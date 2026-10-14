@@ -95,7 +95,8 @@ If the request does not fit, stop following this skill and continue normally wit
    | Boundaries, domain model, component structure | boundaries and domain |
    | Sequence or data-flow diagrams | sequence and data flow |
    | Tenant isolation | multitenancy |
-   | Partial failure, timeouts, retries, degradation | resilience |
+   | Partial failure, timeouts, retries, degradation, or multi-region topology | resilience |
+   | WebSockets, SignalR, or server-sent events at scale | realtime systems |
    | Phased migration between platforms or systems, strangler replacement, or splitting a monolith into modules | migration strategy |
    | Staged rollout, canary, abort criteria | rollout planning |
 
@@ -167,6 +168,7 @@ If the request does not fit, stop following this skill and continue normally wit
 | [references/boundaries-and-domain.md](references/boundaries-and-domain.md) | Workflow step 3: system boundaries, domain modeling, or component design |
 | [references/sequence-and-dataflow.md](references/sequence-and-dataflow.md) | Workflow step 3: sequence or data-flow diagrams |
 | [references/multitenancy.md](references/multitenancy.md) | Workflow step 3: tenant isolation design |
-| [references/resilience.md](references/resilience.md) | Workflow step 3: designing for partial failure |
+| [references/resilience.md](references/resilience.md) | Workflow step 3: designing for partial failure, or a multi-region topology |
+| [references/realtime-systems.md](references/realtime-systems.md) | Workflow step 3: designing realtime features (transport, scale-out, reconnection) |
 | [references/migration-strategy.md](references/migration-strategy.md) | Workflow step 3: phased migration between platforms, frameworks, or systems, a strangler replacement, or a modular-monolith split |
 | [references/rollout-planning.md](references/rollout-planning.md) | Workflow step 3: staged rollout of a change to users |

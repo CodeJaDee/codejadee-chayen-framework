@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 17 — Domains 17 and 18 capabilities |
+| Last executed step | 18 — Domains 19 and 20 capabilities |
+| Step 18 status | DONE (pending user review; D19 9/9 and D20 8/8 IMPLEMENTED, not VERIFIED; all 206 capabilities IMPLEMENTED, D-038) |
 | Step 17 status | DONE (pending user review; D17 10/10 and D18 10/10 IMPLEMENTED, not VERIFIED; chayen-ai-engineering created with the L0 cap raised to 5,500, user-approved, D-037) |
 | Step 16 status | DONE (pending user review; D15 10/10 and D16 10/10 IMPLEMENTED, not VERIFIED; chayen-modernization folded and chayen-documentation created with the L0 cap raised to 5,200, user-approved, D-036) |
 | Step 15 status | DONE (pending user review; D13 12/12 and D14 10/10 IMPLEMENTED, not VERIFIED; chayen-devops created and L0 cap raised to 4,700 with user approval, D-035) |
@@ -22,7 +23,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). All 13 entry skills exist (L0 5,477 / 5,500); Q-10 proposed for closure. |
+| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). All 206 capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500); Q-10 proposed for closure. Next: VERIFIED status needs the behaviour and trigger evals (G-11, G-12) and human review (R-33, R-34). |
 | Commits made by agent | None |
 
 ---
@@ -1704,3 +1705,111 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Recipe behaviour evals (43 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Any ML training, evaluation, red-team run, policy test, or access export analysis described by the recipes | — | NOT_RUN: no fixture repositories in this step; no model or billed API was called |
 | — | Human review of the new skill, 10 new recipes, 6 extended recipes, and 1 reference | — | Pending (R-33, R-34) |
+
+---
+
+## Step 18 — Domains 19 and 20 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D19 Specialized Systems **9/9 IMPLEMENTED** and D20 AI Agent
+  and Skills Engineering **8/8 IMPLEMENTED**, all in existing skills. The
+  catalog total is **206 IMPLEMENTED** (all), 0 IN_PROGRESS, 0 PLANNED, and
+  0 VERIFIED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-19-001..009
+  and CAP-20-001..008 with their mappings and groups (CG-10, CG-20, CG-23,
+  CG-24, CG-54, CG-55, CG-56), and the recipes to extend.
+- **No skill or cap decision was needed:** all records already mapped to
+  existing skills.
+- **D19:**
+  - new `chayen-architecture/references/realtime-systems.md` (CAP-19-002):
+    transport choice, backplane or sticky sessions, per-message
+    authorization, reconnection with missed-message recovery;
+  - new `chayen-data/references/search-and-indexing.md` (CAP-19-003):
+    availability checks before choosing database full-text or a search
+    engine, relevance test queries, index sync;
+  - new `chayen-data/references/geospatial.md` (CAP-19-007): PostGIS or SQL
+    Server spatial support inspected, geography for metres, coordinate
+    order tested;
+  - new `chayen-backend/references/file-processing.md` (CAP-19-004): size
+    limits at the edge, streaming to storage, per-row error reports,
+    idempotent reprocessing, scanner gaps reported;
+  - new `chayen-frontend/references/browser-extensions.md` (CAP-19-009):
+    Manifest V3, minimal permissions, validated messaging;
+  - extended `api-design.md` (GraphQL, CAP-19-001), `external-integrations.md`
+    (webhooks, CAP-19-005), `idempotency-and-consistency.md` (ledgers,
+    CAP-19-006), and `resilience.md` (multi-region, CAP-19-008).
+- **D20 in `chayen-ai-engineering`:**
+  - new `agent-skills.md` (CAP-20-001, 002, 004): authoring with
+    provider formats cited, review including untrusted third-party skills,
+    and version migration;
+  - new `provider-compatibility.md` (CAP-20-005): matrix cells backed by a
+    source or test, isolated configuration homes;
+  - new `session-handoff.md` (CAP-20-007): settled decisions, state from
+    the repository, no secrets, approvals not extended, receiver verifies;
+  - extended `llm-and-agent-evaluation.md` (skill testing CAP-20-003 and
+    benchmarking CAP-20-008) and `agent-governance.md` (instruction
+    conflicts CAP-20-006).
+- **Skills updated:** routing and reference rows in backend, architecture,
+  data, frontend, and AI engineering. The `chayen-frontend` description,
+  scope line, and table now name browser extensions; the
+  `chayen-ai-engineering` description, scope line, examples, and table now
+  cover agent skills. Both descriptions were shortened elsewhere (frontend
+  420 characters and 24 items, AI 412 characters) after a first run showed
+  two warnings.
+- **Review against the records (agent review, D-028).** Every catalog
+  output for the 17 records is produced by its recipe's `## Outputs`, and
+  each record's verification condition appears in the recipe's
+  `## Verification`. Library and platform facts come from agent knowledge
+  and were not executed (R-34).
+- **Catalog:** the 17 records are IMPLEMENTED; all groups and recipe paths
+  are `existing`; the coverage doc was regenerated and its prose updated,
+  including stale "PLANNED" notes in the §5.1 skill table.
+- **Evaluation cases:**
+  - 35 recipe cases (445 in total): 18 for D19 and 17 for D20, including an
+    untrusted third-party skill review.
+  - 7 trigger cases (135 in total): 5 positive, 1 ambiguous (realtime), and
+    1 unsupported (VS Code extension).
+  - The Claude eval cases were regenerated (135 cases, 322 files).
+- **Validator self-test fixtures:** with no PLANNED record or planned recipe
+  left, seven negative controls stopped applying (G-13 46/53). They were
+  retargeted to create the same faulty states from IMPLEMENTED records or
+  existing recipes, each still producing exactly its expected error
+  (`cat-status-completed`, `cat-in-progress-without-evidence`,
+  `cat-implemented-without-evidence`, `cat-recipe-marked-existing-but-missing`,
+  `cat-recipe-is-skill-md`, `cat-recipe-outside-skill`,
+  `sk-recipe-lists-planned-capability`). G-13 passes 53/53.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-architecture/references/realtime-systems.md`, `chayen-data/references/search-and-indexing.md`, `geospatial.md`, `chayen-backend/references/file-processing.md`, `chayen-frontend/references/browser-extensions.md`, `chayen-ai-engineering/references/agent-skills.md`, `provider-compatibility.md`, `session-handoff.md` |
+| Created | `tests/evals/claude/` (7 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/api-design.md`, `external-integrations.md`, `idempotency-and-consistency.md`, `chayen-architecture/references/resilience.md`, `chayen-ai-engineering/references/llm-and-agent-evaluation.md`, `agent-governance.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` and `chayen-ai-engineering/SKILL.md` (descriptions and bodies), `chayen-backend/SKILL.md`, `chayen-architecture/SKILL.md`, `chayen-data/SKILL.md` (routing and reference rows), `skills/README.md` |
+| Modified | `tests/catalog/catalog-mutations.json` (six fixtures retargeted), `tests/skills/validator-mutations.json` (one fixture retargeted) |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json` (additions only), `tests/skills/trigger-cases.json` (additions only), `tests/skills/README.md`; existing generated eval files changed only in line endings (DF-01) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D19 and CAP-D20 IMPLEMENTED; REQ-05 IMPLEMENTED; REQ-02, ARC-04 evidence), `DECISIONS.md` (D-038), `ISSUES.md` (Q-10, R-27, R-28, R-32, R-33, R-34 notes), `IMPLEMENTATION_PLAN.md` |
+| Deleted | None |
+| Scratch only (not in the repository) | Lifecycle work directory `lc18`, and the catalog, case, extension, mutation, and documentation edit scripts. The `skills-ref` venv was reused. |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings (after shortening two descriptions that first produced two warnings). 13 skills. L0 5485/5500. Maximum overlap 0.11. 142 references with valid kinds. 117 recipe files agree with the catalog (206 capabilities). 445 recipe cases. 135 trigger cases. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=206. 20 domains, 57 groups, 13 entry skills (all existing), fingerprint unchanged, doc in sync (after `--write-doc`). |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | First run: **FAIL** G-13 46/53 (seven fixtures no longer applicable). After retargeting: **PASS** 4/4 gate groups, self-tests 53/53 (`node tools/validate/run-validator-tests.mjs` shows each retargeted fixture producing its expected error). |
+| T4 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×13 (`skills-ref` 0.1.1, scratch venv) | PASS: 13/13 valid |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc18` | **PASS 24/24:** 13 skills discoverable on Claude Code 2.1.220, Codex 0.162.1, and Copilot CLI 1.0.89. The fixture stayed unchanged and clean. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` (inside validate-all G-11) | PASS: 135 cases, 322 files |
+| — | Trigger evals for the rewritten frontend and AI engineering descriptions | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (35 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Any search, spatial, realtime, extension, or agent evaluation run described by the recipes | — | NOT_RUN: no fixture repositories in this step |
+| — | Human review of 8 new and 6 extended recipes | — | Pending (R-33, R-34) |

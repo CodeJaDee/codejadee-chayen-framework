@@ -130,8 +130,8 @@
     },
     {
       "id": "sk-recipe-lists-planned-capability",
-      "description": "Recipe claims a capability that is still PLANNED (RC-02). Retargeted in Step 17 to CAP-20-006, which agent-governance.md is mapped to but does not implement; retarget again when D20 is implemented.",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/agent-governance.md", "op": "replace", "find": "capabilities: [CAP-18-010]", "with": "capabilities: [CAP-18-010, CAP-20-006]" }],
+      "description": "Recipe lists a capability that is PLANNED in the catalog (RC-02). Retargeted in Step 18: every capability is implemented, so the mutation sets CAP-20-006 back to PLANNED while agent-governance.md still lists it.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-20-006[\\s\\S]*?status: )IMPLEMENTED", "with": "$1PLANNED" }],
       "expect": { "validator": "package", "error": "V-19 catalog-mapping" }
     },
     {

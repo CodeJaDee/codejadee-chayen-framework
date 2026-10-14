@@ -4539,6 +4539,392 @@
       "checks": [
         "Change risk classes belong to the task contract"
       ]
+    },
+    {
+      "id": "rc-19-001-pos",
+      "capability": "CAP-19-001",
+      "polarity": "positive",
+      "prompt": "Rename the customerName field in our Hot Chocolate GraphQL schema without breaking existing clients.",
+      "expect": { "skill": "chayen-backend", "loads": "references/api-design.md" },
+      "checks": [
+        "The rename is done as add, deprecate with @deprecated, migrate, and remove later",
+        "A schema check runs against known client operations, or is NOT_RUN",
+        "Removal waits for agreed criteria and approval"
+      ]
+    },
+    {
+      "id": "rc-19-001-neg",
+      "capability": "CAP-19-001",
+      "polarity": "negative",
+      "prompt": "Explain the difference between GraphQL and REST.",
+      "expect": { "skill": "none", "not_loads": "references/api-design.md" },
+      "checks": [
+        "A general explanation is answered directly"
+      ]
+    },
+    {
+      "id": "rc-19-002-pos",
+      "capability": "CAP-19-002",
+      "polarity": "positive",
+      "prompt": "Design live order-status updates for 50,000 concurrent users with SignalR across several instances.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/realtime-systems.md" },
+      "checks": [
+        "Existing realtime libraries and hosting limits are inspected first",
+        "Scale-out uses a backplane or sticky sessions with failure handling",
+        "Reconnection recovers missed messages, and every connection is authorized"
+      ]
+    },
+    {
+      "id": "rc-19-002-neg",
+      "capability": "CAP-19-002",
+      "polarity": "negative",
+      "prompt": "Add push notifications to our Capacitor app.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/realtime-systems.md" },
+      "checks": [
+        "Mobile push is frontend shell work"
+      ]
+    },
+    {
+      "id": "rc-19-003-pos",
+      "capability": "CAP-19-003",
+      "polarity": "positive",
+      "prompt": "Add full-text product search with relevance tuning to our PostgreSQL catalogue.",
+      "expect": { "skill": "chayen-data", "loads": "references/search-and-indexing.md" },
+      "checks": [
+        "Available text search features and extensions are inspected first",
+        "A tsvector column with a GIN index and a language configuration is designed",
+        "Relevance test queries with expected top results are defined"
+      ]
+    },
+    {
+      "id": "rc-19-003-neg",
+      "capability": "CAP-19-003",
+      "polarity": "negative",
+      "prompt": "Build semantic retrieval over our docs for the support chatbot.",
+      "expect": { "skill": "chayen-ai-engineering", "not_loads": "references/search-and-indexing.md" },
+      "checks": [
+        "Retrieval for an LLM is RAG work"
+      ]
+    },
+    {
+      "id": "rc-19-004-pos",
+      "capability": "CAP-19-004",
+      "polarity": "positive",
+      "prompt": "Let customers upload CSV files of up to 2 GB of orders and import them in the background.",
+      "expect": { "skill": "chayen-backend", "loads": "references/file-processing.md" },
+      "checks": [
+        "The server enforces a size limit and streams the upload to storage",
+        "Processing runs in the background with a per-row error report",
+        "Reprocessing is idempotent, and a missing malware scanner is reported as a gap"
+      ]
+    },
+    {
+      "id": "rc-19-004-neg",
+      "capability": "CAP-19-004",
+      "polarity": "negative",
+      "prompt": "Fuzz our CSV parser for crashes.",
+      "expect": { "skill": "chayen-testing", "not_loads": "references/file-processing.md" },
+      "checks": [
+        "Fuzzing is testing work"
+      ]
+    },
+    {
+      "id": "rc-19-005-pos",
+      "capability": "CAP-19-005",
+      "polarity": "positive",
+      "prompt": "Receive Stripe webhooks safely in our ASP.NET Core API.",
+      "expect": { "skill": "chayen-backend", "loads": "references/external-integrations.md" },
+      "checks": [
+        "The signature is verified on the raw body",
+        "Replayed and duplicate events are rejected or processed once",
+        "The handler acknowledges quickly and processes asynchronously, with tests for tampered, replayed, and duplicate deliveries"
+      ]
+    },
+    {
+      "id": "rc-19-005-neg",
+      "capability": "CAP-19-005",
+      "polarity": "negative",
+      "prompt": "Is fetching user-supplied URLs in our webhook tester safe?",
+      "expect": { "skill": "chayen-security", "not_loads": "references/external-integrations.md" },
+      "checks": [
+        "SSRF review belongs to the security skill"
+      ]
+    },
+    {
+      "id": "rc-19-006-pos",
+      "capability": "CAP-19-006",
+      "polarity": "positive",
+      "prompt": "Design the ledger for customer wallet balances so money never goes missing.",
+      "expect": { "skill": "chayen-backend", "loads": "references/idempotency-and-consistency.md" },
+      "checks": [
+        "Amounts use decimal types or minor units, never floating point",
+        "Double-entry transactions must balance, enforced in code and the database where possible",
+        "Reconciliation flags mismatches for humans and never auto-corrects money"
+      ]
+    },
+    {
+      "id": "rc-19-006-neg",
+      "capability": "CAP-19-006",
+      "polarity": "negative",
+      "prompt": "Explain double-entry bookkeeping.",
+      "expect": { "skill": "none", "not_loads": "references/idempotency-and-consistency.md" },
+      "checks": [
+        "A general explanation is answered directly"
+      ]
+    },
+    {
+      "id": "rc-19-007-pos",
+      "capability": "CAP-19-007",
+      "polarity": "positive",
+      "prompt": "Find the nearest store to a customer's location in SQL Server.",
+      "expect": { "skill": "chayen-data", "loads": "references/geospatial.md" },
+      "checks": [
+        "Geography (not geometry) is used for distances in metres",
+        "A spatial index supports the query",
+        "Longitude and latitude order is tested with a known point"
+      ]
+    },
+    {
+      "id": "rc-19-007-neg",
+      "capability": "CAP-19-007",
+      "polarity": "negative",
+      "prompt": "Ask the user for location permission in our Capacitor app.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/geospatial.md" },
+      "checks": [
+        "Device permissions are frontend shell work"
+      ]
+    },
+    {
+      "id": "rc-19-008-pos",
+      "capability": "CAP-19-008",
+      "polarity": "positive",
+      "prompt": "Design an active-active setup for our API across two Azure regions.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/resilience.md" },
+      "checks": [
+        "The replication mode and the RPO it implies are stated",
+        "Failover and failback procedures are included",
+        "No failover is executed, and the design is labelled proposed"
+      ]
+    },
+    {
+      "id": "rc-19-008-neg",
+      "capability": "CAP-19-008",
+      "polarity": "negative",
+      "prompt": "Write the full disaster recovery plan with roles and communication.",
+      "expect": { "skill": "chayen-devops", "not_loads": "references/resilience.md" },
+      "checks": [
+        "A DR plan belongs to operations"
+      ]
+    },
+    {
+      "id": "rc-19-009-pos",
+      "capability": "CAP-19-009",
+      "polarity": "positive",
+      "prompt": "Build a Chrome extension that highlights prices on shopping pages, using our React components.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/browser-extensions.md" },
+      "checks": [
+        "The manifest is Manifest V3 with minimal permissions, preferring activeTab",
+        "Messages from content scripts are validated by sender and payload",
+        "The extension is loaded in the target browser or the load check is NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-19-009-neg",
+      "capability": "CAP-19-009",
+      "polarity": "negative",
+      "prompt": "Build a VS Code extension that formats SQL files.",
+      "expect": { "skill": "none", "not_loads": "references/browser-extensions.md" },
+      "checks": [
+        "Editor extensions are out of scope"
+      ]
+    },
+    {
+      "id": "rc-20-001-pos",
+      "capability": "CAP-20-001",
+      "polarity": "positive",
+      "prompt": "Write a skill that helps our coding agents follow our API conventions.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/agent-skills.md" },
+      "checks": [
+        "The providers' current skill format is checked and cited",
+        "The description has concrete scope and a Not for boundary clause",
+        "The validator runs or is NOT_RUN, and the skill makes no enforcement claims"
+      ]
+    },
+    {
+      "id": "rc-20-001-neg",
+      "capability": "CAP-20-001",
+      "polarity": "negative",
+      "prompt": "Write a system prompt for our customer chatbot.",
+      "expect": { "skill": "chayen-ai-engineering", "not_loads": "references/agent-skills.md" },
+      "checks": [
+        "Chatbot prompts use prompt evaluation"
+      ]
+    },
+    {
+      "id": "rc-20-002-pos",
+      "capability": "CAP-20-002",
+      "polarity": "positive",
+      "prompt": "Review the skills in this plugin for overlap and quality.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/agent-skills.md" },
+      "checks": [
+        "Near-duplicate descriptions are flagged with an overlap measure",
+        "Enforcement claims and missing boundary clauses are flagged",
+        "Findings come with suggested edits per skill"
+      ]
+    },
+    {
+      "id": "rc-20-002-pos-untrusted",
+      "capability": "CAP-20-002",
+      "polarity": "positive",
+      "prompt": "Review this skill we downloaded from a public marketplace before we install it.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/agent-skills.md" },
+      "checks": [
+        "The skill is treated as untrusted content",
+        "Hidden instructions, exfiltration requests, and bundled scripts are checked",
+        "No script from the skill is executed during the review"
+      ]
+    },
+    {
+      "id": "rc-20-002-neg",
+      "capability": "CAP-20-002",
+      "polarity": "negative",
+      "prompt": "Review this pull request for readability.",
+      "expect": { "skill": "chayen-documentation", "not_loads": "references/agent-skills.md" },
+      "checks": [
+        "A code review is documentation and collaboration work"
+      ]
+    },
+    {
+      "id": "rc-20-003-pos",
+      "capability": "CAP-20-003",
+      "polarity": "positive",
+      "prompt": "Test whether our skills trigger on the right prompts in Claude Code and Copilot.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/llm-and-agent-evaluation.md" },
+      "checks": [
+        "Negative cases expect zero activation",
+        "Each case runs at least three times, with a no-plugin baseline",
+        "Results from one provider are not reused for another"
+      ]
+    },
+    {
+      "id": "rc-20-003-neg",
+      "capability": "CAP-20-003",
+      "polarity": "negative",
+      "prompt": "Check that our plugin installs and uninstalls on Codex and Copilot.",
+      "expect": { "skill": "chayen-ai-engineering", "not_loads": "references/llm-and-agent-evaluation.md" },
+      "checks": [
+        "Install lifecycle is provider compatibility"
+      ]
+    },
+    {
+      "id": "rc-20-004-pos",
+      "capability": "CAP-20-004",
+      "polarity": "positive",
+      "prompt": "Migrate our plugin to the new manifest format and bump the version everywhere.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/agent-skills.md" },
+      "checks": [
+        "The format change is cited from provider documentation",
+        "Every manifest carries the same new version, with a changelog entry",
+        "Validator and install-test results are recorded or NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-20-004-neg",
+      "capability": "CAP-20-004",
+      "polarity": "negative",
+      "prompt": "Upgrade our app's npm dependencies.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/agent-skills.md" },
+      "checks": [
+        "Application dependency upgrades are implementation work"
+      ]
+    },
+    {
+      "id": "rc-20-005-pos",
+      "capability": "CAP-20-005",
+      "polarity": "positive",
+      "prompt": "Check that our plugin works on Claude Code, Codex, and Copilot, including disable and uninstall.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/provider-compatibility.md" },
+      "checks": [
+        "Every matrix cell cites a documentation source or a recorded test",
+        "Lifecycle tests use isolated configuration homes",
+        "Unchecked behaviour is marked UNVERIFIED"
+      ]
+    },
+    {
+      "id": "rc-20-005-neg",
+      "capability": "CAP-20-005",
+      "polarity": "negative",
+      "prompt": "Make our web app work in Safari.",
+      "expect": { "skill": "none", "not_loads": "references/provider-compatibility.md" },
+      "checks": [
+        "Browser compatibility is not agent provider compatibility"
+      ]
+    },
+    {
+      "id": "rc-20-006-pos",
+      "capability": "CAP-20-006",
+      "polarity": "positive",
+      "prompt": "Our AGENTS.md and CLAUDE.md disagree about the test command. Which one wins?",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/agent-governance.md" },
+      "checks": [
+        "The conflicting files and lines are cited",
+        "Precedence per provider comes from cited documentation or is marked unverified",
+        "No instruction file is modified without approval"
+      ]
+    },
+    {
+      "id": "rc-20-006-neg",
+      "capability": "CAP-20-006",
+      "polarity": "negative",
+      "prompt": "Write OPA policies for our Kubernetes manifests.",
+      "expect": { "skill": "chayen-devops", "not_loads": "references/agent-governance.md" },
+      "checks": [
+        "Policy as code belongs to devops"
+      ]
+    },
+    {
+      "id": "rc-20-007-pos",
+      "capability": "CAP-20-007",
+      "polarity": "positive",
+      "prompt": "Write a handoff so a new session can continue this refactoring tomorrow.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/session-handoff.md" },
+      "checks": [
+        "Settled decisions are listed with who made them",
+        "State comes from the repository (branch, diff, results)",
+        "The handoff contains no secrets and does not extend approvals"
+      ]
+    },
+    {
+      "id": "rc-20-007-neg",
+      "capability": "CAP-20-007",
+      "polarity": "negative",
+      "prompt": "Write knowledge-transfer notes for my successor.",
+      "expect": { "skill": "chayen-documentation", "not_loads": "references/session-handoff.md" },
+      "checks": [
+        "Human knowledge transfer is documentation"
+      ]
+    },
+    {
+      "id": "rc-20-008-pos",
+      "capability": "CAP-20-008",
+      "polarity": "positive",
+      "prompt": "Benchmark whether our skills make the agent better at fixing bugs in our repositories.",
+      "expect": { "skill": "chayen-ai-engineering", "loads": "references/llm-and-agent-evaluation.md" },
+      "checks": [
+        "Fixed fixtures and automatic graders are used",
+        "A no-skill baseline is included",
+        "Results report run counts, variance, and cost per run"
+      ]
+    },
+    {
+      "id": "rc-20-008-neg",
+      "capability": "CAP-20-008",
+      "polarity": "negative",
+      "prompt": "Load test our API at 500 requests per second.",
+      "expect": { "skill": "chayen-performance", "not_loads": "references/llm-and-agent-evaluation.md" },
+      "checks": [
+        "Load testing is performance work"
+      ]
     }
   ]
 }

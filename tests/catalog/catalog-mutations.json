@@ -34,38 +34,38 @@
     },
     {
       "id": "cat-status-completed",
-      "description": "COMPLETED is not a status",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-12-001[\\s\\S]*?status: )PLANNED", "with": "$1COMPLETED" }],
+      "description": "COMPLETED is not a status Retargeted in Step 18: no PLANNED record or planned recipe remains, so the mutation now creates the faulty state from an IMPLEMENTED record or an existing recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-12-001[\\s\\S]*?status: )IMPLEMENTED", "with": "$1COMPLETED" }],
       "expect": { "validator": "catalog", "error": "V-11.10 status" }
     },
     {
       "id": "cat-in-progress-without-evidence",
-      "description": "IN_PROGRESS without existing_coverage",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-12-001[\\s\\S]*?status: )PLANNED", "with": "$1IN_PROGRESS" }],
+      "description": "IN_PROGRESS without existing_coverage Retargeted in Step 18: no PLANNED record or planned recipe remains, so the mutation now creates the faulty state from an IMPLEMENTED record or an existing recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-12-001[\\s\\S]*?)\\n    existing_coverage: \\[[^\\]]*\\]", "with": "$1" }, { "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-12-001[\\s\\S]*?status: )IMPLEMENTED", "with": "$1IN_PROGRESS" }],
       "expect": { "validator": "catalog", "error": "V-11.10 status" }
     },
     {
       "id": "cat-implemented-without-evidence",
-      "description": "IMPLEMENTED without verification_evidence. Targets the first PLANNED record (no evidence, planned recipe), so the case survives as records are implemented; until Step 17 it targeted the last IN_PROGRESS record, and none remain.",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(\\n    status: )PLANNED", "with": "$1IMPLEMENTED" }],
+      "description": "IMPLEMENTED without verification_evidence. Retargeted in Step 18: no PLANNED record or planned recipe remains, so the mutation now creates the faulty state from an IMPLEMENTED record or an existing recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "\\n    verification_evidence: \"[^\"]*\"", "with": "" }],
       "expect": { "validator": "catalog", "error": "V-11.10 status" }
     },
     {
       "id": "cat-recipe-marked-existing-but-missing",
-      "description": "A recipe is marked existing but the file does not exist (missing file). Targets the first planned recipe, so the case survives as recipes get implemented.",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: (skills/[a-z-]+/references/[a-z-]+\\.md), mapping: planned\\}", "with": "recipe: {path: $1, mapping: existing}" }],
+      "description": "A recipe is marked existing but the file does not exist (missing file). Retargeted in Step 18: no PLANNED record or planned recipe remains, so the mutation now creates the faulty state from an IMPLEMENTED record or an existing recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: (skills/[a-z-]+/references/)[a-z0-9-]+\\.md, mapping: existing\\}", "with": "recipe: {path: $1missing-recipe-file.md, mapping: existing}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
       "id": "cat-recipe-is-skill-md",
-      "description": "SKILL.md used as a recipe (D-026). Targets the first planned recipe.",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: (skills/[a-z-]+)/references/[a-z-]+\\.md, mapping: planned\\}", "with": "recipe: {path: $1/SKILL.md, mapping: planned}" }],
+      "description": "SKILL.md used as a recipe (D-026). Retargeted in Step 18: no PLANNED record or planned recipe remains, so the mutation now creates the faulty state from an IMPLEMENTED record or an existing recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: (skills/[a-z-]+)/references/[a-z0-9-]+\\.md, mapping: existing\\}", "with": "recipe: {path: $1/SKILL.md, mapping: existing}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
       "id": "cat-recipe-outside-skill",
-      "description": "A recipe lives outside its entry skill (D-016). Targets the first planned recipe.",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: skills/[a-z-]+/references/([a-z-]+\\.md), mapping: planned\\}", "with": "recipe: {path: skills/chayen-elsewhere/references/$1, mapping: planned}" }],
+      "description": "A recipe lives outside its entry skill (D-016). Retargeted in Step 18: no PLANNED record or planned recipe remains, so the mutation now creates the faulty state from an IMPLEMENTED record or an existing recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: skills/[a-z-]+/references/([a-z0-9-]+\\.md), mapping: existing\\}", "with": "recipe: {path: skills/chayen-elsewhere/references/$1, mapping: existing}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {

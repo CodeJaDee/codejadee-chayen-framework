@@ -1,13 +1,13 @@
 ---
 name: chayen-ai-engineering
-description: Build and evaluate ML and LLM features in Python, .NET, or TypeScript, covering dataset readiness and leakage, experiment design, model evaluation and serving, drift, RAG pipelines and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, and reviews of AI agent permissions. Not for routine data pipelines, attacking third-party AI systems, or legal AI compliance.
+description: Build and evaluate ML and LLM features in Python, .NET, or TypeScript, covering dataset readiness and leakage, experiment design, model evaluation and serving, drift, RAG pipelines and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent skills, and agent permission reviews. Not for routine data pipelines, attacking third-party AI systems, or legal AI compliance.
 ---
 
 # ML, LLM, and agent engineering
 
 Build, evaluate, and operate machine-learning and LLM features with evidence: data checked before training, claims backed by evaluations with stated run counts and variance, and model output, retrieved content, and agent actions treated as untrusted until controlled.
 
-**Scope:** ML and LLM engineering on the user's own systems in Python, .NET, or TypeScript: dataset readiness, experiments, model evaluation and serving, drift, RAG and retrieval evaluation, prompt and tool evaluation, red-teaming the user's own LLM application, LLM observability, and reviews of what AI coding agents may do. Routine ETL and data quality, attacking AI systems the user does not own, legal or regulatory AI compliance determinations, and training foundation models from scratch are outside this scope: do not apply this guidance to them.
+**Scope:** ML and LLM engineering on the user's own systems in Python, .NET, or TypeScript: dataset readiness, experiments, model evaluation and serving, drift, RAG and retrieval evaluation, prompt and tool evaluation, red-teaming the user's own LLM application, LLM observability, reviews of what AI coding agents may do, and agent skills: authoring, review, testing, migration, provider compatibility, instruction conflicts, session handoff, and benchmarks. Routine ETL and data quality, attacking AI systems the user does not own, legal or regulatory AI compliance determinations, and training foundation models from scratch are outside this scope: do not apply this guidance to them.
 
 ## When to use
 
@@ -20,6 +20,8 @@ Requests that fit:
 - "Compare these two system prompts on our eval set before we ship."
 - "Red-team our customer chatbot for prompt injection before launch."
 - "Review what our coding agent is allowed to run on developer machines."
+- "Write a skill that helps our agents follow our API conventions."
+- "Our AGENTS.md and CLAUDE.md disagree about the test command. Which one wins?"
 
 ## When not to use
 
@@ -83,7 +85,11 @@ If the request does not fit, stop following this skill and continue normally wit
    | Prompt or tool-definition evaluation | LLM and agent evaluation |
    | Red-teaming the user's own LLM application | LLM safety |
    | Traces, tokens, cost, and quality of LLM calls | LLM observability |
-   | What an AI coding agent may run, write, or access | agent governance |
+   | What an AI coding agent may run, write, or access; conflicting instruction files | agent governance |
+   | Writing, reviewing, or migrating skills and plugins | agent skills |
+   | Testing skill triggering, or benchmarking agents | LLM and agent evaluation |
+   | Whether a skill or plugin works on each provider | provider compatibility |
+   | Handing a session to another agent or session | session handoff |
 
 3. **Find the existing pipeline, eval set, or configuration** and build on
    it.
@@ -149,7 +155,10 @@ Load the tooling section for the detected stack (workflow step 1), and one recip
 | [references/ml-experiments-and-evaluation.md](references/ml-experiments-and-evaluation.md) | Designing an experiment, or evaluating a trained model |
 | [references/model-serving.md](references/model-serving.md) | Serving a model in production |
 | [references/rag.md](references/rag.md) | Designing a RAG pipeline, or measuring retrieval quality |
-| [references/llm-and-agent-evaluation.md](references/llm-and-agent-evaluation.md) | Evaluating prompts or tool definitions |
+| [references/llm-and-agent-evaluation.md](references/llm-and-agent-evaluation.md) | Evaluating prompts or tool definitions, testing skill triggering, or benchmarking agents |
 | [references/llm-safety.md](references/llm-safety.md) | Red-teaming the user's own LLM application |
 | [references/llm-observability.md](references/llm-observability.md) | Observing LLM calls in production |
-| [references/agent-governance.md](references/agent-governance.md) | Reviewing what an AI coding agent may run, write, or access |
+| [references/agent-governance.md](references/agent-governance.md) | Reviewing what an AI coding agent may run, write, or access, or conflicts between instruction files |
+| [references/agent-skills.md](references/agent-skills.md) | Authoring, reviewing, or migrating agent skills and plugins |
+| [references/provider-compatibility.md](references/provider-compatibility.md) | Checking skills or plugins against each provider and surface |
+| [references/session-handoff.md](references/session-handoff.md) | Handing a session over to another session or agent |

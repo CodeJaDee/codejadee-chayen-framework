@@ -1,13 +1,13 @@
 ---
 name: chayen-frontend
-description: Build or fix web UI in Angular, React, Next.js, Vue, Nuxt, or Vite apps and their PWA, Capacitor, Ionic, Electron, or Tauri shells, covering components, state, forms, layout and design systems, accessibility, i18n, performance, UI errors, offline, device permissions, push, and desktop packaging. Not for server-only APIs, native or game UI such as SwiftUI, Flutter, React Native, WPF, or Unity, or design without code.
+description: Build or fix web UI in Angular, React, Next.js, Vue, Nuxt, or Vite apps, their PWA, Capacitor, Ionic, Electron, or Tauri shells, and browser extensions, for components, state, forms, design systems, accessibility, i18n, performance, UI errors, offline, permissions and push, and desktop packaging. Not for server-only APIs, native or game UI such as SwiftUI, Flutter, React Native, WPF, or Unity, or design without code.
 ---
 
 # Web frontend and app-shell engineering
 
 Implement or repair browser UI, and the web-technology mobile and desktop shells around it, so that it fits the application's framework version, component patterns, design system, and target platforms.
 
-**Scope:** web UI in Angular, React, Next.js, Vue, Nuxt, or Vite applications, including the same code shipped as a PWA, a Capacitor or Ionic mobile app, or an Electron or Tauri desktop app. Native and game toolkits (SwiftUI, UIKit, Jetpack Compose, Android views, Flutter, React Native, .NET MAUI, WPF, WinForms, WinUI, Unity) and server-only code are outside this scope: if the target is one of them, do not apply this guidance.
+**Scope:** web UI in Angular, React, Next.js, Vue, Nuxt, or Vite applications, including the same code shipped as a PWA, a Capacitor or Ionic mobile app, an Electron or Tauri desktop app, or a Manifest V3 browser extension. Native and game toolkits (SwiftUI, UIKit, Jetpack Compose, Android views, Flutter, React Native, .NET MAUI, WPF, WinForms, WinUI, Unity) and server-only code are outside this scope: if the target is one of them, do not apply this guidance.
 
 ## When to use
 
@@ -93,6 +93,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | Device permissions, sensors, push notifications | device permissions and push |
    | Offline use and sync, mobile startup or scrolling speed | offline and mobile performance |
    | Packaging, signing, or updating a desktop app | desktop packaging |
+   | A Manifest V3 browser extension | browser extensions |
 
 3. **Find an analogous component, page, or form** and mirror its
    structure, naming, file layout, and tests.
@@ -186,3 +187,4 @@ Load one framework reference (workflow step 1), the app-shell reference only whe
 | [references/device-permissions-and-push.md](references/device-permissions-and-push.md) | Camera, location, files, or sensors behind a permission, or push notifications |
 | [references/offline-and-mobile-performance.md](references/offline-and-mobile-performance.md) | Offline use and sync, or startup, scrolling, memory, or battery in a mobile shell |
 | [references/desktop-packaging.md](references/desktop-packaging.md) | Packaging, signing, auto-updating, or securing an Electron or Tauri app |
+| [references/browser-extensions.md](references/browser-extensions.md) | Building or packaging a browser extension |

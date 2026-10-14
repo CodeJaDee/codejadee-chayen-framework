@@ -1,13 +1,14 @@
 ---
 kind: recipe
-capabilities: [CAP-03-010]
+capabilities: [CAP-03-010, CAP-19-008]
 ---
 # Resilience design
 
 Design for partial failure. Analyze how each dependency can fail. Then choose
 timeouts, retries, circuit breakers, bulkheads, fallbacks, and degradation
 per dependency, matched to the business tolerance rather than to a default
-template.
+template. At the largest scale, the same analysis decides multi-region
+topology: replication, consistency, failover, and failback.
 
 ## Inputs
 
@@ -52,6 +53,27 @@ template.
 7. **Label the design proposed.** Changes to retry or timeout settings in a
    live system go through review, with rollout planning.
 
+### Multi-region resilience (CAP-19-008)
+
+1. **State the targets:** availability, RTO and RPO per service, and data
+   residency constraints, from the owner.
+2. **Choose the topology:** active-passive (simpler, failover time) or
+   active-active (lower RTO, harder consistency), per service.
+3. **Choose replication and state the consistency trade-off:** synchronous
+   replication (no data loss, latency cost) or asynchronous (an RPO equal to
+   the replication lag), and how conflicts are handled for multi-writer
+   data.
+4. **Design traffic routing:** global load balancing or DNS with health
+   probes, and session or cache handling across regions.
+5. **Write failover and failback procedures:** detection, who decides,
+   the steps, data reconciliation after failover, and the return to the
+   primary region. Executing either is an approved operational action.
+6. **Isolate regions:** no hidden cross-region dependencies (a single
+   identity, secret store, or DNS service), and per-region capacity to take
+   the load.
+7. **Plan tests:** regular failover drills in non-production, then
+   production game days with approval.
+
 ## Outputs
 
 A failure-mode table for the flow, with the proposed policy per dependency, the timing budget, and how each policy is observed and tested.
@@ -63,6 +85,10 @@ End-to-end budget: <sum of worst-case timings> vs <caller timeout / goal>
 Observability: <metrics and logs for each policy>
 Verification: <fault-injection tests>
 ```
+
+For multi-region designs: the topology with the replication mode and the
+consistency trade-off stated, and the failover and failback procedure with a
+test plan.
 
 ## Technology considerations
 
@@ -84,3 +110,5 @@ Verification: <fault-injection tests>
 - Each policy has an observable signal. A fault-injection test is proposed
   or written for each critical dependency.
 - The design is labelled proposed.
+- A multi-region design states the RPO implied by its replication mode and
+  includes a failback step.

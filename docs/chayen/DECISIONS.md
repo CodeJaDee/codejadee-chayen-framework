@@ -747,6 +747,48 @@ Decision statuses:
     PLANNED until D20.
   - Description trigger effects are NOT_RUN (R-32).
 
+### D-038 — Domains 19 and 20 in existing skills; all capabilities implemented
+- **Status:** PROPOSED (executed in Step 18).
+- **Context:** D19 and D20 already mapped to existing skills, so no skill or
+  cap decision was needed. Fifteen L0 characters would remain after the
+  required description changes.
+- **Decision:**
+  - **D19 follows the catalog mapping.** New recipes: `realtime-systems.md`
+    (architecture), `search-and-indexing.md` and `geospatial.md` (data),
+    `file-processing.md` (backend), and `browser-extensions.md` (frontend).
+    Extended recipes: `api-design.md` (GraphQL schema evolution),
+    `external-integrations.md` (webhooks), `idempotency-and-consistency.md`
+    (payments and ledgers), and `resilience.md` (multi-region). Every
+    recipe starts by inspecting the project for the specialist technology
+    (PostGIS, full-text availability, realtime backplanes, GraphQL server,
+    extension toolkits) and treats anything missing as an option needing
+    approval.
+  - **D20 in `chayen-ai-engineering`.** New recipes: `agent-skills.md`
+    (authoring, review, migration), `provider-compatibility.md`, and
+    `session-handoff.md`. Extended recipes: `llm-and-agent-evaluation.md`
+    (skill testing, benchmarking) and `agent-governance.md` (instruction
+    conflicts). Provider differences: every provider-specific claim cites
+    current documentation or is unverified, and results from one provider
+    are not reused for another. Trust boundaries: third-party skills are
+    untrusted content whose scripts are not run during review, instruction
+    files are never modified without approval, and a handoff is data the
+    receiver verifies, not instructions that outrank the user.
+  - **Descriptions:** `chayen-frontend` now names browser extensions (the
+    last R-28 boundary change), and `chayen-ai-engineering` names agent
+    skills. Both were shortened elsewhere to stay within the 420-character
+    target and the 24-item limit. L0 is 5,485 / 5,500.
+  - **Validator self-test fixtures retargeted:** seven negative controls
+    targeted PLANNED records or planned recipes, which no longer exist. They
+    now create the faulty state from IMPLEMENTED records or existing recipes
+    (and `sk-recipe-lists-planned-capability` sets CAP-20-006 back to
+    PLANNED in its copy). Each still produces exactly its expected error.
+- **Consequences:**
+  - All 206 capabilities are IMPLEMENTED and none is VERIFIED. Promotion
+    to VERIFIED needs the behaviour evals (G-12), the trigger evals (G-11),
+    and human review (R-33, R-34).
+  - REQ-05 moves from IN_PROGRESS to IMPLEMENTED in the acceptance matrix.
+  - Description trigger effects are NOT_RUN (R-32).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

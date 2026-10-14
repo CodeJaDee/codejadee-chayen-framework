@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-06-010]
+capabilities: [CAP-06-010, CAP-19-006]
 ---
 # Idempotency and safe retries
 
@@ -10,6 +10,9 @@ exactly one effect:
 - deduplication for consumers;
 - conditional writes for updates;
 - retry policies that never repeat non-idempotent effects.
+
+Money movements add stricter rules: a double-entry ledger with balanced
+entries, exact decimal amounts, and reconciliation with providers.
 
 ## Inputs
 
@@ -53,6 +56,28 @@ exactly one effect:
    - a same key with a different payload is rejected;
    - a stale conditional update is rejected.
 
+### Payments and ledger consistency (CAP-19-006)
+
+1. **Inspect the current model:** how balances and payments are stored,
+   amount types, currency handling, and the payment provider integration.
+2. **Use exact amounts:** decimal types (or integer minor units) with the
+   currency stored per amount; never floating point; rounding rules
+   explicit and tested.
+3. **Model a double-entry ledger:** each transaction has entries whose
+   debits and credits balance per currency, enforced in code and, where
+   possible, by the database (a check or a constraint trigger); entries are
+   append-only, and corrections are reversing entries.
+4. **Make payment operations idempotent** with the idempotency procedure
+   above, passing the key to the provider.
+5. **Reconcile:** a scheduled job compares ledger entries with provider
+   reports or settlement files, flags mismatches for humans, and never
+   auto-corrects money.
+6. **Keep an audit trail:** who or what created each entry, when, and with
+   which request or provider reference.
+7. **Test the invariants:** unbalanced transactions are rejected, amounts
+   use decimal types, retries create one payment, and reconciliation flags
+   a seeded mismatch.
+
 ## Outputs
 
 - The idempotency mechanism (key scope, storage, fingerprint, expiry,
@@ -61,6 +86,9 @@ exactly one effect:
 - The retry policy rules applied to the client, job, and consumer.
 - Tests for repeated and concurrent duplicates, mismatched payloads, and
   stale updates.
+- For money: a ledger and transaction design with invariants (balanced
+  entries, no float money), and a reconciliation job design with tests for
+  the invariants.
 
 ## Technology considerations
 
@@ -81,3 +109,5 @@ exactly one effect:
 - Retries in the code apply only to idempotent or key-protected operations,
   at a single layer.
 - The tests pass with the project's command.
+- The fixture ledger rejects an unbalanced transaction and uses decimal
+  types for all amounts.

@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-06-001, CAP-06-004]
+capabilities: [CAP-06-001, CAP-06-004, CAP-19-001]
 ---
 # API design and versioning
 
@@ -8,6 +8,8 @@ Design an HTTP API contract before implementing it, consistent with the
 project's existing APIs. Cover resources, routes, methods, status codes, the
 error model, pagination, filtering, and idempotency. When a change cannot be
 made compatibly, introduce or evolve an API version under a stated policy.
+GraphQL schemas evolve additively instead, with deprecations and schema
+checks against the operations clients actually send.
 
 ## Inputs
 
@@ -57,6 +59,24 @@ made compatibly, introduce or evolve an API version under a stated policy.
 6. **Label the design proposed,** and confirm it before implementing (API
    endpoints recipe). A changed public contract needs approval.
 
+### GraphQL schema evolution (CAP-19-001)
+
+1. **Inspect the GraphQL stack:** the server library and version, whether
+   the schema is code-first or schema-first, federation, and whether client
+   operations are known (persisted queries, a registry, or client
+   repositories). Do not assume a schema registry exists.
+2. **Prefer additive changes:** new fields and types, nullable additions,
+   and new arguments with defaults.
+3. **Rename or remove in steps:** add the new field, mark the old one
+   `@deprecated(reason: "Use newField")`, migrate clients, measure field
+   usage where possible, and remove only after the agreed criteria and
+   approval.
+4. **Respect nullability rules:** making an output field nullable or an
+   input field non-nullable breaks clients; flag these as breaking.
+5. **Check the schema against known operations** with the stack's schema
+   diff or check tool, and report breaking changes; consider the federation
+   impact on the gateway and other subgraphs.
+
 ## Outputs
 
 - An endpoint table (method, route, request, response, status codes,
@@ -66,6 +86,8 @@ made compatibly, introduce or evolve an API version under a stated policy.
 - For versioning: the scheme (existing or proposed), routing per version,
   the deprecation timeline and headers, and the consumer communication
   notes.
+- For GraphQL: an additive change plan with `@deprecated` usage and removal
+  criteria, and breaking-change check results against known operations.
 
 ## Technology considerations
 
@@ -74,7 +96,7 @@ made compatibly, introduce or evolve an API version under a stated policy.
 | ASP.NET Core | `Asp.Versioning.Http` or `Asp.Versioning.Mvc` (`ApiVersion`, `MapToApiVersion`, `ReportApiVersions`). OpenAPI via `Microsoft.AspNetCore.OpenApi` or Swashbuckle, with one document per version. Minimal APIs use `MapGroup("/v{version:apiVersion}")`. |
 | Node (Nitro, Elysia, Next.js, Nuxt server) | The file-based routing of Nitro, Nuxt, and Next.js puts versions in the folder structure (`server/api/v1/`). Elysia uses `group('/v1')` and generates OpenAPI from schemas through its swagger plugin. |
 | Python (FastAPI, Django, Flask) | FastAPI `APIRouter(prefix="/v1")` with an OpenAPI per app or mount. DRF `URLPathVersioning` or `NamespaceVersioning`. Flask blueprints per version. |
-| GraphQL (any stack) | Schema evolution is additive with `@deprecated`, not URL versioning. That is a separate capability. |
+| GraphQL (any stack) | Schema evolution is additive with `@deprecated`, not URL versioning. Hot Chocolate (.NET), Apollo Server or GraphQL Yoga (Node), Strawberry or Graphene (Python); schema diff with GraphQL Inspector or the registry's checks if used. |
 | SQL Server / PostgreSQL | API shapes must not mirror tables. Versioned APIs may need a mapping layer over one schema. |
 
 ## Verification
@@ -87,3 +109,6 @@ made compatibly, introduce or evolve an API version under a stated policy.
   the OpenAPI output, and the deprecation dates have an owner.
 - The design is labelled proposed until confirmed. No breaking change is
   implemented without approval.
+- A field rename in the fixture GraphQL schema is done as add, deprecate,
+  migrate, and the schema check reports no breaking change for existing
+  operations.

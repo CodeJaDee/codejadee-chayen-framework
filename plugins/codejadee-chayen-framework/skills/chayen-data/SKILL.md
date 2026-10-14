@@ -87,6 +87,8 @@ If the request does not fit, stop following this skill and continue normally wit
    | Extract-transform-load pipelines | ETL pipelines |
    | Retention, archival, purge, legal hold, data governance gaps | retention and governance |
    | Restore drill, proving backups | backup and restore |
+   | Full-text search or a search engine index | search and indexing |
+   | Spatial types, distances, containment | geospatial |
 
 4. **Mirror the existing schema and migrations:** naming, key types, audit
    columns, and the tool's file layout.
@@ -167,3 +169,5 @@ Load one engine reference (workflow step 1), the safety checklist when step 2 re
 | [references/etl-pipelines.md](references/etl-pipelines.md) | Building or fixing an extract-transform-load pipeline |
 | [references/retention-and-governance.md](references/retention-and-governance.md) | Retention rules, archival, purge jobs, legal holds, or checking datasets against governance rules |
 | [references/backup-restore.md](references/backup-restore.md) | Planning or running a restore drill |
+| [references/search-and-indexing.md](references/search-and-indexing.md) | Implementing or tuning search and keeping an index in sync |
+| [references/geospatial.md](references/geospatial.md) | Storing or querying spatial data |

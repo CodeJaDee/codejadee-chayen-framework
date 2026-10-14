@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-06-009]
+capabilities: [CAP-06-009, CAP-19-005]
 ---
 # External service integration
 
@@ -11,6 +11,9 @@ that follows the project's existing pattern:
 - credentials from configuration;
 - errors mapped to the project's model;
 - tests that never call the real provider.
+
+Webhooks are the same integration in the other direction: verify the
+signature, reject replays, acknowledge fast, and process idempotently.
 
 ## Inputs
 
@@ -59,6 +62,26 @@ that follows the project's existing pattern:
    `Retry-After`. Tests never hit the real provider or production
    credentials.
 
+### Webhooks (CAP-19-005)
+
+1. **Receiving: verify before parsing.** Check the provider's signature
+   (HMAC over the raw body with the shared secret, or the provider's SDK
+   verifier) with a constant-time comparison, using the raw request body,
+   not re-serialized JSON.
+2. **Reject replays:** check the signed timestamp against a tolerance window
+   and record event IDs; a seen event ID is acknowledged without being
+   processed again.
+3. **Acknowledge quickly:** persist the event (an inbox table) and return
+   2xx, then process asynchronously with the project's job or queue
+   mechanism; processing failures are retried from the inbox, not by
+   failing the delivery.
+4. **Sending:** sign payloads with a per-subscriber secret and a timestamp,
+   include an event ID, retry with backoff on failure, and give
+   subscribers a way to rotate secrets. Validate subscriber URLs against the
+   SSRF guidance in the security skill.
+5. **Test:** valid, tampered, replayed (old timestamp), and duplicate
+   deliveries.
+
 ## Outputs
 
 - A typed client in the project's pattern, with configuration-bound base URL
@@ -66,6 +89,9 @@ that follows the project's existing pattern:
   retry rules.
 - Error mapping and logging that carries the provider request IDs.
 - Tests with fakes for the success, client-error, timeout, and retry paths.
+- For webhooks: a handler with signature and timestamp checks, idempotency,
+  and async processing, and tests for valid, tampered, replayed, and
+  duplicate deliveries.
 
 ## Technology considerations
 
@@ -87,3 +113,5 @@ that follows the project's existing pattern:
 - Tests use fakes, cover the success, 4xx, timeout, and retry paths, and
   pass with the project's command.
 - No new HTTP library or SDK was added without approval.
+- The fixture webhook handler rejects a tampered payload and processes a
+  duplicate event only once, shown by tests.

@@ -91,13 +91,14 @@ If the request does not fit, stop following this skill and continue normally wit
 
    | Request shape | Recipe |
    |---|---|
-   | New API contract, or versioning | API design |
+   | New API contract, versioning, or GraphQL schema evolution | API design |
    | Implement or fix endpoints, request validation, response conformance | API endpoints |
    | Authentication or authorization in application code | authn and authz |
    | Events, queues, consumers, dead letters | messaging |
    | Scheduled or background work | background jobs |
-   | Calling another HTTP service or a third-party API | external integrations |
-   | Safe retries, duplicates, double effects | idempotency and consistency |
+   | Calling another HTTP service or a third-party API, or sending and receiving webhooks | external integrations |
+   | Uploaded or received files, imports | file processing |
+   | Safe retries, duplicates, double effects, payments and ledgers | idempotency and consistency |
 
 3. **Locate the analogous code:** an existing endpoint, job, consumer, or
    client with the same shape. Mirror it.
@@ -175,10 +176,11 @@ Load one technology reference for the detected stack (workflow step 1), and one 
 | [references/node-servers.md](references/node-servers.md) | Nitro, Elysia, Next.js route handlers, or Nuxt `server/` is detected |
 | [references/python-web-apis.md](references/python-web-apis.md) | FastAPI, Django, or Flask is detected |
 | [references/data-access.md](references/data-access.md) | A database, ORM, SQL, or migration is involved |
-| [references/api-design.md](references/api-design.md) | Designing a new API contract, or versioning one |
+| [references/api-design.md](references/api-design.md) | Designing a new API contract, versioning one, or evolving a GraphQL schema |
 | [references/api-endpoints.md](references/api-endpoints.md) | Implementing or fixing endpoints, validating requests, or checking responses against the contract |
 | [references/authn-authz.md](references/authn-authz.md) | Implementing authentication or authorization |
 | [references/messaging.md](references/messaging.md) | Publishing or consuming events, or designing queues |
 | [references/background-jobs.md](references/background-jobs.md) | Scheduled or background work |
-| [references/external-integrations.md](references/external-integrations.md) | Calling an internal or third-party HTTP service |
-| [references/idempotency-and-consistency.md](references/idempotency-and-consistency.md) | Safe retries, duplicate requests or messages, double effects |
+| [references/external-integrations.md](references/external-integrations.md) | Calling an internal or third-party HTTP service, or sending or receiving webhooks |
+| [references/file-processing.md](references/file-processing.md) | Processing uploaded or received files |
+| [references/idempotency-and-consistency.md](references/idempotency-and-consistency.md) | Safe retries, duplicate requests or messages, double effects, or payment and ledger consistency |

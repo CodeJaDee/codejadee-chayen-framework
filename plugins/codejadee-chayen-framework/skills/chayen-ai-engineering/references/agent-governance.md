@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-18-010]
+capabilities: [CAP-18-010, CAP-20-006]
 ---
 # Agent action risk review
 
@@ -9,7 +9,8 @@ network, use credentials) against the provider's permission settings and the
 team's workflows, and recommend allow, ask, or deny rules and sandboxing.
 The review is advisory: enforcement comes from the provider's permission
 settings, sandboxes, and platform controls, and a recommendation made by an
-AI is never an approval.
+AI is never an approval. The same review detects conflicts between agent
+instructions and reports which one wins.
 
 ## Inputs
 
@@ -49,12 +50,32 @@ AI is never an approval.
    permission system, sandboxing, and platform controls enforce anything,
    and the user decides which rules to adopt.
 
+### Policy conflict detection (CAP-20-006)
+
+1. **Collect the instruction sources:** `AGENTS.md`, `CLAUDE.md`,
+   `.github/copilot-instructions.md` and path-specific instruction files,
+   nested instruction files in subfolders, skills, and the user's request.
+2. **Establish precedence per provider** from its current documentation
+   (cited), because providers read different files and order them
+   differently; mark anything unchecked as unverified.
+3. **Find conflicts:** rules that contradict (different test commands,
+   style rules, forbidden actions), duplicates that drifted apart, and rules
+   that only some providers read.
+4. **Report each conflict** with the files and lines, which rule applies for
+   each provider, and the effect.
+5. **Suggest consolidation** (one shared source, provider files that
+   reference it), applied only with the user's approval. Instruction files
+   are never modified without it.
+
 ## Outputs
 
 - An action risk table with recommended allow, ask, or deny rules per
   provider setting.
 - A statement that the guidance is advisory and that enforcement comes from
   provider permissions.
+- For instruction conflicts: a conflict list with the files and lines
+  involved and the precedence that applies, and a suggested consolidation
+  applied only with the user's approval.
 
 ## Technology considerations
 
@@ -73,3 +94,5 @@ AI is never an approval.
   file was edited without the user's request.
 - The output states that it is advisory and does not present any
   recommendation as an approval.
+- The seeded contradiction between two fixture instruction files is found,
+  and no instruction file is modified.
