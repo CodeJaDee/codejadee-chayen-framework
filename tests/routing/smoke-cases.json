@@ -1,0 +1,23 @@
+{
+  "$comment": "Routing smoke subset for providers without an eval tool (Codex, Copilot). Prompts and expectations come from tests/skills/trigger-cases.json by id; 'explicit' cases name a skill directly; 'requiresDisabled' cases run after the plugin is disabled and expect no chayen skill.",
+  "version": 1,
+  "cases": [
+    { "id": "pos-backend-aspnet-bug" },
+    { "id": "pos-frontend-angular-form" },
+    { "id": "pos-testing-unit" },
+    { "id": "neg-weather" },
+    { "id": "uns-unity" },
+    { "id": "uns-swiftui" },
+    {
+      "id": "explicit-security",
+      "category": "explicit",
+      "promptByProvider": {
+        "copilot": "/chayen-security Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";",
+        "codex": "$chayen-security Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";",
+        "claude": "/codejadee-chayen-framework:chayen-security Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";"
+      },
+      "expect": { "any_of": ["chayen-security"] }
+    },
+    { "id": "disabled-backend", "from": "pos-backend-aspnet-bug", "requiresDisabled": true, "category": "disabled", "expect": { "none": true } }
+  ]
+}

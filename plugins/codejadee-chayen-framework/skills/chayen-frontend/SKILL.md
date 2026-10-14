@@ -1,6 +1,6 @@
 ---
 name: chayen-frontend
-description: Build or fix web UI code in Angular, React, Next.js, Vue, Nuxt, or Vite applications, including components, forms and validation, client state, routing, HTTP integration, accessibility, and UI bugs, following the app's existing patterns and framework version. Not for server-only APIs, native mobile or desktop UI, or visual design without code.
+description: Build or fix browser UI code in Angular, React, Next.js, Vue, Nuxt, or Vite web applications, including components, forms and validation, client state, routing, HTTP integration, accessibility, and UI bugs, following the app's existing patterns and framework version. Not for server-only APIs, native or game UI such as SwiftUI, Android, Flutter, WPF, or Unity, or design without code.
 ---
 
 # Web frontend engineering

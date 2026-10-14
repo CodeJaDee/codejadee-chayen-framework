@@ -5,8 +5,16 @@
 // Zero dependencies (Node.js >= 18). Never shipped with the plugin.
 //
 // Usage:
-//   node tools/evals/generate-claude-evals.mjs          # (re)write the cases
-//   node tools/evals/generate-claude-evals.mjs --check  # exit 1 if committed output is stale
+//   node tools/evals/generate-claude-evals.mjs                # (re)write the committed cases
+//   node tools/evals/generate-claude-evals.mjs --check        # exit 1 if committed output is stale
+//   node tools/evals/generate-claude-evals.mjs --stage <dir>  # copy the plugin to <dir>/<plugin>/ and
+//                                                             # place the cases in its evals/ directory
+//
+// Why staging: `claude plugin eval` only loads plugins inside its containment
+// root (the plugin enclosing the eval cases). Cases kept outside the plugin
+// cannot load it (verified in Step 06, resolves U-12), and shipping evals/
+// inside the distributable plugin is forbidden (V-09). Staging builds a
+// throwaway plugin copy for test runs only.
 //
 // Case format reference: https://code.claude.com/docs/en/plugin-evals (prompt.md
 // frontmatter; tool_used grader with tool/input_match/min/max; arm: both).
@@ -18,9 +26,10 @@ const root = path.resolve(import.meta.dirname, "..", "..");
 const casesFile = path.join(root, "tests", "skills", "trigger-cases.json");
 const outDir = path.join(root, "tests", "evals", "claude");
 const check = process.argv.includes("--check");
+const stageIdx = process.argv.indexOf("--stage");
+const stageDir = stageIdx > -1 ? path.resolve(process.argv[stageIdx + 1] ?? "") : null;
 
 const spec = JSON.parse(fs.readFileSync(casesFile, "utf8"));
-const pluginRel = `../../../../plugins/${spec.plugin}`; // from tests/evals/claude/<id>/
 
 const skillAlt = (names) => `(?:${names.join("|")})`;
 const skillRegex = (names) => `'"skill"\\s*:\\s*"(?:[\\w-]+:)?${skillAlt(names)}"'`;
@@ -43,9 +52,8 @@ function render(c) {
     `name: ${c.id}`,
     `description: ${yamlStr(`[${c.category}] generated from tests/skills/trigger-cases.json — do not edit by hand`)}`,
     `tags: [${[c.category, ...skillTag].join(", ")}]`,
-    `plugins: ["${pluginRel}"]`,
     "runs: 3",
-    "max_turns: 4",
+    "max_turns: 8",
     "timeout_seconds: 180",
     "allowed_tools: [Read, Glob, Grep, Skill]",
     `expected_outcome: ${yamlStr(describeExpectation(c))}`,
@@ -89,7 +97,17 @@ function listExisting(dir, base = dir, out = []) {
   return out;
 }
 
-if (check) {
+if (stageDir) {
+  if (!process.argv[stageIdx + 1]) { console.error("--stage requires a directory"); process.exit(2); }
+  const src = path.join(root, "plugins", spec.plugin);
+  const dest = path.join(stageDir, spec.plugin);
+  if (dest.startsWith(path.join(root, "plugins"))) { console.error("refusing to stage inside the shipped plugins/ directory"); process.exit(2); }
+  fs.rmSync(dest, { recursive: true, force: true });
+  fs.cpSync(src, dest, { recursive: true });
+  for (const [rel, body] of expected) { const p = path.join(dest, "evals", rel); fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, body); }
+  console.log(`Staged plugin + ${spec.cases.length} eval cases at ${dest}`);
+  console.log(`Run: claude plugin eval "${dest}" --ablation none --runs 1 --trust-plugin --no-publish --max-cost-usd <usd>`);
+} else if (check) {
   const problems = [];
   for (const [rel, body] of expected) {
     const p = path.join(outDir, rel);

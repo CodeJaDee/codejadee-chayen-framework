@@ -1,0 +1,157 @@
+{
+  "provider": "github-copilot-cli",
+  "cli": "1.0.97 (auto-updated from 1.0.91 during the run)",
+  "environment": "isolated COPILOT_HOME, marketplace-installed plugin, 29 inherited personal skills disabled in the isolated home only",
+  "runs": [
+    {
+      "provider": "copilot",
+      "phase": "enabled",
+      "ranAt": "2026-10-14T08:13:32.877Z",
+      "results": [
+        {
+          "id": "pos-backend-aspnet-bug",
+          "category": "positive",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 20,
+          "loadedSkills": [
+            "chayen-backend"
+          ],
+          "pass": true,
+          "why": "ok"
+        },
+        {
+          "id": "pos-frontend-angular-form",
+          "category": "positive",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 87,
+          "loadedSkills": [
+            "chayen-frontend"
+          ],
+          "pass": true,
+          "why": "ok"
+        },
+        {
+          "id": "pos-testing-unit",
+          "category": "positive",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 25,
+          "loadedSkills": [
+            "chayen-testing"
+          ],
+          "pass": true,
+          "why": "ok"
+        },
+        {
+          "id": "neg-weather",
+          "category": "negative",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 17,
+          "loadedSkills": [],
+          "pass": true,
+          "why": "no chayen skill"
+        },
+        {
+          "id": "uns-unity",
+          "category": "unsupported",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 20,
+          "loadedSkills": [
+            "chayen-implementation"
+          ],
+          "pass": false,
+          "why": "unexpected chayen-implementation"
+        },
+        {
+          "id": "uns-swiftui",
+          "category": "unsupported",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 51,
+          "loadedSkills": [
+            "chayen-frontend"
+          ],
+          "pass": false,
+          "why": "unexpected chayen-frontend"
+        },
+        {
+          "id": "explicit-security",
+          "category": "explicit",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 34,
+          "loadedSkills": [
+            "chayen-security"
+          ],
+          "pass": true,
+          "why": "ok"
+        }
+      ]
+    },
+    {
+      "note": "re-run after frontend description change",
+      "provider": "copilot",
+      "phase": "enabled",
+      "ranAt": "2026-10-14T08:16:42.248Z",
+      "results": [
+        {
+          "id": "pos-frontend-angular-form",
+          "category": "positive",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 53,
+          "loadedSkills": [
+            "chayen-frontend"
+          ],
+          "pass": true,
+          "why": "ok"
+        },
+        {
+          "id": "uns-unity",
+          "category": "unsupported",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 27,
+          "loadedSkills": [
+            "chayen-implementation"
+          ],
+          "pass": false,
+          "why": "unexpected chayen-implementation"
+        },
+        {
+          "id": "uns-swiftui",
+          "category": "unsupported",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 44,
+          "loadedSkills": [
+            "chayen-frontend"
+          ],
+          "pass": false,
+          "why": "unexpected chayen-frontend"
+        }
+      ]
+    },
+    {
+      "provider": "copilot",
+      "phase": "disabled",
+      "ranAt": "2026-10-14T08:34:13.620Z",
+      "results": [
+        {
+          "id": "disabled-backend",
+          "category": "disabled",
+          "phase": "disabled",
+          "exit": 0,
+          "seconds": 30,
+          "loadedSkills": [],
+          "pass": true,
+          "why": "no chayen skill"
+        }
+      ]
+    }
+  ]
+}

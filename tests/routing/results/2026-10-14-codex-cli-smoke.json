@@ -1,0 +1,134 @@
+{
+  "provider": "openai-codex-cli",
+  "cli": "0.160.1",
+  "environment": "real CODEX_HOME (auth), plugin installed from local marketplace copy then removed; personal ~/.agents/skills disabled per run via -c skills.config",
+  "runs": [
+    {
+      "note": "attempt 1 aborted by provider HTTP 503 (no routing data)",
+      "provider503": true
+    },
+    {
+      "provider": "codex",
+      "phase": "enabled",
+      "ranAt": "2026-10-14T08:33:00.465Z",
+      "results": [
+        {
+          "id": "pos-backend-aspnet-bug",
+          "category": "positive",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 38,
+          "loadedSkills": [
+            "chayen-backend"
+          ],
+          "pass": true,
+          "why": "ok"
+        },
+        {
+          "id": "pos-frontend-angular-form",
+          "category": "positive",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 77,
+          "loadedSkills": [
+            "chayen-frontend"
+          ],
+          "pass": true,
+          "why": "ok"
+        },
+        {
+          "id": "pos-testing-unit",
+          "category": "positive",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 30,
+          "loadedSkills": [
+            "chayen-testing"
+          ],
+          "pass": true,
+          "why": "ok"
+        },
+        {
+          "id": "neg-weather",
+          "category": "negative",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 32,
+          "loadedSkills": [],
+          "pass": true,
+          "why": "no chayen skill"
+        },
+        {
+          "id": "uns-unity",
+          "category": "unsupported",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 34,
+          "loadedSkills": [],
+          "pass": true,
+          "why": "no chayen skill"
+        },
+        {
+          "id": "uns-swiftui",
+          "category": "unsupported",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 38,
+          "loadedSkills": [],
+          "pass": true,
+          "why": "no chayen skill"
+        },
+        {
+          "id": "explicit-security",
+          "category": "explicit",
+          "phase": "enabled",
+          "exit": 0,
+          "seconds": 32,
+          "loadedSkills": [
+            "chayen-security"
+          ],
+          "pass": true,
+          "why": "ok"
+        }
+      ]
+    },
+    {
+      "note": "disable via -c plugins.\"<id>\".enabled=false override (did NOT disable)",
+      "provider": "codex",
+      "phase": "disabled",
+      "ranAt": "2026-10-14T08:33:42.057Z",
+      "results": [
+        {
+          "id": "disabled-backend",
+          "category": "disabled",
+          "phase": "disabled",
+          "exit": 0,
+          "seconds": 27,
+          "loadedSkills": [
+            "chayen-backend"
+          ],
+          "pass": false,
+          "why": "unexpected chayen-backend"
+        }
+      ]
+    },
+    {
+      "note": "disable via enabled = false in config.toml (documented mechanism)",
+      "provider": "codex",
+      "phase": "disabled",
+      "ranAt": "2026-10-14T08:35:14.628Z",
+      "results": [
+        {
+          "id": "disabled-backend",
+          "category": "disabled",
+          "phase": "disabled",
+          "exit": 0,
+          "seconds": 42,
+          "loadedSkills": [],
+          "pass": true,
+          "why": "no chayen skill"
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 05 — Pilot entry skills |
+| Last executed step | 06 — Native behaviour proof of concept |
+| Step 06 status | DONE (pending user review) |
 | Step 05 status | DONE (pending user review) |
 | Step 04 status | DONE (pending user review) |
 | Step 01 status | DONE (pending user review) |
@@ -337,3 +338,86 @@ homes).
 | — | **Behavioural trigger evals (positive / negative / ambiguous / unsupported)** | `claude plugin eval tests/evals/claude/<case>/prompt.md …` | **NOT_RUN.** Each run is a billed model call. Awaiting user approval (R-20). U-12 is still unverified. |
 | — | Codex and Copilot trigger behaviour | Manual procedure in `tests/evals/README.md` | NOT_RUN |
 | — | Reference-load, gate, and convention-conflict behaviour | — | NOT_RUN |
+
+---
+
+## Step 06 — Native behaviour proof of concept
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Report:** [POC_REPORT.md](POC_REPORT.md)
+
+### Work performed
+
+- Tested Claude Code CLI 2.1.270, Codex CLI 0.160.1, and Copilot CLI
+  (1.0.91, which auto-updated to 1.0.97 during the run; isolated runs also
+  used the bundled 1.0.68).
+- The VS Code surfaces could not be automated. Manual procedures were
+  written instead.
+- The Codex IDE extension is documented as UNSUPPORTED.
+- The user's Step 06 instruction to test triggering was taken as approval of
+  billed model runs. Spend was bounded with `--max-cost-usd`, at about $7.30
+  on Claude, about 12 Copilot requests, and about 11 Codex runs.
+- **Fixed during the step:**
+  - eval staging (U-12, D-018);
+  - eval `max_turns` raised to 8;
+  - `chayen-frontend` description (D-019).
+- **Reverted during the step:** an attempted `chayen-implementation`
+  description change.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `tests/provider-compatibility/README.md`, `run-lifecycle.sh`, `claude-code-vscode.md`, `copilot-vscode.md`, `codex-vscode.md`, `results/2026-10-14-step06.md` |
+| Created | `tests/routing/README.md`, `smoke-cases.json`, `run-smoke.mjs`, `results/2026-10-14-claude-code-eval.json`, `results/2026-10-14-copilot-cli-smoke.json`, `results/2026-10-14-codex-cli-smoke.json` |
+| Created | `docs/chayen/POC_REPORT.md` |
+| Modified | `tools/evals/generate-claude-evals.mjs` (`--stage` mode, no `plugins:` field, `max_turns` 8) → regenerated `tests/evals/claude/*/prompt.md` (48) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` (description, D-019) |
+| Modified then reverted | `plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md` (description restored to its Step 05 text) |
+| Modified | `tests/evals/README.md` |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (GOV-14, REQ/PRV/EX/ARC evidence), `DECISIONS.md` (D-018..D-020), `ISSUES.md` (R-23..R-26), `IMPLEMENTATION_PLAN.md`, `PROVIDER_COMPATIBILITY_MATRIX.md` (§8) |
+| Deleted | None in the repository. In the user's environment, the empty `~/.codex/plugins/cache/codejadee/` directory left by `codex plugin remove` was deleted with `rmdir`. |
+
+### Environment side effects (disclosed)
+
+- **Copilot CLI auto-updated from 1.0.91 to 1.0.97** (`%LOCALAPPDATA%\copilot\pkg`)
+  during runs with auto-update enabled.
+- **Codex.** The plugin and marketplace were temporarily added to the real
+  `~/.codex` (`config.toml` plus the plugin cache) for the routing tests,
+  then removed with the native commands. The final fingerprint is identical
+  (config hash plus cache listing). The `config.toml` line
+  `enabled = true → false` was edited inside the section created by the test,
+  and that section was removed afterwards.
+- **Real configs.** `~/.claude/*` (3 files) and `~/.copilot/config.json`
+  have identical hashes before and after all tests.
+- **Personal skills.** `~/.agents/skills` was never modified. They were
+  disabled only in the isolated Copilot home, or per Codex run with `-c`.
+
+### Tests
+
+| # | Test | Command (abridged) | Result |
+|---|---|---|---|
+| T1 | Native lifecycle × 3 CLIs, plus app-code-unchanged check | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc` | **PASS 24/24.** Real configs 5/5 unchanged. |
+| T2 | Claude eval with cases outside the plugin | `claude plugin eval tests/evals/claude/.../prompt.md …` | **FAIL:** "outside the containment root". Fixed with staging (D-018). |
+| T3 | Claude eval, 48 cases, 1 run, staged | `claude plugin eval . --ablation none --runs 1 -j 4 … --max-cost-usd 8` | 35/48: positive 20/27, negative 8/8, unsupported 7/7, ambiguous 0/6. $3.76. |
+| T4 | Claude re-run of 13 failures (`max_turns` 8, `--keep-temp`) | per-case `--case <id>` | 4/13 now pass (testing ×3, amb-slow-and-injection). The rest: no skill loaded (exploration, direct answers, or the built-in `security-review`). |
+| T5 | Claude after the frontend description change | 10 cases | Unity/SwiftUI silent, frontend 4/4, implementation refactor PASS. soft-delete, multicurrency, and csv FAIL. The implementation edit was reverted: soft-delete PASS, multicurrency FAIL (variance). |
+| T6 | Claude explicit invocation | `claude -p "/codejadee-chayen-framework:chayen-security …" --plugin-dir …` | PASS: the security report format was used |
+| T7 | Claude disabled | `--settings '{"enabledPlugins":{"codejadee-chayen-framework@inline":false}}'` | PASS: 0 Chayen skills in session init, and no invocation |
+| T8 | Claude realistic environment (user plugins loaded) | the backend prompt | No Chayen skill (observation, 1 run) |
+| T9 | Copilot lifecycle on 1.0.91 (isolated) | marketplace add/install/disable/enable | PASS. Enable/disable work with `@codejadee` (U-14 resolved). |
+| T10 | Copilot isolated authentication | `GH_TOKEN` (classic PAT) | FAIL: rejected by Copilot. Login metadata copied instead: PASS. |
+| T11 | Copilot routing, clean isolated home | `node tests/routing/run-smoke.mjs --provider copilot … --phase enabled` | 5/7. Unity → implementation, SwiftUI → frontend (FAIL). Re-run after the frontend fix: same. |
+| T12 | Copilot disabled | `copilot plugin disable …@codejadee`, then `--phase disabled` | PASS 1/1. 0 skills listed. |
+| T13 | Copilot realistic environment | `--plugin-dir` with the real home | `kiyo-bug-fix` chosen instead of `chayen-backend` (observation) |
+| T14 | Codex discovery | `codex exec` "list skills" with personal skills disabled per run | PASS: 6 `codejadee-chayen-framework:chayen-*` listed |
+| T15 | Codex routing | `node tests/routing/run-smoke.mjs --provider codex … -- -c "skills.config=[…]"` | Attempt 1 FAIL (HTTP 503 provider outage, no data). Attempt 2 **PASS 7/7**. |
+| T16 | Codex disabled via `-c` override | `-c 'plugins."…".enabled=false'` | FAIL: the skill was still loaded (the override is ineffective) |
+| T17 | Codex disabled via `config.toml` | `enabled = false` | PASS 1/1 |
+| T18 | Codex real-home restoration | `codex plugin remove` + `marketplace remove` + hash compare | PASS: `config.toml` hash identical. An empty cache dir was left behind and removed. |
+| T19 | Test 9 (app code unchanged), first attempt | fixture under the long scratch path | INVALID: git "Filename too long" broke the setup; installs ran with an empty path and failed harmlessly. Redone with `core.longpaths`: PASS (identical tree hash, `git status` clean). |
+| T20 | Static validation after changes | `node tools/validate/validate-package.mjs`; `generate-claude-evals.mjs --check` | PASS: 0 errors, 0 warnings. Cases up to date. |
+| — | Claude Code VS Code, Copilot VS Code | Manual procedures | NOT TESTED |
+| — | Remote GitHub marketplace install | Needs a push | NOT TESTED |
+| — | Statistical baseline (≥3 runs, no-plugin arm) | — | NOT TESTED |

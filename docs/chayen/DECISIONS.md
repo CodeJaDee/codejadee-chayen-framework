@@ -203,6 +203,40 @@ Decision statuses:
 - **Amends:** ARCHITECTURE C-04, and the ≤280 target in
   PLUGIN_PACKAGE_DESIGN SK-03.
 
+### D-018 — Staged Claude evals
+- **Status:** ACCEPTED (forced by provider behaviour, Step 06)
+- **Context:** `claude plugin eval` refuses plugins outside its containment
+  root. U-12 was resolved negatively. Shipping `evals/` in the plugin is
+  forbidden by V-09.
+- **Decision:**
+  - The committed cases in `tests/evals/claude/` carry no `plugins:` field.
+  - Runs use `generate-claude-evals.mjs --stage <dir>`, which builds a
+    throwaway plugin copy with `evals/`.
+  - The eval turn cap is 8.
+
+### D-019 — Frontend description names native and game UI exclusions
+- **Status:** ACCEPTED (Step 06 fix)
+- **Decision:** The `chayen-frontend` description now says "browser UI … Not
+  for … native or game UI such as SwiftUI, Android, Flutter, WPF, or Unity".
+- **Effect:**
+  - Claude Code: 4/4 frontend positives, and Unity/SwiftUI silent.
+  - Copilot: still over-activates (POC_REPORT §4).
+- **Also:** a similar edit to `chayen-implementation` was tried and
+  **reverted** (no measured benefit).
+
+### D-020 — Provider-specific test procedures
+- **Status:** ACCEPTED (Step 06)
+- **Decision:**
+  - **Lifecycle tests** run only in isolated config homes
+    (`run-lifecycle.sh`).
+  - **Copilot routing** uses an isolated home with copied login metadata
+    (no tokens), with inherited skills disabled only there.
+  - **Codex routing** installs into the real `CODEX_HOME`, because
+    authentication is not portable, and personal skills are disabled per
+    run with `-c`. The plugin is removed afterwards, and the config hash is
+    verified.
+  - Never copy `auth.json`, and never put classic PATs into Copilot.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

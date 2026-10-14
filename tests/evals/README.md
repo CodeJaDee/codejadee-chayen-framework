@@ -31,24 +31,30 @@ node tools/evals/generate-claude-evals.mjs          # regenerate after editing t
 node tools/evals/generate-claude-evals.mjs --check  # CI: fail if generated cases are stale
 ```
 
-Each case loads the plugin through `plugins: ["../../../../plugins/codejadee-chayen-framework"]`
-and checks `Skill` tool calls with `tool_used` graders.
+Each case checks `Skill` tool calls with `tool_used` graders.
 
-Run one case, or the cheapest full smoke run (single arm, one run per case):
+### Cases must be staged
+
+`claude plugin eval` only loads plugins inside its **containment root**.
+Cases kept in `tests/evals/claude/` cannot load `plugins/…`. This was
+verified in Step 06 (U-12 resolved: not supported). Shipping `evals/` inside
+the plugin is forbidden (V-09). So stage a throwaway copy first:
 
 ```bash
-claude plugin eval tests/evals/claude/pos-backend-aspnet-bug/prompt.md --ablation none --runs 1 --no-publish
-for f in tests/evals/claude/*/prompt.md; do claude plugin eval "$f" --ablation none --runs 1 --no-publish --json "results/$(basename $(dirname $f)).json"; done
+node tools/evals/generate-claude-evals.mjs --stage /tmp/chayen-stage
+cd /tmp/chayen-stage/codejadee-chayen-framework
+claude plugin eval . --case pos-backend-aspnet-bug --ablation none --runs 1 --trust-plugin --no-publish   # one case
+claude plugin eval . --ablation none --runs 1 -j 4 --trust-plugin --no-publish --max-cost-usd 8 --json results.json  # all 48
 ```
 
-> **Cost.** Every run is a real model call billed to the runner's account.
-> 48 cases × 3 runs × 2 arms is about 290 agent runs. Use `--runs 1
-> --ablation none` (48 runs) for smoke checks, and `--max-cost-usd` as a
-> ceiling.
+> **Cost.** Every run is a real model call billed to the runner's account,
+> at about $0.05–0.15 per run (Step 06).
+> - 48 cases × 3 runs × 2 arms is about 290 agent runs.
+> - Use `--runs 1 --ablation none` (48 runs, about $4) for smoke checks.
+> - Always set `--max-cost-usd`.
 
-> **Unverified (U-12).** Running cases that live outside the plugin
-> directory relies on the documented `plugins:` field and on file targets.
-> This had not been executed as of Step 05.
+Step 06 results and analysis are in `tests/routing/results/` and
+`docs/chayen/POC_REPORT.md`.
 
 ## Codex and Copilot (manual procedure until an adapter exists)
 

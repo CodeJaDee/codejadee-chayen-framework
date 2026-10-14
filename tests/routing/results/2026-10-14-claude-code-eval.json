@@ -1,0 +1,1141 @@
+{
+  "provider": "claude-code",
+  "cli": "2.1.270",
+  "tool": "claude plugin eval (staged plugin copy, --ablation none --runs 1)",
+  "date": "2026-10-14",
+  "run1Totals": {
+    "costUsd": 3.76,
+    "passRate": 0.7291666666666666,
+    "cases": 48
+  },
+  "totalCostUsdAllRuns": 6.11,
+  "rows": [
+    {
+      "run": "run1-max_turns4",
+      "case": "amb-form-to-endpoint",
+      "pass": false,
+      "costUsd": 0.1165,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "amb-pr-review",
+      "pass": false,
+      "costUsd": 0.1301,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "amb-remember-me",
+      "pass": false,
+      "costUsd": 0.133,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "amb-slow-and-injection",
+      "pass": false,
+      "costUsd": 0.0549,
+      "turns": 3,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "amb-tests-then-fix",
+      "pass": false,
+      "costUsd": 0.0634,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "amb-where-endpoint",
+      "pass": false,
+      "costUsd": 0.1076,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-git-concept",
+      "pass": true,
+      "costUsd": 0.0423,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-hamlet",
+      "pass": true,
+      "costUsd": 0.0423,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-laptop",
+      "pass": true,
+      "costUsd": 0.0431,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-math",
+      "pass": true,
+      "costUsd": 0.0405,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-poem",
+      "pass": true,
+      "costUsd": 0.0408,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-python-concept",
+      "pass": true,
+      "costUsd": 0.0428,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-translate",
+      "pass": true,
+      "costUsd": 0.0409,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "neg-weather",
+      "pass": true,
+      "costUsd": 0.0423,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-backend-aspnet-bug",
+      "pass": true,
+      "costUsd": 0.0725,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-backend-efcore-paging",
+      "pass": true,
+      "costUsd": 0.1269,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-backend-elysia-route",
+      "pass": true,
+      "costUsd": 0.0816,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-backend-fastapi-validation",
+      "pass": true,
+      "costUsd": 0.0812,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-backend-migration-index",
+      "pass": true,
+      "costUsd": 0.0846,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-frontend-angular-form",
+      "pass": true,
+      "costUsd": 0.0731,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-frontend-nuxt-page",
+      "pass": true,
+      "costUsd": 0.0777,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-frontend-react-rerender",
+      "pass": true,
+      "costUsd": 0.0729,
+      "turns": 6,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-frontend-vue-a11y",
+      "pass": true,
+      "costUsd": 0.0815,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-implementation-csv-export",
+      "pass": false,
+      "costUsd": 0.1269,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-implementation-multicurrency",
+      "pass": true,
+      "costUsd": 0.1288,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-implementation-refactor",
+      "pass": true,
+      "costUsd": 0.1353,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-implementation-soft-delete",
+      "pass": true,
+      "costUsd": 0.077,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-repository-commands",
+      "pass": false,
+      "costUsd": 0.0633,
+      "turns": 6,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-repository-conventions",
+      "pass": true,
+      "costUsd": 0.0697,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-repository-overview",
+      "pass": true,
+      "costUsd": 0.0695,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-repository-where-belongs",
+      "pass": true,
+      "costUsd": 0.0726,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-security-angular-xss",
+      "pass": true,
+      "costUsd": 0.0962,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-security-controller-review",
+      "pass": false,
+      "costUsd": 0.0408,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-security-cors-auth",
+      "pass": true,
+      "costUsd": 0.0737,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-security-leaked-key",
+      "pass": false,
+      "costUsd": 0.046,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-security-sql-injection",
+      "pass": true,
+      "costUsd": 0.073,
+      "turns": 6,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-testing-flaky",
+      "pass": false,
+      "costUsd": 0.109,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-testing-integration",
+      "pass": true,
+      "costUsd": 0.1428,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-testing-playwright",
+      "pass": false,
+      "costUsd": 0.0571,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-testing-pytest",
+      "pass": false,
+      "costUsd": 0.0552,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "pos-testing-unit",
+      "pass": true,
+      "costUsd": 0.0705,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "uns-cobol",
+      "pass": true,
+      "costUsd": 0.1722,
+      "turns": 3,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "uns-helm",
+      "pass": true,
+      "costUsd": 0.0595,
+      "turns": 6,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "uns-rust-embedded",
+      "pass": true,
+      "costUsd": 0.0768,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "uns-spring-boot",
+      "pass": true,
+      "costUsd": 0.092,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "uns-swiftui",
+      "pass": true,
+      "costUsd": 0.0675,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "uns-unity",
+      "pass": true,
+      "costUsd": 0.0527,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "run1-max_turns4",
+      "case": "uns-vba",
+      "pass": true,
+      "costUsd": 0.0443,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "amb-form-to-endpoint",
+      "pass": false,
+      "costUsd": 0.1178,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "amb-pr-review",
+      "pass": false,
+      "costUsd": 0.0764,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "amb-remember-me",
+      "pass": false,
+      "costUsd": 0.0808,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "amb-slow-and-injection",
+      "pass": true,
+      "costUsd": 0.1123,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "amb-tests-then-fix",
+      "pass": false,
+      "costUsd": 0.1013,
+      "turns": 5,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "amb-where-endpoint",
+      "pass": false,
+      "costUsd": 0.1046,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "pos-implementation-csv-export",
+      "pass": false,
+      "costUsd": 0.1036,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "pos-repository-commands",
+      "pass": false,
+      "costUsd": 0.1399,
+      "turns": 6,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "pos-security-controller-review",
+      "pass": false,
+      "costUsd": 0.0407,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "pos-security-leaked-key",
+      "pass": false,
+      "costUsd": 0.0448,
+      "turns": 1,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "pos-testing-flaky",
+      "pass": true,
+      "costUsd": 0.0909,
+      "turns": 11,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "pos-testing-playwright",
+      "pass": true,
+      "costUsd": 0.0805,
+      "turns": 6,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "rerun-max_turns8",
+      "case": "pos-testing-pytest",
+      "pass": true,
+      "costUsd": 0.0851,
+      "turns": 8,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-frontend-angular-form",
+      "pass": true,
+      "costUsd": 0.1887,
+      "turns": 16,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 2x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-frontend-nuxt-page",
+      "pass": true,
+      "costUsd": 0.0748,
+      "turns": 6,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-frontend-react-rerender",
+      "pass": true,
+      "costUsd": 0.094,
+      "turns": 9,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-frontend-vue-a11y",
+      "pass": true,
+      "costUsd": 0.0947,
+      "turns": 9,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        },
+        {
+          "name": "forbidden-skills",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-implementation-csv-export",
+      "pass": false,
+      "costUsd": 0.1203,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-implementation-multicurrency",
+      "pass": false,
+      "costUsd": 0.0589,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-implementation-reverted",
+      "case": "pos-implementation-multicurrency",
+      "pass": false,
+      "costUsd": 0.1055,
+      "turns": 10,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-implementation-refactor",
+      "pass": true,
+      "costUsd": 0.1175,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "pos-implementation-soft-delete",
+      "pass": false,
+      "costUsd": 0.1187,
+      "turns": 2,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": false,
+          "explanation": "Skill called 0x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-implementation-reverted",
+      "case": "pos-implementation-soft-delete",
+      "pass": true,
+      "costUsd": 0.0798,
+      "turns": 7,
+      "graders": [
+        {
+          "name": "expected-skill",
+          "pass": true,
+          "explanation": "Skill called 1x (expected 1..∞)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "uns-swiftui",
+      "pass": true,
+      "costUsd": 0.0677,
+      "turns": 4,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    },
+    {
+      "run": "v2-after-description-change",
+      "case": "uns-unity",
+      "pass": true,
+      "costUsd": 0.0489,
+      "turns": 3,
+      "graders": [
+        {
+          "name": "no-chayen-skill",
+          "pass": true,
+          "explanation": "Skill called 0x (expected 0..0)"
+        }
+      ]
+    }
+  ]
+}

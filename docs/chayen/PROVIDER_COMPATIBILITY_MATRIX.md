@@ -102,3 +102,26 @@ These were **executed** tests against the `0.1.0-dev` package.
 | VS Code Copilot Chat | NOT_RUN | No scripted interface used. U-04 and U-09 remain open. |
 | Claude Code VS Code extension | NOT_RUN | It shares settings with the CLI (S5), but this was not tested. |
 | Codex IDE extension | UNSUPPORTED (S13) | — |
+
+## 8. Step 06 observations (2026-10-14)
+
+Full details are in [POC_REPORT.md](POC_REPORT.md) and
+`tests/provider-compatibility/results/2026-10-14-step06.md`.
+
+| Surface | Lifecycle (native) | Discovery | Routing (single runs) | Explicit invocation | Disable removes behaviour |
+|---|---|---|---|---|---|
+| Claude Code CLI 2.1.270 | AUTOMATED VERIFIED | AUTOMATED VERIFIED (6) | Partial: positives 20/27 run 1; negatives 8/8; unsupported 7/7 | AUTOMATED VERIFIED | AUTOMATED VERIFIED |
+| Claude Code VS Code | NOT TESTED | NOT TESTED | NOT TESTED | NOT TESTED | NOT TESTED |
+| Codex CLI 0.160.1 | AUTOMATED VERIFIED | AUTOMATED VERIFIED (6) | 7/7 | AUTOMATED VERIFIED (`$skill`) | AUTOMATED VERIFIED (`config.toml` only) |
+| Codex IDE extension | UNSUPPORTED (S13) | — | — | — | — |
+| Copilot CLI 1.0.91–1.0.97 | AUTOMATED VERIFIED, including enable/disable (missing on 1.0.68) | AUTOMATED VERIFIED (6) | 5/7: Unity and SwiftUI over-activate | AUTOMATED VERIFIED (`/skill`) | AUTOMATED VERIFIED |
+| Copilot VS Code | NOT TESTED | NOT TESTED | NOT TESTED | NOT TESTED | NOT TESTED |
+
+**UNVERIFIED items updated:**
+
+| ID | Status |
+|---|---|
+| U-05 | Resolved for the Copilot CLI: plugin skills are auto-invoked. Still open for VS Code. |
+| U-12 | Resolved, **negatively**: cases outside the plugin cannot load it (D-018). |
+| U-14 | Resolved: Copilot enable/disable works on 1.0.91 and later with `<plugin>@<marketplace>`. |
+| U-03 | Codex disable via `-c` override does not work. Use `config.toml`. |
