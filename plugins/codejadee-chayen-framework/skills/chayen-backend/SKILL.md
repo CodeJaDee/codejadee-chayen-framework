@@ -29,6 +29,7 @@ Requests that fit:
 | Changes spanning the database, the API, and the UI | The chayen-implementation skill |
 | Dependency upgrades, feature flags, or refactors not specific to an endpoint | The chayen-implementation skill |
 | Only writing or fixing tests | The chayen-testing skill |
+| Schema design, query or index tuning, data migrations, backfills, ETL, retention, or restore drills | The chayen-data skill |
 | A security review | The chayen-security skill |
 | Choosing a broker, splitting services, or tenancy design | The chayen-architecture skill |
 | Infrastructure-only work: Kubernetes, Terraform, cloud console settings, CI pipelines | — |

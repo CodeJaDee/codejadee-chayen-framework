@@ -499,6 +499,53 @@ Decision statuses:
     stacks and REQ-05 acceptance, and the D08 recipes gain native
     technology rows or a separate skill.
 
+### D-033 — Domains 09 and 10: new `chayen-data` skill; extend the testing pilot
+- **Status:** APPROVED for the new skill (the user chose "New chayen-data"
+  when asked in Step 13). The rest is PROPOSED (executed in Step 13).
+- **Context:** D09 was mapped to the planned `chayen-data` entry skill, and
+  Q-10 and R-27 required a user decision before any new entry skill. The
+  agent offered three options: a new `chayen-data` skill (recommended),
+  extending `chayen-backend` (as D-029 and D-031 did), or a new skill with a
+  higher L0 cap.
+- **Decision:**
+  - **`chayen-data` is created** as the ninth entry skill (170 lines). It
+    covers relational data on SQL Server and PostgreSQL, through the
+    project's migration tool and data access. It routes to one engine
+    reference (`sql-server.md`, `postgresql.md`), a `database-safety.md`
+    checklist when a command targets a non-local database or the change is
+    destructive, and one of 8 recipes.
+  - **Database rules in the skill:** the engine and version are identified
+    before any SQL; production is read-only by default; destructive
+    operations need approval with an impact count, a verified restore point,
+    and a rollback path; changes follow expand, migrate, contract; and the
+    skill states that it is advisory.
+  - **Out of scope:** MySQL, Oracle, SQLite as a production store, NoSQL
+    stores, analytics warehouses, and database provisioning.
+  - **`chayen-backend`** keeps endpoint-level data access and its
+    `data-access.md` reference. Its "When not to use" table now sends
+    schema, query, migration, backfill, ETL, retention, and restore work to
+    `chayen-data`. Its description is unchanged.
+  - **D10 extends `chayen-testing`,** which becomes a router with 7 recipes.
+    Its description now names contract, property-based, mutation, and fuzz
+    testing, test data, and coverage gaps.
+  - **Fuzz boundary (R-28):** fuzz testing of the user's own code is in
+    scope. Fuzzing systems the user does not own stays out.
+  - **Test result vocabulary:** the testing skill reports PASSED, FAILED,
+    SKIPPED, BLOCKED, NOT_RUN, and UNKNOWN for the user's tests. This
+    repository's own governance keeps the BUILD_CONTRACT §5.2 vocabulary.
+  - **Trigger case change:** `pos-backend-migration-index` (an EF Core index
+    migration) is now also a `chayen-data` trigger (CAP-09-002 lists
+    `chayen-backend` as secondary). It moved from positive to ambiguous,
+    accepting either skill, and keeps its id.
+- **Consequences:**
+  - L0 is 3,794 / 4,000 with 9 skills. The 206 characters left cannot hold
+    another useful description, so the remaining 5 planned skills must be
+    merged into existing ones (Option C), or the cap changed, before any
+    further skill is added (Q-10, R-27).
+  - CAP-18-006 (data governance), and the D19 search and geospatial
+    records, now map to an existing entry skill but stay PLANNED.
+  - Description trigger effects are NOT_RUN (R-32).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

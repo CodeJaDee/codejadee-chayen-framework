@@ -1,0 +1,125 @@
+---
+kind: recipe
+capabilities: [CAP-09-002, CAP-09-007, CAP-09-008]
+---
+# Schema migrations, data migrations, and backfills
+
+Change schemas with the project's migration tool so that each step is
+compatible with the running application, reviewed as SQL, reversible where
+possible, and approved before it reaches a shared database. Move and
+backfill data in bounded, idempotent batches with reconciliation and a
+rollback path. All three follow one sequence: expand, migrate, contract.
+
+## Inputs
+
+- The model or data change, the migration tool in use, and the migration
+  history.
+- Table sizes, write load, and the deployment model (rolling, blue-green,
+  downtime window).
+- For data moves: source and target schemas, volumes, transformation
+  rules, and downtime tolerance.
+
+## Procedure
+
+### Schema migration (CAP-09-002)
+
+1. **Generate with the project's tool** (for example `dotnet ef migrations
+   add`, `alembic revision --autogenerate`, `prisma migrate dev
+   --create-only`, `python manage.py makemigrations`). Hand-write SQL only
+   where the project does. Never edit a migration that may already have
+   been applied elsewhere.
+2. **Review the generated SQL** (`dotnet ef migrations script`, `alembic
+   upgrade --sql`, the Prisma SQL file, `sqlmigrate`) against this table:
+
+   | Operation | Risk | Safer pattern |
+   |---|---|---|
+   | Add a `NOT NULL` column without a default | Fails on existing rows, or rewrites the table | Add it nullable, backfill, then add the constraint |
+   | Rename a column or table | Breaks the running application version | Add the new column, write both, backfill, switch reads, drop the old one later |
+   | Change a column type | Table rewrite, possible data loss | New column, backfill, switch, drop |
+   | Drop a column or table | Irreversible data loss | Contract phase only, after no code reads it, with a verified backup and approval |
+   | Index on a large table | Blocks writes during the build | `CREATE INDEX CONCURRENTLY` (PostgreSQL) or `ONLINE = ON` (SQL Server editions that support it) |
+   | Foreign key or check on existing data | Long validation lock, failure on bad rows | PostgreSQL `NOT VALID` then `VALIDATE`. SQL Server: clean up, then add `WITH CHECK`. |
+
+3. **Check compatibility:** the migrated schema must work with both the
+   current and the new application version during the rollout.
+4. **Write the down path,** or state why none exists (dropped data cannot
+   come back without a restore) and give the restore steps instead.
+5. **Assess locking:** the lock each statement takes, the expected duration
+   from the table size, and a `lock_timeout` or maintenance window.
+6. **Verify locally:** apply, roll back, and apply again on a local or
+   disposable database, then run the tests.
+7. **Ask for approval** before any shared environment, with the migration
+   name, the SQL, the risk notes, the locking estimate, the rollback path,
+   and the target environment.
+
+### Data migration (CAP-09-007)
+
+1. **Map fields** from source to target: transformations, defaults,
+   lookups, and what happens to rows that fail validation.
+2. **Batch by key range** (keyset pagination on the source key), with a
+   bounded size and a commit per batch. Record progress in a checkpoint
+   table so a rerun resumes.
+3. **Make it idempotent:** upsert keyed by the source identifier
+   (`INSERT ... ON CONFLICT`, or `MERGE` or update-then-insert with
+   locking on SQL Server), so rerunning a batch never duplicates rows.
+4. **Never drop rows silently.** Write rejected rows, with the reason, to a
+   rejects table.
+5. **Reconcile:** row counts per source and target (plus rejects), sums or
+   checksums of key numeric columns, and a sample comparison of mapped
+   rows.
+6. **Rehearse** on a restored copy or a disposable database of realistic
+   size, and time it.
+7. **Keep a rollback path:** leave the source untouched until sign-off, and
+   have a reverse script or a restore point. Ask for approval before
+   running against a shared or production database.
+
+### Backfill (CAP-09-008)
+
+1. **Order the deploys:** expand (add the nullable column, and deploy code
+   that writes it for new rows), backfill existing rows, verify, then
+   contract (add the constraint, switch reads, drop what is obsolete).
+2. **Bound and throttle:** batches of about 1,000 to 5,000 rows by primary
+   key, a pause between batches, and pause conditions (replication lag,
+   lock waits, error rate, CPU). Keep SQL Server batches below the lock
+   escalation threshold.
+3. **Run it outside the schema migration,** as a script or job that resumes
+   from a watermark and is safe to rerun.
+4. **Track progress** with a remaining-rows query and per-batch logs.
+5. **Verify** with a query that must return zero, for example rows where
+   the new column is null, or differs from the value derived from the old
+   columns.
+
+## Outputs
+
+- A migration generated by the project's tool, the reviewed SQL, and a down
+  path or the stated reason why none exists, with locking and downtime
+  notes and the approval request.
+- Batched data migration scripts that can be rerun safely, with
+  reconciliation queries (counts, checksums) and rollback steps.
+- A backfill plan: batch size, throttling and pause conditions, deploy
+  ordering (expand, backfill, contract), progress tracking, and the
+  verification query.
+
+## Technology considerations
+
+| Stack | Consideration |
+|---|---|
+| EF Core | `migrations add`, `migrations script --idempotent` for review and deployment, `migrationBuilder.Sql` for data steps. A migration bundle (`dotnet ef migrations bundle`) for controlled deployment. |
+| Flyway, DbUp, Liquibase | Versioned SQL files that are never edited after release. Flyway undo migrations are separate scripts and need a paid edition: check which edition the project uses, and otherwise write a forward fix. |
+| Alembic (SQLAlchemy) | `--autogenerate` misses some changes (for example renames, server defaults): review it. Use `op.execute` for data steps, and `op.batch_alter_table` only for SQLite. |
+| Django | `makemigrations`, `sqlmigrate` for review, `RunPython` with a reverse function, `atomic = False` for concurrent index creation on PostgreSQL. |
+| Prisma or Drizzle | `prisma migrate dev --create-only` to edit before applying, and `migrate deploy` in shared environments. Drizzle Kit `generate` and `migrate`. Never `db push` against shared databases. |
+| SQL Server | `ONLINE = ON` where supported, batches below lock escalation, `MERGE` only with `HOLDLOCK`. |
+| PostgreSQL | `lock_timeout`, `CONCURRENTLY` outside a transaction, `NOT VALID` constraints, and `ANALYZE` after large changes. |
+
+## Verification
+
+- The migration was produced by the tool's command and its SQL is shown,
+  and apply, roll back, and re-apply passed on a local or disposable
+  database, or each is NOT_RUN with the command.
+- Running the data migration twice on the fixture gives the same row
+  counts, and the reconciliation queries match.
+- The backfill plan orders deploys so old and new code both work, and every
+  batch is bounded.
+- Nothing was applied to a shared or production database without a
+  recorded approval naming the environment.

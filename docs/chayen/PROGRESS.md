@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 12 — Domains 07 and 08 capabilities |
+| Last executed step | 13 — Domains 09 and 10 capabilities |
+| Step 13 status | DONE (pending user review; D09 12/12 and D10 14/14 IMPLEMENTED, not VERIFIED; chayen-data created with user approval, D-033) |
 | Step 12 status | DONE (pending user review; D07 10/10 and D08 8/8 IMPLEMENTED, not VERIFIED; D08 scope D-032 PROPOSED) |
 | Step 11 status | DONE (pending user review; D05 12/12 and D06 10/10 IMPLEMENTED, not VERIFIED) |
 | Step 10 status | DONE (pending user review; D03 10/10 and D04 8/8 IMPLEMENTED, not VERIFIED) |
@@ -17,7 +18,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only), and, before authoring more entry skills, Q-10 and R-27 (entry-skill set and L0 budget). |
+| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 3,794 / 4,000; the 5 planned skills must merge, or the cap must change). |
 | Commits made by agent | None |
 
 ---
@@ -1025,3 +1026,141 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Recipe behaviour evals (44 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Browser, device, or platform builds (Capacitor, Electron, Tauri) | — | NOT_RUN: no fixture apps; the recipes require these to be reported per run |
 | — | Human review of the 11 new recipes and 2 references | — | Pending (R-33, R-34) |
+
+---
+
+## Step 13 — Domains 09 and 10 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D09 Database and Data **12/12 IMPLEMENTED** in the new
+  `chayen-data` skill, and D10 Testing and QA **14/14 IMPLEMENTED** in
+  `chayen-testing`. None is VERIFIED. The catalog total is 103
+  IMPLEMENTED, 10 IN_PROGRESS, and 93 PLANNED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-09-001..012
+  and CAP-10-001..014 with groups CG-29..CG-36, the `chayen-testing` skill
+  and its three stack references, `chayen-backend/references/data-access.md`,
+  and Q-10 and R-27.
+- **User decision (Q-10).** D09 mapped to the planned `chayen-data` skill,
+  and Q-10 and R-27 required approval before any new entry skill. The agent
+  asked, offering three options. The user chose "New chayen-data"
+  (recommended). Recorded as D-033, APPROVED for the new skill.
+- **`chayen-data`** (new, 170 lines). The description is 414 characters.
+  - Principles: know the engine before writing SQL; production is
+    read-only by default; destructive steps need explicit approval; expand,
+    migrate, contract; the database enforces invariants.
+  - Workflow: identify the engine (one engine reference), classify the
+    target environment (the safety checklist when a command targets a
+    non-local database or the change is destructive), then one of 8
+    recipes.
+  - References:
+    - `sql-server.md` and `postgresql.md` (technology): version and
+      edition checks, types, locking and online changes, plans, backups,
+      commands, and pitfalls;
+    - `database-safety.md` (checklist): environment classes, read-only
+      practice, the destructive operation gate (statements, impact count,
+      verified restore point, rollback path, window), and data handling;
+    - eight recipes:
+      - `data-modeling.md` (CAP-09-001);
+      - `schema-and-data-migration.md` (002, 007, 008): risky-operation
+        table, compatibility, down path, batched idempotent data moves with
+        reconciliation, and backfill ordering;
+      - `query-performance.md` (003, 004);
+      - `transactions.md` (005): control per invariant, isolation, retries,
+        and a concurrent test against the real engine;
+      - `data-quality-and-integrity.md` (006, 010);
+      - `etl-pipelines.md` (009);
+      - `retention-and-governance.md` (011): periods only from the user's
+        policy, dry run first, legal holds, and backups;
+      - `backup-restore.md` (012): isolated target, verification per step,
+        measured RTO and RPO, and a report template.
+- **`chayen-testing`** (reused and extended; router, 159 lines).
+  - Description rewritten (378 characters): adds strategy, API and
+    contract, property-based, mutation, and fuzz tests, test data, coverage
+    gaps, and failure triage.
+  - New principles: expected behaviour is not negotiable (no changing
+    expectations, snapshots, or assertions, and no skip, retry, or delete to
+    get green, unless the user confirms the expectation was wrong), and
+    results are observed, never assumed.
+  - New workflow step: a baseline run before any change.
+  - The Verification section defines PASSED, FAILED, SKIPPED, BLOCKED,
+    NOT_RUN, and UNKNOWN.
+  - Boundary change: fuzz testing of the user's own code is in scope
+    (CAP-10-010). Fuzzing systems the user does not own stays out.
+  - Seven recipes:
+    - `test-strategy.md` (CAP-10-001);
+    - `test-authoring.md` (002, 003, 004, 007): unit, integration with
+      real dependencies and isolation, end to end, and regression tests
+      observed failing before the fix;
+    - `api-and-contract-tests.md` (005, 006);
+    - `advanced-test-techniques.md` (008, 009, 010): properties, mutation,
+      and fuzzing;
+    - `test-data.md` (011);
+    - `failing-and-flaky-tests.md` (012, 014): baseline-based triage,
+      test versus product defect, and repeated-run flaky diagnosis;
+    - `coverage-gaps.md` (013).
+- **`chayen-backend`:** one "When not to use" row now sends schema, query,
+  migration, backfill, ETL, retention, and restore work to `chayen-data`.
+  The description is unchanged.
+- **Review against the records (agent review, D-028).** Every catalog
+  output for the 26 records is produced by its recipe's `## Outputs`, and
+  each record's verification condition appears in the recipe's
+  `## Verification`. Engine, version, and tool facts come from the agent's
+  knowledge and were not executed (R-34). Two statements were softened
+  during review: Flyway undo editions, and the pytest-randomly flags.
+- **Catalog:**
+  - the 26 records are IMPLEMENTED, with `verification_evidence`,
+    `existing_coverage`, and notes (CAP-09-002, 011, CAP-10-001, 006, 010,
+    011, 012);
+  - the `chayen-data` entry skill is `existing`, and so are its records in
+    D18 and D19. CAP-18-006, CAP-19-003 (search), and CAP-19-007 (geospatial) stay PLANNED;
+    `retention-and-governance.md` is `existing` for CAP-18-006 too;
+  - CG-29..CG-36 are `existing`;
+  - the coverage doc was regenerated, and its prose updated (summary, §4,
+    §5.1, §5.2 L0, §6.1, §6.2, §7.3, §9).
+- **Evaluation cases:**
+  - 58 recipe cases (222 in total): 27 for D09 and 31 for D10. Each of the
+    26 capabilities has at least one positive and one negative case. They
+    include a production read-only case, a missing-Docker case that must be
+    reported BLOCKED, and a "just update the snapshots" case.
+  - 12 trigger cases (97 in total): 9 positive (5 for `chayen-data`), 1
+    ambiguous, and 2 unsupported (MongoDB, MySQL).
+  - `chayen-data` was added to the trigger file's skill list.
+    `pos-backend-migration-index` was re-categorised from positive to
+    ambiguous (either `chayen-backend` or `chayen-data`), keeping its id.
+  - The Claude eval cases were regenerated (97 cases, 229 files). Content
+    changed in 5 existing case files: 4 `none_or` forbidden-skill graders
+    now include `chayen-data`, and the re-categorised case.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md` and `references/sql-server.md`, `postgresql.md`, `database-safety.md`, `data-modeling.md`, `schema-and-data-migration.md`, `query-performance.md`, `transactions.md`, `data-quality-and-integrity.md`, `etl-pipelines.md`, `retention-and-governance.md`, `backup-restore.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-testing/references/test-strategy.md`, `test-authoring.md`, `api-and-contract-tests.md`, `advanced-test-techniques.md`, `test-data.md`, `failing-and-flaky-tests.md`, `coverage-gaps.md` |
+| Created | `tests/evals/claude/` (12 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md` (description and body), `chayen-backend/SKILL.md` (one "When not to use" row), `skills/README.md` |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json` (additions only), `tests/skills/trigger-cases.json` (additions, the skill list, and one re-categorised case), `tests/skills/README.md`, 5 existing generated eval case files (content); the other existing generated files changed only in line endings (DF-01) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D09 and CAP-D10 IMPLEMENTED; REQ-02, REQ-05, REQ-07, REQ-08, REQ-09, ARC-04 evidence), `DECISIONS.md` (D-033), `ISSUES.md` (Q-10, R-27, R-28, R-32, R-33, R-34 notes), `IMPLEMENTATION_PLAN.md` |
+| Deleted | None |
+| Scratch only (not in the repository) | Lifecycle work directory `lc13`, and the catalog and case edit scripts. The Step 12 `skills-ref` venv was reused. |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 9 skills. L0 3794/4000. Maximum overlap 0.11. 83 references with valid kinds. 63 recipe files agree with the catalog (104 capabilities, including CAP-18-006 in a recipe file but PLANNED). 222 recipe cases. 97 trigger cases. Earlier runs during the step showed only the expected catalog and case gaps, plus one V-16 error (a positive case naming two skills), fixed by re-categorising that case. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=103 (D01–D10 complete), IN_PROGRESS=10, PLANNED=93. 206 records, 57 groups, 9 existing entry skills, fingerprint unchanged, doc in sync (after `--write-doc`). |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | **PASS:** 4/4 gate groups. Self-tests 53/53. |
+| T4 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2. The `skills/` target was not run again (DF-02). |
+| T5 | Agent Skills reference validator | `agentskills validate` ×9 (`skills-ref` 0.1.1, scratch venv) | PASS: 9/9 valid, including `chayen-data` |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc13` | **PASS 24/24:** 9 skills discoverable on Claude Code 2.1.220, Codex 0.162.1, and Copilot CLI 1.0.89. The fixture stayed unchanged and clean. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` (inside validate-all G-11) | PASS: 97 cases, 229 files |
+| — | Trigger evals for `chayen-data` and the rewritten testing description | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (58 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Any database, migration, mutation, or fuzz run described by the recipes | — | NOT_RUN: no fixture repositories or databases in this step |
+| — | Human review of the new skill, 15 recipes, and 3 references | — | Pending (R-33, R-34) |

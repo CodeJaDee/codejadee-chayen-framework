@@ -9,6 +9,7 @@
     "chayen-implementation",
     "chayen-backend",
     "chayen-frontend",
+    "chayen-data",
     "chayen-testing",
     "chayen-security"
   ],
@@ -35,7 +36,7 @@
     { "id": "pos-backend-efcore-paging", "category": "positive", "prompt": "Add a paginated GET endpoint for products to our .NET Web API using EF Core and SQL Server.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "pos-backend-fastapi-validation", "category": "positive", "prompt": "Our FastAPI signup endpoint accepts invalid email addresses. Add proper request validation.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "pos-backend-elysia-route", "category": "positive", "prompt": "Create an Elysia route that returns a user by id with schema validation of the id parameter.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
-    { "id": "pos-backend-migration-index", "category": "positive", "prompt": "Write an EF Core migration that adds an index on Orders.CreatedAt for SQL Server.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-backend-migration-index", "category": "ambiguous", "prompt": "Write an EF Core migration that adds an index on Orders.CreatedAt for SQL Server.", "expect": { "any_of": ["chayen-backend", "chayen-data"] }, "forbid": ["chayen-frontend"], "notes": "Step 13 (D-033): CAP-09-002 maps to chayen-data with chayen-backend as secondary, so either skill is correct. Re-categorised from positive to ambiguous; the id is kept for traceability." },
     { "id": "pos-backend-api-design", "category": "positive", "prompt": "Design the REST endpoints for managing subscriptions in our FastAPI service, including how we version them.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "pos-backend-messaging", "category": "positive", "prompt": "Publish an OrderPlaced event when an order is created and consume it in the shipping service.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "pos-backend-job", "category": "positive", "prompt": "Add a nightly job to our Nuxt server that archives orders older than two years.", "expect": { "any_of": ["chayen-backend"] } },
@@ -108,6 +109,19 @@
     { "id": "neg-app-store-copy", "category": "negative", "prompt": "Write a catchy app store description for our recipe app.", "expect": { "none": true } },
     { "id": "amb-push-end-to-end", "category": "ambiguous", "prompt": "Send a push notification to the customer's phone when their order ships. The app is Capacitor and the API is ASP.NET Core.", "expect": { "any_of": ["chayen-frontend", "chayen-backend", "chayen-implementation"] }, "forbid": ["chayen-repository"] },
     { "id": "uns-flutter", "category": "unsupported", "prompt": "Add pull-to-refresh to the order list screen in my Flutter app.", "expect": { "none": true } },
-    { "id": "uns-react-native", "category": "unsupported", "prompt": "Fix the janky FlatList scrolling in our React Native app.", "expect": { "none_or": ["chayen-frontend"] }, "forbid": ["chayen-backend"], "notes": "React Native is a native toolkit outside the web-technology shell scope (D-032). Either no skill, or chayen-frontend whose scope line then defers to native behavior, is acceptable." }
+    { "id": "uns-react-native", "category": "unsupported", "prompt": "Fix the janky FlatList scrolling in our React Native app.", "expect": { "none_or": ["chayen-frontend"] }, "forbid": ["chayen-backend"], "notes": "React Native is a native toolkit outside the web-technology shell scope (D-032). Either no skill, or chayen-frontend whose scope line then defers to native behavior, is acceptable." },
+
+    { "id": "pos-data-modeling-sqlserver", "category": "positive", "prompt": "Design the tables for a multi-warehouse inventory system in SQL Server, with constraints that keep stock consistent.", "expect": { "any_of": ["chayen-data"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-data-backfill-postgres", "category": "positive", "prompt": "We added a normalized_email column to a busy PostgreSQL table. Plan the backfill without locking the table.", "expect": { "any_of": ["chayen-data"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-data-query-plan", "category": "positive", "prompt": "This SQL Server query takes 12 seconds. Here is the execution plan; make it faster.", "expect": { "any_of": ["chayen-data"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-data-restore-drill", "category": "positive", "prompt": "Plan a restore drill that proves our PostgreSQL backups actually restore.", "expect": { "any_of": ["chayen-data"] } },
+    { "id": "pos-data-etl-incremental", "category": "positive", "prompt": "Our Python ETL from SQL Server into the reporting database reloads everything every night. Make it incremental.", "expect": { "any_of": ["chayen-data"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-testing-contract", "category": "positive", "prompt": "Set up Pact contract tests between the web app and the orders API.", "expect": { "any_of": ["chayen-testing"] } },
+    { "id": "pos-testing-property", "category": "positive", "prompt": "Use Hypothesis to check that our invoice serializer round-trips every valid invoice.", "expect": { "any_of": ["chayen-testing"] }, "forbid": ["chayen-data"] },
+    { "id": "pos-testing-mutation", "category": "positive", "prompt": "Run Stryker on the pricing module and strengthen the tests that let mutants survive.", "expect": { "any_of": ["chayen-testing"] } },
+    { "id": "pos-testing-triage", "category": "positive", "prompt": "Twelve tests fail after the merge. Which ones did we break, and which were already failing?", "expect": { "any_of": ["chayen-testing"] } },
+    { "id": "amb-migration-and-endpoint", "category": "ambiguous", "prompt": "Add a discount_code column with a migration and expose it in the orders endpoint.", "expect": { "any_of": ["chayen-data", "chayen-backend", "chayen-implementation"] }, "forbid": ["chayen-frontend"] },
+    { "id": "uns-mongodb", "category": "unsupported", "prompt": "Add an index to speed up this MongoDB aggregation pipeline.", "expect": { "none_or": ["chayen-data"] }, "forbid": ["chayen-frontend"], "notes": "MongoDB is outside the relational scope (D-033). Either no skill, or chayen-data whose scope line then defers to native behavior, is acceptable." },
+    { "id": "uns-mysql-online-ddl", "category": "unsupported", "prompt": "Use pt-online-schema-change to add a column to our MySQL 8 orders table.", "expect": { "none_or": ["chayen-data"] }, "forbid": ["chayen-frontend"], "notes": "MySQL is not a charter stack. Either no skill, or chayen-data whose scope line then defers to native behavior, is acceptable." }
   ]
 }
