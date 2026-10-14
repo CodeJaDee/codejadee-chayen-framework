@@ -80,6 +80,8 @@ If the request does not fit, stop following this skill and continue normally wit
    also read [references/app-shells.md](references/app-shells.md).
    For Angular, read the base and only the relevant topic from References;
    preserve the detected package manager and configured build/test runners.
+   For React/Next.js, likewise read the base plus the relevant topic; preserve
+   installed routing, state/form libraries, and server/client ownership.
 2. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -180,6 +182,12 @@ Load one framework reference (workflow step 1), the app-shell reference only whe
 | [references/angular-forms-accessibility.md](references/angular-forms-accessibility.md) | Angular form validation, submission, custom controls, or accessible interaction is involved |
 | [references/angular-ssr-upgrades.md](references/angular-ssr-upgrades.md) | Angular SSR, hydration, or an explicitly requested Angular upgrade or migration is involved |
 | [references/react-nextjs.md](references/react-nextjs.md) | `react` or `next` is detected, including Vite React apps |
+| [references/react-components-state.md](references/react-components-state.md) | React component contracts, state ownership, effect dependencies, or cleanup is involved |
+| [references/react-data-forms.md](references/react-data-forms.md) | React remote state, installed query caches, form validation, or submission is involved |
+| [references/react-navigation-accessibility.md](references/react-navigation-accessibility.md) | React client routing, navigation, accessible controls, keyboard interaction, or focus is involved |
+| [references/react-rendering.md](references/react-rendering.md) | React rendering has a measured bottleneck requiring ownership, selector, or memoization changes |
+| [references/nextjs-routing-boundaries.md](references/nextjs-routing-boundaries.md) | Next.js App Router segments or server/client imports and serialization boundaries are involved |
+| [references/nextjs-rendering-seo.md](references/nextjs-rendering-seo.md) | Next.js rendering mode, metadata, crawlable output, or hydration is involved |
 | [references/vue-nuxt.md](references/vue-nuxt.md) | `vue` or `nuxt` is detected, including Vite Vue apps |
 | [references/app-shells.md](references/app-shells.md) | `capacitor.config.*`, `ionic.config.json`, `config.xml` (Cordova), a web app manifest with a service worker, `electron`, or `src-tauri/` is detected and the task touches it |
 | [references/ui-states.md](references/ui-states.md) | A view loads data, submits, or depends on an authorization or device permission |

@@ -228,6 +228,133 @@
         "validator": "technology",
         "error": "V-23.5 anatomy"
       }
+    },
+    {
+      "id": "tech22-react-inventory",
+      "description": "Step 22 negative control: tech22-react-inventory",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    name: react-routing\n",
+          "with": "    name: react-router-switch\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.1 inventory"
+      }
+    },
+    {
+      "id": "tech22-next-inventory",
+      "description": "Step 22 negative control: tech22-next-inventory",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    name: nextjs-data-caching\n",
+          "with": "    name: nextjs-cache-defaults\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.1 inventory"
+      }
+    },
+    {
+      "id": "tech22-react-section",
+      "description": "Step 22 negative control: tech22-react-section",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-rendering.md",
+          "op": "replace",
+          "find": "## Measured render changes (react-render-optimization)",
+          "with": "## Measured render changes"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech22-next-section",
+      "description": "Step 22 negative control: tech22-next-section",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-mutations.md",
+          "op": "replace",
+          "find": "## HTTP entrypoints (nextjs-route-handlers)",
+          "with": "## HTTP entrypoints"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech22-next-orphan",
+      "description": "Unknown Next capability suffix is rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-server.md",
+          "op": "append",
+          "content": "\n## Other (nextjs-unlisted-operation)\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech22-version-notes",
+      "description": "Step 22 negative control: tech22-version-notes",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-data-auth.md",
+          "op": "replace",
+          "find": "**Version notes:** Next 15 changed",
+          "with": "Version: Next 15 changed"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.5 anatomy"
+      }
+    },
+    {
+      "id": "tech22-case-mapping",
+      "description": "Step 22 negative control: tech22-case-mapping",
+      "edits": [
+        {
+          "file": "tests/skills/technology-cases.json",
+          "op": "replace",
+          "find": "\"applies\": \"react-routing\"",
+          "with": "\"applies\": \"nextjs-app-router\""
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.7 cases"
+      }
+    },
+    {
+      "id": "tech22-fact-id",
+      "description": "Step 22 negative control: tech22-fact-id",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    fact_checks: [NF-08]\n",
+          "with": "    fact_checks: [NF-99]\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.8 facts"
+      }
     }
   ]
 }

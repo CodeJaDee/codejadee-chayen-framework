@@ -36,3 +36,7 @@ Step 21 adds nine technology negative controls for Angular/JS inventory,
 missing and orphan sections, version notes, ordered anatomy, case mapping,
 and fact references. The baseline technology copy includes both fact runners;
 running the self-tests checks validator behavior, not Angular application behavior.
+
+Step 22 adds eight React/Next controls for exact inventory, missing/orphan
+sections, version notes, case mapping, and facts. The temporary baseline now
+also includes the RF/NF runner definitions; it does not execute framework apps.

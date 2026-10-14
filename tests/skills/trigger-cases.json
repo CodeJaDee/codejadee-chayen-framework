@@ -259,6 +259,92 @@
       "expect": {
         "none": true
       }
+    },
+    {
+      "id": "pos-frontend-react-effect-cleanup",
+      "category": "positive",
+      "prompt": "Fix our React component effect cleanup and stale state without replacing Redux.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "pos-frontend-next-client-boundary",
+      "category": "positive",
+      "prompt": "Fix the server credential import in our Next Client Component and pass only safe display fields.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "pos-backend-next-server-function",
+      "category": "positive",
+      "prompt": "Implement a Next Server Action with resource ownership checks and validation inside the callable server operation.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-backend-next-authorization",
+      "category": "positive",
+      "prompt": "Protect our Next route handlers and Server Actions from direct unauthenticated and wrong-tenant calls.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      }
+    },
+    {
+      "id": "amb-next-cache-freshness",
+      "category": "ambiguous",
+      "prompt": "Fix stale Next server data after a save while preserving our configured caching model.",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-frontend"
+        ]
+      },
+      "notes": "The backend owns Next server caching; stale visible UI can also attract the frontend workflow. Measure actual ownership."
+    },
+    {
+      "id": "pos-testing-react-user-interaction",
+      "category": "positive",
+      "prompt": "Write React component tests for rejected save and retry using our configured Vitest and Testing Library setup.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-devops-next-artifact",
+      "category": "positive",
+      "prompt": "Validate our Next standalone production artifact locally, including direct protected routes; do not deploy.",
+      "expect": {
+        "any_of": [
+          "chayen-devops"
+        ]
+      }
+    },
+    {
+      "id": "neg-explain-react-useeffect",
+      "category": "negative",
+      "prompt": "Explain what React useEffect is in one paragraph; do not change code.",
+      "expect": {
+        "none": true
+      }
     }
   ]
 }

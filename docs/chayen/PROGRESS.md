@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 21 — Angular and shared TypeScript/JavaScript support |
+| Last executed step | 22 — React and Next.js engineering guidance |
+| Step 22 status | DONE (pending review; 16/16 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 85/85 self-tests; 3 synthetic boundary checks PASS, 13 NOT_RUN; one 206-line frontend target warning; D-041 layout PROPOSED) |
 | Step 21 status | DONE (pending user review; 22/22 new technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 8 TS/JS facts PASS, 14 Angular facts NOT_RUN; automated gates 5/5, self-tests 77/77; D-040 layout PROPOSED) |
 | Step 20 status | DONE (pending user review; 22/22 technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 31/31 .NET framework facts PASS; D-039 PROPOSED) |
 | Step 19 status | DONE (pending user review; static audit 206/206 after 9 fixes; 0/206 VERIFIED; see ENGINEERING_COVERAGE_AUDIT.md) |
@@ -26,7 +27,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after Step 21; await user direction. D-040 layout review pending. All 206 engineering and 44 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Angular runtime/build/browser checks remain NOT_RUN; G-11/G-12 and human review remain pending (R-39, R-40). |
+| Next step | STOP after Step 22; await user direction. D-041 layout review pending. All 206 engineering and 60 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. React/Next framework/browser/artifact and agent evaluations remain NOT_RUN; synthetic boundary checks are separate (R-41, R-42). |
 | Commits made by agent | None |
 
 ---
@@ -2161,3 +2162,170 @@ Paths below are repository-relative; generated eval files are listed individuall
 
 **Runtime Verification:** Verified for executed catalog/validator and TS/JS
 fact checks. Angular runtime behavior remains NOT_RUN. STEP 21 ends here.
+
+
+## Step 22 — React and Next.js engineering guidance
+
+- **Date:** 2026-10-15
+- **Status:** DONE (pending user review). STOP after STEP 22.
+- **Result:** React 8/8 and Next.js 8/8 IMPLEMENTED, with exact names,
+  one mapped technology section each, version/applicability rules, detailed
+  implementation procedures, examples, and positive/negative specifications.
+  V-23 PASS for all 16 new capabilities (60 technology records total).
+  None is VERIFIED. See [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md) §9.
+
+### Evidence reviewed and work performed
+
+- Read BUILD_CONTRACT, technology standards TC-01..06/LD-03, quality gates,
+  prior .NET and Angular/shared-TS/JS pack structure, technology catalog,
+  existing React/Next frontend and Node server guides, and frontend/backend/
+  testing/devops routers. Initial working tree was clean. No .kiyo/project or
+  repository AGENTS.md was found; no instruction or user configuration edited.
+  Official version-dependent documentation checked 2026-10-15 is listed in
+  TECHNOLOGY_COVERAGE §10.
+- Kept static delivery and existing workflow recipes. Added eleven new
+  technology references and expanded two existing bases; all are conditionally
+  reachable inside their owning skill. No new skill or description change,
+  engineering-catalog change, runtime dependency, or toolchain download.
+  Thirteen skills retain L0 5485/5500; reference count is 175.
+- React: component/ref contracts, state/effects, remote state, forms, existing
+  client routing, measured rendering changes, component tests, accessibility.
+  Extend installed Redux/Context/Zustand/Jotai/query/forms approaches; no
+  speculative library or class-to-hook rewrite. Both Jest and Vitest test
+  contexts preserve configured runners; no arbitrary DOM/test-library install.
+- Next: preserve App/Pages routing ownership; inspect resolved Next/React and
+  request signatures, runtime, cacheComponents/output settings before using
+  version-dependent APIs. Frontend owns App segments, server/client import and
+  DTO boundaries, and rendering/SEO; backend owns Server Functions/handlers,
+  caching and auth; devops owns production artifact testing.
+- Corrected the existing prefix-only secret advice in react-nextjs and
+  node-servers: imports, config env, props/action results, source maps, HTML,
+  and RSC payloads also matter. Small client islands remain safe during server
+  prerender; use client is not proof that window exists during initial render.
+- Authentication/authorization guidance requires trusted identity and
+  resource/tenant checks at every reachable server action/handler/protected
+  data operation. Layout/client/proxy checks never substitute; forged owner/
+  role fields cannot grant permission. These are guides and synthetic tests,
+  not changes to a real application's auth or hosting configuration.
+- Catalog: TECH-REACT-001..008 and TECH-NEXTJS-001..008; V-23 accepts exact
+  Steps 20–22 inventories and React/Next headings and RF/NF fact IDs. Manually
+  reviewed every new related-engineering mapping by its catalog name.
+- Cases: 40 new technology specifications (24 positive, 16 negative), total
+  149. Extra fixtures cover existing classes, no new query library, Jest,
+  async App params, Client Component prerender, forged owner, Cache Components,
+  and direct proxy bypass. Eight trigger prompts generated into eighteen files;
+  totals 158 cases/377 files. Added eight catalog mutation controls.
+- Fact/boundary runner uses Node built-ins, optional existing React packages,
+  and synthetic fixed sessions. Three checks execute ordinary callable,
+  Web Request/Response, and loopback HTTP boundaries with direct denial tests
+  and no writes on denied calls. No Next compiler, cache, provider-session,
+  React DOM interaction, or deployment behavior is claimed from these tests.
+- Updated coverage, STK-05/STK-06 acceptance rows/summary, plan, D-041 decision,
+  R-41/R-42, testing/catalog documentation, and this full file ledger.
+
+### Decisions, risks, and open questions
+
+- **D-041:** user-directed Step 22 React/Next scope ACCEPTED; technology layout
+  PROPOSED pending review. Original indicative release-readiness scope remains
+  visible as superseded history. No release-readiness mission or later step run.
+- **R-41:** framework/app/runner/browser/production fixtures are unavailable.
+  RF-01..08 and NF-01/02/05/07/08 are NOT_RUN. NF-03/04/06 PASS only for synthetic
+  JavaScript/Web-standard server boundaries; this does not establish compiled
+  Server Action transport, Next caching, secret-bundle/RSC exclusion, real auth
+  provider integration, hydration, metadata, accessibility, or deployment.
+- **R-42:** agent behavior/trigger evaluations and human review NOT_RUN. Specs
+  and generated prompts are not executed evaluations. Frontend SKILL.md is
+  206 lines: above target 200, within hard maximum 300 (one V-06 warning).
+  Metadata budget and descriptions are unchanged; base plus one topic loading
+  stays in place. No new capability promoted to VERIFIED.
+- **Deferred finding:** while checking Step 22 mappings, existing Step 21
+  state/form/render-related engineering IDs were observed to need semantic
+  review (for example angular-state-management maps to CAP-07-004 form-and-
+  validation). These prior-step records were not changed in STEP 22 ONLY.
+- No production auth/schema/config change, dependency install, state/router
+  migration, provider switch, git commit, push, publication, or deployment.
+  No files deleted.
+
+### File ledger
+
+Repository-relative paths; generated eval files are recorded individually.
+
+| Action | Path |
+|---|---|
+| Modified | `catalog/technology-capabilities.yaml` |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` |
+| Modified | `docs/chayen/DECISIONS.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` |
+| Modified | `docs/chayen/ISSUES.md` |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/TECHNOLOGY_COVERAGE.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/node-servers.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-devops/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-nextjs.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md` |
+| Modified | `tests/catalog/README.md` |
+| Modified | `tests/catalog/technology-mutations.json` |
+| Modified | `tests/skills/README.md` |
+| Modified | `tests/skills/technology-cases.json` |
+| Modified | `tests/skills/trigger-cases.json` |
+| Modified | `tools/catalog/README.md` |
+| Modified | `tools/catalog/check-technology.mjs` |
+| Modified | `tools/validate/run-validator-tests.mjs` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-data-auth.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-mutations.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-server.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-devops/references/nextjs-deployment.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nextjs-rendering-seo.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nextjs-routing-boundaries.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-components-state.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-data-forms.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-navigation-accessibility.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-rendering.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-testing/references/react-testing.md` |
+| Created | `tests/evals/claude/amb-next-cache-freshness/graders/expected-skill.md` |
+| Created | `tests/evals/claude/amb-next-cache-freshness/prompt.md` |
+| Created | `tests/evals/claude/neg-explain-react-useeffect/graders/no-chayen-skill.md` |
+| Created | `tests/evals/claude/neg-explain-react-useeffect/prompt.md` |
+| Created | `tests/evals/claude/pos-backend-next-authorization/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-backend-next-authorization/prompt.md` |
+| Created | `tests/evals/claude/pos-backend-next-server-function/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-backend-next-server-function/graders/forbidden-skills.md` |
+| Created | `tests/evals/claude/pos-backend-next-server-function/prompt.md` |
+| Created | `tests/evals/claude/pos-devops-next-artifact/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-devops-next-artifact/prompt.md` |
+| Created | `tests/evals/claude/pos-frontend-next-client-boundary/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-frontend-next-client-boundary/prompt.md` |
+| Created | `tests/evals/claude/pos-frontend-react-effect-cleanup/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-frontend-react-effect-cleanup/prompt.md` |
+| Created | `tests/evals/claude/pos-testing-react-user-interaction/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-testing-react-user-interaction/graders/forbidden-skills.md` |
+| Created | `tests/evals/claude/pos-testing-react-user-interaction/prompt.md` |
+| Created | `tests/technology/react-nextjs/README.md` |
+| Created | `tests/technology/react-nextjs/fixture/server-boundaries.mjs` |
+| Created | `tests/technology/react-nextjs/results/step22-fact-checks.md` |
+| Created | `tests/technology/react-nextjs/run-fact-checks.mjs` |
+| Deleted | None |
+| Scratch only, outside repository | Two Step 22 authoring/report scripts in the session user's temporary directory; validator-owned temporary mutation copies |
+
+### Tests and observed outcomes
+
+| Test | Command | Result |
+|---|---|---|
+| Technology coverage | `node tools/catalog/check-technology.mjs --write-doc`, then `node tools/catalog/check-technology.mjs` | PASS: 60 records, including exact 16/16 Step 22 capabilities; 149 case specifications; unique reachable mapped sections, ordered anatomy, RF/NF facts, table in sync |
+| Package and skill content | `node tools/validate/validate-package.mjs` | PASS: 0 errors, 1 warning (frontend 206 lines > target 200, below hard 300); 13 skills, 175 references, L0 5485/5500 |
+| Trigger artifact generation | `node tools/evals/generate-claude-evals.mjs`, with `--check` through validate-all | PASS: 158 cases/377 files; no behavioral run performed |
+| Synthetic boundary checks | `node tests/technology/react-nextjs/run-fact-checks.mjs --report tests/technology/react-nextjs/results/step22-fact-checks.md` | PASS, exit 0: 3 PASS, 0 FAIL, 13 NOT_RUN on Node 26.8.1. NF-03 direct callable denies no/expired/forbidden/wrong-tenant identity and invalid input; NF-04 invalid JSON/400, method/405, safe 200 DTO and private no-store; NF-06 loopback HTTP denies unauthenticated/expired/revoked/forged owner/wrong tenant before writes. No compiled Next verification |
+| First automated regression | `node tools/validate/validate-all.mjs` | FAIL: 84/85 self-tests. New cache record was incorrectly linked to background-job CAP-06-008, duplicating an older mutation's unique target; semantic review also corrected state/form/render/auth/deployment links. Kept existing mutation unchanged and used the actual named engineering IDs |
+| Final automated regression | `node tools/validate/validate-all.mjs` | PASS, exit 0: 5/5 gate groups, 85/85 self-tests, including eight new controls; package target warning remains explicit |
+| Engineering coverage regression | `node tools/catalog/audit-coverage.mjs` | PASS: 206/206 all ten criteria; no missing/duplicate/orphan/broken mappings. Engineering catalog unchanged |
+| Native Claude manifests | `claude plugin validate --strict plugins/codejadee-chayen-framework`; `claude plugin validate --strict .claude-plugin/marketplace.json` | PASS, exit 0 for both |
+| Diff hygiene | `git -c core.safecrlf=false diff --check` | PASS: no whitespace errors |
+| React/Next framework checks | No installed project/runner/build fixture | NOT_RUN: React interaction/effects/query/focus/profiling; Next production router/actions/cache/auth-provider/bundle/RSC/metadata/hydration/artifacts. Optional static React markup facts also NOT_RUN |
+| Agent behavior/trigger evaluations and human review | G-11/G-12/G-15 | NOT_RUN; generation/static checks and synthetic fixtures do not promote status |
+| Provider lifecycle, remote install, publication | Unchanged package manifests/metadata; outside Step 22 guidance scope | NOT_RUN in this step; no external mutation performed |
+
+**Runtime Verification:** Verified for executed validators and synthetic
+boundary checks. React/Next framework behavior remains NOT_RUN. STOP here.

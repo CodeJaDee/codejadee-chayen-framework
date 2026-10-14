@@ -859,6 +859,36 @@ Decision statuses:
   Angular runtime/build/browser claims remain unverified. No later step,
   commit, push, publish, or release is authorized by this decision.
 
+### D-041 — Step 22 React and Next.js technology guidance
+- **Status:** scope ACCEPTED (explicit user prompt, 2026-10-15); layout
+  PROPOSED pending user review.
+- **Scope:** execute STEP 22 ONLY for 8 React and 8 Next.js capabilities.
+  This supersedes the original indicative release-readiness step; preserve
+  that text as history and stop after the requested technology guidance.
+- **Layout:** follow D-039/D-040 and technology standard §5.3. Seven React
+  capabilities live in frontend topics and component testing in testing.
+  Next App Router, server/client boundary, and rendering/SEO live in frontend;
+  Server Functions, handlers, caching, and authentication in backend;
+  deployment testing in devops. General workflow remains in existing recipes.
+  No new skill, metadata change, L0 increase, or engineering-catalog change.
+- **Requirements:** detect resolved versions, preserve App/Pages and installed
+  client-router architecture, reuse state/query/form tools and configured
+  runners. Check authorization at every reachable server operation, not just
+  UI/layout/proxy; keep privileged data out of imports and serialized client
+  payloads as well as public environment configuration.
+- **Verification:** V-23 structural validation and 40 new case specifications;
+  eight mutation controls and eight trigger prompts. A dependency-free runner
+  checks synthetic callable, Web handler, and loopback HTTP boundaries.
+  Its fixed sessions are synthetic, not production auth. React/Next framework,
+  build/cache/browser/provider checks remain NOT_RUN without matching fixtures.
+  No runtime/development dependency or package manifest is added to the plugin
+  or repository; fixture/tooling uses Node built-ins (BC-22).
+- **Consequences:** 60 technology capabilities IMPLEMENTED, 0 VERIFIED;
+  behavior/trigger evaluations and human review pending. Frontend entry body
+  reaches 206 lines (200-line target warning, below 300 hard). No application
+  auth, production configuration, actual deployment, release, or later step
+  was changed or performed.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

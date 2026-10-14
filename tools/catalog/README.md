@@ -60,11 +60,13 @@ it without a YAML library:
 Every file in the subset is also valid YAML 1.2. In Step 07, a PyYAML parse
 produced data identical to this parser's output.
 
-## Technology packs after Step 21
+## Technology packs after Step 22
 
-`node tools/catalog/check-technology.mjs` checks 44 records: 22 .NET, 14
-Angular, and 8 shared TS/JS capabilities. `--write-doc` refreshes the generated
+`node tools/catalog/check-technology.mjs` checks 60 records: 22 .NET, 14
+Angular, 8 shared TS/JS, 8 React, and 8 Next.js capabilities. `--write-doc` refreshes the generated
 table in TECHNOLOGY_COVERAGE.md. It validates inventory, mapping, ordered
-section anatomy, cases, and AF/JF/TF fact IDs. These are static gates; they do
+section anatomy, cases, and AF/JF/TF/RF/NF fact IDs. These are static gates; they do
 not execute agent evaluations or framework facts. Fact commands and current
-PASS/NOT_RUN limits are recorded separately in PROGRESS Step 21.
+PASS/NOT_RUN limits are recorded separately in PROGRESS. Step 22's three
+executed NF checks are synthetic Web-standard boundaries, not compiled Next
+or auth-provider verification.

@@ -1,5 +1,5 @@
 {
-  "$comment": "Technology capability evaluation cases (Steps 20–21, D-039/D-040). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
+  "$comment": "Technology capability evaluation cases (Steps 20–22, D-039/D-040/D-041). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
   "version": 1,
   "cases": [
     {
@@ -1309,6 +1309,654 @@
         "Keeps server signing module out of browser import graph",
         "Uses a server endpoint for privileged work",
         "Checks environment replacements bundles source maps HTML and transfer state without printing secrets"
+      ]
+    },
+    {
+      "id": "tc-react-component-patterns-01",
+      "capability": "react-component-patterns",
+      "polarity": "positive",
+      "context": "React 18 function components with forwardRef and npm lock",
+      "prompt": "Split our order card into components while preserving props and ref consumers.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-components-state.md",
+        "applies": "react-component-patterns"
+      },
+      "checks": [
+        "Preserves nearest props/ref conventions and stable keys",
+        "Does not switch to React 19 ref-as-prop without support",
+        "Tests parent callbacks and error/empty states"
+      ]
+    },
+    {
+      "id": "tc-react-component-patterns-neg-01",
+      "capability": "react-component-patterns",
+      "polarity": "negative",
+      "context": "Node TypeScript model change without React",
+      "prompt": "Change a TypeScript DTO field without editing UI.",
+      "expect": {
+        "not_applies": "react-component-patterns",
+        "skill": "chayen-implementation",
+        "not_loads": "references/react-components-state.md"
+      },
+      "checks": [
+        "Uses shared type guidance without creating React components"
+      ]
+    },
+    {
+      "id": "tc-react-state-effects-01",
+      "capability": "react-state-effects",
+      "polarity": "positive",
+      "context": "React 17 Redux Toolkit feature with StrictMode and hook linting",
+      "prompt": "Fix our React effect cleanup and stale queued updates without replacing Redux.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-components-state.md",
+        "applies": "react-state-effects"
+      },
+      "checks": [
+        "Retains Redux ownership and StrictMode",
+        "Derives display values without effect-copying state",
+        "Tests rapid changes cleanup and functional updates"
+      ]
+    },
+    {
+      "id": "tc-react-state-effects-neg-01",
+      "capability": "react-state-effects",
+      "polarity": "negative",
+      "context": "React 18 TanStack Query feature with correct local effects",
+      "prompt": "Fix invalidation in our existing TanStack Query hook.",
+      "expect": {
+        "not_applies": "react-state-effects",
+        "skill": "chayen-frontend",
+        "not_loads": "references/react-components-state.md"
+      },
+      "checks": [
+        "Uses query server-state guidance without rebuilding state through effects"
+      ]
+    },
+    {
+      "id": "tc-react-server-state-01",
+      "capability": "react-server-state",
+      "polarity": "positive",
+      "context": "React 18 TanStack Query 5 with account-aware query keys and Vitest",
+      "prompt": "Fix stale order data after a save and prevent another account data from showing.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-data-forms.md",
+        "applies": "react-server-state"
+      },
+      "checks": [
+        "Uses installed query APIs and existing provider",
+        "Tests save success/failure and account switch",
+        "Does not add Zustand or mirror queries into global state"
+      ]
+    },
+    {
+      "id": "tc-react-server-state-neg-01",
+      "capability": "react-server-state",
+      "polarity": "negative",
+      "context": "Next 16 server cache issue without client query changes",
+      "prompt": "Fix Next persistent data-cache revalidation on the server.",
+      "expect": {
+        "not_applies": "react-server-state",
+        "skill": "chayen-backend",
+        "not_loads": "references/react-data-forms.md"
+      },
+      "checks": [
+        "Uses Next server-cache guidance instead of a client query library"
+      ]
+    },
+    {
+      "id": "tc-react-form-handling-01",
+      "capability": "react-form-handling",
+      "polarity": "positive",
+      "context": "React 18 React Hook Form 7 with existing schema and Jest",
+      "prompt": "Add cross-field validation and visible save errors to our existing React form.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-data-forms.md",
+        "applies": "react-form-handling"
+      },
+      "checks": [
+        "Keeps React Hook Form and existing schema library",
+        "Does not introduce unsupported useActionState",
+        "Tests invalid pending rejected and valid submit while retaining input"
+      ]
+    },
+    {
+      "id": "tc-react-form-handling-neg-01",
+      "capability": "react-form-handling",
+      "polarity": "negative",
+      "context": "Next App Router server mutation request only",
+      "prompt": "Implement the server save action only, without changing the form.",
+      "expect": {
+        "not_applies": "react-form-handling",
+        "skill": "chayen-backend",
+        "not_loads": "references/react-data-forms.md"
+      },
+      "checks": [
+        "Uses server-boundary guidance without changing client form libraries"
+      ]
+    },
+    {
+      "id": "tc-react-routing-01",
+      "capability": "react-routing",
+      "polarity": "positive",
+      "context": "Vite React 18 app using React Router 6 data-router mode",
+      "prompt": "Add a nested orders route with loading and back-button behavior.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-navigation-accessibility.md",
+        "applies": "react-routing"
+      },
+      "checks": [
+        "Preserves installed router version and data-router mode",
+        "Tests nested direct entry history and error paths",
+        "Does not add a second router or treat guards as auth"
+      ]
+    },
+    {
+      "id": "tc-react-routing-neg-01",
+      "capability": "react-routing",
+      "polarity": "negative",
+      "context": "Next 15 App Router feature without React Router",
+      "prompt": "Add an App Router page to our Next application.",
+      "expect": {
+        "not_applies": "react-routing",
+        "skill": "chayen-frontend",
+        "not_loads": "references/react-navigation-accessibility.md"
+      },
+      "checks": [
+        "Uses Next App Router guidance instead of installing React Router"
+      ]
+    },
+    {
+      "id": "tc-react-render-optimization-01",
+      "capability": "react-render-optimization",
+      "polarity": "positive",
+      "context": "React 19 app with Compiler configured and browser profiler baseline",
+      "prompt": "Reduce our chart rendering cost while keeping the current store subscriptions.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-rendering.md",
+        "applies": "react-render-optimization"
+      },
+      "checks": [
+        "Uses baseline and same interaction profile after changes",
+        "Checks Compiler before manual memoization",
+        "Preserves correctness and avoids new store/blanket memoization"
+      ]
+    },
+    {
+      "id": "tc-react-render-optimization-neg-01",
+      "capability": "react-render-optimization",
+      "polarity": "negative",
+      "context": "PostgreSQL performance investigation without frontend evidence",
+      "prompt": "Investigate a slow SQL query without browser changes.",
+      "expect": {
+        "not_applies": "react-render-optimization",
+        "skill": "chayen-performance",
+        "not_loads": "references/react-rendering.md"
+      },
+      "checks": [
+        "Investigates measured server/data cost rather than guessing React render changes"
+      ]
+    },
+    {
+      "id": "tc-react-component-testing-01",
+      "capability": "react-component-testing",
+      "polarity": "positive",
+      "context": "React 18 Vitest Testing Library user-event with existing query/router wrappers",
+      "prompt": "Write component tests for a failed save and a successful retry using our existing Vitest setup.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/react-testing.md",
+        "applies": "react-component-testing"
+      },
+      "checks": [
+        "Keeps Vitest and configured wrappers",
+        "Queries roles/labels and tests visible rejection/retry",
+        "Does not weaken async assertions or install Jest"
+      ]
+    },
+    {
+      "id": "tc-react-component-testing-neg-01",
+      "capability": "react-component-testing",
+      "polarity": "negative",
+      "context": "React feature implementation request with normal verification",
+      "prompt": "Build a React save form as a production feature.",
+      "expect": {
+        "not_applies": "react-component-testing",
+        "skill": "chayen-frontend",
+        "not_loads": "references/react-testing.md"
+      },
+      "checks": [
+        "Uses frontend implementation workflow rather than a test-only mission"
+      ]
+    },
+    {
+      "id": "tc-react-accessibility-01",
+      "capability": "react-accessibility",
+      "polarity": "positive",
+      "context": "React 17 existing accessible dialog primitives and Playwright checks",
+      "prompt": "Fix labels keyboard operation and focus restoration in our React dialog.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-navigation-accessibility.md",
+        "applies": "react-accessibility"
+      },
+      "checks": [
+        "Reuses semantic controls and installed focus helpers",
+        "Uses version-compatible unique ids rather than unavailable useId",
+        "Separates keyboard and assistive checks from static markup"
+      ]
+    },
+    {
+      "id": "tc-react-accessibility-neg-01",
+      "capability": "react-accessibility",
+      "polarity": "negative",
+      "context": "Design-only mockup request without React source",
+      "prompt": "Design a checkout mockup without writing application code.",
+      "expect": {
+        "not_applies": "react-accessibility",
+        "skill": "none",
+        "not_loads": "references/react-navigation-accessibility.md"
+      },
+      "checks": [
+        "Does not apply React implementation to a design-only artifact"
+      ]
+    },
+    {
+      "id": "tc-nextjs-app-router-01",
+      "capability": "nextjs-app-router",
+      "polarity": "positive",
+      "context": "Next 14 mixed App and Pages app with affected feature in app/orders",
+      "prompt": "Add an orders detail page inside our existing App Router layout.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nextjs-routing-boundaries.md",
+        "applies": "nextjs-app-router"
+      },
+      "checks": [
+        "Keeps feature under existing app segment",
+        "Tests loading not-found nested navigation and direct entry",
+        "Does not migrate remaining Pages features"
+      ]
+    },
+    {
+      "id": "tc-nextjs-app-router-neg-01",
+      "capability": "nextjs-app-router",
+      "polarity": "negative",
+      "context": "Next 13 pages/orders feature with existing page conventions",
+      "prompt": "Add a page to our existing Pages Router feature and keep Pages Router.",
+      "expect": {
+        "not_applies": "nextjs-app-router",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nextjs-routing-boundaries.md"
+      },
+      "checks": [
+        "Preserves Pages Router and does not apply App Router APIs"
+      ]
+    },
+    {
+      "id": "tc-nextjs-server-client-boundary-01",
+      "capability": "nextjs-server-client-boundary",
+      "polarity": "positive",
+      "context": "Next 16 App Router with server DAL and small client buttons",
+      "prompt": "Fix our client import of the server credential module and pass only public product fields.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nextjs-routing-boundaries.md",
+        "applies": "nextjs-server-client-boundary"
+      },
+      "checks": [
+        "Traces client import graph and keeps privileged data server-side",
+        "Checks props action results HTML RSC source maps and public env",
+        "Uses a synthetic secret sentinel in actual build tests when available"
+      ]
+    },
+    {
+      "id": "tc-nextjs-server-client-boundary-neg-01",
+      "capability": "nextjs-server-client-boundary",
+      "polarity": "negative",
+      "context": "React SPA with no Next Server Components",
+      "prompt": "Fix local state in our Vite React SPA.",
+      "expect": {
+        "not_applies": "nextjs-server-client-boundary",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nextjs-routing-boundaries.md"
+      },
+      "checks": [
+        "Uses React local-state guidance without adding Next boundaries"
+      ]
+    },
+    {
+      "id": "tc-nextjs-server-functions-01",
+      "capability": "nextjs-server-functions",
+      "polarity": "positive",
+      "context": "Next 14 React 18 App Router with existing session/schema helpers and Server Actions",
+      "prompt": "Add a change-order Server Action with owner checks and safe validation errors.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nextjs-mutations.md",
+        "applies": "nextjs-server-functions"
+      },
+      "checks": [
+        "Authenticates and authorizes inside callable operation",
+        "Rejects forged owner/resource and denies writes before invalidation",
+        "Does not add React 19 action hooks or return ORM/secret data"
+      ]
+    },
+    {
+      "id": "tc-nextjs-server-functions-neg-01",
+      "capability": "nextjs-server-functions",
+      "polarity": "negative",
+      "context": "Next Pages API route with an existing public HTTP contract",
+      "prompt": "Keep the existing Pages API endpoint used by our external client.",
+      "expect": {
+        "not_applies": "nextjs-server-functions",
+        "skill": "chayen-backend",
+        "not_loads": "references/nextjs-mutations.md"
+      },
+      "checks": [
+        "Keeps existing HTTP handler contract rather than migrating to Server Actions"
+      ]
+    },
+    {
+      "id": "tc-nextjs-route-handlers-01",
+      "capability": "nextjs-route-handlers",
+      "polarity": "positive",
+      "context": "Next 15 App Router route handlers with async params and Node runtime",
+      "prompt": "Add a protected orders route handler and test 401 403 invalid JSON and successful access.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nextjs-mutations.md",
+        "applies": "nextjs-route-handlers"
+      },
+      "checks": [
+        "Matches installed async params and runtime",
+        "Tests direct protected handler success/malformed/denied methods",
+        "Preserves current CSRF and safe response/cache headers"
+      ]
+    },
+    {
+      "id": "tc-nextjs-route-handlers-neg-01",
+      "capability": "nextjs-route-handlers",
+      "polarity": "negative",
+      "context": "Next Pages API route using req/res and established tests",
+      "prompt": "Repair our existing pages/api/orders handler without changing routers.",
+      "expect": {
+        "not_applies": "nextjs-route-handlers",
+        "skill": "chayen-backend",
+        "not_loads": "references/nextjs-mutations.md"
+      },
+      "checks": [
+        "Preserves Pages req/res contract instead of applying App handler signatures"
+      ]
+    },
+    {
+      "id": "tc-nextjs-data-caching-01",
+      "capability": "nextjs-data-caching",
+      "polarity": "positive",
+      "context": "Next 14 explicit cached public catalog fetch with established revalidation tags",
+      "prompt": "Fix stale public catalog data after an authorized mutation without changing our cache architecture.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nextjs-data-auth.md",
+        "applies": "nextjs-data-caching"
+      },
+      "checks": [
+        "Detects precise version and actual stale cache layer",
+        "Invalidates only after authorized successful mutation",
+        "Tests failed save and two-user isolation through production fixture"
+      ]
+    },
+    {
+      "id": "tc-nextjs-data-caching-neg-01",
+      "capability": "nextjs-data-caching",
+      "polarity": "negative",
+      "context": "React client query cache with no Next server cache change",
+      "prompt": "Invalidate our React client TanStack Query after a form save.",
+      "expect": {
+        "not_applies": "nextjs-data-caching",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nextjs-data-auth.md"
+      },
+      "checks": [
+        "Uses installed client query invalidation instead of Next server cache APIs"
+      ]
+    },
+    {
+      "id": "tc-nextjs-authentication-01",
+      "capability": "nextjs-authentication",
+      "polarity": "positive",
+      "context": "Next 15 installed Auth.js session DAL and direct protected routes/actions",
+      "prompt": "Prevent logged-in users from changing another tenant orders, including direct action calls.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nextjs-data-auth.md",
+        "applies": "nextjs-authentication"
+      },
+      "checks": [
+        "Validates session and resource/tenant ownership at each server entry",
+        "Tests direct bypass of layout/proxy including expired/revoked sessions",
+        "Keeps existing provider and refuses browser-supplied roles as authority"
+      ]
+    },
+    {
+      "id": "tc-nextjs-authentication-neg-01",
+      "capability": "nextjs-authentication",
+      "polarity": "negative",
+      "context": "Read-only authentication architecture/security review",
+      "prompt": "Review identity-system architecture without code edits.",
+      "expect": {
+        "not_applies": "nextjs-authentication",
+        "skill": "chayen-security",
+        "not_loads": "references/nextjs-data-auth.md"
+      },
+      "checks": [
+        "Provides review guidance without mutating provider settings or code"
+      ]
+    },
+    {
+      "id": "tc-nextjs-rendering-seo-01",
+      "capability": "nextjs-rendering-seo",
+      "polarity": "positive",
+      "context": "Next 13 Pages Router next/head and getServerSideProps conventions",
+      "prompt": "Fix page title and canonical metadata in our Pages Router product pages.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nextjs-rendering-seo.md",
+        "applies": "nextjs-rendering-seo"
+      },
+      "checks": [
+        "Retains next/head and Pages rendering architecture",
+        "Checks response status metadata private data and canonical cases",
+        "Does not introduce App metadata APIs or claim hydration from snapshot"
+      ]
+    },
+    {
+      "id": "tc-nextjs-rendering-seo-neg-01",
+      "capability": "nextjs-rendering-seo",
+      "polarity": "negative",
+      "context": "Copy-only request with no Next implementation",
+      "prompt": "Write product marketing copy without changing application code.",
+      "expect": {
+        "not_applies": "nextjs-rendering-seo",
+        "skill": "none",
+        "not_loads": "references/nextjs-rendering-seo.md"
+      },
+      "checks": [
+        "Provides content drafting without Next implementation changes"
+      ]
+    },
+    {
+      "id": "tc-nextjs-deployment-testing-01",
+      "capability": "nextjs-deployment-testing",
+      "polarity": "positive",
+      "context": "Next 16 Node standalone output with CI build and separate ESLint/Jest scripts",
+      "prompt": "Validate our standalone Next production artifact locally and test protected routes; do not deploy.",
+      "expect": {
+        "skill": "chayen-devops",
+        "loads": "references/nextjs-deployment.md",
+        "applies": "nextjs-deployment-testing"
+      },
+      "checks": [
+        "Preserves configured output manager Node runtime and runners",
+        "Does not invent next lint or convert to static export",
+        "Tests built assets endpoints and secrets without publication"
+      ]
+    },
+    {
+      "id": "tc-nextjs-deployment-testing-neg-01",
+      "capability": "nextjs-deployment-testing",
+      "polarity": "negative",
+      "context": "Local UI edit without hosting or deployment artifact changes",
+      "prompt": "Add a label to our Next checkout component.",
+      "expect": {
+        "not_applies": "nextjs-deployment-testing",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nextjs-deployment.md"
+      },
+      "checks": [
+        "Uses frontend feature checks rather than changing deployment architecture"
+      ]
+    },
+    {
+      "id": "tc-react-component-patterns-class",
+      "capability": "react-component-patterns",
+      "polarity": "positive",
+      "context": "React 17 existing class component with established ref consumers",
+      "prompt": "Add an empty-state variant to our existing class-based order card without rewriting it.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-components-state.md",
+        "applies": "react-component-patterns"
+      },
+      "checks": [
+        "Preserves class and ref conventions",
+        "Does not convert to hooks or ref-as-prop incidentally",
+        "Tests current props/ref contract"
+      ]
+    },
+    {
+      "id": "tc-react-server-state-no-new-library",
+      "capability": "react-server-state",
+      "polarity": "positive",
+      "context": "React 18 existing service/hooks fetch layer with cancellation and no query/store library",
+      "prompt": "Fix stale data in our existing fetch hook without adding dependencies.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/react-data-forms.md",
+        "applies": "react-server-state"
+      },
+      "checks": [
+        "Extends current layer without installing TanStack Query or a store",
+        "Tests slow old response and unmount cleanup",
+        "Preserves visible errors and existing cache scope"
+      ]
+    },
+    {
+      "id": "tc-react-component-testing-jest",
+      "capability": "react-component-testing",
+      "polarity": "positive",
+      "context": "React 19 Jest Testing Library setup and existing user-event wrappers",
+      "prompt": "Add tests for rejected submission using our current Jest tools.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/react-testing.md",
+        "applies": "react-component-testing"
+      },
+      "checks": [
+        "Uses configured Jest setup and async assertions",
+        "Does not introduce Vitest or blanket snapshots",
+        "Reports actual configured command and counts"
+      ]
+    },
+    {
+      "id": "tc-nextjs-app-router-modern",
+      "capability": "nextjs-app-router",
+      "polarity": "positive",
+      "context": "Next 16 App Router with Promise params and existing error boundaries",
+      "prompt": "Add a dynamic App Router detail page using our installed request prop conventions.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nextjs-routing-boundaries.md",
+        "applies": "nextjs-app-router"
+      },
+      "checks": [
+        "Awaits supported params/searchParams per installed signature",
+        "Keeps existing layouts and loading/error behavior",
+        "Does not reuse Pages Router signatures"
+      ]
+    },
+    {
+      "id": "tc-nextjs-server-client-boundary-prerender",
+      "capability": "nextjs-server-client-boundary",
+      "polarity": "positive",
+      "context": "Next 15 Client Component reads window during initial prerender",
+      "prompt": "Fix the window-is-not-defined error in our use client component without moving the whole layout to the client.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nextjs-routing-boundaries.md",
+        "applies": "nextjs-server-client-boundary"
+      },
+      "checks": [
+        "Recognizes Client Components can prerender on the server",
+        "Uses supported lifecycle/loading boundary",
+        "Tests server render and hydration separately"
+      ]
+    },
+    {
+      "id": "tc-nextjs-server-functions-forged-owner",
+      "capability": "nextjs-server-functions",
+      "polarity": "positive",
+      "context": "Next 15 App Router direct exported action with browser-submitted hidden owner field",
+      "prompt": "Prevent direct callers from submitting another order id and forged owner to our save action.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nextjs-mutations.md",
+        "applies": "nextjs-server-functions"
+      },
+      "checks": [
+        "Derives identity from trusted server session",
+        "Checks the actual requested resource and tenant inside exported action",
+        "Asserts denied calls perform no write or cache invalidation"
+      ]
+    },
+    {
+      "id": "tc-nextjs-data-caching-cache-components",
+      "capability": "nextjs-data-caching",
+      "polarity": "positive",
+      "context": "Next 16 cacheComponents enabled with existing use cache and cacheLife policy",
+      "prompt": "Fix read-after-write freshness using our current Cache Components model without switching cache architecture.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nextjs-data-auth.md",
+        "applies": "nextjs-data-caching"
+      },
+      "checks": [
+        "Inspects cacheComponents and exact APIs before choosing invalidation",
+        "Distinguishes stale-while-revalidate and read-after-write requirements",
+        "Tests production reuse invalidation and user isolation rather than old flags blindly"
+      ]
+    },
+    {
+      "id": "tc-nextjs-authentication-bypass-proxy",
+      "capability": "nextjs-authentication",
+      "polarity": "positive",
+      "context": "Next 16 proxy redirects protected pages but route/action lacks resource auth; installed session provider",
+      "prompt": "Protect our directly callable action and route even when the page proxy is bypassed.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nextjs-data-auth.md",
+        "applies": "nextjs-authentication"
+      },
+      "checks": [
+        "Authenticates and authorizes each server entrypoint",
+        "Tests anonymous expired revoked wrong-tenant and forbidden direct calls",
+        "Does not regard layout or proxy redirect as access enforcement"
       ]
     }
   ]

@@ -5,9 +5,9 @@ recipes. Nothing here is shipped in the plugin.
 
 | File | Level | Used by |
 |---|---|---|
-| `trigger-cases.json` | Entry skill: 150 prompts; 142 through Step 20, plus 8 Angular/TS/JS prompts in Step 21 | `tools/evals/generate-claude-evals.mjs` (Claude evals), `tests/routing/run-smoke.mjs` (Codex and Copilot), validator V-16; new evaluations NOT_RUN |
+| `trigger-cases.json` | Entry skill: 158 prompts; 150 through Step 21, plus 8 React/Next.js prompts in Step 22 | `tools/evals/generate-claude-evals.mjs` (Claude evals), `tests/routing/run-smoke.mjs` (Codex and Copilot), validator V-16; new evaluations NOT_RUN |
 | `recipe-cases.json` | Capability recipe: 445 cases (Steps 08–18), at least 1 positive and 1 negative per capability listed in an existing recipe (SKILL_AUTHORING_STANDARD §8, RC-09) | Validator V-22. Execution: NOT_RUN. There is no runner or fixture repository yet (SKILL_QUALITY_GATES G-12). |
-| `technology-cases.json` | Technology capability: 109 cases (57 .NET plus 52 Angular/TS/JS), at least 1 positive and 1 negative per capability with explicit repository context; Step 21 covers all four managers and legacy/modern Angular conventions | Validator V-23.7 (`tools/catalog/check-technology.mjs`). Agent execution: NOT_RUN (G-12). Framework facts are separate. |
+| `technology-cases.json` | Technology capability: 149 cases (57 .NET, 52 Angular/TS/JS, 40 React/Next.js); explicit context and positive/negative specs per capability, including older/newer frameworks, routing/library preservation, and server boundaries | Validator V-23.7 (`tools/catalog/check-technology.mjs`). Agent execution: NOT_RUN (G-12). Framework/synthetic boundary checks are separate. |
 | `validator-mutations.json` | 32 negative controls for `tools/validate/validate-package.mjs` | `tools/validate/run-validator-tests.mjs` (G-13) |
 
 **Rules for recipe cases:**

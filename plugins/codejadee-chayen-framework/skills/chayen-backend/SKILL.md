@@ -89,6 +89,8 @@ If the request does not fit, stop following this skill and continue normally wit
    reference, plus the data access reference if a database is involved.
    For ASP.NET Core, read the base reference first, then only the one
    topic file the task needs.
+   For Next.js, use nextjs-server as the base instead of node-servers, then
+   only the relevant mutations or data/auth topic from References.
 2. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -181,6 +183,9 @@ Load one technology reference for the detected stack (workflow step 1), and one 
 | [references/aspnetcore-data-access.md](references/aspnetcore-data-access.md) | ASP.NET Core, and the task reads or writes data through EF Core, Dapper, or ADO.NET |
 | [references/aspnetcore-background-services.md](references/aspnetcore-background-services.md) | ASP.NET Core or a .NET worker, and the task touches hosted services, queues, or scheduled work |
 | [references/node-servers.md](references/node-servers.md) | Nitro, Elysia, Next.js route handlers, or Nuxt `server/` is detected |
+| [references/nextjs-server.md](references/nextjs-server.md) | Next.js server work needs version, router, runtime, identity, cache, or secret-boundary detection |
+| [references/nextjs-mutations.md](references/nextjs-mutations.md) | Next.js Server Functions or App Router HTTP handlers need validation, authorization, or mutation behavior |
+| [references/nextjs-data-auth.md](references/nextjs-data-auth.md) | Next.js data caching, invalidation, authentication, session, or resource authorization is involved |
 | [references/python-web-apis.md](references/python-web-apis.md) | FastAPI, Django, or Flask is detected |
 | [references/data-access.md](references/data-access.md) | A database, ORM, SQL, or migration is involved |
 | [references/api-design.md](references/api-design.md) | Designing a new API contract, versioning one, or evolving a GraphQL schema |

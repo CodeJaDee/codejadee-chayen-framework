@@ -30,6 +30,12 @@ implementation skill's types, runtime, and workspace topics. These load only
 for the matching task after version and project-convention detection. General
 workflow stays in existing recipes; no entry-skill description was changed.
 
+React adds 8 capabilities across frontend and testing; Next.js adds 8 across
+frontend, backend, and devops. Topics preserve the installed router, state,
+forms, runtime, and test tools, and validate privileged operations at server
+boundaries. Bases and relevant topics load conditionally; no new skill or
+description change was introduced for these packs.
+
 | Skill | Scope |
 |---|---|
 | `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt and its proposed priority, legacy assessment, unknowns |

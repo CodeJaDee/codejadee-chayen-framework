@@ -42,8 +42,12 @@ kind: technology
   (`await params`). Check the installed version and the existing handlers.
 - **Server Actions** need the same validation and authorization as route
   handlers. Treat them as public endpoints.
-- **Secrets:** only `NEXT_PUBLIC_*` variables reach the browser. Never put
-  secrets in them.
+- **Secrets:** `NEXT_PUBLIC_*` values are public; client imports, next.config
+  env, serialized props/results, HTML/RSC payloads, and source maps can also
+  expose data. Keep privileged values out of every client path.
+- For Next.js, load `nextjs-server.md` plus the relevant mutations or
+  data/auth topic. Preserve App/Pages Router architecture and check the
+  resolved version, cache model, request APIs, and current runtime.
 
 ## Elysia (Bun)
 

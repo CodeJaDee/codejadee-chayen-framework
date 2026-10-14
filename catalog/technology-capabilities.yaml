@@ -6,12 +6,14 @@
 # the model never reads it. Each record maps a capability to the entry skill
 # and the technology reference section that implements it (D-039).
 #
-# Inventory sources: user Steps 20–21 (2026-10-15): 22 .NET capabilities,
-# 14 Angular and 8 shared TypeScript/JavaScript names, verbatim.
+# Inventory sources: user Steps 20–22 (2026-10-15): 22 .NET,
+# 14 Angular, 8 shared TS/JS, 8 React and 8 Next.js names, verbatim.
 #
 # Check:  node tools/catalog/check-technology.mjs
 # Guide:  docs/chayen/TECHNOLOGY_COVERAGE.md
 # Facts:  node tests/technology/dotnet/run-fact-checks.mjs
+#         node tests/technology/angular-typescript/run-fact-checks.mjs
+#         node tests/technology/react-nextjs/run-fact-checks.mjs (includes synthetic boundary checks)
 #
 # Format: the same restricted YAML subset as engineering-capabilities.yaml
 # (D-021). Reference paths are relative to catalog.plugin_root.
@@ -54,6 +56,22 @@ packs:
     expected_capabilities: 8
     detection: "package.json, resolved TypeScript and runtime versions, effective tsconfig, package-manager and CI evidence"
     fact_checks: tests/technology/angular-typescript/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: react
+    title: "React component and application engineering"
+    technologies: [react]
+    expected_capabilities: 8
+    detection: "Resolved react/react-dom, installed router/state/forms and configured runners; React does not imply Next"
+    fact_checks: tests/technology/react-nextjs/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: nextjs
+    title: "Next.js routing, server boundaries, data and deployment"
+    technologies: [nextjs]
+    expected_capabilities: 8
+    detection: "Resolved Next/React/runtime versions, App/Pages feature owner, next.config cache/output settings, session and test tools"
+    fact_checks: tests/technology/react-nextjs/run-fact-checks.mjs
     status: IMPLEMENTED
 
 capabilities:
@@ -1053,4 +1071,356 @@ capabilities:
     fact_checks: [JF-08]
     verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-08; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
     verification_evidence: "Step 21: implementation in mapped section; cases tc-typescript-config-review-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-001
+    name: react-component-patterns
+    pack: react
+    technology: react
+    purpose: "Implement component contracts with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "Building, composing, or splitting React components with concrete props and user interactions."
+    not_when: "Only defining TypeScript wire models; use shared type and API-model guidance instead."
+    inputs:
+      - "React 18 function components with forwardRef and npm lock"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/react-components-state.md
+    section: "Component contracts (react-component-patterns)"
+    engineering_capabilities: [CAP-07-002]
+    fact_checks: [RF-01]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-component-patterns-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-002
+    name: react-state-effects
+    pack: react
+    technology: react
+    purpose: "Implement owned state and synchronization with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "React local/shared state or effects have stale values, redundant derivation, cleanup, or update-order defects."
+    not_when: "Fetching server data through an existing query library; use server-state guidance instead."
+    inputs:
+      - "React 17 Redux Toolkit feature with StrictMode and hook linting"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/react-components-state.md
+    section: "Owned state and synchronization (react-state-effects)"
+    engineering_capabilities: [CAP-07-003]
+    fact_checks: [RF-02]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-state-effects-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-003
+    name: react-server-state
+    pack: react
+    technology: react
+    purpose: "Implement remote state ownership with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "React views load or mutate remote data and need consistent caching, pending, error, or refresh behavior."
+    not_when: "Configuring Next.js persistent server caches; use Next.js server caching guidance instead."
+    inputs:
+      - "React 18 TanStack Query 5 with account-aware query keys and Vitest"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/react-data-forms.md
+    section: "Remote state ownership (react-server-state)"
+    engineering_capabilities: [CAP-07-003]
+    fact_checks: [RF-03]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-server-state-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-004
+    name: react-form-handling
+    pack: react
+    technology: react
+    purpose: "Implement user input and submission with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "React forms need validation, field behavior, submission status, or integration with existing controls."
+    not_when: "Only implementing a server mutation entrypoint; use server-functions or handler guidance instead."
+    inputs:
+      - "React 18 React Hook Form 7 with existing schema and Jest"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/react-data-forms.md
+    section: "User input and submission (react-form-handling)"
+    engineering_capabilities: [CAP-07-004]
+    fact_checks: [RF-04]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-form-handling-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-005
+    name: react-routing
+    pack: react
+    technology: react
+    purpose: "Implement existing routing architecture with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "A React application using an installed client router needs route, navigation, loader, or URL-state changes."
+    not_when: "Editing a Next.js App Router segment; use App Router guidance instead."
+    inputs:
+      - "Vite React 18 app using React Router 6 data-router mode"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/react-navigation-accessibility.md
+    section: "Existing routing architecture (react-routing)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [RF-05]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-routing-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-006
+    name: react-render-optimization
+    pack: react
+    technology: react
+    purpose: "Implement measured render changes with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "A React view has measured unnecessary render work or interaction latency tied to component updates."
+    not_when: "Diagnosing backend latency without render evidence; use performance investigation instead."
+    inputs:
+      - "React 19 app with Compiler configured and browser profiler baseline"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/react-rendering.md
+    section: "Measured render changes (react-render-optimization)"
+    engineering_capabilities: [CAP-07-007]
+    fact_checks: [RF-06]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-render-optimization-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-007
+    name: react-component-testing
+    pack: react
+    technology: react
+    purpose: "Implement observable component behavior with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "React component tests need user interactions, async behavior, state boundaries, or failure regression coverage."
+    not_when: "Implementing production UI as the main task; use the frontend feature workflow with its normal verification instead."
+    inputs:
+      - "React 18 Vitest Testing Library user-event with existing query/router wrappers"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-testing
+    reference: skills/chayen-testing/references/react-testing.md
+    section: "Observable component behavior (react-component-testing)"
+    engineering_capabilities: [CAP-10-002]
+    fact_checks: [RF-07]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-component-testing-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-REACT-008
+    name: react-accessibility
+    pack: react
+    technology: react
+    purpose: "Implement accessible react controls with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "React controls, forms, dialogs, or dynamic navigation need accessible names, keyboard behavior, or focus management."
+    not_when: "Creating design-only images or mockups without code; use design guidance instead."
+    inputs:
+      - "React 17 existing accessible dialog primitives and Playwright checks"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/react-navigation-accessibility.md
+    section: "Accessible React controls (react-accessibility)"
+    engineering_capabilities: [CAP-07-006]
+    fact_checks: [RF-08]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-react-accessibility-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-001
+    name: nextjs-app-router
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement app router segments with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "An existing Next.js App Router feature needs pages, layouts, loading/error boundaries, or navigation changes."
+    not_when: "Editing a Pages Router feature; retain its existing page and API conventions instead."
+    inputs:
+      - "Next 14 mixed App and Pages app with affected feature in app/orders"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/nextjs-routing-boundaries.md
+    section: "App Router segments (nextjs-app-router)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [NF-01]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-app-router-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-002
+    name: nextjs-server-client-boundary
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement server and client imports with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "Next.js App Router imports, props, hooks, or sensitive data cross Server/Client Component boundaries."
+    not_when: "A Vite React SPA needs a local state fix; use React state guidance instead."
+    inputs:
+      - "Next 16 App Router with server DAL and small client buttons"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/nextjs-routing-boundaries.md
+    section: "Server and client imports (nextjs-server-client-boundary)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [NF-02]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-server-client-boundary-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-003
+    name: nextjs-server-functions
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement callable server mutations with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "A supported Next.js App Router feature needs a Server Function or form action for a concrete read/write operation."
+    not_when: "An existing Pages API or external HTTP client owns the operation; keep its handler contract instead."
+    inputs:
+      - "Next 14 React 18 App Router with existing session/schema helpers and Server Actions"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/nextjs-mutations.md
+    section: "Callable server mutations (nextjs-server-functions)"
+    engineering_capabilities: [CAP-06-002]
+    fact_checks: [NF-03]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-server-functions-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-004
+    name: nextjs-route-handlers
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement http entrypoints with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "Next.js App Router route handlers need request validation, response contracts, or server integration behavior."
+    not_when: "The feature uses Pages API routes; keep that existing handler shape and general API recipe instead."
+    inputs:
+      - "Next 15 App Router route handlers with async params and Node runtime"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/nextjs-mutations.md
+    section: "HTTP entrypoints (nextjs-route-handlers)"
+    engineering_capabilities: [CAP-06-002]
+    fact_checks: [NF-04]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-route-handlers-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-005
+    name: nextjs-data-caching
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement cache scope and invalidation with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "Next.js server data freshness, persistent caching, invalidation, or identity isolation needs a concrete change."
+    not_when: "React client query-cache behavior alone is affected; use React server-state guidance instead."
+    inputs:
+      - "Next 14 explicit cached public catalog fetch with established revalidation tags"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/nextjs-data-auth.md
+    section: "Cache scope and invalidation (nextjs-data-caching)"
+    engineering_capabilities: [CAP-12-009]
+    fact_checks: [NF-05]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-data-caching-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-006
+    name: nextjs-authentication
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement server authentication and resource access with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "Next.js protected reads, handlers, or Server Functions need authentication and resource/tenant authorization guidance or implementation."
+    not_when: "Auditing identity-system architecture without code changes; use security review or architecture planning instead."
+    inputs:
+      - "Next 15 installed Auth.js session DAL and direct protected routes/actions"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/nextjs-data-auth.md
+    section: "Server authentication and resource access (nextjs-authentication)"
+    engineering_capabilities: [CAP-06-005]
+    fact_checks: [NF-06]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-authentication-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-007
+    name: nextjs-rendering-seo
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement rendering and search metadata with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "A Next.js page needs compatible rendering behavior, metadata, crawlable content, or SEO-related correction."
+    not_when: "Only writing marketing copy without application code; use content guidance instead."
+    inputs:
+      - "Next 13 Pages Router next/head and getServerSideProps conventions"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/nextjs-rendering-seo.md
+    section: "Rendering and search metadata (nextjs-rendering-seo)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [NF-07]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-rendering-seo-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-NEXTJS-008
+    name: nextjs-deployment-testing
+    pack: nextjs
+    technology: nextjs
+    purpose: "Implement production artifact checks with the project's resolved versions, established routing and library conventions, safe execution boundaries, and observable verification evidence."
+    applies_when: "A Next.js production artifact, hosting mode, or deployment test plan needs a concrete validation or repair."
+    not_when: "Implementing a page/component alone; use frontend guidance and its build checks instead."
+    inputs:
+      - "Next 16 Node standalone output with CI build and separate ESLint/Jest scripts"
+      - "Affected source and public contracts, installed libraries, actual package manager, configured build and test commands"
+    outputs:
+      - "Scoped implementation preserving existing router, state library and execution boundaries"
+      - "Positive/negative boundary tests, exact commands, PASS/FAIL/NOT_RUN evidence and remaining limits"
+    entry_skill: chayen-devops
+    reference: skills/chayen-devops/references/nextjs-deployment.md
+    section: "Production artifact checks (nextjs-deployment-testing)"
+    engineering_capabilities: [CAP-13-010]
+    fact_checks: [NF-08]
+    verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-deployment-testing-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
     status: IMPLEMENTED

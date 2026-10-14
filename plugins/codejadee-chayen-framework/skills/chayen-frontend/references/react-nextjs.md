@@ -6,11 +6,32 @@ kind: technology
 **Applies to:** React applications built with Vite, Next.js, or another
 bundler.
 
-- Read the `react` and `next` major versions first.
+- Read resolved `react`, `react-dom`, and `next` versions first, along with
+  the installed router, state, form, validation, and testing libraries.
+  Manifest ranges alone do not prove installed API support.
 - Hooks such as `useActionState` or `use`, Server Components, and caching
   defaults all depend on the version.
 
 ## Check the repository first
+
+Compare packageManager, lockfile, workspace, and CI evidence for npm, pnpm,
+Yarn, or Bun; resolve conflicting evidence before dependency edits. Use the
+configured build, typecheck, lint, and test scripts, not assumed npm commands.
+Inspect next.config, React Compiler, StrictMode, cacheComponents, and target
+runtime when present. React alone does not imply Next.js or a client router.
+
+Load this base plus the relevant topic only: `react-components-state.md`,
+`react-data-forms.md`, `react-navigation-accessibility.md`, `react-rendering.md`,
+`nextjs-routing-boundaries.md`, or `nextjs-rendering-seo.md`. Keep workflow in
+the matching feature, component, form, accessibility, or performance recipe.
+
+| Version/convention signal | Preserve or check |
+|---|---|
+| Existing classes, hooks, refs | Retain local conventions; hooks need React 16.8+, ref-as-prop differs in React 19 |
+| Existing state/query/forms | Extend installed tools; no new store, query, or form library without need and authorization |
+| Next Pages Router | Keep pages/api, page data functions, and next/head; no incidental App Router migration |
+| Next App Router | Keep server/client ownership, compatible request APIs, and current route structure |
+| Newer Next/React APIs | Check exact versions before useActionState, async request props, cache APIs, or Compiler assumptions |
 
 | Area | What to look for |
 |---|---|
@@ -64,8 +85,17 @@ bundler.
   - Stale data after a mutation usually means a missing revalidation.
 - **Dynamic `params`/`searchParams`** are asynchronous in recent versions.
   Follow the existing pages.
-- **Only `NEXT_PUBLIC_*` variables are exposed to the browser.** Never put
-  secrets in them.
+- `NEXT_PUBLIC_*` values are public, and `next.config` env, client imports,
+  props, action results, source maps, HTML and RSC payloads can also expose
+  data. Keep server credentials and privileged modules out of all these paths;
+  inspect names and locations without printing values. A server-only module
+  guard helps catch imports but does not prevent unsafe serialized props.
+- A Client Component may be prerendered on the server. Keep browser globals
+  behind the supported lifecycle/loading boundary rather than reading them
+  during initial render.
+- Protected operations authenticate, validate, and authorize on the actual
+  server action/handler/data boundary. Client guards, hidden buttons, and
+  layout or middleware/proxy redirects are not substitutes.
 
 ### Vite specifics
 
@@ -82,10 +112,16 @@ bundler.
 
 ## Verification commands
 
+Use the detected manager and configured scripts first. These npm commands
+are examples only for projects that configure them; never download a global
+compiler or invent a lint target. Test-only React requests use the testing
+workflow. Next server-only work uses the backend workflow, and deployment
+validation uses the devops workflow.
+
 ```bash
 npm run build
 npm run lint
-npx tsc --noEmit       # if no typecheck script
+tsc --noEmit           # only with the existing local compiler/configuration
 npm test               # Vitest or Jest; use run mode, not watch
 ```
 

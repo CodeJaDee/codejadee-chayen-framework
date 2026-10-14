@@ -2,7 +2,7 @@
 // Developer-only checker for the technology capability catalog (V-23, D-039).
 // Zero dependencies (Node.js >= 18). Never shipped.
 //
-// Checks catalog/technology-capabilities.yaml against the user's Steps 20–21
+// Checks catalog/technology-capabilities.yaml against the user's Steps 20–22
 // inventory, the shipped technology reference sections, the evaluation cases
 // in tests/skills/technology-cases.json, the engineering catalog, and the
 // framework fact-check lists. Optionally regenerates the tables in
@@ -19,7 +19,7 @@ const argv = process.argv.slice(2);
 const root = argv.includes("--root") ? path.resolve(argv[argv.indexOf("--root") + 1]) : path.resolve(import.meta.dirname, "..", "..");
 const writeDoc = argv.includes("--write-doc");
 
-// The user's Steps 20–21 inventories (2026-10-15), verbatim and in order.
+// The user's Steps 20–22 inventories (2026-10-15), verbatim and in order.
 const INVENTORY = {
   "dotnet-aspnetcore": {
     csharp: ["csharp-nullability", "csharp-async-concurrency", "csharp-memory-disposal", "csharp-linq-optimization",
@@ -38,11 +38,21 @@ const INVENTORY = {
     "typescript-javascript": ["typescript-type-safety", "typescript-api-modeling", "javascript-async-control",
       "javascript-runtime-compatibility", "esm-cjs-interop", "package-manager-integrity", "typescript-monorepo", "typescript-config-review"],
   },
+  react: {
+    react: ["react-component-patterns", "react-state-effects", "react-server-state", "react-form-handling",
+      "react-routing", "react-render-optimization", "react-component-testing", "react-accessibility"],
+  },
+  nextjs: {
+    nextjs: ["nextjs-app-router", "nextjs-server-client-boundary", "nextjs-server-functions", "nextjs-route-handlers",
+      "nextjs-data-caching", "nextjs-authentication", "nextjs-rendering-seo", "nextjs-deployment-testing"],
+  },
 };
 const FACT_FILES = {
   "dotnet-aspnetcore": "tests/technology/dotnet/run-fact-checks.mjs",
   angular: "tests/technology/angular-typescript/run-fact-checks.mjs",
   "typescript-javascript": "tests/technology/angular-typescript/run-fact-checks.mjs",
+  react: "tests/technology/react-nextjs/run-fact-checks.mjs",
+  nextjs: "tests/technology/react-nextjs/run-fact-checks.mjs",
 };
 const DOC = "docs/chayen/TECHNOLOGY_COVERAGE.md";
 const BEGIN = "<!-- BEGIN GENERATED: check-technology -->", END = "<!-- END GENERATED: check-technology -->";
@@ -91,7 +101,7 @@ const STATUS = new Set(cat.status_vocabulary ?? []);
     if (names.has(x.name)) error(c, `duplicate name ${x.name}`); names.add(x.name);
     if (!packs.has(x.pack)) error(c, `${x.id}: unknown pack ${x.pack}`);
   }
-  if (!has(c)) pass(c, `${caps.length} records match the Steps 20–21 inventories exactly (names, order, technology); ids and names unique`);
+  if (!has(c)) pass(c, `${caps.length} records match the Steps 20–22 inventories exactly (names, order, technology); ids and names unique`);
 }
 
 { // V-23.2 record fields and status
@@ -149,7 +159,7 @@ const sections = {};
   const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith(".md") ? [path.join(d, e.name)] : []));
   for (const f of walk(path.join(root, pluginRoot, "skills"))) {
     const rel = path.relative(path.join(root, pluginRoot), f).split(path.sep).join("/");
-    for (const m of fs.readFileSync(f, "utf8").replace(/\r\n/g, "\n").matchAll(/^## .*\(((?:csharp|aspnet|angular|typescript|javascript|esm|package)-[a-z0-9-]+)\)\s*$/gm)) {
+    for (const m of fs.readFileSync(f, "utf8").replace(/\r\n/g, "\n").matchAll(/^## .*\(((?:csharp|aspnet|angular|typescript|javascript|esm|package|react|nextjs)-[a-z0-9-]+)\)\s*$/gm)) {
       (seen[m[1]] ??= []).push(rel);
       if (!names.has(m[1])) error(c, `${rel}: section for "${m[1]}" has no catalog record (orphan)`);
     }
@@ -239,7 +249,7 @@ const caseCount = {};
   const c = "V-23.8 facts";
   for (const [packId, rel] of Object.entries(FACT_FILES)) {
     if (!exists(rel)) { error(c, `${packId}: ${rel} is missing`); continue; }
-    const allFacts = new Map([...read(rel).matchAll(/"((?:TF|AF|JF)-\d{2})": \["([a-z0-9-]+)"/g)].map((m) => [m[1], m[2]]));
+    const allFacts = new Map([...read(rel).matchAll(/"((?:TF|AF|JF|RF|NF)-\d{2})": \["([a-z0-9-]+)"/g)].map((m) => [m[1], m[2]]));
     const packCaps = caps.filter((x) => x.pack === packId);
     const packNames = new Set(packCaps.map((x) => x.name));
     const facts = new Map([...allFacts].filter(([, name]) => packNames.has(name)));
@@ -250,7 +260,7 @@ const caseCount = {};
       if (!x) error(c, `${rel}: ${f} names unknown capability ${name}`);
       else if (!(x.fact_checks ?? []).includes(f)) error(c, `${x.id}: does not list its fact ${f}`);
     }
-    if (!has(c)) pass(c, `${packId}: ${facts.size} framework facts defined; every record's facts exist and every fact is listed by its capability`);
+    if (!has(c)) pass(c, `${packId}: ${facts.size} fact checks defined; every record's facts exist and every fact is listed by its capability`);
   }
 }
 
