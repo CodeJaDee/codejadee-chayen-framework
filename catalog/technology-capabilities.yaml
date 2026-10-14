@@ -6,8 +6,8 @@
 # the model never reads it. Each record maps a capability to the entry skill
 # and the technology reference section that implements it (D-039).
 #
-# Inventory source: the user's Step 20 prompt (2026-10-15): 8 C# and 14
-# ASP.NET Core capability names, verbatim. The checker compares against it.
+# Inventory sources: user Steps 20–21 (2026-10-15): 22 .NET capabilities,
+# 14 Angular and 8 shared TypeScript/JavaScript names, verbatim.
 #
 # Check:  node tools/catalog/check-technology.mjs
 # Guide:  docs/chayen/TECHNOLOGY_COVERAGE.md
@@ -38,6 +38,22 @@ packs:
     expected_capabilities: 22
     detection: "A .csproj or Directory.Build.props; Microsoft.NET.Sdk.Web for ASP.NET Core; TargetFramework and global.json for the version"
     fact_checks: tests/technology/dotnet/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: angular
+    title: "Angular application engineering"
+    technologies: [angular]
+    expected_capabilities: 14
+    detection: "Resolved @angular/core version, bootstrap and component/module conventions, angular.json or workspace targets"
+    fact_checks: tests/technology/angular-typescript/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: typescript-javascript
+    title: "Shared TypeScript and JavaScript engineering"
+    technologies: [typescript-javascript]
+    expected_capabilities: 8
+    detection: "package.json, resolved TypeScript and runtime versions, effective tsconfig, package-manager and CI evidence"
+    fact_checks: tests/technology/angular-typescript/run-fact-checks.mjs
     status: IMPLEMENTED
 
 capabilities:
@@ -553,4 +569,488 @@ capabilities:
     fact_checks: [TF-26]
     verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-devops; framework facts TF-26 by run-fact-checks.mjs."
     verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-hosting-deployment-* in tests/skills/technology-cases.json; framework facts TF-26 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-001
+    name: angular-component-design
+    pack: angular
+    technology: angular
+    purpose: "Implement component boundaries using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Building or splitting Angular components with a concrete user interaction and public contract."
+    not_when: "Only changing a shared TypeScript model; use language guidance instead."
+    inputs:
+      - "Angular 15 NgModule app with decorator inputs and npm lock"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-components.md
+    section: "Component boundaries (angular-component-design)"
+    engineering_capabilities: [CAP-07-002]
+    fact_checks: [AF-01]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-01; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-component-design-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-002
+    name: angular-signals
+    pack: angular
+    technology: angular
+    purpose: "Implement signal state using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "An Angular feature already uses signals or explicitly requests a compatible signal implementation."
+    not_when: "A legacy Observable feature needs a small fix; retain its RxJS approach instead."
+    inputs:
+      - "Angular 18 standalone app already using signal and computed with pnpm"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-reactivity.md
+    section: "Signal state (angular-signals)"
+    engineering_capabilities: [CAP-07-004]
+    fact_checks: [AF-02]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-02; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-signals-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-003
+    name: angular-rxjs-interop
+    pack: angular
+    technology: angular
+    purpose: "Implement observable boundaries using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular views bridge existing Observable streams and signals or need reliable subscription teardown."
+    not_when: "Only fixing a plain JavaScript Promise chain; use async-control guidance instead."
+    inputs:
+      - "Angular 17 app using signals and RxJS 7 with cancellable search requests"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-reactivity.md
+    section: "Observable boundaries (angular-rxjs-interop)"
+    engineering_capabilities: [CAP-07-004]
+    fact_checks: [AF-03]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-03; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-rxjs-interop-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-004
+    name: angular-state-management
+    pack: angular
+    technology: angular
+    purpose: "Implement state ownership using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular feature state needs consistent ownership, transitions, or integration with an existing store."
+    not_when: "Choosing a new system-wide architecture; use architecture planning before installing a store."
+    inputs:
+      - "Angular 16 app using NgRx effects and selectors with pnpm"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-reactivity.md
+    section: "State ownership (angular-state-management)"
+    engineering_capabilities: [CAP-07-004]
+    fact_checks: [AF-04]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-04; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-state-management-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-005
+    name: angular-routing
+    pack: angular
+    technology: angular
+    purpose: "Implement navigation contracts using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular route configuration, lazy loading, guards, resolvers, or navigation behavior needs implementation or repair."
+    not_when: "Implementing server authorization alone; use backend security guidance instead."
+    inputs:
+      - "Angular 15 NgModule routes and class guards using Yarn Classic"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-navigation-http.md
+    section: "Navigation contracts (angular-routing)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [AF-05]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-05; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-routing-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-006
+    name: angular-http-client
+    pack: angular
+    technology: angular
+    purpose: "Implement client requests using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular HttpClient services, interceptors, request cancellation, or response handling needs a concrete change."
+    not_when: "Defining a server-only API endpoint; use backend API guidance instead."
+    inputs:
+      - "Angular 18 functional HttpClient providers and RxJS services using npm"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-navigation-http.md
+    section: "Client requests (angular-http-client)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [AF-06]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-06; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-http-client-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-007
+    name: angular-forms
+    pack: angular
+    technology: angular
+    purpose: "Implement form contracts using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular forms need controls, validation, submission handling, or integration with existing field components."
+    not_when: "Only changing backend validation rules; use backend validation guidance instead."
+    inputs:
+      - "Angular 14 typed reactive forms with custom ControlValueAccessor and Karma"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-forms-accessibility.md
+    section: "Form contracts (angular-forms)"
+    engineering_capabilities: [CAP-07-003]
+    fact_checks: [AF-07]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-07; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-forms-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-008
+    name: angular-template-control-flow
+    pack: angular
+    technology: angular
+    purpose: "Implement template branches and lists using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular templates need conditional, repeated, or mutually exclusive views with stable identity."
+    not_when: "The issue is asynchronous request ordering; use RxJS interop guidance instead."
+    inputs:
+      - "Angular 16 templates with ngFor trackBy and CommonModule"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-components.md
+    section: "Template branches and lists (angular-template-control-flow)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [AF-08]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-08; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-template-control-flow-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-009
+    name: angular-dependency-injection
+    pack: angular
+    technology: angular
+    purpose: "Implement injector ownership using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular services, tokens, providers, or injector boundaries produce incorrect lifetime or resolution behavior."
+    not_when: "The request only designs backend dependency injection; use backend guidance instead."
+    inputs:
+      - "Angular 18 feature with root store and per-dialog component providers"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-components.md
+    section: "Injector ownership (angular-dependency-injection)"
+    engineering_capabilities: [CAP-07-002]
+    fact_checks: [AF-09]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-09; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-dependency-injection-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-010
+    name: angular-change-detection
+    pack: angular
+    technology: angular
+    purpose: "Implement rendering notifications using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular views render stale values or excessive work and change-notification behavior is implicated."
+    not_when: "Investigating server latency without browser evidence; use performance measurement instead."
+    inputs:
+      - "Angular 19 OnPush app with Zone.js and external widget callbacks"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-reactivity.md
+    section: "Rendering notifications (angular-change-detection)"
+    engineering_capabilities: [CAP-07-008]
+    fact_checks: [AF-10]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-10; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-change-detection-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-011
+    name: angular-ssr-hydration
+    pack: angular
+    technology: angular
+    purpose: "Implement server render and client reuse using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "An Angular application already uses SSR or explicitly requests compatible SSR and hydration behavior."
+    not_when: "A browser-only SPA needs a small UI fix; keep its current rendering model instead."
+    inputs:
+      - "Angular 18 SSR with hydration and browser-only storage access"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-ssr-upgrades.md
+    section: "Server render and client reuse (angular-ssr-hydration)"
+    engineering_capabilities: [CAP-07-008]
+    fact_checks: [AF-11]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-11; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-ssr-hydration-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-012
+    name: angular-testing
+    pack: angular
+    technology: angular
+    purpose: "Implement angular behavior tests using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Writing, repairing, or selecting tests for Angular components, services, routes, forms, or HTTP behavior."
+    not_when: "Implementing production UI without a test-only request; use the frontend workflow with its existing tests instead."
+    inputs:
+      - "Angular 16 NgModule app with Karma Jasmine and HttpClientTestingModule"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-testing
+    reference: skills/chayen-testing/references/angular-testing.md
+    section: "Angular behavior tests (angular-testing)"
+    engineering_capabilities: [CAP-10-002]
+    fact_checks: [AF-12]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-12; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-testing-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-013
+    name: angular-accessibility
+    pack: angular
+    technology: angular
+    purpose: "Implement accessible angular views using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Angular controls, validation, navigation, or dynamic content need accessible semantics and user interaction."
+    not_when: "Only producing a visual mockup without code; use design guidance instead."
+    inputs:
+      - "Angular 18 design system with CDK and Playwright accessibility checks"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-forms-accessibility.md
+    section: "Accessible Angular views (angular-accessibility)"
+    engineering_capabilities: [CAP-07-006]
+    fact_checks: [AF-13]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-13; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-accessibility-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-ANGULAR-014
+    name: angular-upgrade-migration
+    pack: angular
+    technology: angular
+    purpose: "Implement requested upgrades using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "The user requests an Angular upgrade or a specific compatible migration with defined scope."
+    not_when: "Only planning migration options without edits; use architecture migration planning instead."
+    inputs:
+      - "Angular 16 npm workspace targeting Angular 17 with RxJS and Karma"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/angular-ssr-upgrades.md
+    section: "Requested upgrades (angular-upgrade-migration)"
+    engineering_capabilities: [CAP-05-008]
+    fact_checks: [AF-14]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts AF-14; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-angular-upgrade-migration-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-001
+    name: typescript-type-safety
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement safe narrowing using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "TypeScript code has unsafe narrowing, null handling, broad any values, or incorrect type contracts."
+    not_when: "A plain JavaScript file needs a runtime bug fix only; use its existing JavaScript conventions instead."
+    inputs:
+      - "TypeScript 5.4 Node library with strictNullChecks and unknown JSON"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/typescript-types.md
+    section: "Safe narrowing (typescript-type-safety)"
+    engineering_capabilities: [CAP-05-002]
+    fact_checks: [JF-01]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-01; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-typescript-type-safety-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-002
+    name: typescript-api-modeling
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement api representation using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "TypeScript request/response models, generated client contracts, or domain mappings need implementation or correction."
+    not_when: "Designing the server protocol without code changes; use API or architecture planning instead."
+    inputs:
+      - "TypeScript 5.4 generated OpenAPI client with existing decoder"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/typescript-types.md
+    section: "API representation (typescript-api-modeling)"
+    engineering_capabilities: [CAP-05-012]
+    fact_checks: [JF-02]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-02; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-typescript-api-modeling-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-003
+    name: javascript-async-control
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement async ordering and cancellation using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "JavaScript or TypeScript asynchronous work loses ordering, errors, cancellation, or bounded resource usage."
+    not_when: "Angular Observable composition alone is affected; use its RxJS guidance instead."
+    inputs:
+      - "Node 22 TypeScript batch worker with bounded helper and AbortSignal"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/javascript-runtime.md
+    section: "Async ordering and cancellation (javascript-async-control)"
+    engineering_capabilities: [CAP-05-006]
+    fact_checks: [JF-03]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-03; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-javascript-async-control-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-004
+    name: javascript-runtime-compatibility
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement runtime support using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "Shared JavaScript or TypeScript code must run on specified browsers, Node, Bun, workers, or SSR runtimes."
+    not_when: "Only fixing compiler diagnostics without runtime requirements; use type-safety guidance instead."
+    inputs:
+      - "Shared TypeScript package consumed by Node 20 browser and Angular SSR"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/javascript-runtime.md
+    section: "Runtime support (javascript-runtime-compatibility)"
+    engineering_capabilities: [CAP-05-012]
+    fact_checks: [JF-04]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-04; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-javascript-runtime-compatibility-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-005
+    name: esm-cjs-interop
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement module boundaries using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "ESM/CommonJS consumers fail to import a JavaScript or TypeScript package or its generated output."
+    not_when: "A missing package version or lockfile conflict is the cause; use package integrity guidance instead."
+    inputs:
+      - "Node 20 package promising ESM and CommonJS with separate exports"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/javascript-runtime.md
+    section: "Module boundaries (esm-cjs-interop)"
+    engineering_capabilities: [CAP-05-012]
+    fact_checks: [JF-05]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-05; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-esm-cjs-interop-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-006
+    name: package-manager-integrity
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement reproducible dependency operations using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "JavaScript/TypeScript installs, lockfiles, package-manager selection, or dependency edits need a reproducible change."
+    not_when: "Performing a vulnerability audit only; use dependency security review instead."
+    inputs:
+      - "Bun workspace with packageManager pin bun.lock and bun CI scripts"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/typescript-workspace.md
+    section: "Reproducible dependency operations (package-manager-integrity)"
+    engineering_capabilities: [CAP-05-008]
+    fact_checks: [JF-06]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-06; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-package-manager-integrity-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-007
+    name: typescript-monorepo
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement package boundaries using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "TypeScript workspace packages need dependency, build-order, export, or shared-code changes."
+    not_when: "A single-package app needs a local component edit; use its ordinary feature recipe instead."
+    inputs:
+      - "pnpm TypeScript workspace with existing Turbo builds and explicit exports"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/typescript-workspace.md
+    section: "Package boundaries (typescript-monorepo)"
+    engineering_capabilities: [CAP-05-003]
+    fact_checks: [JF-07]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-07; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-typescript-monorepo-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
+    status: IMPLEMENTED
+
+  - id: TECH-JS-008
+    name: typescript-config-review
+    pack: typescript-javascript
+    technology: typescript-javascript
+    purpose: "Implement effective compiler settings using the project's actual versions, existing conventions, practical boundary tests, and explicit verification evidence."
+    applies_when: "TypeScript configuration needs review or correction for a specific compiler, runtime, or template-checking problem."
+    not_when: "Converting a JavaScript repository to TypeScript without a request; preserve its current toolchain instead."
+    inputs:
+      - "Angular 18 workspace with inherited app server and test configs"
+      - "Affected source and contracts, actual package manager, effective configuration, configured build and test commands"
+    outputs:
+      - "Scoped implementation or review preserving existing conventions"
+      - "Positive and negative boundary tests, exact commands and PASS/FAIL/NOT_RUN evidence"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/typescript-workspace.md
+    section: "Effective compiler settings (typescript-config-review)"
+    engineering_capabilities: [CAP-05-012]
+    fact_checks: [JF-08]
+    verification: "V-23 mapping and section checks; technology positive/negative cases; framework facts JF-08; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
+    verification_evidence: "Step 21: implementation in mapped section; cases tc-typescript-config-review-*; fact results in tests/technology/angular-typescript/results/step21-fact-checks.md. Behavior and trigger evaluations NOT_RUN; framework facts do not promote status."
     status: IMPLEMENTED

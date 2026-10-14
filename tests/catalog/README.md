@@ -31,3 +31,8 @@ the validator exits with 1 **and** reports an `ERROR` line starting with
 
 A `replace` must match exactly once, so a drifting fixture fails loudly
 instead of passing silently.
+
+Step 21 adds nine technology negative controls for Angular/JS inventory,
+missing and orphan sections, version notes, ordered anatomy, case mapping,
+and fact references. The baseline technology copy includes both fact runners;
+running the self-tests checks validator behavior, not Angular application behavior.

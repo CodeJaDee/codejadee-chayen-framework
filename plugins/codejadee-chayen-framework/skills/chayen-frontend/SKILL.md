@@ -78,6 +78,8 @@ If the request does not fit, stop following this skill and continue normally wit
 1. **Detect the framework and its major version.** Read exactly one
    framework reference. If a shell is present and the task touches it,
    also read [references/app-shells.md](references/app-shells.md).
+   For Angular, read the base and only the relevant topic from References;
+   preserve the detected package manager and configured build/test runners.
 2. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -172,6 +174,11 @@ Load one framework reference (workflow step 1), the app-shell reference only whe
 | Reference | Load when |
 |---|---|
 | [references/angular.md](references/angular.md) | `angular.json` or `@angular/core` is detected |
+| [references/angular-components.md](references/angular-components.md) | Angular component boundaries, template control flow, or injector ownership is involved |
+| [references/angular-reactivity.md](references/angular-reactivity.md) | Angular signals, RxJS interop, existing stores, or change detection is involved |
+| [references/angular-navigation-http.md](references/angular-navigation-http.md) | Angular routes, guards, lazy loading, HttpClient, or interceptors are involved |
+| [references/angular-forms-accessibility.md](references/angular-forms-accessibility.md) | Angular form validation, submission, custom controls, or accessible interaction is involved |
+| [references/angular-ssr-upgrades.md](references/angular-ssr-upgrades.md) | Angular SSR, hydration, or an explicitly requested Angular upgrade or migration is involved |
 | [references/react-nextjs.md](references/react-nextjs.md) | `react` or `next` is detected, including Vite React apps |
 | [references/vue-nuxt.md](references/vue-nuxt.md) | `vue` or `nuxt` is detected, including Vite Vue apps |
 | [references/app-shells.md](references/app-shells.md) | `capacitor.config.*`, `ionic.config.json`, `config.xml` (Cordova), a web app manifest with a service worker, `electron`, or `src-tauri/` is detected and the task touches it |

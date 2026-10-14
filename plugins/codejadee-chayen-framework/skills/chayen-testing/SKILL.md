@@ -148,6 +148,7 @@ Load one technology reference for the detected framework (workflow step 1), and 
 |---|---|
 | [references/dotnet-testing.md](references/dotnet-testing.md) | .NET test projects (xUnit, NUnit, MSTest) are detected, including ASP.NET Core integration tests with `WebApplicationFactory` |
 | [references/javascript-testing.md](references/javascript-testing.md) | Jest, Vitest, Jasmine/Karma, Testing Library, Playwright, or Cypress is detected |
+| [references/angular-testing.md](references/angular-testing.md) | Angular tests need TestBed, component, form, router, HTTP, async, or teardown checks with the configured runner |
 | [references/python-testing.md](references/python-testing.md) | pytest, unittest, or Django tests are detected |
 | [references/test-strategy.md](references/test-strategy.md) | Deciding test levels, priorities, and CI integration for a system or feature |
 | [references/test-authoring.md](references/test-authoring.md) | Writing unit, integration, end-to-end, or regression tests |

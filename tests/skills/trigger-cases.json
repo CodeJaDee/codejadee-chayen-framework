@@ -176,6 +176,89 @@
     { "id": "amb-efcore-migration", "category": "ambiguous", "prompt": "Create the EF Core migration for the new ShippingAddress column and check it for data loss.", "expect": { "any_of": ["chayen-data", "chayen-backend"] }, "forbid": ["chayen-frontend"], "notes": "aspnet-efcore-migrations lives in chayen-data; chayen-backend also names migrations. Measure which skill wins (R-37)." },
     { "id": "pos-testing-webapplicationfactory", "category": "positive", "prompt": "Write WebApplicationFactory integration tests for our ASP.NET Core orders endpoints, including the 401 and 403 paths.", "expect": { "any_of": ["chayen-testing"] }, "forbid": ["chayen-frontend"] },
     { "id": "pos-devops-dotnet8-port", "category": "positive", "prompt": "After moving our .NET API to the .NET 8 container image, the Kubernetes health probes on port 80 fail. Fix the hosting setup.", "expect": { "any_of": ["chayen-devops"] }, "forbid": ["chayen-frontend"] },
-    { "id": "neg-explain-csharp-record", "category": "negative", "prompt": "What is the difference between a record and a class in C#? Just explain it.", "expect": { "none": true } }
+    { "id": "neg-explain-csharp-record", "category": "negative", "prompt": "What is the difference between a record and a class in C#? Just explain it.", "expect": { "none": true } },
+    {
+      "id": "pos-frontend-angular-signals",
+      "category": "positive",
+      "prompt": "Fix the computed signal total in our Angular cart component without changing its RxJS service.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "pos-frontend-angular-legacy-route",
+      "category": "positive",
+      "prompt": "Add a lazy route to our Angular 15 NgModule app and keep the existing class guards.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "pos-frontend-angular-hydration",
+      "category": "positive",
+      "prompt": "Fix our Angular SSR page hydration mismatch and the window-is-not-defined error.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "amb-angular-upgrade-only",
+      "category": "ambiguous",
+      "prompt": "Upgrade Angular 16 to 17 only; keep NgModules, RxJS, Zone.js, and existing control flow.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend",
+          "chayen-implementation"
+        ]
+      },
+      "notes": "The frontend Angular upgrade section handles UI-specific changes; the general implementation upgrades recipe can also own framework upgrades."
+    },
+    {
+      "id": "pos-testing-angular-karma",
+      "category": "positive",
+      "prompt": "Write Angular form and HTTP failure tests with our existing Karma Jasmine runner.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-impl-typescript-interop",
+      "category": "positive",
+      "prompt": "Fix our TypeScript package so its existing ESM and CommonJS consumers load the built exports.",
+      "expect": {
+        "any_of": [
+          "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "pos-impl-typescript-config",
+      "category": "positive",
+      "prompt": "Fix our inherited TypeScript library config without weakening strict null checks or changing the package manager.",
+      "expect": {
+        "any_of": [
+          "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "neg-explain-angular-signals",
+      "category": "negative",
+      "prompt": "What is an Angular signal? Explain it briefly without changing code.",
+      "expect": {
+        "none": true
+      }
+    }
   ]
 }

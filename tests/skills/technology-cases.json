@@ -1,5 +1,5 @@
 {
-  "$comment": "Technology capability evaluation cases (Step 20, D-039). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
+  "$comment": "Technology capability evaluation cases (Steps 20–21, D-039/D-040). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
   "version": 1,
   "cases": [
     {
@@ -514,6 +514,802 @@
       "prompt": "Review our .NET API Dockerfile for security problems.",
       "expect": { "not_applies": "aspnet-hosting-deployment", "skill": "chayen-security" },
       "checks": ["Performs a security review with findings", "Does not redesign hosting configuration"]
+    },
+    {
+      "id": "tc-angular-component-design-01",
+      "capability": "angular-component-design",
+      "polarity": "positive",
+      "context": "Angular 15 NgModule app with decorator inputs and npm lock",
+      "prompt": "Split our order card into a reusable Angular component without changing its parent bindings.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-components.md",
+        "applies": "angular-component-design"
+      },
+      "checks": [
+        "Keeps NgModule declarations and decorator inputs",
+        "Tests parent input binding and output event",
+        "Does not convert the feature to standalone"
+      ]
+    },
+    {
+      "id": "tc-angular-component-design-neg-01",
+      "capability": "angular-component-design",
+      "polarity": "negative",
+      "context": "Node TypeScript library with no Angular dependency",
+      "prompt": "Update the shared Node DTO name without changing any UI.",
+      "expect": {
+        "not_applies": "angular-component-design"
+      },
+      "checks": [
+        "Uses TypeScript guidance and does not create an Angular component"
+      ]
+    },
+    {
+      "id": "tc-angular-signals-01",
+      "capability": "angular-signals",
+      "polarity": "positive",
+      "context": "Angular 18 standalone app already using signal and computed with pnpm",
+      "prompt": "Fix our signal counter so the derived total updates without an effect copying state.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-reactivity.md",
+        "applies": "angular-signals"
+      },
+      "checks": [
+        "Uses computed for derived total",
+        "Updates owned state immutably",
+        "Checks Angular version before selecting APIs"
+      ]
+    },
+    {
+      "id": "tc-angular-signals-neg-01",
+      "capability": "angular-signals",
+      "polarity": "negative",
+      "context": "Angular 15 NgModule feature with BehaviorSubject and async pipe",
+      "prompt": "Fix the stale value in our Angular 15 BehaviorSubject view; keep RxJS.",
+      "expect": {
+        "not_applies": "angular-signals"
+      },
+      "checks": [
+        "Preserves RxJS and does not introduce unavailable signals"
+      ]
+    },
+    {
+      "id": "tc-angular-rxjs-interop-01",
+      "capability": "angular-rxjs-interop",
+      "polarity": "positive",
+      "context": "Angular 17 app using signals and RxJS 7 with cancellable search requests",
+      "prompt": "Bridge our search Observable to the existing signal view and cancel obsolete reads.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-reactivity.md",
+        "applies": "angular-rxjs-interop"
+      },
+      "checks": [
+        "Creates toSignal once with deliberate initial state",
+        "Cancels or excludes stale reads",
+        "Tests teardown and stream errors"
+      ]
+    },
+    {
+      "id": "tc-angular-rxjs-interop-neg-01",
+      "capability": "angular-rxjs-interop",
+      "polarity": "negative",
+      "context": "Node TypeScript service using Promise and no Angular",
+      "prompt": "Fix the rejected Promise in our Node batch processor.",
+      "expect": {
+        "not_applies": "angular-rxjs-interop"
+      },
+      "checks": [
+        "Uses Promise async guidance without Angular interop APIs"
+      ]
+    },
+    {
+      "id": "tc-angular-state-management-01",
+      "capability": "angular-state-management",
+      "polarity": "positive",
+      "context": "Angular 16 app using NgRx effects and selectors with pnpm",
+      "prompt": "Add loading and error state to our existing NgRx orders feature.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-reactivity.md",
+        "applies": "angular-state-management"
+      },
+      "checks": [
+        "Extends existing reducers effects and selectors",
+        "Does not install a signal store",
+        "Tests stale responses and reset"
+      ]
+    },
+    {
+      "id": "tc-angular-state-management-neg-01",
+      "capability": "angular-state-management",
+      "polarity": "negative",
+      "context": "Architecture planning request without approved package or code changes",
+      "prompt": "Choose a new state architecture for several future frontend apps; give a plan only.",
+      "expect": {
+        "not_applies": "angular-state-management"
+      },
+      "checks": [
+        "Provides architecture options without editing or installing stores"
+      ]
+    },
+    {
+      "id": "tc-angular-routing-01",
+      "capability": "angular-routing",
+      "polarity": "positive",
+      "context": "Angular 15 NgModule routes and class guards using Yarn Classic",
+      "prompt": "Add a lazy orders route and preserve our existing guards and deep links.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-navigation-http.md",
+        "applies": "angular-routing"
+      },
+      "checks": [
+        "Keeps lazy NgModule and class-guard conventions",
+        "Tests direct entry and rejected access",
+        "States that the server must authorize"
+      ]
+    },
+    {
+      "id": "tc-angular-routing-neg-01",
+      "capability": "angular-routing",
+      "polarity": "negative",
+      "context": "ASP.NET Core authorization task with no UI edits",
+      "prompt": "Enforce permission checks on the server orders endpoint.",
+      "expect": {
+        "not_applies": "angular-routing"
+      },
+      "checks": [
+        "Works on backend authorization without client guards"
+      ]
+    },
+    {
+      "id": "tc-angular-http-client-01",
+      "capability": "angular-http-client",
+      "polarity": "positive",
+      "context": "Angular 18 functional HttpClient providers and RxJS services using npm",
+      "prompt": "Fix our HTTP interceptor and add visible network-error handling to the orders view.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-navigation-http.md",
+        "applies": "angular-http-client"
+      },
+      "checks": [
+        "Preserves interceptor chain and provider order",
+        "Tests success failure and cancellation",
+        "Never adds server secrets to client config"
+      ]
+    },
+    {
+      "id": "tc-angular-http-client-neg-01",
+      "capability": "angular-http-client",
+      "polarity": "negative",
+      "context": "Node backend-only request without frontend edits",
+      "prompt": "Implement the orders POST endpoint in our server.",
+      "expect": {
+        "not_applies": "angular-http-client"
+      },
+      "checks": [
+        "Uses backend endpoint guidance without Angular HTTP providers"
+      ]
+    },
+    {
+      "id": "tc-angular-forms-01",
+      "capability": "angular-forms",
+      "polarity": "positive",
+      "context": "Angular 14 typed reactive forms with custom ControlValueAccessor and Karma",
+      "prompt": "Add cross-field validation and preserve disabled values in our existing checkout form.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-forms-accessibility.md",
+        "applies": "angular-forms"
+      },
+      "checks": [
+        "Keeps reactive forms and checks reset nullability",
+        "Tests disabled submitted values and custom control propagation",
+        "Shows linked errors after interaction"
+      ]
+    },
+    {
+      "id": "tc-angular-forms-neg-01",
+      "capability": "angular-forms",
+      "polarity": "negative",
+      "context": "Node API validation with no form or UI change",
+      "prompt": "Validate the JSON payload in our server endpoint only.",
+      "expect": {
+        "not_applies": "angular-forms"
+      },
+      "checks": [
+        "Uses backend payload validation and does not add an Angular form"
+      ]
+    },
+    {
+      "id": "tc-angular-template-control-flow-01",
+      "capability": "angular-template-control-flow",
+      "polarity": "positive",
+      "context": "Angular 16 templates with ngFor trackBy and CommonModule",
+      "prompt": "Fix reorder behavior in our Angular editable list while keeping its current template syntax.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-components.md",
+        "applies": "angular-template-control-flow"
+      },
+      "checks": [
+        "Retains ngFor and trackBy on Angular 16",
+        "Tests reorders preserving focus and row state",
+        "Does not introduce Angular 17 control flow"
+      ]
+    },
+    {
+      "id": "tc-angular-template-control-flow-neg-01",
+      "capability": "angular-template-control-flow",
+      "polarity": "negative",
+      "context": "Angular RxJS search with correct rendered list identity",
+      "prompt": "Fix cancellation of our Angular search HTTP stream.",
+      "expect": {
+        "not_applies": "angular-template-control-flow"
+      },
+      "checks": [
+        "Applies RxJS cancellation without converting template syntax"
+      ]
+    },
+    {
+      "id": "tc-angular-dependency-injection-01",
+      "capability": "angular-dependency-injection",
+      "polarity": "positive",
+      "context": "Angular 18 feature with root store and per-dialog component providers",
+      "prompt": "Fix our dialog service scope so each dialog gets isolated state.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-components.md",
+        "applies": "angular-dependency-injection"
+      },
+      "checks": [
+        "Traces root route and component provider ownership",
+        "Tests shared versus isolated identities",
+        "Does not expose privileged configuration through a token"
+      ]
+    },
+    {
+      "id": "tc-angular-dependency-injection-neg-01",
+      "capability": "angular-dependency-injection",
+      "polarity": "negative",
+      "context": "ASP.NET Core server dependency injection only",
+      "prompt": "Fix the scoped service lifetime in an ASP.NET API.",
+      "expect": {
+        "not_applies": "angular-dependency-injection"
+      },
+      "checks": [
+        "Uses server DI and does not apply Angular injector rules"
+      ]
+    },
+    {
+      "id": "tc-angular-change-detection-01",
+      "capability": "angular-change-detection",
+      "polarity": "positive",
+      "context": "Angular 19 OnPush app with Zone.js and external widget callbacks",
+      "prompt": "Our external callback updates data but the Angular view stays stale. Fix the notification.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-reactivity.md",
+        "applies": "angular-change-detection"
+      },
+      "checks": [
+        "Preserves Zone.js and component strategy",
+        "Tests the actual async update without masking missing notification",
+        "Does not globally add detectChanges or switch to zoneless"
+      ]
+    },
+    {
+      "id": "tc-angular-change-detection-neg-01",
+      "capability": "angular-change-detection",
+      "polarity": "negative",
+      "context": "PostgreSQL query investigation with no frontend reproduction",
+      "prompt": "Investigate slow database queries without changing the browser.",
+      "expect": {
+        "not_applies": "angular-change-detection"
+      },
+      "checks": [
+        "Uses measured data/performance investigation instead of Angular rendering changes"
+      ]
+    },
+    {
+      "id": "tc-angular-ssr-hydration-01",
+      "capability": "angular-ssr-hydration",
+      "polarity": "positive",
+      "context": "Angular 18 SSR with hydration and browser-only storage access",
+      "prompt": "Fix the SSR window error and hydration mismatch in our product page.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-ssr-upgrades.md",
+        "applies": "angular-ssr-hydration"
+      },
+      "checks": [
+        "Separates server render from real browser hydration checks",
+        "Keeps initial markup deterministic",
+        "Prevents secrets and cross-user state in transfer state"
+      ]
+    },
+    {
+      "id": "tc-angular-ssr-hydration-neg-01",
+      "capability": "angular-ssr-hydration",
+      "polarity": "negative",
+      "context": "Angular 15 browser app without SSR configuration",
+      "prompt": "Add a field to our browser-only Angular form; keep it an SPA.",
+      "expect": {
+        "not_applies": "angular-ssr-hydration"
+      },
+      "checks": [
+        "Does not install SSR or hydration for a browser-only field edit"
+      ]
+    },
+    {
+      "id": "tc-angular-testing-01",
+      "capability": "angular-testing",
+      "polarity": "positive",
+      "context": "Angular 16 NgModule app with Karma Jasmine and HttpClientTestingModule",
+      "prompt": "Write Angular form and HTTP failure tests using our existing Karma runner.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/angular-testing.md",
+        "applies": "angular-testing"
+      },
+      "checks": [
+        "Retains Karma Jasmine and module setup",
+        "Tests invalid submission and HTTP failure without live API",
+        "Reports configured commands and counts"
+      ]
+    },
+    {
+      "id": "tc-angular-testing-neg-01",
+      "capability": "angular-testing",
+      "polarity": "negative",
+      "context": "Angular frontend implementation request with normal tests included",
+      "prompt": "Build a new Angular form and save it through our existing service.",
+      "expect": {
+        "not_applies": "angular-testing"
+      },
+      "checks": [
+        "Uses the frontend workflow rather than adopting a test-only mission"
+      ]
+    },
+    {
+      "id": "tc-angular-accessibility-01",
+      "capability": "angular-accessibility",
+      "polarity": "positive",
+      "context": "Angular 18 design system with CDK and Playwright accessibility checks",
+      "prompt": "Fix labels, keyboard operation, and focus restoration on our Angular checkout dialog.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-forms-accessibility.md",
+        "applies": "angular-accessibility"
+      },
+      "checks": [
+        "Uses native semantics and existing CDK helpers",
+        "Tests keyboard focus and linked form errors",
+        "Separates manual assistive-technology checks from static markup"
+      ]
+    },
+    {
+      "id": "tc-angular-accessibility-neg-01",
+      "capability": "angular-accessibility",
+      "polarity": "negative",
+      "context": "Design-only artifact request with no Angular source edits",
+      "prompt": "Create a Figma-only checkout mockup without application code.",
+      "expect": {
+        "not_applies": "angular-accessibility"
+      },
+      "checks": [
+        "Does not apply Angular implementation to a design-only task"
+      ]
+    },
+    {
+      "id": "tc-angular-upgrade-migration-01",
+      "capability": "angular-upgrade-migration",
+      "polarity": "positive",
+      "context": "Angular 16 npm workspace targeting Angular 17 with RxJS and Karma",
+      "prompt": "Upgrade Angular 16 to 17 only. Keep NgModules, RxJS, Zone.js, and existing control flow.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-ssr-upgrades.md",
+        "applies": "angular-upgrade-migration"
+      },
+      "checks": [
+        "Checks exact Angular Node TypeScript and RxJS ranges",
+        "Preserves all explicitly retained conventions",
+        "Runs configured build and Karma tests and reviews schematic diff"
+      ]
+    },
+    {
+      "id": "tc-angular-upgrade-migration-neg-01",
+      "capability": "angular-upgrade-migration",
+      "polarity": "negative",
+      "context": "Read-only architecture migration planning request",
+      "prompt": "Compare possible Angular migration approaches; do not edit code.",
+      "expect": {
+        "not_applies": "angular-upgrade-migration"
+      },
+      "checks": [
+        "Provides a migration plan without invoking update or rewriting code"
+      ]
+    },
+    {
+      "id": "tc-typescript-type-safety-01",
+      "capability": "typescript-type-safety",
+      "polarity": "positive",
+      "context": "TypeScript 5.4 Node library with strictNullChecks and unknown JSON",
+      "prompt": "Remove unsafe casts from our TypeScript payload handler and reject malformed input.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-types.md",
+        "applies": "typescript-type-safety"
+      },
+      "checks": [
+        "Uses runtime narrowing instead of as or blanket any",
+        "Checks installed compiler and effective strict flags",
+        "Tests valid malformed and null payloads"
+      ]
+    },
+    {
+      "id": "tc-typescript-type-safety-neg-01",
+      "capability": "typescript-type-safety",
+      "polarity": "negative",
+      "context": "C# code change without TypeScript consumers",
+      "prompt": "Fix one null reference in a C# controller.",
+      "expect": {
+        "not_applies": "typescript-type-safety"
+      },
+      "checks": [
+        "Uses C# nullability guidance and not tsconfig"
+      ]
+    },
+    {
+      "id": "tc-typescript-api-modeling-01",
+      "capability": "typescript-api-modeling",
+      "polarity": "positive",
+      "context": "TypeScript 5.4 generated OpenAPI client with existing decoder",
+      "prompt": "Correct our API models for absent versus null fields and ISO timestamp values.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-types.md",
+        "applies": "typescript-api-modeling"
+      },
+      "checks": [
+        "Reads authoritative schema and avoids editing generated types",
+        "Tests absent null malformed and timestamp mapping",
+        "Compiles client consumers"
+      ]
+    },
+    {
+      "id": "tc-typescript-api-modeling-neg-01",
+      "capability": "typescript-api-modeling",
+      "polarity": "negative",
+      "context": "Architecture/API design task without TypeScript implementation",
+      "prompt": "Design an HTTP API versioning strategy; no client code edits.",
+      "expect": {
+        "not_applies": "typescript-api-modeling"
+      },
+      "checks": [
+        "Uses API design workflow without manufacturing TypeScript DTOs"
+      ]
+    },
+    {
+      "id": "tc-javascript-async-control-01",
+      "capability": "javascript-async-control",
+      "polarity": "positive",
+      "context": "Node 22 TypeScript batch worker with bounded helper and AbortSignal",
+      "prompt": "Fix our batch processing so rejected operations are observed and parallel work is bounded.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/javascript-runtime.md",
+        "applies": "javascript-async-control"
+      },
+      "checks": [
+        "Reuses existing limiter and forwards cancellation",
+        "Tests rejected work stale completion and maximum active operations",
+        "Avoids async forEach and unbounded Promise.all"
+      ]
+    },
+    {
+      "id": "tc-javascript-async-control-neg-01",
+      "capability": "javascript-async-control",
+      "polarity": "negative",
+      "context": "Angular RxJS feature without Promise batch operations",
+      "prompt": "Fix our Angular Observable search stream using the existing RxJS approach.",
+      "expect": {
+        "not_applies": "javascript-async-control"
+      },
+      "checks": [
+        "Uses Angular RxJS interop instead of replacing Observables with Promises"
+      ]
+    },
+    {
+      "id": "tc-javascript-runtime-compatibility-01",
+      "capability": "javascript-runtime-compatibility",
+      "polarity": "positive",
+      "context": "Shared TypeScript package consumed by Node 20 browser and Angular SSR",
+      "prompt": "Remove browser globals from our server import path without breaking browser consumers.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/javascript-runtime.md",
+        "applies": "javascript-runtime-compatibility"
+      },
+      "checks": [
+        "Records runtime targets separately from lib declarations",
+        "Tests server imports without window",
+        "Never sends server secrets into browser output"
+      ]
+    },
+    {
+      "id": "tc-javascript-runtime-compatibility-neg-01",
+      "capability": "javascript-runtime-compatibility",
+      "polarity": "negative",
+      "context": "TypeScript model-only compiler diagnostic",
+      "prompt": "Resolve a TypeScript type mismatch in a server model with no runtime change.",
+      "expect": {
+        "not_applies": "javascript-runtime-compatibility"
+      },
+      "checks": [
+        "Uses type-safety guidance without inventing polyfills or runtime targets"
+      ]
+    },
+    {
+      "id": "tc-esm-cjs-interop-01",
+      "capability": "esm-cjs-interop",
+      "polarity": "positive",
+      "context": "Node 20 package promising ESM and CommonJS with separate exports",
+      "prompt": "Fix our published package so both promised import and require consumers load the built artifact.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/javascript-runtime.md",
+        "applies": "esm-cjs-interop"
+      },
+      "checks": [
+        "Tests emitted public import and require entrypoints",
+        "Matches moduleResolution and declaration exports",
+        "Does not claim esModuleInterop makes every ESM module require-able"
+      ]
+    },
+    {
+      "id": "tc-esm-cjs-interop-neg-01",
+      "capability": "esm-cjs-interop",
+      "polarity": "negative",
+      "context": "pnpm workspace whose package formats already load correctly",
+      "prompt": "Fix an out-of-date pnpm lockfile without changing module format.",
+      "expect": {
+        "not_applies": "esm-cjs-interop"
+      },
+      "checks": [
+        "Uses package integrity and preserves module format"
+      ]
+    },
+    {
+      "id": "tc-package-manager-integrity-01",
+      "capability": "package-manager-integrity",
+      "polarity": "positive",
+      "context": "Bun workspace with packageManager pin bun.lock and bun CI scripts",
+      "prompt": "Repair the Bun manifest and lock mismatch while preserving our package manager and CI commands.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "package-manager-integrity"
+      },
+      "checks": [
+        "Detects Bun from pin lock and CI",
+        "Does not run npm or delete other manager files",
+        "Uses configured frozen install and reviews expected lock diff"
+      ]
+    },
+    {
+      "id": "tc-package-manager-integrity-neg-01",
+      "capability": "package-manager-integrity",
+      "polarity": "negative",
+      "context": "Read-only dependency security audit request",
+      "prompt": "Audit dependencies for known vulnerabilities without changing versions.",
+      "expect": {
+        "not_applies": "package-manager-integrity"
+      },
+      "checks": [
+        "Uses security dependency audit and does not mutate lockfiles"
+      ]
+    },
+    {
+      "id": "tc-typescript-monorepo-01",
+      "capability": "typescript-monorepo",
+      "polarity": "positive",
+      "context": "pnpm TypeScript workspace with existing Turbo builds and explicit exports",
+      "prompt": "Move the shared decoder into our existing shared package and build its consumers.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "typescript-monorepo"
+      },
+      "checks": [
+        "Keeps pnpm Turbo and current package boundaries",
+        "Declares dependencies and uses public exports",
+        "Builds affected packages and consumers without inventing project references"
+      ]
+    },
+    {
+      "id": "tc-typescript-monorepo-neg-01",
+      "capability": "typescript-monorepo",
+      "polarity": "negative",
+      "context": "Angular standalone app with no workspace package graph",
+      "prompt": "Fix a local component in our single-package Angular app.",
+      "expect": {
+        "not_applies": "typescript-monorepo"
+      },
+      "checks": [
+        "Uses local frontend recipe without creating a monorepo"
+      ]
+    },
+    {
+      "id": "tc-typescript-config-review-01",
+      "capability": "typescript-config-review",
+      "polarity": "positive",
+      "context": "Angular 18 workspace with inherited app server and test configs",
+      "prompt": "Fix our effective TypeScript module settings without weakening strictTemplates.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "typescript-config-review"
+      },
+      "checks": [
+        "Traces inherited compiler and Angular options",
+        "Uses Angular supported compiler version and existing scripts",
+        "Tests valid compile and expected diagnostic without broad suppressions"
+      ]
+    },
+    {
+      "id": "tc-typescript-config-review-neg-01",
+      "capability": "typescript-config-review",
+      "polarity": "negative",
+      "context": "JavaScript-only app needing a runtime bug fix",
+      "prompt": "Convert our JavaScript app to TypeScript even though no conversion was requested.",
+      "expect": {
+        "not_applies": "typescript-config-review"
+      },
+      "checks": [
+        "Preserves JavaScript and existing JSDoc/checkJs conventions"
+      ]
+    },
+    {
+      "id": "tc-package-manager-integrity-npm",
+      "capability": "package-manager-integrity",
+      "polarity": "positive",
+      "context": "npm packageManager pin package-lock.json and npm ci in CI",
+      "prompt": "Repair our npm lock mismatch and keep the existing npm scripts.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "package-manager-integrity"
+      },
+      "checks": [
+        "Uses npm ci and does not create pnpm-lock.yaml",
+        "No unrelated manager or lockfile conversion",
+        "Does not print registry credentials"
+      ]
+    },
+    {
+      "id": "tc-package-manager-integrity-pnpm",
+      "capability": "package-manager-integrity",
+      "polarity": "positive",
+      "context": "pnpm packageManager pin pnpm-lock.yaml workspace file and pnpm CI",
+      "prompt": "Add the approved dependency to our pnpm workspace using its current lockfile.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "package-manager-integrity"
+      },
+      "checks": [
+        "Uses owning workspace pnpm commands and preserves workspace lock ownership",
+        "No unrelated manager or lockfile conversion",
+        "Does not print registry credentials"
+      ]
+    },
+    {
+      "id": "tc-package-manager-integrity-yarn-classic",
+      "capability": "package-manager-integrity",
+      "polarity": "positive",
+      "context": "Yarn 1 pin yarn.lock and yarn install --frozen-lockfile in CI",
+      "prompt": "Repair our Yarn Classic install without upgrading Yarn.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "package-manager-integrity"
+      },
+      "checks": [
+        "Uses Classic frozen-lockfile rather than modern immutable flags",
+        "No unrelated manager or lockfile conversion",
+        "Does not print registry credentials"
+      ]
+    },
+    {
+      "id": "tc-package-manager-integrity-yarn-modern",
+      "capability": "package-manager-integrity",
+      "polarity": "positive",
+      "context": "Yarn 4 pin yarn.lock .yarnrc.yml and immutable CI install",
+      "prompt": "Repair our modern Yarn lockfile while preserving immutable CI installs.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "package-manager-integrity"
+      },
+      "checks": [
+        "Uses configured Yarn release and immutable policy",
+        "No unrelated manager or lockfile conversion",
+        "Does not print registry credentials"
+      ]
+    },
+    {
+      "id": "tc-package-manager-integrity-conflict",
+      "capability": "package-manager-integrity",
+      "polarity": "positive",
+      "context": "packageManager says pnpm but npm package-lock.json and npm ci are the only install evidence",
+      "prompt": "Update the dependency but first resolve our conflicting package-manager evidence.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/typescript-workspace.md",
+        "applies": "package-manager-integrity"
+      },
+      "checks": [
+        "Reports the conflict and asks once before lock mutation; never deletes lockfiles",
+        "No unrelated manager or lockfile conversion",
+        "Does not print registry credentials"
+      ]
+    },
+    {
+      "id": "tc-angular-component-design-standalone",
+      "capability": "angular-component-design",
+      "polarity": "positive",
+      "context": "Angular 19 standalone application with signal input/output conventions and pnpm",
+      "prompt": "Add a small order-card component using our existing standalone and signal input/output conventions.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-components.md",
+        "applies": "angular-component-design"
+      },
+      "checks": [
+        "Checks installed API support and nearest metadata",
+        "Uses standalone imports and existing input/output style",
+        "Does not introduce an owning NgModule"
+      ]
+    },
+    {
+      "id": "tc-angular-template-control-flow-modern",
+      "capability": "angular-template-control-flow",
+      "polarity": "positive",
+      "context": "Angular 18 standalone app already using built-in blocks",
+      "prompt": "Add an empty-state branch to our existing Angular for block.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-components.md",
+        "applies": "angular-template-control-flow"
+      },
+      "checks": [
+        "Uses compatible existing built-in syntax",
+        "Keeps stable track key and tests empty/reorder states",
+        "Does not migrate unrelated templates"
+      ]
+    },
+    {
+      "id": "tc-angular-http-client-server-secret",
+      "capability": "angular-http-client",
+      "polarity": "positive",
+      "context": "Angular browser client and separate privileged server credential module",
+      "prompt": "Our API needs a server signing key. Connect the Angular view securely without embedding the key.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/angular-navigation-http.md",
+        "applies": "angular-http-client"
+      },
+      "checks": [
+        "Keeps server signing module out of browser import graph",
+        "Uses a server endpoint for privileged work",
+        "Checks environment replacements bundles source maps HTML and transfer state without printing secrets"
+      ]
     }
   ]
 }

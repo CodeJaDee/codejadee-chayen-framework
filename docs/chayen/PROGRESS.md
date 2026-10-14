@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 20 — .NET technology pack (C#, ASP.NET Core) |
+| Last executed step | 21 — Angular and shared TypeScript/JavaScript support |
+| Step 21 status | DONE (pending user review; 22/22 new technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 8 TS/JS facts PASS, 14 Angular facts NOT_RUN; automated gates 5/5, self-tests 77/77; D-040 layout PROPOSED) |
 | Step 20 status | DONE (pending user review; 22/22 technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 31/31 .NET framework facts PASS; D-039 PROPOSED) |
 | Step 19 status | DONE (pending user review; static audit 206/206 after 9 fixes; 0/206 VERIFIED; see ENGINEERING_COVERAGE_AUDIT.md) |
 | Step 18 status | DONE (pending user review; D19 9/9 and D20 8/8 IMPLEMENTED, not VERIFIED; all 206 capabilities IMPLEMENTED, D-038) |
@@ -25,7 +26,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032; D-039 review (.NET pack layout, standard §5.3). All 206 engineering capabilities and 22 .NET technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500). VERIFIED needs the behaviour and trigger evals (G-11, G-12) and human review (R-33, R-34, R-38). |
+| Next step | STOP after Step 21; await user direction. D-040 layout review pending. All 206 engineering and 44 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Angular runtime/build/browser checks remain NOT_RUN; G-11/G-12 and human review remain pending (R-39, R-40). |
 | Commits made by agent | None |
 
 ---
@@ -2002,3 +2003,161 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Trigger evals for the 7 new cases (G-11) | — | NOT_RUN: billed runs need approval (R-32, R-37) |
 | — | Behaviour evals for the 57 technology cases (G-12) | — | NOT_RUN: no runner yet; the fact-check fixture is not an agent eval |
 | — | Human review of the .NET guidance (G-15) | — | NOT_RUN (R-33, R-38) |
+
+
+## Step 21 — Angular and shared TypeScript/JavaScript support
+
+- **Date:** 2026-10-15
+- **Status:** DONE (pending user review). Stop after STEP 21.
+- **Result:** 14/14 Angular and 8/8 shared TS/JS capabilities IMPLEMENTED;
+  all 22 pass V-23 inventory, mapping, anatomy, and positive/negative case
+  validation. None is VERIFIED. Framework facts: 8 TS/JS PASS, 14 Angular
+  NOT_RUN. Coverage report: [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md) §7.
+
+### Evidence reviewed and work performed
+
+- Read BUILD_CONTRACT, SKILL_AUTHORING_STANDARD (including technology
+  rules TC-01..06 and conditional loading), SKILL_QUALITY_GATES,
+  TECHNOLOGY_COVERAGE, engineering stack-pack evidence, existing frontend,
+  implementation and testing routers, Angular base, and V-23/case format.
+  Initial working tree was clean. No .kiyo/project or applicable AGENTS.md
+  was found. Official compatibility sources checked 2026-10-15 are in
+  TECHNOLOGY_COVERAGE §8.
+- Extended the existing static technology pack model. No new entry skill,
+  description change, engineering capability change, or runtime dependency.
+  L0 remains 5,485/5,500 across 13 skills. Ten new shipped references bring
+  the reference count to 164; all are conditionally reachable inside their
+  owning skill. General workflow remains in existing recipes.
+- Frontend: expanded Angular base detection and compatibility gates; five
+  topic guides hold 13 capabilities. Testing owns angular-testing in one new
+  topic. Implementation owns eight shared capabilities in a base and three
+  topics. Guides include practical steps, examples, failure boundaries, and
+  explicit result reporting.
+- Version and convention requirements: inspect resolved Angular/CLI/build,
+  TypeScript and RxJS versions; preserve standalone/NgModule, decorators or
+  signal bindings, form strategy, RxJS operators, state libraries, Zone.js
+  or zoneless mode, and template syntax. No automatic modernization.
+- Package evidence: npm, pnpm, Yarn Classic/modern, Bun text/binary locks,
+  packageManager and CI; conflicting evidence is surfaced before edits.
+  Preserve configured scripts, custom builders and test runners. TestBed is
+  not a runner, and fakeAsync is not assumed in Vitest/zoneless setups.
+- Secret boundaries: never send privileged server credentials through browser
+  imports, public config, env replacements, HTML, transfer state, bundles, or
+  source maps; inspect locations/names without printing values. Added a
+  positive boundary specification for this requirement.
+- Catalog: added TECH-ANGULAR-001..014 and TECH-JS-001..008. V-23 now checks
+  the exact Steps 20–21 inventories and recognizes all new section suffixes
+  and AF/JF facts. Added ordered anatomy checking required by TC-02.
+- Tests: 52 new technology specifications (30 positive, 22 negative), including
+  all managers, manager conflict, legacy/modern component/template examples,
+  and server-secret isolation; total 109. Added eight trigger specifications
+  and generated 17 eval files; total 150 cases/359 files. Nine new mutation
+  controls; self-tests now 77/77.
+- Developer-only framework runner reuses explicitly supplied existing tools.
+  Temporary fixture uses real TypeScript compilation (valid and invalid cases),
+  runtime cancellation, JSON/module behavior, and offline local npm installs
+  with scripts disabled. No Angular or TS dependency was downloaded or added.
+  TypeScript 6.0.3 was used only for these facts; guides require each project's
+  own Angular-compatible compiler and configured commands.
+- Traceability: technology coverage, plan and decision D-040, acceptance
+  STK-02/STK-04, and risks R-39/R-40 updated. Acceptance summary was recalculated
+  from current requirement rows (its previous counts were stale), without
+  promoting unrelated rows.
+
+### Decisions, risks, and open questions
+
+- **D-040:** user-directed Step 21 scope ACCEPTED; use of existing technology
+  sections/routers PROPOSED for review. Original indicative user-documentation
+  scope remains visible as superseded history. No later work performed.
+- **R-39:** no installed Angular application or browser/SSR/upgrade fixture.
+  AF-01..14 and Angular production builds, automatic rendering, accessibility,
+  and hydration are NOT_RUN. The optional pure Angular checks themselves did
+  not run. Do not infer compatibility with older Angular majors or other
+  JS runtimes/package managers from the TS/Node/npm facts.
+- **R-40:** behavior and trigger evaluations remain NOT_RUN. Their case
+  specifications were validated, not executed by an agent. No capability is
+  promoted to VERIFIED, and human review remains pending.
+- No production/auth/schema change, new dependency, package-manager switch,
+  git commit, push, publication, or release. No files deleted.
+
+### File ledger
+
+Paths below are repository-relative; generated eval files are listed individually.
+
+| Action | Path |
+|---|---|
+| Modified | `catalog/technology-capabilities.yaml` |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` |
+| Modified | `docs/chayen/DECISIONS.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` |
+| Modified | `docs/chayen/ISSUES.md` |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/TECHNOLOGY_COVERAGE.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md` |
+| Modified | `tests/catalog/README.md` |
+| Modified | `tests/catalog/technology-mutations.json` |
+| Modified | `tests/skills/README.md` |
+| Modified | `tests/skills/technology-cases.json` |
+| Modified | `tests/skills/trigger-cases.json` |
+| Modified | `tools/catalog/README.md` |
+| Modified | `tools/catalog/check-technology.mjs` |
+| Modified | `tools/validate/run-validator-tests.mjs` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-components.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-forms-accessibility.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-navigation-http.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-reactivity.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-ssr-upgrades.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/javascript-runtime.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/typescript-javascript.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/typescript-types.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/typescript-workspace.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-testing/references/angular-testing.md` |
+| Created | `tests/evals/claude/amb-angular-upgrade-only/graders/expected-skill.md` |
+| Created | `tests/evals/claude/amb-angular-upgrade-only/prompt.md` |
+| Created | `tests/evals/claude/neg-explain-angular-signals/graders/no-chayen-skill.md` |
+| Created | `tests/evals/claude/neg-explain-angular-signals/prompt.md` |
+| Created | `tests/evals/claude/pos-frontend-angular-hydration/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-frontend-angular-hydration/prompt.md` |
+| Created | `tests/evals/claude/pos-frontend-angular-legacy-route/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-frontend-angular-legacy-route/prompt.md` |
+| Created | `tests/evals/claude/pos-frontend-angular-signals/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-frontend-angular-signals/prompt.md` |
+| Created | `tests/evals/claude/pos-impl-typescript-config/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-impl-typescript-config/prompt.md` |
+| Created | `tests/evals/claude/pos-impl-typescript-interop/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-impl-typescript-interop/prompt.md` |
+| Created | `tests/evals/claude/pos-testing-angular-karma/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-testing-angular-karma/graders/forbidden-skills.md` |
+| Created | `tests/evals/claude/pos-testing-angular-karma/prompt.md` |
+| Created | `tests/technology/angular-typescript/README.md` |
+| Created | `tests/technology/angular-typescript/results/step21-fact-checks.md` |
+| Created | `tests/technology/angular-typescript/run-fact-checks.mjs` |
+| Deleted | None |
+| Scratch only, outside repository | Three authoring/report scripts under the session user's temporary directory; isolated fact and mutation workspaces |
+
+### Tests and observed outcomes
+
+| Test | Command | Result |
+|---|---|---|
+| Package/skill validation | `node tools/validate/validate-package.mjs` | PASS: 0 errors, 0 warnings; 13 skills, 164 references, L0 5485/5500 |
+| All technology capabilities | `node tools/catalog/check-technology.mjs --write-doc`, then `node tools/catalog/check-technology.mjs` | PASS: all 44 records, including all 22 Step 21 capabilities; 109 case specifications; AF/JF/TF links; generated table in sync |
+| Trigger artifacts | `node tools/evals/generate-claude-evals.mjs`, then `--check` through validate-all | PASS: 150 cases, 359 files in sync; agent evaluations NOT_RUN |
+| TS/JS fact attempt 1 | `node tests/technology/angular-typescript/run-fact-checks.mjs --typescript "C:/Users/praty/AppData/Roaming/npm/node_modules/@angular/cli/node_modules/@schematics/angular/third_party/github.com/Microsoft/TypeScript/lib/typescript.js" --npm-cli "C:/Users/praty/AppData/Roaming/npm/node_modules/npm/bin/npm-cli.js" --report tests/technology/angular-typescript/results/step21-fact-checks.md` | FAIL, exit 1: 4 PASS, 4 FAIL, 14 NOT_RUN. Vendored TS 5.4.2 compiler lacked standard lib files; switched to an existing complete editor compiler |
+| TS/JS fact attempt 2 | Final command below with existing TS 6.0.3, before fixture adjustment | FAIL, exit 1: 7 PASS, 1 FAIL, 14 NOT_RUN. TS 6 diagnosed deprecated baseUrl in the monorepo fixture; replaced it with absolute paths mapping without suppressing diagnostics |
+| Final TS/JS facts | `node tests/technology/angular-typescript/run-fact-checks.mjs --typescript "C:/Users/praty/AppData/Local/Programs/Microsoft VS Code/16507d91be/resources/app/extensions/node_modules/typescript/lib/typescript.js" --npm-cli "C:/Users/praty/AppData/Roaming/npm/node_modules/npm/bin/npm-cli.js" --report tests/technology/angular-typescript/results/step21-fact-checks.md` | PASS, exit 0: 8 PASS, 0 FAIL, 14 Angular NOT_RUN; Node 26.8.1, TS 6.0.3. Report in tests/technology/angular-typescript/results/step21-fact-checks.md |
+| First automated regression | `node tools/validate/validate-all.mjs` after initial 8 controls | PASS: 5/5 groups, 76/76 self-tests |
+| Expanded regression attempt | Same command after extra cases and order control | FAIL: 76/77 self-tests. New standalone case made one mutation match twice; retargeted that mutation to the uniquely mapped route case |
+| Final automated regression | `node tools/validate/validate-all.mjs` | PASS, exit 0: 5/5 groups, 77/77 self-tests; includes all nine Step 21 controls |
+| Engineering coverage regression | `node tools/catalog/audit-coverage.mjs` | PASS: 206/206 on all ten criteria, 0 missing/duplicate/orphan/broken mappings; engineering capability statuses unchanged |
+| Native Claude manifests | `claude plugin validate --strict plugins/codejadee-chayen-framework`; `claude plugin validate --strict .claude-plugin/marketplace.json` | PASS, exit 0 for both |
+| Diff hygiene | `git -c core.safecrlf=false diff --check` | PASS: no whitespace errors |
+| Angular app/framework/browser checks | No app dependency fixture supplied | NOT_RUN: AF-01..14; production build, configured app tests, rendered accessibility, real SSR/hydration, and upgrade checks |
+| Behavior/trigger evaluation execution and human review | G-11/G-12/G-15 | NOT_RUN; generation and structural validation are not execution |
+| Provider lifecycle, remote install, publication | Not required for unchanged manifests/metadata in this step | NOT_RUN in Step 21; no external release action |
+
+**Runtime Verification:** Verified for executed catalog/validator and TS/JS
+fact checks. Angular runtime behavior remains NOT_RUN. STEP 21 ends here.

@@ -80,6 +80,8 @@ If the request does not fit, stop following this skill and continue normally wit
    files or scripts, plus the analogous code. Do not survey the whole
    repository. For C# code, also read the one C# reference that matches
    the change (see References).
+   For TypeScript or JavaScript language/toolchain changes, read the shared
+   base plus only the relevant types, runtime, or workspace topic.
 2. **Baseline.** When running commands is permitted, build and run the
    relevant tests before editing. Record pre-existing failures.
 3. **Classify the change,** then read the one matching recipe:
@@ -182,4 +184,8 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 | [references/csharp-async-and-memory.md](references/csharp-async-and-memory.md) | Workflow step 1: C# code, and the change touches async, cancellation, concurrency, disposal, or allocations |
 | [references/csharp-linq-and-serialization.md](references/csharp-linq-and-serialization.md) | Workflow step 1: C# code, and the change touches LINQ queries or JSON or XML serialization |
 | [references/csharp-project-health.md](references/csharp-project-health.md) | Workflow step 1: .NET projects, and the change touches analyzers, code style, project files, SDK pinning, or NuGet packages |
+| [references/typescript-javascript.md](references/typescript-javascript.md) | Workflow step 1: TypeScript or JavaScript code, runtime, or toolchain changes require version, package-manager, and runner evidence |
+| [references/typescript-types.md](references/typescript-types.md) | TypeScript narrowing, null safety, public types, API models, or runtime decoding is involved |
+| [references/javascript-runtime.md](references/javascript-runtime.md) | JavaScript or TypeScript async control, runtime support, or ESM/CommonJS boundaries are involved |
+| [references/typescript-workspace.md](references/typescript-workspace.md) | Package-manager integrity, TypeScript workspace boundaries, or effective compiler configuration is involved |
 | [references/change-summary.md](references/change-summary.md) | Workflow step 7: reporting or handing over a completed change, or auditing the evidence claimed for completed work |

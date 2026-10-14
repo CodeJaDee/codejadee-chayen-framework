@@ -831,6 +831,34 @@ Decision statuses:
   - The later technology packs (Angular, SQL Server, and the additional
     stacks) can follow the same pattern.
 
+### D-040 — Step 21 Angular and shared TS/JS support
+- **Status:** scope ACCEPTED (explicit user prompt, 2026-10-15); implementation
+  layout PROPOSED pending review.
+- **Scope decision:** execute the user's 14 Angular and 8 shared TS/JS
+  capabilities as STEP 21 ONLY. This supersedes the original indicative
+  user-documentation step; its text is retained as history. Stop after Step 21.
+- **Layout:** extend D-039 and authoring standard §5.3. Thirteen Angular
+  sections live in frontend technology topics; angular-testing lives in the
+  testing skill. Eight shared language/toolchain sections live in the
+  implementation skill. Existing recipes retain workflow; base references
+  plus one selected topic provide conditional detail. No new entry skill,
+  description change, L0-budget change, or engineering-catalog change.
+- **Verification:** developer-only Node fact runner uses explicitly supplied
+  existing tools and synthetic temporary fixtures. No Angular/TypeScript
+  packages are installed; offline npm checks use only local fixture packages
+  with scripts disabled. No runtime/development dependency is added to the
+  repository or shipped plugin (BC-22). Missing Angular/browser fixtures and
+  unexecuted agent evaluations remain NOT_RUN; capabilities stay IMPLEMENTED.
+- **Constraints:** inspect versions first; preserve standalone/NgModule,
+  RxJS/store, zone, forms, and template conventions. No automatic Signals,
+  zoneless, control-flow, or package-manager migration. Use configured runners;
+  keep privileged server secrets out of browser artifacts and transfer state.
+- **Consequences:** all 44 technology capabilities are IMPLEMENTED, 0 VERIFIED.
+  The 22 new sections pass V-23; 52 new positive/negative specifications and
+  8 trigger prompts are available, but agent evaluations remain unexecuted.
+  Angular runtime/build/browser claims remain unverified. No later step,
+  commit, push, publish, or release is authorized by this decision.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

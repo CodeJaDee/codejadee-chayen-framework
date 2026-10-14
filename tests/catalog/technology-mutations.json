@@ -85,6 +85,149 @@
       "description": "The generated coverage table no longer matches the catalog",
       "edits": [{ "file": "docs/chayen/TECHNOLOGY_COVERAGE.md", "op": "replace", "find": "| TECH-CSHARP-001 | `csharp-nullability`", "with": "| TECH-CSHARP-001 | `csharp-nullable`" }],
       "expect": { "validator": "technology", "error": "V-23.9 coverage-doc" }
+    },
+    {
+      "id": "tech21-angular-inventory",
+      "description": "Step 21 negative control: tech21-angular-inventory",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    name: angular-signals\n",
+          "with": "    name: angular-signal-conversion\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.1 inventory"
+      }
+    },
+    {
+      "id": "tech21-js-inventory",
+      "description": "Step 21 negative control: tech21-js-inventory",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    name: esm-cjs-interop\n",
+          "with": "    name: esm-only-interop\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.1 inventory"
+      }
+    },
+    {
+      "id": "tech21-angular-section",
+      "description": "Step 21 negative control: tech21-angular-section",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-components.md",
+          "op": "replace",
+          "find": "## Component boundaries (angular-component-design)",
+          "with": "## Component boundaries"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech21-js-section",
+      "description": "Step 21 negative control: tech21-js-section",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/javascript-runtime.md",
+          "op": "replace",
+          "find": "## Module boundaries (esm-cjs-interop)",
+          "with": "## Module boundaries"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech21-angular-orphan",
+      "description": "Unknown Angular capability section must be rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-components.md",
+          "op": "append",
+          "content": "\n## Other (angular-unlisted-feature)\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech21-js-fact",
+      "description": "Step 21 negative control: tech21-js-fact",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    fact_checks: [JF-08]\n",
+          "with": "    fact_checks: [JF-99]\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.8 facts"
+      }
+    },
+    {
+      "id": "tech21-angular-version",
+      "description": "Step 21 negative control: tech21-angular-version",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-reactivity.md",
+          "op": "replace",
+          "find": "**Version notes:** Signals appeared",
+          "with": "Version: Signals appeared"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.5 anatomy"
+      }
+    },
+    {
+      "id": "tech21-positive-mapping",
+      "description": "Step 21 negative control: tech21-positive-mapping",
+      "edits": [
+        {
+          "file": "tests/skills/technology-cases.json",
+          "op": "replace",
+          "find": "\"applies\": \"angular-routing\"",
+          "with": "\"applies\": \"angular-component-design\""
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.7 cases"
+      }
+    },
+    {
+      "id": "tech21-section-order",
+      "description": "Version notes before applicability must fail standard section order",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/typescript-types.md",
+          "op": "replace",
+          "find": "**Applies when:** TypeScript code has unsafe narrowing, null handling, broad any values, or incorrect type contracts.\n\n**Not when:** A plain JavaScript file needs a runtime bug fix only; use its existing JavaScript conventions instead.",
+          "with": "**Not when:** A plain JavaScript file needs a runtime bug fix only; use its existing JavaScript conventions instead.\n\n**Applies when:** TypeScript code has unsafe narrowing, null handling, broad any values, or incorrect type contracts."
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.5 anatomy"
+      }
     }
   ]
 }

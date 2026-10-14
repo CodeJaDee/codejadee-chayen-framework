@@ -29,6 +29,7 @@ change the shape of the steps after them. Any re-plan is recorded in
 | 18 | Domains 19 and 20 capabilities (as executed) | D19 in backend, architecture, data, and frontend (4 new recipes, 4 extended; frontend description names browser extensions); D20 in `chayen-ai-engineering` (3 new recipes, 2 extended; description names agent skills); all 206 capabilities IMPLEMENTED (D-038); 35 recipe cases; 7 trigger cases; seven validator self-test fixtures retargeted | REQ-05 (D19, D20), REQ-02..REQ-04, REQ-07..REQ-09 | DONE (pending review) |
 | 19 | Engineering coverage audit (as executed) | `docs/chayen/ENGINEERING_COVERAGE_AUDIT.md`; `tools/catalog/audit-coverage.mjs` (ten static criteria per capability); 9 recipe gaps fixed; 206/206 pass static criteria, 0/206 VERIFIED | REQ-05, REQ-08, REQ-10 | DONE (pending review) |
 | 20 | .NET technology pack (as executed) | `catalog/technology-capabilities.yaml` (22 C# and ASP.NET Core capabilities); 12 new and 2 changed technology references in 6 existing skills; `tools/catalog/check-technology.mjs` (V-23) with 14 negative controls; 57 technology cases; 7 trigger cases; .NET fact checks `tests/technology/dotnet/` (31/31 PASS); `docs/chayen/TECHNOLOGY_COVERAGE.md` (D-039) | STK-01, REQ-07, REQ-08, REQ-10 | DONE (pending review) |
+| 21 | Angular and shared TypeScript/JavaScript technology support (user-directed, D-040) | 14 Angular and 8 shared TS/JS sections in existing skills; 52 new technology cases; 8 trigger cases; 9 new mutation controls; V-23 validation; 8 TS/JS framework facts PASS, 14 Angular facts NOT_RUN; coverage/progress updated | STK-02, STK-04, REQ-07, REQ-08, REQ-10 | DONE (pending review) |
 | — | Final entry-skill set (*unscheduled*; the authoring guide part was done in Step 08 as SKILL_AUTHORING_STANDARD.md) | Final entry-skill set (Q-10, R-27) | REQ-05, STK-* | NOT_STARTED |
 | 05 | Structural validation suite | Dev-only validator, test fixtures, CI workflow | REQ-10 | NOT_STARTED |
 | 06 | Claude Code packaging | Plugin + marketplace manifests, install evidence | REQ-01, PRV-CC | NOT_STARTED |
@@ -212,8 +213,13 @@ Run all automated suites against all supported providers and record the
 results. Failures are logged in [ISSUES.md](ISSUES.md).
 
 ### Step 21 — User documentation
+**Original indicative scope, superseded by the user's Step 21 prompt (D-040).**
 README, per-provider native install, update, and uninstall instructions,
 troubleshooting, and a contribution guide.
+
+**As executed:** first-class Angular (14 capabilities) and shared TS/JS
+(8 capabilities), preserving version, module, reactivity, manager, and runner
+conventions. See TECHNOLOGY_COVERAGE §7 and PROGRESS Step 21. Stop here.
 
 ### Step 22 — Release readiness review
 Audit the acceptance matrix, licence, versioning, and changelog. Produce a

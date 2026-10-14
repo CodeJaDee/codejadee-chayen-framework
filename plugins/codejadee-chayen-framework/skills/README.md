@@ -24,6 +24,12 @@ is a set of `kind: technology` references inside the implementation,
 backend, data, testing, performance, and devops skills, loaded only when a
 .NET project is detected.
 
+Angular support adds 14 capabilities in frontend and testing technology
+references. Shared TypeScript/JavaScript guidance adds 8 capabilities in the
+implementation skill's types, runtime, and workspace topics. These load only
+for the matching task after version and project-convention detection. General
+workflow stays in existing recipes; no entry-skill description was changed.
+
 | Skill | Scope |
 |---|---|
 | `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt and its proposed priority, legacy assessment, unknowns |

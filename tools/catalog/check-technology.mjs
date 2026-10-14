@@ -2,10 +2,10 @@
 // Developer-only checker for the technology capability catalog (V-23, D-039).
 // Zero dependencies (Node.js >= 18). Never shipped.
 //
-// Checks catalog/technology-capabilities.yaml against the user's Step 20
+// Checks catalog/technology-capabilities.yaml against the user's Steps 20–21
 // inventory, the shipped technology reference sections, the evaluation cases
 // in tests/skills/technology-cases.json, the engineering catalog, and the
-// .NET fact-check list. Optionally regenerates the tables in
+// framework fact-check lists. Optionally regenerates the tables in
 // docs/chayen/TECHNOLOGY_COVERAGE.md.
 //
 // Usage:
@@ -19,7 +19,7 @@ const argv = process.argv.slice(2);
 const root = argv.includes("--root") ? path.resolve(argv[argv.indexOf("--root") + 1]) : path.resolve(import.meta.dirname, "..", "..");
 const writeDoc = argv.includes("--write-doc");
 
-// The user's Step 20 inventory (2026-10-15), verbatim and in order.
+// The user's Steps 20–21 inventories (2026-10-15), verbatim and in order.
 const INVENTORY = {
   "dotnet-aspnetcore": {
     csharp: ["csharp-nullability", "csharp-async-concurrency", "csharp-memory-disposal", "csharp-linq-optimization",
@@ -28,8 +28,22 @@ const INVENTORY = {
       "aspnet-authentication", "aspnet-authorization", "aspnet-openapi", "aspnet-exception-handling", "aspnet-background-services",
       "aspnet-data-access", "aspnet-efcore-migrations", "aspnet-integration-testing", "aspnet-performance", "aspnet-hosting-deployment"],
   },
+  angular: {
+    angular: ["angular-component-design", "angular-signals", "angular-rxjs-interop", "angular-state-management",
+      "angular-routing", "angular-http-client", "angular-forms", "angular-template-control-flow",
+      "angular-dependency-injection", "angular-change-detection", "angular-ssr-hydration", "angular-testing",
+      "angular-accessibility", "angular-upgrade-migration"],
+  },
+  "typescript-javascript": {
+    "typescript-javascript": ["typescript-type-safety", "typescript-api-modeling", "javascript-async-control",
+      "javascript-runtime-compatibility", "esm-cjs-interop", "package-manager-integrity", "typescript-monorepo", "typescript-config-review"],
+  },
 };
-const FACT_FILES = { "dotnet-aspnetcore": "tests/technology/dotnet/run-fact-checks.mjs" };
+const FACT_FILES = {
+  "dotnet-aspnetcore": "tests/technology/dotnet/run-fact-checks.mjs",
+  angular: "tests/technology/angular-typescript/run-fact-checks.mjs",
+  "typescript-javascript": "tests/technology/angular-typescript/run-fact-checks.mjs",
+};
 const DOC = "docs/chayen/TECHNOLOGY_COVERAGE.md";
 const BEGIN = "<!-- BEGIN GENERATED: check-technology -->", END = "<!-- END GENERATED: check-technology -->";
 
@@ -77,7 +91,7 @@ const STATUS = new Set(cat.status_vocabulary ?? []);
     if (names.has(x.name)) error(c, `duplicate name ${x.name}`); names.add(x.name);
     if (!packs.has(x.pack)) error(c, `${x.id}: unknown pack ${x.pack}`);
   }
-  if (!has(c)) pass(c, `${caps.length} records match the Step 20 inventory exactly (names, order, technology); ids and names unique`);
+  if (!has(c)) pass(c, `${caps.length} records match the Steps 20–21 inventories exactly (names, order, technology); ids and names unique`);
 }
 
 { // V-23.2 record fields and status
@@ -135,7 +149,7 @@ const sections = {};
   const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith(".md") ? [path.join(d, e.name)] : []));
   for (const f of walk(path.join(root, pluginRoot, "skills"))) {
     const rel = path.relative(path.join(root, pluginRoot), f).split(path.sep).join("/");
-    for (const m of fs.readFileSync(f, "utf8").replace(/\r\n/g, "\n").matchAll(/^## .*\(((?:csharp|aspnet)-[a-z0-9-]+)\)\s*$/gm)) {
+    for (const m of fs.readFileSync(f, "utf8").replace(/\r\n/g, "\n").matchAll(/^## .*\(((?:csharp|aspnet|angular|typescript|javascript|esm|package)-[a-z0-9-]+)\)\s*$/gm)) {
       (seen[m[1]] ??= []).push(rel);
       if (!names.has(m[1])) error(c, `${rel}: section for "${m[1]}" has no catalog record (orphan)`);
     }
@@ -159,6 +173,9 @@ const sections = {};
   for (const x of caps) {
     const s = sections[x.id];
     if (typeof s !== "string") continue;
+    const labels = ["Applies when", "Not when", "Version notes", "Steps", "Verify"];
+    const positions = labels.map(label => s.indexOf(`**${label}:**`));
+    if (positions.some((pos, i) => pos < 0 || (i > 0 && pos <= positions[i - 1]))) error(c, `${x.id}: applicability, version, steps, and verification labels must appear in the standard order`);
     for (const [label, min] of [["Applies when", 8], ["Not when", 6], ["Version notes", 8], ["Verify", 12]]) {
       const p = part(s, label);
       if (p === null) error(c, `${x.id}: missing "**${label}:**"`);
@@ -222,8 +239,11 @@ const caseCount = {};
   const c = "V-23.8 facts";
   for (const [packId, rel] of Object.entries(FACT_FILES)) {
     if (!exists(rel)) { error(c, `${packId}: ${rel} is missing`); continue; }
-    const facts = new Map([...read(rel).matchAll(/"(TF-\d{2})": \["([a-z0-9-]+)"/g)].map((m) => [m[1], m[2]]));
+    const allFacts = new Map([...read(rel).matchAll(/"((?:TF|AF|JF)-\d{2})": \["([a-z0-9-]+)"/g)].map((m) => [m[1], m[2]]));
     const packCaps = caps.filter((x) => x.pack === packId);
+    const packNames = new Set(packCaps.map((x) => x.name));
+    const facts = new Map([...allFacts].filter(([, name]) => packNames.has(name)));
+    for (const [f, name] of allFacts) if (!caps.some((x) => x.name === name)) error(c, `${rel}: ${f} names unknown capability ${name}`);
     for (const x of packCaps) for (const f of x.fact_checks ?? []) if (!facts.has(f)) error(c, `${x.id}: fact ${f} is not defined in ${rel}`);
     for (const [f, name] of facts) {
       const x = packCaps.find((y) => y.name === name);
