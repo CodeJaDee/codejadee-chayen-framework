@@ -4,6 +4,7 @@
   "plugin": "codejadee-chayen-framework",
   "skills": [
     "chayen-repository",
+    "chayen-requirements",
     "chayen-implementation",
     "chayen-backend",
     "chayen-frontend",
@@ -15,6 +16,10 @@
     { "id": "pos-repository-conventions", "category": "positive", "prompt": "What naming and folder conventions does this codebase follow? Point me to examples.", "expect": { "any_of": ["chayen-repository"] } },
     { "id": "pos-repository-where-belongs", "category": "positive", "prompt": "Where in this project would a new payment provider integration belong? Don't change anything yet.", "expect": { "any_of": ["chayen-repository"] } },
     { "id": "pos-repository-commands", "category": "positive", "prompt": "Which commands does this solution use to build, test and lint? Check the CI config.", "expect": { "any_of": ["chayen-repository"] } },
+    { "id": "pos-repository-impact", "category": "positive", "prompt": "If I rename the CustomerId column in the Orders table, what else in this codebase would break? Don't change anything yet.", "expect": { "any_of": ["chayen-repository"] } },
+    { "id": "pos-repository-history", "category": "positive", "prompt": "When did the discount calculation in this repository change, and what reason did the commit give?", "expect": { "any_of": ["chayen-repository"] } },
+    { "id": "pos-repository-ownership", "category": "positive", "prompt": "Who should review changes to the payments folder in this repository?", "expect": { "any_of": ["chayen-repository"] }, "forbid": ["chayen-security"] },
+    { "id": "pos-repository-debt", "category": "positive", "prompt": "List the technical debt in this repository, with evidence for each item.", "expect": { "any_of": ["chayen-repository"] } },
 
     { "id": "pos-implementation-csv-export", "category": "positive", "prompt": "Implement CSV export of a user's orders end to end: the database query, an API endpoint, and a download button on the orders page.", "expect": { "any_of": ["chayen-implementation"] } },
     { "id": "pos-implementation-refactor", "category": "positive", "prompt": "Refactor the payment module to remove the duplicated retry logic across the three gateway clients without changing behavior.", "expect": { "any_of": ["chayen-implementation"] } },
@@ -44,6 +49,12 @@
     { "id": "pos-security-leaked-key", "category": "positive", "prompt": "We accidentally committed an API key to the repository. What should we do?", "expect": { "any_of": ["chayen-security"] } },
     { "id": "pos-security-cors-auth", "category": "positive", "prompt": "Harden the CORS and authentication configuration of our ASP.NET Core API.", "expect": { "any_of": ["chayen-security"] } },
 
+    { "id": "pos-requirements-elicitation", "category": "positive", "prompt": "Our sales director says the CRM needs better reporting. Help me work out what they actually need before we build anything.", "expect": { "any_of": ["chayen-requirements"] }, "forbid": ["chayen-backend", "chayen-frontend"] },
+    { "id": "pos-requirements-acceptance", "category": "positive", "prompt": "Write acceptance criteria for this story: as a customer I can cancel a booking up to 24 hours before it starts.", "expect": { "any_of": ["chayen-requirements"] } },
+    { "id": "pos-requirements-edge-cases", "category": "positive", "prompt": "What edge cases should we cover for booking cancellation before we start building it?", "expect": { "any_of": ["chayen-requirements"] } },
+    { "id": "pos-requirements-nfr", "category": "positive", "prompt": "Turn 'the payments API must be fast and reliable' into measurable non-functional requirements.", "expect": { "any_of": ["chayen-requirements"] } },
+    { "id": "pos-requirements-backlog", "category": "positive", "prompt": "Split our reporting epic into user stories we can deliver over the next two sprints.", "expect": { "any_of": ["chayen-requirements"] }, "forbid": ["chayen-implementation"] },
+
     { "id": "neg-weather", "category": "negative", "prompt": "Explain today's weather in Bangkok.", "expect": { "none": true } },
     { "id": "neg-poem", "category": "negative", "prompt": "Write a short poem about autumn leaves.", "expect": { "none": true } },
     { "id": "neg-translate", "category": "negative", "prompt": "Translate 'good morning, how are you?' into Japanese.", "expect": { "none": true } },
@@ -59,6 +70,7 @@
     { "id": "amb-where-endpoint", "category": "ambiguous", "prompt": "Where should I add a new API endpoint for refunds in this project, and what should it look like?", "expect": { "any_of": ["chayen-repository", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "amb-pr-review", "category": "ambiguous", "prompt": "Review this pull request for security problems and missing tests.", "expect": { "any_of": ["chayen-security", "chayen-testing"] } },
     { "id": "amb-form-to-endpoint", "category": "ambiguous", "prompt": "Make the Angular checkout form submit to the new ASP.NET Core payments endpoint and show server validation errors.", "expect": { "any_of": ["chayen-frontend", "chayen-implementation", "chayen-backend"] } },
+    { "id": "amb-rules-from-code", "category": "ambiguous", "prompt": "Document the business rules that our OrderCalculator class implements so the product owner can confirm them.", "expect": { "any_of": ["chayen-requirements", "chayen-repository"] }, "forbid": ["chayen-frontend"] },
 
     { "id": "uns-rust-embedded", "category": "unsupported", "prompt": "Write a Rust driver for an I2C temperature sensor on an STM32 microcontroller.", "expect": { "none": true } },
     { "id": "uns-helm", "category": "unsupported", "prompt": "Fix the Helm chart so the Kubernetes deployment runs three replicas with a rolling update.", "expect": { "none": true } },

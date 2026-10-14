@@ -71,7 +71,7 @@
     {
       "id": "sk-broken-anchor",
       "description": "Internal link to a heading that does not exist (LD-05)",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": "[stack detection signals](references/stack-detection.md)", "with": "[stack detection signals](references/stack-detection.md#no-such-heading)" }],
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": "[references/stack-detection.md](references/stack-detection.md)", "with": "[references/stack-detection.md](references/stack-detection.md#no-such-heading)" }],
       "expect": { "validator": "package", "error": "V-08 links" }
     },
     {
@@ -155,7 +155,7 @@
     {
       "id": "sk-description-single-exclusion",
       "description": "Boundary clause names only one exclusion (DS-03)",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": " Not for writing code or general git questions.", "with": " Not for writing code." }],
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": " Not for writing code, git operations such as rebase or merge, or prioritizing work.", "with": " Not for writing code." }],
       "expect": { "validator": "package", "error": "V-20 description-breadth" }
     },
     {
@@ -196,6 +196,22 @@
       "description": "SKILL.md over the 300-line budget (SB-01)",
       "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "append", "content": "\nAdditional line used to exceed the line budget in this negative control.\n", "repeat": 160 }],
       "expect": { "validator": "package", "error": "V-06 line-budgets" }
+    },
+    {
+      "id": "sk-placeholder-in-prose",
+      "description": "Placeholder marker in skill prose (code spans are exempt, prose is not)",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/SKILL.md",
+          "op": "replace",
+          "find": "## Workflow\n",
+          "with": "## Workflow\n\nTBD: finish this section later.\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-12 placeholders"
+      }
     }
   ]
 }

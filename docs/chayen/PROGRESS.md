@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 08 — Skill authoring standard and quality gates |
+| Last executed step | 09 — Domains 01 and 02 capabilities |
+| Step 09 status | DONE (pending user review; D01 9/9 and D02 10/10 IMPLEMENTED, not VERIFIED) |
 | Step 08 status | DONE (pending user review; standard PROPOSED) |
 | Step 07 status | DONE (pending user review; catalog PROPOSED) |
 | Step 06 status | DONE (pending user review) |
@@ -586,3 +587,105 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Trigger evals after the body restructuring, and the scope-line effect on Copilot (R-24, R-31) | — | NOT_RUN: billed runs need approval |
 | — | Recipe behaviour evals (`recipe-cases.json`) | — | NOT_RUN: no runner or fixture repositories yet (G-12) |
 | — | User review of the standard and gates | — | Pending |
+
+---
+
+## Step 09 — Domains 01 and 02 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D01 Repository **9/9 IMPLEMENTED**, and D02 Requirements
+  **10/10 IMPLEMENTED**. None is VERIFIED; the behaviour and trigger evals
+  are NOT_RUN (D-028).
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, SKILL_AUTHORING_STANDARD, and the 19
+  catalog records (resolved by ID, CAP-01-001..009 and CAP-02-001..010).
+- **D01 (reused and improved the pilot, D-027).**
+  - `chayen-repository` is now a concise router (152 lines):
+    - a new description and scope line covering dependencies, impact,
+      history, ownership, debt, and unknowns;
+    - evidence labels `found`, `inferred`, and `unknown`;
+    - an explicit "never invent ownership, dependencies, business rules"
+      principle;
+    - read-only and people-related safety boundaries.
+  - The "git history forensics" exclusion was replaced by an exclusion of
+    git operations that change state.
+  - Five recipes:
+    - `repository-profile.md` (CAP-01-001, 002, 007; absorbs the pilot
+      workflow);
+    - `dependency-and-impact.md` (003, 004);
+    - `history-and-ownership.md` (005, 006): ownership is only "declared"
+      (from `CODEOWNERS`) or "activity" (from git); no `checkout`, `bisect`,
+      or `stash` without approval;
+    - `technical-debt-inventory.md` (008): no prioritization;
+    - `unknowns-and-assumptions.md` (009).
+- **D02 (new entry skill `chayen-requirements`,** planned in D-023, because
+  no pilot covered requirements).
+  - A `requirements-record.md` template keeps four statement types apart:
+    confirmed facts (each with a source), assumptions (each with impact and
+    a confirmation route), open decisions (each with an owner and options,
+    never decided by the agent), and acceptance criteria (each observable,
+    with a check method).
+  - Five recipes:
+    - `elicitation-and-modeling.md` (CAP-02-001, 004, 005): rules from code
+      cite `path:line`, and contradictions become open decisions;
+    - `stories-and-acceptance.md` (002, 003, 008);
+    - `scope-and-backlog.md` (007, 010; CAP-04-004 estimation stays
+      PLANNED);
+    - `nonfunctional-requirements.md` (009);
+    - `requirement-traceability.md` (006): no invented links.
+- **Catalog:**
+  - the 19 records are now IMPLEMENTED, with `existing_coverage` and
+    `verification_evidence`;
+  - CG-01..CG-06 recipes are marked existing;
+  - `chayen-requirements` is marked existing;
+  - notes were updated;
+  - the coverage doc was regenerated, and its prose updated.
+- **Evaluation cases:**
+  - 38 recipe cases (1 positive and 1 negative per capability; 48 in
+    total);
+  - 10 trigger cases (58 in total), with `chayen-requirements` added to the
+    skill list;
+  - the Claude eval cases were regenerated (58 cases, 134 files).
+- **Validators:**
+  - V-12 now exempts code spans and fenced blocks, so the debt recipe can
+    name `TODO` and `FIXME` markers. A new self-test checks that a
+    placeholder in prose is still caught.
+  - Six self-test cases were re-targeted, because Step 09 legitimately
+    changed the content they mutated. No validator change was needed for
+    them.
+- **Lifecycle script:** the expected skill count is now derived from the
+  skills directory instead of being hard-coded as 6.
+- **Scope:** no other domain's recipes were implemented.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-repository/references/repository-profile.md`, `dependency-and-impact.md`, `history-and-ownership.md`, `technical-debt-inventory.md`, `unknowns-and-assumptions.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-requirements/SKILL.md` and `references/requirements-record.md`, `elicitation-and-modeling.md`, `stories-and-acceptance.md`, `scope-and-backlog.md`, `nonfunctional-requirements.md`, `requirement-traceability.md` |
+| Created | `tests/evals/claude/` (10 new generated case directories) |
+| Modified (generated) | `tests/evals/claude/uns-spring-boot/graders/forbidden-skills.md`. The new skill was added to its forbidden-skill pattern. |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md`, `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json`, `tests/skills/trigger-cases.json` (original formatting kept; additions only), `tests/skills/validator-mutations.json`, `tests/catalog/catalog-mutations.json`, `tests/skills/README.md` |
+| Modified | `tools/validate/validate-package.mjs` (V-12 code-span exemption), `tools/validate/README.md`, `tests/provider-compatibility/run-lifecycle.sh` (derived skill count) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D01 and CAP-D02 IMPLEMENTED; REQ-02, REQ-05, ARC-04 evidence), `DECISIONS.md` (D-027, D-028), `ISSUES.md` (Q-10, R-27, R-28 notes; R-32, R-33), `IMPLEMENTATION_PLAN.md`, `SKILL_QUALITY_GATES.md` (G-13 count) |
+| Deleted | None |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 7 skills. L0 2787/4000. Maximum description overlap 0.12. 26 references with valid kinds. 12 recipe files agree with the catalog (24 capabilities). 48 recipe cases. 58 trigger cases. The first run had 4 errors and 1 warning (two Outputs sections were templates only, the trigger cases lacked the new skill, and a 430-character description); all were fixed. |
+| T2 | Catalog and coverage | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=19 (D01=9/9, D02=10/10), IN_PROGRESS=28, PLANNED=159. 206 records, fingerprint unchanged, doc in sync. |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | **PASS:** 4/4 gate groups. Self-tests 53/53. The first run was 47/53: 6 cases targeted content that Step 09 changed. They were re-targeted, with no validator misses. |
+| T4 | Claude Code validator | `claude plugin validate --strict` on the plugin, `skills/`, and the marketplace | PASS ×3 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×7 (`skills-ref` 0.1.1) | PASS: 7/7 valid |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc9` | **PASS 24/24:** 7 skills discoverable on Claude Code 2.1.270, Codex 0.160.1, and Copilot 1.0.97. The user's real configs were unchanged. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` | PASS: 58 cases, 134 files |
+| — | Trigger evals for the new and changed descriptions | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (38 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Human review of the 10 recipes | — | Pending (R-33) |

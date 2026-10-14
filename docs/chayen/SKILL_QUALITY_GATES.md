@@ -54,7 +54,7 @@ bash tests/provider-compatibility/run-lifecycle.sh <scratch-dir>   # G-14 (insta
 | G-10 | Skills, recipes, and catalog agree; every recipe capability has eval cases; trigger cases are well-formed | V-19, V-22, V-16 | Automated | Every change |
 | G-11 | Trigger eval cases are generated and current. **Trigger evals are executed** when a description or routing changes. | `generate-claude-evals.mjs --check`; staged `claude plugin eval` (≥3 runs, no-plugin arm); `tests/routing/run-smoke.mjs` | Check: automated. Runs: billed, need approval. | Check: every change. Runs: before claiming a routing effect (DS-09). |
 | G-12 | Recipe behaviour evals pass on fixture repositories | `tests/skills/recipe-cases.json`, graded on transcripts | Billed, manual. **No runner or fixtures yet.** | Before any capability becomes VERIFIED |
-| G-13 | The validators themselves detect what they claim to | `run-validator-tests.mjs`: 2 baseline runs + 50 negative controls (19 catalog, 31 package) | Automated | Whenever a validator or standard changes |
+| G-13 | The validators themselves detect what they claim to | `run-validator-tests.mjs`: 2 baseline runs + 51 negative controls (19 catalog, 32 package; Step 09 added `sk-placeholder-in-prose`) | Automated | Whenever a validator or standard changes |
 | G-14 | Native install, discovery, disable, and uninstall still work on each CLI | `run-lifecycle.sh` (24 checks, isolated homes) | Automated, local CLIs | Packaging changes; before release |
 | G-15 | Human review (checklist §4) | Reviewer | Manual | Every skill or recipe change; before promotion |
 

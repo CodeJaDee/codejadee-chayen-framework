@@ -11,7 +11,7 @@ These tools are for **repository maintainers only**.
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
 node tools/validate/validate-package.mjs       # package, skills, references, catalog alignment (detail)
-node tools/validate/run-validator-tests.mjs    # self-tests: 2 baselines + 50 negative controls
+node tools/validate/run-validator-tests.mjs    # self-tests: 2 baselines + 51 negative controls
 ```
 
 The rules come from
@@ -44,7 +44,7 @@ The gates are in
 | V-07 / V-07b | L0 budget (≤4,000 characters, ≤14 skills), description length and YAML safety, the "Not for" clause, and pairwise distinctness. |
 | V-08 | Links and heading anchors resolve, stay inside the skill directory, are ≤2 hops away, and every reference file is reachable from `SKILL.md`. |
 | V-10 | No provider-specific tool names or variables, enforcement claims, or self-references. |
-| V-12 | No placeholder text. No required recipe section with fewer than 12 words (TODO-only recipes). |
+| V-12 | No placeholder text in prose (code spans and fenced blocks are exempt, so a recipe can name the markers it searches for). No required recipe section with fewer than 12 words (TODO-only recipes). |
 | V-16 | `tests/skills/trigger-cases.json` integrity |
 | V-17 | Entry skill anatomy: title, `**Scope:**` line, the ten sections in order, ≥4 positive and ≥3 negative triggers, the no-match gate sentence, and a `Reference \| Load when` table. |
 | V-18 | Every reference file declares `kind` (recipe, technology, checklist, or template), uses only allowed frontmatter fields, and has that kind's sections. A recipe has ≥3 numbered procedure steps and a valid `capabilities` list. |

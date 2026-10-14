@@ -1,5 +1,5 @@
 {
-  "$comment": "Capability-level evaluation cases (SKILL_AUTHORING_STANDARD §8, RC-09). Developer-only, never shipped. Every capability listed in an existing recipe needs at least one positive and one negative case; validator V-22 enforces this. Positive: the entry skill is used and the recipe is read. Negative: the recipe is not read; 'skill' names the better fit or 'none'. 'checks' are behaviour assertions for a grader. Prompts never mention Chayen (REQ-03). Execution status: NOT_RUN (no runner yet; see SKILL_QUALITY_GATES G-12).",
+  "$comment": "Capability-level evaluation cases (SKILL_AUTHORING_STANDARD §8, RC-09). Developer-only, never shipped. Every capability listed in an existing recipe needs at least one positive and one negative case; validator V-22 enforces this. Positive: the entry skill is used and the recipe is read. Negative: the recipe is not read; 'skill' names the better fit or 'none'. 'checks' are behaviour assertions for a grader. Prompts never mention Chayen (REQ-03). Execution status: NOT_RUN for all cases (no runner or fixture repositories yet; see SKILL_QUALITY_GATES G-12).",
   "version": 1,
   "cases": [
     {
@@ -114,6 +114,418 @@
       "expect": { "skill": "none", "not_loads": "references/change-summary.md" },
       "checks": [
         "The question is answered directly without producing a change summary"
+      ]
+    },
+    {
+      "id": "rc-01-001-pos",
+      "capability": "CAP-01-001",
+      "polarity": "positive",
+      "prompt": "I just cloned this repository. How is it structured, and how do I build it and run its tests?",
+      "expect": { "skill": "chayen-repository", "loads": "references/repository-profile.md" },
+      "checks": [
+        "Each stack and version cites a manifest file",
+        "Build and test commands are labelled found (with source) or inferred",
+        "No file is modified"
+      ]
+    },
+    {
+      "id": "rc-01-001-neg",
+      "capability": "CAP-01-001",
+      "polarity": "negative",
+      "prompt": "What is a monorepo, in general?",
+      "expect": { "skill": "none", "not_loads": "references/repository-profile.md" },
+      "checks": [
+        "Answered conceptually without scanning a repository"
+      ]
+    },
+    {
+      "id": "rc-01-002-pos",
+      "capability": "CAP-01-002",
+      "polarity": "positive",
+      "prompt": "Map the folders and projects in this solution, what each one does, and which ones are deployable.",
+      "expect": { "skill": "chayen-repository", "loads": "references/repository-profile.md" },
+      "checks": [
+        "Every listed area exists in the fixture",
+        "Deployable units are marked found only when a build target, Dockerfile, or pipeline shows them",
+        "Generated and vendored folders are skipped"
+      ]
+    },
+    {
+      "id": "rc-01-002-neg",
+      "capability": "CAP-01-002",
+      "polarity": "negative",
+      "prompt": "Draw the runtime request flow between our services when an order is placed.",
+      "expect": { "skill": "none", "not_loads": "references/repository-profile.md" },
+      "checks": [
+        "No repository layout profile is produced as the answer"
+      ]
+    },
+    {
+      "id": "rc-01-003-pos",
+      "capability": "CAP-01-003",
+      "polarity": "positive",
+      "prompt": "Which projects reference the Shared.Core library, directly or transitively?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Every edge cites a ProjectReference or command output",
+        "Search-based edges are labelled inferred",
+        "The seeded cycle in the fixture is reported"
+      ]
+    },
+    {
+      "id": "rc-01-003-neg",
+      "capability": "CAP-01-003",
+      "polarity": "negative",
+      "prompt": "Which of our npm packages have known vulnerabilities?",
+      "expect": { "skill": "chayen-security", "not_loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "The dependency-and-impact recipe is not used for a vulnerability question"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "If I rename the CustomerId column in the Orders table, what else in this codebase breaks?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Usages are grouped by layer with evidence labels",
+        "String and reflection usages are searched and the search terms are stated",
+        "External consumers are reported as unknown unless documented",
+        "No code is edited"
+      ]
+    },
+    {
+      "id": "rc-01-004-neg",
+      "capability": "CAP-01-004",
+      "polarity": "negative",
+      "prompt": "Rename CustomerId to ClientId across the codebase.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "The rename is treated as an implementation task, not a read-only impact report"
+      ]
+    },
+    {
+      "id": "rc-01-005-pos",
+      "capability": "CAP-01-005",
+      "polarity": "positive",
+      "prompt": "When did the discount calculation in OrderCalculator change, and why?",
+      "expect": { "skill": "chayen-repository", "loads": "references/history-and-ownership.md" },
+      "checks": [
+        "The commit is identified by hash",
+        "The reason quotes the commit message or says not stated",
+        "No checkout, bisect, or stash is run"
+      ]
+    },
+    {
+      "id": "rc-01-005-neg",
+      "capability": "CAP-01-005",
+      "polarity": "negative",
+      "prompt": "How do I squash my last three commits?",
+      "expect": { "skill": "none", "not_loads": "references/history-and-ownership.md" },
+      "checks": [
+        "No history analysis is produced; the git question is answered directly"
+      ]
+    },
+    {
+      "id": "rc-01-006-pos",
+      "capability": "CAP-01-006",
+      "polarity": "positive",
+      "prompt": "Who should review changes to the payments module?",
+      "expect": { "skill": "chayen-repository", "loads": "references/history-and-ownership.md" },
+      "checks": [
+        "Declared owners come from CODEOWNERS with the matching pattern",
+        "Active contributors are labelled activity with a time window",
+        "No ownership is asserted without a declaration"
+      ]
+    },
+    {
+      "id": "rc-01-006-neg",
+      "capability": "CAP-01-006",
+      "polarity": "negative",
+      "prompt": "Review who has admin access to our Azure subscription.",
+      "expect": { "skill": "none", "not_loads": "references/history-and-ownership.md" },
+      "checks": [
+        "CODEOWNERS and git history are not used to answer an access-control question"
+      ]
+    },
+    {
+      "id": "rc-01-007-pos",
+      "capability": "CAP-01-007",
+      "polarity": "positive",
+      "prompt": "What conventions does this codebase follow for naming, folder layout, and error handling?",
+      "expect": { "skill": "chayen-repository", "loads": "references/repository-profile.md" },
+      "checks": [
+        "Every convention cites an example path and line",
+        "Two coexisting styles are both reported with which looks newer or more common"
+      ]
+    },
+    {
+      "id": "rc-01-007-neg",
+      "capability": "CAP-01-007",
+      "polarity": "negative",
+      "prompt": "What naming convention should C# use in general?",
+      "expect": { "skill": "none", "not_loads": "references/repository-profile.md" },
+      "checks": [
+        "Answered from general knowledge without a repository profile"
+      ]
+    },
+    {
+      "id": "rc-01-008-pos",
+      "capability": "CAP-01-008",
+      "polarity": "positive",
+      "prompt": "List the technical debt in this repository, with evidence.",
+      "expect": { "skill": "chayen-repository", "loads": "references/technical-debt-inventory.md" },
+      "checks": [
+        "Every register row has reproducible evidence",
+        "No priority or business impact is assigned",
+        "Registry checks are reported as not run unless permitted"
+      ]
+    },
+    {
+      "id": "rc-01-008-neg",
+      "capability": "CAP-01-008",
+      "polarity": "negative",
+      "prompt": "Which technical debt should we fix first next quarter?",
+      "expect": { "skill": "none", "not_loads": "references/technical-debt-inventory.md" },
+      "checks": [
+        "The inventory recipe is not used to rank or prioritize"
+      ]
+    },
+    {
+      "id": "rc-01-009-pos",
+      "capability": "CAP-01-009",
+      "polarity": "positive",
+      "prompt": "Before we start changing the billing service, what don't we know about how it is deployed and configured?",
+      "expect": { "skill": "chayen-repository", "loads": "references/unknowns-and-assumptions.md" },
+      "checks": [
+        "Each unknown records where it was searched",
+        "Assumptions carry impact and a confirmation route",
+        "No default is presented as a fact"
+      ]
+    },
+    {
+      "id": "rc-01-009-neg",
+      "capability": "CAP-01-009",
+      "polarity": "negative",
+      "prompt": "Write the task contract for adding multi-currency support.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/unknowns-and-assumptions.md" },
+      "checks": [
+        "A task contract is produced by the implementation skill, not an unknowns register"
+      ]
+    },
+    {
+      "id": "rc-02-001-pos",
+      "capability": "CAP-02-001",
+      "polarity": "positive",
+      "prompt": "The client wants better reporting. Help me work out what they actually need.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/elicitation-and-modeling.md" },
+      "checks": [
+        "Questions are grouped by topic and limited to outcome-changing ones",
+        "Answers are recorded as confirmed facts with a source; the rest as assumptions or open decisions"
+      ]
+    },
+    {
+      "id": "rc-02-001-neg",
+      "capability": "CAP-02-001",
+      "polarity": "negative",
+      "prompt": "Implement the monthly sales report endpoint we specified yesterday.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/elicitation-and-modeling.md" },
+      "checks": [
+        "No elicitation question set is produced for an already-specified implementation task"
+      ]
+    },
+    {
+      "id": "rc-02-002-pos",
+      "capability": "CAP-02-002",
+      "polarity": "positive",
+      "prompt": "Refine this user story so it is ready for sprint planning: as a user I want reports.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/stories-and-acceptance.md" },
+      "checks": [
+        "The refined story names role, capability, and benefit",
+        "INVEST weaknesses are listed",
+        "Invented details are marked as assumptions"
+      ]
+    },
+    {
+      "id": "rc-02-002-neg",
+      "capability": "CAP-02-002",
+      "polarity": "negative",
+      "prompt": "Estimate these five stories in story points.",
+      "expect": { "skill": "none", "not_loads": "references/stories-and-acceptance.md" },
+      "checks": [
+        "No story refinement is produced; no points are invented"
+      ]
+    },
+    {
+      "id": "rc-02-003-pos",
+      "capability": "CAP-02-003",
+      "polarity": "positive",
+      "prompt": "Write acceptance criteria for the password reset story.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/stories-and-acceptance.md" },
+      "checks": [
+        "Criteria are observable and each states a check method",
+        "No criterion uses unmeasurable wording without a rewrite or open decision"
+      ]
+    },
+    {
+      "id": "rc-02-003-neg",
+      "capability": "CAP-02-003",
+      "polarity": "negative",
+      "prompt": "Turn these acceptance criteria into Playwright tests.",
+      "expect": { "skill": "chayen-testing", "not_loads": "references/stories-and-acceptance.md" },
+      "checks": [
+        "Test code is the testing skill's job; the stories recipe is not used"
+      ]
+    },
+    {
+      "id": "rc-02-004-pos",
+      "capability": "CAP-02-004",
+      "polarity": "positive",
+      "prompt": "Write the use cases for our warehouse returns process.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/elicitation-and-modeling.md" },
+      "checks": [
+        "Every role in the description becomes an actor",
+        "Each stated exception becomes an extension; unstated behaviour becomes an open decision"
+      ]
+    },
+    {
+      "id": "rc-02-004-neg",
+      "capability": "CAP-02-004",
+      "polarity": "negative",
+      "prompt": "Design the database tables for warehouse returns.",
+      "expect": { "skill": "none", "not_loads": "references/elicitation-and-modeling.md" },
+      "checks": [
+        "No use-case model is produced as the answer to a data-modeling request"
+      ]
+    },
+    {
+      "id": "rc-02-005-pos",
+      "capability": "CAP-02-005",
+      "polarity": "positive",
+      "prompt": "What are the actual pricing rules implemented in this OrderCalculator class?",
+      "expect": { "skill": "chayen-requirements", "loads": "references/elicitation-and-modeling.md" },
+      "checks": [
+        "Every rule cites path and line",
+        "No rule appears that the code does not implement",
+        "Contradictions with documents are listed as open decisions"
+      ]
+    },
+    {
+      "id": "rc-02-005-neg",
+      "capability": "CAP-02-005",
+      "polarity": "negative",
+      "prompt": "Refactor the pricing rules in OrderCalculator into a rules engine.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/elicitation-and-modeling.md" },
+      "checks": [
+        "The refactor is not answered with a rule table"
+      ]
+    },
+    {
+      "id": "rc-02-006-pos",
+      "capability": "CAP-02-006",
+      "polarity": "positive",
+      "prompt": "Which of our requirements have no tests? Build a traceability matrix from the requirement IDs to code and tests.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/requirement-traceability.md" },
+      "checks": [
+        "Found links cite where the ID appears",
+        "Inferred links state their reasoning",
+        "No requirement is marked covered without a test that asserts its criterion"
+      ]
+    },
+    {
+      "id": "rc-02-006-neg",
+      "capability": "CAP-02-006",
+      "polarity": "negative",
+      "prompt": "Find untested lines in the OrderService class from the coverage report.",
+      "expect": { "skill": "chayen-testing", "not_loads": "references/requirement-traceability.md" },
+      "checks": [
+        "Line coverage is not reported as requirement traceability"
+      ]
+    },
+    {
+      "id": "rc-02-007-pos",
+      "capability": "CAP-02-007",
+      "polarity": "positive",
+      "prompt": "Help me define what is in and out of scope for the customer portal MVP, and its external dependencies.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/scope-and-backlog.md" },
+      "checks": [
+        "In, out, and undecided lists each have a rationale",
+        "Every named external system appears in the dependency register with an owner or owner unknown"
+      ]
+    },
+    {
+      "id": "rc-02-007-neg",
+      "capability": "CAP-02-007",
+      "polarity": "negative",
+      "prompt": "Show the package dependency graph of this repository.",
+      "expect": { "skill": "chayen-repository", "not_loads": "references/scope-and-backlog.md" },
+      "checks": [
+        "Package dependencies go to the repository skill, not the scope recipe"
+      ]
+    },
+    {
+      "id": "rc-02-008-pos",
+      "capability": "CAP-02-008",
+      "polarity": "positive",
+      "prompt": "What edge cases am I missing for the booking cancellation feature?",
+      "expect": { "skill": "chayen-requirements", "loads": "references/stories-and-acceptance.md" },
+      "checks": [
+        "Every edge-case category is considered",
+        "Each case has an expected behaviour or an open decision"
+      ]
+    },
+    {
+      "id": "rc-02-008-neg",
+      "capability": "CAP-02-008",
+      "polarity": "negative",
+      "prompt": "Generate thousands of random inputs to fuzz our booking parser.",
+      "expect": { "skill": "none", "not_loads": "references/stories-and-acceptance.md" },
+      "checks": [
+        "No edge-case list is produced for a fuzzing request"
+      ]
+    },
+    {
+      "id": "rc-02-009-pos",
+      "capability": "CAP-02-009",
+      "polarity": "positive",
+      "prompt": "Turn 'the payments API must be fast and reliable' into measurable targets.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/nonfunctional-requirements.md" },
+      "checks": [
+        "Every NFR has a metric, target, and measurement method",
+        "Proposed targets are labelled assumptions with rationale"
+      ]
+    },
+    {
+      "id": "rc-02-009-neg",
+      "capability": "CAP-02-009",
+      "polarity": "negative",
+      "prompt": "Run a load test against the payments API.",
+      "expect": { "skill": "none", "not_loads": "references/nonfunctional-requirements.md" },
+      "checks": [
+        "No NFR table is produced; load testing is not done by this recipe"
+      ]
+    },
+    {
+      "id": "rc-02-010-pos",
+      "capability": "CAP-02-010",
+      "polarity": "positive",
+      "prompt": "Break the reporting epic into user stories we can deliver incrementally.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/scope-and-backlog.md" },
+      "checks": [
+        "Items are vertical slices with user-visible behaviour",
+        "The first increment is named",
+        "No estimates or priorities are invented"
+      ]
+    },
+    {
+      "id": "rc-02-010-neg",
+      "capability": "CAP-02-010",
+      "polarity": "negative",
+      "prompt": "Plan the file-by-file edit order for adding order notes.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/scope-and-backlog.md" },
+      "checks": [
+        "File-level planning is the implementation skill's task contract, not backlog decomposition"
       ]
     }
   ]

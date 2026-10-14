@@ -348,6 +348,46 @@ Decision statuses:
   total). Capability statuses are unchanged: 31 IN_PROGRESS and 175
   PLANNED.
 
+### D-027 — Domains 01 and 02: extend the repository skill, add the requirements skill
+- **Status:** PROPOSED (executed in Step 09 at the user's request)
+- **Decision:**
+  - **D01 stays in the existing `chayen-repository`.** The user asked to
+    improve and reuse the pilots rather than duplicate them.
+    - The skill becomes a router over five recipes.
+    - Its description and scope line now cover dependencies, change impact,
+      history, ownership, debt, and unknowns.
+    - The "git history forensics" exclusion is replaced by an exclusion of
+      git operations that change state.
+  - **D02 gets the entry skill the catalog planned, `chayen-requirements`**
+    (D-023). No pilot covers requirements work.
+    - Its shared output is the requirements record (template), which
+      separates confirmed facts, assumptions, open decisions, and acceptance
+      criteria.
+  - Evidence labels `found`, `inferred`, and `unknown` apply to every
+    repository finding. Ownership is only "declared" (from `CODEOWNERS`) or
+    "activity" (from git), and is never inferred as ownership.
+- **Consequences:**
+  - There are 7 entry skills. L0 is 2,787 / 4,000, which sharpens R-27.
+  - Q-10 is still open for the remaining 7 planned skills.
+  - Two descriptions changed (one new, one rewritten). Their trigger effect
+    is NOT_RUN (DS-09, R-32).
+
+### D-028 — Basis for IMPLEMENTED in Step 09
+- **Status:** PROPOSED
+- **Decision:** The 19 D01 and D02 records are IMPLEMENTED (D-022), not
+  VERIFIED. Each one has:
+  - an existing recipe that meets the standard (V-18);
+  - catalog agreement (V-19);
+  - at least 1 positive and 1 negative recipe case (V-22);
+  - an agent review of the recipe against the record's inputs and outputs;
+  - `verification_evidence` naming the evals still pending.
+- **Not done:**
+  - human review of the recipes (G-15 by a person);
+  - the trigger evals (G-11);
+  - the behaviour evals (G-12).
+
+  These are needed for VERIFIED.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

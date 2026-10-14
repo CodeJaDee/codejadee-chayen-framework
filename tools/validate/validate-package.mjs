@@ -488,7 +488,10 @@ for (const s of skillDirs) {
     if (/\/README\.md$/.test(rel)) continue; // human-facing package docs, not loaded as skill content
     const text = fs.readFileSync(f.p, "utf8");
     for (const [re, why] of rules) if (re.test(text)) error(c10, `${rel}: ${why}: "${text.match(re)[0]}"`);
-    if (/\b(?:TODO|TBD|FIXME)\b|lorem ipsum/i.test(text)) error(c12, `${rel}: placeholder text found`);
+    // Placeholder markers in prose. Code spans and fenced blocks are excluded, because a
+    // recipe may legitimately name markers it searches for (for example `TODO` counts).
+    const prose = text.replace(/```[\s\S]*?```/g, "").replace(/`[^`\n]*`/g, "");
+    if (/\b(?:TODO|TBD|FIXME)\b|lorem ipsum/i.test(prose)) error(c12, `${rel}: placeholder text found`);
     // empty section: a heading whose next non-blank line is a heading of the same or higher level, or end of file
     const lines = text.replace(/```[\s\S]*?```/g, "```").split(/\r?\n/);
     lines.forEach((line, i) => {

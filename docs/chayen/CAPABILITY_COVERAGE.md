@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Step | 07 |
+| Step | 07 (catalog); updated in Steps 08 and 09 |
 | Date | 2026-10-14 |
 | Status | **PROPOSED**: awaiting user review |
 | Canonical catalog | [`catalog/engineering-capabilities.yaml`](../../catalog/engineering-capabilities.yaml) |
@@ -21,24 +21,25 @@ it, and the checker fails when they drift.
 
 - **206 capabilities in 20 domains**, exactly as inventoried. No name was
   renamed or omitted, and the order is preserved.
-- **0 IMPLEMENTED, 0 VERIFIED.** A catalog entry alone never changes a
-  status (D-022).
-- **31 IN_PROGRESS.** For each, a Step 05 pilot skill already ships a workflow
-  step, section, or reference that addresses the capability's core purpose.
-  The evidence paths are listed in `existing_coverage`.
-- **175 PLANNED.** No shipped content implements them yet.
-- **14 entry skills** are proposed (the ADR-0004 cap): the 6 existing pilots
-  plus 8 planned. This needs approval (Q-10). §5 shows a metadata-budget
-  conflict that the decision must resolve.
-- **114 recipe files** are mapped: 2 existing (`task-contract.md` and
-  `change-summary.md`, converted to the recipe anatomy in Step 08) and 112
-  planned. **56
+- **19 IMPLEMENTED (Step 09): D01 9/9 and D02 10/10.** Each has a recipe
+  that meets SKILL_AUTHORING_STANDARD §6, a review against its record,
+  passing static gates, and positive and negative recipe cases.
+- **0 VERIFIED.** Behaviour and trigger evals have not been executed.
+  A catalog entry alone never changes a status (D-022).
+- **28 IN_PROGRESS.** For each, an existing entry skill already ships a
+  workflow step, section, or reference that addresses the capability's core
+  purpose. The evidence paths are listed in `existing_coverage`.
+- **159 PLANNED.** No shipped content implements them yet.
+- **14 entry skills** are proposed (the ADR-0004 cap): 7 existing
+  (`chayen-requirements` was added in Step 09) and 7 planned. This needs
+  approval (Q-10). §5 shows a metadata-budget conflict that the decision must
+  resolve.
+- **114 recipe files** are mapped: 12 existing and 102 planned. **56
   consolidation groups** let 148 capabilities share a recipe while keeping
   their own identity.
 - **61 cross-recipe overlaps** are recorded symmetrically and resolved by
   hand-off.
 
-Nothing in the plugin changed in this step. No recipe was implemented.
 
 ---
 
@@ -107,11 +108,11 @@ Additional keys:
 |---|---|
 | PLANNED | No shipped content in the mapped entry skill implements the capability. |
 | IN_PROGRESS | The mapped entry skill already ships content that addresses the core purpose, listed in `existing_coverage`. The record is not fully implemented, and nothing is verified at capability level. |
-| IMPLEMENTED | The recipe exists, covers every output in the record without placeholder content, and lists pending `verification_evidence`. **None yet.** |
+| IMPLEMENTED | The recipe exists, covers every output in the record without placeholder content, and lists pending `verification_evidence`. **19 after Step 09 (D01, D02).** |
 | VERIFIED | The verification approach was executed and passed, with a recorded result. **None yet.** |
 
-**Why no capability is IMPLEMENTED,** even where a full pilot reference exists
-(for example `task-contract.md`):
+**Why the pilot-covered capabilities are not IMPLEMENTED,** even where a full
+pilot reference exists (for example `task-contract.md`):
 
 - The pilot files were written before these records existed.
 - Nobody has reviewed them against each record's outputs.
@@ -148,7 +149,7 @@ D-016 stops one skill from linking another skill's references.
 | Entry skill | State | Owns capabilities from |
 |---|---|---|
 | chayen-repository | existing | D01 |
-| chayen-requirements | planned | D02, plus estimation (D04) |
+| chayen-requirements | existing (Step 09) | D02, plus estimation (D04; still PLANNED) |
 | chayen-architecture | planned | D03, decision register (D04), waivers (D18), realtime and multi-region (D19) |
 | chayen-implementation | existing | D04 contract, plan, risk, and handoff; D05 except dependency upgrades; safe refactor plan (D15); change passport and evidence audit (D18) |
 | chayen-backend | existing | D06, plus GraphQL, file processing, webhooks, and payments (D19) |
@@ -177,12 +178,14 @@ The per-skill counts are in §10.
 ### 5.2 Metadata budget conflict (R-27)
 
 The always-loaded metadata (L0) is capped at 4,000 characters (ADR-0004,
-D-017). The six pilot descriptions already use **2,332 / 4,000** characters,
-at 358–393 characters each (V-07, measured in this step).
+D-017). In Step 07, the six pilot descriptions used **2,332 / 4,000**
+characters, at 358–393 characters each. After Step 09, the 7 existing skills
+use **2,787 / 4,000**, leaving 1,213 characters for 7 planned skills, about
+150 each. The conflict below is now sharper.
 
 | Option | Arithmetic | Trade-off |
 |---|---|---|
-| A. 14 skills within 4,000 | 1,668 characters left for 8 skills, about 185 characters each (description only) | Too short for stack lists and "Not for" clauses. Step 06 already saw under-triggering at about 380 characters. |
+| A. 14 skills within 4,000 | 1,213 characters left for 7 skills, about 150 characters each (description only) | Too short for stack lists and "Not for" clauses. Step 06 already saw under-triggering at about 380 characters. |
 | B. 14 skills, raise L0 to about 5,600 | 8 × about 410 characters | Uses about 70% of Codex's 8,000-character fallback (S12). That crowds or truncates the user's other skills, against the ADR-0004 intent. |
 | C. 10–11 skills within 4,000 | 4–5 new skills at about 400 characters | Broader skills. Candidate merges: requirements + architecture; performance into devops; modernization into implementation; documentation + review. |
 
@@ -198,11 +201,23 @@ then re-run the checker. Capability identities do not change.
 
 ---
 
-## 6. What the pilot already covers (IN_PROGRESS)
+## 6. What the shipped skills cover
+
+### 6.1 IMPLEMENTED (Step 09)
+
+| Entry skill | Capabilities | Recipes |
+|---|---|---|
+| chayen-repository | All 9 in D01 | `repository-profile.md`, `dependency-and-impact.md`, `history-and-ownership.md`, `technical-debt-inventory.md`, `unknowns-and-assumptions.md` |
+| chayen-requirements | All 10 in D02 | `elicitation-and-modeling.md`, `stories-and-acceptance.md`, `scope-and-backlog.md`, `nonfunctional-requirements.md`, `requirement-traceability.md`, plus the `requirements-record.md` template |
+
+These records are IMPLEMENTED, not VERIFIED. Their `verification_evidence`
+says that the recipe and case-level behaviour evals (G-12) and the trigger
+evals (G-11) are NOT_RUN.
+
+### 6.2 IN_PROGRESS (pilot content, recipe still planned)
 
 | Entry skill | IN_PROGRESS capabilities | Evidence basis |
 |---|---|---|
-| chayen-repository | repo-onboarding, repository-map, convention-discovery | Workflow steps 1–5, the repository profile output, `stack-detection.md` |
 | chayen-implementation | task-contract, implementation-planning, risk-classification, handoff-summary, feature-implementation, code-refactoring, safe-code-edit, change-passport | `task-contract.md`, `change-summary.md`, workflow and principles |
 | chayen-backend | api-implementation, api-contract-validation | Workflow, plus four stack references (ASP.NET Core, Node servers, Python, data access) |
 | chayen-frontend | ui-feature-implementation, state-management, form-and-validation | Workflow, plus the Angular, React/Next.js, and Vue/Nuxt references |
@@ -243,12 +258,14 @@ skills. Examples are `error-handling` with `frontend-error-handling`, and
 ### 7.3 Pilot boundary changes required later
 
 These records conflict with a pilot skill's current "When not to use" text or
-description. **The pilot skills were not changed in this step.** The change
-belongs to the step that implements each recipe.
+description. Each change belongs to the step that implements the recipe.
+**Step 09 made the change for CAP-01-005 and CAP-01-006**: `chayen-repository`
+now covers read-only history and ownership, and git operations remain
+excluded.
 
 | Capability | Current pilot boundary | Change needed |
 |---|---|---|
-| CAP-01-005 git-history-analysis, CAP-01-006 code-ownership-analysis | `chayen-repository` excludes "git history forensics" | Allow read-only history and ownership analysis. Keep general git help out (CAP-16-010). |
+| CAP-01-005 git-history-analysis, CAP-01-006 code-ownership-analysis | **Done in Step 09** (description, scope line, "When not to use") | Read-only history and ownership analysis allowed. General git operations stay out (CAP-16-010). |
 | CAP-10-010 fuzz-testing | `chayen-testing` excludes "fuzzing campaigns" | Allow fuzz harnesses for the user's own code |
 | CAP-19-009 browser-extension-development | The `chayen-frontend` description names web applications only | Add browser extensions to the description, subject to the budget in §5.2 |
 | CAP-08-001..008 (D08) | `chayen-frontend` excludes native mobile and desktop UI | Scope decision Q-11. Web-technology shells only, or extend the charter stacks. |
@@ -302,7 +319,8 @@ Every record carries its own verification sentence. They follow one pattern.
    IMPLEMENTED or VERIFIED is refused without evidence.
 
 No capability-level verification has run. That is consistent with
-0 IMPLEMENTED and 0 VERIFIED.
+0 VERIFIED. The 19 IMPLEMENTED records name their pending evals in
+`verification_evidence`.
 
 ---
 
@@ -316,8 +334,8 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 
 | Domain | Title | Capabilities | PLANNED | IN_PROGRESS | IMPLEMENTED | VERIFIED | Entry skills used |
 |---|---|---|---|---|---|---|---|
-| D01 | REPOSITORY | 9 | 6 | 3 | 0 | 0 | chayen-repository (9) |
-| D02 | REQUIREMENTS | 10 | 10 | 0 | 0 | 0 | chayen-requirements (10) |
+| D01 | REPOSITORY | 9 | 0 | 0 | 9 | 0 | chayen-repository (9) |
+| D02 | REQUIREMENTS | 10 | 0 | 0 | 10 | 0 | chayen-requirements (10) |
 | D03 | ARCHITECTURE | 10 | 10 | 0 | 0 | 0 | chayen-architecture (10) |
 | D04 | PLANNING | 8 | 4 | 4 | 0 | 0 | chayen-implementation (4), chayen-requirements (1), chayen-modernization (1), chayen-devops (1), chayen-architecture (1) |
 | D05 | IMPLEMENTATION | 12 | 9 | 3 | 0 | 0 | chayen-implementation (11), chayen-modernization (1) |
@@ -336,14 +354,14 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | D18 | GOVERNANCE | 10 | 9 | 1 | 0 | 0 | chayen-documentation (1), chayen-implementation (2), chayen-devops (2), chayen-security (2), chayen-data (1), chayen-architecture (1), chayen-ai-engineering (1) |
 | D19 | SPECIALIZED | 9 | 9 | 0 | 0 | 0 | chayen-backend (4), chayen-architecture (2), chayen-data (2), chayen-frontend (1) |
 | D20 | AGENT-ENGINEERING | 8 | 8 | 0 | 0 | 0 | chayen-ai-engineering (8) |
-| **All** | | **206** | **175** | **31** | **0** | **0** | |
+| **All** | | **206** | **159** | **28** | **19** | **0** | |
 
 ### Totals by entry skill
 
 | Entry skill | Skill file | Capabilities | IN_PROGRESS | Domains | Recipe files (existing / planned) |
 |---|---|---|---|---|---|
-| chayen-repository | existing | 9 | 3 | D01 | 0 / 5 |
-| chayen-requirements | planned | 11 | 0 | D02, D04 | 0 / 5 |
+| chayen-repository | existing | 9 | 0 | D01 | 5 / 0 |
+| chayen-requirements | existing | 11 | 0 | D02, D04 | 5 / 0 |
 | chayen-architecture | planned | 14 | 0 | D03, D04, D18, D19 | 0 / 7 |
 | chayen-implementation | existing | 18 | 8 | D04, D05, D15, D18 | 2 / 9 |
 | chayen-backend | existing | 14 | 2 | D06, D19 | 0 / 8 |
@@ -361,12 +379,12 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 
 | Group | Recipe (plugin-relative) | Mapping | Members |
 |---|---|---|---|
-| CG-01 | `skills/chayen-repository/references/repository-profile.md` | planned | CAP-01-001 repo-onboarding<br>CAP-01-002 repository-map<br>CAP-01-007 convention-discovery |
-| CG-02 | `skills/chayen-repository/references/dependency-and-impact.md` | planned | CAP-01-003 dependency-mapping<br>CAP-01-004 change-impact-analysis |
-| CG-03 | `skills/chayen-repository/references/history-and-ownership.md` | planned | CAP-01-005 git-history-analysis<br>CAP-01-006 code-ownership-analysis |
-| CG-04 | `skills/chayen-requirements/references/stories-and-acceptance.md` | planned | CAP-02-002 user-story-refinement<br>CAP-02-003 acceptance-criteria<br>CAP-02-008 edge-case-discovery |
-| CG-05 | `skills/chayen-requirements/references/elicitation-and-modeling.md` | planned | CAP-02-001 requirement-elicitation<br>CAP-02-004 use-case-modeling<br>CAP-02-005 business-rule-extraction |
-| CG-06 | `skills/chayen-requirements/references/scope-and-backlog.md` | planned | CAP-02-007 scope-and-dependency<br>CAP-02-010 backlog-decomposition<br>CAP-04-004 estimation-and-sizing |
+| CG-01 | `skills/chayen-repository/references/repository-profile.md` | existing | CAP-01-001 repo-onboarding<br>CAP-01-002 repository-map<br>CAP-01-007 convention-discovery |
+| CG-02 | `skills/chayen-repository/references/dependency-and-impact.md` | existing | CAP-01-003 dependency-mapping<br>CAP-01-004 change-impact-analysis |
+| CG-03 | `skills/chayen-repository/references/history-and-ownership.md` | existing | CAP-01-005 git-history-analysis<br>CAP-01-006 code-ownership-analysis |
+| CG-04 | `skills/chayen-requirements/references/stories-and-acceptance.md` | existing | CAP-02-002 user-story-refinement<br>CAP-02-003 acceptance-criteria<br>CAP-02-008 edge-case-discovery |
+| CG-05 | `skills/chayen-requirements/references/elicitation-and-modeling.md` | existing | CAP-02-001 requirement-elicitation<br>CAP-02-004 use-case-modeling<br>CAP-02-005 business-rule-extraction |
+| CG-06 | `skills/chayen-requirements/references/scope-and-backlog.md` | existing | CAP-02-007 scope-and-dependency<br>CAP-02-010 backlog-decomposition<br>CAP-04-004 estimation-and-sizing |
 | CG-07 | `skills/chayen-architecture/references/architecture-review.md` | planned | CAP-03-001 architecture-review<br>CAP-03-008 architecture-fitness |
 | CG-08 | `skills/chayen-architecture/references/decision-records.md` | planned | CAP-03-002 architecture-option-analysis<br>CAP-03-003 architecture-decision-record<br>CAP-04-008 decision-register<br>CAP-18-009 exception-and-waiver-management |
 | CG-09 | `skills/chayen-architecture/references/boundaries-and-domain.md` | planned | CAP-03-004 system-boundary-design<br>CAP-03-005 domain-modeling<br>CAP-03-006 component-design |
@@ -424,30 +442,30 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 
 | ID | Capability | Entry skill | Recipe | Group | Status |
 |---|---|---|---|---|---|
-| CAP-01-001 | repo-onboarding | chayen-repository | repository-profile.md (planned) | CG-01 | IN_PROGRESS |
-| CAP-01-002 | repository-map | chayen-repository | repository-profile.md (planned) | CG-01 | IN_PROGRESS |
-| CAP-01-003 | dependency-mapping | chayen-repository | dependency-and-impact.md (planned) | CG-02 | PLANNED |
-| CAP-01-004 | change-impact-analysis | chayen-repository | dependency-and-impact.md (planned) | CG-02 | PLANNED |
-| CAP-01-005 | git-history-analysis | chayen-repository | history-and-ownership.md (planned) | CG-03 | PLANNED |
-| CAP-01-006 | code-ownership-analysis | chayen-repository | history-and-ownership.md (planned) | CG-03 | PLANNED |
-| CAP-01-007 | convention-discovery | chayen-repository | repository-profile.md (planned) | CG-01 | IN_PROGRESS |
-| CAP-01-008 | technical-debt-inventory | chayen-repository | technical-debt-inventory.md (planned) | — | PLANNED |
-| CAP-01-009 | unknowns-and-assumptions | chayen-repository | unknowns-and-assumptions.md (planned) | — | PLANNED |
+| CAP-01-001 | repo-onboarding | chayen-repository | repository-profile.md | CG-01 | IMPLEMENTED |
+| CAP-01-002 | repository-map | chayen-repository | repository-profile.md | CG-01 | IMPLEMENTED |
+| CAP-01-003 | dependency-mapping | chayen-repository | dependency-and-impact.md | CG-02 | IMPLEMENTED |
+| CAP-01-004 | change-impact-analysis | chayen-repository | dependency-and-impact.md | CG-02 | IMPLEMENTED |
+| CAP-01-005 | git-history-analysis | chayen-repository | history-and-ownership.md | CG-03 | IMPLEMENTED |
+| CAP-01-006 | code-ownership-analysis | chayen-repository | history-and-ownership.md | CG-03 | IMPLEMENTED |
+| CAP-01-007 | convention-discovery | chayen-repository | repository-profile.md | CG-01 | IMPLEMENTED |
+| CAP-01-008 | technical-debt-inventory | chayen-repository | technical-debt-inventory.md | — | IMPLEMENTED |
+| CAP-01-009 | unknowns-and-assumptions | chayen-repository | unknowns-and-assumptions.md | — | IMPLEMENTED |
 
 #### D02 REQUIREMENTS (10)
 
 | ID | Capability | Entry skill | Recipe | Group | Status |
 |---|---|---|---|---|---|
-| CAP-02-001 | requirement-elicitation | chayen-requirements (planned) | elicitation-and-modeling.md (planned) | CG-05 | PLANNED |
-| CAP-02-002 | user-story-refinement | chayen-requirements (planned) | stories-and-acceptance.md (planned) | CG-04 | PLANNED |
-| CAP-02-003 | acceptance-criteria | chayen-requirements (planned) | stories-and-acceptance.md (planned) | CG-04 | PLANNED |
-| CAP-02-004 | use-case-modeling | chayen-requirements (planned) | elicitation-and-modeling.md (planned) | CG-05 | PLANNED |
-| CAP-02-005 | business-rule-extraction | chayen-requirements (planned) | elicitation-and-modeling.md (planned) | CG-05 | PLANNED |
-| CAP-02-006 | requirement-traceability | chayen-requirements (planned) | requirement-traceability.md (planned) | — | PLANNED |
-| CAP-02-007 | scope-and-dependency | chayen-requirements (planned) | scope-and-backlog.md (planned) | CG-06 | PLANNED |
-| CAP-02-008 | edge-case-discovery | chayen-requirements (planned) | stories-and-acceptance.md (planned) | CG-04 | PLANNED |
-| CAP-02-009 | nonfunctional-requirements | chayen-requirements (planned) | nonfunctional-requirements.md (planned) | — | PLANNED |
-| CAP-02-010 | backlog-decomposition | chayen-requirements (planned) | scope-and-backlog.md (planned) | CG-06 | PLANNED |
+| CAP-02-001 | requirement-elicitation | chayen-requirements | elicitation-and-modeling.md | CG-05 | IMPLEMENTED |
+| CAP-02-002 | user-story-refinement | chayen-requirements | stories-and-acceptance.md | CG-04 | IMPLEMENTED |
+| CAP-02-003 | acceptance-criteria | chayen-requirements | stories-and-acceptance.md | CG-04 | IMPLEMENTED |
+| CAP-02-004 | use-case-modeling | chayen-requirements | elicitation-and-modeling.md | CG-05 | IMPLEMENTED |
+| CAP-02-005 | business-rule-extraction | chayen-requirements | elicitation-and-modeling.md | CG-05 | IMPLEMENTED |
+| CAP-02-006 | requirement-traceability | chayen-requirements | requirement-traceability.md | — | IMPLEMENTED |
+| CAP-02-007 | scope-and-dependency | chayen-requirements | scope-and-backlog.md | CG-06 | IMPLEMENTED |
+| CAP-02-008 | edge-case-discovery | chayen-requirements | stories-and-acceptance.md | CG-04 | IMPLEMENTED |
+| CAP-02-009 | nonfunctional-requirements | chayen-requirements | nonfunctional-requirements.md | — | IMPLEMENTED |
+| CAP-02-010 | backlog-decomposition | chayen-requirements | scope-and-backlog.md | CG-06 | IMPLEMENTED |
 
 #### D03 ARCHITECTURE (10)
 
@@ -471,7 +489,7 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | CAP-04-001 | task-contract | chayen-implementation | task-contract.md | CG-11 | IN_PROGRESS |
 | CAP-04-002 | implementation-planning | chayen-implementation | task-contract.md | CG-11 | IN_PROGRESS |
 | CAP-04-003 | risk-classification | chayen-implementation | task-contract.md | CG-11 | IN_PROGRESS |
-| CAP-04-004 | estimation-and-sizing | chayen-requirements (planned) | scope-and-backlog.md (planned) | CG-06 | PLANNED |
+| CAP-04-004 | estimation-and-sizing | chayen-requirements | scope-and-backlog.md | CG-06 | PLANNED |
 | CAP-04-005 | migration-planning | chayen-modernization (planned) | migration-strategy.md (planned) | CG-12 | PLANNED |
 | CAP-04-006 | rollout-planning | chayen-devops (planned) | release-and-rollout.md (planned) | CG-13 | PLANNED |
 | CAP-04-007 | handoff-summary | chayen-implementation | change-summary.md | CG-14 | IN_PROGRESS |

@@ -61,7 +61,7 @@ entry_skills:
     mapping: existing
     scope: "Read-only orientation in an existing repository: stacks, layout, commands, conventions, dependencies, change impact, history, ownership, debt, and unknowns."
   - name: chayen-requirements
-    mapping: planned
+    mapping: existing
     scope: "Turn requests into clear, testable requirements: elicitation, stories, acceptance criteria, use cases, business rules, traceability, scope, NFRs, decomposition, and sizing."
   - name: chayen-architecture
     mapping: planned
@@ -185,32 +185,32 @@ domains:
 consolidation_groups:
   - id: CG-01
     recipe: skills/chayen-repository/references/repository-profile.md
-    mapping: planned
+    mapping: existing
     members: [CAP-01-001, CAP-01-002, CAP-01-007]
     rationale: "Onboarding, layout mapping, and convention discovery are one read-only repository profile workflow (pilot workflow steps 1-5)."
   - id: CG-02
     recipe: skills/chayen-repository/references/dependency-and-impact.md
-    mapping: planned
+    mapping: existing
     members: [CAP-01-003, CAP-01-004]
     rationale: "Change impact is computed from the dependency map; one recipe builds the graph and walks it."
   - id: CG-03
     recipe: skills/chayen-repository/references/history-and-ownership.md
-    mapping: planned
+    mapping: existing
     members: [CAP-01-005, CAP-01-006]
     rationale: "Both read git log, blame, and CODEOWNERS; ownership is a projection of history."
   - id: CG-04
     recipe: skills/chayen-requirements/references/stories-and-acceptance.md
-    mapping: planned
+    mapping: existing
     members: [CAP-02-002, CAP-02-003, CAP-02-008]
     rationale: "Story refinement produces acceptance criteria, and edge cases become further criteria."
   - id: CG-05
     recipe: skills/chayen-requirements/references/elicitation-and-modeling.md
-    mapping: planned
+    mapping: existing
     members: [CAP-02-001, CAP-02-004, CAP-02-005]
     rationale: "Elicitation, use cases, and rule extraction share the question bank and the actor and rule notation."
   - id: CG-06
     recipe: skills/chayen-requirements/references/scope-and-backlog.md
-    mapping: planned
+    mapping: existing
     members: [CAP-02-007, CAP-02-010, CAP-04-004]
     rationale: "Scoping, decomposition into backlog items, and relative sizing are done in one pass over the same item list."
   - id: CG-07
@@ -488,12 +488,13 @@ capabilities:
       - "List of unknowns that could not be determined from the files"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: existing}
     consolidation: CG-01
     overlaps: [CAP-16-004]
-    existing_coverage: [skills/chayen-repository/SKILL.md, skills/chayen-repository/references/stack-detection.md]
     verification: "Trigger eval: onboarding prompts select chayen-repository (>=3 runs, no-plugin arm). Behaviour eval on dotnet-api and angular-app fixtures: every stack, version, and command claim cites a file, unexecuted commands are labelled not run, and no file is modified."
-    status: IN_PROGRESS
+    verification_evidence: "Step 09: recipe repository-profile.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-001-pos and rc-01-001-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/repository-profile.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-01-002
     name: repository-map
@@ -512,11 +513,12 @@ capabilities:
       - "Entry points per deployable unit with file paths"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: existing}
     consolidation: CG-01
-    existing_coverage: [skills/chayen-repository/SKILL.md]
     verification: "Trigger eval on map prompts. Behaviour eval on a multi-project fixture: every listed area exists, generated and vendored folders are skipped, and deployable units match the fixture's known answer."
-    status: IN_PROGRESS
+    verification_evidence: "Step 09: recipe repository-profile.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-002-pos and rc-01-002-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/repository-profile.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-01-003
     name: dependency-mapping
@@ -536,11 +538,13 @@ capabilities:
       - "Observed cycles and layering violations, each with file evidence"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/dependency-and-impact.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/dependency-and-impact.md, mapping: existing}
     consolidation: CG-02
     overlaps: [CAP-11-012]
     verification: "Behaviour eval on a fixture with a known project-reference graph and one deliberate cycle: the reported edges and the cycle match the fixture answer key."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe dependency-and-impact.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-003-pos and rc-01-003-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/dependency-and-impact.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-01-004
     name: change-impact-analysis
@@ -560,12 +564,13 @@ capabilities:
       - "Blast-radius rating with reasoning, and the tests that should run"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/dependency-and-impact.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/dependency-and-impact.md, mapping: existing}
     consolidation: CG-02
     overlaps: [CAP-15-005]
     verification: "Behaviour eval on a fixture with a seeded rename whose true usages are known: recall of affected files is reported, and no code is edited."
-    status: PLANNED
-    notes: "The pilot 'where does X belong' workflow step traces an analogous feature, which is placement guidance, not impact analysis."
+    verification_evidence: "Step 09: recipe dependency-and-impact.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-004-pos and rc-01-004-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/dependency-and-impact.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-01-005
     name: git-history-analysis
@@ -585,11 +590,13 @@ capabilities:
       - "Churn or co-change summary with commands used"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/history-and-ownership.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/history-and-ownership.md, mapping: existing}
     consolidation: CG-03
     verification: "Behaviour eval on a fixture repository with a scripted history: the commit that introduced a seeded behaviour change is identified by hash."
-    status: PLANNED
-    notes: "Boundary change required: the pilot chayen-repository 'When not to use' currently excludes git history forensics."
+    verification_evidence: "Step 09: recipe history-and-ownership.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-005-pos and rc-01-005-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/history-and-ownership.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 09: the chayen-repository boundary now includes read-only history and ownership analysis; git operations that change state remain excluded."
 
   - id: CAP-01-006
     name: code-ownership-analysis
@@ -608,11 +615,13 @@ capabilities:
       - "Areas without a declared owner"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/history-and-ownership.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/history-and-ownership.md, mapping: existing}
     consolidation: CG-03
     verification: "Behaviour eval on a fixture with CODEOWNERS and scripted authorship: declared and inferred owners match the answer key; personal data beyond recorded commit identity is not invented."
-    status: PLANNED
-    notes: "Boundary change required, as for CAP-01-005."
+    verification_evidence: "Step 09: recipe history-and-ownership.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-006-pos and rc-01-006-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/history-and-ownership.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 09: the chayen-repository boundary now includes read-only history and ownership analysis; git operations that change state remain excluded."
 
   - id: CAP-01-007
     name: convention-discovery
@@ -632,12 +641,13 @@ capabilities:
       - "Conflicting conventions reported side by side, with which looks newer or more common"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: existing}
     consolidation: CG-01
     overlaps: [CAP-18-001]
-    existing_coverage: [skills/chayen-repository/SKILL.md]
     verification: "Behaviour eval on a fixture with non-default conventions (for example feature folders and a custom result type): the reported conventions match the fixture and cite example files."
-    status: IN_PROGRESS
+    verification_evidence: "Step 09: recipe repository-profile.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-007-pos and rc-01-007-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/repository-profile.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-01-008
     name: technical-debt-inventory
@@ -657,10 +667,12 @@ capabilities:
       - "Areas not scanned"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/technical-debt-inventory.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/technical-debt-inventory.md, mapping: existing}
     overlaps: [CAP-15-001, CAP-15-010]
     verification: "Behaviour eval on a fixture with seeded debt items: each seeded item is found with evidence and nothing is changed."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe technical-debt-inventory.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-008-pos and rc-01-008-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/technical-debt-inventory.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-01-009
     name: unknowns-and-assumptions
@@ -680,11 +692,12 @@ capabilities:
       - "Assumptions list with the impact if each is wrong"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/references/unknowns-and-assumptions.md, mapping: planned}
+    recipe: {path: skills/chayen-repository/references/unknowns-and-assumptions.md, mapping: existing}
     overlaps: [CAP-04-001]
     verification: "Behaviour eval with a fixture missing its deployment configuration: the agent reports the deployment target as unknown instead of inventing it."
-    status: PLANNED
-    notes: "The pilot repository profile already has an 'Unknown or not found' line; the full capability is not implemented."
+    verification_evidence: "Step 09: recipe unknowns-and-assumptions.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-01-009-pos and rc-01-009-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-repository/references/unknowns-and-assumptions.md, skills/chayen-repository/SKILL.md]
+    status: IMPLEMENTED
 
   # ---------------------------------------------------------------------------
   # D02 REQUIREMENTS (10)
@@ -706,11 +719,13 @@ capabilities:
       - "Grouped question list (goal, users, data, rules, constraints, success) with why each matters"
       - "Draft requirement statements marked confirmed or assumed"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/elicitation-and-modeling.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/elicitation-and-modeling.md, mapping: existing}
     consolidation: CG-05
     verification: "Trigger eval on vague-request prompts. Behaviour eval: for a seeded ambiguous request, the output asks about each seeded ambiguity and does not invent answers."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe elicitation-and-modeling.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-001-pos and rc-02-001-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/elicitation-and-modeling.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-002
     name: user-story-refinement
@@ -729,11 +744,13 @@ capabilities:
       - "Refined story in the team's format, with assumptions and open questions"
       - "INVEST check with the weaknesses found"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/stories-and-acceptance.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/stories-and-acceptance.md, mapping: existing}
     consolidation: CG-04
     verification: "Behaviour eval on three seeded weak stories: each refined story names actor, need, and value, and every invented detail is marked as an assumption."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe stories-and-acceptance.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-002-pos and rc-02-002-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/stories-and-acceptance.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-003
     name: acceptance-criteria
@@ -752,12 +769,14 @@ capabilities:
       - "Numbered acceptance criteria, each verifiable by a test or a stated manual check"
       - "Criteria intentionally left out of scope"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/stories-and-acceptance.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/stories-and-acceptance.md, mapping: existing}
     consolidation: CG-04
     overlaps: [CAP-04-001]
     verification: "Behaviour eval: generated criteria contain no unmeasurable wording ('works correctly', 'fast'), and each maps to a check."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe stories-and-acceptance.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-003-pos and rc-02-003-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/stories-and-acceptance.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
     notes: "The pilot task contract already requires testable acceptance criteria for implementation work; this capability covers criteria authored before implementation."
 
   - id: CAP-02-004
@@ -776,11 +795,13 @@ capabilities:
       - "Use-case list and actor map"
       - "One use case per goal with main flow, extensions, and conditions"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/elicitation-and-modeling.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/elicitation-and-modeling.md, mapping: existing}
     consolidation: CG-05
     verification: "Behaviour eval on a seeded process description: every role becomes an actor and each stated exception appears as an extension."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe elicitation-and-modeling.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-004-pos and rc-02-004-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/elicitation-and-modeling.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-005
     name: business-rule-extraction
@@ -798,11 +819,13 @@ capabilities:
       - "Rule table: rule, conditions, outcome, source path and line, confidence"
       - "Contradictions or gaps between sources"
     stacks: [dotnet-aspnetcore, typescript-javascript, python, sqlserver, postgresql]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/elicitation-and-modeling.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/elicitation-and-modeling.md, mapping: existing}
     consolidation: CG-05
     verification: "Behaviour eval on a fixture class with five seeded pricing rules: all five are extracted with correct conditions and line references."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe elicitation-and-modeling.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-005-pos and rc-02-005-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/elicitation-and-modeling.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-006
     name: requirement-traceability
@@ -821,11 +844,13 @@ capabilities:
       - "Traceability matrix: requirement, design or code location, tests, evidence, status"
       - "Requirements without implementation or tests, and code without a requirement"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/requirement-traceability.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/requirement-traceability.md, mapping: existing}
     overlaps: [CAP-18-003]
     verification: "Behaviour eval on a fixture with requirement IDs in test names and one untested requirement: the gap is reported and no link is invented."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe requirement-traceability.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-006-pos and rc-02-006-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/requirement-traceability.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-007
     name: scope-and-dependency
@@ -844,11 +869,13 @@ capabilities:
       - "In-scope and out-of-scope lists with rationale"
       - "Dependency register: dependency, owner, needed by, risk if late"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/scope-and-backlog.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/scope-and-backlog.md, mapping: existing}
     consolidation: CG-06
     verification: "Behaviour eval: for a seeded project brief, every named external system appears as a dependency with an owner or 'owner unknown'."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe scope-and-backlog.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-007-pos and rc-02-007-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/scope-and-backlog.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-008
     name: edge-case-discovery
@@ -865,11 +892,13 @@ capabilities:
     outputs:
       - "Edge-case list grouped by category, each with expected behaviour or an open question"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/stories-and-acceptance.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/stories-and-acceptance.md, mapping: existing}
     consolidation: CG-04
     verification: "Behaviour eval on a seeded feature with known tricky cases (leap day, zero quantity, concurrent cancel): recall of seeded cases is reported."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe stories-and-acceptance.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-008-pos and rc-02-008-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/stories-and-acceptance.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-009
     name: nonfunctional-requirements
@@ -887,11 +916,13 @@ capabilities:
       - "NFR list with metric, target, measurement method, and priority"
       - "Assumptions behind each target"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/nonfunctional-requirements.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/nonfunctional-requirements.md, mapping: existing}
     overlaps: [CAP-12-007]
     verification: "Behaviour eval: every NFR in the output has a numeric or checkable target and a measurement method."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe nonfunctional-requirements.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-009-pos and rc-02-009-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/nonfunctional-requirements.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-02-010
     name: backlog-decomposition
@@ -909,11 +940,13 @@ capabilities:
       - "Ordered backlog items with short acceptance notes and dependencies"
       - "Suggested first increment that delivers user value"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/scope-and-backlog.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/scope-and-backlog.md, mapping: existing}
     consolidation: CG-06
     verification: "Behaviour eval: produced items are vertical slices (each touches user-visible behaviour) rather than layer tasks, judged against a rubric."
-    status: PLANNED
+    verification_evidence: "Step 09: recipe scope-and-backlog.md written to SKILL_AUTHORING_STANDARD section 6 and reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-02-010-pos and rc-02-010-neg defined in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-requirements/references/scope-and-backlog.md, skills/chayen-requirements/SKILL.md]
+    status: IMPLEMENTED
 
   # ---------------------------------------------------------------------------
   # D03 ARCHITECTURE (10)
@@ -1239,8 +1272,8 @@ capabilities:
       - "Size per item with drivers, assumptions, and confidence"
       - "Items that need a spike before sizing"
     stacks: [any]
-    entry_skill: {name: chayen-requirements, mapping: planned}
-    recipe: {path: skills/chayen-requirements/references/scope-and-backlog.md, mapping: planned}
+    entry_skill: {name: chayen-requirements, mapping: existing}
+    recipe: {path: skills/chayen-requirements/references/scope-and-backlog.md, mapping: existing}
     consolidation: CG-06
     verification: "Behaviour eval: each estimate states its drivers and uncertainty, and no estimate is given for an item with an unresolved seeded unknown."
     status: PLANNED

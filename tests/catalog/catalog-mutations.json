@@ -53,19 +53,19 @@
     {
       "id": "cat-recipe-marked-existing-but-missing",
       "description": "A recipe is marked existing but the file does not exist (missing file)",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-repository/references/technical-debt-inventory.md, mapping: planned}", "with": "recipe: {path: skills/chayen-repository/references/technical-debt-inventory.md, mapping: existing}" }],
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: planned}", "with": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: existing}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
       "id": "cat-recipe-is-skill-md",
       "description": "SKILL.md used as a recipe (D-026)",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-repository/references/unknowns-and-assumptions.md, mapping: planned}", "with": "recipe: {path: skills/chayen-repository/SKILL.md, mapping: existing}" }],
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: planned}", "with": "recipe: {path: skills/chayen-architecture/SKILL.md, mapping: planned}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
       "id": "cat-recipe-outside-skill",
       "description": "A recipe lives in another skill (D-016)",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-repository/references/unknowns-and-assumptions.md, mapping: planned}", "with": "recipe: {path: skills/chayen-security/references/unknowns-and-assumptions.md, mapping: planned}" }],
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: planned}", "with": "recipe: {path: skills/chayen-security/references/sequence-and-dataflow.md, mapping: planned}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
@@ -113,7 +113,7 @@
     {
       "id": "cat-coverage-doc-stale",
       "description": "The generated tables in CAPABILITY_COVERAGE.md no longer match",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "skills/chayen-repository/references/technical-debt-inventory\\.md", "flags": "g", "with": "skills/chayen-repository/references/debt-inventory.md" }],
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "skills/chayen-architecture/references/sequence-and-dataflow\\.md", "flags": "g", "with": "skills/chayen-architecture/references/sequence-dataflow.md" }],
       "expect": { "validator": "catalog", "error": "V-11.11 doc-sync" }
     }
   ]
