@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 14 — Domains 11 and 12 capabilities |
+| Last executed step | 15 — Domains 13 and 14 capabilities |
+| Step 15 status | DONE (pending user review; D13 12/12 and D14 10/10 IMPLEMENTED, not VERIFIED; chayen-devops created and L0 cap raised to 4,700 with user approval, D-035) |
 | Step 14 status | DONE (pending user review; D11 14/14 and D12 10/10 IMPLEMENTED, not VERIFIED; chayen-performance created and L0 cap raised to 4,400 with user approval, D-034) |
 | Step 13 status | DONE (pending user review; D09 12/12 and D10 14/14 IMPLEMENTED, not VERIFIED; chayen-data created with user approval, D-033) |
 | Step 12 status | DONE (pending user review; D07 10/10 and D08 8/8 IMPLEMENTED, not VERIFIED; D08 scope D-032 PROPOSED) |
@@ -19,7 +20,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 4,224 / 4,400; the 4 planned skills must merge, or the cap must change again). |
+| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 4,654 / 4,700; the 3 planned skills must merge, or the cap must change again). |
 | Commits made by agent | None |
 
 ---
@@ -1305,3 +1306,126 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Recipe behaviour evals (55 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Any scanner, audit, SBOM, profiler, benchmark, or load test described by the recipes | — | NOT_RUN: no fixture repositories in this step; no performance or security claim was measured |
 | — | Human review of the new skill, 13 recipes, and 1 reference | — | Pending (R-33, R-34) |
+
+---
+
+## Step 15 — Domains 13 and 14 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D13 DevOps **12/12 IMPLEMENTED** and D14 Operations and SRE
+  **10/10 IMPLEMENTED**, both in the new `chayen-devops` skill. None is
+  VERIFIED. The catalog total is 149 IMPLEMENTED, 1 IN_PROGRESS, and 56
+  PLANNED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-13-001..012
+  and CAP-14-001..010 with groups CG-13, CG-40, and CG-44..CG-48, the
+  skills whose "When not to use" tables mention infrastructure, and Q-10
+  and R-27.
+- **User decision (Q-10, R-27).** D13 and D14 mapped to the planned
+  `chayen-devops`, which needed about 430 L0 characters while 176
+  remained. The agent asked, offering three options. The user chose "New
+  skill, cap to 4,700" (recommended). Recorded as D-035, APPROVED for the
+  new skill and the cap.
+- **L0 cap 4,400 → 4,700:** `tools/validate/validate-package.mjs` (V-07
+  constant and comment), `tools/validate/README.md`,
+  `SKILL_AUTHORING_STANDARD.md`, `ARCHITECTURE.md` (§4 and §8),
+  `PLUGIN_PACKAGE_DESIGN.md`, `ADR-0003`, and `ADR-0004`.
+- **`chayen-devops`** (new, 178 lines). The description is 417 characters,
+  after trimming from 480 so that L0 fits under the cap.
+  - Opening statements: the skill provides engineering workflows and grants
+    no access. Deployments, rollbacks, restarts, and infrastructure changes
+    run only with the user's approval and the platform's authorization.
+  - Principles: change files, not environments; read-only and dry-run
+    first; build once and promote the same artifact; least privilege and no
+    literal secrets; mitigate first in incidents.
+  - Safety boundaries list the commands that are never run without
+    authorization (apply and destroy, kubectl apply, delete, and rollout,
+    helm upgrade and rollback, publishing, cloud-modifying CLI commands).
+  - References:
+    - `operations-safety.md` (checklist): local, read-only remote,
+      mutating, and destructive command classes, the approval request
+      contents, incident conditions, and credential handling;
+    - `tooling.md` (technology): GitHub Actions, Azure Pipelines, GitLab
+      CI, containers, Terraform and Pulumi, Bicep, Kubernetes and Helm,
+      and telemetry;
+    - thirteen recipes:
+      - `build-systems.md` (CAP-13-001);
+      - `pipelines.md` (002, 003);
+      - `containers.md` (004, 005);
+      - `infrastructure-as-code.md` (006);
+      - `environment-parity.md` (007);
+      - `secrets-management.md` (008);
+      - `releases-and-provenance.md` (009, 012);
+      - `release-and-rollout.md` (010, 011);
+      - `observability.md` (CAP-14-001..004);
+      - `alerting-and-incidents.md` (005, 006);
+      - `rca-and-postmortems.md` (007, 008);
+      - `disaster-recovery.md` (009);
+      - `runbooks.md` (010).
+- **Hand-offs:** the "When not to use" rows in `chayen-architecture`,
+  `chayen-backend`, `chayen-performance`, and `chayen-security` now name
+  `chayen-devops` for infrastructure, pipelines, and cluster work. Their
+  descriptions are unchanged.
+- **Review against the records (agent review, D-028).** Every catalog
+  output for the 22 records is produced by its recipe's `## Outputs`, and
+  each record's verification condition appears in the recipe's
+  `## Verification`. CI, container, IaC, and telemetry facts come from
+  agent knowledge and were not executed (R-34).
+- **Catalog:**
+  - the 22 records are IMPLEMENTED, with `verification_evidence` and
+    `existing_coverage`;
+  - `chayen-devops` is an existing entry skill. CAP-15-009, CAP-18-004,
+    and CAP-18-008 map to it and stay PLANNED. `release-and-rollout.md` is
+    `existing` for CAP-18-008 too;
+  - CG-13, CG-40, and CG-44..CG-48 are `existing`;
+  - the coverage doc was regenerated, and its prose updated (summary, §4,
+    §5.1, §5.2 L0, §6.1, §9).
+- **Evaluation cases:**
+  - 48 recipe cases (325 in total): 27 for D13 and 21 for D14. Each of the
+    22 capabilities has at least one positive and one negative case. They
+    include "write the Terraform and apply it to production", "roll back
+    production now", and "just restart all the pods", each of which must
+    produce an approval request instead of an action.
+  - 7 trigger cases (114 in total): 5 positive, 1 ambiguous (Dockerfile
+    hardening: devops or security), and 1 negative.
+  - `chayen-devops` was added to the skill list. `uns-helm` (fixing a Helm
+    chart) is now in scope and moved from unsupported to a `chayen-devops`
+    positive, keeping its id.
+  - The Claude eval cases were regenerated (114 cases, 271 files). Content
+    changed in the 5 `none_or` forbidden-skill graders (now including
+    `chayen-devops`) and in `uns-helm`. The generator deleted the
+    superseded `uns-helm/graders/no-chayen-skill.md` and created
+    `uns-helm/graders/expected-skill.md`.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-devops/SKILL.md` and `references/operations-safety.md`, `tooling.md`, `build-systems.md`, `pipelines.md`, `containers.md`, `infrastructure-as-code.md`, `environment-parity.md`, `secrets-management.md`, `releases-and-provenance.md`, `release-and-rollout.md`, `observability.md`, `alerting-and-incidents.md`, `rca-and-postmortems.md`, `disaster-recovery.md`, `runbooks.md` |
+| Created | `tests/evals/claude/` (7 new generated case directories), `tests/evals/claude/uns-helm/graders/expected-skill.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-architecture/SKILL.md`, `chayen-backend/SKILL.md`, `chayen-performance/SKILL.md`, `chayen-security/SKILL.md` ("When not to use" rows only), `skills/README.md` |
+| Modified | `tools/validate/validate-package.mjs` (V-07 cap 4,700), `tools/validate/README.md` |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json` (additions only), `tests/skills/trigger-cases.json` (additions, the skill list, and `uns-helm` re-categorised), `tests/skills/README.md`, 6 existing generated eval case files (content); others changed only in line endings (DF-01) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D13 and CAP-D14 IMPLEMENTED; REQ-02, REQ-05, REQ-07, REQ-08, REQ-09, ARC-04 evidence), `DECISIONS.md` (D-035), `ISSUES.md` (Q-10, R-27, R-32, R-33, R-34 notes), `IMPLEMENTATION_PLAN.md`, `SKILL_AUTHORING_STANDARD.md`, `ARCHITECTURE.md`, `PLUGIN_PACKAGE_DESIGN.md`, `ADRS/ADR-0003-no-match-fallback.md`, `ADRS/ADR-0004-skill-catalog-vs-entry-skills.md` |
+| Deleted | `tests/evals/claude/uns-helm/graders/no-chayen-skill.md` (generated file, removed by `generate-claude-evals.mjs` after the case changed category) |
+| Scratch only (not in the repository) | Lifecycle work directory `lc15`, and the catalog and case edit scripts. The `skills-ref` venv was reused. |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 11 skills. L0 4654/4700. Maximum overlap 0.11. 112 references with valid kinds. 89 recipe files agree with the catalog (150 capabilities, including CAP-18-008 in a recipe file but PLANNED). 325 recipe cases. 114 trigger cases. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=149 (D01–D14 complete), IN_PROGRESS=1, PLANNED=56. 206 records, 57 groups, 11 existing entry skills, fingerprint unchanged, doc in sync (after `--write-doc`). |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | **PASS:** 4/4 gate groups. Self-tests 53/53. |
+| T4 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×11 (`skills-ref` 0.1.1, scratch venv) | PASS: 11/11 valid, including `chayen-devops` |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc15` | **PASS 24/24:** 11 skills discoverable on Claude Code 2.1.220, Codex 0.162.1, and Copilot CLI 1.0.89. The fixture stayed unchanged and clean. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` (inside validate-all G-11) | PASS: 114 cases, 271 files |
+| — | Trigger evals for `chayen-devops` | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (48 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Any build, pipeline lint, container build, IaC validate or plan, or telemetry check described by the recipes | — | NOT_RUN: no fixture repositories in this step. No deployment, rollback, restart, or infrastructure command was run. |
+| — | Human review of the new skill, 13 recipes, and 2 references | — | Pending (R-33, R-34) |

@@ -32,7 +32,7 @@ Requests that fit:
 | Schema design, query or index tuning, data migrations, backfills, ETL, retention, or restore drills | The chayen-data skill |
 | A security review | The chayen-security skill |
 | Choosing a broker, splitting services, or tenancy design | The chayen-architecture skill |
-| Infrastructure-only work: Kubernetes, Terraform, cloud console settings, CI pipelines | — |
+| Infrastructure-only work: Kubernetes, Terraform, CI pipelines, observability setup | The chayen-devops skill |
 | Backends in Java, Go, Rust, PHP, Ruby, or other stacks not listed in the description | Not covered here |
 
 If the request does not fit, stop following this skill and continue normally without mentioning it.

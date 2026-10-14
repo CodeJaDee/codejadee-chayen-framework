@@ -29,7 +29,7 @@ Requests that fit:
 | Mapping what exists, or "what depends on X", with no design question | The chayen-repository skill |
 | Requirements, acceptance criteria, or sizing backlog items | The chayen-requirements skill |
 | A task contract or change summary for a code change | The chayen-implementation skill |
-| Writing Terraform, Kubernetes, or CI pipeline code | Answer directly |
+| Writing Terraform, Kubernetes, or CI pipeline code | The chayen-devops skill |
 | A security review of code | The chayen-security skill |
 
 If the request does not fit, stop following this skill and continue normally without mentioning it.

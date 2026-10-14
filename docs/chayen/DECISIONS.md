@@ -593,6 +593,48 @@ Decision statuses:
     description changed after Step 06 measured security under-triggering
     (R-23).
 
+### D-035 — Domains 13 and 14: new `chayen-devops` with the L0 cap raised to 4,700
+- **Status:** APPROVED for the new skill and the cap change (the user chose
+  "New skill, cap to 4,700" when asked in Step 15). The rest is PROPOSED
+  (executed in Step 15).
+- **Context:** D13 and D14 (22 capabilities) mapped to the planned
+  `chayen-devops`, which needs about 430 L0 characters, while 176 remained
+  under the 4,400 cap. The agent offered three options: a new skill with
+  the cap raised to 4,700 (recommended), a new skill with a final cap of
+  6,000, or spreading the capabilities over three existing skills.
+- **Decision:**
+  - **The L0 cap is 4,700 characters** (about 59 % of Codex's
+    8,000-character fallback). V-07, the authoring standard, ARCHITECTURE,
+    PLUGIN_PACKAGE_DESIGN, and ADR-0003 and ADR-0004 state it.
+  - **`chayen-devops` is created** as the eleventh entry skill (178 lines,
+    description 417 characters). Its core rule: it changes files, not
+    environments. It states that it grants no access, and that
+    deployments, rollbacks, restarts, scaling, publishing, and mutating or
+    destructive infrastructure commands run only with the user's approval
+    and the platform's authorization.
+  - **References:** an `operations-safety.md` checklist that classifies
+    every command as local, read-only remote, mutating, or destructive,
+    with the approval request contents; a `tooling.md` technology reference
+    (GitHub Actions, Azure Pipelines, GitLab CI, containers, Terraform,
+    Pulumi, Bicep, Kubernetes and Helm, telemetry); and 13 recipes.
+  - **Hand-offs:** the architecture, backend, performance, and security
+    skills now name `chayen-devops` for infrastructure, pipelines, and
+    cluster work in their "When not to use" tables. Their descriptions
+    are unchanged.
+  - **Trigger case change:** `uns-helm` (fixing a Helm chart) is now in
+    scope and moved from unsupported to a `chayen-devops` positive, keeping
+    its id. The generator replaced its `no-chayen-skill.md` grader with
+    `expected-skill.md`.
+- **Consequences:**
+  - L0 is 4,654 / 4,700 with 11 skills. The 3 remaining planned skills
+    (`chayen-modernization`, `chayen-documentation`,
+    `chayen-ai-engineering`) cannot fit in 46 characters: each needs a
+    merge or another cap decision (Q-10).
+  - CAP-15-009 (hotfix), CAP-18-004 (policy as code), and CAP-18-008
+    (go/no-go, in `release-and-rollout.md`) now map to an existing entry
+    skill but stay PLANNED.
+  - Description trigger effects are NOT_RUN (R-32).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

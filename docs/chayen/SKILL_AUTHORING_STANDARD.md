@@ -37,7 +37,7 @@ plugins/codejadee-chayen-framework/skills/
 
 | Level | What loads | When | Budget |
 |---|---|---|---|
-| L0 | `name` + `description` of every entry skill | Always, by the provider | ≤4,400 characters for all Chayen skills together (raised from 4,000 by D-034) |
+| L0 | `name` + `description` of every entry skill | Always, by the provider | ≤4,700 characters for all Chayen skills together (4,000 originally; raised by D-034 and D-035) |
 | L1 | `SKILL.md` body | When the provider matches the description | ≤300 lines (hard). Target ≤200 lines. |
 | L2 | One or more `references/*.md` | When the SKILL.md routing table says so | ≤300 lines each |
 
@@ -83,7 +83,7 @@ decides triggering (REQ-02) and silence (REQ-04).
 | DS-02 | Name the concrete scope: stacks, tools, file types, or artifacts, from the validator vocabulary. Use at least 2 such terms. | V-20 |
 | DS-03 | End with a boundary clause starting "Not for" or "Not a", naming at least 2 exclusions. Exclusions name the neighbouring skills' work and the unsupported stacks that would otherwise attract the skill. | V-07, V-20 |
 | DS-04 | No catch-all wording: "any task", "anything", "everything", "all kinds of", "general purpose", "etc.", "and more", "and so on", "any language", "any framework". | V-20 |
-| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard. The total L0 of all entry skills is ≤4,400 characters (4,000 until D-034). | V-07 |
+| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard. The total L0 of all entry skills is ≤4,700 characters (4,000 until D-034, 4,400 until D-035). | V-07 |
 | DS-06 | Distinct from every other entry skill: word overlap ≤0.25 target, and >0.35 is an error. | V-07b |
 | DS-07 | YAML-safe: no `": "`, no `" #"`, and no leading indicator character. | V-07 |
 | DS-08 | At most 24 enumerated items (warning). Longer lists usually mean the skill is too broad, or should name stack families instead. | V-20 |

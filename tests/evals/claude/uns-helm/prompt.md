@@ -1,12 +1,12 @@
 ---
 name: uns-helm
-description: "[unsupported] generated from tests/skills/trigger-cases.json — do not edit by hand"
-tags: [unsupported]
+description: "[positive] generated from tests/skills/trigger-cases.json — do not edit by hand"
+tags: [positive, chayen-devops]
 runs: 3
 max_turns: 8
 timeout_seconds: 180
 allowed_tools: [Read, Glob, Grep, Skill]
-expected_outcome: "invokes no chayen-* skill (native behavior)"
+expected_outcome: "invokes chayen-devops"
 ---
 
 Fix the Helm chart so the Kubernetes deployment runs three replicas with a rolling update.

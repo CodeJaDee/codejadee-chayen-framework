@@ -28,7 +28,7 @@ Requests that fit:
 | Bundle size, Core Web Vitals, or mobile app startup | The chayen-frontend skill |
 | Functional, API, or regression tests | The chayen-testing skill |
 | Resilience patterns (timeouts, retries, circuit breakers) as a design | The chayen-architecture skill |
-| Setting up autoscaling, clusters, or cloud resources | — |
+| Setting up autoscaling, clusters, or cloud resources | The chayen-devops skill |
 | Load or stress testing systems the user does not own or has not authorized | — |
 
 If the request does not fit, stop following this skill and continue normally without mentioning it.

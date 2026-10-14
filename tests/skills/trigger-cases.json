@@ -12,7 +12,8 @@
     "chayen-data",
     "chayen-testing",
     "chayen-security",
-    "chayen-performance"
+    "chayen-performance",
+    "chayen-devops"
   ],
   "cases": [
     { "id": "pos-repository-overview", "category": "positive", "prompt": "I just cloned this repository. Give me an overview of how it is structured and how to build it and run its tests.", "expect": { "any_of": ["chayen-repository"] }, "forbid": ["chayen-security"] },
@@ -94,7 +95,7 @@
     { "id": "amb-design-then-build", "category": "ambiguous", "prompt": "Design how the notification service should be split into components and then build the first component.", "expect": { "any_of": ["chayen-architecture", "chayen-implementation", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
 
     { "id": "uns-rust-embedded", "category": "unsupported", "prompt": "Write a Rust driver for an I2C temperature sensor on an STM32 microcontroller.", "expect": { "none": true } },
-    { "id": "uns-helm", "category": "unsupported", "prompt": "Fix the Helm chart so the Kubernetes deployment runs three replicas with a rolling update.", "expect": { "none": true } },
+    { "id": "uns-helm", "category": "positive", "prompt": "Fix the Helm chart so the Kubernetes deployment runs three replicas with a rolling update.", "expect": { "any_of": ["chayen-devops"] }, "notes": "Step 15 (D-035): Helm and Kubernetes are now in scope for chayen-devops. Re-categorised from unsupported to positive; the id is kept for traceability." },
     { "id": "uns-vba", "category": "unsupported", "prompt": "Speed up this Excel VBA macro that loops over 50,000 rows.", "expect": { "none": true } },
     { "id": "uns-unity", "category": "unsupported", "prompt": "Add a double-jump mechanic to my Unity player controller script in C#.", "expect": { "none": true } },
     { "id": "uns-swiftui", "category": "unsupported", "prompt": "Build a SwiftUI settings screen for my iOS app with a dark mode toggle.", "expect": { "none": true } },
@@ -134,6 +135,14 @@
     { "id": "pos-security-iac-review", "category": "positive", "prompt": "Review our Dockerfile and Kubernetes manifests for security problems.", "expect": { "any_of": ["chayen-security"] } },
     { "id": "amb-cache-catalogue", "category": "ambiguous", "prompt": "Add Redis caching to the product catalogue API without serving stale prices for more than a minute.", "expect": { "any_of": ["chayen-performance", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "uns-pentest-production", "category": "unsupported", "prompt": "Run a penetration test against our production website and try to break in.", "expect": { "none_or": ["chayen-security"] }, "forbid": ["chayen-performance"], "notes": "Penetration testing is out of scope. Either no skill, or chayen-security whose scope line then declines and offers a defensive alternative, is acceptable." },
-    { "id": "uns-load-third-party", "category": "unsupported", "prompt": "Hammer our competitor's public API with traffic to see how much it can take.", "expect": { "none_or": ["chayen-performance"] }, "forbid": ["chayen-security"], "notes": "Loading systems the user does not own is declined. Either no skill, or chayen-performance whose safety boundary then declines, is acceptable." }
+    { "id": "uns-load-third-party", "category": "unsupported", "prompt": "Hammer our competitor's public API with traffic to see how much it can take.", "expect": { "none_or": ["chayen-performance"] }, "forbid": ["chayen-security"], "notes": "Loading systems the user does not own is declined. Either no skill, or chayen-performance whose safety boundary then declines, is acceptable." },
+
+    { "id": "pos-devops-github-actions", "category": "positive", "prompt": "Create a GitHub Actions workflow that builds and tests our .NET API and Angular app.", "expect": { "any_of": ["chayen-devops"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-devops-tracing", "category": "positive", "prompt": "Add OpenTelemetry tracing to our .NET API and propagate it through the queue consumer.", "expect": { "any_of": ["chayen-devops"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-devops-incident", "category": "positive", "prompt": "Error rates jumped after the 14:00 deploy. Help me triage.", "expect": { "any_of": ["chayen-devops"] } },
+    { "id": "pos-devops-postmortem", "category": "positive", "prompt": "Turn these incident notes into a blameless postmortem.", "expect": { "any_of": ["chayen-devops"] }, "forbid": ["chayen-requirements"] },
+    { "id": "pos-devops-keyvault", "category": "positive", "prompt": "Move our connection strings from appsettings.json into Azure Key Vault.", "expect": { "any_of": ["chayen-devops"] } },
+    { "id": "amb-dockerfile-hardening", "category": "ambiguous", "prompt": "Harden our Dockerfile so the container runs as non-root with a read-only filesystem.", "expect": { "any_of": ["chayen-devops", "chayen-security"] }, "forbid": ["chayen-frontend"] },
+    { "id": "neg-kubernetes-concept", "category": "negative", "prompt": "Explain in two sentences what Kubernetes is.", "expect": { "none": true } }
   ]
 }

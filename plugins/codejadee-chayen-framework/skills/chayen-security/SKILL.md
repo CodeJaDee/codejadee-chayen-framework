@@ -32,7 +32,8 @@ Requests that fit:
 | Retention jobs and deletion of stored data | The chayen-data skill |
 | Penetration testing, exploit development, or attacking systems the user does not own or is not authorized to test | — |
 | Compliance certification (SOC 2, ISO 27001, PCI DSS), legal advice, or policy writing | — |
-| Writing new infrastructure, or cloud account and firewall administration with no files to review | — |
+| Writing or changing infrastructure, pipelines, or containers | The chayen-devops skill |
+| Cloud account and firewall administration with no files to review | — |
 
 If the request does not fit, stop following this skill and continue normally without mentioning it.
 
