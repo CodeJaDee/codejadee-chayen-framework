@@ -74,7 +74,7 @@ entry_skills:
     scope: "Server-side application code: API design and implementation, validation, versioning, authn and authz implementation, messaging, jobs, integrations, webhooks, idempotency, payments consistency, GraphQL schema evolution, and file processing."
   - name: chayen-frontend
     mapping: existing
-    scope: "Browser UI code: features, components, state, forms, layout, accessibility, performance, design systems, i18n, UI errors, browser extensions, and web-technology mobile or desktop shells (Q-11)."
+    scope: "Browser UI code: features, components, state, forms, layout, accessibility, performance, design systems, i18n, UI errors, browser extensions, and web-technology mobile or desktop shells (PWA, Capacitor or Ionic, Electron, Tauri; D-032)."
   - name: chayen-data
     mapping: planned
     scope: "Relational data work on SQL Server and PostgreSQL: modeling, migrations, queries, indexes, transactions, integrity, data migration and backfills, ETL, quality, retention and governance, backup drills, search, and geospatial data."
@@ -305,22 +305,22 @@ consolidation_groups:
     rationale: "Ledger consistency depends on idempotency keys, retries, and exactly-once effects."
   - id: CG-25
     recipe: skills/chayen-frontend/references/ui-features.md
-    mapping: planned
+    mapping: existing
     members: [CAP-07-001, CAP-07-003, CAP-07-004]
     rationale: "The pilot frontend skill and its framework references implement UI features, client state, and forms."
   - id: CG-26
     recipe: skills/chayen-frontend/references/layout-and-design-system.md
-    mapping: planned
+    mapping: existing
     members: [CAP-07-005, CAP-07-008]
     rationale: "Responsive layout should come from the design system's grid, tokens, and breakpoints."
   - id: CG-27
     recipe: skills/chayen-frontend/references/hybrid-mobile.md
-    mapping: planned
-    members: [CAP-08-001, CAP-08-002, CAP-08-004, CAP-08-005, CAP-08-006]
-    rationale: "Web-technology mobile shells share one plugin and native-bridge model for features, navigation, permissions, push, and lifecycle (scope Q-11)."
+    mapping: existing
+    members: [CAP-08-001, CAP-08-002, CAP-08-006]
+    rationale: "Web-technology mobile shells share one plugin and native-bridge model for features, link routing, and lifecycle (D-032; permissions and push split to CG-57)."
   - id: CG-28
     recipe: skills/chayen-frontend/references/offline-and-mobile-performance.md
-    mapping: planned
+    mapping: existing
     members: [CAP-08-003, CAP-08-007]
     rationale: "Offline caching and mobile performance are both governed by storage, network, and startup budgets."
   - id: CG-29
@@ -463,6 +463,11 @@ consolidation_groups:
     mapping: planned
     members: [CAP-20-001, CAP-20-002, CAP-20-004]
     rationale: "Authoring, reviewing, and migrating skills apply one skill anatomy and description standard."
+  - id: CG-57
+    recipe: skills/chayen-frontend/references/device-permissions-and-push.md
+    mapping: existing
+    members: [CAP-08-004, CAP-08-005]
+    rationale: "Push notifications start with the notification permission; both need just-in-time requests, denial handling, and platform manifest entries (D-032)."
 
 capabilities:
 
@@ -1979,11 +1984,12 @@ capabilities:
       - "Build, lint, and test results"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: existing}
     consolidation: CG-25
-    existing_coverage: [skills/chayen-frontend/SKILL.md, skills/chayen-frontend/references/angular.md, skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/vue-nuxt.md]
     verification: "Trigger eval: Step 06 frontend positives (4/4 on Claude) re-run >=3 times; native and game UI prompts stay silent. Behaviour eval on angular-app and nuxt-app fixtures: build passes and patterns match the fixture."
-    status: IN_PROGRESS
+    verification_evidence: "Step 12: recipe ui-features.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-001-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/ui-features.md, skills/chayen-frontend/references/ui-states.md, skills/chayen-frontend/references/angular.md, skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/vue-nuxt.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-002
     name: component-architecture
@@ -2002,10 +2008,12 @@ capabilities:
       - "Refactor steps that keep the UI working"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/component-architecture.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/component-architecture.md, mapping: existing}
     overlaps: [CAP-03-006]
     verification: "Behaviour eval on a fixture with an oversized component: the proposal keeps existing tests passing and follows the repo's folder conventions."
-    status: PLANNED
+    verification_evidence: "Step 12: recipe component-architecture.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-002-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/component-architecture.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-003
     name: state-management
@@ -2024,12 +2032,13 @@ capabilities:
       - "Tests or a measurable render-count check"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: existing}
     consolidation: CG-25
     overlaps: [CAP-08-003]
-    existing_coverage: [skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/angular.md]
     verification: "Behaviour eval: no new state library is introduced when one exists in the fixture, and the re-render fix is shown by a test or profiler note."
-    status: IN_PROGRESS
+    verification_evidence: "Step 12: recipe ui-features.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-003-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/ui-features.md, skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/angular.md, skills/chayen-frontend/references/vue-nuxt.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-004
     name: form-and-validation
@@ -2048,12 +2057,13 @@ capabilities:
       - "Tests for valid, invalid, and server-error submissions"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: existing}
     consolidation: CG-25
     overlaps: [CAP-11-007]
-    existing_coverage: [skills/chayen-frontend/references/angular.md, skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/vue-nuxt.md]
     verification: "Behaviour eval: the fixture form blocks invalid submission, announces errors accessibly, and maps a seeded 400 response to fields."
-    status: IN_PROGRESS
+    verification_evidence: "Step 12: recipe ui-features.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-004-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/ui-features.md, skills/chayen-frontend/references/angular.md, skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/vue-nuxt.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-005
     name: responsive-layout
@@ -2072,10 +2082,12 @@ capabilities:
       - "Checked viewport list with results"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/layout-and-design-system.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/layout-and-design-system.md, mapping: existing}
     consolidation: CG-26
     verification: "Behaviour eval: a Playwright viewport check at 360, 768, and 1280 px shows no horizontal overflow on the fixture page, or is marked NOT_RUN with the command."
-    status: PLANNED
+    verification_evidence: "Step 12: recipe layout-and-design-system.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-005-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/layout-and-design-system.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-006
     name: accessibility-audit
@@ -2094,10 +2106,12 @@ capabilities:
       - "Automated check results (axe or similar) or NOT_RUN"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/accessibility.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/accessibility.md, mapping: existing}
     verification: "Behaviour eval on a fixture with seeded issues (unlabelled input, focus trap missing, low contrast): each is reported with its WCAG criterion."
-    status: PLANNED
-    notes: "The pilot frontend skill names accessibility in its scope and the Vue reference has an accessibility section, but no audit procedure exists."
+    verification_evidence: "Step 12: recipe accessibility.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-006-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/accessibility.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: accessibility.md adds the audit procedure that the pilot skill lacked."
 
   - id: CAP-07-007
     name: frontend-performance
@@ -2117,10 +2131,12 @@ capabilities:
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
     secondary_skills: [chayen-performance]
-    recipe: {path: skills/chayen-frontend/references/frontend-performance.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/frontend-performance.md, mapping: existing}
     overlaps: [CAP-08-007, CAP-12-005]
     verification: "Behaviour eval: bundle size before and after is reported from the build output for a fixture with a seeded large import."
-    status: PLANNED
+    verification_evidence: "Step 12: recipe frontend-performance.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-007-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/frontend-performance.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-008
     name: design-system-integration
@@ -2139,10 +2155,12 @@ capabilities:
       - "List of gaps where the design system lacks a needed component"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/layout-and-design-system.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/layout-and-design-system.md, mapping: existing}
     consolidation: CG-26
     verification: "Behaviour eval: no new hard-coded colours or spacing values are introduced in the fixture when equivalent tokens exist."
-    status: PLANNED
+    verification_evidence: "Step 12: recipe layout-and-design-system.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-008-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/layout-and-design-system.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-009
     name: internationalization
@@ -2161,9 +2179,11 @@ capabilities:
       - "Checks for missing keys and untranslated strings"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/internationalization.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/internationalization.md, mapping: existing}
     verification: "Behaviour eval: no hard-coded user-visible strings remain in the changed fixture components, and a currency renders correctly for two locales in a test."
-    status: PLANNED
+    verification_evidence: "Step 12: recipe internationalization.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-009-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/internationalization.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-07-010
     name: frontend-error-handling
@@ -2182,18 +2202,20 @@ capabilities:
       - "Tests for failure states"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/frontend-error-handling.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/frontend-error-handling.md, mapping: existing}
     overlaps: [CAP-05-007]
     verification: "Behaviour eval: a mocked 500 response in a fixture test renders the error state and does not display server internals."
-    status: PLANNED
+    verification_evidence: "Step 12: recipe frontend-error-handling.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-07-010-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/frontend-error-handling.md, skills/chayen-frontend/references/ui-states.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
 
   # ---------------------------------------------------------------------------
   # D08 MOBILE-DESKTOP (8)
-  # Scope (Q-11): the charter stacks contain no native mobile or desktop
-  # toolkit. These records are mapped to web-technology shells (PWA,
+  # Scope (Q-11, D-032 PROPOSED): the charter stacks contain no native mobile
+  # or desktop toolkit. These records are mapped to web-technology shells (PWA,
   # Capacitor or Ionic, Electron, Tauri) built with the charter's web stacks.
-  # Native toolkits (SwiftUI, Kotlin/Compose, Flutter, WPF, WinUI) remain out
-  # of scope until the charter stack list changes.
+  # Native toolkits (SwiftUI, Kotlin/Compose, Flutter, React Native, .NET MAUI,
+  # WPF, WinUI) remain out of scope until the charter stack list changes.
   # ---------------------------------------------------------------------------
   - id: CAP-08-001
     name: mobile-feature
@@ -2212,11 +2234,13 @@ capabilities:
       - "Platform-specific notes and build commands for each platform"
     stacks: [angular, react, vue, typescript-javascript]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: existing}
     consolidation: CG-27
     verification: "Behaviour eval on a Capacitor fixture: the web build and the Capacitor sync command succeed, or are marked NOT_RUN with the reason (for example no SDK)."
-    status: PLANNED
-    notes: "Boundary change and scope decision required (Q-11): chayen-frontend currently excludes native mobile and desktop UI."
+    verification_evidence: "Step 12: recipe hybrid-mobile.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-001-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/hybrid-mobile.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   - id: CAP-08-002
     name: navigation-and-deep-link
@@ -2235,11 +2259,13 @@ capabilities:
       - "Test matrix for cold start, warm start, and unknown links"
     stacks: [angular, react, vue, typescript-javascript]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: existing}
     consolidation: CG-27
     verification: "Behaviour eval: the routing table maps every documented link format, and an unknown link falls back safely."
-    status: PLANNED
-    notes: "Scope decision Q-11."
+    verification_evidence: "Step 12: recipe hybrid-mobile.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-002-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/hybrid-mobile.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   - id: CAP-08-003
     name: offline-first
@@ -2258,12 +2284,14 @@ capabilities:
       - "Implementation using the existing service worker or plugin, with tests for offline and reconnect"
     stacks: [angular, react, vue, typescript-javascript]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/offline-and-mobile-performance.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/offline-and-mobile-performance.md, mapping: existing}
     consolidation: CG-28
     overlaps: [CAP-07-003]
     verification: "Behaviour eval: a test with the network disabled saves data locally, and reconnecting syncs it once without duplicates."
-    status: PLANNED
-    notes: "Scope decision Q-11 for app shells; PWA offline support is within the web scope."
+    verification_evidence: "Step 12: recipe offline-and-mobile-performance.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-003-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/offline-and-mobile-performance.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   - id: CAP-08-004
     name: device-permission-and-sensors
@@ -2282,11 +2310,13 @@ capabilities:
       - "Manifest and Info.plist entries with usage descriptions"
     stacks: [angular, react, vue, typescript-javascript]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: planned}
-    consolidation: CG-27
+    recipe: {path: skills/chayen-frontend/references/device-permissions-and-push.md, mapping: existing}
+    consolidation: CG-57
     verification: "Behaviour eval: the fixture requests permission only on user action, and the denied state has a tested UI path."
-    status: PLANNED
-    notes: "Scope decision Q-11."
+    verification_evidence: "Step 12: recipe device-permissions-and-push.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-004-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/device-permissions-and-push.md, skills/chayen-frontend/references/ui-states.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   - id: CAP-08-005
     name: push-notification
@@ -2306,11 +2336,13 @@ capabilities:
     stacks: [angular, react, vue, typescript-javascript, server-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
     secondary_skills: [chayen-backend]
-    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: planned}
-    consolidation: CG-27
+    recipe: {path: skills/chayen-frontend/references/device-permissions-and-push.md, mapping: existing}
+    consolidation: CG-57
     verification: "Behaviour eval: tokens are stored and refreshed, invalid tokens are removed on send failure, and payloads carry no sensitive data."
-    status: PLANNED
-    notes: "Scope decision Q-11."
+    verification_evidence: "Step 12: recipe device-permissions-and-push.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-005-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/device-permissions-and-push.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   - id: CAP-08-006
     name: app-lifecycle
@@ -2329,11 +2361,13 @@ capabilities:
       - "Test or manual check list per lifecycle transition"
     stacks: [angular, react, vue, typescript-javascript]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/hybrid-mobile.md, mapping: existing}
     consolidation: CG-27
     verification: "Behaviour eval: the fixture restores in-progress form data after a simulated pause and resume."
-    status: PLANNED
-    notes: "Scope decision Q-11."
+    verification_evidence: "Step 12: recipe hybrid-mobile.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-006-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/hybrid-mobile.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   - id: CAP-08-007
     name: mobile-performance
@@ -2352,12 +2386,14 @@ capabilities:
       - "Before and after measurements or NOT_RUN"
     stacks: [angular, react, vue, typescript-javascript]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/offline-and-mobile-performance.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/offline-and-mobile-performance.md, mapping: existing}
     consolidation: CG-28
     overlaps: [CAP-07-007]
     verification: "Behaviour eval: recommendations cite a measurement (bundle size, startup trace) rather than generic tips, for a fixture with a seeded heavy startup import."
-    status: PLANNED
-    notes: "Scope decision Q-11."
+    verification_evidence: "Step 12: recipe offline-and-mobile-performance.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-007-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/offline-and-mobile-performance.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   - id: CAP-08-008
     name: desktop-packaging-and-update
@@ -2376,11 +2412,13 @@ capabilities:
       - "Security settings (context isolation, no Node integration in renderers) and release steps"
     stacks: [typescript-javascript, angular, react, vue]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/references/desktop-packaging.md, mapping: planned}
+    recipe: {path: skills/chayen-frontend/references/desktop-packaging.md, mapping: existing}
     overlaps: [CAP-13-009]
     verification: "Behaviour eval: the Electron fixture keeps context isolation on and node integration off, and the update feed URL is configurable."
-    status: PLANNED
-    notes: "Scope decision Q-11."
+    verification_evidence: "Step 12: recipe desktop-packaging.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-08-008-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-frontend/references/desktop-packaging.md, skills/chayen-frontend/references/app-shells.md, skills/chayen-frontend/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 12: scope per D-032 (PROPOSED), web-technology shells only (PWA, Capacitor or Ionic, Electron, Tauri); native toolkits stay out of scope."
 
   # ---------------------------------------------------------------------------
   # D09 DATABASE-DATA (12)

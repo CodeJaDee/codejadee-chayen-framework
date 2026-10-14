@@ -1320,6 +1320,498 @@
       "checks": [
         "Resilience design goes to the architecture skill"
       ]
+    },
+    {
+      "id": "rc-07-001-pos",
+      "capability": "CAP-07-001",
+      "polarity": "positive",
+      "prompt": "Add a Nuxt page that lists products from our API, with loading, empty, and error states.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "An existing page is mirrored for routing, data loading, and file layout",
+        "Loading, empty, error, and permission-denied behaviour is decided before markup is written",
+        "Fields missing from the API contract are asked about, not invented"
+      ]
+    },
+    {
+      "id": "rc-07-001-pos-nextjs-stale",
+      "capability": "CAP-07-001",
+      "polarity": "positive",
+      "prompt": "The Next.js product page still shows the old price after an admin updates it.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "The root cause is named with path:line, for example a missing revalidatePath or revalidateTag",
+        "The fix uses the caching API of the installed Next.js version",
+        "Build and tests are reported PASS, FAIL, or NOT_RUN with the command"
+      ]
+    },
+    {
+      "id": "rc-07-001-neg",
+      "capability": "CAP-07-001",
+      "polarity": "negative",
+      "prompt": "Build the GET /api/products endpoint that the new product page needs, in our ASP.NET Core API.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/ui-features.md" },
+      "checks": [
+        "The work is server-side endpoint work, not UI"
+      ]
+    },
+    {
+      "id": "rc-07-002-pos",
+      "capability": "CAP-07-002",
+      "polarity": "positive",
+      "prompt": "This React OrderDetails component is 900 lines. How should it be split into components?",
+      "expect": { "skill": "chayen-frontend", "loads": "references/component-architecture.md" },
+      "checks": [
+        "A component tree with responsibilities, inputs, outputs, and state is proposed before any edit",
+        "Characterization tests are added or their absence is stated before code moves",
+        "The component's public export stays stable, or every caller is updated"
+      ]
+    },
+    {
+      "id": "rc-07-002-neg",
+      "capability": "CAP-07-002",
+      "polarity": "negative",
+      "prompt": "Design the internal modules of our notification service.",
+      "expect": { "skill": "chayen-architecture", "not_loads": "references/component-architecture.md" },
+      "checks": [
+        "Service-internal module design is not UI component structure"
+      ]
+    },
+    {
+      "id": "rc-07-003-pos",
+      "capability": "CAP-07-003",
+      "polarity": "positive",
+      "prompt": "Should the cart live in a Pinia store or in component state in our Vue app?",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "Each piece of cart state is classified (server cache, URL, local, shared, derived)",
+        "The existing Pinia setup is used and no new state library is proposed",
+        "Totals are derived with computed values, not stored separately"
+      ]
+    },
+    {
+      "id": "rc-07-003-pos-react-rerender",
+      "capability": "CAP-07-003",
+      "polarity": "positive",
+      "prompt": "This React search component re-renders the whole result list on every keystroke. Fix it.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "The re-render is measured (profiler or render count) before memoization is added",
+        "The identity change causing the re-render is named",
+        "A test or profiler note shows fewer renders after the fix"
+      ]
+    },
+    {
+      "id": "rc-07-003-neg",
+      "capability": "CAP-07-003",
+      "polarity": "negative",
+      "prompt": "Cache the product API responses in Redis on the server to reduce database load.",
+      "expect": { "skill": "none", "not_loads": "references/ui-features.md" },
+      "checks": [
+        "Server-side caching is not client state management"
+      ]
+    },
+    {
+      "id": "rc-07-004-pos",
+      "capability": "CAP-07-004",
+      "polarity": "positive",
+      "prompt": "Create an Angular form for customer registration with name, email, and password validation.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "Every input has a label and each error is linked with aria-describedby",
+        "A failed submit marks all fields touched and moves focus to the first invalid field or a summary",
+        "A test maps a seeded 400 or 422 server response to the right field"
+      ]
+    },
+    {
+      "id": "rc-07-004-pos-react-server-errors",
+      "capability": "CAP-07-004",
+      "polarity": "positive",
+      "prompt": "Show the server's validation errors next to the right fields in our React Hook Form checkout form.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "Server field errors are set with the form library's API (for example setError)",
+        "Errors without a field go to a form-level message",
+        "5xx and network failures use the error state, not a field"
+      ]
+    },
+    {
+      "id": "rc-07-004-neg",
+      "capability": "CAP-07-004",
+      "polarity": "negative",
+      "prompt": "Validate the same registration rules on our FastAPI signup endpoint.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/ui-features.md" },
+      "checks": [
+        "Server-side request validation belongs to the backend"
+      ]
+    },
+    {
+      "id": "rc-07-005-pos",
+      "capability": "CAP-07-005",
+      "polarity": "positive",
+      "prompt": "Our Tailwind admin dashboard breaks on mobile screens. Make it responsive, including the orders table.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "The existing Tailwind breakpoints are used and no new breakpoint set is added",
+        "The table strategy (scroll container or stacked cards) is chosen with the user",
+        "Viewports 360, 768, and 1280 are checked for horizontal overflow, or marked NOT_RUN with the command"
+      ]
+    },
+    {
+      "id": "rc-07-005-neg",
+      "capability": "CAP-07-005",
+      "polarity": "negative",
+      "prompt": "Build a native iOS layout for the settings screen in SwiftUI.",
+      "expect": { "skill": "none", "not_loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "Native iOS UI is outside the web scope"
+      ]
+    },
+    {
+      "id": "rc-07-006-pos",
+      "capability": "CAP-07-006",
+      "polarity": "positive",
+      "prompt": "Audit the checkout page of our Vue app for accessibility problems.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/accessibility.md" },
+      "checks": [
+        "Each finding has a WCAG criterion, a location, an impact, and a severity",
+        "An automated axe or lint check is run, or marked NOT_RUN with the command",
+        "Full WCAG conformance is not claimed from automated results alone"
+      ]
+    },
+    {
+      "id": "rc-07-006-neg",
+      "capability": "CAP-07-006",
+      "polarity": "negative",
+      "prompt": "Write a VPAT accessibility conformance report for our procurement team.",
+      "expect": { "skill": "none", "not_loads": "references/accessibility.md" },
+      "checks": [
+        "A legal or procurement document is not a code audit"
+      ]
+    },
+    {
+      "id": "rc-07-007-pos",
+      "capability": "CAP-07-007",
+      "polarity": "positive",
+      "prompt": "Our Angular app's initial bundle is 4 MB. How do we cut it down?",
+      "expect": { "skill": "chayen-frontend", "loads": "references/frontend-performance.md" },
+      "checks": [
+        "The baseline comes from the production build output, not the dev server",
+        "Improvements are ranked and each cites the measurement it targets",
+        "Effects not re-measured are labelled expected, not measured"
+      ]
+    },
+    {
+      "id": "rc-07-007-pos-nextjs-lcp",
+      "capability": "CAP-07-007",
+      "polarity": "positive",
+      "prompt": "Improve the Largest Contentful Paint of our Next.js home page.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/frontend-performance.md" },
+      "checks": [
+        "The LCP element is identified from a Lighthouse run or field data with stated conditions",
+        "The LCP image is prioritised and not lazy-loaded",
+        "Lab numbers are not presented as field results"
+      ]
+    },
+    {
+      "id": "rc-07-007-neg",
+      "capability": "CAP-07-007",
+      "polarity": "negative",
+      "prompt": "The /api/search endpoint behind our search page takes 3 seconds under load. Find the bottleneck.",
+      "expect": { "skill": "none", "not_loads": "references/frontend-performance.md" },
+      "checks": [
+        "Server-side bottleneck analysis is not browser performance work"
+      ]
+    },
+    {
+      "id": "rc-07-008-pos",
+      "capability": "CAP-07-008",
+      "polarity": "positive",
+      "prompt": "Replace our hand-rolled buttons with the components from our design system, and add dark mode using our tokens.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "Design-system components are used through their public API, not copied markup",
+        "No new literal colour or spacing values are introduced where tokens exist",
+        "Gaps in the design system are listed with the screen that needs them"
+      ]
+    },
+    {
+      "id": "rc-07-008-neg",
+      "capability": "CAP-07-008",
+      "polarity": "negative",
+      "prompt": "Create a brand style guide with colours and typography for our new product.",
+      "expect": { "skill": "none", "not_loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "Brand design without code is out of scope"
+      ]
+    },
+    {
+      "id": "rc-07-009-pos",
+      "capability": "CAP-07-009",
+      "polarity": "positive",
+      "prompt": "Add Thai and English language support to our Angular app, including dates and prices.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/internationalization.md" },
+      "checks": [
+        "The existing i18n library is detected, or the user is asked before one is chosen",
+        "The th-TH Buddhist calendar default is raised as a product decision",
+        "Dates and currencies are formatted with locale APIs, and a missing-key check is reported"
+      ]
+    },
+    {
+      "id": "rc-07-009-neg",
+      "capability": "CAP-07-009",
+      "polarity": "negative",
+      "prompt": "Translate this paragraph into French.",
+      "expect": { "skill": "none", "not_loads": "references/internationalization.md" },
+      "checks": [
+        "Plain translation is not an i18n code task"
+      ]
+    },
+    {
+      "id": "rc-07-010-pos",
+      "capability": "CAP-07-010",
+      "polarity": "positive",
+      "prompt": "Show a friendly message instead of a blank page when the API fails in our Nuxt app.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/frontend-error-handling.md" },
+      "checks": [
+        "One failure-to-experience mapping is applied centrally",
+        "A test with a mocked 500 shows the error state without server internals",
+        "403 renders a permission-denied state without Retry"
+      ]
+    },
+    {
+      "id": "rc-07-010-pos-angular-interceptor",
+      "capability": "CAP-07-010",
+      "polarity": "positive",
+      "prompt": "Add a global HTTP error interceptor to our Angular app.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/frontend-error-handling.md" },
+      "checks": [
+        "The interceptor style matches the app (functional or class-based)",
+        "Retries are limited to idempotent reads",
+        "Client error reports, if any, are scrubbed of tokens and personal data"
+      ]
+    },
+    {
+      "id": "rc-07-010-neg",
+      "capability": "CAP-07-010",
+      "polarity": "negative",
+      "prompt": "Standardise the error responses that our ASP.NET Core API returns.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/frontend-error-handling.md" },
+      "checks": [
+        "API error contracts are server-side error handling"
+      ]
+    },
+    {
+      "id": "rc-08-001-pos",
+      "capability": "CAP-08-001",
+      "polarity": "positive",
+      "prompt": "Add a barcode scanning screen to our Ionic Angular app.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/hybrid-mobile.md" },
+      "checks": [
+        "An installed plugin is reused, or adding one is proposed for approval with its Capacitor major checked",
+        "A manual-entry fallback exists for web and unsupported platforms",
+        "npx cap sync and the platform runs are executed or marked NOT_RUN with the reason"
+      ]
+    },
+    {
+      "id": "rc-08-001-pos-pwa-install",
+      "capability": "CAP-08-001",
+      "polarity": "positive",
+      "prompt": "Add an 'install app' prompt to our Vite React PWA.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/hybrid-mobile.md" },
+      "checks": [
+        "beforeinstallprompt is treated as Chromium-only",
+        "iOS users get Add to Home Screen instructions",
+        "The prompt is hidden when the app runs in standalone display mode"
+      ]
+    },
+    {
+      "id": "rc-08-001-neg",
+      "capability": "CAP-08-001",
+      "polarity": "negative",
+      "prompt": "Build this settings screen in SwiftUI for our iOS app.",
+      "expect": { "skill": "none", "not_loads": "references/hybrid-mobile.md" },
+      "checks": [
+        "Native toolkits are outside the web-technology shell scope"
+      ]
+    },
+    {
+      "id": "rc-08-002-pos",
+      "capability": "CAP-08-002",
+      "polarity": "positive",
+      "prompt": "Make links to https://shop.example.com/orders/123 open the order screen in our Capacitor app.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/hybrid-mobile.md" },
+      "checks": [
+        "A link table maps each URL pattern to a route before code is written",
+        "Both cold start (getLaunchUrl) and warm start (appUrlOpen) are handled",
+        "assetlinks.json and apple-app-site-association changes are proposed for approval, and an unknown link falls back safely in a test"
+      ]
+    },
+    {
+      "id": "rc-08-002-neg",
+      "capability": "CAP-08-002",
+      "polarity": "negative",
+      "prompt": "Add a route for /orders/:id to our Angular web app.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/hybrid-mobile.md" },
+      "checks": [
+        "A web-only route is a UI feature, not mobile deep linking"
+      ]
+    },
+    {
+      "id": "rc-08-003-pos",
+      "capability": "CAP-08-003",
+      "polarity": "positive",
+      "prompt": "Our field workers lose connectivity. Make the inspection form in our Angular PWA work offline and sync later.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/offline-and-mobile-performance.md" },
+      "checks": [
+        "The offline scope and the conflict policy are agreed with the user before coding",
+        "Queued writes carry a client-generated idempotency key",
+        "A test with the network disabled saves locally and syncs once after reconnecting, without duplicates"
+      ]
+    },
+    {
+      "id": "rc-08-003-neg",
+      "capability": "CAP-08-003",
+      "polarity": "negative",
+      "prompt": "Cache our API responses on the server to reduce database load.",
+      "expect": { "skill": "none", "not_loads": "references/offline-and-mobile-performance.md" },
+      "checks": [
+        "Server caching is not offline-first client work"
+      ]
+    },
+    {
+      "id": "rc-08-004-pos",
+      "capability": "CAP-08-004",
+      "polarity": "positive",
+      "prompt": "Ask for location permission only when the user taps 'Find nearby stores' in our Capacitor React app, and handle denial.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/device-permissions-and-push.md" },
+      "checks": [
+        "The permission is requested only after the user action",
+        "Denied and permanently denied states have a fallback and no re-prompt loop",
+        "AndroidManifest.xml and Info.plist entries with usage descriptions are listed for approval"
+      ]
+    },
+    {
+      "id": "rc-08-004-neg",
+      "capability": "CAP-08-004",
+      "polarity": "negative",
+      "prompt": "Review which permissions our Azure service principal has.",
+      "expect": { "skill": "none", "not_loads": "references/device-permissions-and-push.md" },
+      "checks": [
+        "Cloud access review is not device permissions"
+      ]
+    },
+    {
+      "id": "rc-08-005-pos",
+      "capability": "CAP-08-005",
+      "polarity": "positive",
+      "prompt": "Send a push notification to the customer's phone when their order ships. The app is Capacitor and the API is ASP.NET Core.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/device-permissions-and-push.md" },
+      "checks": [
+        "The existing provider SDK is used on the server, or adding one is proposed for approval",
+        "Tokens are stored per device and removed on an invalid-token response, shown in server tests",
+        "The payload carries no sensitive data and provider credentials stay out of client code"
+      ]
+    },
+    {
+      "id": "rc-08-005-pos-pwa-web-push",
+      "capability": "CAP-08-005",
+      "polarity": "positive",
+      "prompt": "Add web push notifications to our Nuxt PWA.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/device-permissions-and-push.md" },
+      "checks": [
+        "The VAPID private key stays on the server",
+        "The iOS and iPadOS Home Screen requirement is stated",
+        "Notification taps route through the deep-link table"
+      ]
+    },
+    {
+      "id": "rc-08-005-neg",
+      "capability": "CAP-08-005",
+      "polarity": "negative",
+      "prompt": "Send an email to the customer when their order ships.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/device-permissions-and-push.md" },
+      "checks": [
+        "Email delivery is a server-side integration, not push"
+      ]
+    },
+    {
+      "id": "rc-08-006-pos",
+      "capability": "CAP-08-006",
+      "polarity": "positive",
+      "prompt": "Our Ionic Vue app loses the inspection form data when it goes to the background.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/hybrid-mobile.md" },
+      "checks": [
+        "The draft is persisted on change or pause and restored on start",
+        "Polling, timers, and watches pause in the background and resume in the foreground",
+        "A simulated pause and resume test restores the form data"
+      ]
+    },
+    {
+      "id": "rc-08-006-neg",
+      "capability": "CAP-08-006",
+      "polarity": "negative",
+      "prompt": "Handle graceful shutdown of our ASP.NET Core background service.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/hybrid-mobile.md" },
+      "checks": [
+        "Server shutdown is not app lifecycle"
+      ]
+    },
+    {
+      "id": "rc-08-007-pos",
+      "capability": "CAP-08-007",
+      "polarity": "positive",
+      "prompt": "Our Capacitor app takes 6 seconds to start on older Android phones. Speed it up.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/offline-and-mobile-performance.md" },
+      "checks": [
+        "Startup is measured on a device with a release build, or NOT_RUN with the reason",
+        "Each improvement cites a measurement rather than a generic tip",
+        "The splash screen is hidden on first render, not on a fixed timer"
+      ]
+    },
+    {
+      "id": "rc-08-007-neg",
+      "capability": "CAP-08-007",
+      "polarity": "negative",
+      "prompt": "Improve the LCP of our marketing home page in Next.js.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/offline-and-mobile-performance.md" },
+      "checks": [
+        "Web Vitals on a website are frontend performance, not mobile performance"
+      ]
+    },
+    {
+      "id": "rc-08-008-pos",
+      "capability": "CAP-08-008",
+      "polarity": "positive",
+      "prompt": "Package our Electron app for Windows and macOS with auto-updates.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/desktop-packaging.md" },
+      "checks": [
+        "The existing packager is kept",
+        "Context isolation on and Node integration off are checked in every window",
+        "The update feed URL is configurable, signing uses CI secrets by name, and nothing is published without approval"
+      ]
+    },
+    {
+      "id": "rc-08-008-pos-tauri-channel",
+      "capability": "CAP-08-008",
+      "polarity": "positive",
+      "prompt": "Set up code signing and a beta update channel for our Tauri v2 app.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/desktop-packaging.md" },
+      "checks": [
+        "The updater private key and password stay in CI secrets",
+        "Capability files grant only the permissions in use",
+        "Builds for other operating systems are NOT_RUN unless CI ran them"
+      ]
+    },
+    {
+      "id": "rc-08-008-neg",
+      "capability": "CAP-08-008",
+      "polarity": "negative",
+      "prompt": "Package our API as a Docker image for release.",
+      "expect": { "skill": "none", "not_loads": "references/desktop-packaging.md" },
+      "checks": [
+        "Container release packaging is not desktop packaging"
+      ]
     }
   ]
 }

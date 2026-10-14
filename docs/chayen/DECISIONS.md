@@ -461,6 +461,44 @@ Decision statuses:
     it a natural merge candidate (Q-10).
   - Description trigger effects are NOT_RUN (R-32).
 
+### D-032 — Domains 07 and 08: extend the frontend pilot; D08 limited to web-technology shells
+- **Status:** PROPOSED (executed in Step 12). Q-11 stays open until the
+  user approves or changes the D08 scope.
+- **Context:** the user's Step 12 prompt asked for all 8 D08 capabilities,
+  "without assuming a single frontend framework" and "respecting
+  platform-specific constraints". Q-11 had to be answered before any D08
+  recipe could be written. The charter lists no native mobile or desktop
+  stack.
+- **Decision:**
+  - **D08 covers web-technology shells only:** PWA, Capacitor or Ionic
+    (Cordova in legacy apps), Electron, and Tauri, built with the charter's
+    web stacks. This is the Step 07 proposal. Native toolkits stay out of
+    scope: SwiftUI, UIKit, Jetpack Compose, Flutter, React Native, .NET
+    MAUI, WPF, WinForms, WinUI, and Unity. The charter stack list does not
+    change, so BC-20 is not triggered.
+  - **D07 and D08 extend `chayen-frontend`.** The skill becomes a router
+    (189 lines): one framework reference, the new `app-shells.md`
+    technology reference only when a shell is present, and one of 11
+    recipes. A shared `ui-states.md` checklist covers loading, empty,
+    error, retry, permission denied, offline, and the other view states.
+  - **Recommendation versus verification:** the skill's principles require
+    every claim about rendered or device behaviour to be labelled as
+    verified by a named command or test, "not verified in browser", or "not
+    verified on device".
+  - **CG-27 is split.** Device permissions (CAP-08-004) and push
+    notifications (CAP-08-005) move from `hybrid-mobile.md` to a new
+    `device-permissions-and-push.md` (CG-57). Both start with a permission
+    request, and keeping five capabilities in one recipe would have made
+    it too dense to follow. CG-27 keeps CAP-08-001, 002, and 006.
+- **Consequences:**
+  - The `chayen-frontend` description now names the shells and excludes
+    React Native and Flutter (419 characters). L0 is 3,349 / 4,000.
+  - Description trigger effects are NOT_RUN (R-32). The Step 06 frontend
+    routing results no longer describe the current description.
+  - If the user wants native toolkits, a later decision changes the charter
+    stacks and REQ-05 acceptance, and the D08 recipes gain native
+    technology rows or a separate skill.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

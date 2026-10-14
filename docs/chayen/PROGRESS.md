@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 11 — Domains 05 and 06 capabilities |
+| Last executed step | 12 — Domains 07 and 08 capabilities |
+| Step 12 status | DONE (pending user review; D07 10/10 and D08 8/8 IMPLEMENTED, not VERIFIED; D08 scope D-032 PROPOSED) |
 | Step 11 status | DONE (pending user review; D05 12/12 and D06 10/10 IMPLEMENTED, not VERIFIED) |
 | Step 10 status | DONE (pending user review; D03 10/10 and D04 8/8 IMPLEMENTED, not VERIFIED) |
 | Step 09 status | DONE (pending user review; D01 9/9 and D02 10/10 IMPLEMENTED, not VERIFIED) |
@@ -16,7 +17,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open before authoring more entry skills: Q-10 and R-27 (entry-skill set and L0 budget), and Q-11 (D08 scope). |
+| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only), and, before authoring more entry skills, Q-10 and R-27 (entry-skill set and L0 budget). |
 | Commits made by agent | None |
 
 ---
@@ -893,3 +894,134 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Trigger evals for the rewritten implementation and backend descriptions | — | NOT_RUN: billed runs need approval (R-32) |
 | — | Recipe behaviour evals (44 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Human review of the 17 new recipes | — | Pending (R-33) |
+
+---
+
+## Step 12 — Domains 07 and 08 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D07 Frontend **10/10 IMPLEMENTED**, and D08 Mobile-Desktop
+  **8/8 IMPLEMENTED** for web-technology shells (D-032, PROPOSED). None is
+  VERIFIED. The catalog total is 77 IMPLEMENTED, 16 IN_PROGRESS, and 113
+  PLANNED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-07-001..010
+  and CAP-08-001..008 with groups CG-25..CG-28, the `chayen-frontend` skill
+  and its three framework references, the authoring standard, the
+  validators, and Q-11.
+- **Q-11 (D08 scope).** The question was open, and it had to be answered
+  before any D08 recipe. The user's prompt asked for all 8 D08
+  capabilities, so they were implemented on the Step 07 proposal:
+  web-technology shells (PWA, Capacitor or Ionic, Electron, Tauri), with
+  native toolkits, including React Native and Flutter, out of scope. This
+  is recorded as D-032 PROPOSED. Q-11 is now PARTIALLY RESOLVED, pending
+  the user's approval.
+- **`chayen-frontend`** (reused and extended, D-032).
+  - It is now a router (189 lines). It detects the framework, and the
+    shell when present, then loads one framework reference, the
+    `app-shells.md` technology reference when a shell is involved, and one
+    of 11 recipes. A short UI bug path stays in the skill.
+  - New principles: no default framework; reuse the design system, state
+    and form libraries, and native plugins; every data-bound or
+    permission-gated view has its states; and "recommendation is not
+    verification" (claims about rendered or device behaviour are labelled
+    verified with a command, "not verified in browser", or "not verified on
+    device").
+  - Safety additions: ask before new native permissions, signing,
+    update-channel, or push-credential changes; never weaken Electron or
+    Tauri security defaults; no push server keys, VAPID private keys, or
+    certificates in client code.
+  - Description rewritten (419 characters): adds PWA, Capacitor, Ionic,
+    Electron, and Tauri shells, and excludes React Native and Flutter.
+- **Shared references:**
+  - `ui-states.md` (checklist): loading, refresh, empty, error, retry,
+    permission denied (authorization and device), unauthenticated, not
+    found, offline, submitting, success, and partial states, with
+    accessibility and a test per state;
+  - `app-shells.md` (technology): detection signals, platform constraints,
+    commands, and pitfalls for Capacitor, Ionic, Cordova, PWA, Electron,
+    and Tauri.
+- **Eleven recipes:**
+  - `ui-features.md` (CAP-07-001, 003, 004): feature, state placement by
+    kind, and forms with server error mapping;
+  - `component-architecture.md` (002);
+  - `layout-and-design-system.md` (005, 008): existing breakpoints,
+    reflow and zoom, tokens, and a design-system gap list;
+  - `accessibility.md` (006): WCAG 2.2 AA, axe or lint plus a manual
+    review, with no conformance claim from tools alone;
+  - `frontend-performance.md` (007): measured baseline, ranked
+    improvements, before and after;
+  - `internationalization.md` (009): ICU messages, `Intl` formatting,
+    right-to-left, and the th-TH Buddhist calendar default as a product
+    decision;
+  - `frontend-error-handling.md` (010): one central failure mapping, safe
+    retries, and boundaries;
+  - `hybrid-mobile.md` (CAP-08-001, 002, 006): plugin features with
+    fallbacks, deep and universal links for cold and warm starts, and
+    lifecycle persistence;
+  - `device-permissions-and-push.md` (004, 005): just-in-time permissions
+    with denial handling and manifest entries, and end-to-end push with the
+    token lifecycle and privacy-safe payloads;
+  - `offline-and-mobile-performance.md` (003, 007): offline scope, an
+    outbox with idempotency keys, an agreed conflict policy, and device
+    measurement;
+  - `desktop-packaging.md` (008): the existing packager, secure defaults,
+    signing through CI secrets, and a configurable update feed.
+- **Review against the records (agent review, D-028).** Every catalog
+  output for the 18 records is produced by its recipe's `## Outputs`, and
+  each record's verification condition appears in the recipe's
+  `## Verification`. One platform fact was executed: `th-TH` formats with
+  the Buddhist calendar in Node `Intl` (T8). Other platform facts come from
+  the agent's knowledge and are flagged as R-34.
+- **Catalog:**
+  - the 18 records are IMPLEMENTED, with `verification_evidence`,
+    `existing_coverage`, and notes;
+  - CG-25, CG-26, and CG-28 are `existing`. CG-27 is `existing` and keeps
+    CAP-08-001, 002, and 006. The new CG-57 (`device-permissions-and-push.md`)
+    holds CAP-08-004 and 005 (D-032);
+  - the entry-skill scope and the D08 header comment cite D-032;
+  - the coverage doc was regenerated, and its prose updated (counts, §5.2
+    L0, §6.1, §6.2, §7.3, §8, §9).
+  - **Correction:** the coverage doc said 148 grouped capabilities. The
+    catalog had 147 before and after this step, and the doc now says 147.
+- **Evaluation cases:**
+  - 44 recipe cases (164 in total): 25 for D07 and 19 for D08. Each of the
+    18 capabilities has at least one positive and one negative case. The
+    prompts span Angular, React, Next.js, Vue, Nuxt, Vite, Capacitor,
+    Ionic, PWA, Electron, and Tauri.
+  - 9 trigger cases (85 in total): 5 positive, 1 negative, 1 ambiguous
+    (push end to end), and 2 unsupported (Flutter, React Native).
+  - The Claude eval cases were regenerated (85 cases, 199 files).
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/ui-features.md`, `component-architecture.md`, `layout-and-design-system.md`, `accessibility.md`, `frontend-performance.md`, `internationalization.md`, `frontend-error-handling.md`, `hybrid-mobile.md`, `device-permissions-and-push.md`, `offline-and-mobile-performance.md`, `desktop-packaging.md`, `app-shells.md`, `ui-states.md` |
+| Created | `tests/evals/claude/` (9 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` (description and body), `skills/README.md` |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json`, `tests/skills/trigger-cases.json` (additions only), `tests/skills/README.md`. Existing generated eval files have no content change (regenerated; line endings only, see DF-01). |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D07 and CAP-D08 IMPLEMENTED; REQ-02, REQ-05, REQ-07, REQ-08, ARC-04 evidence), `DECISIONS.md` (D-032), `ISSUES.md` (Q-10, Q-11, R-27, R-28, R-32, R-33 notes; new R-34, DF-01, DF-02), `IMPLEMENTATION_PLAN.md` |
+| Deleted | None |
+| Scratch only (not in the repository) | `skills-ref` 0.1.1 virtual environment, lifecycle work directory `lc12`, and the catalog and case edit scripts |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 8 skills. L0 3349/4000. Maximum overlap 0.11. 65 references with valid kinds. 48 recipe files agree with the catalog (78 capabilities). 164 recipe cases. 85 trigger cases. The first run, before the catalog and cases were updated, had 54 errors: expected mapping and case gaps, plus one real V-08 error (a 3-hop link chain through `hybrid-mobile.md`), fixed by removing that link. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=77 (D01–D08 complete), IN_PROGRESS=16, PLANNED=113. 206 records, 57 groups, fingerprint unchanged, doc in sync (after `--write-doc`). |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | **PASS:** 4/4 gate groups. Self-tests 53/53. |
+| T4 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin, `skills/`, and the marketplace | Plugin **PASS**, marketplace **PASS**. `skills/` **FAIL**: "No manifest found in directory". This CLI version accepts only manifest directories, and the result does not depend on skill content (DF-02). |
+| T5 | Agent Skills reference validator | `agentskills validate` ×8 (`skills-ref` 0.1.1, scratch venv) | PASS: 8/8 valid |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc12` | **PASS 24/24:** 8 skills discoverable on Claude Code 2.1.220, Codex 0.162.1, and Copilot CLI 1.0.89. The fixture stayed unchanged and clean. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` | PASS: 85 cases, 199 files. Before regeneration, a CRLF checkout of the committed files reported 176 problems (line endings only, DF-01). |
+| T8 | Locale fact used in `internationalization.md` | `node -e` formatting a date with `Intl.DateTimeFormat("th-TH")` and `"th-TH-u-ca-gregory"` | PASS: `14/10/2569`, `14/10/2026`, calendar `buddhist` |
+| — | Trigger evals for the rewritten frontend description | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (44 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Browser, device, or platform builds (Capacitor, Electron, Tauri) | — | NOT_RUN: no fixture apps; the recipes require these to be reported per run |
+| — | Human review of the 11 new recipes and 2 references | — | Pending (R-33, R-34) |

@@ -21,29 +21,32 @@ it, and the checker fails when they drift.
 
 - **206 capabilities in 20 domains**, exactly as inventoried. No name was
   renamed or omitted, and the order is preserved.
-- **59 IMPLEMENTED:**
+- **77 IMPLEMENTED:**
   - D01 9/9 and D02 10/10 (Step 09);
   - D03 10/10 and D04 8/8 (Step 10);
-  - D05 12/12 and D06 10/10 (Step 11).
+  - D05 12/12 and D06 10/10 (Step 11);
+  - D07 10/10 and D08 8/8 (Step 12; D08 scoped to web-technology shells,
+    D-032).
 
   Each has a recipe that meets SKILL_AUTHORING_STANDARD §6, a review against
   its record, passing static gates, and positive and negative recipe cases.
 - **0 VERIFIED.** Behaviour and trigger evals have not been executed.
   A catalog entry alone never changes a status (D-022).
-- **19 IN_PROGRESS.** For each, an existing entry skill already ships a
+- **16 IN_PROGRESS.** For each, an existing entry skill already ships a
   workflow step, section, or reference that addresses the capability's core
   purpose. The evidence paths are listed in `existing_coverage`.
-- **128 PLANNED.** No shipped content implements them yet.
+- **113 PLANNED.** No shipped content implements them yet.
 - **14 entry skills** are proposed (the ADR-0004 cap): 8 existing
   (`chayen-requirements` added in Step 09, `chayen-architecture` in Step 10)
   and 6 planned. This needs
   approval (Q-10). §5 shows a metadata-budget conflict that the decision must
   resolve.
-- **115 recipe files** are mapped: 37 existing and 78 planned. Step 10's
-  separate `rollout-planning.md` added a path; the earlier figure of 114 was
-  not updated then. **56
-  consolidation groups** let 148 capabilities share a recipe while keeping
-  their own identity.
+- **116 recipe files** are mapped: 48 existing and 68 planned. Step 12
+  split `device-permissions-and-push.md` out of `hybrid-mobile.md` (D-032).
+  **57 consolidation groups** let 147 capabilities share a recipe while
+  keeping their own identity. (Corrected in Step 12: the earlier figure of
+  148 did not match the catalog, which had 147 grouped capabilities before
+  and after this step.)
 - **61 cross-recipe overlaps** are recorded symmetrically and resolved by
   hand-off.
 
@@ -115,7 +118,7 @@ Additional keys:
 |---|---|
 | PLANNED | No shipped content in the mapped entry skill implements the capability. |
 | IN_PROGRESS | The mapped entry skill already ships content that addresses the core purpose, listed in `existing_coverage`. The record is not fully implemented, and nothing is verified at capability level. |
-| IMPLEMENTED | The recipe exists, covers every output in the record without placeholder content, and lists pending `verification_evidence`. **37 after Step 10 (D01–D04).** |
+| IMPLEMENTED | The recipe exists, covers every output in the record without placeholder content, and lists pending `verification_evidence`. **77 after Step 12 (D01–D08).** |
 | VERIFIED | The verification approach was executed and passed, with a recorded result. **None yet.** |
 
 **Why the pilot-covered capabilities are not IMPLEMENTED,** even where a full
@@ -160,7 +163,7 @@ D-016 stops one skill from linking another skill's references.
 | chayen-architecture | existing (Step 10) | D03, decision register, migration planning, and rollout planning (D04; D-029), strangler and modularization (D15, PLANNED), waivers (D18), realtime and multi-region (D19) |
 | chayen-implementation | existing | D04 contract, plan, risk class, and handoff; all of D05, including dependency upgrades (D-031); framework upgrade and breaking-change analysis (D15, PLANNED); safe refactor plan (D15); change passport and evidence audit (D18) |
 | chayen-backend | existing | D06, plus GraphQL, file processing, webhooks, and payments (D19) |
-| chayen-frontend | existing | D07, D08 (scope-limited, Q-11), browser extensions (D19) |
+| chayen-frontend | existing | D07, D08 (web-technology shells only, D-032), browser extensions (D19) |
 | chayen-data | planned | D09, data governance (D18), search and geospatial (D19) |
 | chayen-testing | existing | D10 |
 | chayen-security | existing | D11 except container and IaC review; access and licence reviews (D18) |
@@ -187,10 +190,10 @@ The per-skill counts are in §10.
 
 The always-loaded metadata (L0) is capped at 4,000 characters (ADR-0004,
 D-017). In Step 07, the six pilot descriptions used **2,332 / 4,000**
-characters, at 358–393 characters each. After Step 10, the 8 existing skills
-use **3,315 / 4,000** after Step 11 (3,226 after Step 10). That leaves 685
-characters for the 6 planned skills, about 114 each, which is not enough for
-a useful description. The merge
+characters, at 358–393 characters each. The 8 existing skills use
+**3,349 / 4,000** after Step 12 (3,315 after Step 11, 3,226 after Step 10).
+That leaves 651 characters for the 6 planned skills, about 108 each, which
+is not enough for a useful description. The merge
 decision (Option C) is now due before the next skill.
 
 | Option | Arithmetic | Trade-off |
@@ -213,7 +216,7 @@ then re-run the checker. Capability identities do not change.
 
 ## 6. What the shipped skills cover
 
-### 6.1 IMPLEMENTED (Steps 09 to 11)
+### 6.1 IMPLEMENTED (Steps 09 to 12)
 
 | Entry skill | Capabilities | Recipes |
 |---|---|---|
@@ -224,6 +227,8 @@ then re-run the checker. Capability identities do not change.
 | chayen-backend | All 10 in D06 | `api-design.md`, `api-endpoints.md`, `authn-authz.md`, `messaging.md`, `background-jobs.md`, `external-integrations.md`, `idempotency-and-consistency.md`, plus the four stack technology references |
 | chayen-repository | All 9 in D01 | `repository-profile.md`, `dependency-and-impact.md`, `history-and-ownership.md`, `technical-debt-inventory.md`, `unknowns-and-assumptions.md` |
 | chayen-requirements | All 10 in D02 | `elicitation-and-modeling.md`, `stories-and-acceptance.md`, `scope-and-backlog.md`, `nonfunctional-requirements.md`, `requirement-traceability.md`, plus the `requirements-record.md` template |
+| chayen-frontend (D07) | All 10 in D07 | `ui-features.md`, `component-architecture.md`, `layout-and-design-system.md`, `accessibility.md`, `frontend-performance.md`, `internationalization.md`, `frontend-error-handling.md`, plus the `ui-states.md` checklist and the three framework references |
+| chayen-frontend (D08) | All 8 in D08, for web-technology shells (D-032) | `hybrid-mobile.md`, `device-permissions-and-push.md`, `offline-and-mobile-performance.md`, `desktop-packaging.md`, plus the `app-shells.md` technology reference |
 
 These records are IMPLEMENTED, not VERIFIED. Their `verification_evidence`
 says that the recipe and case-level behaviour evals (G-12) and the trigger
@@ -234,7 +239,6 @@ evals (G-11) are NOT_RUN.
 | Entry skill | IN_PROGRESS capabilities | Evidence basis |
 |---|---|---|
 | chayen-implementation | change-passport | `change-summary.md` |
-| chayen-frontend | ui-feature-implementation, state-management, form-and-validation | Workflow, plus the Angular, React/Next.js, and Vue/Nuxt references |
 | chayen-testing | unit-test-generation, integration-test-design, e2e-test-automation, regression-testing, flaky-test-diagnosis, test-failure-triage | Workflow steps 2–7, failure handling, and three stack testing references |
 | chayen-security | secure-code-review, dependency-vulnerability-triage, secret-detection-and-rotation-plan, authorization-review, input-output-validation, ssrf-and-egress-review, crypto-usage-review, secure-logging, vulnerability-remediation | `review-checklist.md` sections, `stack-hardening.md`, workflow, failure handling |
 
@@ -282,7 +286,7 @@ excluded.
 | CAP-01-005 git-history-analysis, CAP-01-006 code-ownership-analysis | **Done in Step 09** (description, scope line, "When not to use") | Read-only history and ownership analysis allowed. General git operations stay out (CAP-16-010). |
 | CAP-10-010 fuzz-testing | `chayen-testing` excludes "fuzzing campaigns" | Allow fuzz harnesses for the user's own code |
 | CAP-19-009 browser-extension-development | The `chayen-frontend` description names web applications only | Add browser extensions to the description, subject to the budget in §5.2 |
-| CAP-08-001..008 (D08) | `chayen-frontend` excludes native mobile and desktop UI | Scope decision Q-11. Web-technology shells only, or extend the charter stacks. |
+| CAP-08-001..008 (D08) | `chayen-frontend` excluded native mobile and desktop UI | **Done in Step 12** (description, scope line, "When not to use"; D-032 PROPOSED): web-technology shells are in scope, native toolkits stay out. |
 | CAP-18-005 access-control-review | `chayen-security` excludes cloud hardening without application code | Allow a read-only review of exported grants, or remap |
 
 ---
@@ -297,6 +301,8 @@ excluded.
     triggers ("→ native answer").
   - If the user wants native support, the charter stack list and REQ-05
     acceptance change through a decision record (BC-20).
+  - **Step 12:** implemented on this basis (D-032, PROPOSED). Q-11 stays
+    open until the user approves or changes the scope.
 - **Java (STK-14, Q-08).** No record lists `java`. It stays an optional
   extension, and records can add it later without changing identities.
 - **Legal and compliance edges.**
@@ -333,7 +339,7 @@ Every record carries its own verification sentence. They follow one pattern.
    IMPLEMENTED or VERIFIED is refused without evidence.
 
 No capability-level verification has run. That is consistent with
-0 VERIFIED. The 19 IMPLEMENTED records name their pending evals in
+0 VERIFIED. The 77 IMPLEMENTED records name their pending evals in
 `verification_evidence`.
 
 ---
@@ -354,8 +360,8 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | D04 | PLANNING | 8 | 0 | 0 | 8 | 0 | chayen-implementation (4), chayen-requirements (1), chayen-architecture (3) |
 | D05 | IMPLEMENTATION | 12 | 0 | 0 | 12 | 0 | chayen-implementation (12) |
 | D06 | BACKEND | 10 | 0 | 0 | 10 | 0 | chayen-backend (10) |
-| D07 | FRONTEND | 10 | 7 | 3 | 0 | 0 | chayen-frontend (10) |
-| D08 | MOBILE-DESKTOP | 8 | 8 | 0 | 0 | 0 | chayen-frontend (8) |
+| D07 | FRONTEND | 10 | 0 | 0 | 10 | 0 | chayen-frontend (10) |
+| D08 | MOBILE-DESKTOP | 8 | 0 | 0 | 8 | 0 | chayen-frontend (8) |
 | D09 | DATABASE-DATA | 12 | 12 | 0 | 0 | 0 | chayen-data (12) |
 | D10 | TESTING-QA | 14 | 8 | 6 | 0 | 0 | chayen-testing (14) |
 | D11 | SECURITY-PRIVACY | 14 | 5 | 9 | 0 | 0 | chayen-security (13), chayen-devops (1) |
@@ -368,7 +374,7 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | D18 | GOVERNANCE | 10 | 9 | 1 | 0 | 0 | chayen-documentation (1), chayen-implementation (2), chayen-devops (2), chayen-security (2), chayen-data (1), chayen-architecture (1), chayen-ai-engineering (1) |
 | D19 | SPECIALIZED | 9 | 9 | 0 | 0 | 0 | chayen-backend (4), chayen-architecture (2), chayen-data (2), chayen-frontend (1) |
 | D20 | AGENT-ENGINEERING | 8 | 8 | 0 | 0 | 0 | chayen-ai-engineering (8) |
-| **All** | | **206** | **128** | **19** | **59** | **0** | |
+| **All** | | **206** | **113** | **16** | **77** | **0** | |
 
 ### Totals by entry skill
 
@@ -379,7 +385,7 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | chayen-architecture | existing | 18 | 0 | D03, D04, D15, D18, D19 | 8 / 1 |
 | chayen-implementation | existing | 21 | 1 | D04, D05, D15, D18 | 12 / 0 |
 | chayen-backend | existing | 14 | 0 | D06, D19 | 7 / 1 |
-| chayen-frontend | existing | 19 | 3 | D07, D08, D19 | 0 / 11 |
+| chayen-frontend | existing | 19 | 0 | D07, D08, D19 | 11 / 1 |
 | chayen-data | planned | 15 | 0 | D09, D18, D19 | 0 / 10 |
 | chayen-testing | existing | 14 | 6 | D10 | 0 / 7 |
 | chayen-security | existing | 15 | 9 | D11, D18 | 0 / 8 |
@@ -417,10 +423,10 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | CG-22 | `skills/chayen-backend/references/messaging.md` | existing | CAP-06-006 event-driven-integration<br>CAP-06-007 message-queue-design |
 | CG-23 | `skills/chayen-backend/references/external-integrations.md` | existing | CAP-06-009 external-service-integration<br>CAP-19-005 webhook-safety |
 | CG-24 | `skills/chayen-backend/references/idempotency-and-consistency.md` | existing | CAP-06-010 idempotency-and-retries<br>CAP-19-006 payments-and-ledger-consistency |
-| CG-25 | `skills/chayen-frontend/references/ui-features.md` | planned | CAP-07-001 ui-feature-implementation<br>CAP-07-003 state-management<br>CAP-07-004 form-and-validation |
-| CG-26 | `skills/chayen-frontend/references/layout-and-design-system.md` | planned | CAP-07-005 responsive-layout<br>CAP-07-008 design-system-integration |
-| CG-27 | `skills/chayen-frontend/references/hybrid-mobile.md` | planned | CAP-08-001 mobile-feature<br>CAP-08-002 navigation-and-deep-link<br>CAP-08-004 device-permission-and-sensors<br>CAP-08-005 push-notification<br>CAP-08-006 app-lifecycle |
-| CG-28 | `skills/chayen-frontend/references/offline-and-mobile-performance.md` | planned | CAP-08-003 offline-first<br>CAP-08-007 mobile-performance |
+| CG-25 | `skills/chayen-frontend/references/ui-features.md` | existing | CAP-07-001 ui-feature-implementation<br>CAP-07-003 state-management<br>CAP-07-004 form-and-validation |
+| CG-26 | `skills/chayen-frontend/references/layout-and-design-system.md` | existing | CAP-07-005 responsive-layout<br>CAP-07-008 design-system-integration |
+| CG-27 | `skills/chayen-frontend/references/hybrid-mobile.md` | existing | CAP-08-001 mobile-feature<br>CAP-08-002 navigation-and-deep-link<br>CAP-08-006 app-lifecycle |
+| CG-28 | `skills/chayen-frontend/references/offline-and-mobile-performance.md` | existing | CAP-08-003 offline-first<br>CAP-08-007 mobile-performance |
 | CG-29 | `skills/chayen-data/references/schema-and-data-migration.md` | planned | CAP-09-002 schema-migration<br>CAP-09-007 data-migration<br>CAP-09-008 backfill-planning |
 | CG-30 | `skills/chayen-data/references/query-performance.md` | planned | CAP-09-003 query-optimization<br>CAP-09-004 index-review |
 | CG-31 | `skills/chayen-data/references/data-quality-and-integrity.md` | planned | CAP-09-006 data-integrity-validation<br>CAP-09-010 data-quality |
@@ -449,6 +455,7 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | CG-54 | `skills/chayen-ai-engineering/references/llm-and-agent-evaluation.md` | planned | CAP-17-008 prompt-and-tool-evaluation<br>CAP-20-003 skill-testing<br>CAP-20-008 agent-task-benchmarking |
 | CG-55 | `skills/chayen-ai-engineering/references/agent-governance.md` | planned | CAP-18-010 agent-action-risk-review<br>CAP-20-006 policy-conflict-detection |
 | CG-56 | `skills/chayen-ai-engineering/references/agent-skills.md` | planned | CAP-20-001 skill-authoring<br>CAP-20-002 skill-review<br>CAP-20-004 skill-version-migration |
+| CG-57 | `skills/chayen-frontend/references/device-permissions-and-push.md` | existing | CAP-08-004 device-permission-and-sensors<br>CAP-08-005 push-notification |
 
 ### Capability index
 
@@ -545,29 +552,29 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 
 | ID | Capability | Entry skill | Recipe | Group | Status |
 |---|---|---|---|---|---|
-| CAP-07-001 | ui-feature-implementation | chayen-frontend | ui-features.md (planned) | CG-25 | IN_PROGRESS |
-| CAP-07-002 | component-architecture | chayen-frontend | component-architecture.md (planned) | — | PLANNED |
-| CAP-07-003 | state-management | chayen-frontend | ui-features.md (planned) | CG-25 | IN_PROGRESS |
-| CAP-07-004 | form-and-validation | chayen-frontend | ui-features.md (planned) | CG-25 | IN_PROGRESS |
-| CAP-07-005 | responsive-layout | chayen-frontend | layout-and-design-system.md (planned) | CG-26 | PLANNED |
-| CAP-07-006 | accessibility-audit | chayen-frontend | accessibility.md (planned) | — | PLANNED |
-| CAP-07-007 | frontend-performance | chayen-frontend | frontend-performance.md (planned) | — | PLANNED |
-| CAP-07-008 | design-system-integration | chayen-frontend | layout-and-design-system.md (planned) | CG-26 | PLANNED |
-| CAP-07-009 | internationalization | chayen-frontend | internationalization.md (planned) | — | PLANNED |
-| CAP-07-010 | frontend-error-handling | chayen-frontend | frontend-error-handling.md (planned) | — | PLANNED |
+| CAP-07-001 | ui-feature-implementation | chayen-frontend | ui-features.md | CG-25 | IMPLEMENTED |
+| CAP-07-002 | component-architecture | chayen-frontend | component-architecture.md | — | IMPLEMENTED |
+| CAP-07-003 | state-management | chayen-frontend | ui-features.md | CG-25 | IMPLEMENTED |
+| CAP-07-004 | form-and-validation | chayen-frontend | ui-features.md | CG-25 | IMPLEMENTED |
+| CAP-07-005 | responsive-layout | chayen-frontend | layout-and-design-system.md | CG-26 | IMPLEMENTED |
+| CAP-07-006 | accessibility-audit | chayen-frontend | accessibility.md | — | IMPLEMENTED |
+| CAP-07-007 | frontend-performance | chayen-frontend | frontend-performance.md | — | IMPLEMENTED |
+| CAP-07-008 | design-system-integration | chayen-frontend | layout-and-design-system.md | CG-26 | IMPLEMENTED |
+| CAP-07-009 | internationalization | chayen-frontend | internationalization.md | — | IMPLEMENTED |
+| CAP-07-010 | frontend-error-handling | chayen-frontend | frontend-error-handling.md | — | IMPLEMENTED |
 
 #### D08 MOBILE-DESKTOP (8)
 
 | ID | Capability | Entry skill | Recipe | Group | Status |
 |---|---|---|---|---|---|
-| CAP-08-001 | mobile-feature | chayen-frontend | hybrid-mobile.md (planned) | CG-27 | PLANNED |
-| CAP-08-002 | navigation-and-deep-link | chayen-frontend | hybrid-mobile.md (planned) | CG-27 | PLANNED |
-| CAP-08-003 | offline-first | chayen-frontend | offline-and-mobile-performance.md (planned) | CG-28 | PLANNED |
-| CAP-08-004 | device-permission-and-sensors | chayen-frontend | hybrid-mobile.md (planned) | CG-27 | PLANNED |
-| CAP-08-005 | push-notification | chayen-frontend | hybrid-mobile.md (planned) | CG-27 | PLANNED |
-| CAP-08-006 | app-lifecycle | chayen-frontend | hybrid-mobile.md (planned) | CG-27 | PLANNED |
-| CAP-08-007 | mobile-performance | chayen-frontend | offline-and-mobile-performance.md (planned) | CG-28 | PLANNED |
-| CAP-08-008 | desktop-packaging-and-update | chayen-frontend | desktop-packaging.md (planned) | — | PLANNED |
+| CAP-08-001 | mobile-feature | chayen-frontend | hybrid-mobile.md | CG-27 | IMPLEMENTED |
+| CAP-08-002 | navigation-and-deep-link | chayen-frontend | hybrid-mobile.md | CG-27 | IMPLEMENTED |
+| CAP-08-003 | offline-first | chayen-frontend | offline-and-mobile-performance.md | CG-28 | IMPLEMENTED |
+| CAP-08-004 | device-permission-and-sensors | chayen-frontend | device-permissions-and-push.md | CG-57 | IMPLEMENTED |
+| CAP-08-005 | push-notification | chayen-frontend | device-permissions-and-push.md | CG-57 | IMPLEMENTED |
+| CAP-08-006 | app-lifecycle | chayen-frontend | hybrid-mobile.md | CG-27 | IMPLEMENTED |
+| CAP-08-007 | mobile-performance | chayen-frontend | offline-and-mobile-performance.md | CG-28 | IMPLEMENTED |
+| CAP-08-008 | desktop-packaging-and-update | chayen-frontend | desktop-packaging.md | — | IMPLEMENTED |
 
 #### D09 DATABASE-DATA (12)
 

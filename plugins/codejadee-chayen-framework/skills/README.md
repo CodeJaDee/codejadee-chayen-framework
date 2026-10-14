@@ -25,6 +25,6 @@ development repository. Capability coverage is tracked in
 | `chayen-architecture` | Architecture and technical planning: reviews and fitness tests, options and ADRs, decision register, boundaries and domain, data flow, multitenancy, resilience, migration and rollout plans |
 | `chayen-implementation` | Code changes with a task contract and change summary: features, bug fixes, refactors, algorithms, concurrency, error handling, dependency upgrades, configuration and flags, generated code, compatibility |
 | `chayen-backend` | Server-side code in the project's stack (ASP.NET Core, Node and Bun servers, Python): API design and versioning, endpoints and validation, auth, background jobs, messaging, integrations, idempotency |
-| `chayen-frontend` | Web UI: Angular, React/Next.js, Vue/Nuxt, Vite |
+| `chayen-frontend` | Web UI (Angular, React/Next.js, Vue/Nuxt, Vite) and its PWA, Capacitor/Ionic, Electron, and Tauri shells: features, state, forms, components, layout and design systems, accessibility, performance, i18n, UI errors, offline, permissions, push, lifecycle, desktop packaging |
 | `chayen-testing` | Automated tests: .NET, JavaScript/TypeScript, Python |
 | `chayen-security` | Advisory security review and hardening |
