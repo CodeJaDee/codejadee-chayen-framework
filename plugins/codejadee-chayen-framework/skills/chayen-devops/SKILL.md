@@ -81,6 +81,8 @@ If the request does not fit, stop following this skill and continue normally wit
    hosting reference.
    For Next.js production artifacts or deployment checks, read the Next.js
    deployment reference and preserve configured output/runner conventions.
+   For Nuxt rendering/artifacts or an evidenced Vite build, read the matching
+   reference and retain framework-owned configuration and existing scripts.
 3. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -171,6 +173,8 @@ Read the safety checklist before remote commands (workflow step 1), the tooling 
 | [references/tooling.md](references/tooling.md) | Workflow step 2: read only the section for the detected CI, container, IaC, or telemetry platform |
 | [references/aspnetcore-hosting.md](references/aspnetcore-hosting.md) | Workflow step 2: an ASP.NET Core app is published, containerized, configured per environment, or hosted |
 | [references/nextjs-deployment.md](references/nextjs-deployment.md) | Workflow step 2: Next.js production build, output mode, hosting artifact, or deployment tests are involved |
+| [references/nuxt-deployment.md](references/nuxt-deployment.md) | Nuxt SSR/SPA/static/hybrid rendering, preset, or production artifact validation is involved |
+| [references/vite-toolchain.md](references/vite-toolchain.md) | Actual Vite build evidence exists and configuration, measured bundle cost, or env exposure is involved |
 | [references/build-systems.md](references/build-systems.md) | Fixing or speeding up builds, or setting up a monorepo build |
 | [references/pipelines.md](references/pipelines.md) | Designing or fixing CI or CD pipelines |
 | [references/containers.md](references/containers.md) | Improving or hardening Dockerfiles and container runtime settings |

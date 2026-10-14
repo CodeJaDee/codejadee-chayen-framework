@@ -82,6 +82,8 @@ If the request does not fit, stop following this skill and continue normally wit
    preserve the detected package manager and configured build/test runners.
    For React/Next.js, likewise read the base plus the relevant topic; preserve
    installed routing, state/form libraries, and server/client ownership.
+   For Vue/Nuxt, read the base plus the relevant topic and distinguish plain
+   Vue from Nuxt context; do not infer Vite from the framework alone.
 2. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -189,6 +191,11 @@ Load one framework reference (workflow step 1), the app-shell reference only whe
 | [references/nextjs-routing-boundaries.md](references/nextjs-routing-boundaries.md) | Next.js App Router segments or server/client imports and serialization boundaries are involved |
 | [references/nextjs-rendering-seo.md](references/nextjs-rendering-seo.md) | Next.js rendering mode, metadata, crawlable output, or hydration is involved |
 | [references/vue-nuxt.md](references/vue-nuxt.md) | `vue` or `nuxt` is detected, including Vite Vue apps |
+| [references/vue-composition.md](references/vue-composition.md) | Vue Composition API, ref/computed/watch behavior, or composable ownership and cleanup is involved |
+| [references/vue-routing-state.md](references/vue-routing-state.md) | Plain Vue Router navigation or existing Vue/Nuxt store and SSR state ownership is involved |
+| [references/vue-performance.md](references/vue-performance.md) | Vue reactive rendering has a measured interaction or computation bottleneck |
+| [references/nuxt-app.md](references/nuxt-app.md) | Nuxt file routes, SSR-aware data fetching, auto-import discovery, or composable context is involved |
+| [references/nuxt-modules.md](references/nuxt-modules.md) | Installed Nuxt module configuration or an explicitly requested compatible module integration is involved |
 | [references/app-shells.md](references/app-shells.md) | `capacitor.config.*`, `ionic.config.json`, `config.xml` (Cordova), a web app manifest with a service worker, `electron`, or `src-tauri/` is detected and the task touches it |
 | [references/ui-states.md](references/ui-states.md) | A view loads data, submits, or depends on an authorization or device permission |
 | [references/ui-features.md](references/ui-features.md) | Building or fixing a page or feature, client state, or a form |

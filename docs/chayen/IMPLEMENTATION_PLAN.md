@@ -31,6 +31,7 @@ change the shape of the steps after them. Any re-plan is recorded in
 | 20 | .NET technology pack (as executed) | `catalog/technology-capabilities.yaml` (22 C# and ASP.NET Core capabilities); 12 new and 2 changed technology references in 6 existing skills; `tools/catalog/check-technology.mjs` (V-23) with 14 negative controls; 57 technology cases; 7 trigger cases; .NET fact checks `tests/technology/dotnet/` (31/31 PASS); `docs/chayen/TECHNOLOGY_COVERAGE.md` (D-039) | STK-01, REQ-07, REQ-08, REQ-10 | DONE (pending review) |
 | 21 | Angular and shared TypeScript/JavaScript technology support (user-directed, D-040) | 14 Angular and 8 shared TS/JS sections in existing skills; 52 new technology cases; 8 trigger cases; 9 new mutation controls; V-23 validation; 8 TS/JS framework facts PASS, 14 Angular facts NOT_RUN; coverage/progress updated | STK-02, STK-04, REQ-07, REQ-08, REQ-10 | DONE (pending review) |
 | 22 | React and Next.js technology guidance (user-directed, D-041) | 8 React and 8 Next.js capabilities; 11 new references in existing skills; 40 evaluation cases, 8 trigger prompts, 8 mutation controls; V-23 validation; 3 synthetic boundary checks PASS, 13 NOT_RUN; coverage/progress | STK-05, STK-06, REQ-07, REQ-08, REQ-09, REQ-10 | DONE (pending review) |
+| 23 | Vue, Nuxt, and Vite engineering guidance (user-directed, D-042) | 7 Vue, 7 Nuxt, 4 Vite capabilities; 10 new references; 44 cases, 8 trigger prompts, 9 mutation controls; V-23 validation; 2 supporting JS checks PASS, 16 NOT_RUN; coverage/progress | STK-07, STK-08, STK-09, REQ-07, REQ-08, REQ-09, REQ-10 | DONE (pending review) |
 | — | Final entry-skill set (*unscheduled*; the authoring guide part was done in Step 08 as SKILL_AUTHORING_STANDARD.md) | Final entry-skill set (Q-10, R-27) | REQ-05, STK-* | NOT_STARTED |
 | 05 | Structural validation suite | Dev-only validator, test fixtures, CI workflow | REQ-10 | NOT_STARTED |
 | 06 | Claude Code packaging | Plugin + marketplace manifests, install evidence | REQ-01, PRV-CC | NOT_STARTED |
@@ -232,3 +233,11 @@ on explicit user approval.**
 with version/routing/library/tooling preservation, server/client and secret
 boundaries, direct server authorization, and positive/negative specifications.
 See TECHNOLOGY_COVERAGE §9 and PROGRESS Step 22. STOP after Step 22.
+
+### Step 23 — Vue, Nuxt, and Vite guidance (user-directed)
+
+Implement the user's exact 7/7/4 inventory, preserving actual versions,
+plain Vue/Nuxt distinctions, conventions, SSR/browser/private-config boundaries,
+selected builder and configured test/package-manager tooling. Add recipes,
+examples, evaluations, validation, coverage and progress. D-042 and
+TECHNOLOGY_COVERAGE §11 record execution and limits. STOP after STEP 23.

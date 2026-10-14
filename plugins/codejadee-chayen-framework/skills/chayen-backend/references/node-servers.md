@@ -31,6 +31,10 @@ kind: technology
   - `createError({ statusCode, statusMessage })`.
 - **Runtime config** comes from `useRuntimeConfig()`. Private keys stay out
   of the `public` section.
+- Nuxt version and installed Nitro/h3 determine context and handlers; legacy
+  Nuxt 2 serverMiddleware and private/public config retain their conventions.
+  Use `nuxt-server.md` for Nuxt-specific work. Private values must also stay
+  out of returned DTOs, SSR data payloads, client imports, and public state.
 
 ## Next.js route handlers and server code
 

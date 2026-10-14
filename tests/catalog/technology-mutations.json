@@ -355,6 +355,148 @@
         "validator": "technology",
         "error": "V-23.8 facts"
       }
+    },
+    {
+      "id": "tech23-vue-inventory",
+      "description": "Step 23 negative control: tech23-vue-inventory",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    name: vue-router\n",
+          "with": "    name: vue-router-renamed\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.1 inventory"
+      }
+    },
+    {
+      "id": "tech23-nuxt-inventory",
+      "description": "Step 23 negative control: tech23-nuxt-inventory",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    name: nuxt-modules\n",
+          "with": "    name: nuxt-modules-renamed\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.1 inventory"
+      }
+    },
+    {
+      "id": "tech23-vite-inventory",
+      "description": "Step 23 negative control: tech23-vite-inventory",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    name: vite-configuration\n",
+          "with": "    name: vite-configuration-renamed\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.1 inventory"
+      }
+    },
+    {
+      "id": "tech23-vue-section",
+      "description": "Step 23 negative control: tech23-vue-section",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-performance.md",
+          "op": "replace",
+          "find": "## Measured rendering changes (vue-performance)",
+          "with": "## Measured rendering changes"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech23-nuxt-orphan",
+      "description": "Unknown Nuxt capability heading is rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nuxt-server.md",
+          "op": "append",
+          "content": "\n## Other (nuxt-unlisted-operation)\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech23-vite-orphan",
+      "description": "Unknown Vite capability heading is rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/vite-toolchain.md",
+          "op": "append",
+          "content": "\n## Other (vite-unlisted-operation)\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.4 sections"
+      }
+    },
+    {
+      "id": "tech23-version",
+      "description": "Step 23 negative control: tech23-version",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nuxt-server.md",
+          "op": "replace",
+          "find": "**Version notes:** Nuxt 3/4 runtimeConfig",
+          "with": "Version: Nuxt 3/4 runtimeConfig"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.5 anatomy"
+      }
+    },
+    {
+      "id": "tech23-case-mapping",
+      "description": "Step 23 negative control: tech23-case-mapping",
+      "edits": [
+        {
+          "file": "tests/skills/technology-cases.json",
+          "op": "replace",
+          "find": "\"applies\": \"vue-performance\"",
+          "with": "\"applies\": \"vite-build-optimization\""
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.7 cases"
+      }
+    },
+    {
+      "id": "tech23-fact-reference",
+      "description": "Step 23 negative control: tech23-fact-reference",
+      "edits": [
+        {
+          "file": "catalog/technology-capabilities.yaml",
+          "op": "replace",
+          "find": "    fact_checks: [BF-04]\n",
+          "with": "    fact_checks: [BF-99]\n"
+        }
+      ],
+      "expect": {
+        "validator": "technology",
+        "error": "V-23.8 facts"
+      }
     }
   ]
 }

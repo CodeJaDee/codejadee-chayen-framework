@@ -6,14 +6,15 @@
 # the model never reads it. Each record maps a capability to the entry skill
 # and the technology reference section that implements it (D-039).
 #
-# Inventory sources: user Steps 20–22 (2026-10-15): 22 .NET,
-# 14 Angular, 8 shared TS/JS, 8 React and 8 Next.js names, verbatim.
+# Inventory sources: user Steps 20–23 (2026-10-15), verbatim:
+# 22 .NET, 14 Angular, 8 shared TS/JS, 8 React, 8 Next.js, 7 Vue, 7 Nuxt, 4 Vite.
 #
 # Check:  node tools/catalog/check-technology.mjs
 # Guide:  docs/chayen/TECHNOLOGY_COVERAGE.md
 # Facts:  node tests/technology/dotnet/run-fact-checks.mjs
 #         node tests/technology/angular-typescript/run-fact-checks.mjs
 #         node tests/technology/react-nextjs/run-fact-checks.mjs (includes synthetic boundary checks)
+#         node tests/technology/vue-nuxt-vite/run-fact-checks.mjs (includes JS exposure counterexamples)
 #
 # Format: the same restricted YAML subset as engineering-capabilities.yaml
 # (D-021). Reference paths are relative to catalog.plugin_root.
@@ -72,6 +73,30 @@ packs:
     expected_capabilities: 8
     detection: "Resolved Next/React/runtime versions, App/Pages feature owner, next.config cache/output settings, session and test tools"
     fact_checks: tests/technology/react-nextjs/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: vue
+    title: "vue engineering guidance"
+    technologies: [vue]
+    expected_capabilities: 7
+    detection: "Resolved Vue/compiler, Options/setup conventions, plain Vue versus Nuxt, installed router/store/tests"
+    fact_checks: tests/technology/vue-nuxt-vite/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: nuxt
+    title: "nuxt engineering guidance"
+    technologies: [nuxt]
+    expected_capabilities: 7
+    detection: "Resolved Nuxt/Vue/Nitro, configured source roots/builder, SSR/data context and private/public config"
+    fact_checks: tests/technology/vue-nuxt-vite/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: vite
+    title: "vite engineering guidance"
+    technologies: [vite]
+    expected_capabilities: 4
+    detection: "Selected Vite build from scripts/dependencies/config owner, resolved Vite/plugins/runtime and runner"
+    fact_checks: tests/technology/vue-nuxt-vite/run-fact-checks.mjs
     status: IMPLEMENTED
 
 capabilities:
@@ -1423,4 +1448,400 @@ capabilities:
     fact_checks: [NF-08]
     verification: "V-23 mapping, anatomy and positive/negative specification checks; RF/NF fact and boundary runner; behavior and trigger evaluations G-12/G-11 required for VERIFIED."
     verification_evidence: "Step 22: implementation in mapped section; tc-nextjs-deployment-testing-* evaluation specifications; fact/boundary results in tests/technology/react-nextjs/results/step22-fact-checks.md. Synthetic boundary checks are not compiled Next verification. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-VUE-001
+    name: vue-composition-api
+    pack: vue
+    technology: vue
+    purpose: "Implement composition conventions using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "A Vue feature uses Composition API or explicitly requests a compatible setup implementation."
+    not_when: "A small Options API edit is sufficient; preserve that component's existing style instead."
+    inputs:
+      - "Vue 3.3 script setup SFCs using webpack and npm"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/vue-composition.md
+    section: "Composition conventions (vue-composition-api)"
+    engineering_capabilities: [CAP-07-002]
+    fact_checks: [VF-01]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vue-composition-api-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VUE-002
+    name: vue-reactivity
+    pack: vue
+    technology: vue
+    purpose: "Implement reactive ownership and derivation using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Vue refs, reactive objects, computed state, or watchers have stale values or incorrect update behavior."
+    not_when: "Only fixing Nuxt remote request hydration; use Nuxt data-fetching guidance instead."
+    inputs:
+      - "Vue 3.4 reactive objects and computed state with configured Jest tests"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/vue-composition.md
+    section: "Reactive ownership and derivation (vue-reactivity)"
+    engineering_capabilities: [CAP-07-003]
+    fact_checks: [VF-02]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vue-reactivity-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VUE-003
+    name: vue-composables
+    pack: vue
+    technology: vue
+    purpose: "Implement reusable instance behavior using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Existing Vue behavior needs a composable with defined input, state, lifecycle, or reuse boundaries."
+    not_when: "A pure helper function has no reactive/lifecycle behavior; keep it an ordinary utility instead."
+    inputs:
+      - "Plain Vue 3.4 composables and server rendering without Nuxt"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/vue-composition.md
+    section: "Reusable instance behavior (vue-composables)"
+    engineering_capabilities: [CAP-07-002]
+    fact_checks: [VF-03]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vue-composables-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VUE-004
+    name: vue-router
+    pack: vue
+    technology: vue
+    purpose: "Implement plain vue navigation using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "A plain Vue application using installed Vue Router needs routes, guards, URL state, or navigation changes."
+    not_when: "Editing Nuxt file-based routes; use Nuxt routing guidance instead."
+    inputs:
+      - "Plain Vue 3 Vue Router 4 explicit history config using pnpm"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/vue-routing-state.md
+    section: "Plain Vue navigation (vue-router)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [VF-04]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vue-router-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VUE-005
+    name: vue-state-management
+    pack: vue
+    technology: vue
+    purpose: "Implement store and request scope using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Vue or Nuxt state needs ownership, transitions, store subscriptions, or safe server/client integration."
+    not_when: "Choosing a new application architecture without edits; use architecture planning before introducing a store."
+    inputs:
+      - "Vue 3 app using Pinia 2 request-local SSR instances and Vitest"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/vue-routing-state.md
+    section: "Store and request scope (vue-state-management)"
+    engineering_capabilities: [CAP-07-003]
+    fact_checks: [VF-05]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vue-state-management-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VUE-006
+    name: vue-component-testing
+    pack: vue
+    technology: vue
+    purpose: "Implement public component behavior using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Vue component tests need bindings, emits, models, slots, async behavior, or lifecycle regression coverage."
+    not_when: "Implementing a UI feature as the main request; use the frontend workflow and its ordinary tests instead."
+    inputs:
+      - "Vue 3 Vue Test Utils 2 Vitest with existing router/store mount helpers"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-testing
+    reference: skills/chayen-testing/references/vue-testing.md
+    section: "Public component behavior (vue-component-testing)"
+    engineering_capabilities: [CAP-10-002]
+    fact_checks: [VF-06]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vue-component-testing-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VUE-007
+    name: vue-performance
+    pack: vue
+    technology: vue
+    purpose: "Implement measured rendering changes using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Vue rendering or interaction cost has a reproducible measured bottleneck needing a scoped change."
+    not_when: "Only tuning build chunking in an evidenced Vite project; use Vite build optimization guidance instead."
+    inputs:
+      - "Vue 3.4 editable list with profiler baseline and existing virtualizer"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/vue-performance.md
+    section: "Measured rendering changes (vue-performance)"
+    engineering_capabilities: [CAP-07-007]
+    fact_checks: [VF-07]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vue-performance-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-NUXT-001
+    name: nuxt-routing
+    pack: nuxt
+    technology: nuxt
+    purpose: "Implement framework routes using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Nuxt file-based pages, layouts, navigation, or route middleware need implementation or repair."
+    not_when: "Editing an explicit plain Vue Router configuration; use Vue router guidance instead."
+    inputs:
+      - "Nuxt 4 app/pages with configured srcDir and pnpm scripts"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/nuxt-app.md
+    section: "Framework routes (nuxt-routing)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [UF-01]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-nuxt-routing-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-NUXT-002
+    name: nuxt-data-fetching
+    pack: nuxt
+    technology: nuxt
+    purpose: "Implement ssr-aware remote data using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Nuxt page/composable data loading needs hydration reuse, request identity, refresh, or error-state changes."
+    not_when: "An event-triggered standalone request or plain Vue fetch helper suffices; preserve that existing request layer instead."
+    inputs:
+      - "Nuxt 3 SSR useAsyncData wrapper with user-scoped keys and configured tests"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/nuxt-app.md
+    section: "SSR-aware remote data (nuxt-data-fetching)"
+    engineering_capabilities: [CAP-07-001]
+    fact_checks: [UF-02]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-nuxt-data-fetching-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-NUXT-003
+    name: nuxt-server-api
+    pack: nuxt
+    technology: nuxt
+    purpose: "Implement protected server entrypoints using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "A Nuxt server feature needs an HTTP endpoint, validation, authorization, or server integration change."
+    not_when: "A standalone Nitro/Elysia server or frontend-only page owns the task; use its existing backend or frontend guidance instead."
+    inputs:
+      - "Nuxt 3 existing Nitro h3 handlers auth/schema helpers and Node preset"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/nuxt-server.md
+    section: "Protected server entrypoints (nuxt-server-api)"
+    engineering_capabilities: [CAP-06-002]
+    fact_checks: [UF-03]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-nuxt-server-api-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-NUXT-004
+    name: nuxt-runtime-config
+    pack: nuxt
+    technology: nuxt
+    purpose: "Implement runtime privacy and overrides using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Nuxt configuration needs private/public classification, runtime overrides, or safe server/client access."
+    not_when: "A standalone Vite app needs build-time env handling; use Vite environment safety instead."
+    inputs:
+      - "Nuxt 4 runtimeConfig public/private and production NUXT overrides"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/nuxt-server.md
+    section: "Runtime privacy and overrides (nuxt-runtime-config)"
+    engineering_capabilities: [CAP-13-008]
+    fact_checks: [UF-04]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-nuxt-runtime-config-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-NUXT-005
+    name: nuxt-auto-imports
+    pack: nuxt
+    technology: nuxt
+    purpose: "Implement context and generated imports using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Nuxt auto-import discovery, collisions, generated types, or composable context causes a concrete defect."
+    not_when: "Plain Vue needs an ordinary explicit import; use its existing module conventions instead."
+    inputs:
+      - "Nuxt 4 layers composables import scan and generated types with pnpm prepare"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/nuxt-app.md
+    section: "Context and generated imports (nuxt-auto-imports)"
+    engineering_capabilities: [CAP-07-002]
+    fact_checks: [UF-05]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-nuxt-auto-imports-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-NUXT-006
+    name: nuxt-modules
+    pack: nuxt
+    technology: nuxt
+    purpose: "Implement existing module contracts using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "A Nuxt app needs a configured installed module or an explicitly requested module integration/implementation."
+    not_when: "One local component/helper solves the task; avoid introducing a module abstraction or dependency instead."
+    inputs:
+      - "Nuxt 3 installed compatible module with current config hooks and layers"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-frontend
+    reference: skills/chayen-frontend/references/nuxt-modules.md
+    section: "Existing module contracts (nuxt-modules)"
+    engineering_capabilities: [CAP-13-001]
+    fact_checks: [UF-06]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-nuxt-modules-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-NUXT-007
+    name: nuxt-rendering-deployment
+    pack: nuxt
+    technology: nuxt
+    purpose: "Implement render modes and production artifacts using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Nuxt rendering mode, SSR/client boundaries, route rules, or production artifacts need validation or repair."
+    not_when: "A plain Vue component or isolated Nuxt page edit is sufficient; use frontend guidance and its ordinary checks instead."
+    inputs:
+      - "Nuxt 4 Nitro Node output with routeRules and existing build/start/browser tests"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-devops
+    reference: skills/chayen-devops/references/nuxt-deployment.md
+    section: "Render modes and production artifacts (nuxt-rendering-deployment)"
+    engineering_capabilities: [CAP-13-010]
+    fact_checks: [UF-07]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-nuxt-rendering-deployment-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VITE-001
+    name: vite-configuration
+    pack: vite
+    technology: vite
+    purpose: "Implement configuration ownership using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "An evidenced Vite app/build needs configuration, plugin, alias, root, base, or dev-server changes."
+    not_when: "The project uses webpack/Vue CLI or another selected builder; follow that existing toolchain instead."
+    inputs:
+      - "Vue 3 standalone Vite 5 selected scripts plugins and alias config"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-devops
+    reference: skills/chayen-devops/references/vite-toolchain.md
+    section: "Configuration ownership (vite-configuration)"
+    engineering_capabilities: [CAP-13-001]
+    fact_checks: [BF-01]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vite-configuration-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VITE-002
+    name: vite-build-optimization
+    pack: vite
+    technology: vite
+    purpose: "Implement measured build changes using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "An evidenced Vite production build has measured bundle, chunk, build-time, or loading cost requiring a scoped change."
+    not_when: "Only fixing Vue reactive render work; use Vue performance guidance instead."
+    inputs:
+      - "Vite 8 app with existing Rolldown configuration and measured production bundle baseline"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-devops
+    reference: skills/chayen-devops/references/vite-toolchain.md
+    section: "Measured build changes (vite-build-optimization)"
+    engineering_capabilities: [CAP-13-001]
+    fact_checks: [BF-02]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vite-build-optimization-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VITE-003
+    name: vite-environment-safety
+    pack: vite
+    technology: vite
+    purpose: "Implement build-time environment exposure using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "Vite env prefixes, modes, define replacements, or client/server env usage need privacy or correctness changes."
+    not_when: "Nuxt private runtime overrides are the actual issue; use Nuxt runtime-config guidance instead."
+    inputs:
+      - "Vite 6 app with custom envPrefix define and public client settings"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-devops
+    reference: skills/chayen-devops/references/vite-toolchain.md
+    section: "Build-time environment exposure (vite-environment-safety)"
+    engineering_capabilities: [CAP-13-008]
+    fact_checks: [BF-03]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vite-environment-safety-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-VITE-004
+    name: vite-test-integration
+    pack: vite
+    technology: vite
+    purpose: "Implement configured runner integration using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
+    applies_when: "An evidenced Vite project needs its existing test runner/configuration aligned with transforms, aliases, env, or framework behavior."
+    not_when: "A webpack or non-Vite project needs ordinary tests; retain its own runner and config instead."
+    inputs:
+      - "Vite 5 app with separate Vitest config existing aliases and DOM setup"
+      - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
+    outputs:
+      - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
+      - "Positive/negative boundary tests with exact PASS/FAIL/NOT_RUN commands and remaining limits"
+    entry_skill: chayen-testing
+    reference: skills/chayen-testing/references/vite-testing.md
+    section: "Configured runner integration (vite-test-integration)"
+    engineering_capabilities: [CAP-10-003]
+    fact_checks: [BF-04]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 23: mapped section and tc-vite-test-integration-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
     status: IMPLEMENTED

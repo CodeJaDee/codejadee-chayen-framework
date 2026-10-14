@@ -91,6 +91,8 @@ If the request does not fit, stop following this skill and continue normally wit
    topic file the task needs.
    For Next.js, use nextjs-server as the base instead of node-servers, then
    only the relevant mutations or data/auth topic from References.
+   For Nuxt server endpoints or runtime configuration, use the Nuxt server
+   reference and preserve the detected Nuxt/Nitro or legacy server conventions.
 2. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -186,6 +188,7 @@ Load one technology reference for the detected stack (workflow step 1), and one 
 | [references/nextjs-server.md](references/nextjs-server.md) | Next.js server work needs version, router, runtime, identity, cache, or secret-boundary detection |
 | [references/nextjs-mutations.md](references/nextjs-mutations.md) | Next.js Server Functions or App Router HTTP handlers need validation, authorization, or mutation behavior |
 | [references/nextjs-data-auth.md](references/nextjs-data-auth.md) | Next.js data caching, invalidation, authentication, session, or resource authorization is involved |
+| [references/nuxt-server.md](references/nuxt-server.md) | Nuxt server APIs or private/public runtime configuration need version, context, validation, or privacy checks |
 | [references/python-web-apis.md](references/python-web-apis.md) | FastAPI, Django, or Flask is detected |
 | [references/data-access.md](references/data-access.md) | A database, ORM, SQL, or migration is involved |
 | [references/api-design.md](references/api-design.md) | Designing a new API contract, versioning one, or evolving a GraphQL schema |

@@ -889,6 +889,35 @@ Decision statuses:
   auth, production configuration, actual deployment, release, or later step
   was changed or performed.
 
+### D-042 — Step 23 Vue, Nuxt, and Vite guidance
+- **Status:** scope ACCEPTED (explicit user prompt, 2026-10-15); layout
+  PROPOSED pending review.
+- **Scope:** STEP 23 ONLY, exact seven Vue, seven Nuxt, four Vite capabilities.
+  Add this user-directed step after Step 22 without performing a release or
+  carrying work into another step.
+- **Layout:** reuse technology standards and existing entry skills. Six Vue
+  capabilities in frontend, component testing in testing; Nuxt app/import/module
+  work in frontend, server API/private config in backend, rendering/deployment
+  in devops; Vite configuration/build/env in devops, runner integration in
+  testing. Existing workflow recipes retain procedures; base plus one topic
+  loads conditionally. No new skills, descriptions, metadata budget or
+  engineering-catalog changes.
+- **Constraints:** detect resolved versions and selected build/config ownership;
+  keep Options/setup, Vue 2/3, Nuxt 2/3/4 layout/context, installed routers/stores,
+  manager and tests. No automatic Vite/Vitest, framework migration, or store/
+  module install. Keep browser globals out of SSR and private configuration
+  out of public DTO/state/payload/import/build paths.
+- **Verification:** V-23 for all 18 sections/cases, 44 positive/negative specs,
+  eight trigger prompts, nine mutation controls. Developer-only runner uses
+  optional existing tools and Node built-ins; two executed JavaScript exposure
+  counterexamples do not prove Nuxt serialization or Vite build secrecy.
+  No runtime/development dependency or project package manifest is added
+  (BC-22). Framework/browser/artifact/agent evaluations remain NOT_RUN.
+- **Consequences:** 78 technology records IMPLEMENTED, 0 VERIFIED; frontend
+  and backend bodies exceed the 200-line target at 213/202 but stay under
+  300 hard. Human review remains pending. No prior-step implementation fixes,
+  production configuration, deployment, commit, publish, or later step action.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

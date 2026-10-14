@@ -1,5 +1,5 @@
 {
-  "$comment": "Technology capability evaluation cases (Steps 20–22, D-039/D-040/D-041). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
+  "$comment": "Technology capability evaluation cases (Steps 20–23, D-039..D-042). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
   "version": 1,
   "cases": [
     {
@@ -1957,6 +1957,718 @@
         "Authenticates and authorizes each server entrypoint",
         "Tests anonymous expired revoked wrong-tenant and forbidden direct calls",
         "Does not regard layout or proxy redirect as access enforcement"
+      ]
+    },
+    {
+      "id": "tc-vue-composition-api-01",
+      "capability": "vue-composition-api",
+      "polarity": "positive",
+      "context": "Vue 3.3 script setup SFCs using webpack and npm",
+      "prompt": "Add a typed props and emits contract to our existing setup component without changing its model pattern.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-composition.md",
+        "applies": "vue-composition-api"
+      },
+      "checks": [
+        "Detects Vue/compiler and current setup conventions",
+        "Does not assume Vite or Vue 3.4 defineModel",
+        "Tests public props emits and existing model contract"
+      ]
+    },
+    {
+      "id": "tc-vue-composition-api-neg-01",
+      "capability": "vue-composition-api",
+      "polarity": "negative",
+      "context": "Vue 2 Options API component without Composition plugin or migration request",
+      "prompt": "Add one field to our existing Options API component; keep Options API.",
+      "expect": {
+        "not_applies": "vue-composition-api",
+        "skill": "chayen-frontend",
+        "not_loads": "references/vue-composition.md"
+      },
+      "checks": [
+        "Preserves Options API without Composition or framework migration"
+      ]
+    },
+    {
+      "id": "tc-vue-reactivity-01",
+      "capability": "vue-reactivity",
+      "polarity": "positive",
+      "context": "Vue 3.4 reactive objects and computed state with configured Jest tests",
+      "prompt": "Fix our stale value after destructuring the reactive object.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-composition.md",
+        "applies": "vue-reactivity"
+      },
+      "checks": [
+        "Distinguishes ordinary destructuring from compiler props transform",
+        "Uses supported toRef/property/computed patterns",
+        "Tests nested/replaced values and watcher cleanup"
+      ]
+    },
+    {
+      "id": "tc-vue-reactivity-neg-01",
+      "capability": "vue-reactivity",
+      "polarity": "negative",
+      "context": "Nuxt 4 remote-data issue with correct local reactivity",
+      "prompt": "Fix duplicate SSR request hydration in a Nuxt useFetch page.",
+      "expect": {
+        "not_applies": "vue-reactivity",
+        "skill": "chayen-frontend",
+        "not_loads": "references/vue-composition.md"
+      },
+      "checks": [
+        "Uses Nuxt data-fetching guidance instead of treating hydration as ordinary reactive state"
+      ]
+    },
+    {
+      "id": "tc-vue-composables-01",
+      "capability": "vue-composables",
+      "polarity": "positive",
+      "context": "Plain Vue 3.4 composables and server rendering without Nuxt",
+      "prompt": "Extract our existing subscription behavior and ensure each consumer cleans up independently.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-composition.md",
+        "applies": "vue-composables"
+      },
+      "checks": [
+        "Keeps instance-owned state and scope cleanup",
+        "Tests two consumers destroy and server import without window",
+        "Does not call Nuxt context APIs or introduce module-scope user refs"
+      ]
+    },
+    {
+      "id": "tc-vue-composables-neg-01",
+      "capability": "vue-composables",
+      "polarity": "negative",
+      "context": "Plain Vue utility request with no scope ownership",
+      "prompt": "Extract a pure string-formatting helper without reactive state or lifecycle.",
+      "expect": {
+        "not_applies": "vue-composables",
+        "skill": "chayen-implementation",
+        "not_loads": "references/vue-composition.md"
+      },
+      "checks": [
+        "Keeps pure helper ordinary rather than creating a reactive composable"
+      ]
+    },
+    {
+      "id": "tc-vue-router-01",
+      "capability": "vue-router",
+      "polarity": "positive",
+      "context": "Plain Vue 3 Vue Router 4 explicit history config using pnpm",
+      "prompt": "Add a nested detail route and preserve our existing history and guards.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-routing-state.md",
+        "applies": "vue-router"
+      },
+      "checks": [
+        "Matches installed Router 4 and current config",
+        "Tests direct entry params rejected guards and history",
+        "Does not infer deployed fallback or use guard as auth"
+      ]
+    },
+    {
+      "id": "tc-vue-router-neg-01",
+      "capability": "vue-router",
+      "polarity": "negative",
+      "context": "Nuxt 3 generated pages with existing layout conventions",
+      "prompt": "Add a file-based Nuxt page without creating a separate router.",
+      "expect": {
+        "not_applies": "vue-router",
+        "skill": "chayen-frontend",
+        "not_loads": "references/vue-routing-state.md"
+      },
+      "checks": [
+        "Uses Nuxt routing rather than adding another Vue Router"
+      ]
+    },
+    {
+      "id": "tc-vue-state-management-01",
+      "capability": "vue-state-management",
+      "polarity": "positive",
+      "context": "Vue 3 app using Pinia 2 request-local SSR instances and Vitest",
+      "prompt": "Extend our orders store with pending and failed-save state without adding another store library.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-routing-state.md",
+        "applies": "vue-state-management"
+      },
+      "checks": [
+        "Extends existing actions/getters and supported storeToRefs",
+        "Tests failed writes reset and account/request isolation",
+        "Does not install Vuex or mirror remote state unnecessarily"
+      ]
+    },
+    {
+      "id": "tc-vue-state-management-neg-01",
+      "capability": "vue-state-management",
+      "polarity": "negative",
+      "context": "Architecture planning request with no approved store change",
+      "prompt": "Plan a new application state architecture without code edits.",
+      "expect": {
+        "not_applies": "vue-state-management",
+        "skill": "chayen-architecture",
+        "not_loads": "references/vue-routing-state.md"
+      },
+      "checks": [
+        "Provides architecture plan rather than silently installing a store"
+      ]
+    },
+    {
+      "id": "tc-vue-component-testing-01",
+      "capability": "vue-component-testing",
+      "polarity": "positive",
+      "context": "Vue 3 Vue Test Utils 2 Vitest with existing router/store mount helpers",
+      "prompt": "Write tests for prop updates emitted events and rejected loading in our component.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/vue-testing.md",
+        "applies": "vue-component-testing"
+      },
+      "checks": [
+        "Retains configured Vitest and Vue Test Utils setup",
+        "Exercises public props emits async output and unmount",
+        "Does not mock away Nuxt context when context is under test"
+      ]
+    },
+    {
+      "id": "tc-vue-component-testing-neg-01",
+      "capability": "vue-component-testing",
+      "polarity": "negative",
+      "context": "Vue frontend feature request with normal verification",
+      "prompt": "Implement a new Vue form as the production feature.",
+      "expect": {
+        "not_applies": "vue-component-testing",
+        "skill": "chayen-frontend",
+        "not_loads": "references/vue-testing.md"
+      },
+      "checks": [
+        "Uses frontend implementation workflow instead of test-only scope"
+      ]
+    },
+    {
+      "id": "tc-vue-performance-01",
+      "capability": "vue-performance",
+      "polarity": "positive",
+      "context": "Vue 3.4 editable list with profiler baseline and existing virtualizer",
+      "prompt": "Reduce measured reactive update cost without breaking focus or list edits.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-performance.md",
+        "applies": "vue-performance"
+      },
+      "checks": [
+        "Measures same interaction before and after",
+        "Keeps keys focus and store architecture",
+        "Checks version and shallow update semantics before optimizing"
+      ]
+    },
+    {
+      "id": "tc-vue-performance-neg-01",
+      "capability": "vue-performance",
+      "polarity": "negative",
+      "context": "Vite bundle-cost task with existing production build evidence",
+      "prompt": "Optimize emitted Vite chunks without changing component rendering.",
+      "expect": {
+        "not_applies": "vue-performance",
+        "skill": "chayen-devops",
+        "not_loads": "references/vue-performance.md"
+      },
+      "checks": [
+        "Uses build optimization rather than guessing render changes"
+      ]
+    },
+    {
+      "id": "tc-nuxt-routing-01",
+      "capability": "nuxt-routing",
+      "polarity": "positive",
+      "context": "Nuxt 4 app/pages with configured srcDir and pnpm scripts",
+      "prompt": "Add a parameterized page and keep our current layouts and middleware.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nuxt-app.md",
+        "applies": "nuxt-routing"
+      },
+      "checks": [
+        "Inspects actual source roots instead of moving folders",
+        "Tests direct SSR and client route changes",
+        "Treats middleware redirects as UX not server authorization"
+      ]
+    },
+    {
+      "id": "tc-nuxt-routing-neg-01",
+      "capability": "nuxt-routing",
+      "polarity": "negative",
+      "context": "Vue 3 explicit Router 4 app with no Nuxt dependency",
+      "prompt": "Add a route to our plain Vue Router configuration.",
+      "expect": {
+        "not_applies": "nuxt-routing",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nuxt-app.md"
+      },
+      "checks": [
+        "Uses explicit Vue Router rather than manufacturing Nuxt pages"
+      ]
+    },
+    {
+      "id": "tc-nuxt-data-fetching-01",
+      "capability": "nuxt-data-fetching",
+      "polarity": "positive",
+      "context": "Nuxt 3 SSR useAsyncData wrapper with user-scoped keys and configured tests",
+      "prompt": "Fix hydration refetch and stale responses in our existing Nuxt data wrapper.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nuxt-app.md",
+        "applies": "nuxt-data-fetching"
+      },
+      "checks": [
+        "Keeps supported wrapper and consistent key/options",
+        "Tests request counts errors changed params and separate users",
+        "Does not serialize private config or forward arbitrary credentials"
+      ]
+    },
+    {
+      "id": "tc-nuxt-data-fetching-neg-01",
+      "capability": "nuxt-data-fetching",
+      "polarity": "negative",
+      "context": "Nuxt event-only mutation with existing fetch helper",
+      "prompt": "Send an event-triggered request after a button click; no SSR data requirement.",
+      "expect": {
+        "not_applies": "nuxt-data-fetching",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nuxt-app.md"
+      },
+      "checks": [
+        "Keeps event-only fetch without unnecessary SSR data wrapper"
+      ]
+    },
+    {
+      "id": "tc-nuxt-server-api-01",
+      "capability": "nuxt-server-api",
+      "polarity": "positive",
+      "context": "Nuxt 3 existing Nitro h3 handlers auth/schema helpers and Node preset",
+      "prompt": "Add a protected orders endpoint with validation and direct wrong-tenant tests.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nuxt-server.md",
+        "applies": "nuxt-server-api"
+      },
+      "checks": [
+        "Detects actual Nitro/h3 and closest handler style",
+        "Checks identity/resource authorization on direct server entry",
+        "Tests denial no writes malformed input and safe DTOs"
+      ]
+    },
+    {
+      "id": "tc-nuxt-server-api-neg-01",
+      "capability": "nuxt-server-api",
+      "polarity": "negative",
+      "context": "Nuxt UI-only feature with existing API contract",
+      "prompt": "Add a browser-only field to our Nuxt form without server changes.",
+      "expect": {
+        "not_applies": "nuxt-server-api",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nuxt-server.md"
+      },
+      "checks": [
+        "Uses frontend feature workflow without changing server API"
+      ]
+    },
+    {
+      "id": "tc-nuxt-runtime-config-01",
+      "capability": "nuxt-runtime-config",
+      "polarity": "positive",
+      "context": "Nuxt 4 runtimeConfig public/private and production NUXT overrides",
+      "prompt": "Keep the API secret server-side and fix the runtime override without leaking config through responses.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nuxt-server.md",
+        "applies": "nuxt-runtime-config"
+      },
+      "checks": [
+        "Separates private runtimeConfig from public/app data",
+        "Checks declared keys and exact runtime override scheme",
+        "Tests synthetic secret artifacts/payload and missing-secret failure without printing values"
+      ]
+    },
+    {
+      "id": "tc-nuxt-runtime-config-neg-01",
+      "capability": "nuxt-runtime-config",
+      "polarity": "negative",
+      "context": "Vite SPA without Nuxt runtimeConfig",
+      "prompt": "Configure public build-time env in our standalone Vite app.",
+      "expect": {
+        "not_applies": "nuxt-runtime-config",
+        "skill": "chayen-devops",
+        "not_loads": "references/nuxt-server.md"
+      },
+      "checks": [
+        "Uses Vite env guidance rather than Nuxt runtime APIs"
+      ]
+    },
+    {
+      "id": "tc-nuxt-auto-imports-01",
+      "capability": "nuxt-auto-imports",
+      "polarity": "positive",
+      "context": "Nuxt 4 layers composables import scan and generated types with pnpm prepare",
+      "prompt": "Fix the composable name collision and its invalid call context.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nuxt-app.md",
+        "applies": "nuxt-auto-imports"
+      },
+      "checks": [
+        "Traces actual layer/symbol ownership and import settings",
+        "Regenerates through configured prepare without editing .nuxt",
+        "Tests context and server/client import boundaries"
+      ]
+    },
+    {
+      "id": "tc-nuxt-auto-imports-neg-01",
+      "capability": "nuxt-auto-imports",
+      "polarity": "negative",
+      "context": "Plain Vue app without Nuxt generated context",
+      "prompt": "Import a helper in a plain Vue component explicitly.",
+      "expect": {
+        "not_applies": "nuxt-auto-imports",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nuxt-app.md"
+      },
+      "checks": [
+        "Keeps ordinary explicit import without Nuxt auto-import assumptions"
+      ]
+    },
+    {
+      "id": "tc-nuxt-modules-01",
+      "capability": "nuxt-modules",
+      "polarity": "positive",
+      "context": "Nuxt 3 installed compatible module with current config hooks and layers",
+      "prompt": "Repair configuration of our installed module while keeping its client plugin and private server options separate.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nuxt-modules.md",
+        "applies": "nuxt-modules"
+      },
+      "checks": [
+        "Checks installed module/Nuxt/Kit compatibility",
+        "Uses owning configuration rather than standalone Vite config",
+        "Tests duplicate/layer/disabled and SSR client boundaries without adding dependencies"
+      ]
+    },
+    {
+      "id": "tc-nuxt-modules-neg-01",
+      "capability": "nuxt-modules",
+      "polarity": "negative",
+      "context": "Nuxt local utility change without reusable module need",
+      "prompt": "Add one local display helper to our page.",
+      "expect": {
+        "not_applies": "nuxt-modules",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nuxt-modules.md"
+      },
+      "checks": [
+        "Keeps local helper rather than inventing a module integration"
+      ]
+    },
+    {
+      "id": "tc-nuxt-rendering-deployment-01",
+      "capability": "nuxt-rendering-deployment",
+      "polarity": "positive",
+      "context": "Nuxt 4 Nitro Node output with routeRules and existing build/start/browser tests",
+      "prompt": "Validate our SSR artifact and browser-only widget boundary locally; do not deploy.",
+      "expect": {
+        "skill": "chayen-devops",
+        "loads": "references/nuxt-deployment.md",
+        "applies": "nuxt-rendering-deployment"
+      },
+      "checks": [
+        "Retains preset rendering and configured runtime/scripts",
+        "Does not globally disable SSR or drop server endpoints",
+        "Checks artifact routes assets private sentinels and browser hydration separately"
+      ]
+    },
+    {
+      "id": "tc-nuxt-rendering-deployment-neg-01",
+      "capability": "nuxt-rendering-deployment",
+      "polarity": "negative",
+      "context": "Vue local UI edit without Nuxt artifact",
+      "prompt": "Fix a label in our plain Vue component.",
+      "expect": {
+        "not_applies": "nuxt-rendering-deployment",
+        "skill": "chayen-frontend",
+        "not_loads": "references/nuxt-deployment.md"
+      },
+      "checks": [
+        "Uses frontend local edit checks rather than changing deployment mode"
+      ]
+    },
+    {
+      "id": "tc-vite-configuration-01",
+      "capability": "vite-configuration",
+      "polarity": "positive",
+      "context": "Vue 3 standalone Vite 5 selected scripts plugins and alias config",
+      "prompt": "Fix our Vite alias and nested asset base while preserving existing plugins and commands.",
+      "expect": {
+        "skill": "chayen-devops",
+        "loads": "references/vite-toolchain.md",
+        "applies": "vite-configuration"
+      },
+      "checks": [
+        "Establishes selected builder and actual config ownership",
+        "Keeps installed plugins and version-compatible alias/base options",
+        "Tests build and app resolution rather than adding another config"
+      ]
+    },
+    {
+      "id": "tc-vite-configuration-neg-01",
+      "capability": "vite-configuration",
+      "polarity": "negative",
+      "context": "Vue CLI webpack builder with no Vite pipeline",
+      "prompt": "Fix a webpack alias in our Vue CLI project; keep webpack.",
+      "expect": {
+        "not_applies": "vite-configuration",
+        "skill": "chayen-devops",
+        "not_loads": "references/vite-toolchain.md"
+      },
+      "checks": [
+        "Uses existing webpack and does not install Vite"
+      ]
+    },
+    {
+      "id": "tc-vite-build-optimization-01",
+      "capability": "vite-build-optimization",
+      "polarity": "positive",
+      "context": "Vite 8 app with existing Rolldown configuration and measured production bundle baseline",
+      "prompt": "Reduce our measured initial chunk cost without copying old Rollup config or adding dependencies.",
+      "expect": {
+        "skill": "chayen-devops",
+        "loads": "references/vite-toolchain.md",
+        "applies": "vite-build-optimization"
+      },
+      "checks": [
+        "Checks actual bundler/API and comparable production metrics",
+        "Preserves side effects lazy route loading and browser targets",
+        "Does not confuse dev prebundling with production improvement"
+      ]
+    },
+    {
+      "id": "tc-vite-build-optimization-neg-01",
+      "capability": "vite-build-optimization",
+      "polarity": "negative",
+      "context": "Vue component render issue without bundle evidence",
+      "prompt": "Fix a Vue watcher causing too many reactive renders.",
+      "expect": {
+        "not_applies": "vite-build-optimization",
+        "skill": "chayen-frontend",
+        "not_loads": "references/vite-toolchain.md"
+      },
+      "checks": [
+        "Uses measured Vue rendering guidance rather than build chunking"
+      ]
+    },
+    {
+      "id": "tc-vite-environment-safety-01",
+      "capability": "vite-environment-safety",
+      "polarity": "positive",
+      "context": "Vite 6 app with custom envPrefix define and public client settings",
+      "prompt": "Prevent private env values entering the browser and interpret our false public flag correctly.",
+      "expect": {
+        "skill": "chayen-devops",
+        "loads": "references/vite-toolchain.md",
+        "applies": "vite-environment-safety"
+      },
+      "checks": [
+        "Inspects custom prefixes define plugins and all client artifacts",
+        "Does not spread process.env or broaden exposure",
+        "Uses synthetic sentinels and explicit string parsing without printing secrets"
+      ]
+    },
+    {
+      "id": "tc-vite-environment-safety-neg-01",
+      "capability": "vite-environment-safety",
+      "polarity": "negative",
+      "context": "Nuxt 3 runtimeConfig privacy issue rather than standalone Vite env",
+      "prompt": "Fix Nuxt private runtime overrides in the built server.",
+      "expect": {
+        "not_applies": "vite-environment-safety",
+        "skill": "chayen-backend",
+        "not_loads": "references/vite-toolchain.md"
+      },
+      "checks": [
+        "Uses Nuxt runtime config scheme instead of treating private config as Vite env"
+      ]
+    },
+    {
+      "id": "tc-vite-test-integration-01",
+      "capability": "vite-test-integration",
+      "polarity": "positive",
+      "context": "Vite 5 app with separate Vitest config existing aliases and DOM setup",
+      "prompt": "Fix our configured test alias and transform without changing production config or runner.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/vite-testing.md",
+        "applies": "vite-test-integration"
+      },
+      "checks": [
+        "Traces actual separate test config ownership and inheritance",
+        "Shares required aliases/plugins with supported version APIs only",
+        "Runs positive/negative runner resolution and build separately"
+      ]
+    },
+    {
+      "id": "tc-vite-test-integration-neg-01",
+      "capability": "vite-test-integration",
+      "polarity": "negative",
+      "context": "Webpack app with Jest and no selected Vite builder",
+      "prompt": "Write tests in our webpack Vue app using the existing Jest setup.",
+      "expect": {
+        "not_applies": "vite-test-integration",
+        "skill": "chayen-testing",
+        "not_loads": "references/vite-testing.md"
+      },
+      "checks": [
+        "Keeps existing non-Vite test tools without introducing Vitest"
+      ]
+    },
+    {
+      "id": "tc-vue-reactivity-props35",
+      "capability": "vue-reactivity",
+      "polarity": "positive",
+      "context": "Vue 3.5 script setup compiler supports reactive defineProps destructuring",
+      "prompt": "Fix the stale watcher source around our destructured props without treating every destructure as broken.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-composition.md",
+        "applies": "vue-reactivity"
+      },
+      "checks": [
+        "Checks compiler transform support and ordinary object distinction",
+        "Uses a reactive getter/ref source where needed",
+        "Tests changed props without unnecessary syntax rewrite"
+      ]
+    },
+    {
+      "id": "tc-vue-state-management-vuex",
+      "capability": "vue-state-management",
+      "polarity": "positive",
+      "context": "Vue 2.7 existing Vuex store and Jest specs",
+      "prompt": "Add pending/error state to our existing Vuex action; keep Vuex and Options API.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/vue-routing-state.md",
+        "applies": "vue-state-management"
+      },
+      "checks": [
+        "Retains existing Vuex and Vue 2 conventions",
+        "Does not add Pinia or Vue 3 macros",
+        "Tests transitions cleanup and identity reset"
+      ]
+    },
+    {
+      "id": "tc-vue-component-testing-legacy-jest",
+      "capability": "vue-component-testing",
+      "polarity": "positive",
+      "context": "Vue 2 Vue Test Utils 1 Jest with current mount helpers",
+      "prompt": "Add component event and rejected-load tests using our existing Vue 2 Jest setup.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/vue-testing.md",
+        "applies": "vue-component-testing"
+      },
+      "checks": [
+        "Uses Vue Test Utils 1 and installed Jest environment",
+        "Does not introduce Vue 3 or Vitest APIs",
+        "Runs supported rendering/promise utilities and public assertions"
+      ]
+    },
+    {
+      "id": "tc-nuxt-routing-legacy",
+      "capability": "nuxt-routing",
+      "polarity": "positive",
+      "context": "Nuxt 2 pages root layouts and existing middleware without Nitro",
+      "prompt": "Add a page to our Nuxt 2 application without migrating it.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nuxt-app.md",
+        "applies": "nuxt-routing"
+      },
+      "checks": [
+        "Keeps Nuxt 2 file/middleware/layout conventions",
+        "Does not move to app directory or add Nitro",
+        "Tests direct entry client navigation and errors with existing scripts"
+      ]
+    },
+    {
+      "id": "tc-nuxt-runtime-config-legacy",
+      "capability": "nuxt-runtime-config",
+      "polarity": "positive",
+      "context": "Nuxt 2.15 privateRuntimeConfig/publicRuntimeConfig and existing production scripts",
+      "prompt": "Keep our Nuxt 2 private API key out of page payloads while preserving runtime configuration.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/nuxt-server.md",
+        "applies": "nuxt-runtime-config"
+      },
+      "checks": [
+        "Uses legacy private/publicRuntimeConfig server context",
+        "Does not migrate to Nuxt 3 APIs",
+        "Checks returned payloads and public output with synthetic sentinel"
+      ]
+    },
+    {
+      "id": "tc-nuxt-auto-imports-disabled",
+      "capability": "nuxt-auto-imports",
+      "polarity": "positive",
+      "context": "Nuxt 4 imports.autoImport disabled deliberately with explicit imports",
+      "prompt": "Fix the missing composable import without enabling auto-imports globally.",
+      "expect": {
+        "skill": "chayen-frontend",
+        "loads": "references/nuxt-app.md",
+        "applies": "nuxt-auto-imports"
+      },
+      "checks": [
+        "Preserves explicit import policy",
+        "Uses configured prepare/types and valid Nuxt context",
+        "Does not hand-edit generated files or enable imports unasked"
+      ]
+    },
+    {
+      "id": "tc-vite-configuration-react",
+      "capability": "vite-configuration",
+      "polarity": "positive",
+      "context": "React 18 standalone Vite 5 config with installed React plugin",
+      "prompt": "Fix our React Vite asset base without adding Vue tooling.",
+      "expect": {
+        "skill": "chayen-devops",
+        "loads": "references/vite-toolchain.md",
+        "applies": "vite-configuration"
+      },
+      "checks": [
+        "Detects Vite independently of UI framework",
+        "Keeps existing React plugin and selected config",
+        "Tests production assets and aliases with current scripts"
+      ]
+    },
+    {
+      "id": "tc-vite-test-integration-jest",
+      "capability": "vite-test-integration",
+      "polarity": "positive",
+      "context": "Vite React app with deliberate Jest tests and current transformer mappings",
+      "prompt": "Align the alias in our existing Jest tests without switching to Vitest.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/vite-testing.md",
+        "applies": "vite-test-integration"
+      },
+      "checks": [
+        "Retains configured Jest transform/alias setup",
+        "Does not assume Vite requires Vitest",
+        "Runs current tests and production build separately"
       ]
     }
   ]

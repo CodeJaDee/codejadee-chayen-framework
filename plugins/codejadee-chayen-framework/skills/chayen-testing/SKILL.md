@@ -150,6 +150,8 @@ Load one technology reference for the detected framework (workflow step 1), and 
 | [references/javascript-testing.md](references/javascript-testing.md) | Jest, Vitest, Jasmine/Karma, Testing Library, Playwright, or Cypress is detected |
 | [references/angular-testing.md](references/angular-testing.md) | Angular tests need TestBed, component, form, router, HTTP, async, or teardown checks with the configured runner |
 | [references/react-testing.md](references/react-testing.md) | React component tests need interactions, async behavior, router/query wrappers, or cleanup with the configured runner |
+| [references/vue-testing.md](references/vue-testing.md) | Vue component bindings, emits, models, async rendering, or cleanup need the configured Vue/Nuxt test environment |
+| [references/vite-testing.md](references/vite-testing.md) | Actual Vite build evidence exists and current test config, transforms, aliases, or environments need integration checks |
 | [references/python-testing.md](references/python-testing.md) | pytest, unittest, or Django tests are detected |
 | [references/test-strategy.md](references/test-strategy.md) | Deciding test levels, priorities, and CI integration for a system or feature |
 | [references/test-authoring.md](references/test-authoring.md) | Writing unit, integration, end-to-end, or regression tests |

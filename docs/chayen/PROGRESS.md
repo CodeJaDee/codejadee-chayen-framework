@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 22 — React and Next.js engineering guidance |
+| Last executed step | 23 — Vue, Nuxt, and Vite engineering guidance |
+| Step 23 status | DONE (pending review; 18/18 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 94/94 self-tests; 2 supporting JS checks PASS, 16 NOT_RUN; frontend/backend target warnings at 213/202 lines; D-042 layout PROPOSED) |
 | Step 22 status | DONE (pending review; 16/16 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 85/85 self-tests; 3 synthetic boundary checks PASS, 13 NOT_RUN; one 206-line frontend target warning; D-041 layout PROPOSED) |
 | Step 21 status | DONE (pending user review; 22/22 new technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 8 TS/JS facts PASS, 14 Angular facts NOT_RUN; automated gates 5/5, self-tests 77/77; D-040 layout PROPOSED) |
 | Step 20 status | DONE (pending user review; 22/22 technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 31/31 .NET framework facts PASS; D-039 PROPOSED) |
@@ -27,7 +28,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after Step 22; await user direction. D-041 layout review pending. All 206 engineering and 60 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. React/Next framework/browser/artifact and agent evaluations remain NOT_RUN; synthetic boundary checks are separate (R-41, R-42). |
+| Next step | STOP after Step 23; await user direction. D-042 layout review pending. All 206 engineering and 78 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Framework/browser/artifact and agent evaluations remain NOT_RUN; Step 23 JS exposure counterexamples are separate (R-43, R-44). |
 | Commits made by agent | None |
 
 ---
@@ -2329,3 +2330,168 @@ Repository-relative paths; generated eval files are recorded individually.
 
 **Runtime Verification:** Verified for executed validators and synthetic
 boundary checks. React/Next framework behavior remains NOT_RUN. STOP here.
+
+
+## Step 23 — Vue, Nuxt, and Vite engineering guidance
+
+- **Date:** 2026-10-15
+- **Status:** DONE (pending user review). STOP after STEP 23.
+- **Result:** Vue 7/7, Nuxt 7/7, Vite 4/4 IMPLEMENTED and structurally
+  validated. Every exact name has one mapped technology section, ordered
+  applicability/version/steps/verification, examples, and positive/negative
+  specifications. V-23 PASS for all 18 new capabilities (78 technology records
+  total), none VERIFIED. Report: [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md) §11.
+
+### Evidence reviewed and work performed
+
+- Read BUILD_CONTRACT, technology standard TC-01..06 and conditional loading
+  rules, existing .NET/Angular/shared-TS/React/Next pack layout/catalog/checker,
+  Vue/Nuxt and Node-server bases, owning routers and quality gates. Initial
+  working tree was clean; no .kiyo/project or repository AGENTS.md was found.
+  No instruction files or user config changed.
+- Consulted official Vue, Router, Vite, Vitest, Nuxt repository and Nuxt 2
+  documentation on 2026-10-15. Some versioned Nuxt site URLs and initially
+  guessed repository paths failed; GitHub directory metadata located the
+  current official files. Only successful primary sources support guidance;
+  see TECHNOLOGY_COVERAGE §12. No third-party claims or latest-version default
+  was imposed.
+- Reused static delivery and current workflow recipes. Added ten technology
+  references and expanded Vue/Nuxt and Node-server bases with detection,
+  boundaries, examples, and targeted routing. No new entry skill, description,
+  L0 budget, runtime dependency, toolchain install, or engineering-catalog
+  change. Thirteen skills retain L0 5485/5500; total references 185.
+- Vue: Composition/setup and retained Options conventions; Vue 2.7 versus 3
+  reactivity, macro support, ordinary destructuring versus Vue 3.5 props
+  compiler transform; instance-owned composables with scope cleanup; existing
+  Router/Pinia/Vuex; configured component tests and measured rendering changes.
+- Nuxt: plain Vue versus generated framework context; Nuxt 2/3/4 pages,
+  app/root/srcDir, SSR data keys/hydration, event-only fetch, auto-import settings,
+  installed modules/layers, server entry validation/auth, private/public runtime
+  config/legacy overrides, rendering and output/preset validation.
+- Vite: selected-builder evidence first; Vue CLI/webpack and non-Vite Nuxt
+  keep their toolchain. Preserve framework-owned config, plugins, supported
+  Rollup/Rolldown API, comparable production build evidence, env prefix/define
+  privacy, and current Jest/Vitest or other runner. A Vite React case proves
+  the specifications do not equate Vite with Vue.
+- SSR/privacy: browser globals stay out of server imports/setup; request-local
+  stores/data; private config stays out of public/app settings, DTOs, state,
+  data payloads, HTML, client imports and source maps. Runtime overrides and
+  build-time env are distinct. No private credential values were inspected or
+  printed; tests use synthetic sentinels.
+- Package manager and tests: compare npm/pnpm/Yarn/Bun pin/lock/workspace/CI
+  evidence, resolve conflicts, and reuse configured scripts. No automatic
+  Vite/Vitest/state/module install or framework/API-style migration.
+- Catalog: TECH-VUE-001..007, TECH-NUXT-001..007, TECH-VITE-001..004. Checker
+  recognizes exact Step 23 inventories, suffixes, and VF/UF/BF definitions.
+  Reviewed all eighteen related-engineering links against named catalog
+  capabilities; no unrelated prior-step record fixes.
+- Tests: 44 new technology specs (26 positive, 18 negative), total 193, including
+  Vue 2 Vuex/Jest, Vue 3.5 props, Nuxt 2 routing/config, disabled imports, Vite
+  React and Vite-with-Jest. Eight triggers generated eighteen files, total 166
+  cases/395 files. Nine new mutation controls; self-tests now 94/94.
+- Developer-only runner reuses optional explicitly supplied existing Vue/Vite
+  packages; none were available/supplied in this run. Two Node/JavaScript
+  counterexamples executed with synthetic config/env data. No package manifest,
+  dependency download, live API, production write, or deployed app fixture.
+- Updated coverage, STK-07/08/09 and acceptance summary, plan/D-042, risks
+  R-43/R-44, test/catalog documentation, and the full file ledger below.
+
+### Decisions, risks, and open questions
+
+- **D-042:** user-directed STEP 23 scope ACCEPTED; existing-router/technology
+  layout PROPOSED pending review. No other numbered step or release executed.
+- **R-43:** 16 framework checks remain NOT_RUN; optional Vue core/SSR and Vite
+  resolveConfig checks did not run. UF-04/BF-03 PASS only for JavaScript
+  serialization/string/spread exposure. They do not establish Nuxt private
+  projection, production overrides, payload secrecy, Vite transforms/plugins/
+  artifacts, browser hydration, component/store/router tests, module/context
+  correctness, or measured build/render improvement.
+- **R-44:** behavior and trigger evaluations and human review NOT_RUN.
+  Specifications and generated prompts are not agent execution. All eighteen
+  remain IMPLEMENTED, 0 VERIFIED. Frontend/backend bodies are 213/202 lines,
+  above target 200 but within 300 hard; two V-06 warnings are explicit.
+- No production config/auth/schema change, new dependency, module/store/builder
+  migration, git commit, push, deployment, publication, or later-step action.
+  No files deleted.
+
+### File ledger
+
+Repository-relative paths; generated evaluations listed individually.
+
+| Action | Path |
+|---|---|
+| Modified | `catalog/technology-capabilities.yaml` |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` |
+| Modified | `docs/chayen/DECISIONS.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` |
+| Modified | `docs/chayen/ISSUES.md` |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/TECHNOLOGY_COVERAGE.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/node-servers.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-devops/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-nuxt.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md` |
+| Modified | `tests/catalog/README.md` |
+| Modified | `tests/catalog/technology-mutations.json` |
+| Modified | `tests/skills/README.md` |
+| Modified | `tests/skills/technology-cases.json` |
+| Modified | `tests/skills/trigger-cases.json` |
+| Modified | `tools/catalog/README.md` |
+| Modified | `tools/catalog/check-technology.mjs` |
+| Modified | `tools/validate/run-validator-tests.mjs` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/nuxt-server.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-devops/references/nuxt-deployment.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-devops/references/vite-toolchain.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nuxt-app.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nuxt-modules.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-composition.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-performance.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-routing-state.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-testing/references/vite-testing.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-testing/references/vue-testing.md` |
+| Created | `tests/evals/claude/amb-nuxt-private-runtime-config/graders/expected-skill.md` |
+| Created | `tests/evals/claude/amb-nuxt-private-runtime-config/prompt.md` |
+| Created | `tests/evals/claude/neg-explain-vue-nuxt/graders/no-chayen-skill.md` |
+| Created | `tests/evals/claude/neg-explain-vue-nuxt/prompt.md` |
+| Created | `tests/evals/claude/pos-backend-nuxt-protected-api/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-backend-nuxt-protected-api/graders/forbidden-skills.md` |
+| Created | `tests/evals/claude/pos-backend-nuxt-protected-api/prompt.md` |
+| Created | `tests/evals/claude/pos-devops-vite-config/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-devops-vite-config/prompt.md` |
+| Created | `tests/evals/claude/pos-frontend-nuxt-ssr-data/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-frontend-nuxt-ssr-data/prompt.md` |
+| Created | `tests/evals/claude/pos-frontend-vue-composable-cleanup/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-frontend-vue-composable-cleanup/prompt.md` |
+| Created | `tests/evals/claude/pos-testing-vite-alias/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-testing-vite-alias/prompt.md` |
+| Created | `tests/evals/claude/pos-testing-vue-jest/graders/expected-skill.md` |
+| Created | `tests/evals/claude/pos-testing-vue-jest/graders/forbidden-skills.md` |
+| Created | `tests/evals/claude/pos-testing-vue-jest/prompt.md` |
+| Created | `tests/technology/vue-nuxt-vite/README.md` |
+| Created | `tests/technology/vue-nuxt-vite/results/step23-fact-checks.md` |
+| Created | `tests/technology/vue-nuxt-vite/run-fact-checks.mjs` |
+| Deleted | None |
+| Scratch only, outside repository | Two Step 23 authoring/report scripts in the session user's temporary directory; validator-owned temporary mutation copies |
+
+### Tests and observed outcomes
+
+| Test | Command | Result |
+|---|---|---|
+| Technology inventory/sections/cases | `node tools/catalog/check-technology.mjs --write-doc`, then `node tools/catalog/check-technology.mjs` | PASS: 78 records including all 18 Step 23 capabilities; 193 specs, exact inventory, unique mapped sections, ordered anatomy, VF/UF/BF links, coverage table in sync |
+| Package and content validation | `node tools/validate/validate-package.mjs` | PASS: 0 errors, 2 warnings (frontend 213/backend 202 lines above target 200); all under 300 hard; 13 skills, 185 references, L0 5485/5500 |
+| Trigger artifacts | `node tools/evals/generate-claude-evals.mjs`, with `--check` through validate-all | PASS: 166 cases/395 files in sync; agent trigger execution NOT_RUN |
+| JS exposure checks | `node tests/technology/vue-nuxt-vite/run-fact-checks.mjs --report tests/technology/vue-nuxt-vite/results/step23-fact-checks.md` | PASS, exit 0: 2 PASS, 0 FAIL, 16 NOT_RUN on Node 26.8.1. UF-04 full config JSON contains synthetic private marker, explicit public DTO excludes it; BF-03 false env string is truthy and unrestricted spread exposes marker. No Nuxt/Vite framework proof |
+| Automated regression | `node tools/validate/validate-all.mjs` | PASS, exit 0: 5/5 groups, 94/94 validator self-tests, all nine Step 23 negative controls; two target warnings remain |
+| Engineering coverage | `node tools/catalog/audit-coverage.mjs` | PASS: 206/206 all ten criteria, no missing/duplicate/orphan/broken mappings; engineering catalog unchanged |
+| Native manifests | `claude plugin validate --strict plugins/codejadee-chayen-framework`; `claude plugin validate --strict .claude-plugin/marketplace.json` | PASS, exit 0 for both |
+| Diff hygiene | `git -c core.safecrlf=false diff --check` | PASS: no whitespace errors |
+| Actual framework/app/runtime checks | No existing compatible dependencies/project fixture supplied | NOT_RUN: Vue/API/compiler/component/store/router/performance, Nuxt SSR/data/context/config/modules/server/render/deployment, Vite config/build/env/runner behavior. Optional pure API facts also NOT_RUN |
+| Agent behavior/trigger evaluations and human review | G-11/G-12/G-15 | NOT_RUN; no VERIFIED promotion |
+| Provider lifecycle, remote install, release | Unchanged manifests/metadata; outside Step 23 guidance scope | NOT_RUN in this step; no external mutation |
+
+**Runtime Verification:** Verified for executed validators and supporting
+JavaScript counterexamples. Framework/browser/artifact behavior remains
+NOT_RUN. STEP 23 ends here.

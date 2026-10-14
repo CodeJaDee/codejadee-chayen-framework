@@ -345,6 +345,93 @@
       "expect": {
         "none": true
       }
+    },
+    {
+      "id": "pos-frontend-vue-composable-cleanup",
+      "category": "positive",
+      "prompt": "Fix our Vue composable subscription cleanup and ensure consumers have isolated state.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "pos-frontend-nuxt-ssr-data",
+      "category": "positive",
+      "prompt": "Fix duplicate hydration requests and stale data in our Nuxt useAsyncData page.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "pos-backend-nuxt-protected-api",
+      "category": "positive",
+      "prompt": "Implement a Nuxt server orders endpoint with input validation and direct tenant authorization tests.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "amb-nuxt-private-runtime-config",
+      "category": "ambiguous",
+      "prompt": "Keep our Nuxt private runtime config out of page payloads and verify the production override.",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-devops",
+          "chayen-frontend"
+        ]
+      },
+      "notes": "Private config guidance is backend-owned; built artifact and page payload investigations can reach devops/frontend. Routing must be measured."
+    },
+    {
+      "id": "pos-devops-vite-config",
+      "category": "positive",
+      "prompt": "Fix our evidenced Vite production asset base and configuration without changing the package manager.",
+      "expect": {
+        "any_of": [
+          "chayen-devops"
+        ]
+      }
+    },
+    {
+      "id": "pos-testing-vue-jest",
+      "category": "positive",
+      "prompt": "Write Vue component prop/event and rejected-load tests using our existing Jest and Vue Test Utils setup.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-testing-vite-alias",
+      "category": "positive",
+      "prompt": "Repair alias and transform integration in our existing Vite test configuration while preserving the configured runner.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      }
+    },
+    {
+      "id": "neg-explain-vue-nuxt",
+      "category": "negative",
+      "prompt": "Explain the difference between Vue and Nuxt briefly without changing files.",
+      "expect": {
+        "none": true
+      }
     }
   ]
 }

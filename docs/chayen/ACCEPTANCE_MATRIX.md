@@ -7,7 +7,7 @@ is defined in [BUILD_CONTRACT.md](BUILD_CONTRACT.md) §5.1.
 A row may be marked `VERIFIED` only when its verification evidence column
 cites an executed test and its recorded result (BC-10, BC-13).
 
-**Snapshot:** after Step 22 (2026-10-15).
+**Snapshot:** after Step 23 (2026-10-15).
 
 ## Summary
 
@@ -17,10 +17,10 @@ cites an executed test and its recorded result (BC-10, BC-13).
 | Core requirements (REQ) | 10 | 0 | 9 | 1 | 0 |
 | Exclusions (EX) | 7 | 0 | 0 | 7 | 0 |
 | Providers (PRV) | 3 | 0 | 3 | 0 | 0 |
-| Stack coverage (STK) | 14 | 1 | 8 | 5 | 0 |
+| Stack coverage (STK) | 14 | 1 | 5 | 8 | 0 |
 | Architecture components (ARC) | 14 | 1 | 6 | 7 | 0 |
 | Capability domains (CAP) | 20 | 0 | 0 | 20 | 0 |
-| **Total** | **85** | **2** | **26** | **57** | **0** |
+| **Total** | **85** | **2** | **23** | **60** | **0** |
 
 Step 06 executed native lifecycle tests (24/24 on 3 CLIs) and routing tests
 on Claude Code, Codex, and Copilot. Details are in
@@ -104,6 +104,13 @@ thirteen framework/browser/artifact checks and all new agent evaluations
 remain NOT_RUN. No React/Next runtime verification or VERIFIED promotion is
 claimed. See TECHNOLOGY_COVERAGE §9 and PROGRESS Step 22.
 
+Step 23 adds seven Vue, seven Nuxt, four Vite technology capabilities, all
+IMPLEMENTED and V-23 validated, with 44 new evaluation specifications and
+eight trigger prompts. Two supporting JavaScript exposure checks PASS;
+sixteen framework checks and all new agent evaluations remain NOT_RUN.
+No framework privacy/render/build verification is inferred. See
+TECHNOLOGY_COVERAGE §11 and PROGRESS Step 23.
+
 No row is `VERIFIED`, because these remain open:
 
 - VS Code surfaces: NOT TESTED;
@@ -179,9 +186,9 @@ No row is `VERIFIED`, because these remain open:
 | STK-04 | JavaScript / TypeScript | Additional | 21, 14, 05 | 8 shared TS/JS technology records; implementation base and types/runtime/workspace topics mapped in `catalog/technology-capabilities.yaml`; `TECHNOLOGY_COVERAGE.md` §7 | Catalog, positive/negative cases, framework facts, behavior/trigger evals | `node tools/catalog/check-technology.mjs` PASS: 8/8 shared mappings and sections, 13 positive/8 negative specifications. JF-01..08 PASS via `node tests/technology/angular-typescript/run-fact-checks.mjs` with existing compiler/npm arguments (exact command in report and PROGRESS). Agent behavior/trigger evals NOT_RUN; other runtime versions NOT_RUN | IMPLEMENTED |
 | STK-05 | React | Additional | 22, 14, 05 | Eight technology sections in frontend topics and testing, mapped in `catalog/technology-capabilities.yaml`; `TECHNOLOGY_COVERAGE.md` §9 | Catalog/cases, configured framework tests, behavior/trigger evaluations | `node tools/catalog/check-technology.mjs` PASS: 8/8 mappings/sections, 11 positive/8 negative specs. RF-01..08 NOT_RUN without installed app/runner/browser fixture. Agent behavior/trigger evaluations NOT_RUN; no library/router migrations or new dependencies | IMPLEMENTED |
 | STK-06 | Next.js | Additional | 22, 14, 05 | Eight technology sections across frontend/backend/devops; version/router detection, server/client/secret boundaries, direct auth, cache and artifact guidance; `TECHNOLOGY_COVERAGE.md` §9 | Catalog/cases, direct server-boundary tests, production/browser/behavior/trigger checks | `node tools/catalog/check-technology.mjs` PASS: 8/8 mappings/sections, 13 positive/8 negative specs. `node tests/technology/react-nextjs/run-fact-checks.mjs --report tests/technology/react-nextjs/results/step22-fact-checks.md`: NF-03/04/06 synthetic JS/Web boundary checks PASS, remaining five Next checks NOT_RUN. Compiled Next/cache/auth-provider/browser/deployment and agent evaluations NOT_RUN | IMPLEMENTED |
-| STK-07 | Vue | Additional | 15, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 41 records apply to `vue` explicitly or through a stack group (12 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
-| STK-08 | Nuxt | Additional | 15, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 42 records apply to `nuxt` explicitly or through a stack group (12 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
-| STK-09 | Vite | Additional | 15, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 22 records apply to `vite` explicitly or through a stack group (7 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
+| STK-07 | Vue | Additional | 23, 15, 05 | Seven mapped technology sections in frontend/testing; version/Options/setup/reactivity/router/store/SSR/testing guidance; TECHNOLOGY_COVERAGE §11 | Catalog/specs, configured framework/browser and agent evaluations | `node tools/catalog/check-technology.mjs` PASS: 7/7 sections, 10 positive/7 negative specs. VF-01..07 NOT_RUN; no installed core/component/store/router/browser fixture. Agent evaluations NOT_RUN; no automatic Composition/store/builder migration | IMPLEMENTED |
+| STK-08 | Nuxt | Additional | 23, 15, 05 | Seven sections across frontend/backend/devops; pages/data/context/modules/private config and SSR/artifact procedures; TECHNOLOGY_COVERAGE §11 | Catalog/specs, configured server/SSR/build/context/browser checks | V-23 PASS: 7/7 sections, 10 positive/7 negative specs. `node tests/technology/vue-nuxt-vite/run-fact-checks.mjs --report tests/technology/vue-nuxt-vite/results/step23-fact-checks.md`: UF-04 JavaScript serialization counterexample PASS; six other Nuxt checks NOT_RUN. Actual Nuxt config overrides/payload/secrets/context/hydration/server/runtime and agent evaluations NOT_RUN | IMPLEMENTED |
+| STK-09 | Vite | Additional | 23, 15, 05 | Four sections in devops/testing; selected-builder/config ownership, build measurement, env privacy and configured runner integration; TECHNOLOGY_COVERAGE §11 | Catalog/specs, configured build/env/artifact/runner and agent checks | V-23 PASS: 4/4 sections, 6 positive/4 negative specs. BF-03 JavaScript string/spread exposure counterexample PASS via Step 23 runner; three other Vite checks NOT_RUN. Actual Vite transforms/bundles/privacy/measurements/config/runner and agent evaluations NOT_RUN; no assumed Vite/Vitest | IMPLEMENTED |
 | STK-10 | Nitro | Additional | 16, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 28 records apply to `nitro` explicitly or through a stack group (8 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
 | STK-11 | Elysia | Additional | 16, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 28 records apply to `elysia` explicitly or through a stack group (8 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
 | STK-12 | Python | Additional | 17, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 74 records apply to `python` explicitly or through a stack group (15 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |

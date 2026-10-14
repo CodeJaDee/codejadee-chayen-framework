@@ -40,3 +40,7 @@ running the self-tests checks validator behavior, not Angular application behavi
 Step 22 adds eight React/Next controls for exact inventory, missing/orphan
 sections, version notes, case mapping, and facts. The temporary baseline now
 also includes the RF/NF runner definitions; it does not execute framework apps.
+
+Step 23 adds nine Vue/Nuxt/Vite controls for inventory, missing/orphan sections,
+version notes, case mapping, and fact references. The baseline copies the
+VF/UF/BF runner definitions for static checking, not framework execution.

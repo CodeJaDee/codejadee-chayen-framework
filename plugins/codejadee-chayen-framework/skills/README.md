@@ -36,6 +36,11 @@ forms, runtime, and test tools, and validate privileged operations at server
 boundaries. Bases and relevant topics load conditionally; no new skill or
 description change was introduced for these packs.
 
+Vue (7), Nuxt (7), and Vite (4) add technology topics in frontend, backend,
+testing, and devops. Version and selected-builder evidence distinguish plain
+Vue, Nuxt context, and Vite configuration; SSR/private-config and existing
+manager/test conventions remain explicit. No additional entry skill is added.
+
 | Skill | Scope |
 |---|---|
 | `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt and its proposed priority, legacy assessment, unknowns |
