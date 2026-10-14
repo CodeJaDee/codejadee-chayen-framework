@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 16 — Domains 15 and 16 capabilities |
+| Last executed step | 17 — Domains 17 and 18 capabilities |
+| Step 17 status | DONE (pending user review; D17 10/10 and D18 10/10 IMPLEMENTED, not VERIFIED; chayen-ai-engineering created with the L0 cap raised to 5,500, user-approved, D-037) |
 | Step 16 status | DONE (pending user review; D15 10/10 and D16 10/10 IMPLEMENTED, not VERIFIED; chayen-modernization folded and chayen-documentation created with the L0 cap raised to 5,200, user-approved, D-036) |
 | Step 15 status | DONE (pending user review; D13 12/12 and D14 10/10 IMPLEMENTED, not VERIFIED; chayen-devops created and L0 cap raised to 4,700 with user approval, D-035) |
 | Step 14 status | DONE (pending user review; D11 14/14 and D12 10/10 IMPLEMENTED, not VERIFIED; chayen-performance created and L0 cap raised to 4,400 with user approval, D-034) |
@@ -21,7 +22,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 5,051 / 5,200; `chayen-ai-engineering` must merge, or the cap must change again). |
+| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). All 13 entry skills exist (L0 5,477 / 5,500); Q-10 proposed for closure. |
 | Commits made by agent | None |
 
 ---
@@ -1570,3 +1571,136 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Recipe behaviour evals (42 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Any build, test, upgrade, git, or doc-generation command described by the recipes | — | NOT_RUN: no fixture repositories in this step |
 | — | Human review of the new skill, 11 new or extended recipes, and 1 checklist | — | Pending (R-33, R-34) |
+
+---
+
+## Step 17 — Domains 17 and 18 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D17 AI, ML, and LLM Engineering **10/10 IMPLEMENTED** in the
+  new `chayen-ai-engineering` skill, and D18 Governance and Compliance
+  **10/10 IMPLEMENTED** (agent action risk in `chayen-ai-engineering`, the
+  other nine in existing skills). None is VERIFIED. The catalog total is
+  189 IMPLEMENTED, 0 IN_PROGRESS, and 17 PLANNED (D19 and D20).
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-17-001..010
+  and CAP-18-001..010 with their mappings and groups (CG-08, CG-13, CG-14,
+  CG-32, CG-39, CG-50..CG-55), the recipes to extend, and Q-10 and R-27.
+- **User decision (Q-10, R-27).** `chayen-ai-engineering` needed about 420
+  L0 characters while 149 remained. The agent asked, offering three
+  options. The user chose "New skill, cap to 5,500" (recommended). Recorded
+  as D-037. All 13 mapped entry skills now exist.
+- **`chayen-ai-engineering`** (new, 155 lines, description 405 characters).
+  - Principles: evidence before claims, data first, untrusted model output
+    and retrieved content, recommendations are not authorizations, and
+    approval for billed runs, external data transfer, red-team runs, and
+    permission changes.
+  - `ai-tooling.md` (technology): Python ML, serving, .NET and TypeScript AI,
+    vector stores, evaluation tools, telemetry, and agent configuration
+    (provider-neutral, citing current provider documentation).
+  - Eight recipes:
+    - `ml-data.md` (CAP-17-001, 005): readiness with leakage and duplicate
+      checks, and drift per feature;
+    - `ml-experiments-and-evaluation.md` (002, 003): non-ML baselines, fixed
+      splits, and per-class metrics with intervals;
+    - `model-serving.md` (004);
+    - `rag.md` (006, 007): permission filtering at query time, citations,
+      injection handling, and recall at k and MRR or nDCG;
+    - `llm-and-agent-evaluation.md` (008): three or more runs per case with
+      variance;
+    - `llm-safety.md` (009): authorized red-teaming of the user's own app;
+    - `llm-observability.md` (010): GenAI spans and redaction;
+    - `agent-governance.md` (CAP-18-010): allow, ask, or deny
+      recommendations, advisory only.
+- **D18 in existing skills:**
+  - `chayen-documentation` `pull-requests-and-review.md`: standards
+    compliance check (CAP-18-001), citing written rules and never
+    certifying compliance;
+  - `chayen-implementation` `change-summary.md`: change passport
+    (CAP-18-002, with a no-self-approval rule) and evidence audit
+    (CAP-18-003, supported, unsupported, or not re-runnable per claim);
+  - `chayen-devops`: new `policy-as-code.md` (CAP-18-004, allow and deny
+    tests, CI step, no waivers granted by the agent) and go/no-go in
+    `release-and-rollout.md` (CAP-18-008, unknown is never met, the decision
+    stays with the owner);
+  - `chayen-security`: new `access-reviews.md` (CAP-18-005, read-only
+    exports, scope line updated) and licence obligations in
+    `sbom-and-licenses.md` (CAP-18-007, notices file, not legal advice);
+  - `chayen-data` `retention-and-governance.md`: governance check
+    (CAP-18-006);
+  - `chayen-architecture` `decision-records.md`: waivers and a waiver
+    register (CAP-18-009, the approver stays empty until a named person
+    approves).
+  - Routing and reference rows updated in the six skills; their
+    descriptions are unchanged.
+- **L0 cap 5,200 → 5,500:** the validator (V-07),
+  `tools/validate/README.md`, `SKILL_AUTHORING_STANDARD.md`,
+  `ARCHITECTURE.md`, `PLUGIN_PACKAGE_DESIGN.md`, `ADR-0003`, and `ADR-0004`.
+- **Review against the records (agent review, D-028).** Every catalog
+  output for the 20 records is produced by its recipe's `## Outputs`, and
+  each record's verification condition appears in the recipe's
+  `## Verification`. Tool and platform facts come from agent knowledge and
+  were not executed (R-34).
+- **Catalog:**
+  - the 20 records are IMPLEMENTED, with `verification_evidence`,
+    `existing_coverage`, and notes (CAP-18-001, 002, 003, 005);
+  - `chayen-ai-engineering` is an existing entry skill; no entry skill is
+    planned;
+  - groups whose recipe files now exist are `existing` (including CG-51
+    to CG-55); CAP-20-003, 006, and 008 map to existing AI recipe files and
+    stay PLANNED;
+  - the coverage doc was regenerated, and its prose updated (summary, §4,
+    §5.1, §5.2 L0, §6.1, §6.2, §9).
+- **Evaluation cases:**
+  - 43 recipe cases (410 in total): 21 for D17 and 22 for D18. Each of the
+    20 capabilities has at least one positive and one negative case. They
+    include shipping a prompt after one run, jailbreaking a competitor's
+    chatbot, "mark release 3.2 as approved", and "approve this waiver
+    yourself".
+  - 7 trigger cases (128 in total): 6 positive (5 for
+    `chayen-ai-engineering`) and 1 unsupported.
+  - `chayen-ai-engineering` was added to the skill list. The Claude eval
+    cases were regenerated (128 cases, 303 files); content changed in the
+    `none_or` forbidden-skill graders, which now include
+    `chayen-ai-engineering`.
+- **Validator self-test fixtures:** after the content changes, G-13 failed
+  51/53. `cat-implemented-without-evidence` targeted the last IN_PROGRESS
+  record (none remain) and now targets the first PLANNED record;
+  `sk-recipe-lists-planned-capability` added CAP-18-003 (now legitimately
+  listed) and now targets CAP-20-006 in `agent-governance.md`. Both still
+  produce their expected errors, and G-13 passes 53/53.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/SKILL.md` and `references/ai-tooling.md`, `ml-data.md`, `ml-experiments-and-evaluation.md`, `model-serving.md`, `rag.md`, `llm-and-agent-evaluation.md`, `llm-safety.md`, `llm-observability.md`, `agent-governance.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-devops/references/policy-as-code.md`, `chayen-security/references/access-reviews.md` |
+| Created | `tests/evals/claude/` (7 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-documentation/references/pull-requests-and-review.md`, `chayen-implementation/references/change-summary.md`, `chayen-devops/references/release-and-rollout.md`, `chayen-security/references/sbom-and-licenses.md`, `chayen-data/references/retention-and-governance.md`, `chayen-architecture/references/decision-records.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-documentation/SKILL.md`, `chayen-implementation/SKILL.md`, `chayen-devops/SKILL.md`, `chayen-security/SKILL.md` (scope line and rows), `chayen-data/SKILL.md`, `chayen-architecture/SKILL.md` (routing and reference rows; descriptions unchanged), `skills/README.md` |
+| Modified | `tools/validate/validate-package.mjs` (V-07 cap 5,500), `tools/validate/README.md`, `tests/catalog/catalog-mutations.json` and `tests/skills/validator-mutations.json` (one fixture each retargeted) |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json` (additions only), `tests/skills/trigger-cases.json` (additions and the skill list), `tests/skills/README.md`, 7 existing generated eval case files (content); others changed only in line endings (DF-01) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D17 and CAP-D18 IMPLEMENTED; REQ-02, REQ-05, REQ-08, REQ-09, ARC-04 evidence), `DECISIONS.md` (D-037), `ISSUES.md` (Q-10, R-27, R-28, R-32, R-33, R-34 notes), `IMPLEMENTATION_PLAN.md`, `SKILL_AUTHORING_STANDARD.md`, `ARCHITECTURE.md`, `PLUGIN_PACKAGE_DESIGN.md`, `ADRS/ADR-0003-no-match-fallback.md`, `ADRS/ADR-0004-skill-catalog-vs-entry-skills.md` |
+| Deleted | None |
+| Scratch only (not in the repository) | Lifecycle work directory `lc17`, and the catalog, case, extension, mutation, and documentation edit scripts. The `skills-ref` venv was reused. |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 13 skills. L0 5477/5500. Maximum overlap 0.11. 134 references with valid kinds. 109 recipe files agree with the catalog (189 capabilities). 410 recipe cases. 128 trigger cases. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=189 (D01–D18 complete), IN_PROGRESS=0, PLANNED=17. 206 records, 57 groups, 13 entry skills (all existing), fingerprint unchanged, doc in sync (after `--write-doc`). |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | First run: **FAIL** G-13 51/53 (two fixtures no longer applicable after the content changes). After retargeting both: **PASS** 4/4 gate groups, self-tests 53/53. |
+| T4 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×13 (`skills-ref` 0.1.1, scratch venv) | PASS: 13/13 valid, including `chayen-ai-engineering` |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc17` | **PASS 24/24:** 13 skills discoverable on Claude Code 2.1.220, Codex 0.162.1, and Copilot CLI 1.0.89. The fixture stayed unchanged and clean. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` (inside validate-all G-11) | PASS: 128 cases, 303 files |
+| — | Trigger evals for `chayen-ai-engineering` | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (43 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Any ML training, evaluation, red-team run, policy test, or access export analysis described by the recipes | — | NOT_RUN: no fixture repositories in this step; no model or billed API was called |
+| — | Human review of the new skill, 10 new recipes, 6 extended recipes, and 1 reference | — | Pending (R-33, R-34) |

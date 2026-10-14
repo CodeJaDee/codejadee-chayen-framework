@@ -37,7 +37,7 @@ also degrades matching for the user's other skills.
      recommendation (S24).
    - It keeps `SKILL.md` small while indexing 206 capabilities.
 4. **The budget is enforced by a validator:**
-   - L0 ≤4,000 characters (raised to 4,400 by D-034 in Step 14 to 4,700 by D-035 in Step 15, and to 5,200 by D-036 in Step 16, with user approval);
+   - L0 ≤4,000 characters (raised to 4,400 by D-034 in Step 14 to 4,700 by D-035 in Step 15, to 5,200 by D-036 in Step 16, and to 5,500 by D-037 in Step 17, with user approval);
    - ≤14 skills;
    - `SKILL.md` ≤300 lines;
    - ≤2 hops (V-06, V-07, V-08).

@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-16-005, CAP-16-006, CAP-16-007]
+capabilities: [CAP-16-005, CAP-16-006, CAP-16-007, CAP-18-001]
 ---
 # Pull requests, code review, and review comments
 
@@ -8,6 +8,8 @@ Prepare pull requests that reviewers can trust (self-reviewed, focused,
 with context, real testing evidence, and risks), review diffs with
 prioritised and actionable comments, and work through review comments
 until each has a change or a reasoned reply, re-verifying after changes.
+The same review loop checks a change against the team's written standards,
+citing the exact rule for each deviation.
 
 ## Inputs
 
@@ -64,6 +66,22 @@ until each has a change or a reasoned reply, re-verifying after changes.
 4. **Re-run verification** after changes and report the results.
 5. **Do not resolve threads or push** without the user's approval.
 
+### Standards compliance check (CAP-18-001)
+
+1. **Collect the written standards in force:** coding guidelines,
+   instruction files (`AGENTS.md`, `CLAUDE.md`, contribution guides), and
+   lint and formatter configuration. Only written rules count; conventions
+   observed in code are reported separately as conventions.
+2. **Run the automated checks** the project defines (linters, formatters,
+   analyzers) on the code or diff, and record the results with commands.
+3. **Check the remaining rules by reading the code,** and report each
+   deviation with the rule (document and section, quoted briefly), the
+   location, a severity, and a suggested fix.
+4. **List rules that could be automated** (a lint rule, an analyzer, a CI
+   check) so they stop depending on review.
+5. **Do not certify compliance:** report "no deviations found for the listed
+   rules in the reviewed scope", and name the rules that were not checked.
+
 ## Outputs
 
 - A PR description following the repository template, with verification
@@ -72,6 +90,9 @@ until each has a change or a reasoned reply, re-verifying after changes.
   location and suggestion, and a summary verdict with reasoning.
 - Changes per accepted comment, a reply draft per comment, and re-run
   verification results.
+- For a standards check: a deviation list (rule, location, severity,
+  suggested fix), and the rules that could be enforced automatically by a
+  linter or CI check.
 
 ## Technology considerations
 
@@ -92,3 +113,5 @@ until each has a change or a reasoned reply, re-verifying after changes.
   re-run after changes, with results.
 - Nothing was posted, pushed, or resolved on a remote service without
   approval.
+- Two seeded violations of the fixture's written standard are reported with
+  the exact rule cited.

@@ -245,7 +245,7 @@ Entry skills are the **only** objects the provider's discovery sees.
 - **Budget** (enforced by C-12, derivation in §8):
   - at most **14** entry skills;
   - each `description` targets ≤280 characters (hard limit 1024);
-  - Chayen's total listing metadata is ≤5,200 characters (4,000 until D-034, 4,400 until D-035, 4,700 until D-036).
+  - Chayen's total listing metadata is ≤5,500 characters (4,000 until D-034, 4,400 until D-035, 4,700 until D-036, 5,200 until D-037).
 - **Naming:** `chayen-<intent>`. The prefix is short, which gives collision
   resistance against Copilot's silent drop (F-05, R-10).
 - **`SKILL.md` anatomy** (template in PLUGIN_PACKAGE_DESIGN §4):
@@ -344,7 +344,7 @@ sequenceDiagram
     participant S as SKILL.md (L1)
     participant I as Pack INDEX.md (L2)
     participant T as Topic / workflow / template (L3)
-    Note over P: L0: every turn, names + descriptions only (≤5,200 chars total, D-036)
+    Note over P: L0: every turn, names + descriptions only (≤5,500 chars total, D-037)
     U->>M: "Add a paged GET endpoint for orders"
     P->>M: candidate: chayen-feature-delivery
     M->>S: load body (≤300 lines)
@@ -357,7 +357,7 @@ sequenceDiagram
 
 | Level | Content | Loaded when | Budget |
 |---|---|---|---|
-| L0 | `name` + `description` of each entry skill | Always (by the provider) | ≤5,200 characters total (D-036) |
+| L0 | `name` + `description` of each entry skill | Always (by the provider) | ≤5,500 characters total (D-037) |
 | L1 | `SKILL.md` body | On match | ≤300 lines (spec allows 500) |
 | L2 | Pack `INDEX.md`, workflow file, template | When the skill routes to it | ≤80 lines per INDEX. ≤200 lines per workflow or template. |
 | L3 | Topic files | When INDEX or a workflow points to them | ≤300 lines each |
@@ -593,7 +593,7 @@ flowchart TB
 
 | Attribute | Target | Derivation | Checked by |
 |---|---|---|---|
-| L0 metadata footprint | ≤5,200 characters total (raised from 4,000 by D-034, D-035, and D-036, user-approved in Steps 14 to 16) | About 65 % of Codex's 8,000-character fallback (S12), leaving room for the user's other skills. Claude Code's 1% budget is assumed to be ≥8,000 characters at common context sizes (**assumption AS-03**). | V-07 |
+| L0 metadata footprint | ≤5,500 characters total (raised from 4,000 by D-034 to D-037, user-approved in Steps 14 to 17) | About 69 % of Codex's 8,000-character fallback (S12), leaving room for the user's other skills. Claude Code's 1% budget is assumed to be ≥8,000 characters at common context sizes (**assumption AS-03**). | V-07 |
 | Entry skills | ≤14 | 4,000 characters ÷ (≈280 description + ≈20 name) | V-07 |
 | `SKILL.md` body | ≤300 lines | Below the 500-line spec ceiling (S7, S24), leaving headroom | V-06 |
 | Link depth | ≤2 hops | ADR-0004 | V-08 |

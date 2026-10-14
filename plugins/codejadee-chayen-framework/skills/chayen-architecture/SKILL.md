@@ -91,7 +91,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | Request shape | Recipe |
    |---|---|
    | Review the architecture; add fitness tests | architecture review |
-   | Compare options; write an ADR; keep a decision register | decision records |
+   | Compare options; write an ADR; keep a decision register; record a waiver | decision records |
    | Boundaries, domain model, component structure | boundaries and domain |
    | Sequence or data-flow diagrams | sequence and data flow |
    | Tenant isolation | multitenancy |
@@ -163,7 +163,7 @@ If the request does not fit, stop following this skill and continue normally wit
 |---|---|
 | [references/architecture-styles.md](references/architecture-styles.md) | Workflow step 2: recognising the current architecture style from evidence |
 | [references/architecture-review.md](references/architecture-review.md) | Workflow step 3: reviewing an architecture, or adding fitness tests |
-| [references/decision-records.md](references/decision-records.md) | Workflow step 3: comparing options, writing an ADR, or keeping a decision register |
+| [references/decision-records.md](references/decision-records.md) | Workflow step 3: comparing options, writing an ADR, keeping a decision register, or recording exceptions and waivers |
 | [references/boundaries-and-domain.md](references/boundaries-and-domain.md) | Workflow step 3: system boundaries, domain modeling, or component design |
 | [references/sequence-and-dataflow.md](references/sequence-and-dataflow.md) | Workflow step 3: sequence or data-flow diagrams |
 | [references/multitenancy.md](references/multitenancy.md) | Workflow step 3: tenant isolation design |

@@ -9,7 +9,7 @@ Find and explain security weaknesses in the user's own code and configuration, p
 
 This guidance is advisory. It cannot block, enforce, or guarantee anything. Real protection comes from code fixes, CI security scanning, secret scanning, branch protection, permission settings, and platform controls.
 
-**Scope:** defensive review and hardening of the user's application code in .NET, TypeScript or JavaScript, Python, and SQL, and read-only review of the container, Kubernetes, and infrastructure-as-code files in the repository. Penetration testing, dynamic scanning of live systems without authorization, compliance certification, cloud account or network administration, and attacks on systems the user does not own are outside this scope: do not apply this guidance to them.
+**Scope:** defensive review and hardening of the user's application code in .NET, TypeScript or JavaScript, Python, and SQL, read-only review of the container, Kubernetes, and infrastructure-as-code files in the repository, and read-only review of access exports the user provides. Penetration testing, dynamic scanning of live systems without authorization, compliance certification, cloud account or network administration, and attacks on systems the user does not own are outside this scope: do not apply this guidance to them.
 
 ## When to use
 
@@ -33,7 +33,7 @@ Requests that fit:
 | Penetration testing, exploit development, or attacking systems the user does not own or is not authorized to test | — |
 | Compliance certification (SOC 2, ISO 27001, PCI DSS), legal advice, or policy writing | — |
 | Writing or changing infrastructure, pipelines, or containers | The chayen-devops skill |
-| Cloud account and firewall administration with no files to review | — |
+| Changing cloud permissions or firewall rules directly | — |
 
 If the request does not fit, stop following this skill and continue normally without mentioning it.
 
@@ -79,7 +79,8 @@ If the request does not fit, stop following this skill and continue normally wit
    | SAST alerts or dependency audit results | scanner triage |
    | An exposed or hard-coded secret | secret exposure response |
    | Personal data in a feature | privacy |
-   | SBOM or dependency licences | SBOM and licences |
+   | SBOM, dependency licences, or licence obligations | SBOM and licences |
+   | Who can access what: exported roles, grants, repository permissions | access reviews |
    | Dockerfiles, Kubernetes manifests, Terraform, or Bicep | infrastructure security review |
    | Fixing a confirmed vulnerability | vulnerability remediation |
 
@@ -161,6 +162,7 @@ Load one recipe for the request (workflow step 2), plus the checklists it names 
 | [references/scanner-triage.md](references/scanner-triage.md) | Triaging SAST alerts or dependency audit findings |
 | [references/secret-exposure-response.md](references/secret-exposure-response.md) | A secret is exposed, or the repository must be checked for hard-coded secrets |
 | [references/privacy.md](references/privacy.md) | Reviewing how a feature handles personal data |
-| [references/sbom-and-licenses.md](references/sbom-and-licenses.md) | Producing or reviewing an SBOM, or checking dependency licences |
+| [references/sbom-and-licenses.md](references/sbom-and-licenses.md) | Producing or reviewing an SBOM, checking dependency licences, or listing licence obligations |
+| [references/access-reviews.md](references/access-reviews.md) | Reviewing exported role assignments, grants, or repository permissions for least privilege |
 | [references/infrastructure-security-review.md](references/infrastructure-security-review.md) | Reviewing Dockerfiles, Kubernetes manifests, Terraform, or Bicep for misconfiguration |
 | [references/vulnerability-remediation.md](references/vulnerability-remediation.md) | Fixing a confirmed vulnerability |

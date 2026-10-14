@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-09-011]
+capabilities: [CAP-09-011, CAP-18-006]
 ---
 # Data retention, archival, and purge
 
@@ -9,6 +9,8 @@ store that holds the data, archive or delete with batched jobs that honour
 legal holds, run a dry run that shows exactly what would go before any
 deletion, and state how backups and replicas are covered. Legal retention
 periods always come from the user's policy, never from the agent.
+The same policy drives a governance check: classification, ownership,
+lineage, retention, residency, and access for each dataset or table.
 
 ## Inputs
 
@@ -47,6 +49,21 @@ periods always come from the user's policy, never from the agent.
    under legal hold, the dry run reports the right rows, and the purge
    deletes only rows past retention.
 
+### Data governance check (CAP-18-006)
+
+1. **Read the governance policy** the user provides: classification levels,
+   required metadata, retention rules, residency, and access rules.
+2. **Inventory datasets and tables** from the schema, the data catalogue, and
+   pipeline definitions, including copies (replicas, warehouse tables,
+   exports).
+3. **Check each one:** classification present and plausible (personal-data
+   columns not marked public), an owner, lineage from source to copies,
+   retention rule mapped, residency of the storage location, and access
+   matching the classification.
+4. **Report gaps** per dataset with the rule they break, and propose metadata
+   or code changes (classification tags, column comments, catalogue entries),
+   labelled advisory. Compliance is not certified by this check.
+
 ## Outputs
 
 - Retention rules mapped to tables and stores, with purge or archive jobs.
@@ -54,6 +71,9 @@ periods always come from the user's policy, never from the agent.
   with approval.
 - Notes on backups, replicas, and downstream copies, and the stores this
   job does not cover.
+- For a governance check: a gap table per dataset (classification, owner,
+  retention, residency, access) and proposed metadata or code changes,
+  advisory.
 
 ## Technology considerations
 
@@ -74,3 +94,5 @@ periods always come from the user's policy, never from the agent.
   source named.
 - No deletion ran against a shared or production database without approval
   of the dry-run evidence.
+- A seeded unclassified personal-data column in the fixture schema is
+  reported as a gap.

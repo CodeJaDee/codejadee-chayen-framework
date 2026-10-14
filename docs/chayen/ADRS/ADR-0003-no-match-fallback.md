@@ -19,7 +19,7 @@ without the plugin (REQ-04). This can go wrong in three ways:
 
 1. **Zero always-on content.** The plugin ships no hooks, instruction files,
    agents, or MCP servers (ADR-0005). The only per-turn footprint is the
-   entry-skill listing (L0, ≤5,200 characters since D-036), which providers add for every
+   entry-skill listing (L0, ≤5,500 characters since D-037), which providers add for every
    installed skill (S1, S7, S12).
 2. **No catch-all skill.** No entry skill has a description like "use for
    any coding task".

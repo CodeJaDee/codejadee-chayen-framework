@@ -46,8 +46,8 @@
     },
     {
       "id": "cat-implemented-without-evidence",
-      "description": "IMPLEMENTED without verification_evidence",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-04-001[\\s\\S]*?status: )IN_PROGRESS", "with": "$1IMPLEMENTED" }],
+      "description": "IMPLEMENTED without verification_evidence. Targets the first PLANNED record (no evidence, planned recipe), so the case survives as records are implemented; until Step 17 it targeted the last IN_PROGRESS record, and none remain.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(\\n    status: )PLANNED", "with": "$1IMPLEMENTED" }],
       "expect": { "validator": "catalog", "error": "V-11.10 status" }
     },
     {

@@ -76,7 +76,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | README, onboarding guide, knowledge transfer | project docs |
    | API reference or usage docs | API docs |
    | Architecture description and diagrams | architecture docs |
-   | PR description, code review, review comments | pull requests and review |
+   | PR description, code review, review comments, standards compliance | pull requests and review |
    | Release notes or changelog | release notes |
    | Branches, commits, rebases, conflicts, history cleanup | git workflow |
 
@@ -138,6 +138,6 @@ Load the fact-checking checklist for any written output (workflow step 1), and o
 | [references/project-docs.md](references/project-docs.md) | Writing or updating a README, an onboarding guide, or a knowledge-transfer document |
 | [references/api-docs.md](references/api-docs.md) | Documenting an API from its contract |
 | [references/architecture-docs.md](references/architecture-docs.md) | Describing the architecture as it is, with diagrams |
-| [references/pull-requests-and-review.md](references/pull-requests-and-review.md) | Preparing a pull request, reviewing a diff, or resolving review comments |
+| [references/pull-requests-and-review.md](references/pull-requests-and-review.md) | Preparing a pull request, reviewing a diff, resolving review comments, or checking code against written standards |
 | [references/release-notes.md](references/release-notes.md) | Writing release notes or a changelog entry |
 | [references/git-workflow.md](references/git-workflow.md) | Branches, commits, rebases, conflict resolution, or history cleanup |

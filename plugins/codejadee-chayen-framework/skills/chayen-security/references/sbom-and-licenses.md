@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-11-012]
+capabilities: [CAP-11-012, CAP-18-007]
 ---
 # SBOM and dependency licences
 
@@ -8,6 +8,8 @@ Produce or review a software bill of materials (CycloneDX or SPDX) with a
 standard tool, including transitive packages, and build a licence table
 that flags unknown, incompatible, or copyleft licences for review. Licence
 conclusions are advisory and go to the people who own the licence policy.
+For a given distribution model, the same inventory yields the obligations
+the project must meet and a draft third-party notices file.
 
 ## Inputs
 
@@ -44,11 +46,28 @@ conclusions are advisory and go to the people who own the licence policy.
 6. **Recommend keeping the SBOM current:** generate it in CI per release,
    and store it with the release artifacts.
 
+### Licence obligations (CAP-18-007)
+
+1. **State the distribution model:** SaaS only, distributed binaries or
+   containers, a library others embed, or a mobile or desktop app, because
+   obligations depend on it.
+2. **List obligations per licence and model:** attribution and notices
+   (MIT, BSD, Apache-2.0 including its NOTICE file), source availability and
+   modification notices (LGPL, MPL), copyleft scope for the combined work
+   (GPL, AGPL, including network use for AGPL), and patent clauses.
+3. **Draft the third-party notices file** from the inventory: package, version,
+   licence, and copyright line from the package metadata or licence file.
+   Missing copyright lines are marked for follow-up.
+4. **Flag items for legal review** with the facts and the question, and
+   state that the output is not legal advice.
+
 ## Outputs
 
 - An SBOM generated with a standard tool, with the command and tool
   version.
 - A licence table with items needing legal review, marked advisory.
+- An obligation list per licence and distribution model, with items for
+  legal review, and a draft third-party notices file.
 
 ## Technology considerations
 
@@ -68,3 +87,6 @@ conclusions are advisory and go to the people who own the licence policy.
   NOT_RUN with the reason.
 - The licence table is labelled advisory and makes no legal compatibility
   determination.
+- The notices file for the fixture includes every MIT and Apache-2.0
+  component with its copyright line, and the output states it is not legal
+  advice.

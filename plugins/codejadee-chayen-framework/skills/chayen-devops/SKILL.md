@@ -88,7 +88,8 @@ If the request does not fit, stop following this skill and continue normally wit
    | Works locally but not in another environment | environment parity |
    | Secret stores, local and CI secrets, rotation | secrets management |
    | Packaging, versioning, signing, provenance | releases and provenance |
-   | Post-deploy checks, rollback readiness | release and rollout |
+   | Post-deploy checks, rollback readiness, release go or no-go | release and rollout |
+   | Policy-as-code rules for configuration or IaC | policy as code |
    | Urgent fix for a released version | hotfix |
    | Logs, metrics, traces, SLOs | observability |
    | Alert noise or gaps, live incident triage | alerting and incidents |
@@ -171,7 +172,8 @@ Read the safety checklist before remote commands (workflow step 1), the tooling 
 | [references/environment-parity.md](references/environment-parity.md) | Differences between local, test, staging, and production |
 | [references/secrets-management.md](references/secrets-management.md) | Secret stores, local development secrets, CI secrets, rotation |
 | [references/releases-and-provenance.md](references/releases-and-provenance.md) | Packaging, versioning, signing, or provenance of artifacts |
-| [references/release-and-rollout.md](references/release-and-rollout.md) | Post-deploy validation, or proving a rollback works |
+| [references/release-and-rollout.md](references/release-and-rollout.md) | Post-deploy validation, proving a rollback works, or a release go or no-go recommendation |
+| [references/policy-as-code.md](references/policy-as-code.md) | Writing or testing policy-as-code rules (OPA, Conftest, Kyverno, Azure Policy) |
 | [references/hotfix.md](references/hotfix.md) | Preparing an urgent fix for a released version from its release tag |
 | [references/observability.md](references/observability.md) | Logs, metrics, traces, SLOs, or dashboards |
 | [references/alerting-and-incidents.md](references/alerting-and-incidents.md) | Alert tuning, or triage of a live incident |

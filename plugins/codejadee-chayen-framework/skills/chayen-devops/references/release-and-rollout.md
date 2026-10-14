@@ -1,6 +1,6 @@
 ---
 kind: recipe
-capabilities: [CAP-13-010, CAP-13-011]
+capabilities: [CAP-13-010, CAP-13-011, CAP-18-008]
 ---
 # Deployment validation and rollback verification
 
@@ -9,7 +9,9 @@ confirmation, health, smoke tests, key metrics against thresholds) with a
 defined failure action, and make sure a release can be rolled back: a
 written procedure, data compatibility of the previous version with the new
 schema, and a rehearsal in a non-production environment. Rollbacks in any
-environment run only with approval and the platform's authorization.
+environment run only with approval and the platform's authorization. Before
+a release, the same evidence feeds a go or no-go recommendation; the
+decision stays with the release owner.
 
 ## Inputs
 
@@ -56,12 +58,31 @@ environment run only with approval and the platform's authorization.
    environment is available.
 5. **Record the result** and any blockers, before production deployment.
 
+### Release go or no-go (CAP-18-008)
+
+1. **Agree the criteria** with the release owner, or use the team's
+   checklist: tests, open defects by severity, security findings, rollback
+   readiness, migrations, documentation, and required sign-offs.
+2. **Collect evidence per criterion** from real sources: pipeline runs, the
+   issue tracker export, scanner reports, and the rollback rehearsal. A
+   criterion with no evidence is "unknown", never "met".
+3. **Fill the readiness table:** criterion, evidence with its source and
+   date, and status (met, not met, unknown).
+4. **Recommend go or no-go** with the blocking items. Any open critical
+   defect or failed required check means no-go unless the owner records an
+   exception.
+5. **Leave the decision to the release owner.** A recommendation from the agent is never an approval: approval fields
+   are filled only from a named person's recorded decision.
+
 ## Outputs
 
 - Post-deploy checks with thresholds, and the command or pipeline step, plus
   the failure action (rollback trigger).
 - A rollback procedure with data-compatibility analysis, and the rehearsal
   result or NOT_RUN with the reason.
+- A readiness table with criteria, evidence, and status, and a
+  recommendation with blocking items; the decision stays with the release
+  owner.
 
 ## Technology considerations
 
@@ -81,3 +102,6 @@ environment run only with approval and the platform's authorization.
   blocking rollback.
 - The rollback rehearsal result is recorded, or NOT_RUN with the reason,
   and no rollback was executed without approval.
+- A fixture release with an open critical defect is recommended no-go,
+  citing the defect, and the output does not record a decision on the
+  owner's behalf.

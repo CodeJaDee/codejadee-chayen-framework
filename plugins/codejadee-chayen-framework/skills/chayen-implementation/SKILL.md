@@ -177,4 +177,4 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 | [references/configuration-and-flags.md](references/configuration-and-flags.md) | Workflow step 3: adding or changing settings, or a feature flag |
 | [references/contract-codegen.md](references/contract-codegen.md) | Workflow step 3: generating or regenerating code from a contract |
 | [references/compatibility.md](references/compatibility.md) | Workflow step 3: changing a public API, event, schema, or library that others consume |
-| [references/change-summary.md](references/change-summary.md) | Workflow step 7: reporting or handing over a completed change |
+| [references/change-summary.md](references/change-summary.md) | Workflow step 7: reporting or handing over a completed change, or auditing the evidence claimed for completed work |

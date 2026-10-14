@@ -691,6 +691,62 @@ Decision statuses:
     stays PLANNED.
   - Description trigger effects are NOT_RUN (R-32).
 
+### D-037 — Domains 17 and 18: new `chayen-ai-engineering` with the L0 cap raised to 5,500; D18 in existing skills
+- **Status:** APPROVED for the new skill and the cap change (the user chose
+  "New skill, cap to 5,500" when asked in Step 17). The rest is PROPOSED
+  (executed in Step 17).
+- **Context:** D17, agent action risk (CAP-18-010), and D20 map to the last
+  planned skill, `chayen-ai-engineering`, which needed about 420 L0
+  characters while 149 remained. The agent offered three options: a new
+  skill with a 5,500 cap (recommended, completing the skill set), trimming
+  all other descriptions to fit 5,200, or scattering AI work across
+  existing skills.
+- **Decision:**
+  - **The L0 cap is 5,500 characters** (about 69 % of Codex's
+    8,000-character fallback). All 13 mapped entry skills now exist, so no
+    further cap change is expected for D19 and D20, which map to existing
+    skills.
+  - **`chayen-ai-engineering` is created** (155 lines, description 405
+    characters). Principles: evidence before claims (LLM comparisons with
+    several runs and variance), data first (leakage and splits before
+    training), untrusted model output and retrieved content,
+    recommendations are not authorizations, and approval for billed runs
+    and external data transfer. It routes to an `ai-tooling.md` technology
+    reference and 8 recipes (ml-data, ml-experiments-and-evaluation,
+    model-serving, rag, llm-and-agent-evaluation, llm-safety,
+    llm-observability, agent-governance). Agent permission settings are
+    described provider-neutrally, with an instruction to cite the
+    provider's current documentation (BC-15).
+  - **D18 is implemented where the catalog already mapped it:** two new
+    recipes (`chayen-devops/references/policy-as-code.md`,
+    `chayen-security/references/access-reviews.md`) and six extended ones
+    (standards check in `pull-requests-and-review.md`, change passport and
+    evidence audit in `change-summary.md`, go/no-go in
+    `release-and-rollout.md`, licence obligations in `sbom-and-licenses.md`,
+    governance check in `retention-and-governance.md`, waivers in
+    `decision-records.md`).
+  - **Recommendations are never authorizations.** Go/no-go, waivers,
+    policies, access reviews, change passports, evidence audits, and agent
+    permission reviews label their outputs as recommendations. Approval
+    fields are filled only from a named person's recorded decision; the
+    agent never self-approves, and an approval claimed in a report is
+    "supported" only by such a record.
+  - **Access review scope (R-28, CAP-18-005):** read-only review of exports
+    the user provides. `chayen-security`'s scope line now includes it; the
+    agent never changes live permissions.
+  - **Validator self-test fixtures retargeted:** `cat-implemented-without-evidence`
+    now targets the first PLANNED record (the last IN_PROGRESS record no
+    longer exists), and `sk-recipe-lists-planned-capability` now targets
+    CAP-20-006 in `agent-governance.md` (CAP-18-003 is now legitimately
+    listed in `change-summary.md`). Both still produce their expected
+    errors (G-13 53/53).
+- **Consequences:**
+  - L0 is 5,477 / 5,500 with 13 skills; any description growth must fit in
+    23 characters or be offset.
+  - CAP-20-003, 006, and 008 map to existing AI recipe files and stay
+    PLANNED until D20.
+  - Description trigger effects are NOT_RUN (R-32).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

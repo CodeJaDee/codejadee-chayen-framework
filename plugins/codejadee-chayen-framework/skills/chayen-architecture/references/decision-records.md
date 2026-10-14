@@ -1,13 +1,14 @@
 ---
 kind: recipe
-capabilities: [CAP-03-002, CAP-03-003, CAP-04-008]
+capabilities: [CAP-03-002, CAP-03-003, CAP-04-008, CAP-18-009]
 ---
 # Option analysis, ADRs, and the decision register
 
 Compare candidate options against explicit criteria. Record the outcome as an
 architecture decision record (ADR), and keep a register so that decisions can
 be found and revisited. Proposed decisions and accepted decisions are never
-confused.
+confused. Exceptions to a standard or policy are recorded the same way,
+as waivers with scope, risk, compensating controls, approver, and expiry.
 
 ## Inputs
 
@@ -54,6 +55,20 @@ confused.
      superseded ADR still referenced as current, or a proposed ADR that has
      sat for a long time without a decision.
 
+### Exceptions and waivers (CAP-18-009)
+
+1. **Describe the deviation:** the standard or policy it breaks (cited),
+   the scope (system, component, resource), and why it is needed.
+2. **Assess the risk** and list compensating controls that reduce it.
+3. **Write the waiver record** in the repository's decision format: ID,
+   standard, scope, risk, compensating controls, requester, approver,
+   approval date, and expiry date. The approver and approval date stay
+   empty until a named person approves; the agent never fills them in.
+4. **Add it to the waiver register,** and flag waivers that are expired,
+   expiring soon, missing an approver, or missing an expiry.
+5. **On expiry,** propose renewal with fresh justification, or the work to
+   remove the deviation.
+
 ## Outputs
 
 - An option comparison table, and a recommendation labelled proposed.
@@ -74,6 +89,9 @@ Consequences: <positive, negative, follow-ups>
 | ID | Title | Status | Date | Owner | Supersedes / Superseded by | Link |
 Conflicts: <items>
 ```
+
+- For exceptions: a waiver record with expiry and compensating controls,
+  and a register of waivers with expired ones flagged.
 
 ## Technology considerations
 
@@ -96,3 +114,5 @@ Stack-neutral. Follow the repository's ADR conventions where they exist:
   superseded.
 - The register lists every ADR found, with its status. The seeded
   superseded or conflicting decisions are flagged.
+- Every fixture waiver record has an approver and an expiry, or is flagged
+  as incomplete, and the seeded expired waiver is flagged.

@@ -85,7 +85,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | Transaction boundaries, isolation, concurrency control | transactions |
    | Constraint violations, orphan rows, data quality checks | data quality and integrity |
    | Extract-transform-load pipelines | ETL pipelines |
-   | Retention, archival, purge, legal hold | retention and governance |
+   | Retention, archival, purge, legal hold, data governance gaps | retention and governance |
    | Restore drill, proving backups | backup and restore |
 
 4. **Mirror the existing schema and migrations:** naming, key types, audit
@@ -165,5 +165,5 @@ Load one engine reference (workflow step 1), the safety checklist when step 2 re
 | [references/transactions.md](references/transactions.md) | Choosing transaction boundaries, isolation, or concurrency control |
 | [references/data-quality-and-integrity.md](references/data-quality-and-integrity.md) | Finding or preventing invalid data, or adding data quality checks |
 | [references/etl-pipelines.md](references/etl-pipelines.md) | Building or fixing an extract-transform-load pipeline |
-| [references/retention-and-governance.md](references/retention-and-governance.md) | Retention rules, archival, purge jobs, or legal holds |
+| [references/retention-and-governance.md](references/retention-and-governance.md) | Retention rules, archival, purge jobs, legal holds, or checking datasets against governance rules |
 | [references/backup-restore.md](references/backup-restore.md) | Planning or running a restore drill |
