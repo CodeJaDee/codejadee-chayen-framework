@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 10 — Domains 03 and 04 capabilities |
+| Last executed step | 11 — Domains 05 and 06 capabilities |
+| Step 11 status | DONE (pending user review; D05 12/12 and D06 10/10 IMPLEMENTED, not VERIFIED) |
 | Step 10 status | DONE (pending user review; D03 10/10 and D04 8/8 IMPLEMENTED, not VERIFIED) |
 | Step 09 status | DONE (pending user review; D01 9/9 and D02 10/10 IMPLEMENTED, not VERIFIED) |
 | Step 08 status | DONE (pending user review; standard PROPOSED) |
@@ -792,3 +793,103 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Trigger evals for `chayen-architecture` and the changed `chayen-requirements` description | — | NOT_RUN: billed runs need approval (R-32) |
 | — | Recipe behaviour evals (28 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Human review of the 9 new and 3 changed references | — | Pending (R-33) |
+
+---
+
+## Step 11 — Domains 05 and 06 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D05 Implementation **12/12 IMPLEMENTED**, and D06 Backend
+  **10/10 IMPLEMENTED**. None is VERIFIED. The catalog total is 59
+  IMPLEMENTED, 19 IN_PROGRESS, and 128 PLANNED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-05-001..012
+  and CAP-06-001..010 with their groups, and the current implementation and
+  backend skills.
+- **`chayen-implementation`** (reused and extended, D-031).
+  - It is now a router by change type (177 lines). Its old feature workflow
+    moved into `feature-delivery.md`.
+  - New principles: task-scoped diffs, pure change types, never silently
+    replacing dependencies or frameworks, and verification with the real
+    toolchain.
+  - Ten recipes:
+    - `feature-delivery.md` (CAP-05-001, 004);
+    - `bug-fix.md` (002): reproduce, root cause, minimal fix, regression
+      test before and after, siblings reported;
+    - `refactoring.md` (003): characterization tests, no behaviour change;
+    - `algorithm-design.md` (005);
+    - `concurrency-safety.md` (006): the interleaving written down, with
+      fixes at the store for cross-instance races;
+    - `error-handling.md` (007);
+    - `upgrades.md` (008): release notes cited, the lock file regenerated
+      by the tool, no swaps;
+    - `configuration-and-flags.md` (009, 010);
+    - `contract-codegen.md` (011);
+    - `compatibility.md` (012).
+- **`chayen-backend`** (reused and extended).
+  - It detects the stack first (no ASP.NET default) and loads one
+    technology reference, then routes across seven recipes (183 lines). A
+    short endpoint-level bug path stays in the skill (D-016).
+  - Seven recipes:
+    - `api-design.md` (CAP-06-001, 004);
+    - `api-endpoints.md` (002, 003): mirrors an existing template endpoint,
+      validates with the project's library, checks response conformance;
+    - `authn-authz.md` (005): approval-gated, deny-by-default, resource
+      checks;
+    - `messaging.md` (006, 007): outbox, idempotent consumers,
+      dead-lettering;
+    - `background-jobs.md` (008): idempotent re-runs, overlap control,
+      cancellation;
+    - `external-integrations.md` (009): typed clients, timeouts, fakes in
+      tests;
+    - `idempotency-and-consistency.md` (010).
+  - Each recipe's technology table covers ASP.NET Core, Nitro, Nuxt,
+    Next.js, Elysia, FastAPI, Django, and Flask, plus SQL Server and
+    PostgreSQL.
+- **Catalog:**
+  - the 22 records are IMPLEMENTED;
+  - CG-17 and CAP-05-008 were remapped to `chayen-implementation`, with
+    CAP-15-004 and CAP-15-005 still PLANNED;
+  - recipe and group mapping states are now derived from file existence;
+  - notes and entry-skill scopes were updated;
+  - the coverage doc was regenerated, and its prose updated.
+  - **Correction:** the coverage doc's recipe-file count was 114 after
+    Step 10, but should have been 115 (Step 10's separate
+    `rollout-planning.md`). It is now 115: 37 existing and 78 planned.
+- **Evaluation cases:**
+  - 44 recipe cases (120 in total). The prompts deliberately span ASP.NET
+    Core, Nitro, Nuxt, Elysia, FastAPI, and Django.
+  - 9 trigger cases (76 in total), including an unsupported Go backend
+    case.
+  - The Claude eval cases were regenerated (76 cases, 176 files).
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/feature-delivery.md`, `bug-fix.md`, `refactoring.md`, `algorithm-design.md`, `concurrency-safety.md`, `error-handling.md`, `upgrades.md`, `configuration-and-flags.md`, `contract-codegen.md`, `compatibility.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/api-design.md`, `api-endpoints.md`, `authn-authz.md`, `messaging.md`, `background-jobs.md`, `external-integrations.md`, `idempotency-and-consistency.md` |
+| Created | `tests/evals/claude/` (9 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md`, `chayen-backend/SKILL.md` (descriptions and bodies), `skills/README.md` |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json`, `tests/skills/trigger-cases.json` (additions only), `tests/skills/README.md`. No existing generated grader changed, because no new skill was added. |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D05 and CAP-D06 IMPLEMENTED; REQ-02, REQ-05, REQ-07, REQ-08, ARC-04 evidence), `DECISIONS.md` (D-031), `ISSUES.md` (Q-10, R-27, R-32 notes), `IMPLEMENTATION_PLAN.md` |
+| Deleted | None |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings, on the first run. 8 skills. L0 3315/4000. Maximum overlap 0.11. 52 references with valid kinds. 37 recipe files agree with the catalog (60 capabilities). 120 recipe cases. 76 trigger cases. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=59 (D01–D06 complete), IN_PROGRESS=19, PLANNED=128. 206 records, fingerprint unchanged, doc in sync. |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | **PASS:** 4/4 gate groups. Self-tests 53/53. |
+| T4 | Claude Code validator | `claude plugin validate --strict` on the plugin, `skills/`, and the marketplace | PASS ×3 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×8 (`skills-ref` 0.1.1) | PASS: 8/8 valid |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc11` | **PASS 24/24:** 8 skills discoverable on Claude Code, Codex, and Copilot. The user's real configs were unchanged. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` | PASS: 76 cases, 176 files |
+| — | Trigger evals for the rewritten implementation and backend descriptions | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (44 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Human review of the 17 new recipes | — | Pending (R-33) |

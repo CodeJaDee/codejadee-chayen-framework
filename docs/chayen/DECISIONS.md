@@ -433,6 +433,34 @@ Decision statuses:
   - `decision-records.md`, `migration-strategy.md`, `rollout-planning.md`;
   - `chayen-implementation/references/task-contract.md`.
 
+### D-031 — Domains 05 and 06: extend the implementation and backend pilots; move upgrades to implementation
+- **Status:** PROPOSED (executed in Step 11)
+- **Decision:**
+  - **D05 extends `chayen-implementation`.**
+    - Its feature workflow moved into `feature-delivery.md`, and the skill
+      routes by change type across 10 recipes plus the task contract and
+      change summary.
+    - Principles: task-scoped diffs, pure change types (a fix does not
+      refactor), never silently replacing dependencies or frameworks, and
+      verification with the project's real toolchain.
+  - **D06 extends `chayen-backend`.**
+    - The skill detects the stack first and loads one technology reference.
+      ASP.NET Core is not the default.
+    - It routes across 7 recipes. A short endpoint-level bug path stays in
+      the skill, because D-016 prevents linking the implementation skill's
+      `bug-fix.md`.
+  - **Dependency upgrades (CAP-05-008) move with CG-17 (`upgrades.md`)**
+    from the planned `chayen-modernization` to `chayen-implementation`. The
+    reason is the same as D-029: no new skill fits the L0 budget. CG-17 also
+    carries CAP-15-004 framework-version-upgrade and CAP-15-005
+    breaking-change-analysis, which stay PLANNED.
+- **Consequences:**
+  - Both descriptions grew (implementation 414 characters, backend 416).
+    L0 is 3,315 / 4,000.
+  - `chayen-modernization` now owns only 4 PLANNED capabilities. That makes
+    it a natural merge candidate (Q-10).
+  - Description trigger effects are NOT_RUN (R-32).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

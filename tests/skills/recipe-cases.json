@@ -838,6 +838,488 @@
       "checks": [
         "Acceptance criteria are not answered with a decision register"
       ]
+    },
+    {
+      "id": "rc-05-001-pos",
+      "capability": "CAP-05-001",
+      "polarity": "positive",
+      "prompt": "Add soft-delete support across the schema, the API, and the admin UI.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/feature-delivery.md" },
+      "checks": [
+        "An analogous existing feature is named and followed per layer",
+        "The build stays green after each layer",
+        "git diff --stat lists only planned files"
+      ]
+    },
+    {
+      "id": "rc-05-001-neg",
+      "capability": "CAP-05-001",
+      "polarity": "negative",
+      "prompt": "Explain how soft delete usually works in EF Core.",
+      "expect": { "skill": "none", "not_loads": "references/feature-delivery.md" },
+      "checks": [
+        "No code is changed for an explanation request"
+      ]
+    },
+    {
+      "id": "rc-05-002-pos",
+      "capability": "CAP-05-002",
+      "polarity": "positive",
+      "prompt": "Users get logged out randomly. Find the cause and fix it.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/bug-fix.md" },
+      "checks": [
+        "A failing reproduction or regression test exists before the fix",
+        "The root cause cites path and line and separates trigger from cause",
+        "Sibling occurrences are reported, not silently fixed"
+      ]
+    },
+    {
+      "id": "rc-05-002-neg",
+      "capability": "CAP-05-002",
+      "polarity": "negative",
+      "prompt": "Prepare an emergency patch for the 3.2 release branch.",
+      "expect": { "skill": "none", "not_loads": "references/bug-fix.md" },
+      "checks": [
+        "No bug-fix workflow on main is applied to a hotfix-branch request"
+      ]
+    },
+    {
+      "id": "rc-05-003-pos",
+      "capability": "CAP-05-003",
+      "polarity": "positive",
+      "prompt": "Refactor the payment module to remove the duplicated retry logic without changing behavior.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/refactoring.md" },
+      "checks": [
+        "Characterization tests exist before the change",
+        "Test results equal the baseline",
+        "Public signatures and routes are unchanged"
+      ]
+    },
+    {
+      "id": "rc-05-003-neg",
+      "capability": "CAP-05-003",
+      "polarity": "negative",
+      "prompt": "Find code that is never called in this project.",
+      "expect": { "skill": "none", "not_loads": "references/refactoring.md" },
+      "checks": [
+        "No refactor is performed for a dead-code question"
+      ]
+    },
+    {
+      "id": "rc-05-004-pos",
+      "capability": "CAP-05-004",
+      "polarity": "positive",
+      "prompt": "Change the default page size from 20 to 50 everywhere it is configured, nothing else.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/feature-delivery.md" },
+      "checks": [
+        "The diff contains only the page-size lines",
+        "No reformatting or renames of untouched code"
+      ]
+    },
+    {
+      "id": "rc-05-004-neg",
+      "capability": "CAP-05-004",
+      "polarity": "negative",
+      "prompt": "What does this regex do?",
+      "expect": { "skill": "none", "not_loads": "references/feature-delivery.md" },
+      "checks": [
+        "No edit is made for a question"
+      ]
+    },
+    {
+      "id": "rc-05-005-pos",
+      "capability": "CAP-05-005",
+      "polarity": "positive",
+      "prompt": "Our scheduling code is O(n^2) and too slow for 50k items. Design a better algorithm.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/algorithm-design.md" },
+      "checks": [
+        "Time and space complexity and a correctness argument are stated",
+        "Edge-case tests are added",
+        "A before and after measurement is shown or marked NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-05-005-neg",
+      "capability": "CAP-05-005",
+      "polarity": "negative",
+      "prompt": "Explain how quicksort works.",
+      "expect": { "skill": "none", "not_loads": "references/algorithm-design.md" },
+      "checks": [
+        "No implementation recipe is applied to a conceptual question"
+      ]
+    },
+    {
+      "id": "rc-05-006-pos",
+      "capability": "CAP-05-006",
+      "polarity": "positive",
+      "prompt": "Two requests sometimes create duplicate orders in our Nitro API. Is this a race condition?",
+      "expect": { "skill": "chayen-implementation", "loads": "references/concurrency-safety.md" },
+      "checks": [
+        "The interleaving is written down",
+        "The fix is at the data store for a cross-instance race",
+        "A concurrent test with a run count is shown or NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-05-006-neg",
+      "capability": "CAP-05-006",
+      "polarity": "negative",
+      "prompt": "What is a mutex?",
+      "expect": { "skill": "none", "not_loads": "references/concurrency-safety.md" },
+      "checks": [
+        "Answered conceptually without code changes"
+      ]
+    },
+    {
+      "id": "rc-05-007-pos",
+      "capability": "CAP-05-007",
+      "polarity": "positive",
+      "prompt": "Our API returns stack traces and inconsistent error formats. Clean up the error handling.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/error-handling.md" },
+      "checks": [
+        "The existing error convention is reused",
+        "No stack traces reach callers outside development",
+        "Tests cover an expected and an unexpected error path"
+      ]
+    },
+    {
+      "id": "rc-05-007-neg",
+      "capability": "CAP-05-007",
+      "polarity": "negative",
+      "prompt": "Show a friendly error page in the Angular app when the API fails.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/error-handling.md" },
+      "checks": [
+        "UI error states are the frontend skill's job"
+      ]
+    },
+    {
+      "id": "rc-05-008-pos",
+      "capability": "CAP-05-008",
+      "polarity": "positive",
+      "prompt": "Upgrade AutoMapper to the latest version and fix whatever breaks.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/upgrades.md" },
+      "checks": [
+        "Release notes between versions are cited",
+        "The lock file is regenerated by the package manager",
+        "No other library is replaced"
+      ]
+    },
+    {
+      "id": "rc-05-008-neg",
+      "capability": "CAP-05-008",
+      "polarity": "negative",
+      "prompt": "Which of our npm dependencies have known CVEs?",
+      "expect": { "skill": "chayen-security", "not_loads": "references/upgrades.md" },
+      "checks": [
+        "A vulnerability question is not answered with an upgrade"
+      ]
+    },
+    {
+      "id": "rc-05-009-pos",
+      "capability": "CAP-05-009",
+      "polarity": "positive",
+      "prompt": "Add a configurable timeout for the email service with a sensible default.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/configuration-and-flags.md" },
+      "checks": [
+        "The setting is bound through the existing configuration pattern",
+        "It has a default or fails fast at startup",
+        "No secret value is committed"
+      ]
+    },
+    {
+      "id": "rc-05-009-neg",
+      "capability": "CAP-05-009",
+      "polarity": "negative",
+      "prompt": "Set up Azure Key Vault for all our secrets.",
+      "expect": { "skill": "none", "not_loads": "references/configuration-and-flags.md" },
+      "checks": [
+        "No configuration-recipe change is made for a secrets-platform request"
+      ]
+    },
+    {
+      "id": "rc-05-010-pos",
+      "capability": "CAP-05-010",
+      "polarity": "positive",
+      "prompt": "Hide the new checkout flow behind a feature flag.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/configuration-and-flags.md" },
+      "checks": [
+        "The existing flag mechanism is reused",
+        "Both flag states are tested",
+        "The default for the new behaviour is off"
+      ]
+    },
+    {
+      "id": "rc-05-010-neg",
+      "capability": "CAP-05-010",
+      "polarity": "negative",
+      "prompt": "Plan a canary rollout for the new checkout.",
+      "expect": { "skill": "chayen-architecture", "not_loads": "references/configuration-and-flags.md" },
+      "checks": [
+        "Rollout planning goes to the architecture skill"
+      ]
+    },
+    {
+      "id": "rc-05-011-pos",
+      "capability": "CAP-05-011",
+      "polarity": "positive",
+      "prompt": "Regenerate the TypeScript client from the updated OpenAPI spec.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/contract-codegen.md" },
+      "checks": [
+        "The project's generator command is used",
+        "Generated files are not hand-edited",
+        "Breaking contract changes are listed"
+      ]
+    },
+    {
+      "id": "rc-05-011-neg",
+      "capability": "CAP-05-011",
+      "polarity": "negative",
+      "prompt": "Design the OpenAPI contract for a new subscriptions API.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/contract-codegen.md" },
+      "checks": [
+        "Contract design is the backend skill's API design recipe"
+      ]
+    },
+    {
+      "id": "rc-05-012-pos",
+      "capability": "CAP-05-012",
+      "polarity": "positive",
+      "prompt": "Add a field to this public API without breaking existing mobile clients.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/compatibility.md" },
+      "checks": [
+        "Consumers are listed, with unknown ones as a risk",
+        "Existing consumer tests pass unchanged",
+        "A test proves the old request shape still works"
+      ]
+    },
+    {
+      "id": "rc-05-012-neg",
+      "capability": "CAP-05-012",
+      "polarity": "negative",
+      "prompt": "Introduce v2 of the orders API with URL versioning.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/compatibility.md" },
+      "checks": [
+        "API versioning is the backend skill's API design recipe"
+      ]
+    },
+    {
+      "id": "rc-06-001-pos",
+      "capability": "CAP-06-001",
+      "polarity": "positive",
+      "prompt": "Design the REST endpoints for managing subscriptions in our FastAPI service.",
+      "expect": { "skill": "chayen-backend", "loads": "references/api-design.md" },
+      "checks": [
+        "The house error shape, casing, and paging are reused",
+        "Each operation lists status codes and authorization",
+        "The design is labelled proposed"
+      ]
+    },
+    {
+      "id": "rc-06-001-neg",
+      "capability": "CAP-06-001",
+      "polarity": "negative",
+      "prompt": "Write the API reference documentation for our endpoints.",
+      "expect": { "skill": "none", "not_loads": "references/api-design.md" },
+      "checks": [
+        "No new contract is designed for a documentation request"
+      ]
+    },
+    {
+      "id": "rc-06-002-pos",
+      "capability": "CAP-06-002",
+      "polarity": "positive",
+      "prompt": "Add a paginated products endpoint to our .NET Web API using EF Core.",
+      "expect": { "skill": "chayen-backend", "loads": "references/api-endpoints.md" },
+      "checks": [
+        "A template endpoint is cited and mirrored",
+        "No EF entity crosses the API boundary",
+        "Tests cover success, validation, and authorization"
+      ]
+    },
+    {
+      "id": "rc-06-002-neg",
+      "capability": "CAP-06-002",
+      "polarity": "negative",
+      "prompt": "Build the product list page that calls this endpoint.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/api-endpoints.md" },
+      "checks": [
+        "UI work goes to the frontend skill"
+      ]
+    },
+    {
+      "id": "rc-06-003-pos",
+      "capability": "CAP-06-003",
+      "polarity": "positive",
+      "prompt": "Our Elysia endpoint accepts invalid emails. Add proper request validation.",
+      "expect": { "skill": "chayen-backend", "loads": "references/api-endpoints.md" },
+      "checks": [
+        "Validation uses the project's schema library (TypeBox)",
+        "Invalid input returns the house validation shape",
+        "Response conformance is checked or reported NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-06-003-neg",
+      "capability": "CAP-06-003",
+      "polarity": "negative",
+      "prompt": "Is this input vulnerable to SQL injection?",
+      "expect": { "skill": "chayen-security", "not_loads": "references/api-endpoints.md" },
+      "checks": [
+        "Injection review goes to the security skill"
+      ]
+    },
+    {
+      "id": "rc-06-004-pos",
+      "capability": "CAP-06-004",
+      "polarity": "positive",
+      "prompt": "We need a v2 of the orders API without breaking v1 clients. How do we version it?",
+      "expect": { "skill": "chayen-backend", "loads": "references/api-design.md" },
+      "checks": [
+        "The existing versioning scheme is detected or a scheme is proposed for approval",
+        "v1 tests still pass",
+        "Deprecation dates have an owner"
+      ]
+    },
+    {
+      "id": "rc-06-004-neg",
+      "capability": "CAP-06-004",
+      "polarity": "negative",
+      "prompt": "Evolve our GraphQL schema without breaking the mobile app.",
+      "expect": { "skill": "none", "not_loads": "references/api-design.md" },
+      "checks": [
+        "GraphQL schema evolution is a separate planned capability"
+      ]
+    },
+    {
+      "id": "rc-06-005-pos",
+      "capability": "CAP-06-005",
+      "polarity": "positive",
+      "prompt": "Only let users edit their own orders in our Django REST API; implement the authorization check.",
+      "expect": { "skill": "chayen-backend", "loads": "references/authn-authz.md" },
+      "checks": [
+        "Approval is requested before applying the auth change",
+        "Object-level permission is enforced",
+        "Tests cover 401, denial for other users, and success"
+      ]
+    },
+    {
+      "id": "rc-06-005-neg",
+      "capability": "CAP-06-005",
+      "polarity": "negative",
+      "prompt": "Review our authorization code for vulnerabilities.",
+      "expect": { "skill": "chayen-security", "not_loads": "references/authn-authz.md" },
+      "checks": [
+        "Security review goes to the security skill"
+      ]
+    },
+    {
+      "id": "rc-06-006-pos",
+      "capability": "CAP-06-006",
+      "polarity": "positive",
+      "prompt": "Publish an OrderPlaced event when an order is created and consume it in the shipping service.",
+      "expect": { "skill": "chayen-backend", "loads": "references/messaging.md" },
+      "checks": [
+        "The existing broker and library are reused",
+        "Publishing is atomic with the state change (outbox or equivalent)",
+        "A duplicate delivery is processed once in a test"
+      ]
+    },
+    {
+      "id": "rc-06-006-neg",
+      "capability": "CAP-06-006",
+      "polarity": "negative",
+      "prompt": "Should we choose RabbitMQ or Kafka for our platform?",
+      "expect": { "skill": "chayen-architecture", "not_loads": "references/messaging.md" },
+      "checks": [
+        "Broker selection is an architecture decision"
+      ]
+    },
+    {
+      "id": "rc-06-007-pos",
+      "capability": "CAP-06-007",
+      "polarity": "positive",
+      "prompt": "Our consumers keep reprocessing the same bad message forever. Fix the queue setup.",
+      "expect": { "skill": "chayen-backend", "loads": "references/messaging.md" },
+      "checks": [
+        "A maximum delivery count and dead-letter destination are configured",
+        "The delivery guarantee is stated"
+      ]
+    },
+    {
+      "id": "rc-06-007-neg",
+      "capability": "CAP-06-007",
+      "polarity": "negative",
+      "prompt": "Explain what Kafka is.",
+      "expect": { "skill": "none", "not_loads": "references/messaging.md" },
+      "checks": [
+        "Answered conceptually without configuration changes"
+      ]
+    },
+    {
+      "id": "rc-06-008-pos",
+      "capability": "CAP-06-008",
+      "polarity": "positive",
+      "prompt": "Add a nightly job that archives old orders in our Nuxt app.",
+      "expect": { "skill": "chayen-backend", "loads": "references/background-jobs.md" },
+      "checks": [
+        "The existing job mechanism is reused (Nitro tasks or platform cron)",
+        "A re-run is idempotent",
+        "Overlap control or a single-instance assumption is stated"
+      ]
+    },
+    {
+      "id": "rc-06-008-neg",
+      "capability": "CAP-06-008",
+      "polarity": "negative",
+      "prompt": "Schedule our CI pipeline to run nightly.",
+      "expect": { "skill": "none", "not_loads": "references/background-jobs.md" },
+      "checks": [
+        "CI scheduling is not an application background job"
+      ]
+    },
+    {
+      "id": "rc-06-009-pos",
+      "capability": "CAP-06-009",
+      "polarity": "positive",
+      "prompt": "Integrate our API with the shipping provider to create shipments, with sensible timeouts.",
+      "expect": { "skill": "chayen-backend", "loads": "references/external-integrations.md" },
+      "checks": [
+        "The project's client pattern is reused",
+        "Every call has an explicit timeout and retries only safe operations",
+        "Tests use fakes and never call the provider"
+      ]
+    },
+    {
+      "id": "rc-06-009-neg",
+      "capability": "CAP-06-009",
+      "polarity": "negative",
+      "prompt": "Is fetching user-supplied URLs in our image proxy safe?",
+      "expect": { "skill": "chayen-security", "not_loads": "references/external-integrations.md" },
+      "checks": [
+        "SSRF review goes to the security skill"
+      ]
+    },
+    {
+      "id": "rc-06-010-pos",
+      "capability": "CAP-06-010",
+      "polarity": "positive",
+      "prompt": "Clients retry POST /payments on timeout and we charge twice. Fix it.",
+      "expect": { "skill": "chayen-backend", "loads": "references/idempotency-and-consistency.md" },
+      "checks": [
+        "Idempotency keys are stored under a unique constraint",
+        "Repeated and concurrent duplicates produce one effect in tests",
+        "The stored response is replayed"
+      ]
+    },
+    {
+      "id": "rc-06-010-neg",
+      "capability": "CAP-06-010",
+      "polarity": "negative",
+      "prompt": "Add circuit breakers for the slow inventory service.",
+      "expect": { "skill": "chayen-architecture", "not_loads": "references/idempotency-and-consistency.md" },
+      "checks": [
+        "Resilience design goes to the architecture skill"
+      ]
     }
   ]
 }

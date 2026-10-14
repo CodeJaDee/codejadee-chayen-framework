@@ -23,8 +23,8 @@ development repository. Capability coverage is tracked in
 | `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt, unknowns |
 | `chayen-requirements` | Requirements analysis: elicitation, stories, acceptance criteria, use cases, business rules, edge cases, NFRs, scope, backlog and sizing, traceability |
 | `chayen-architecture` | Architecture and technical planning: reviews and fitness tests, options and ADRs, decision register, boundaries and domain, data flow, multitenancy, resilience, migration and rollout plans |
-| `chayen-implementation` | Multi-file or cross-layer changes with a task contract and change summary |
-| `chayen-backend` | Server-side code: ASP.NET Core, data access, Node and Bun servers, Python web APIs |
+| `chayen-implementation` | Code changes with a task contract and change summary: features, bug fixes, refactors, algorithms, concurrency, error handling, dependency upgrades, configuration and flags, generated code, compatibility |
+| `chayen-backend` | Server-side code in the project's stack (ASP.NET Core, Node and Bun servers, Python): API design and versioning, endpoints and validation, auth, background jobs, messaging, integrations, idempotency |
 | `chayen-frontend` | Web UI: Angular, React/Next.js, Vue/Nuxt, Vite |
 | `chayen-testing` | Automated tests: .NET, JavaScript/TypeScript, Python |
 | `chayen-security` | Advisory security review and hardening |
