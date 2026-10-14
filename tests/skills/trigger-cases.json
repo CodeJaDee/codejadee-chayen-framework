@@ -1,0 +1,71 @@
+{
+  "$comment": "Provider-neutral skill trigger cases (source of truth). expect.any_of = at least one of these skills should be invoked; expect.none = no chayen-* skill may be invoked; forbid = these skills must not be invoked. Generate Claude Code eval cases with: node tools/evals/generate-claude-evals.mjs",
+  "version": 1,
+  "plugin": "codejadee-chayen-framework",
+  "skills": [
+    "chayen-repository",
+    "chayen-implementation",
+    "chayen-backend",
+    "chayen-frontend",
+    "chayen-testing",
+    "chayen-security"
+  ],
+  "cases": [
+    { "id": "pos-repository-overview", "category": "positive", "prompt": "I just cloned this repository. Give me an overview of how it is structured and how to build it and run its tests.", "expect": { "any_of": ["chayen-repository"] }, "forbid": ["chayen-security"] },
+    { "id": "pos-repository-conventions", "category": "positive", "prompt": "What naming and folder conventions does this codebase follow? Point me to examples.", "expect": { "any_of": ["chayen-repository"] } },
+    { "id": "pos-repository-where-belongs", "category": "positive", "prompt": "Where in this project would a new payment provider integration belong? Don't change anything yet.", "expect": { "any_of": ["chayen-repository"] } },
+    { "id": "pos-repository-commands", "category": "positive", "prompt": "Which commands does this solution use to build, test and lint? Check the CI config.", "expect": { "any_of": ["chayen-repository"] } },
+
+    { "id": "pos-implementation-csv-export", "category": "positive", "prompt": "Implement CSV export of a user's orders end to end: the database query, an API endpoint, and a download button on the orders page.", "expect": { "any_of": ["chayen-implementation"] } },
+    { "id": "pos-implementation-refactor", "category": "positive", "prompt": "Refactor the payment module to remove the duplicated retry logic across the three gateway clients without changing behavior.", "expect": { "any_of": ["chayen-implementation"] } },
+    { "id": "pos-implementation-soft-delete", "category": "positive", "prompt": "Add soft-delete support across the app: schema change, API changes, and hiding deleted items in the admin UI.", "expect": { "any_of": ["chayen-implementation"] } },
+    { "id": "pos-implementation-multicurrency", "category": "positive", "prompt": "Plan and implement multi-currency support in our invoicing feature across the backend and frontend.", "expect": { "any_of": ["chayen-implementation"] } },
+
+    { "id": "pos-backend-aspnet-bug", "category": "positive", "prompt": "Fix this ASP.NET Core API bug: GET /api/orders/{id} returns 500 when the order has no customer.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-backend-efcore-paging", "category": "positive", "prompt": "Add a paginated GET endpoint for products to our .NET Web API using EF Core and SQL Server.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-backend-fastapi-validation", "category": "positive", "prompt": "Our FastAPI signup endpoint accepts invalid email addresses. Add proper request validation.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-backend-elysia-route", "category": "positive", "prompt": "Create an Elysia route that returns a user by id with schema validation of the id parameter.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-backend-migration-index", "category": "positive", "prompt": "Write an EF Core migration that adds an index on Orders.CreatedAt for SQL Server.", "expect": { "any_of": ["chayen-backend"] }, "forbid": ["chayen-frontend"] },
+
+    { "id": "pos-frontend-angular-form", "category": "positive", "prompt": "Create an Angular form for customer registration with name, email and password validation.", "expect": { "any_of": ["chayen-frontend"] }, "forbid": ["chayen-backend"] },
+    { "id": "pos-frontend-react-rerender", "category": "positive", "prompt": "This React search component re-renders the whole list on every keystroke. Fix it.", "expect": { "any_of": ["chayen-frontend"] }, "forbid": ["chayen-backend"] },
+    { "id": "pos-frontend-nuxt-page", "category": "positive", "prompt": "Add a Nuxt page that lists products from our API with loading, empty and error states.", "expect": { "any_of": ["chayen-frontend"] } },
+    { "id": "pos-frontend-vue-a11y", "category": "positive", "prompt": "Make our Vue modal dialog keyboard accessible, including focus trapping and closing with Escape.", "expect": { "any_of": ["chayen-frontend"] }, "forbid": ["chayen-backend"] },
+
+    { "id": "pos-testing-unit", "category": "positive", "prompt": "Write unit tests for the OrderService class.", "expect": { "any_of": ["chayen-testing"] } },
+    { "id": "pos-testing-integration", "category": "positive", "prompt": "Add xUnit integration tests for the /api/orders endpoints using WebApplicationFactory.", "expect": { "any_of": ["chayen-testing"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-testing-flaky", "category": "positive", "prompt": "This Vitest test passes locally but fails randomly in CI. Find out why and fix it.", "expect": { "any_of": ["chayen-testing"] } },
+    { "id": "pos-testing-playwright", "category": "positive", "prompt": "Add Playwright end-to-end tests for the checkout flow.", "expect": { "any_of": ["chayen-testing"] } },
+    { "id": "pos-testing-pytest", "category": "positive", "prompt": "Write pytest tests for the parse_invoice function, including edge cases.", "expect": { "any_of": ["chayen-testing"] } },
+
+    { "id": "pos-security-controller-review", "category": "positive", "prompt": "Review this controller for security vulnerabilities.", "expect": { "any_of": ["chayen-security"] } },
+    { "id": "pos-security-sql-injection", "category": "positive", "prompt": "Is this SQL query built in our repository class vulnerable to injection?", "expect": { "any_of": ["chayen-security"] } },
+    { "id": "pos-security-angular-xss", "category": "positive", "prompt": "Check our Angular app for XSS risks.", "expect": { "any_of": ["chayen-security"] } },
+    { "id": "pos-security-leaked-key", "category": "positive", "prompt": "We accidentally committed an API key to the repository. What should we do?", "expect": { "any_of": ["chayen-security"] } },
+    { "id": "pos-security-cors-auth", "category": "positive", "prompt": "Harden the CORS and authentication configuration of our ASP.NET Core API.", "expect": { "any_of": ["chayen-security"] } },
+
+    { "id": "neg-weather", "category": "negative", "prompt": "Explain today's weather in Bangkok.", "expect": { "none": true } },
+    { "id": "neg-poem", "category": "negative", "prompt": "Write a short poem about autumn leaves.", "expect": { "none": true } },
+    { "id": "neg-translate", "category": "negative", "prompt": "Translate 'good morning, how are you?' into Japanese.", "expect": { "none": true } },
+    { "id": "neg-math", "category": "negative", "prompt": "What is 17 percent of 2,340?", "expect": { "none": true } },
+    { "id": "neg-hamlet", "category": "negative", "prompt": "Summarize the plot of Hamlet in three sentences.", "expect": { "none": true } },
+    { "id": "neg-git-concept", "category": "negative", "prompt": "In general terms, what does git rebase do compared to git merge?", "expect": { "none": true } },
+    { "id": "neg-python-concept", "category": "negative", "prompt": "What is the difference between a list and a tuple in Python?", "expect": { "none": true } },
+    { "id": "neg-laptop", "category": "negative", "prompt": "Recommend a good laptop for programming under 1,500 dollars.", "expect": { "none": true } },
+
+    { "id": "amb-remember-me", "category": "ambiguous", "prompt": "Add a 'remember me' checkbox to the login page and make the server honor it.", "expect": { "any_of": ["chayen-implementation", "chayen-frontend", "chayen-backend", "chayen-security"] }, "forbid": ["chayen-repository"] },
+    { "id": "amb-slow-and-injection", "category": "ambiguous", "prompt": "Our login endpoint is slow and I think it might be vulnerable to SQL injection.", "expect": { "any_of": ["chayen-backend", "chayen-security"] }, "forbid": ["chayen-frontend"] },
+    { "id": "amb-tests-then-fix", "category": "ambiguous", "prompt": "Write tests for the order validation rules and fix whatever bug they reveal.", "expect": { "any_of": ["chayen-testing", "chayen-implementation", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "amb-where-endpoint", "category": "ambiguous", "prompt": "Where should I add a new API endpoint for refunds in this project, and what should it look like?", "expect": { "any_of": ["chayen-repository", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "amb-pr-review", "category": "ambiguous", "prompt": "Review this pull request for security problems and missing tests.", "expect": { "any_of": ["chayen-security", "chayen-testing"] } },
+    { "id": "amb-form-to-endpoint", "category": "ambiguous", "prompt": "Make the Angular checkout form submit to the new ASP.NET Core payments endpoint and show server validation errors.", "expect": { "any_of": ["chayen-frontend", "chayen-implementation", "chayen-backend"] } },
+
+    { "id": "uns-rust-embedded", "category": "unsupported", "prompt": "Write a Rust driver for an I2C temperature sensor on an STM32 microcontroller.", "expect": { "none": true } },
+    { "id": "uns-helm", "category": "unsupported", "prompt": "Fix the Helm chart so the Kubernetes deployment runs three replicas with a rolling update.", "expect": { "none": true } },
+    { "id": "uns-vba", "category": "unsupported", "prompt": "Speed up this Excel VBA macro that loops over 50,000 rows.", "expect": { "none": true } },
+    { "id": "uns-unity", "category": "unsupported", "prompt": "Add a double-jump mechanic to my Unity player controller script in C#.", "expect": { "none": true } },
+    { "id": "uns-swiftui", "category": "unsupported", "prompt": "Build a SwiftUI settings screen for my iOS app with a dark mode toggle.", "expect": { "none": true } },
+    { "id": "uns-cobol", "category": "unsupported", "prompt": "Write a COBOL batch program that totals daily transactions from a fixed-width file.", "expect": { "none": true } },
+    { "id": "uns-spring-boot", "category": "unsupported", "prompt": "Fix a NullPointerException in my Spring Boot REST controller.", "expect": { "none_or": ["chayen-backend"] }, "forbid": ["chayen-frontend", "chayen-repository"], "notes": "Java is an optional extension without guidance yet. Either no skill, or chayen-backend whose gate then defers to native behavior, is acceptable." }
+  ]
+}

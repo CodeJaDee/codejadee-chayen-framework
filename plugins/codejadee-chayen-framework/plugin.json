@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "codejadee-chayen-framework",
+  "version": "0.1.0-dev",
+  "description": "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.",
+  "author": {
+    "name": "CodeJaDee",
+    "url": "https://github.com/CodeJaDee"
+  },
+  "homepage": "https://github.com/CodeJaDee/codejadee-chayen-framework",
+  "repository": "https://github.com/CodeJaDee/codejadee-chayen-framework",
+  "keywords": [
+    "software-engineering",
+    "dotnet",
+    "aspnetcore",
+    "angular",
+    "sql-server",
+    "typescript"
+  ]
+}

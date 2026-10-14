@@ -1,0 +1,20 @@
+{
+  "name": "codejadee",
+  "interface": {
+    "displayName": "CodeJaDee"
+  },
+  "plugins": [
+    {
+      "name": "codejadee-chayen-framework",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codejadee-chayen-framework"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

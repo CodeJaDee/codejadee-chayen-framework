@@ -1,0 +1,15 @@
+{
+  "name": "codejadee",
+  "description": "CodeJaDee engineering plugins for coding agents.",
+  "owner": {
+    "name": "CodeJaDee",
+    "url": "https://github.com/CodeJaDee"
+  },
+  "plugins": [
+    {
+      "name": "codejadee-chayen-framework",
+      "source": "./plugins/codejadee-chayen-framework",
+      "description": "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks."
+    }
+  ]
+}
