@@ -237,6 +237,65 @@ Decision statuses:
     verified.
   - Never copy `auth.json`, and never put classic PATs into Copilot.
 
+### D-021 — Capability catalog format: one restricted-YAML file
+- **Status:** ACCEPTED (user-specified in the Step 07 prompt)
+- **Decision:**
+  - The canonical catalog is `catalog/engineering-capabilities.yaml`.
+  - It replaces the JSON layout in ARCHITECTURE C-03 (`schema/`,
+    `domains.json`, `capabilities/*.json`).
+  - The file uses a restricted YAML subset: two-space indentation, quoted
+    strings or plain tokens, flow lists and maps of plain tokens only, and
+    no anchors or block scalars.
+  - The zero-dependency checker `tools/catalog/check-catalog.mjs` parses it
+    (BC-22: no new dependency).
+- **Evidence:** Step 07 test T3. PyYAML 6.0.3, in a throwaway venv, produced
+  data identical to the checker's parser.
+
+### D-022 — Capability IDs and status rules
+- **Status:** PROPOSED
+- **Decision:**
+  - **IDs:** `CAP-<DD>-<NNN>`, where DD is the domain number (01..20) and
+    NNN is the position in the user's inventory. Names are verbatim.
+  - **Status vocabulary:** BUILD_CONTRACT §5.1.
+  - **IN_PROGRESS:** only when the mapped entry skill already ships content
+    for the capability's core purpose (`existing_coverage`).
+  - **IMPLEMENTED:** needs an existing recipe and `verification_evidence`.
+  - **VERIFIED:** needs a recorded passing verification.
+  - `COMPLETED` is not a status. A catalog entry never changes a status by
+    itself. The checker enforces all of these rules.
+- **Result in Step 07:** 31 IN_PROGRESS, 175 PLANNED, 0 IMPLEMENTED,
+  0 VERIFIED.
+
+### D-023 — Proposed entry-skill mapping (14 skills)
+- **Status:** PROPOSED. It decides Q-10 once approved.
+- **Decision:**
+  - Every capability maps to exactly one entry skill: the 6 existing pilots
+    plus 8 planned skills (`chayen-requirements`, `chayen-architecture`,
+    `chayen-data`, `chayen-performance`, `chayen-devops`,
+    `chayen-modernization`, `chayen-documentation`,
+    `chayen-ai-engineering`).
+  - Domains D04, D18, and D19 are distributed by artifact
+    (CAPABILITY_COVERAGE §5.1).
+  - D08 maps to `chayen-frontend`, limited to web-technology shells (Q-11).
+- **Conflict:** 14 skills do not fit the 4,000-character L0 budget at the
+  pilot description length (R-27, CAPABILITY_COVERAGE §5.2).
+  - Recommendation: keep the cap.
+  - Add skills one at a time, measuring each time.
+  - Merge when the cap would be exceeded.
+
+### D-024 — Overlap consolidation model
+- **Status:** PROPOSED
+- **Decision:**
+  - **Same work on the same artifacts, same entry skill:** a consolidation
+    group (`CG-nn`) shares one recipe file. Every member keeps its own ID,
+    triggers, outputs, and status.
+  - **Related work in different recipes or skills:** a symmetric `overlaps`
+    link, resolved by hand-off (negative triggers and "When not to use"
+    tables).
+  - No cross-skill shared recipes while D-016 holds (U-11/U-13).
+- **Result:** 56 groups covering 148 capabilities, and 61 overlap pairs.
+  No capability identity was merged or dropped.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

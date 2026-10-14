@@ -1,0 +1,48 @@
+# Capability catalog checker
+
+This tool is for **repository maintainers only**.
+
+- It is not part of the plugin package (`plugins/`).
+- Plugin users never run it.
+- It has no dependencies. It needs Node.js 18 or later.
+
+```bash
+node tools/catalog/check-catalog.mjs              # check; exit 1 on any error
+node tools/catalog/check-catalog.mjs --write-doc  # regenerate the tables in docs/chayen/CAPABILITY_COVERAGE.md
+node tools/catalog/check-catalog.mjs --dump-json  # print the parsed catalog as JSON
+```
+
+Options `--root <repoRoot>` and `--file <catalogPath>` point the checker at
+another copy. They are used for negative-control runs.
+
+## What it checks (validator V-11)
+
+The checker is the reproducible **count and uniqueness check** for
+[`catalog/engineering-capabilities.yaml`](../../catalog/engineering-capabilities.yaml).
+It embeds the user's Step 07 inventory verbatim and compares the catalog
+against it. It verifies:
+
+- exactly 20 domains and 206 capabilities;
+- unique ids and names;
+- every inventory name present, in inventory order, with no renames;
+- entry-skill and recipe mappings that agree with the files on disk;
+- consolidation groups and overlaps that are consistent;
+- status values from BUILD_CONTRACT §5.1. `COMPLETED` is rejected, and
+  IN_PROGRESS, IMPLEMENTED, and VERIFIED each need evidence;
+- that the generated tables in `CAPABILITY_COVERAGE.md` are current.
+
+The full list is in
+[CAPABILITY_COVERAGE.md §2](../../docs/chayen/CAPABILITY_COVERAGE.md#2-how-to-check).
+
+## Format
+
+The catalog uses a restricted YAML subset (D-021), so this checker can parse
+it without a YAML library:
+
+- two-space indentation;
+- quoted strings or plain tokens;
+- flow lists and maps of plain tokens only;
+- no anchors, aliases, or block scalars.
+
+Every file in the subset is also valid YAML 1.2. In Step 07, a PyYAML parse
+produced data identical to this parser's output.

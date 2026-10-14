@@ -16,6 +16,17 @@
 >
 > All are replaceable without structural change.
 >
+> **Step 07 amendments:**
+> - C-03 is implemented as one YAML file,
+>   `catalog/engineering-capabilities.yaml` (user-specified, D-021). It
+>   replaces the JSON layout below.
+> - IDs are `CAP-<domain 01..20>-<nnn>` (D-022). The record fields follow
+>   the user's Step 07 list, as described in
+>   [CAPABILITY_COVERAGE.md](CAPABILITY_COVERAGE.md) §3.
+> - V-11 lives in `tools/catalog/check-catalog.mjs`.
+> - The proposed 14-skill entry set (D-023, PROPOSED) supersedes the C-04
+>   provisional list for mapping purposes. The final set is still Q-10.
+>
 > **Step 05 amendments:**
 > - The pilot entry skills are the six user-specified skills (D-015), not
 >   the provisional C-04 list.

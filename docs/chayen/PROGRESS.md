@@ -4,14 +4,15 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 06 — Native behaviour proof of concept |
+| Last executed step | 07 — Engineering capability catalog |
+| Step 07 status | DONE (pending user review; catalog PROPOSED) |
 | Step 06 status | DONE (pending user review) |
 | Step 05 status | DONE (pending user review) |
 | Step 04 status | DONE (pending user review) |
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. The capability catalog and authoring guide are unscheduled (D-012). |
+| Next step | As directed by the user. Open before authoring more entry skills: Q-10 and R-27 (entry-skill set and L0 budget), and Q-11 (D08 scope). |
 | Commits made by agent | None |
 
 ---
@@ -421,3 +422,69 @@ homes).
 | — | Claude Code VS Code, Copilot VS Code | Manual procedures | NOT TESTED |
 | — | Remote GitHub marketplace install | Needs a push | NOT TESTED |
 | — | Statistical baseline (≥3 runs, no-plugin arm) | — | NOT TESTED |
+
+---
+
+## Step 07 — Engineering capability catalog
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review). The catalog content is PROPOSED.
+- **Guide:** [CAPABILITY_COVERAGE.md](CAPABILITY_COVERAGE.md)
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT and ARCHITECTURE (C-03, C-04, §8 budgets),
+  DECISIONS, ACCEPTANCE_MATRIX, ISSUES, ADR-0004, and all six pilot skills
+  and their 16 references, to determine existing coverage.
+- **Recorded the user's inventory verbatim** as 206 records in 20 domains.
+  - Each record has: ID, exact name, domain, purpose, positive and negative
+    triggers, inputs, outputs, stacks, entry-skill mapping, recipe mapping,
+    verification approach, and status.
+  - No name was renamed or omitted, and inventory order is kept.
+- **Format:** one restricted-YAML file, as the user specified (D-021). This
+  replaces the JSON layout in ARCHITECTURE C-03; amendment notes were added
+  to ARCHITECTURE and PLUGIN_PACKAGE_DESIGN.
+- **Mapping** (CAPABILITY_COVERAGE §5–§7):
+  - a proposed 14-skill entry set (D-023), awaiting the Q-10 decision;
+  - 56 consolidation groups that share recipes while keeping identities,
+    and 61 symmetric cross-recipe overlaps (D-024);
+  - pilot boundary changes needed later are listed, not made.
+- **Status:**
+  - 31 IN_PROGRESS, where pilot content already addresses the capability
+    (with evidence paths);
+  - 175 PLANNED;
+  - 0 IMPLEMENTED and 0 VERIFIED (D-022).
+- **Scope:** no recipe or skill was implemented, and the plugin is
+  unchanged.
+- **Wrote the checker:** `tools/catalog/check-catalog.mjs` (V-11, zero
+  dependencies), the reproducible count and uniqueness check. It also
+  generates the tables in CAPABILITY_COVERAGE.md and detects when they go
+  stale.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `catalog/engineering-capabilities.yaml` |
+| Created | `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Created | `tools/catalog/check-catalog.mjs`, `tools/catalog/README.md` |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (GOV-15, REQ-05, STK-01..14 evidence, ARC-03, ARC-12, 20 CAP domain rows), `DECISIONS.md` (D-021..D-024), `ISSUES.md` (Q-01 resolved for the inventory, Q-10 updated, Q-11, R-27..R-29), `IMPLEMENTATION_PLAN.md` (Step 07 row, details, numbering note), `ARCHITECTURE.md` and `PLUGIN_PACKAGE_DESIGN.md` (Step 07 amendment notes only) |
+| Deleted | None |
+| Not changed | `plugins/` (no skill, reference, or manifest edits), `tests/`, `.vscode/` |
+
+Scratch only, outside the repository: the catalog was assembled from
+per-domain parts, and a throwaway Python venv was created with PyYAML for
+T3. No dependency was added to the repository.
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Count, uniqueness, inventory identity, mappings, and doc sync | `node tools/catalog/check-catalog.mjs` | **PASS:** 0 errors, 0 warnings. 20 domains, 206 capabilities, 206 unique ids, 206 unique names. Per domain: D01=9 D02=10 D03=10 D04=8 D05=12 D06=10 D07=10 D08=8 D09=12 D10=14 D11=14 D12=10 D13=12 D14=10 D15=10 D16=10 D17=10 D18=10 D19=9 D20=8. Status: IN_PROGRESS=31, PLANNED=175. Inventory fingerprint `2f13cad24ff431e3` equals the catalog fingerprint. |
+| T2 | Negative controls: 18 mutated catalog copies (omit one, duplicate name, rename, COMPLETED, IN_PROGRESS without evidence, wrong recipe mapping, asymmetric overlap, IMPLEMENTED without evidence, 15 skills, placeholder, Chayen in a trigger, duplicate id, domain title, stale doc, recipe outside skill, unquoted colon, group mismatch, bad trigger reference) | scratch `mutate.mjs` → `check-catalog.mjs --file <mutant>` | **PASS: 18/18 rejected** (exit 1, each with the expected check ID). The first run did not apply M16 (wrong search string in the mutation script). It was corrected and re-run: rejected by V-11.1. |
+| T3 | Independent YAML parse | PyYAML 6.0.3 `safe_load` compared with `check-catalog.mjs --dump-json` | **PASS:** identical data. PyYAML also counts 206 records, 206 unique ids, 206 unique names. |
+| T4 | Plugin package unchanged and valid | `node tools/validate/validate-package.mjs` | PASS: 0 errors, 0 warnings. L0 2332/4000. |
+| T5 | Eval cases still in sync | `node tools/evals/generate-claude-evals.mjs --check` | PASS: 48 cases, 110 files up to date |
+| — | Trigger evals for the catalog's positive and negative prompts | — | NOT_RUN. They were not requested in this step, and each run is billed. |
+| — | Capability behaviour evals (fixture repositories) | — | NOT_RUN. No fixtures exist yet (POC_REPORT §6). |
+| — | User review of catalog content | — | Pending (R-29) |

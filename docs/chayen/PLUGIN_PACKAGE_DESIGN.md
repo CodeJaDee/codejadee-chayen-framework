@@ -26,6 +26,16 @@ Working names (Q-03 pending): plugin `codejadee-chayen`, marketplace
 > The developer validator is `tools/validate/validate-package.mjs`. It
 > implements V-01..V-05, V-09, and V-13 so far.
 
+> **Step 07 amendments (D-021, D-022).**
+>
+> - The catalog is the single file `catalog/engineering-capabilities.yaml`,
+>   which replaces the `schema/`, `domains.json`, and `capabilities/` layout
+>   in §1.
+> - V-11 is implemented in `tools/catalog/check-catalog.mjs`, not by a JSON
+>   Schema.
+> - V-11 accepts **planned** entry skills and recipes when they are labelled
+>   `planned`. It requires `existing` to match the files on disk.
+
 ---
 
 ## 1. Repository structure

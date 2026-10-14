@@ -15,7 +15,8 @@ change the shape of the steps after them. Any re-plan is recorded in
 | 04 | Minimal native plugin package (re-planned by the user's Step 04 prompt, see D-012) | `plugins/codejadee-chayen-framework/` (both manifests, canonical `skills/`), three native marketplace files, `tools/validate/validate-package.mjs` | REQ-01, PRV-*, ARC-01, ARC-02, ARC-14 | DONE (pending review) |
 | 05 | Pilot entry skills (as executed, D-015) | 6 skills in `plugins/codejadee-chayen-framework/skills/` with 16 skill-local references; `tests/skills/trigger-cases.json` (48 cases); generated Claude eval cases; validator V-06..V-17 subset | REQ-02..REQ-04, REQ-06..REQ-10, ARC-04..ARC-13 | DONE (pending review) |
 | 06 | Native behaviour proof of concept (as executed) | `tests/provider-compatibility/` (lifecycle script, VS Code procedures, results), `tests/routing/` (smoke runner, results), `docs/chayen/POC_REPORT.md`; eval staging fix | REQ-01..REQ-04, REQ-10, PRV-* | DONE (pending review) |
-| — | Capability catalog and authoring guide (*unscheduled*, formerly Step 04) | `catalog/` (schema, `domains.json`, `capabilities/*.json` per ARCHITECTURE C-03), `docs/chayen/AUTHORING_GUIDE.md`, final entry-skill set | REQ-05, STK-* | NOT_STARTED |
+| 07 | Engineering capability catalog (as executed) | `catalog/engineering-capabilities.yaml` (206 records, 20 domains; D-021), `docs/chayen/CAPABILITY_COVERAGE.md`, `tools/catalog/check-catalog.mjs` (V-11 count, uniqueness, and mapping check) | REQ-05, ARC-03, STK-* (mapping level) | DONE (pending review) |
+| — | Authoring guide and final entry-skill set (*unscheduled*; the catalog part was done in Step 07) | `docs/chayen/AUTHORING_GUIDE.md`, final entry-skill set (Q-10, R-27) | REQ-05, STK-* | NOT_STARTED |
 | 05 | Structural validation suite | Dev-only validator, test fixtures, CI workflow | REQ-10 | NOT_STARTED |
 | 06 | Claude Code packaging | Plugin + marketplace manifests, install evidence | REQ-01, PRV-CC | NOT_STARTED |
 | 07 | OpenAI Codex packaging | Codex manifests, install evidence | REQ-01, PRV-CX | NOT_STARTED |
@@ -34,6 +35,13 @@ change the shape of the steps after them. Any re-plan is recorded in
 | 20 | Provider compatibility and regression run | Full test run, results recorded | REQ-10, all | NOT_STARTED |
 | 21 | User documentation | README, per-provider install guides, contributing guide | REQ-01, GOV-* | NOT_STARTED |
 | 22 | Release readiness review | Readiness report. **No publishing without approval** | All | NOT_STARTED |
+
+> **Note (Step 07):** The rows after the unscheduled row are the original
+> Step 01 plan, and they are indicative only. Their numbers 05–08 collide
+> with the as-executed steps above; the step that actually runs is the one
+> numbered in the user's prompt. The Step 07 catalog maps capabilities to
+> entry skills (D-023), so the per-stack rows 11–19 will need re-planning
+> around those skills.
 
 ## Step details
 
@@ -91,7 +99,24 @@ Validated with:
 Steps 06–08 now focus on remote (GitHub) marketplace installs and skill-load
 verification on each surface.
 
-### (Unscheduled) Capability catalog and authoring guide
+### Step 07 — Engineering capability catalog (as executed)
+- **Source:** the user's Step 07 inventory (20 domains, 206 names), recorded
+  verbatim in one YAML file (D-021).
+- **Each record has:** ID, name, domain, purpose, positive and negative
+  triggers, inputs, outputs, entry-skill mapping, recipe mapping,
+  verification approach, and status (D-022).
+- **Mapping:** a proposed 14-skill set (D-023), consolidation groups and
+  overlaps (D-024).
+- **No recipe implemented.** Capabilities with pilot content are
+  IN_PROGRESS. Everything else is PLANNED.
+- `tools/catalog/check-catalog.mjs` is the reproducible count and
+  uniqueness check (V-11).
+
+### (Unscheduled) Authoring guide and final entry-skill set
+
+> Step 07 delivered the catalog part of this item in a different format
+> (YAML, D-021). The bullets below are kept as originally planned. Q-01 is
+> resolved for the inventory, but the catalog content still needs review.
 - Define the **20 domains** and **206 capabilities** as `catalog/` JSON, per
   ARCHITECTURE C-03. Each capability gets:
   - an ID (`CAP-<domain>-<nnn>`)
