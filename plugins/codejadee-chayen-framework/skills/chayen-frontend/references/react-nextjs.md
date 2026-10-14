@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # React and Next.js (including Vite React apps)
 
 **Applies to:** React applications built with Vite, Next.js, or another

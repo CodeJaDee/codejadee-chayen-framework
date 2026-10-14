@@ -184,8 +184,8 @@ domains:
 
 consolidation_groups:
   - id: CG-01
-    recipe: skills/chayen-repository/SKILL.md
-    mapping: existing
+    recipe: skills/chayen-repository/references/repository-profile.md
+    mapping: planned
     members: [CAP-01-001, CAP-01-002, CAP-01-007]
     rationale: "Onboarding, layout mapping, and convention discovery are one read-only repository profile workflow (pilot workflow steps 1-5)."
   - id: CG-02
@@ -254,8 +254,8 @@ consolidation_groups:
     members: [CAP-04-007, CAP-18-002, CAP-18-003]
     rationale: "The pilot change summary is the change passport; handoff and evidence audit read or extend the same record."
   - id: CG-15
-    recipe: skills/chayen-implementation/SKILL.md
-    mapping: existing
+    recipe: skills/chayen-implementation/references/feature-delivery.md
+    mapping: planned
     members: [CAP-05-001, CAP-05-004]
     rationale: "Feature delivery and safe edits are the pilot implementation workflow and its smallest-diff principles."
   - id: CG-16
@@ -284,8 +284,8 @@ consolidation_groups:
     members: [CAP-06-001, CAP-06-004, CAP-19-001]
     rationale: "Contract design, versioning, and GraphQL schema evolution apply the same compatibility rules to different API styles."
   - id: CG-21
-    recipe: skills/chayen-backend/SKILL.md
-    mapping: existing
+    recipe: skills/chayen-backend/references/api-endpoints.md
+    mapping: planned
     members: [CAP-06-002, CAP-06-003]
     rationale: "The pilot backend skill and its stack references implement endpoints with boundary validation."
   - id: CG-22
@@ -304,8 +304,8 @@ consolidation_groups:
     members: [CAP-06-010, CAP-19-006]
     rationale: "Ledger consistency depends on idempotency keys, retries, and exactly-once effects."
   - id: CG-25
-    recipe: skills/chayen-frontend/SKILL.md
-    mapping: existing
+    recipe: skills/chayen-frontend/references/ui-features.md
+    mapping: planned
     members: [CAP-07-001, CAP-07-003, CAP-07-004]
     rationale: "The pilot frontend skill and its framework references implement UI features, client state, and forms."
   - id: CG-26
@@ -344,8 +344,8 @@ consolidation_groups:
     members: [CAP-09-011, CAP-18-006]
     rationale: "Retention rules are part of data governance classification and policy."
   - id: CG-33
-    recipe: skills/chayen-testing/SKILL.md
-    mapping: existing
+    recipe: skills/chayen-testing/references/test-authoring.md
+    mapping: planned
     members: [CAP-10-002, CAP-10-003, CAP-10-004, CAP-10-007]
     rationale: "The pilot testing skill and its stack references cover unit, integration, end-to-end, and regression tests."
   - id: CG-34
@@ -364,8 +364,8 @@ consolidation_groups:
     members: [CAP-10-012, CAP-10-014]
     rationale: "Flakiness diagnosis is a branch of failure triage."
   - id: CG-37
-    recipe: skills/chayen-security/references/review-checklist.md
-    mapping: existing
+    recipe: skills/chayen-security/references/secure-review.md
+    mapping: planned
     members: [CAP-11-002, CAP-11-006, CAP-11-007, CAP-11-008, CAP-11-009, CAP-11-011]
     rationale: "The pilot checklist sections (access control, injection, SSRF, cryptography, logging) are the review lenses of a secure code review."
   - id: CG-38
@@ -488,7 +488,7 @@ capabilities:
       - "List of unknowns that could not be determined from the files"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: planned}
     consolidation: CG-01
     overlaps: [CAP-16-004]
     existing_coverage: [skills/chayen-repository/SKILL.md, skills/chayen-repository/references/stack-detection.md]
@@ -512,7 +512,7 @@ capabilities:
       - "Entry points per deployable unit with file paths"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: planned}
     consolidation: CG-01
     existing_coverage: [skills/chayen-repository/SKILL.md]
     verification: "Trigger eval on map prompts. Behaviour eval on a multi-project fixture: every listed area exists, generated and vendored folders are skipped, and deployable units match the fixture's known answer."
@@ -632,7 +632,7 @@ capabilities:
       - "Conflicting conventions reported side by side, with which looks newer or more common"
     stacks: [any]
     entry_skill: {name: chayen-repository, mapping: existing}
-    recipe: {path: skills/chayen-repository/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-repository/references/repository-profile.md, mapping: planned}
     consolidation: CG-01
     overlaps: [CAP-18-001]
     existing_coverage: [skills/chayen-repository/SKILL.md]
@@ -1359,7 +1359,7 @@ capabilities:
     stacks: [any]
     entry_skill: {name: chayen-implementation, mapping: existing}
     secondary_skills: [chayen-backend, chayen-frontend]
-    recipe: {path: skills/chayen-implementation/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-implementation/references/feature-delivery.md, mapping: planned}
     consolidation: CG-15
     existing_coverage: [skills/chayen-implementation/SKILL.md]
     verification: "Trigger eval: Step 06 positives (CSV export, soft-delete, multi-currency) run >=3 times with fixture workspaces. Behaviour eval: build and tests pass after the change, the diff touches only planned files, and the summary is complete."
@@ -1431,7 +1431,7 @@ capabilities:
       - "Build or typecheck result after the edit"
     stacks: [any]
     entry_skill: {name: chayen-implementation, mapping: existing}
-    recipe: {path: skills/chayen-implementation/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-implementation/references/feature-delivery.md, mapping: planned}
     consolidation: CG-15
     existing_coverage: [skills/chayen-implementation/SKILL.md]
     verification: "Behaviour eval: the diff for a seeded small edit contains no whitespace-only or unrelated changes, and the build result is reported."
@@ -1664,7 +1664,7 @@ capabilities:
       - "Build and test results"
     stacks: [server-stacks]
     entry_skill: {name: chayen-backend, mapping: existing}
-    recipe: {path: skills/chayen-backend/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-backend/references/api-endpoints.md, mapping: planned}
     consolidation: CG-21
     existing_coverage: [skills/chayen-backend/SKILL.md, skills/chayen-backend/references/aspnetcore-webapi.md, skills/chayen-backend/references/node-servers.md, skills/chayen-backend/references/python-web-apis.md, skills/chayen-backend/references/data-access.md]
     verification: "Trigger eval: Step 06 backend positives (5/5 on Claude, Codex and Copilot smoke) re-run >=3 times. Behaviour eval on dotnet-api, nitro, and fastapi fixtures: endpoint builds, tests pass, and DTO and error conventions match the fixture."
@@ -1687,7 +1687,7 @@ capabilities:
       - "Tests for valid and invalid payloads"
     stacks: [server-stacks]
     entry_skill: {name: chayen-backend, mapping: existing}
-    recipe: {path: skills/chayen-backend/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-backend/references/api-endpoints.md, mapping: planned}
     consolidation: CG-21
     overlaps: [CAP-05-011, CAP-10-005]
     existing_coverage: [skills/chayen-backend/references/aspnetcore-webapi.md, skills/chayen-backend/references/python-web-apis.md, skills/chayen-backend/references/node-servers.md]
@@ -1875,7 +1875,7 @@ capabilities:
       - "Build, lint, and test results"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: planned}
     consolidation: CG-25
     existing_coverage: [skills/chayen-frontend/SKILL.md, skills/chayen-frontend/references/angular.md, skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/vue-nuxt.md]
     verification: "Trigger eval: Step 06 frontend positives (4/4 on Claude) re-run >=3 times; native and game UI prompts stay silent. Behaviour eval on angular-app and nuxt-app fixtures: build passes and patterns match the fixture."
@@ -1920,7 +1920,7 @@ capabilities:
       - "Tests or a measurable render-count check"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: planned}
     consolidation: CG-25
     overlaps: [CAP-08-003]
     existing_coverage: [skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/angular.md]
@@ -1944,7 +1944,7 @@ capabilities:
       - "Tests for valid, invalid, and server-error submissions"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-frontend, mapping: existing}
-    recipe: {path: skills/chayen-frontend/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-frontend/references/ui-features.md, mapping: planned}
     consolidation: CG-25
     overlaps: [CAP-11-007]
     existing_coverage: [skills/chayen-frontend/references/angular.md, skills/chayen-frontend/references/react-nextjs.md, skills/chayen-frontend/references/vue-nuxt.md]
@@ -2596,7 +2596,7 @@ capabilities:
       - "Test command and pass, fail, and skip counts"
     stacks: [test-stacks]
     entry_skill: {name: chayen-testing, mapping: existing}
-    recipe: {path: skills/chayen-testing/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-testing/references/test-authoring.md, mapping: planned}
     consolidation: CG-33
     existing_coverage: [skills/chayen-testing/SKILL.md, skills/chayen-testing/references/dotnet-testing.md, skills/chayen-testing/references/javascript-testing.md, skills/chayen-testing/references/python-testing.md]
     verification: "Trigger eval: Step 06 testing positives (5/5 on Claude) re-run >=3 times. Behaviour eval on xUnit, Vitest, and pytest fixtures: tests compile and run, and counts are reported."
@@ -2619,7 +2619,7 @@ capabilities:
       - "Run command and result, or NOT_RUN when the dependency is unavailable"
     stacks: [test-stacks, sql-stacks]
     entry_skill: {name: chayen-testing, mapping: existing}
-    recipe: {path: skills/chayen-testing/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-testing/references/test-authoring.md, mapping: planned}
     consolidation: CG-33
     existing_coverage: [skills/chayen-testing/references/dotnet-testing.md, skills/chayen-testing/references/python-testing.md]
     verification: "Behaviour eval: tests pass twice in a row on the fixture without leftover data, and an unavailable database is reported as NOT_RUN."
@@ -2642,7 +2642,7 @@ capabilities:
       - "Run result with traces or screenshots on failure"
     stacks: [web-ui-stacks]
     entry_skill: {name: chayen-testing, mapping: existing}
-    recipe: {path: skills/chayen-testing/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-testing/references/test-authoring.md, mapping: planned}
     consolidation: CG-33
     existing_coverage: [skills/chayen-testing/references/javascript-testing.md]
     verification: "Behaviour eval: generated specs contain no fixed sleeps, use accessible selectors, and pass against the fixture app or are marked NOT_RUN."
@@ -2711,7 +2711,7 @@ capabilities:
       - "Evidence that it failed before the fix (observed or reasoned) and passes after"
     stacks: [test-stacks]
     entry_skill: {name: chayen-testing, mapping: existing}
-    recipe: {path: skills/chayen-testing/SKILL.md, mapping: existing}
+    recipe: {path: skills/chayen-testing/references/test-authoring.md, mapping: planned}
     consolidation: CG-33
     overlaps: [CAP-05-002]
     existing_coverage: [skills/chayen-testing/SKILL.md]
@@ -2921,7 +2921,7 @@ capabilities:
       - "Areas not reviewed and recommended enforcing controls"
     stacks: [server-stacks, web-ui-stacks, sql-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/review-checklist.md, mapping: existing}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
     consolidation: CG-37
     overlaps: [CAP-16-006]
     existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md]
@@ -3015,7 +3015,7 @@ capabilities:
       - "Findings with exploit scenario and fix, plus suggested negative tests"
     stacks: [server-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/review-checklist.md, mapping: existing}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
     consolidation: CG-37
     overlaps: [CAP-03-009, CAP-06-005, CAP-18-005]
     existing_coverage: [skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md]
@@ -3039,7 +3039,7 @@ capabilities:
       - "Fixes using parameterization, encoding, or allow-lists"
     stacks: [server-stacks, web-ui-stacks, sql-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/review-checklist.md, mapping: existing}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
     consolidation: CG-37
     overlaps: [CAP-07-004]
     existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/review-checklist.md]
@@ -3063,7 +3063,7 @@ capabilities:
       - "Fix: allow-list, resolved-IP checks, redirect limits, egress controls to request from the platform team"
     stacks: [server-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/review-checklist.md, mapping: existing}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
     consolidation: CG-37
     overlaps: [CAP-06-009]
     existing_coverage: [skills/chayen-security/references/review-checklist.md]
@@ -3086,7 +3086,7 @@ capabilities:
       - "Findings (weak algorithm, ECB, static IV, MD5 or SHA1 for passwords, insecure random) with fixes using platform libraries"
     stacks: [dotnet-aspnetcore, typescript-javascript, python]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/review-checklist.md, mapping: existing}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
     consolidation: CG-37
     existing_coverage: [skills/chayen-security/references/review-checklist.md]
     verification: "Behaviour eval: seeded ECB mode and an unsalted SHA-256 password hash in the fixture are both flagged with platform-library fixes."
@@ -3132,7 +3132,7 @@ capabilities:
       - "Fixes (redaction, structured fields, event list)"
     stacks: [server-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/review-checklist.md, mapping: existing}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
     consolidation: CG-37
     overlaps: [CAP-14-002]
     existing_coverage: [skills/chayen-security/references/review-checklist.md]
@@ -3204,7 +3204,7 @@ capabilities:
       - "Staged plan and approval request when the fix could break clients"
     stacks: [server-stacks, web-ui-stacks, sql-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/stack-hardening.md, mapping: existing}
+    recipe: {path: skills/chayen-security/references/vulnerability-remediation.md, mapping: planned}
     existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/stack-hardening.md]
     verification: "Behaviour eval: the seeded injection is fixed with parameterization, a test demonstrates it, and unrelated code is untouched."
     status: IN_PROGRESS

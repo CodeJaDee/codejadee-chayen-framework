@@ -13,7 +13,14 @@ node tools/catalog/check-catalog.mjs --dump-json  # print the parsed catalog as 
 ```
 
 Options `--root <repoRoot>` and `--file <catalogPath>` point the checker at
-another copy. They are used for negative-control runs.
+another copy. They are used for negative-control runs: see
+`tests/catalog/catalog-mutations.json` and
+`tools/validate/run-validator-tests.mjs`.
+
+| File | Purpose |
+|---|---|
+| `check-catalog.mjs` | Validator V-11, and the coverage-table generator |
+| `catalog-lib.mjs` | The shared restricted-YAML parser. `tools/validate/validate-package.mjs` also uses it (V-19). |
 
 ## What it checks (validator V-11)
 
@@ -25,7 +32,7 @@ against it. It verifies:
 - exactly 20 domains and 206 capabilities;
 - unique ids and names;
 - every inventory name present, in inventory order, with no renames;
-- entry-skill and recipe mappings that agree with the files on disk;
+- entry-skill and recipe mappings that agree with the files on disk; a recipe is always `skills/<skill>/references/<name>.md`, never `SKILL.md` (D-026);
 - consolidation groups and overlaps that are consistent;
 - status values from BUILD_CONTRACT §5.1. `COMPLETED` is rejected, and
   IN_PROGRESS, IMPLEMENTED, and VERIFIED each need evidence;

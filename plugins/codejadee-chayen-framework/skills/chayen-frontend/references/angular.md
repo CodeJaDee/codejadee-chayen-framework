@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # Angular
 
 **Applies to:** Angular applications.

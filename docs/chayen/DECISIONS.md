@@ -296,6 +296,58 @@ Decision statuses:
 - **Result:** 56 groups covering 148 capabilities, and 61 overlap pairs.
   No capability identity was merged or dropped.
 
+### D-025 — Skill authoring standard and quality gates
+- **Status:** PROPOSED (designed in Step 08 at the user's request)
+- **Decision:**
+  - Entry skills follow
+    [SKILL_AUTHORING_STANDARD.md](SKILL_AUTHORING_STANDARD.md):
+    - portable frontmatter (`name`, `description`, optionally `license` and
+      `metadata`);
+    - a `**Scope:**` gate line;
+    - ten ordered sections, including "Preconditions and inputs" and
+      "Safety boundaries";
+    - a `Reference | Load when` table.
+  - Reference files declare `kind: recipe | technology | checklist |
+    template` in a small frontmatter block. Recipes add `capabilities`.
+  - Recipe evaluation cases live developer-side in
+    `tests/skills/recipe-cases.json`, not in the shipped recipe.
+  - Gates G-01..G-15 are in
+    [SKILL_QUALITY_GATES.md](SKILL_QUALITY_GATES.md). The automated gates
+    run from the repository through `tools/validate/validate-all.mjs`.
+    That script is not a user CLI.
+- **Rationale:**
+  - Only fields and layouts documented by all providers are used
+    (PROVIDER_SPEC_RESEARCH §5).
+  - Frontmatter in reference files is plain text to providers; no provider
+    parses reference files. This was confirmed in Step 08:
+    `claude plugin validate --strict` passed, `skills-ref` reported 6/6
+    valid, and the lifecycle test passed 24/24.
+  - Keeping evaluation data out of the plugin follows D-018.
+- **Amends:** the V-17 section list from Step 05.
+
+### D-026 — Recipes are reference files, never SKILL.md
+- **Status:** PROPOSED
+- **Decision:**
+  - A catalog `recipe.path` must be `skills/<skill>/references/<name>.md`.
+  - Six consolidation groups (CG-01, CG-15, CG-21, CG-25, CG-33, CG-37) and
+    CAP-11-014 pointed at a pilot `SKILL.md`, `review-checklist.md`, or
+    `stack-hardening.md`. They now point at planned recipe files:
+    `repository-profile.md`, `feature-delivery.md`, `api-endpoints.md`,
+    `ui-features.md`, `test-authoring.md`, `secure-review.md`, and
+    `vulnerability-remediation.md`.
+  - The affected 21 capabilities stay IN_PROGRESS through
+    `existing_coverage`.
+  - `task-contract.md` (CG-11) and `change-summary.md` (CG-14) were
+    converted to the recipe anatomy. They are the only existing recipe
+    files.
+- **Rationale:**
+  - Entry skills must stay concise (user Step 08 requirement), so detailed
+    capability procedures belong in references.
+  - A `SKILL.md` cannot carry a recipe's anatomy without bloating L1.
+- **Effect:** recipe files are now 2 existing and 112 planned (114 in
+  total). Capability statuses are unchanged: 31 IN_PROGRESS and 175
+  PLANNED.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

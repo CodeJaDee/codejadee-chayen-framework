@@ -7,20 +7,20 @@ is defined in [BUILD_CONTRACT.md](BUILD_CONTRACT.md) §5.1.
 A row may be marked `VERIFIED` only when its verification evidence column
 cites an executed test and its recorded result (BC-10, BC-13).
 
-**Snapshot:** after Step 07 (2026-10-14).
+**Snapshot:** after Step 08 (2026-10-14).
 
 ## Summary
 
 | Category | Rows | PLANNED | IN_PROGRESS | IMPLEMENTED | VERIFIED |
 |---|---|---|---|---|---|
-| Governance (GOV) | 15 | 0 | 0 | 15 | 0 |
+| Governance (GOV) | 17 | 0 | 0 | 17 | 0 |
 | Core requirements (REQ) | 10 | 0 | 10 | 0 | 0 |
 | Exclusions (EX) | 7 | 0 | 0 | 7 | 0 |
 | Providers (PRV) | 3 | 0 | 3 | 0 | 0 |
 | Stack coverage (STK) | 14 | 1 | 13 | 0 | 0 |
 | Architecture components (ARC) | 14 | 1 | 6 | 7 | 0 |
 | Capability domains (CAP) | 20 | 12 | 8 | 0 | 0 |
-| **Total** | **83** | **14** | **40** | **29** | **0** |
+| **Total** | **85** | **14** | **40** | **31** | **0** |
 
 Step 06 executed native lifecycle tests (24/24 on 3 CLIs) and routing tests
 on Claude Code, Codex, and Copilot. Details are in
@@ -30,6 +30,11 @@ Step 07 created the capability catalog: 206 records in 20 domains, checked by
 V-11. Per-capability status lives in the catalog, and the 20 CAP rows below
 roll it up by domain. Capabilities: 31 IN_PROGRESS, 175 PLANNED,
 0 IMPLEMENTED, 0 VERIFIED. See [CAPABILITY_COVERAGE.md](CAPABILITY_COVERAGE.md).
+
+Step 08 added the skill authoring standard and quality gates (GOV-16,
+GOV-17), and validators V-17..V-22 with 52/52 self-tests. It brought the six
+pilots to the standard. No requirement status changed: content quality is
+now gated, but behaviour after the restructuring is NOT_RUN (R-31).
 
 No row is `VERIFIED`, because these remain open:
 
@@ -58,6 +63,8 @@ No row is `VERIFIED`, because these remain open:
 | GOV-13 | ADRs for the 8 required decisions | 03 | `docs/chayen/ADRS/README.md`, `ADR-0001`..`ADR-0008` | 8 ADR files present and indexed + user review | Checks: see PROGRESS Step 03. User review: pending | IMPLEMENTED |
 | GOV-14 | Proof-of-concept report (native behaviour per surface) | 06 | `docs/chayen/POC_REPORT.md`, `tests/provider-compatibility/results/2026-10-14-step06.md` | File exists + user review | File existence: PASS (Step 06). User review: pending | IMPLEMENTED |
 | GOV-15 | Capability coverage document (catalog guide, status rules, mapping, overlaps, generated tables) | 07 | `docs/chayen/CAPABILITY_COVERAGE.md` | File exists, generated block in sync (V-11.11), + user review | V-11.11 PASS (Step 07 T1). User review: pending | IMPLEMENTED |
+| GOV-16 | Skill authoring standard (entry-skill anatomy, descriptions, reference kinds, recipe anatomy, conditional loading, evaluation cases) | 08 | `docs/chayen/SKILL_AUTHORING_STANDARD.md` (D-025) | File exists, rules mapped to validators, pilots validated against it, + user review | V-17..V-22 PASS on 6 pilots (Step 08 T1). User review: pending | IMPLEMENTED |
+| GOV-17 | Skill quality gates (G-01..G-15, detection matrix, review checklist) | 08 | `docs/chayen/SKILL_QUALITY_GATES.md` | File exists; every requested detection has a validator and a negative control; + user review | G-13 self-tests 52/52 (Step 08 T2). User review: pending | IMPLEMENTED |
 
 ## Core requirements
 
@@ -72,7 +79,7 @@ No row is `VERIFIED`, because these remain open:
 | REQ-07 | Preserve existing repository architecture and conventions | 09, 11–19, 05 | Precedence + detect-existing-conventions steps in all 6 skills and every reference's 'Check the repository first' table | Skill review checklist (detect-before-prescribe, D-008). Trigger tests on repos with non-default conventions | Static review only; convention-conflict behaviour tests: NOT_RUN | IN_PROGRESS |
 | REQ-08 | Evidence-driven verification | 09, 05 | Verification + Failure handling sections in all skills; task-contract.md and change-summary.md (PASS/FAIL/NOT_RUN rules) | Skill content review, plus tests that responses cite executed commands and output | V-17 PASS; behaviour: NOT_RUN | IN_PROGRESS |
 | REQ-09 | Security guidance without claiming hard enforcement | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-security/ (advisory statement, checklist, stack hardening) | Validator forbidden-claim check (D-003), plus content review | V-10 PASS (no enforcement/absolute claims); behaviour: NOT_RUN | IN_PROGRESS |
-| REQ-10 | Provider compatibility and regression tests | 05, 10, 20, 06 | tools/validate/, tools/evals/generate-claude-evals.mjs (--stage), tests/skills/trigger-cases.json, tests/evals/claude/, tests/provider-compatibility/run-lifecycle.sh, tests/routing/run-smoke.mjs | Automated suite run in CI and locally, results recorded per provider | Step 06: lifecycle 24/24; Claude eval executed (48 cases, $3.76 run 1); Codex/Copilot smoke executed; CI not set up; VS Code manual | IN_PROGRESS |
+| REQ-10 | Provider compatibility and regression tests | 05, 10, 20, 06 | tools/validate/, tools/evals/generate-claude-evals.mjs (--stage), tests/skills/trigger-cases.json, tests/evals/claude/, tests/provider-compatibility/run-lifecycle.sh, tests/routing/run-smoke.mjs | Automated suite run in CI and locally, results recorded per provider | Step 06: lifecycle 24/24; Claude eval executed (48 cases, $3.76 run 1); Codex/Copilot smoke executed; CI not set up; VS Code manual Step 08: validator self-tests 52/52; lifecycle re-run 24/24. | IN_PROGRESS |
 
 ## Exclusions (must remain true)
 
@@ -119,17 +126,17 @@ No row is `VERIFIED`, because these remain open:
 |---|---|---|---|---|---|---|
 | ARC-01 | C-01 Portable Plugin Package | 04, 06 | `plugins/codejadee-chayen-framework/` (manifests, README, `skills/` canonical source; 0 skills) | V-09, V-13, X-01, plus install on each surface | V-09 PASS, V-13 PASS, X-01 PASS. Local installs: see REQ-01. Install on every surface: NOT_RUN. | IMPLEMENTED |
 | ARC-02 | C-02 Provider Compatibility Metadata | 04, 06–08 | `plugins/codejadee-chayen-framework/plugin.json`, `.../.claude-plugin/plugin.json` | V-01..V-04, X-01, install tests (U-01, U-02) | V-02 PASS, plus **official Agent Plugins 1.0.0 JSON Schema** (ajv 2020) PASS with 4/4 negative controls rejected. V-03 PASS, V-04 PASS, X-01 PASS. | IMPLEMENTED |
-| ARC-03 | C-03 Engineering Capability Catalog | 04, 07 | `catalog/engineering-capabilities.yaml` (single restricted-YAML file, D-021; IDs and status rules D-022; 14-skill mapping D-023 PROPOSED; 56 consolidation groups, 61 overlaps D-024) | V-11 (counts, uniqueness, inventory identity, mapping integrity) | V-11 PASS (`node tools/catalog/check-catalog.mjs`, Step 07 T1); negative controls 18/18 rejected (T2); PyYAML 6.0.3 cross-parse identical (T3). User review: pending | IMPLEMENTED |
-| ARC-04 | C-04 Entry Skills (≤14) | 04 (set), 09–18 (content), 05 | 6 pilot entry skills in plugins/codejadee-chayen-framework/skills/ (D-015) | V-05..V-07, positive trigger suite | V-05, V-07 (L0 2292/4000 chars), V-07b (max overlap 0.14), V-17 PASS; skills-ref validate 6/6 valid; claude plugin validate --strict PASS; positive trigger suite: NOT_RUN | IMPLEMENTED |
+| ARC-03 | C-03 Engineering Capability Catalog | 04, 07 | `catalog/engineering-capabilities.yaml` (single restricted-YAML file, D-021; IDs and status rules D-022; 14-skill mapping D-023 PROPOSED; 56 consolidation groups, 61 overlaps D-024) | V-11 (counts, uniqueness, inventory identity, mapping integrity) | V-11 PASS (`node tools/catalog/check-catalog.mjs`, Step 07 T1); negative controls 18/18 rejected (T2); PyYAML 6.0.3 cross-parse identical (T3). User review: pending Step 08: recipe paths must be `references/*.md` (D-026); 27 mappings re-pointed; V-11 PASS; catalog negative controls 19/19. | IMPLEMENTED |
+| ARC-04 | C-04 Entry Skills (≤14) | 04 (set), 09–18 (content), 05 | 6 pilot entry skills in plugins/codejadee-chayen-framework/skills/ (D-015) | V-05..V-07, positive trigger suite | V-05, V-07 (L0 2292/4000 chars), V-07b (max overlap 0.14), V-17 PASS; skills-ref validate 6/6 valid; claude plugin validate --strict PASS; positive trigger suite: NOT_RUN Step 08: all 6 meet SKILL_AUTHORING_STANDARD §4 (scope line, 10 ordered sections, Safety boundaries, Reference/Load-when table); V-05/V-17/V-20 PASS; `claude plugin validate --strict` PASS; skills-ref 6/6 valid; lifecycle 24/24 (6 skills discoverable on 3 CLIs). Behaviour after restructuring: NOT_RUN (R-31). | IMPLEMENTED |
 | ARC-05 | C-05 Technology Reference Packs | 11–19, 05 | Skill-local stack references (D-016): aspnetcore-webapi, data-access, node-servers, python-web-apis, angular, react-nextjs, vue-nuxt, dotnet/javascript/python testing, stack-hardening, stack-detection | V-06, V-08, V-12, behavioural suite | V-06, V-08, V-12 PASS; behavioural suite: NOT_RUN; shared knowledge packs deferred (U-11/U-13) | IN_PROGRESS |
-| ARC-06 | C-06 Skill Applicability Rules | 09, 05, 06 | When to use / When not to use / gate sentence / precedence in every SKILL.md | Negative, gate, and convention-conflict suites (ADR-0003) | V-17 PASS; Step 06 negative suite 10/10 silent; unsupported: Claude 7/7, Codex 2/2 silent, Copilot 0/2 (gate did not prevent activation; no misapplied guidance observed) | IMPLEMENTED |
+| ARC-06 | C-06 Skill Applicability Rules | 09, 05, 06 | When to use / When not to use / gate sentence / precedence in every SKILL.md | Negative, gate, and convention-conflict suites (ADR-0003) | V-17 PASS; Step 06 negative suite 10/10 silent; unsupported: Claude 7/7, Codex 2/2 silent, Copilot 0/2 (gate did not prevent activation; no misapplied guidance observed) Step 08: `**Scope:**` gate line added to all 6 pilots (R-24 recommendation); effect on Copilot over-activation: NOT_RUN. | IMPLEMENTED |
 | ARC-07 | C-07 Progressive Reference Loading | 05, 09 | Routing tables load one reference per detected stack; ≤2 hops; skill-local | V-06..V-08, reference-load checks (U-11, AS-04) | V-06, V-08 PASS; reference-load checks: NOT_RUN | IN_PROGRESS |
 | ARC-08 | C-08 Composite Development Workflows | 09 | — | V-06, V-08, behavioural suite | — | PLANNED |
-| ARC-09 | C-09 Task Contract Templates | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md | V-12, behavioural suite (contract produced when required) | V-12 PASS; behaviour: NOT_RUN | IN_PROGRESS |
-| ARC-10 | C-10 Evidence and Change Passport Templates | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md; verification tables in all skills | V-12, behavioural suite (NOT_RUN reported honestly) | V-12 PASS; behaviour: NOT_RUN | IN_PROGRESS |
+| ARC-09 | C-09 Task Contract Templates | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md | V-12, behavioural suite (contract produced when required) | V-12 PASS; behaviour: NOT_RUN Step 08: task-contract.md converted to a `kind: recipe` file (CAP-04-001..003) with Procedure and Verification; V-18/V-19/V-22 PASS. | IN_PROGRESS |
+| ARC-10 | C-10 Evidence and Change Passport Templates | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md; verification tables in all skills | V-12, behavioural suite (NOT_RUN reported honestly) | V-12 PASS; behaviour: NOT_RUN Step 08: change-summary.md converted to a `kind: recipe` file (CAP-04-007, CAP-18-002); V-18/V-19/V-22 PASS. | IN_PROGRESS |
 | ARC-11 | C-11 Security and Trust Guidance | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-security/ (SKILL.md, review-checklist.md, stack-hardening.md) | V-10, security behaviour cases (ADR-0007) | V-10 PASS; security behaviour cases: NOT_RUN | IMPLEMENTED |
-| ARC-12 | C-12 Developer-only Validators | 04, 05 | tools/validate/validate-package.mjs: V-01a–c, V-02–V-10, V-12, V-13, V-16, V-17; tools/catalog/check-catalog.mjs: V-11 (zero deps) | Validator self-tests on good and bad fixtures | Repo: 0 errors 0 warnings. Mutated copies: Step 04 (12 errors) and Step 05 (21 errors) all injected faults detected. CI + committed fixtures: NOT_RUN; V-11 implemented in Step 07 (18/18 mutated catalogs rejected); V-14, V-15 not implemented | IN_PROGRESS |
-| ARC-13 | C-13 Evaluation and Compatibility Test Suites | 05, 10, 20, 06 | tests/skills/trigger-cases.json, tests/evals/claude/ (staged via generator --stage), tests/routing/ (run-smoke.mjs, smoke-cases.json, results/), tests/provider-compatibility/ (run-lifecycle.sh, VS Code procedures, results/) | Suites executed, with results recorded | Executed Step 06: lifecycle 24/24; Claude eval 48 cases + 25 re-runs; Codex 7/7 + disabled 1/1; Copilot 5/7 + disabled 1/1. Statistical baseline and fixture workspaces: NOT_RUN | IN_PROGRESS |
+| ARC-12 | C-12 Developer-only Validators | 04, 05 | tools/validate/validate-package.mjs: V-01a–c, V-02–V-10, V-12, V-13, V-16, V-17; tools/catalog/check-catalog.mjs: V-11 (zero deps) | Validator self-tests on good and bad fixtures | Repo: 0 errors 0 warnings. Mutated copies: Step 04 (12 errors) and Step 05 (21 errors) all injected faults detected. CI + committed fixtures: NOT_RUN; V-11 implemented in Step 07 (18/18 mutated catalogs rejected); V-14, V-15 not implemented Step 08: V-03 unsupported fields, V-05 strict frontmatter + duplicate names, V-08 anchors + unreachable refs, V-17 revised, V-18 reference kinds, V-19 catalog alignment, V-20 breadth, V-22 recipe cases; self-tests `run-validator-tests.mjs` 52/52 (2 baselines + 50 negative controls); `validate-all.mjs`. | IN_PROGRESS |
+| ARC-13 | C-13 Evaluation and Compatibility Test Suites | 05, 10, 20, 06 | tests/skills/trigger-cases.json, tests/evals/claude/ (staged via generator --stage), tests/routing/ (run-smoke.mjs, smoke-cases.json, results/), tests/provider-compatibility/ (run-lifecycle.sh, VS Code procedures, results/) | Suites executed, with results recorded | Executed Step 06: lifecycle 24/24; Claude eval 48 cases + 25 re-runs; Codex 7/7 + disabled 1/1; Copilot 5/7 + disabled 1/1. Statistical baseline and fixture workspaces: NOT_RUN Step 08: tests/catalog/catalog-mutations.json (19), tests/skills/validator-mutations.json (31), tests/skills/recipe-cases.json (10 cases, execution NOT_RUN). | IN_PROGRESS |
 | ARC-14 | C-14 Marketplace Distribution | 04, 06–08, 22 | `.claude-plugin/marketplace.json`, `.github/plugin/marketplace.json`, `.agents/plugins/marketplace.json` (D-013) | V-01, V-14, install-from-marketplace tests | V-01a/b/c PASS, consistency PASS. `claude plugin validate --strict` (marketplace) PASS. Local-path marketplace installs: Claude PASS, Codex PASS, Copilot PASS. Provider file-selection observed (Copilot uses `.github/plugin`; Codex uses `.agents/plugins`). Remote GitHub marketplace: NOT_RUN (nothing pushed). V-14: not implemented. | IMPLEMENTED |
 
 ## Step 03 design basis (design only, not verification)

@@ -1,3 +1,6 @@
+---
+kind: checklist
+---
 # Stack detection signals
 
 Read only the sections for ecosystems you actually find.

@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # .NET testing: xUnit, NUnit, MSTest
 
 **Applies to:** .NET test projects.

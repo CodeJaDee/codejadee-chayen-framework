@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # JavaScript and TypeScript testing: Jest, Vitest, Jasmine/Karma, Testing Library, Playwright, Cypress
 
 **Applies to:** Angular, React, Next.js, Vue, Nuxt, Vite, and Node or Bun

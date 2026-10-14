@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # ASP.NET Core Web API
 
 **Applies to:** ASP.NET Core on .NET 6 and later.

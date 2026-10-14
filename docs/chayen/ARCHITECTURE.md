@@ -16,6 +16,16 @@
 >
 > All are replaceable without structural change.
 >
+> **Step 08 amendments:**
+> - The `SKILL.md` anatomy in C-04 is superseded by
+>   [SKILL_AUTHORING_STANDARD.md](SKILL_AUTHORING_STANDARD.md) §4 (D-025):
+>   a scope line, ten ordered sections including "Preconditions and inputs"
+>   and "Safety boundaries", and a `Reference | Load when` table.
+> - References declare a `kind`. Capability recipes are reference files,
+>   never `SKILL.md` (D-026).
+> - C-12 now covers V-17..V-22, the self-test runner, and `validate-all.mjs`.
+>   The gates are in [SKILL_QUALITY_GATES.md](SKILL_QUALITY_GATES.md).
+>
 > **Step 07 amendments:**
 > - C-03 is implemented as one YAML file,
 >   `catalog/engineering-capabilities.yaml` (user-specified, D-021). It

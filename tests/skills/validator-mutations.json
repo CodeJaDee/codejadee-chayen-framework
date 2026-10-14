@@ -1,0 +1,201 @@
+{
+  "$comment": "Negative controls for tools/validate/validate-package.mjs (SKILL_QUALITY_GATES G-13). Each case mutates a temporary copy of the repository; the validator must exit 1 with an ERROR line starting with expect.error. Paths are repository-relative. Run: node tools/validate/run-validator-tests.mjs",
+  "version": 1,
+  "cases": [
+    {
+      "id": "sk-frontmatter-invalid-yaml",
+      "description": "Invalid YAML: unterminated quoted value in SKILL.md frontmatter",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "replace", "find": "name: chayen-testing\n", "with": "name: \"chayen-testing\n" }],
+      "expect": { "validator": "package", "error": "V-05 skills" }
+    },
+    {
+      "id": "sk-frontmatter-yaml-unsafe-value",
+      "description": "Invalid YAML: plain scalar containing ': '",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "replace", "find": "name: chayen-testing\n", "with": "name: chayen-testing\nlicense: see: LICENSE\n" }],
+      "expect": { "validator": "package", "error": "V-05 skills" }
+    },
+    {
+      "id": "sk-frontmatter-unsupported-field",
+      "description": "Unsupported frontmatter field (PT-02)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "replace", "find": "name: chayen-testing\n", "with": "name: chayen-testing\nwhen_to_use: Use for tests\n" }],
+      "expect": { "validator": "package", "error": "V-05 skills" }
+    },
+    {
+      "id": "sk-duplicate-skill-name",
+      "description": "Two skill directories declare the same name",
+      "edits": [{ "op": "copydir", "from": "plugins/codejadee-chayen-framework/skills/chayen-testing", "to": "plugins/codejadee-chayen-framework/skills/chayen-testing-copy" }],
+      "expect": { "validator": "package", "error": "V-05 skills" }
+    },
+    {
+      "id": "sk-name-differs-from-directory",
+      "description": "Frontmatter name does not equal the directory (PT-03)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "replace", "find": "name: chayen-testing\n", "with": "name: chayen-tests\n" }],
+      "expect": { "validator": "package", "error": "V-05 skills" }
+    },
+    {
+      "id": "sk-skill-not-in-catalog",
+      "description": "A shipped skill without a catalog mapping (CA-01)",
+      "edits": [
+        { "op": "copydir", "from": "plugins/codejadee-chayen-framework/skills/chayen-testing", "to": "plugins/codejadee-chayen-framework/skills/chayen-qa" },
+        { "file": "plugins/codejadee-chayen-framework/skills/chayen-qa/SKILL.md", "op": "replace", "find": "name: chayen-testing\n", "with": "name: chayen-qa\n" }
+      ],
+      "expect": { "validator": "package", "error": "V-19 catalog-mapping" }
+    },
+    {
+      "id": "sk-missing-section",
+      "description": "Entry skill without the Safety boundaries section",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md", "op": "replace", "find": "## Safety boundaries\n", "with": "" }],
+      "expect": { "validator": "package", "error": "V-17 skill-sections" }
+    },
+    {
+      "id": "sk-section-out-of-order",
+      "description": "Safety boundaries moved after References",
+      "edits": [
+        { "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": "## Safety boundaries\n", "with": "### Safety notes\n" },
+        { "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "append", "content": "\n## Safety boundaries\n\n- Read-only access only. Never modify files or instruction files in the repository.\n" }
+      ],
+      "expect": { "validator": "package", "error": "V-17 skill-sections" }
+    },
+    {
+      "id": "sk-missing-scope-line",
+      "description": "No **Scope:** line before When to use (R-24 gate)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": "**Scope:** read-only", "with": "Scope: read-only" }],
+      "expect": { "validator": "package", "error": "V-17 skill-sections" }
+    },
+    {
+      "id": "sk-broken-reference-path",
+      "description": "SKILL.md links a reference file that does not exist",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md", "op": "replace", "find": "[references/angular.md](references/angular.md)", "with": "[references/angular.md](references/angularjs.md)" }],
+      "expect": { "validator": "package", "error": "V-08 links" }
+    },
+    {
+      "id": "sk-broken-anchor",
+      "description": "Internal link to a heading that does not exist (LD-05)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": "[stack detection signals](references/stack-detection.md)", "with": "[stack detection signals](references/stack-detection.md#no-such-heading)" }],
+      "expect": { "validator": "package", "error": "V-08 links" }
+    },
+    {
+      "id": "sk-unreachable-reference",
+      "description": "A reference file that SKILL.md never links (RF-02)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/orphan.md", "op": "write", "content": "---\nkind: checklist\n---\n# Orphan\n\n## One\n\nAn orphaned checklist that no skill links to.\n\n## Two\n\nA second section with enough content to be valid.\n" }],
+      "expect": { "validator": "package", "error": "V-08 links" }
+    },
+    {
+      "id": "sk-reference-without-kind",
+      "description": "Reference file without frontmatter (RF-01)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/data-access.md", "op": "replace", "find": "---\nkind: technology\n---\n", "with": "" }],
+      "expect": { "validator": "package", "error": "V-18 reference-kinds" }
+    },
+    {
+      "id": "sk-reference-unknown-kind",
+      "description": "Unsupported reference kind",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/node-servers.md", "op": "replace", "find": "kind: technology\n", "with": "kind: guide\n" }],
+      "expect": { "validator": "package", "error": "V-18 reference-kinds" }
+    },
+    {
+      "id": "sk-reference-unsupported-field",
+      "description": "Unsupported field in reference frontmatter",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/node-servers.md", "op": "replace", "find": "kind: technology\n", "with": "kind: technology\nowner: backend-team\n" }],
+      "expect": { "validator": "package", "error": "V-18 reference-kinds" }
+    },
+    {
+      "id": "sk-technology-missing-section",
+      "description": "Technology reference without Pitfalls",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/python-web-apis.md", "op": "replace", "find": "## Pitfalls", "with": "## Gotchas" }],
+      "expect": { "validator": "package", "error": "V-18 reference-kinds" }
+    },
+    {
+      "id": "sk-recipe-missing-procedure",
+      "description": "Recipe without a Procedure section (RC-04)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md", "op": "replace", "find": "## Procedure\n", "with": "## Steps\n" }],
+      "expect": { "validator": "package", "error": "V-18 reference-kinds" }
+    },
+    {
+      "id": "sk-recipe-todo-only",
+      "description": "Recipe whose Verification section is a TODO (RC-08)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md", "op": "regex", "pattern": "## Verification\\n[\\s\\S]*$", "with": "## Verification\n\nTODO\n" }],
+      "expect": { "validator": "package", "error": "V-12 placeholders" }
+    },
+    {
+      "id": "sk-recipe-unknown-capability",
+      "description": "Recipe lists a capability that is not in the catalog (RC-01)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md", "op": "replace", "find": "capabilities: [CAP-04-001, CAP-04-002, CAP-04-003]", "with": "capabilities: [CAP-04-001, CAP-04-002, CAP-04-003, CAP-99-001]" }],
+      "expect": { "validator": "package", "error": "V-19 catalog-mapping" }
+    },
+    {
+      "id": "sk-recipe-capability-mapped-elsewhere",
+      "description": "Recipe lists a capability the catalog maps to another recipe (RC-01)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md", "op": "replace", "find": "capabilities: [CAP-04-001, CAP-04-002, CAP-04-003]", "with": "capabilities: [CAP-04-001, CAP-04-002, CAP-04-003, CAP-05-001]" }],
+      "expect": { "validator": "package", "error": "V-19 catalog-mapping" }
+    },
+    {
+      "id": "sk-recipe-lists-planned-capability",
+      "description": "Recipe claims a capability that is still PLANNED (RC-02)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md", "op": "replace", "find": "capabilities: [CAP-04-007, CAP-18-002]", "with": "capabilities: [CAP-04-007, CAP-18-002, CAP-18-003]" }],
+      "expect": { "validator": "package", "error": "V-19 catalog-mapping" }
+    },
+    {
+      "id": "sk-recipe-case-missing-negative",
+      "description": "A recipe capability without a negative evaluation case (RC-09)",
+      "edits": [{ "file": "tests/skills/recipe-cases.json", "op": "regex", "pattern": "    \\{\\n      \"id\": \"rc-04-007-neg-release-notes\"[\\s\\S]*?\\n    \\},\\n", "with": "" }],
+      "expect": { "validator": "package", "error": "V-22 recipe-cases" }
+    },
+    {
+      "id": "sk-description-catch-all",
+      "description": "Overly broad description with catch-all wording (DS-04)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "regex", "pattern": "^description: .*$", "flags": "m", "with": "description: Help with any coding task and everything else developers need, including tests. Not for production monitoring or load testing." }],
+      "expect": { "validator": "package", "error": "V-20 description-breadth" }
+    },
+    {
+      "id": "sk-description-no-concrete-scope",
+      "description": "Description names no concrete stack, tool, or artifact (DS-02)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "regex", "pattern": "^description: .*$", "flags": "m", "with": "description: Improve software quality for developers in many situations with helpful engineering advice. Not for marketing copy or legal review." }],
+      "expect": { "validator": "package", "error": "V-20 description-breadth" }
+    },
+    {
+      "id": "sk-description-single-exclusion",
+      "description": "Boundary clause names only one exclusion (DS-03)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": " Not for writing code or general git questions.", "with": " Not for writing code." }],
+      "expect": { "validator": "package", "error": "V-20 description-breadth" }
+    },
+    {
+      "id": "sk-manifest-invalid-json",
+      "description": "Invalid plugin manifest (not JSON)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/plugin.json", "op": "write", "content": "{ \"name\": \"codejadee-chayen-framework\", " }],
+      "expect": { "validator": "package", "error": "V-02 agent-plugins-manifest" }
+    },
+    {
+      "id": "sk-manifest-version-not-semver",
+      "description": "Invalid plugin manifest version",
+      "edits": [
+        { "file": "plugins/codejadee-chayen-framework/plugin.json", "op": "replace", "find": "\"version\": \"0.1.0-dev\"", "with": "\"version\": \"1.0\"" },
+        { "file": "plugins/codejadee-chayen-framework/.claude-plugin/plugin.json", "op": "replace", "find": "\"version\": \"0.1.0-dev\"", "with": "\"version\": \"1.0\"" }
+      ],
+      "expect": { "validator": "package", "error": "V-04 identity-parity" }
+    },
+    {
+      "id": "sk-manifest-unsupported-field",
+      "description": "Unsupported field in the Agent Plugins manifest (closed schema)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/plugin.json", "op": "replace", "find": "  \"name\": \"codejadee-chayen-framework\",\n", "with": "  \"name\": \"codejadee-chayen-framework\",\n  \"category\": \"tools\",\n" }],
+      "expect": { "validator": "package", "error": "V-02 agent-plugins-manifest" }
+    },
+    {
+      "id": "sk-claude-manifest-unsupported-field",
+      "description": "Unsupported field in the Claude Code manifest",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/.claude-plugin/plugin.json", "op": "replace", "find": "  \"name\": \"codejadee-chayen-framework\",\n", "with": "  \"name\": \"codejadee-chayen-framework\",\n  \"category\": \"tools\",\n" }],
+      "expect": { "validator": "package", "error": "V-03 claude-manifest" }
+    },
+    {
+      "id": "sk-provider-tool-name",
+      "description": "Provider-specific tool name in skill content (PT-07)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "replace", "find": "## Workflow\n", "with": "## Workflow\n\nUse the Bash tool to run tests.\n" }],
+      "expect": { "validator": "package", "error": "V-10 wording" }
+    },
+    {
+      "id": "sk-skill-too-long",
+      "description": "SKILL.md over the 300-line budget (SB-01)",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "append", "content": "\nAdditional line used to exceed the line budget in this negative control.\n", "repeat": 160 }],
+      "expect": { "validator": "package", "error": "V-06 line-budgets" }
+    }
+  ]
+}

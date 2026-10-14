@@ -1,0 +1,120 @@
+{
+  "$comment": "Capability-level evaluation cases (SKILL_AUTHORING_STANDARD §8, RC-09). Developer-only, never shipped. Every capability listed in an existing recipe needs at least one positive and one negative case; validator V-22 enforces this. Positive: the entry skill is used and the recipe is read. Negative: the recipe is not read; 'skill' names the better fit or 'none'. 'checks' are behaviour assertions for a grader. Prompts never mention Chayen (REQ-03). Execution status: NOT_RUN (no runner yet; see SKILL_QUALITY_GATES G-12).",
+  "version": 1,
+  "cases": [
+    {
+      "id": "rc-04-001-pos-csv-export",
+      "capability": "CAP-04-001",
+      "polarity": "positive",
+      "prompt": "Let users export their orders to CSV, from the database query through the API to a download button on the Orders page.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
+      "checks": [
+        "A task contract appears before the first file edit",
+        "Every acceptance criterion is observable (no 'works correctly')",
+        "The verification plan names commands found in the repository"
+      ]
+    },
+    {
+      "id": "rc-04-001-neg-readme-typo",
+      "capability": "CAP-04-001",
+      "polarity": "negative",
+      "prompt": "Fix the typo 'recieve' in README.md.",
+      "expect": { "skill": "none", "not_loads": "references/task-contract.md" },
+      "checks": [
+        "No task contract is produced",
+        "The single edit is made or proposed directly"
+      ]
+    },
+    {
+      "id": "rc-04-002-pos-soft-delete-plan",
+      "capability": "CAP-04-002",
+      "polarity": "positive",
+      "prompt": "Add soft-delete support across the schema, the API, and the admin UI. Show me the plan first.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
+      "checks": [
+        "The Approach names an analogous existing feature",
+        "Files are listed per layer in the order data, service, API, UI, tests",
+        "The schema migration is listed under risky actions needing approval"
+      ]
+    },
+    {
+      "id": "rc-04-002-neg-backlog-split",
+      "capability": "CAP-04-002",
+      "polarity": "negative",
+      "prompt": "Split our reporting epic into user stories for the next two sprints.",
+      "expect": { "skill": "none", "not_loads": "references/task-contract.md" },
+      "checks": [
+        "No file-level edit plan or task contract is produced",
+        "The answer is backlog-level, not code-level"
+      ]
+    },
+    {
+      "id": "rc-04-003-pos-auth-change",
+      "capability": "CAP-04-003",
+      "polarity": "positive",
+      "prompt": "Replace the cookie authentication in our ASP.NET Core API and Angular app with JWT bearer tokens.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
+      "checks": [
+        "The authentication change is listed under risky actions needing approval",
+        "No authentication code is changed before the user approves that action"
+      ]
+    },
+    {
+      "id": "rc-04-003-neg-agent-command-risk",
+      "capability": "CAP-04-003",
+      "polarity": "negative",
+      "prompt": "Is it safe to auto-approve 'git push --force' in my coding agent's permission settings?",
+      "expect": { "skill": "none", "not_loads": "references/task-contract.md" },
+      "checks": [
+        "No task contract is produced",
+        "No repository files are edited"
+      ]
+    },
+    {
+      "id": "rc-04-007-pos-handover",
+      "capability": "CAP-04-007",
+      "polarity": "positive",
+      "prompt": "Summarise the changes we made today to the invoicing module so another developer can pick them up tomorrow.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "Files changed are taken from the working tree diff",
+        "Unexecuted checks are reported as NOT_RUN with a reason",
+        "Next steps for the receiver are listed",
+        "No secret values appear"
+      ]
+    },
+    {
+      "id": "rc-04-007-neg-release-notes",
+      "capability": "CAP-04-007",
+      "polarity": "negative",
+      "prompt": "Write customer-facing release notes for version 2.4 from the merged pull requests.",
+      "expect": { "skill": "none", "not_loads": "references/change-summary.md" },
+      "checks": [
+        "No change-summary template with a verification table is produced",
+        "The output is written for customers, not reviewers"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-audit-record",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "We finished the soft-delete change. Give me the full record of it for the audit trail: evidence, risks, and rollback.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The verification table has a command and an observed result per row",
+        "Rollback includes the migration or data steps",
+        "Acceptance criteria are mapped to tests or listed as not verified"
+      ]
+    },
+    {
+      "id": "rc-18-002-neg-sbom-question",
+      "capability": "CAP-18-002",
+      "polarity": "negative",
+      "prompt": "Explain what a software bill of materials is.",
+      "expect": { "skill": "none", "not_loads": "references/change-summary.md" },
+      "checks": [
+        "The question is answered directly without producing a change summary"
+      ]
+    }
+  ]
+}

@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # Data access: EF Core, Dapper, SQL Server, PostgreSQL
 
 **Applies to:** application data access code and schema migrations. This is

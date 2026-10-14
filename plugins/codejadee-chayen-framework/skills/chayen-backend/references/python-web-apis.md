@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # Python web APIs: FastAPI, Django / Django REST framework, Flask
 
 **Applies to:** Python 3 web services.

@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 07 — Engineering capability catalog |
+| Last executed step | 08 — Skill authoring standard and quality gates |
+| Step 08 status | DONE (pending user review; standard PROPOSED) |
 | Step 07 status | DONE (pending user review; catalog PROPOSED) |
 | Step 06 status | DONE (pending user review) |
 | Step 05 status | DONE (pending user review) |
@@ -488,3 +489,100 @@ T3. No dependency was added to the repository.
 | — | Trigger evals for the catalog's positive and negative prompts | — | NOT_RUN. They were not requested in this step, and each run is billed. |
 | — | Capability behaviour evals (fixture repositories) | — | NOT_RUN. No fixtures exist yet (POC_REPORT §6). |
 | — | User review of catalog content | — | Pending (R-29) |
+
+---
+
+## Step 08 — Skill authoring standard and quality gates
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review). The standard and gates are
+  PROPOSED (D-025).
+- **Documents:** [SKILL_AUTHORING_STANDARD.md](SKILL_AUTHORING_STANDARD.md),
+  [SKILL_QUALITY_GATES.md](SKILL_QUALITY_GATES.md)
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the 206-capability catalog, the provider
+  skill-format facts (PROVIDER_SPEC_RESEARCH §5), the existing validator,
+  and all six pilot skills and their references.
+- **Standard.**
+  - Portability rules use only the documented frontmatter fields.
+  - Description rules.
+  - Entry-skill anatomy, covering every requested element: name and
+    description, positive and negative triggers, applicability and
+    exclusions (a new `**Scope:**` line), preconditions, workflow, outputs
+    and verification, failure handling, safety boundaries, and conditional
+    reference loading.
+  - Conciseness budgets.
+  - Reference kinds.
+  - Capability recipe anatomy: capability IDs, procedure, inputs and
+    outputs, technology considerations, verification, and ≥1 positive and
+    ≥1 negative evaluation case.
+- **Quality gates G-01..G-15.** Each requested detection is mapped to a
+  validator and a negative control. There is a review checklist and the
+  promotion rules.
+- **Validators** (developer-only, run from this repository, not a CLI):
+  - `validate-package.mjs`:
+    - strict frontmatter parsing;
+    - unsupported fields in skills, references, and the Claude manifest;
+    - duplicate names;
+    - anchors and unreachable references;
+    - V-17 revised;
+    - V-18 reference kinds and recipe anatomy;
+    - V-19 catalog alignment;
+    - V-20 description breadth;
+    - V-22 recipe cases.
+  - `check-catalog.mjs`: recipes must be `references/*.md` files (D-026).
+    The parser moved to `catalog-lib.mjs`.
+  - New: `run-validator-tests.mjs` (mutation self-tests) and
+    `validate-all.mjs`.
+- **Pilots improved** to meet the standard. Descriptions were **not**
+  changed, so L0 is still 2,332 characters.
+  - All six skills:
+    - added the scope gate line;
+    - renamed "Inputs" to "Preconditions and inputs";
+    - added a "Safety boundaries" section, with approval, untrusted-content,
+      and secret rules moved from "Principles" and missing items added;
+    - converted References to `Reference | Load when` tables tied to
+      workflow steps.
+  - 13 references declare `technology` or `checklist`.
+  - `task-contract.md` and `change-summary.md` were converted to recipes.
+- **Catalog.** 21 capabilities in 6 groups, plus CAP-11-014, were
+  re-pointed from `SKILL.md` or checklists to planned recipe files (D-026).
+  Statuses are unchanged: 31 IN_PROGRESS and 175 PLANNED. The coverage doc
+  was regenerated.
+- **Scope:** no remaining capability recipe was implemented.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `docs/chayen/SKILL_AUTHORING_STANDARD.md`, `docs/chayen/SKILL_QUALITY_GATES.md` |
+| Created | `tools/catalog/catalog-lib.mjs`, `tools/validate/run-validator-tests.mjs`, `tools/validate/validate-all.mjs` |
+| Created | `tests/catalog/README.md`, `tests/catalog/catalog-mutations.json`, `tests/skills/README.md`, `tests/skills/recipe-cases.json`, `tests/skills/validator-mutations.json` |
+| Modified | `tools/validate/validate-package.mjs`, `tools/validate/README.md`, `tools/catalog/check-catalog.mjs` (parser extracted; D-026 rule), `tools/catalog/README.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/*/SKILL.md` (6 files; bodies only, frontmatter unchanged) |
+| Modified | `plugins/codejadee-chayen-framework/skills/*/references/*.md`: 13 files gained a `kind` frontmatter block. `chayen-implementation/references/task-contract.md` and `change-summary.md` were restructured as recipes. |
+| Modified | `catalog/engineering-capabilities.yaml` (27 recipe mappings re-pointed), `docs/chayen/CAPABILITY_COVERAGE.md` (prose and regenerated tables) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (GOV-16, GOV-17, Step 08 evidence), `DECISIONS.md` (D-025, D-026), `ISSUES.md` (R-24 note, R-30, R-31), `IMPLEMENTATION_PLAN.md`, `ARCHITECTURE.md` and `PLUGIN_PACKAGE_DESIGN.md` (amendment notes) |
+| Deleted | None |
+
+Scratch only: `skills-ref` 0.1.1 was installed into the throwaway venv used
+in Step 07. A lifecycle work directory was created under the scratchpad.
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T0 | Pilots against the new standard, before improvements | `node tools/validate/validate-package.mjs` | FAIL as expected: 52 errors (V-17 ×30 across 6 skills, V-18 ×15, V-19 ×6, V-22 ×1). V-05, V-07, V-08, and V-20 already passed. |
+| T1 | All package, skill, reference, and catalog-alignment checks, after improvements | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 22 checks. L0 2332/4000. 15 references with valid kinds. 2 recipe files agree with the catalog (5 capabilities). 10 recipe cases. |
+| T2 | Validator self-tests | `node tools/validate/run-validator-tests.mjs` | **PASS 52/52:** 2 baselines, 19 catalog controls, and 31 package controls, each failing with the expected check ID. The first run was 51/52: one catalog case's search string matched twice (a test-definition fault, not a missed detection). It was made unique and re-run. |
+| T3 | Catalog | `node tools/catalog/check-catalog.mjs` | PASS: 206 records, fingerprint unchanged, doc in sync |
+| T4 | Aggregate | `node tools/validate/validate-all.mjs` | PASS: 4/4 gate groups |
+| T5 | Claude Code official validator | `claude plugin validate --strict` on the plugin, `skills/`, and the marketplace (2.1.270) | PASS ×3 |
+| T6 | Agent Skills reference validator | `agentskills validate <skill>` ×6 (`skills-ref` 0.1.1) | PASS: 6/6 "Valid skill" |
+| T7 | Native lifecycle on 3 CLIs (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc8` | **PASS 24/24:** Claude Code 2.1.270, Codex 0.160.1, Copilot 1.0.97. 6 skills discoverable on each. The user's real configs had identical hashes before and after. |
+| T8 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` | PASS: 48 cases |
+| — | Trigger evals after the body restructuring, and the scope-line effect on Copilot (R-24, R-31) | — | NOT_RUN: billed runs need approval |
+| — | Recipe behaviour evals (`recipe-cases.json`) | — | NOT_RUN: no runner or fixture repositories yet (G-12) |
+| — | User review of the standard and gates | — | Pending |

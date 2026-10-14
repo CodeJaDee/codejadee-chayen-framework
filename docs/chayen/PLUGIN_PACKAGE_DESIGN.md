@@ -26,6 +26,22 @@ Working names (Q-03 pending): plugin `codejadee-chayen`, marketplace
 > The developer validator is `tools/validate/validate-package.mjs`. It
 > implements V-01..V-05, V-09, and V-13 so far.
 
+> **Step 08 amendments (D-025, D-026).**
+>
+> - The skill and reference anatomies are defined by
+>   SKILL_AUTHORING_STANDARD.md. Reference files carry a `kind` frontmatter
+>   block (§5.1 there).
+> - New validators:
+>   - V-17 (revised anatomy);
+>   - V-18 (reference kinds and recipe anatomy);
+>   - V-19 (catalog alignment);
+>   - V-20 (description breadth);
+>   - V-22 (recipe evaluation cases).
+> - V-03 now also rejects unsupported fields, and V-08 checks heading
+>   anchors and unreachable references.
+> - Self-tests are in `tests/catalog/` and `tests/skills/`, run by
+>   `tools/validate/run-validator-tests.mjs`.
+
 > **Step 07 amendments (D-021, D-022).**
 >
 > - The catalog is the single file `catalog/engineering-capabilities.yaml`,

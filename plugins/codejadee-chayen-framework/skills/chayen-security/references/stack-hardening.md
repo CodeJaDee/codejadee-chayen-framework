@@ -1,3 +1,6 @@
+---
+kind: checklist
+---
 # Stack-specific hardening notes
 
 Read only the section for the stack under review.

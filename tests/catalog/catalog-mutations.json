@@ -1,0 +1,120 @@
+{
+  "$comment": "Negative controls for tools/catalog/check-catalog.mjs (V-11). Each case mutates a temporary copy of the repository; the checker must exit 1 with an ERROR line starting with expect.error. Run: node tools/validate/run-validator-tests.mjs",
+  "version": 1,
+  "cases": [
+    {
+      "id": "cat-omit-capability",
+      "description": "One inventory capability is removed (count and omission)",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "  - id: CAP-07-006\\n[\\s\\S]*?\\n(?=  - id: )", "with": "" }],
+      "expect": { "validator": "catalog", "error": "V-11.5 count" }
+    },
+    {
+      "id": "cat-duplicate-name",
+      "description": "Two records share a name",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "    name: acceptance-criteria\n", "with": "    name: user-story-refinement\n" }],
+      "expect": { "validator": "catalog", "error": "V-11.5 unique-name" }
+    },
+    {
+      "id": "cat-rename",
+      "description": "A capability is renamed away from the inventory",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "    name: repo-onboarding\n", "with": "    name: repository-onboarding\n" }],
+      "expect": { "validator": "catalog", "error": "V-11.5 inventory" }
+    },
+    {
+      "id": "cat-duplicate-id",
+      "description": "Two records share an id",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "  - id: CAP-01-002\n", "with": "  - id: CAP-01-001\n" }],
+      "expect": { "validator": "catalog", "error": "V-11.5 unique-id" }
+    },
+    {
+      "id": "cat-domain-title",
+      "description": "A domain title differs from the inventory",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "    title: MOBILE-DESKTOP\n", "with": "    title: MOBILE\n" }],
+      "expect": { "validator": "catalog", "error": "V-11.4 domains" }
+    },
+    {
+      "id": "cat-status-completed",
+      "description": "COMPLETED is not a status",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-12-001[\\s\\S]*?status: )PLANNED", "with": "$1COMPLETED" }],
+      "expect": { "validator": "catalog", "error": "V-11.10 status" }
+    },
+    {
+      "id": "cat-in-progress-without-evidence",
+      "description": "IN_PROGRESS without existing_coverage",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-12-001[\\s\\S]*?status: )PLANNED", "with": "$1IN_PROGRESS" }],
+      "expect": { "validator": "catalog", "error": "V-11.10 status" }
+    },
+    {
+      "id": "cat-implemented-without-evidence",
+      "description": "IMPLEMENTED without verification_evidence",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "(id: CAP-04-001[\\s\\S]*?status: )IN_PROGRESS", "with": "$1IMPLEMENTED" }],
+      "expect": { "validator": "catalog", "error": "V-11.10 status" }
+    },
+    {
+      "id": "cat-recipe-marked-existing-but-missing",
+      "description": "A recipe is marked existing but the file does not exist (missing file)",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-repository/references/technical-debt-inventory.md, mapping: planned}", "with": "recipe: {path: skills/chayen-repository/references/technical-debt-inventory.md, mapping: existing}" }],
+      "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
+    },
+    {
+      "id": "cat-recipe-is-skill-md",
+      "description": "SKILL.md used as a recipe (D-026)",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-repository/references/unknowns-and-assumptions.md, mapping: planned}", "with": "recipe: {path: skills/chayen-repository/SKILL.md, mapping: existing}" }],
+      "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
+    },
+    {
+      "id": "cat-recipe-outside-skill",
+      "description": "A recipe lives in another skill (D-016)",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-repository/references/unknowns-and-assumptions.md, mapping: planned}", "with": "recipe: {path: skills/chayen-security/references/unknowns-and-assumptions.md, mapping: planned}" }],
+      "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
+    },
+    {
+      "id": "cat-overlap-asymmetric",
+      "description": "An overlap is not reciprocated",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "    overlaps: [CAP-01-001]\n", "with": "" }],
+      "expect": { "validator": "catalog", "error": "V-11.9 overlaps" }
+    },
+    {
+      "id": "cat-fifteen-entry-skills",
+      "description": "More than 14 entry skills (ADR-0004)",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "entry_skills:\n", "with": "entry_skills:\n  - name: chayen-extra\n    mapping: planned\n    scope: \"An extra skill used only to test the fourteen-skill cap of ADR-0004.\"\n" }],
+      "expect": { "validator": "catalog", "error": "V-11.3 entry-skills" }
+    },
+    {
+      "id": "cat-placeholder-text",
+      "description": "Placeholder text in a record",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "purpose: \"Profile CPU,", "with": "purpose: \"TBD. Profile CPU," }],
+      "expect": { "validator": "catalog", "error": "V-11.6 placeholder" }
+    },
+    {
+      "id": "cat-trigger-mentions-plugin",
+      "description": "A positive trigger names the plugin (REQ-03)",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "      - \"Profile this .NET service and show me where CPU time goes.\"", "with": "      - \"Use chayen to profile this .NET service.\"" }],
+      "expect": { "validator": "catalog", "error": "V-11.6 triggers" }
+    },
+    {
+      "id": "cat-invalid-yaml",
+      "description": "Unquoted scalar containing a colon (invalid restricted YAML)",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "    verification: \"Behaviour eval: a seeded duplicate index", "with": "    verification: Behaviour eval: a seeded duplicate index" }],
+      "expect": { "validator": "catalog", "error": "V-11.1 parse" }
+    },
+    {
+      "id": "cat-group-member-mismatch",
+      "description": "Consolidation group lists a capability that does not reference it",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "members: [CAP-01-005, CAP-01-006]", "with": "members: [CAP-01-005, CAP-01-006, CAP-01-008]" }],
+      "expect": { "validator": "catalog", "error": "V-11.8 consolidation" }
+    },
+    {
+      "id": "cat-negative-trigger-bad-reference",
+      "description": "A negative trigger names a capability incorrectly",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "Write an onboarding guide document for new hires → CAP-16-004 developer-onboarding-guide", "with": "Write an onboarding guide document for new hires → CAP-16-004 onboarding-guide" }],
+      "expect": { "validator": "catalog", "error": "V-11.6 triggers" }
+    },
+    {
+      "id": "cat-coverage-doc-stale",
+      "description": "The generated tables in CAPABILITY_COVERAGE.md no longer match",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "skills/chayen-repository/references/technical-debt-inventory\\.md", "flags": "g", "with": "skills/chayen-repository/references/debt-inventory.md" }],
+      "expect": { "validator": "catalog", "error": "V-11.11 doc-sync" }
+    }
+  ]
+}

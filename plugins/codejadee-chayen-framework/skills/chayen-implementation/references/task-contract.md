@@ -1,12 +1,61 @@
+---
+kind: recipe
+capabilities: [CAP-04-001, CAP-04-002, CAP-04-003]
+---
 # Task contract
 
-A short agreement written **before** editing a non-trivial change. Keep it
-under about 25 lines and present it in the conversation.
+A short agreement written **before** editing a non-trivial change. It states
+the goal, the testable acceptance criteria, the edit plan, and the risky
+actions that need approval. Keep it under about 25 lines and present it in
+the conversation.
 
-- Write it to a file only if the user asks, or if the repository already
-  keeps such documents.
-- Skip it for changes that touch one or two files with no risky actions.
-  Mention that it was skipped.
+## Inputs
+
+- The goal, with enough detail to state acceptance criteria.
+- Orientation results from the repository:
+  - stack and versions;
+  - the real build and test commands, from CI files or scripts;
+  - the closest analogous feature.
+- The areas the change touches, so that risky actions can be identified.
+
+## Procedure
+
+1. **Decide whether a contract is needed.**
+   - Write one when the change touches three or more files, or any risky
+     area.
+   - Otherwise skip it, and say in one line that it was skipped.
+2. **Fill in the template below** in the conversation.
+   - Write it to a file only if the user asks, or if the repository already
+     keeps such documents.
+3. **Plan the edit in `Approach`.**
+   - Name the analogous feature to follow.
+   - List the files per layer, in edit order: data model and migration,
+     then domain or service, then API, then UI, then tests.
+   - Name the point after each layer where the build must still pass.
+4. **Classify the risky actions.**
+   - Check the change against this list: schema or data migrations,
+     deleting files, authentication or authorization, breaking public
+     contracts, new dependencies or major upgrades, production
+     configuration, anything irreversible.
+   - Record every match under `Risky actions needing approval`, or write
+     `none`.
+5. **Confirm with the user** when the contract contains a risky action or an
+   assumption that changes the outcome. Otherwise proceed, and keep the
+   contract visible.
+6. **Keep the contract current.**
+   - Before each risky action, ask for approval of that action. Approval of
+     the contract is not enough.
+   - If the scope changes, update the contract and re-confirm it.
+
+## Outputs
+
+- A task contract in the template format, with:
+  - testable acceptance criteria;
+  - an ordered edit plan per layer;
+  - every risky action listed.
+- An explicit approval request when risky actions or outcome-changing
+  assumptions exist. Otherwise a one-line note that the contract was
+  skipped.
 
 ## Template
 
@@ -35,6 +84,25 @@ Verification plan: <build, test, lint commands; new tests to add>
 | Assumptions | Every assumption that changes the result is listed and confirmed with the user. |
 | Risky actions | Each needs explicit approval before it is performed, not only before the contract is accepted. |
 | Scope changes | Update the contract and re-confirm. Do not let the scope drift silently. |
+
+## Technology considerations
+
+Stack-neutral. The verification plan uses the repository's own commands
+(for example `dotnet test`, `ng test --watch=false`, `npm test`, `pytest`),
+as found in CI files or scripts, and never assumed. The edit order follows
+the layers the repository actually has. A project without a data layer skips
+that step.
+
+## Verification
+
+- For qualifying changes, the contract appears before the first file edit.
+- Every acceptance criterion is observable, and is later mapped to a test or
+  check in the change summary.
+- Every risky action in the plan has the user's explicit approval recorded
+  before it is performed. If approval is missing, the step is reported as not
+  done.
+- The verification plan names commands that exist in the repository, each
+  marked as found or inferred.
 
 ## Example
 

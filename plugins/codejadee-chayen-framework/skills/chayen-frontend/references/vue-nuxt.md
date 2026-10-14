@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # Vue and Nuxt (including Vite Vue apps)
 
 **Applies to:** Vue 3 applications and Nuxt.

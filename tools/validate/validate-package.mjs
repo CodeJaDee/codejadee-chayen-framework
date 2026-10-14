@@ -4,6 +4,7 @@
 // never required by plugin users.
 //
 // Usage: node tools/validate/validate-package.mjs [repoRoot]
+// Standard: docs/chayen/SKILL_AUTHORING_STANDARD.md; gates: docs/chayen/SKILL_QUALITY_GATES.md
 // Exit code: 0 = no errors (warnings allowed), 1 = errors found.
 //
 // Rule sources (see docs/chayen/PROVIDER_SPEC_RESEARCH.md):
@@ -13,6 +14,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
 
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, "..", ".."));
 const PLUGIN_DIR_REL = "plugins/codejadee-chayen-framework";
@@ -86,6 +88,8 @@ if (cc) {
     error(c, `name "${cc.name}" is reserved by Claude Code`);
   const componentKeys = ["skills", "commands", "agents", "hooks", "mcpServers", "lspServers", "outputStyles", "workflows", "experimental", "userConfig", "channels", "settings", "monitors", "themes", "types", "dependencies"];
   for (const k of componentKeys) if (k in cc) error(c, `component/config key "${k}" is not allowed (M-03, ADR-0005)`);
+  const metaKeys = ["$schema", "name", "version", "description", "author", "homepage", "repository", "license", "keywords"];
+  for (const k of Object.keys(cc)) if (!metaKeys.includes(k) && !componentKeys.includes(k)) error(c, `unsupported field "${k}" (S3 manifest schema)`);
   for (const k of ["version", "description", "author"]) if (!(k in cc)) warn(c, `missing recommended field "${k}"`);
   if (cc.author && !isStr(cc.author.name)) error(c, "author.name is required when author is set");
   if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${ccRel} passes static checks`);
@@ -206,6 +210,42 @@ if (exists(PLUGIN_DIR_REL)) {
 }
 
 // ---------- 6. Skills: single canonical source + frontmatter (V-05) ----------
+// Strict parser for the small frontmatter subset the standard allows (PT-02, RF-01):
+// one "key: value" per line, values as YAML-safe plain scalars, quoted strings,
+// or flow lists of plain tokens; `metadata` may hold an indented string map.
+function parseFrontmatter(text) {
+  const errs = [];
+  const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
+  if (!m) return { fields: null, body: text, errs: ["missing YAML frontmatter (--- block at the top)"] };
+  const fields = {};
+  let parent = null;
+  m[1].split(/\r?\n/).forEach((line, i) => {
+    const no = i + 2;
+    if (!line.trim() || /^\s*#/.test(line)) return;
+    if (/\t/.test(line)) { errs.push(`frontmatter line ${no}: tab character`); return; }
+    const nested = /^ {2}([A-Za-z0-9_-]+):\s+(.*)$/.exec(line);
+    if (nested && parent === "metadata") { fields.metadata[nested[1]] = nested[2]; return; }
+    const kv = /^([A-Za-z0-9_-]+):(?:\s+(.*))?$/.exec(line);
+    if (!kv) { errs.push(`frontmatter line ${no}: not a "key: value" line`); return; }
+    const [, key, raw = ""] = kv;
+    if (key in fields) { errs.push(`frontmatter line ${no}: duplicate key "${key}"`); return; }
+    parent = key;
+    if (raw === "") { fields[key] = key === "metadata" ? {} : ""; return; }
+    if (/^["']/.test(raw)) {
+      const q = raw[0];
+      if (raw.length < 2 || !raw.endsWith(q)) { errs.push(`frontmatter line ${no}: unterminated quoted value for "${key}"`); return; }
+      fields[key] = raw.slice(1, -1);
+    } else if (raw.startsWith("[")) {
+      if (!raw.endsWith("]")) { errs.push(`frontmatter line ${no}: unterminated list for "${key}"`); return; }
+      fields[key] = raw.slice(1, -1).split(",").map((t) => t.trim()).filter(Boolean);
+    } else {
+      if (/: |\s#|^[&*!|>%@`{]/.test(raw)) { errs.push(`frontmatter line ${no}: value of "${key}" is not a YAML-safe plain scalar (": ", " #", or an indicator); quote or rephrase`); return; }
+      fields[key] = raw;
+    }
+  });
+  return { fields, body: text.slice(m[0].length), errs };
+}
+
 {
   const c = "V-05 skills";
   const skillsRel = `${PLUGIN_DIR_REL}/skills`;
@@ -218,24 +258,29 @@ if (exists(PLUGIN_DIR_REL)) {
     }
   })(root);
   let count = 0;
+  const seenNames = new Map();
   for (const s of stray) {
     const m = s.match(new RegExp(`^${skillsRel}/([^/]+)/SKILL\\.md$`));
     if (!m) { error(c, `SKILL.md outside the canonical source: ${s}`); continue; }
     count++;
-    const text = fs.readFileSync(abs(s), "utf8");
-    const fm = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-    if (!fm) { error(c, `${s}: missing YAML frontmatter`); continue; }
-    const fields = Object.fromEntries(fm[1].split(/\r?\n/).filter((l) => /^[A-Za-z0-9_-]+:/.test(l)).map((l) => [l.slice(0, l.indexOf(":")), l.slice(l.indexOf(":") + 1).trim()]));
-    for (const k of Object.keys(fields)) if (!["name", "description", "license", "metadata"].includes(k)) error(c, `${s}: non-portable frontmatter field "${k}" (F-01)`);
-    if (fields.name !== m[1]) error(c, `${s}: name "${fields.name}" must equal directory "${m[1]}"`);
-    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(fields.name ?? "") || (fields.name ?? "").length > 64) error(c, `${s}: invalid name`);
-    if (!fields.description || fields.description.length > 1024) error(c, `${s}: description required, max 1024 chars`);
+    const { fields, errs } = parseFrontmatter(fs.readFileSync(abs(s), "utf8"));
+    for (const e of errs) error(c, `${s}: ${e}`);
+    if (!fields) continue;
+    for (const k of Object.keys(fields)) if (!["name", "description", "license", "metadata"].includes(k)) error(c, `${s}: unsupported frontmatter field "${k}" (PT-02, F-01)`);
+    if (fields.metadata !== undefined && (typeof fields.metadata !== "object" || Array.isArray(fields.metadata))) error(c, `${s}: metadata must be a string map`);
+    const name = typeof fields.name === "string" ? fields.name : "";
+    if (name !== m[1]) error(c, `${s}: name "${name}" must equal directory "${m[1]}" (PT-03)`);
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(name) || name.length > 64) error(c, `${s}: invalid name "${name}" (PT-03)`);
+    const key = name.toLowerCase();
+    if (seenNames.has(key)) error(c, `${s}: duplicate skill name "${name}" (also ${seenNames.get(key)}) (PT-03)`);
+    else seenNames.set(key, s);
+    if (typeof fields.description !== "string" || !fields.description || fields.description.length > 1024) error(c, `${s}: description required, max 1024 chars (PT-04)`);
   }
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${count} skill(s) found, all under ${skillsRel}/`);
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${count} skill(s) found, all under ${skillsRel}/, frontmatter valid, names unique`);
   if (count === 0) warn(c, "no skills yet: the package installs but provides no behaviour");
 }
 
-// ---------- 6b. Skill content checks (V-06, V-07, V-08, V-10, V-12, V-17) ----------
+// ---------- 6b. Skill content checks (V-06, V-07, V-08, V-10, V-12, V-17, V-18, V-19, V-20, V-22) ----------
 const SKILLS_DIR = abs(`${PLUGIN_DIR_REL}/skills`);
 const skillDirs = fs.existsSync(SKILLS_DIR)
   ? fs.readdirSync(SKILLS_DIR, { withFileTypes: true }).filter((d) => d.isDirectory() && fs.existsSync(path.join(SKILLS_DIR, d.name, "SKILL.md"))).map((d) => d.name).sort()
@@ -243,11 +288,33 @@ const skillDirs = fs.existsSync(SKILLS_DIR)
 const skillMeta = {};
 for (const s of skillDirs) {
   const text = fs.readFileSync(path.join(SKILLS_DIR, s, "SKILL.md"), "utf8");
-  const fm = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-  const desc = fm ? (fm[1].match(/^description:\s*(.*)$/m)?.[1] ?? "") : "";
-  skillMeta[s] = { text, body: fm ? text.slice(fm[0].length) : text, desc };
+  const { fields, body } = parseFrontmatter(text);
+  skillMeta[s] = { text, body, desc: typeof fields?.description === "string" ? fields.description : "" };
 }
-const mdLinks = (text) => [...text.replace(/```[\s\S]*?```/g, "").matchAll(/\]\(([^)\s]+)\)/g)].map((m) => m[1]).filter((l) => !/^(https?:|mailto:|#)/.test(l));
+const stripCode = (t) => t.replace(/```[\s\S]*?```/g, "");
+const mdLinks = (text) => [...stripCode(text).matchAll(/\]\(([^)\s]+)\)/g)].map((m) => m[1]).filter((l) => !/^(https?:|mailto:)/.test(l));
+const slug = (h) => h.trim().toLowerCase().replace(/[`*_]/g, "").replace(/[^\p{L}\p{N}\s-]/gu, "").replace(/\s/g, "-");
+const headings = (text) => [...stripCode(text).matchAll(/^#{1,6}\s+(.+?)\s*$/gm)].map((m) => m[1]);
+// Level-2 sections in order: [{ title, content }]
+const h2Sections = (body) => {
+  const out = [];
+  let cur = null;
+  for (const line of body.split(/\r?\n/)) {
+    const h = /^## (.+?)\s*$/.exec(line);
+    if (h) { cur = { title: h[1], content: [] }; out.push(cur); }
+    else if (cur) cur.content.push(line);
+  }
+  return out.map((x) => ({ title: x.title, content: x.content.join("\n") }));
+};
+const words = (t) => stripCode(t).replace(/[|#>*`_-]/g, " ").split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
+const refFiles = {};      // skill -> [{ file, rel, fields, body, errs }]
+for (const s of skillDirs) {
+  const dir = path.join(SKILLS_DIR, s, "references");
+  refFiles[s] = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(".md")).sort().map((f) => {
+    const text = fs.readFileSync(path.join(dir, f), "utf8");
+    return { file: f, rel: `skills/${s}/references/${f}`, text, ...parseFrontmatter(text) };
+  }) : [];
+}
 
 { // V-07 metadata budget, description safety and distinctness
   const c = "V-07 metadata-budget";
@@ -257,7 +324,7 @@ const mdLinks = (text) => [...text.replace(/```[\s\S]*?```/g, "").matchAll(/\]\(
     if (m.desc.length > 1024) error(c, `${s}: description ${m.desc.length} chars > 1024`);
     else if (m.desc.length > 420) warn(c, `${s}: description ${m.desc.length} chars > 420 target (D-017)`);
     if (/: |\s#|^['"\[{>|*&!%@`]/.test(m.desc)) error(c, `${s}: description contains YAML-unsafe characters (": ", " #", or a leading indicator); quote it or rephrase`);
-    if (!/\bNot (for|a)\b/.test(m.desc)) error(c, `${s}: description lacks a "Not for ..." boundary clause (SK-03)`);
+    if (!/\bNot (for|a)\b/.test(m.desc)) error(c, `${s}: description lacks a "Not for ..." boundary clause (DS-03)`);
   }
   if (skillDirs.length > 14) error(c, `${skillDirs.length} entry skills > 14`);
   if (total > 4000) error(c, `L0 metadata ${total} chars > 4000`);
@@ -265,11 +332,11 @@ const mdLinks = (text) => [...text.replace(/```[\s\S]*?```/g, "").matchAll(/\]\(
 
   const c2 = "V-07b description-distinctness";
   const stop = new Set("a an and or the of for to in on with by from as is are be use when not such this that it its into than via code covers including".split(" "));
-  const words = (t) => new Set(t.toLowerCase().replace(/[^a-z0-9#+.\s-]/g, " ").split(/\s+/).filter((w) => w.length > 2 && !stop.has(w)));
+  const wordSet = (t) => new Set(t.toLowerCase().replace(/[^a-z0-9#+.\s-]/g, " ").split(/\s+/).filter((w) => w.length > 2 && !stop.has(w)));
   const names = Object.keys(skillMeta);
   let maxPair = ["", "", 0];
   for (let i = 0; i < names.length; i++) for (let j = i + 1; j < names.length; j++) {
-    const a = words(skillMeta[names[i]].desc), b = words(skillMeta[names[j]].desc);
+    const a = wordSet(skillMeta[names[i]].desc), b = wordSet(skillMeta[names[j]].desc);
     const inter = [...a].filter((w) => b.has(w)).length, jac = inter / (a.size + b.size - inter || 1);
     if (jac > maxPair[2]) maxPair = [names[i], names[j], jac];
     if (jac > 0.35) error(c2, `${names[i]} vs ${names[j]}: description word overlap ${jac.toFixed(2)} > 0.35`);
@@ -278,50 +345,133 @@ const mdLinks = (text) => [...text.replace(/```[\s\S]*?```/g, "").matchAll(/\]\(
   if (!results.some((r) => r.check === c2 && r.level === "ERROR")) pass(c2, `max pairwise overlap ${maxPair[2].toFixed(2)} (${maxPair[0]} / ${maxPair[1]})`);
 }
 
-{ // V-17 required sections, V-06 line budgets
-  const c = "V-17 skill-sections", c6 = "V-06 line-budgets";
-  const required = ["When to use", "When not to use", "Inputs", "Workflow", "Outputs", "Verification", "Failure handling"];
+{ // V-20 description breadth (DS-02, DS-03, DS-04, DS-08)
+  const c = "V-20 description-breadth";
+  const CATCH_ALL = /\b(any (?:task|kind of|type of|language|framework|project|code|request)|anything|everything|all kinds of|general[- ]purpose|etc\.?|and more|and so on|whatever)\b/i;
+  // Concrete scope vocabulary: stacks, tools, files, and engineering artifacts.
+  const VOCAB = [".net", "c#", "asp.net", "ef core", "dapper", "sql server", "postgresql", "sql", "angular", "react", "next.js", "vue", "nuxt", "vite",
+    "nitro", "elysia", "node", "typescript", "javascript", "python", "fastapi", "django", "flask", "xunit", "nunit", "mstest", "jasmine", "jest",
+    "vitest", "playwright", "cypress", "pytest", "docker", "kubernetes", "terraform", "java", "agents.md", "claude.md", "endpoint", "migration",
+    "component", "form", "test", "task contract", "change summary", "diff", "dependenc", "repository", "codebase", "command", "layout", "api",
+    "schema", "pipeline", "dockerfile", "secret", "cors", "csrf", "xss", "injection", "routing", "accessibility", "query", "refactor"];
   for (const [s, m] of Object.entries(skillMeta)) {
-    for (const h of required) if (!new RegExp(`^## ${h}\\b`, "m").test(m.body)) error(c, `${s}: missing section "## ${h}"`);
-    const pos = (m.body.split(/^## When not to use/m)[0].match(/^- "/gm) ?? []).length;
-    if (pos < 3) error(c, `${s}: fewer than 3 positive trigger examples in "When to use"`);
-    if (!/stop following this skill and continue normally without mentioning it/.test(m.body)) error(c, `${s}: missing the no-match gate sentence (ADR-0003)`);
+    const d = m.desc, lower = d.toLowerCase();
+    const hit = CATCH_ALL.exec(d);
+    if (hit) error(c, `${s}: catch-all wording "${hit[0]}" makes the description overly broad (DS-04)`);
+    const terms = VOCAB.filter((t) => new RegExp(`(^|[^a-z0-9])${t.replace(/[.#+]/g, (x) => `\\${x}`)}`).test(lower));
+    if (terms.length < 2) error(c, `${s}: names ${terms.length} concrete scope term(s); at least 2 stacks, tools, files, or artifacts are required (DS-02)`);
+    const notIdx = d.search(/\bNot (for|a)\b/);
+    if (notIdx >= 0) {
+      const excl = d.slice(notIdx).replace(/^Not (for|a)\s+/, "").replace(/\.$/, "").split(/,\s*|\s+or\s+|\s+and\s+/).filter((x) => x.trim().length > 2);
+      if (excl.length < 2) error(c, `${s}: boundary clause names ${excl.length} exclusion(s); at least 2 are required (DS-03)`);
+    }
+    const scopePart = notIdx >= 0 ? d.slice(0, notIdx) : d;
+    const items = scopePart.split(/,\s*|\s+or\s+/).length;
+    if (items > 24) warn(c, `${s}: ${items} enumerated items before the boundary clause (> 24, DS-08); consider naming families`);
+  }
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `all ${skillDirs.length} descriptions name concrete scope, avoid catch-all wording, and exclude at least 2 neighbours`);
+}
+
+{ // V-17 entry skill anatomy (standard §4.1), V-06 line budgets
+  const c = "V-17 skill-sections", c6 = "V-06 line-budgets";
+  const required = ["When to use", "When not to use", "Principles", "Preconditions and inputs", "Workflow", "Outputs", "Verification", "Failure handling", "Safety boundaries", "References"];
+  for (const [s, m] of Object.entries(skillMeta)) {
+    const secs = h2Sections(m.body);
+    const titles = secs.map((x) => x.title);
+    let last = -1;
+    for (const h of required) {
+      const idx = titles.findIndex((t) => t === h);
+      if (idx < 0) { error(c, `${s}: missing section "## ${h}"`); continue; }
+      if (idx < last) error(c, `${s}: section "## ${h}" is out of order (standard §4.1)`);
+      last = Math.max(last, idx);
+      if (words(secs[idx].content) < 8) error(c, `${s}: section "## ${h}" has no substantive content`);
+    }
+    const pre = m.body.split(/^## /m)[0];
+    if (!/^# \S/m.test(pre)) error(c, `${s}: missing "# <Title>" heading`);
+    if (!/^\*\*Scope:\*\* \S/m.test(pre)) error(c, `${s}: missing the "**Scope:** ..." line before "## When to use" (standard §4.1, R-24)`);
+    const whenUse = secs.find((x) => x.title === "When to use")?.content ?? "";
+    if ((whenUse.match(/^- "/gm) ?? []).length < 4) error(c, `${s}: fewer than 4 quoted positive trigger examples in "When to use"`);
+    const whenNot = secs.find((x) => x.title === "When not to use")?.content ?? "";
+    const negEntries = (whenNot.match(/^- \S/gm) ?? []).length + Math.max(0, (whenNot.match(/^\|(?!\s*-)/gm) ?? []).length - 1);
+    if (negEntries < 3) error(c, `${s}: fewer than 3 exclusions in "When not to use"`);
+    if (!/stop following this skill and continue normally without mentioning it/.test(whenNot)) error(c, `${s}: missing the no-match gate sentence in "When not to use" (ADR-0003)`);
+    const refs = secs.find((x) => x.title === "References")?.content ?? "";
+    if (refFiles[s].length && !/^\|\s*Reference\s*\|\s*Load when\s*\|/m.test(refs)) error(c, `${s}: "## References" must be a "| Reference | Load when |" table (LD-01)`);
     const lines = m.text.split(/\r?\n/).length;
     if (lines > 300) error(c6, `${s}/SKILL.md has ${lines} lines > 300`);
+    else if (lines > 200) warn(c6, `${s}/SKILL.md has ${lines} lines > 200 target (SB-01)`);
   }
-  for (const s of skillDirs) {
-    const refDir = path.join(SKILLS_DIR, s, "references");
-    if (fs.existsSync(refDir)) for (const f of fs.readdirSync(refDir)) {
-      const n = fs.readFileSync(path.join(refDir, f), "utf8").split(/\r?\n/).length;
-      if (n > 300) error(c6, `${s}/references/${f} has ${n} lines > 300`);
-    }
+  for (const s of skillDirs) for (const r of refFiles[s]) {
+    const n = r.text.split(/\r?\n/).length;
+    if (n > 300) error(c6, `${r.rel} has ${n} lines > 300`);
   }
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `all ${skillDirs.length} skills have the required sections, >=3 positive examples, and the no-match gate`);
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `all ${skillDirs.length} skills follow the standard anatomy (scope line, ordered sections, >=4 positive and >=3 negative triggers, gate, reference table)`);
   if (!results.some((r) => r.check === c6 && r.level === "ERROR")) pass(c6, "SKILL.md and reference files within 300 lines");
 }
 
-{ // V-08 links: resolve, stay inside the skill's own directory (D-016), max 2 hops, no skill-to-skill links
+{ // V-18 reference kinds (standard §5)
+  const c = "V-18 reference-kinds";
+  const KIND_SECTIONS = {
+    recipe: ["Inputs", "Procedure", "Outputs", "Technology considerations", "Verification"],
+    technology: ["Check the repository first", /^(Verification|Commands)/, "Pitfalls"],
+    template: ["Template"],
+    checklist: [],
+  };
+  for (const s of skillDirs) for (const r of refFiles[s]) {
+    for (const e of r.errs) error(c, `${r.rel}: ${e}`);
+    if (!r.fields) continue;
+    for (const k of Object.keys(r.fields)) if (!["kind", "capabilities"].includes(k)) error(c, `${r.rel}: unsupported frontmatter field "${k}" (RF-01)`);
+    const kind = r.fields.kind;
+    if (!(kind in KIND_SECTIONS)) { error(c, `${r.rel}: kind "${kind}" must be recipe, technology, checklist, or template (RF-01)`); continue; }
+    if (kind !== "recipe" && "capabilities" in r.fields) error(c, `${r.rel}: capabilities is only allowed for kind recipe`);
+    const secs = h2Sections(r.body);
+    if (!/^# \S/m.test(r.body)) error(c, `${r.rel}: missing "# <Title>" heading`);
+    if (kind === "checklist" && secs.length < 2) error(c, `${r.rel}: a checklist needs at least 2 "##" sections`);
+    let last = -1;
+    for (const req of KIND_SECTIONS[kind]) {
+      const idx = secs.findIndex((x) => (req instanceof RegExp ? req.test(x.title) : x.title === req));
+      const label = req instanceof RegExp ? req.source.replace(/[\\^()]/g, "") : req;
+      if (idx < 0) { error(c, `${r.rel}: kind ${kind} requires "## ${label}"`); continue; }
+      if (kind === "recipe" && idx < last) error(c, `${r.rel}: "## ${label}" is out of order (standard §5.2)`);
+      last = Math.max(last, idx);
+      if (kind === "recipe" && words(secs[idx].content) < 12) error("V-12 placeholders", `${r.rel}: required section "## ${label}" has fewer than 12 words; placeholder or TODO-only recipes are not allowed (RC-08)`);
+    }
+    if (kind === "recipe") {
+      const proc = secs.find((x) => x.title === "Procedure")?.content ?? "";
+      if ((proc.match(/^\d+\.\s+\S/gm) ?? []).length < 3) error(c, `${r.rel}: "## Procedure" needs at least 3 numbered steps (RC-04)`);
+      const tech = secs.find((x) => x.title === "Technology considerations")?.content ?? "";
+      if (tech && !/Stack-neutral\./.test(tech) && !/^\|/m.test(tech) && !/^- /m.test(tech)) error(c, `${r.rel}: "## Technology considerations" must list stacks or begin "Stack-neutral." (RC-06)`);
+      const caps = r.fields.capabilities;
+      if (!Array.isArray(caps) || !caps.length) error(c, `${r.rel}: recipe needs a non-empty capabilities list (RC-01)`);
+      else for (const id of caps) if (!/^CAP-\d{2}-\d{3}$/.test(id)) error(c, `${r.rel}: "${id}" is not a capability ID (CAP-DD-NNN)`);
+    }
+  }
+  const n = Object.values(refFiles).flat().length;
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${n} reference files declare a valid kind and carry the sections their kind requires`);
+}
+
+{ // V-08 links: resolve, stay inside the skill's own directory (D-016), max 2 hops, anchors exist, no unreachable references
   const c = "V-08 links";
   for (const s of skillDirs) {
     const skillRoot = path.join(SKILLS_DIR, s);
     const visit = (file, depth) => {
       for (const l of mdLinks(fs.readFileSync(file, "utf8"))) {
-        const target = path.resolve(path.dirname(file), l.split("#")[0]);
+        const [target0, anchor] = l.split("#");
+        const target = target0 ? path.resolve(path.dirname(file), target0) : file;
         const rel = path.relative(root, file).split(path.sep).join("/");
         if (!target.startsWith(skillRoot + path.sep)) { error(c, `${rel}: link "${l}" leaves the skill directory (D-016)`); continue; }
         if (!fs.existsSync(target)) { error(c, `${rel}: broken link "${l}"`); continue; }
+        if (anchor !== undefined && !headings(fs.readFileSync(target, "utf8")).map(slug).includes(anchor)) error(c, `${rel}: link "${l}" points to a missing heading anchor (LD-05)`);
+        if (!target0) continue;
         if (depth + 1 > 2) { error(c, `${rel}: link "${l}" exceeds 2 hops from SKILL.md`); continue; }
-        if (target.endsWith(".md")) visit(target, depth + 1);
+        if (target.endsWith(".md") && target !== file) visit(target, depth + 1);
       }
     };
     visit(path.join(skillRoot, "SKILL.md"), 0);
-    const refDir = path.join(skillRoot, "references");
-    if (fs.existsSync(refDir)) {
-      const linked = new Set(mdLinks(skillMeta[s].text).map((l) => path.resolve(skillRoot, l.split("#")[0])));
-      for (const f of fs.readdirSync(refDir)) if (!linked.has(path.join(refDir, f))) warn(c, `${s}/references/${f} is not linked from SKILL.md (unreachable)`);
-    }
+    const linked = new Set(mdLinks(skillMeta[s].text).map((l) => path.resolve(skillRoot, l.split("#")[0])));
+    for (const r of refFiles[s]) if (!linked.has(path.join(skillRoot, "references", r.file))) error(c, `${s}/references/${r.file} is not linked from SKILL.md (unreachable, RF-02)`);
   }
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, "all skill links resolve inside their own skill directory within 2 hops");
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, "all skill links and anchors resolve inside their own skill directory within 2 hops; every reference is reachable");
 }
 
 { // V-10 wording, V-12 placeholders over every markdown file in the plugin
@@ -350,7 +500,79 @@ const mdLinks = (text) => [...text.replace(/```[\s\S]*?```/g, "").matchAll(/\]\(
     });
   }
   if (!results.some((r) => r.check === c10 && r.level === "ERROR")) pass(c10, "no provider-specific tokens, enforcement claims, or self-references in skill content");
-  if (!results.some((r) => r.check === c12 && r.level === "ERROR")) pass(c12, "no placeholder text in plugin markdown");
+  if (!results.some((r) => r.check === c12 && r.level === "ERROR")) pass(c12, "no placeholder text or content-free recipe sections in plugin markdown");
+}
+
+// ---------- 6c. Catalog alignment (V-19) and recipe evaluation cases (V-22) ----------
+let catalog = null;
+{
+  const c = "V-19 catalog-mapping";
+  const rel = "catalog/engineering-capabilities.yaml";
+  if (!exists(rel)) error(c, `${rel} is missing`);
+  else {
+    try { catalog = parseYamlSubset(fs.readFileSync(abs(rel), "utf8")); }
+    catch (e) { error(c, `${rel}: invalid YAML (${e.message}); run tools/catalog/check-catalog.mjs`); }
+  }
+  if (catalog) {
+    const capById = new Map((catalog.capabilities ?? []).map((x) => [x.id, x]));
+    const catSkills = new Map((catalog.entry_skills ?? []).map((x) => [x.name, x]));
+    for (const s of skillDirs) {
+      if (!catSkills.has(s)) error(c, `${s}: shipped skill is not a catalog entry skill (CA-01)`);
+      else if (catSkills.get(s).mapping !== "existing") error(c, `${s}: catalog marks the skill "${catSkills.get(s).mapping}", expected existing (CA-01)`);
+    }
+    const listed = new Map(); // recipe path -> Set(ids)
+    for (const s of skillDirs) for (const r of refFiles[s]) {
+      if (r.fields?.kind !== "recipe" || !Array.isArray(r.fields.capabilities)) continue;
+      listed.set(r.rel, new Set(r.fields.capabilities));
+      for (const id of r.fields.capabilities) {
+        const cap = capById.get(id);
+        if (!cap) { error(c, `${r.rel}: ${id} is not in the catalog (RC-01)`); continue; }
+        if (cap.recipe?.path !== r.rel) error(c, `${r.rel}: ${id} ${cap.name} is mapped to ${cap.recipe?.path} in the catalog, not to this file (RC-01)`);
+        if (cap.recipe?.mapping !== "existing") error(c, `${r.rel}: catalog recipe mapping for ${id} must be "existing" now that the file exists`);
+        if (cap.status === "PLANNED") error(c, `${r.rel}: ${id} is listed in a recipe but PLANNED in the catalog; set IN_PROGRESS with existing_coverage, or remove it (RC-02)`);
+      }
+    }
+    for (const cap of capById.values()) {
+      if (cap.recipe?.mapping !== "existing") continue;
+      const p = cap.recipe.path;
+      const ref = Object.values(refFiles).flat().find((r) => r.rel === p);
+      if (!ref) { error(c, `${cap.id}: catalog recipe ${p} does not exist in the plugin`); continue; }
+      if (ref.fields?.kind !== "recipe") error(c, `${cap.id}: catalog recipe ${p} is kind "${ref.fields?.kind}", expected recipe (CA-02)`);
+      else if (!listed.get(p)?.has(cap.id) && cap.status !== "PLANNED") error(c, `${cap.id}: mapped to ${p} but not listed in its capabilities and not PLANNED (RC-02)`);
+    }
+    if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} skills are catalog entry skills; ${listed.size} recipe file(s) agree with the catalog (${[...listed.values()].reduce((n, x) => n + x.size, 0)} capabilities)`);
+
+    const c22 = "V-22 recipe-cases";
+    const crel = "tests/skills/recipe-cases.json";
+    const spec = readJson(c22, crel);
+    if (spec) {
+      const ids = new Set(), have = {};
+      for (const k of spec.cases ?? []) {
+        if (ids.has(k.id)) error(c22, `duplicate case id ${k.id}`); ids.add(k.id);
+        const cap = capById.get(k.capability);
+        if (!cap) { error(c22, `${k.id}: unknown capability ${k.capability}`); continue; }
+        if (!["positive", "negative"].includes(k.polarity)) error(c22, `${k.id}: polarity must be positive or negative`);
+        if (!isStr(k.prompt) || k.prompt.length < 10) error(c22, `${k.id}: prompt missing`);
+        else if (/chayen/i.test(k.prompt)) error(c22, `${k.id}: prompt mentions Chayen (REQ-03)`);
+        if (!Array.isArray(k.checks) || !k.checks.length) error(c22, `${k.id}: at least one behaviour check is required`);
+        const recipeLocal = cap.recipe.path.replace(/^skills\/[^/]+\//, "");
+        const e = k.expect ?? {};
+        if (k.polarity === "positive") {
+          if (e.skill !== cap.entry_skill.name) error(c22, `${k.id}: positive case must expect the catalog entry skill ${cap.entry_skill.name}`);
+          if (e.loads !== recipeLocal) error(c22, `${k.id}: positive case must expect loads "${recipeLocal}"`);
+        } else if (k.polarity === "negative") {
+          if (e.not_loads !== recipeLocal) error(c22, `${k.id}: negative case must expect not_loads "${recipeLocal}"`);
+          if (e.skill !== undefined && e.skill !== "none" && !catSkills.has(e.skill)) error(c22, `${k.id}: unknown skill ${e.skill}`);
+        }
+        (have[k.capability] ??= { positive: 0, negative: 0 })[k.polarity] += 1;
+      }
+      for (const [p, set] of listed) for (const id of set) {
+        const h = have[id] ?? { positive: 0, negative: 0 };
+        if (h.positive < 1 || h.negative < 1) error(c22, `${id} (${p}): needs at least 1 positive and 1 negative case, has ${h.positive}/${h.negative} (RC-09)`);
+      }
+      if (!results.some((r) => r.check === c22 && r.level === "ERROR")) pass(c22, `${(spec.cases ?? []).length} recipe cases; every capability in an existing recipe has >=1 positive and >=1 negative case`);
+    }
+  }
 }
 
 { // V-16 trigger test cases integrity

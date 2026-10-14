@@ -1,3 +1,6 @@
+---
+kind: checklist
+---
 # Security review checklist
 
 This checklist is organized by common web application risk themes, aligned

@@ -16,7 +16,8 @@ change the shape of the steps after them. Any re-plan is recorded in
 | 05 | Pilot entry skills (as executed, D-015) | 6 skills in `plugins/codejadee-chayen-framework/skills/` with 16 skill-local references; `tests/skills/trigger-cases.json` (48 cases); generated Claude eval cases; validator V-06..V-17 subset | REQ-02..REQ-04, REQ-06..REQ-10, ARC-04..ARC-13 | DONE (pending review) |
 | 06 | Native behaviour proof of concept (as executed) | `tests/provider-compatibility/` (lifecycle script, VS Code procedures, results), `tests/routing/` (smoke runner, results), `docs/chayen/POC_REPORT.md`; eval staging fix | REQ-01..REQ-04, REQ-10, PRV-* | DONE (pending review) |
 | 07 | Engineering capability catalog (as executed) | `catalog/engineering-capabilities.yaml` (206 records, 20 domains; D-021), `docs/chayen/CAPABILITY_COVERAGE.md`, `tools/catalog/check-catalog.mjs` (V-11 count, uniqueness, and mapping check) | REQ-05, ARC-03, STK-* (mapping level) | DONE (pending review) |
-| — | Authoring guide and final entry-skill set (*unscheduled*; the catalog part was done in Step 07) | `docs/chayen/AUTHORING_GUIDE.md`, final entry-skill set (Q-10, R-27) | REQ-05, STK-* | NOT_STARTED |
+| 08 | Skill authoring standard and quality gates (as executed) | `docs/chayen/SKILL_AUTHORING_STANDARD.md`, `docs/chayen/SKILL_QUALITY_GATES.md` (D-025), validators V-17..V-22 in `tools/validate/`, `tests/catalog/`, `tests/skills/` (recipe cases, mutation suites), pilot skills brought to the standard, recipes re-pointed (D-026) | REQ-02..REQ-10 (content quality), ARC-04, ARC-06, ARC-12, ARC-13 | DONE (pending review) |
+| — | Final entry-skill set (*unscheduled*; the authoring guide part was done in Step 08 as SKILL_AUTHORING_STANDARD.md) | Final entry-skill set (Q-10, R-27) | REQ-05, STK-* | NOT_STARTED |
 | 05 | Structural validation suite | Dev-only validator, test fixtures, CI workflow | REQ-10 | NOT_STARTED |
 | 06 | Claude Code packaging | Plugin + marketplace manifests, install evidence | REQ-01, PRV-CC | NOT_STARTED |
 | 07 | OpenAI Codex packaging | Codex manifests, install evidence | REQ-01, PRV-CX | NOT_STARTED |
@@ -111,6 +112,23 @@ verification on each surface.
   IN_PROGRESS. Everything else is PLANNED.
 - `tools/catalog/check-catalog.mjs` is the reproducible count and
   uniqueness check (V-11).
+
+### Step 08 — Skill authoring standard and quality gates (as executed)
+- **Standard:** SKILL_AUTHORING_STANDARD.md defines:
+  - portable frontmatter;
+  - description rules;
+  - the entry-skill anatomy: scope line, ten ordered sections, safety
+    boundaries, conditional loading;
+  - reference kinds;
+  - the capability recipe anatomy, with developer-side evaluation cases.
+- **Gates:** SKILL_QUALITY_GATES.md lists G-01..G-15, and maps each requested
+  detection to a validator and a negative control.
+- **Validators:** `validate-package.mjs` was extended with V-17..V-22.
+  `run-validator-tests.mjs` (52/52) and `validate-all.mjs` were added. They
+  are developer-only, not a CLI.
+- **Pilots:** all six now meet the standard. Two references were converted
+  to recipes, and the other 13 declare a kind. No remaining recipes were
+  implemented.
 
 ### (Unscheduled) Authoring guide and final entry-skill set
 

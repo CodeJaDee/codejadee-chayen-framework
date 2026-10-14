@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # Node and Bun servers: Nitro, Nuxt server routes, Next.js route handlers, Elysia
 
 **Applies to:** server-side TypeScript and JavaScript in these frameworks.

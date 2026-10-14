@@ -1,3 +1,6 @@
+---
+kind: technology
+---
 # Python testing: pytest, unittest, Django
 
 **Applies to:** Python 3 projects.
