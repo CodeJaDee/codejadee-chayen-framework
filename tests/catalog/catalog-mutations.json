@@ -52,20 +52,20 @@
     },
     {
       "id": "cat-recipe-marked-existing-but-missing",
-      "description": "A recipe is marked existing but the file does not exist (missing file)",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: planned}", "with": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: existing}" }],
+      "description": "A recipe is marked existing but the file does not exist (missing file). Targets the first planned recipe, so the case survives as recipes get implemented.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: (skills/[a-z-]+/references/[a-z-]+\\.md), mapping: planned\\}", "with": "recipe: {path: $1, mapping: existing}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
       "id": "cat-recipe-is-skill-md",
-      "description": "SKILL.md used as a recipe (D-026)",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: planned}", "with": "recipe: {path: skills/chayen-architecture/SKILL.md, mapping: planned}" }],
+      "description": "SKILL.md used as a recipe (D-026). Targets the first planned recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: (skills/[a-z-]+)/references/[a-z-]+\\.md, mapping: planned\\}", "with": "recipe: {path: $1/SKILL.md, mapping: planned}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
       "id": "cat-recipe-outside-skill",
-      "description": "A recipe lives in another skill (D-016)",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "recipe: {path: skills/chayen-architecture/references/sequence-and-dataflow.md, mapping: planned}", "with": "recipe: {path: skills/chayen-security/references/sequence-and-dataflow.md, mapping: planned}" }],
+      "description": "A recipe lives outside its entry skill (D-016). Targets the first planned recipe.",
+      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "recipe: \\{path: skills/[a-z-]+/references/([a-z-]+\\.md), mapping: planned\\}", "with": "recipe: {path: skills/chayen-elsewhere/references/$1, mapping: planned}" }],
       "expect": { "validator": "catalog", "error": "V-11.7 recipe" }
     },
     {
@@ -112,8 +112,8 @@
     },
     {
       "id": "cat-coverage-doc-stale",
-      "description": "The generated tables in CAPABILITY_COVERAGE.md no longer match",
-      "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "regex", "pattern": "skills/chayen-architecture/references/sequence-and-dataflow\\.md", "flags": "g", "with": "skills/chayen-architecture/references/sequence-dataflow.md" }],
+      "description": "The generated tables in CAPABILITY_COVERAGE.md no longer match the catalog (a hand edit inside the generated block)",
+      "edits": [{ "file": "docs/chayen/CAPABILITY_COVERAGE.md", "op": "replace", "find": "| D01 | REPOSITORY |", "with": "| D01 | REPOSITORY (hand-edited) |" }],
       "expect": { "validator": "catalog", "error": "V-11.11 doc-sync" }
     }
   ]

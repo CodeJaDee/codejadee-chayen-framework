@@ -527,6 +527,317 @@
       "checks": [
         "File-level planning is the implementation skill's task contract, not backlog decomposition"
       ]
+    },
+    {
+      "id": "rc-03-001-pos",
+      "capability": "CAP-03-001",
+      "polarity": "positive",
+      "prompt": "Review the architecture of this solution against our availability-first goal and tell me the biggest risks.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/architecture-review.md" },
+      "checks": [
+        "Each finding cites evidence and has a recommendation and an alternative",
+        "Accepted ADRs in scope are listed as followed or drift",
+        "The review is labelled proposed"
+      ]
+    },
+    {
+      "id": "rc-03-001-neg",
+      "capability": "CAP-03-001",
+      "polarity": "negative",
+      "prompt": "Review this pull request for readability and naming.",
+      "expect": { "skill": "none", "not_loads": "references/architecture-review.md" },
+      "checks": [
+        "No architecture review report is produced for a code-review request"
+      ]
+    },
+    {
+      "id": "rc-03-002-pos",
+      "capability": "CAP-03-002",
+      "polarity": "positive",
+      "prompt": "Should our order service call inventory over HTTP or through a message queue? Compare the options.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/decision-records.md" },
+      "checks": [
+        "Option 0 (keep the current approach) is included",
+        "Every option lists at least one disadvantage",
+        "The weighting that would flip the recommendation is named",
+        "The recommendation is labelled proposed"
+      ]
+    },
+    {
+      "id": "rc-03-002-neg",
+      "capability": "CAP-03-002",
+      "polarity": "negative",
+      "prompt": "Which JSON library is faster in .NET?",
+      "expect": { "skill": "none", "not_loads": "references/decision-records.md" },
+      "checks": [
+        "No ADR or option-analysis format is produced for a micro-benchmark question"
+      ]
+    },
+    {
+      "id": "rc-03-003-pos",
+      "capability": "CAP-03-003",
+      "polarity": "positive",
+      "prompt": "Write an ADR for our decision to move from REST polling to SignalR for order status.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/decision-records.md" },
+      "checks": [
+        "The repository's ADR template and next number are used when they exist",
+        "Status is Proposed, not Accepted, without a named approver",
+        "A superseded ADR is referenced, not edited"
+      ]
+    },
+    {
+      "id": "rc-03-003-neg",
+      "capability": "CAP-03-003",
+      "polarity": "negative",
+      "prompt": "Update the README with the new SignalR setup steps.",
+      "expect": { "skill": "none", "not_loads": "references/decision-records.md" },
+      "checks": [
+        "No ADR is written for a README update"
+      ]
+    },
+    {
+      "id": "rc-03-004-pos",
+      "capability": "CAP-03-004",
+      "polarity": "positive",
+      "prompt": "Where should we draw the boundary between our billing and subscription modules?",
+      "expect": { "skill": "chayen-architecture", "loads": "references/boundaries-and-domain.md" },
+      "checks": [
+        "Every entity has exactly one owning boundary",
+        "Every cross-boundary interaction is a named interface with its consistency need",
+        "Shared tables in the current state are cited with evidence"
+      ]
+    },
+    {
+      "id": "rc-03-004-neg",
+      "capability": "CAP-03-004",
+      "polarity": "negative",
+      "prompt": "Design the REST endpoints for the subscription API.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/boundaries-and-domain.md" },
+      "checks": [
+        "Endpoint contract design is not answered with a context map"
+      ]
+    },
+    {
+      "id": "rc-03-005-pos",
+      "capability": "CAP-03-005",
+      "polarity": "positive",
+      "prompt": "Help me model the domain for our loan application process: aggregates and invariants.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/boundaries-and-domain.md" },
+      "checks": [
+        "Each stated invariant is enforced by exactly one aggregate",
+        "A glossary of domain terms is produced",
+        "The model is storage-independent"
+      ]
+    },
+    {
+      "id": "rc-03-005-neg",
+      "capability": "CAP-03-005",
+      "polarity": "negative",
+      "prompt": "Write the use cases for the loan application process.",
+      "expect": { "skill": "chayen-requirements", "not_loads": "references/boundaries-and-domain.md" },
+      "checks": [
+        "Use cases come from the requirements skill, not a domain model"
+      ]
+    },
+    {
+      "id": "rc-03-006-pos",
+      "capability": "CAP-03-006",
+      "polarity": "positive",
+      "prompt": "How should I structure the components inside our new notification service?",
+      "expect": { "skill": "chayen-architecture", "loads": "references/boundaries-and-domain.md" },
+      "checks": [
+        "Each component has a responsibility, a public interface, and allowed dependencies",
+        "Components follow the repository's existing style and naming"
+      ]
+    },
+    {
+      "id": "rc-03-006-neg",
+      "capability": "CAP-03-006",
+      "polarity": "negative",
+      "prompt": "Split this 900-line React component into smaller components.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/boundaries-and-domain.md" },
+      "checks": [
+        "UI component splitting is not answered with service component design"
+      ]
+    },
+    {
+      "id": "rc-03-007-pos",
+      "capability": "CAP-03-007",
+      "polarity": "positive",
+      "prompt": "Draw a sequence diagram of what happens when a user places an order in this codebase.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/sequence-and-dataflow.md" },
+      "checks": [
+        "Every diagram step cites a handler or call",
+        "Asynchronous and synchronous steps are distinguished",
+        "Remote calls show failure behaviour or a marked gap"
+      ]
+    },
+    {
+      "id": "rc-03-007-neg",
+      "capability": "CAP-03-007",
+      "polarity": "negative",
+      "prompt": "Map the folders and projects in this repository.",
+      "expect": { "skill": "chayen-repository", "not_loads": "references/sequence-and-dataflow.md" },
+      "checks": [
+        "A layout map is not answered with a sequence diagram"
+      ]
+    },
+    {
+      "id": "rc-03-008-pos",
+      "capability": "CAP-03-008",
+      "polarity": "positive",
+      "prompt": "Add a test that fails if the Domain project references Infrastructure.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/architecture-review.md" },
+      "checks": [
+        "The test uses the repository's test framework and an existing or approved architecture-test library",
+        "The test is run and the command and result are shown, or NOT_RUN with a reason",
+        "No package is added without approval"
+      ]
+    },
+    {
+      "id": "rc-03-008-neg",
+      "capability": "CAP-03-008",
+      "polarity": "negative",
+      "prompt": "Set up a GitHub Actions workflow that runs our tests.",
+      "expect": { "skill": "none", "not_loads": "references/architecture-review.md" },
+      "checks": [
+        "No architecture fitness test is written for a CI setup request"
+      ]
+    },
+    {
+      "id": "rc-03-009-pos",
+      "capability": "CAP-03-009",
+      "polarity": "positive",
+      "prompt": "How should we isolate customer data in our multi-tenant SaaS: database per tenant or a TenantId column?",
+      "expect": { "skill": "chayen-architecture", "loads": "references/multitenancy.md" },
+      "checks": [
+        "The current tenancy model is identified from evidence, or marked unknown",
+        "Exactly one tenant resolution point is named and validated against identity",
+        "Every access path has an enforcement point or a decided exception",
+        "Cross-tenant access tests are planned"
+      ]
+    },
+    {
+      "id": "rc-03-009-neg",
+      "capability": "CAP-03-009",
+      "polarity": "negative",
+      "prompt": "Add a TenantId filter to this one EF query.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/multitenancy.md" },
+      "checks": [
+        "A one-query change is not answered with a tenancy model comparison"
+      ]
+    },
+    {
+      "id": "rc-03-010-pos",
+      "capability": "CAP-03-010",
+      "polarity": "positive",
+      "prompt": "How do we keep checkout working when the payment provider is slow? Design the resilience.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/resilience.md" },
+      "checks": [
+        "Every dependency has an explicit timeout and failure behaviour",
+        "Retries apply only to idempotent operations",
+        "The end-to-end timing budget fits the caller timeout"
+      ]
+    },
+    {
+      "id": "rc-03-010-neg",
+      "capability": "CAP-03-010",
+      "polarity": "negative",
+      "prompt": "Write our disaster recovery plan for losing the Azure region.",
+      "expect": { "skill": "none", "not_loads": "references/resilience.md" },
+      "checks": [
+        "No per-dependency failure-mode table is produced for a disaster recovery plan"
+      ]
+    },
+    {
+      "id": "rc-04-004-pos",
+      "capability": "CAP-04-004",
+      "polarity": "positive",
+      "prompt": "Roughly how big are these six backlog items? Give t-shirt sizes and explain why.",
+      "expect": { "skill": "chayen-requirements", "loads": "references/scope-and-backlog.md" },
+      "checks": [
+        "Every size states drivers, assumptions, and confidence",
+        "Items with size-changing unknowns get a spike instead of a size",
+        "No size is expressed as a date or commitment"
+      ]
+    },
+    {
+      "id": "rc-04-004-neg",
+      "capability": "CAP-04-004",
+      "polarity": "negative",
+      "prompt": "Plan the capacity of our database cluster for next year.",
+      "expect": { "skill": "none", "not_loads": "references/scope-and-backlog.md" },
+      "checks": [
+        "No backlog sizing is produced for an infrastructure capacity question"
+      ]
+    },
+    {
+      "id": "rc-04-005-pos",
+      "capability": "CAP-04-005",
+      "polarity": "positive",
+      "prompt": "Plan our migration from .NET Framework 4.8 to .NET 8 in safe phases.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/migration-strategy.md" },
+      "checks": [
+        "Every phase has measurable exit criteria and a rollback point",
+        "Option 0 (stay) and at least one alternative approach are compared",
+        "Destructive steps come last and need explicit approval",
+        "The plan is labelled proposed with an approver role"
+      ]
+    },
+    {
+      "id": "rc-04-005-neg",
+      "capability": "CAP-04-005",
+      "polarity": "negative",
+      "prompt": "Upgrade Newtonsoft.Json to the latest version in this project.",
+      "expect": { "skill": "none", "not_loads": "references/migration-strategy.md" },
+      "checks": [
+        "No phased migration plan is produced for a single package upgrade"
+      ]
+    },
+    {
+      "id": "rc-04-006-pos",
+      "capability": "CAP-04-006",
+      "polarity": "positive",
+      "prompt": "Write a staged rollout plan with abort criteria for the new pricing engine.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/rollout-planning.md" },
+      "checks": [
+        "Every stage has a metric threshold and an abort action",
+        "The previous version stays compatible with the schema during rollout",
+        "Deployment mechanics are cited from the repository or listed as gaps",
+        "The plan is labelled proposed"
+      ]
+    },
+    {
+      "id": "rc-04-006-neg",
+      "capability": "CAP-04-006",
+      "polarity": "negative",
+      "prompt": "Add a feature flag around the new pricing code.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/rollout-planning.md" },
+      "checks": [
+        "Adding the flag is an implementation task, not a rollout plan"
+      ]
+    },
+    {
+      "id": "rc-04-008-pos",
+      "capability": "CAP-04-008",
+      "polarity": "positive",
+      "prompt": "Start a decision log for this project from the ADRs we already have.",
+      "expect": { "skill": "chayen-architecture", "loads": "references/decision-records.md" },
+      "checks": [
+        "Every ADR found is listed with its status",
+        "Superseded or conflicting decisions are flagged",
+        "No ADR status is changed"
+      ]
+    },
+    {
+      "id": "rc-04-008-neg",
+      "capability": "CAP-04-008",
+      "polarity": "negative",
+      "prompt": "Write task acceptance criteria for the export feature.",
+      "expect": { "skill": "chayen-requirements", "not_loads": "references/decision-records.md" },
+      "checks": [
+        "Acceptance criteria are not answered with a decision register"
+      ]
     }
   ]
 }

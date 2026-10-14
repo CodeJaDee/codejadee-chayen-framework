@@ -388,6 +388,51 @@ Decision statuses:
 
   These are needed for VERIFIED.
 
+### D-029 — Domains 03 and 04: `chayen-architecture` also owns migration and rollout planning
+- **Status:** PROPOSED (executed in Step 10)
+- **Context:**
+  - The catalog mapped migration planning (CAP-04-005) to the planned
+    `chayen-modernization`, and rollout planning (CAP-04-006) to the planned
+    `chayen-devops`.
+  - Creating both skills, plus `chayen-architecture`, would exceed the
+    4,000-character L0 budget (R-27). It was 2,787 before Step 10.
+- **Decision:**
+  - Create only `chayen-architecture`, and give it design, decision, and
+    technical-planning scope.
+  - Remap CAP-04-005 with its group CG-12 (`migration-strategy.md`), which
+    also moves CAP-15-003 strangler-migration and CAP-15-008
+    monolith-modularization. Both stay PLANNED.
+  - Remap CAP-04-006 out of CG-13 into its own recipe,
+    `rollout-planning.md`. Deployment validation, rollback verification, and
+    go/no-go stay with the planned `chayen-devops`.
+  - Estimation (CAP-04-004) stays with `chayen-requirements`, as catalogued.
+    Its description now includes sizing and excludes delivery schedules.
+  - Task contract, planning, risk, and handoff stay with
+    `chayen-implementation`. The task contract gains a four-level risk class
+    scale.
+- **Consequences:**
+  - There are 8 skills. L0 is 3,226 / 4,000, leaving about 129 characters
+    for each of the 6 planned skills. That is a first instance of Option C
+    (merge) in CAPABILITY_COVERAGE §5.2, and the remaining set must be
+    decided (Q-10) before another skill is added.
+
+### D-030 — Proposed plans are separate from approved decisions
+- **Status:** PROPOSED
+- **Decision:**
+  - Every design, option recommendation, ADR, migration plan, rollout plan,
+    and task contract that the agent produces is labelled **proposed**.
+  - Only the user or a named owner makes it accepted or approved. The record
+    names who, and when.
+  - Accepted ADRs are never edited, except for their status line when a
+    superseding ADR is accepted.
+  - The task contract has a `Status: proposed | approved by <user>` line.
+    Contract approval never implies approval of the individual risky
+    actions.
+- **Where:**
+  - `chayen-architecture` (Principles, Safety boundaries);
+  - `decision-records.md`, `migration-strategy.md`, `rollout-planning.md`;
+  - `chayen-implementation/references/task-contract.md`.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

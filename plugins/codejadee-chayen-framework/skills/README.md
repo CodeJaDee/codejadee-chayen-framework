@@ -21,7 +21,8 @@ development repository. Capability coverage is tracked in
 | Skill | Scope |
 |---|---|
 | `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt, unknowns |
-| `chayen-requirements` | Requirements analysis: elicitation, stories, acceptance criteria, use cases, business rules, edge cases, NFRs, scope, backlog, traceability |
+| `chayen-requirements` | Requirements analysis: elicitation, stories, acceptance criteria, use cases, business rules, edge cases, NFRs, scope, backlog and sizing, traceability |
+| `chayen-architecture` | Architecture and technical planning: reviews and fitness tests, options and ADRs, decision register, boundaries and domain, data flow, multitenancy, resilience, migration and rollout plans |
 | `chayen-implementation` | Multi-file or cross-layer changes with a task contract and change summary |
 | `chayen-backend` | Server-side code: ASP.NET Core, data access, Node and Bun servers, Python web APIs |
 | `chayen-frontend` | Web UI: Angular, React/Next.js, Vue/Nuxt, Vite |

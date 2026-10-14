@@ -1,13 +1,13 @@
 ---
 name: chayen-requirements
-description: Analyze software requirements before code is written. Clarifies vague requests, refines user stories, writes testable acceptance criteria and edge cases, models use cases, extracts business rules from code, SQL, or documents, defines non-functional targets, sets scope, splits backlogs, and traces requirements to code and tests. Not for writing code, architecture design, or effort estimates.
+description: Analyze software requirements before code is written. Clarifies vague requests, refines user stories, writes testable acceptance criteria and edge cases, models use cases, extracts business rules from code, SQL, or documents, defines non-functional targets, sets scope, splits and sizes backlogs, and traces requirements to code and tests. Not for writing code, architecture design, or delivery schedules.
 ---
 
 # Requirements analysis
 
 Turn requests, documents, and existing code into requirements that are explicit, testable, and honest about what is still undecided.
 
-**Scope:** requirements work for software features and systems: elicitation, stories, acceptance criteria, use cases, business rules, edge cases, non-functional requirements, scope, backlog decomposition, and traceability. Writing code, architecture or technology choices, effort estimation, and legal or regulatory interpretation are outside this scope.
+**Scope:** requirements work for software features and systems: elicitation, stories, acceptance criteria, use cases, business rules, edge cases, non-functional requirements, scope, backlog decomposition and sizing, and traceability. Writing code, architecture or technology choices, delivery schedules or commitments, and legal or regulatory interpretation are outside this scope.
 
 ## When to use
 
@@ -19,6 +19,7 @@ Requests that fit:
 - "What edge cases am I missing for booking cancellation?"
 - "Turn 'it must be fast and reliable' into measurable targets."
 - "Break this epic into stories we can deliver incrementally."
+- "Roughly how big are these backlog items? Give t-shirt sizes and why."
 - "Which of these requirements have no tests?"
 
 ## When not to use
@@ -28,8 +29,8 @@ Requests that fit:
 | Implementing the feature or changing code | The chayen-implementation, chayen-backend, or chayen-frontend skill |
 | Writing the automated tests for agreed criteria | The chayen-testing skill |
 | Understanding how a repository is organized | The chayen-repository skill |
-| Choosing an architecture, framework, or database | Answer directly |
-| Story points, time estimates, or sprint capacity | Answer directly |
+| Choosing an architecture, framework, or database | The chayen-architecture skill |
+| Delivery dates, sprint commitments, or staffing plans | Answer directly |
 | Interpreting laws or regulations (GDPR, PCI DSS) as legal advice | Answer directly, noting it is not legal advice |
 
 If the request does not fit, stop following this skill and continue normally without mentioning it.
@@ -76,7 +77,7 @@ If the request does not fit, stop following this skill and continue normally wit
    |---|---|
    | Vague request, use cases, rules hidden in code or documents | elicitation and modeling |
    | Story refinement, acceptance criteria, edge cases | stories and acceptance |
-   | Scope, dependencies, epic decomposition | scope and backlog |
+   | Scope, dependencies, epic decomposition, sizing | scope and backlog |
    | Performance, availability, security, and other quality targets | non-functional requirements |
    | Links from requirements to code, tests, and evidence | requirement traceability |
 
@@ -141,6 +142,6 @@ If the request does not fit, stop following this skill and continue normally wit
 | [references/requirements-record.md](references/requirements-record.md) | Workflow step 3: producing any requirements output |
 | [references/elicitation-and-modeling.md](references/elicitation-and-modeling.md) | Workflow step 2: vague requests, use cases, or business rules in code or documents |
 | [references/stories-and-acceptance.md](references/stories-and-acceptance.md) | Workflow step 2: refining stories, writing acceptance criteria, or finding edge cases |
-| [references/scope-and-backlog.md](references/scope-and-backlog.md) | Workflow step 2: scope, dependencies, or decomposing an epic |
+| [references/scope-and-backlog.md](references/scope-and-backlog.md) | Workflow step 2: scope, dependencies, decomposing an epic, or sizing backlog items |
 | [references/nonfunctional-requirements.md](references/nonfunctional-requirements.md) | Workflow step 2: performance, availability, security, privacy, accessibility, or other quality targets |
 | [references/requirement-traceability.md](references/requirement-traceability.md) | Workflow step 2: linking requirements to code, tests, and evidence |

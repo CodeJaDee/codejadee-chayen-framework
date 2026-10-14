@@ -1,19 +1,21 @@
 ---
 kind: recipe
-capabilities: [CAP-02-007, CAP-02-010]
+capabilities: [CAP-02-007, CAP-02-010, CAP-04-004]
 ---
-# Scope, dependencies, and backlog decomposition
+# Scope, dependencies, backlog decomposition, and sizing
 
 Define what is in and out of scope, and the dependencies the work relies on.
 Then break an epic or feature into vertical, independently deliverable
-backlog items in a sensible order. Sizing and estimation are not part of this
-recipe.
+backlog items in a sensible order. Size the items with explicit drivers and
+uncertainty, so that a size is never presented as a commitment or a schedule.
 
 ## Inputs
 
 - The goal, and the candidate features or epic description.
 - Known systems, teams, data sources, decisions, and deadlines.
 - An existing backlog format or issue template, if the team has one.
+- **For sizing:** the team's scale (story points, t-shirt sizes, or time
+  ranges) and reference items it has already sized, if any.
 
 ## Procedure
 
@@ -49,8 +51,23 @@ recipe.
 6. **Write each item** with a title, a short description, two or three
    acceptance notes, its dependencies, and the decisions it waits on. Use the
    team's issue format if one exists.
-7. **Record** the scope, dependencies, and decisions in the requirements
-   record.
+7. **Size the items,** when asked.
+   - Use the team's scale. Without one, use t-shirt sizes (XS–XL) and say
+     so.
+   - Compare each item with the team's reference items when they exist.
+   - For each size, state:
+     - the **drivers**: the number of layers touched, new integrations,
+       data migration, unknowns, test effort, and similarity to past work;
+     - the **assumptions**;
+     - a **confidence** (high, medium, or low).
+   - An item with an unresolved unknown that could change its size by more
+     than one step gets **no size**. It gets a proposed spike, with the
+     question the spike answers.
+   - Time ranges, when requested, are ranges (for example 3–5 days) with
+     their assumptions. They are never single numbers, and never dates or
+     commitments.
+8. **Record** the scope, dependencies, sizes, and decisions in the
+   requirements record. Sizes are proposals until the team accepts them.
 
 ## Outputs
 
@@ -64,6 +81,9 @@ recipe.
 - An ordered backlog of vertical items with acceptance notes and
   dependencies, and the suggested first increment.
 - Open decisions that block items.
+- When sized: a size per item, with its drivers, assumptions, and
+  confidence. Spikes are listed for the items that cannot be sized yet, all
+  labelled proposed.
 
 ## Technology considerations
 
@@ -86,4 +106,8 @@ does not inspect code by default:
 - Each backlog item is a vertical slice with user-visible behaviour (rubric:
   could it be demonstrated to a user on its own?).
 - The first increment is identified.
-- No item carries an estimate or a priority that the team has not given.
+- No item carries a priority that the team has not given. Sizes appear only
+  when sizing was requested, and are labelled proposed.
+- Every size states its drivers, assumptions, and confidence. No item with a
+  size-changing unknown is sized: it gets a spike instead.
+- No size is expressed as a date, a deadline, or a commitment.

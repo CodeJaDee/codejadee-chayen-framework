@@ -32,13 +32,24 @@ the conversation.
    - List the files per layer, in edit order: data model and migration,
      then domain or service, then API, then UI, then tests.
    - Name the point after each layer where the build must still pass.
-4. **Classify the risky actions.**
-   - Check the change against this list: schema or data migrations,
-     deleting files, authentication or authorization, breaking public
-     contracts, new dependencies or major upgrades, production
+4. **Classify the risk.**
+   - Check the change against this list of risky actions: schema or data
+     migrations, deleting files, authentication or authorization, breaking
+     public contracts, new dependencies or major upgrades, production
      configuration, anything irreversible.
    - Record every match under `Risky actions needing approval`, or write
      `none`.
+   - Assign the highest class that applies, with the reason:
+
+     | Class | When | Required before merge or execution |
+     |---|---|---|
+     | Low | Internal, reversible, no data, security, or contract impact | Build and tests |
+     | Medium | Several modules or a deployable boundary. A behaviour change visible to users. A new dependency. | Approval of the contract, plus tests at the affected levels |
+     | High | Public contract, authentication or authorization, persisted data, production configuration | Explicit approval per risky action, a rollback note, and a staged rollout considered |
+     | Critical | Irreversible data loss, security-sensitive data exposure, financial effects | Named approver, a rehearsed rollback or restore, and a staged rollout plan |
+
+   - Unknown blast radius is not Low. Classify it at least Medium, and say
+     what would lower it.
 5. **Confirm with the user** when the contract contains a risky action or an
    assumption that changes the outcome. Otherwise proceed, and keep the
    contract visible.
@@ -50,9 +61,11 @@ the conversation.
 ## Outputs
 
 - A task contract in the template format, with:
+  - its status (`proposed` until the user confirms it);
   - testable acceptance criteria;
   - an ordered edit plan per layer;
-  - every risky action listed.
+  - every risky action listed;
+  - a risk class with its reason.
 - An explicit approval request when risky actions or outcome-changing
   assumptions exist. Otherwise a one-line note that the contract was
   skipped.
@@ -61,6 +74,7 @@ the conversation.
 
 ```text
 Task contract
+Status: proposed | approved by <user> (<date>)
 Goal: <one sentence, user-visible outcome>
 In scope:
 - <behavior or component>
@@ -73,6 +87,7 @@ Acceptance criteria:
 Affected areas: <projects / folders / layers>
 Approach: <analogous feature to follow; edit order>
 Risky actions needing approval: <migration | deletion | auth | dependency | none>
+Risk class: <Low | Medium | High | Critical> — reason: <why>
 Verification plan: <build, test, lint commands; new tests to add>
 ```
 
@@ -84,6 +99,7 @@ Verification plan: <build, test, lint commands; new tests to add>
 | Assumptions | Every assumption that changes the result is listed and confirmed with the user. |
 | Risky actions | Each needs explicit approval before it is performed, not only before the contract is accepted. |
 | Scope changes | Update the contract and re-confirm. Do not let the scope drift silently. |
+| Status | The contract is `proposed` until the user confirms it. Approval of the contract never implies approval of the individual risky actions. |
 
 ## Technology considerations
 
@@ -98,6 +114,8 @@ that step.
 - For qualifying changes, the contract appears before the first file edit.
 - Every acceptance criterion is observable, and is later mapped to a test or
   check in the change summary.
+- The risk class follows the table. An unknown blast radius is never
+  classed Low.
 - Every risky action in the plan has the user's explicit approval recorded
   before it is performed. If approval is missing, the step is reported as not
   done.
@@ -108,6 +126,7 @@ that step.
 
 ```text
 Task contract
+Status: proposed
 Goal: Users can export their own orders as CSV from the Orders page.
 In scope: export endpoint, CSV formatting, download button.
 Out of scope: Excel format, admin export of all users' orders.
@@ -120,5 +139,6 @@ Acceptance criteria:
 Affected areas: Orders API controller and service, Orders page component.
 Approach: follow the existing invoice PDF download (same auth and filter handling).
 Risky actions needing approval: none.
+Risk class: Medium — reason: new endpoint exposing user data; row-level authorization must hold.
 Verification plan: dotnet test; ng test --watch=false; new API test for row-level authorization.
 ```

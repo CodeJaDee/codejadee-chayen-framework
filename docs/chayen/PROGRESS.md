@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 09 — Domains 01 and 02 capabilities |
+| Last executed step | 10 — Domains 03 and 04 capabilities |
+| Step 10 status | DONE (pending user review; D03 10/10 and D04 8/8 IMPLEMENTED, not VERIFIED) |
 | Step 09 status | DONE (pending user review; D01 9/9 and D02 10/10 IMPLEMENTED, not VERIFIED) |
 | Step 08 status | DONE (pending user review; standard PROPOSED) |
 | Step 07 status | DONE (pending user review; catalog PROPOSED) |
@@ -689,3 +690,105 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Trigger evals for the new and changed descriptions | — | NOT_RUN: billed runs need approval (R-32) |
 | — | Recipe behaviour evals (38 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Human review of the 10 recipes | — | Pending (R-33) |
+
+---
+
+## Step 10 — Domains 03 and 04 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D03 Architecture **10/10 IMPLEMENTED**, and D04 Planning **8/8
+  IMPLEMENTED**. None is VERIFIED; the behaviour and trigger evals are
+  NOT_RUN. The catalog total is now 37 IMPLEMENTED, 24 IN_PROGRESS, and 145
+  PLANNED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, SKILL_AUTHORING_STANDARD, and the catalog
+  records for CAP-03-001..010 and CAP-04-001..008, with their consolidation
+  groups.
+- **Mapping decision (D-029).**
+  - The catalog placed migration and rollout planning in two planned skills.
+    Creating them would exceed the L0 budget.
+  - Only `chayen-architecture` was created. It covers design, decisions, and
+    technical planning.
+  - CAP-04-005, with its group CG-12 (which carries the still-PLANNED
+    CAP-15-003 and CAP-15-008), and CAP-04-006 (moved out of CG-13) were
+    remapped to it.
+- **`chayen-architecture` (new):** principles for evidence-first work,
+  preserving approved decisions, keeping proposed separate from approved
+  (D-030), using no default pattern, and stating trade-offs explicitly.
+  - An `architecture-styles.md` checklist for recognising the current style.
+  - Eight recipes:
+    - `architecture-review.md` (CAP-03-001, 03-008): checks accepted ADRs
+      for drift; fitness tests with NetArchTest/ArchUnitNET,
+      dependency-cruiser, Nx, and import-linter;
+    - `decision-records.md` (03-002, 03-003, 04-008): option 0 "keep
+      current"; ADR status lifecycle; superseding without editing accepted
+      ADRs; register with conflict flags;
+    - `boundaries-and-domain.md` (03-004, 03-005, 03-006);
+    - `sequence-and-dataflow.md` (03-007);
+    - `multitenancy.md` (03-009);
+    - `resilience.md` (03-010);
+    - `migration-strategy.md` (04-005);
+    - `rollout-planning.md` (04-006).
+- **`chayen-implementation`:** `task-contract.md` gained a Low, Medium, High,
+  and Critical risk class scale with the gates required per class, and a
+  `Status: proposed | approved by <user>` line. CAP-04-001, 002, 003, and 007
+  were promoted.
+- **`chayen-requirements`:**
+  - `scope-and-backlog.md` gained a sizing step (CAP-04-004). Each size has
+    drivers, assumptions, and confidence; spikes replace sizes for
+    size-changing unknowns; there are no dates or commitments.
+  - The description and scope now include sizing, and exclude delivery
+    schedules.
+  - Architecture questions now hand off to `chayen-architecture` by name.
+- **Catalog:**
+  - the 18 records are IMPLEMENTED, with `existing_coverage` and
+    `verification_evidence`;
+  - CG-07..CG-10 and CG-12 recipes are marked existing;
+  - CG-13 no longer includes CAP-04-006;
+  - the entry-skill scopes were updated;
+  - the neighbouring PLANNED records (CAP-18-009, CAP-19-002, CAP-19-008)
+    had their mapping state corrected;
+  - the coverage doc was regenerated, and its prose updated.
+- **Evaluation cases:**
+  - 28 recipe cases, for the 10 D03 capabilities and CAP-04-004, 005, 006,
+    008 (76 in total). CAP-04-001, 002, 003, and 007 already had cases from
+    Step 08.
+  - 9 trigger cases (67 in total), with `chayen-architecture` added to the
+    skill list.
+  - The Claude eval cases were regenerated (67 cases, 155 files).
+- **Self-tests:**
+  - Four catalog mutation cases depended on a specific planned recipe that
+    this step implemented. Three now target the first planned recipe by
+    regex. The stale-doc case now edits the generated doc block directly.
+    The validators themselves were unchanged.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-architecture/SKILL.md` and `references/architecture-styles.md`, `architecture-review.md`, `decision-records.md`, `boundaries-and-domain.md`, `sequence-and-dataflow.md`, `multitenancy.md`, `resilience.md`, `migration-strategy.md`, `rollout-planning.md` |
+| Created | `tests/evals/claude/` (9 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md`, `chayen-requirements/SKILL.md`, `chayen-requirements/references/scope-and-backlog.md`, `skills/README.md` |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json`, `tests/skills/trigger-cases.json` (additions only), `tests/catalog/catalog-mutations.json`, `tests/skills/README.md` |
+| Modified (generated) | `tests/evals/claude/*` graders whose forbidden-skill pattern now includes the new skill |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D03 and CAP-D04 IMPLEMENTED; REQ-02, REQ-05, ARC-04, ARC-09, ARC-10 evidence), `DECISIONS.md` (D-029, D-030), `ISSUES.md` (Q-10, R-27, R-32 notes), `IMPLEMENTATION_PLAN.md` |
+| Deleted | None |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 8 skills. L0 3226/4000. Maximum overlap 0.12. 35 references with valid kinds. 20 recipe files agree with the catalog (38 capabilities). 76 recipe cases. 67 trigger cases. The first run had 3 errors (one Outputs section was a template only, and the trigger cases lacked the new skill); both were fixed. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=37 (D01–D04 complete), IN_PROGRESS=24, PLANNED=145. 206 records, fingerprint unchanged, doc in sync. |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | **PASS:** 4/4 gate groups. Self-tests 53/53. The first run was 49/53: 4 catalog mutation cases targeted a recipe this step implemented. They were made robust, with no validator misses. |
+| T4 | Claude Code validator | `claude plugin validate --strict` on the plugin, `skills/`, and the marketplace | PASS ×3 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×8 (`skills-ref` 0.1.1) | PASS: 8/8 valid |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc10` | **PASS 24/24:** 8 skills discoverable on Claude Code, Codex, and Copilot. The user's real configs were unchanged. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` | PASS: 67 cases, 155 files |
+| — | Trigger evals for `chayen-architecture` and the changed `chayen-requirements` description | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (28 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Human review of the 9 new and 3 changed references | — | Pending (R-33) |
