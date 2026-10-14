@@ -82,7 +82,9 @@ If the request does not fit, stop following this skill and continue normally wit
 
 3. **Record the baseline** before changing anything, or state that none
    exists and the result can only be a hypothesis.
-4. **Follow the recipe,** changing one thing at a time.
+4. **Follow the recipe,** changing one thing at a time. For an ASP.NET
+   Core service, read the ASP.NET Core performance reference for the
+   framework levers once the bottleneck is measured.
 5. **Stop for approval** before load or profiling sessions outside a local
    or disposable environment, new libraries or infrastructure (caches,
    profilers, load tools), and configuration changes in shared
@@ -144,6 +146,7 @@ Load the runtime tools section for the detected runtime (workflow step 1), and o
 | Reference | Load when |
 |---|---|
 | [references/runtime-tools.md](references/runtime-tools.md) | Workflow step 1: read only the section for the detected runtime (.NET, Node, Python, or browser) |
+| [references/aspnetcore-performance.md](references/aspnetcore-performance.md) | Workflow step 4: an ASP.NET Core service, after a measurement has located the bottleneck |
 | [references/baseline-and-profiling.md](references/baseline-and-profiling.md) | Establishing a baseline or benchmark, profiling, or finding a bottleneck |
 | [references/load-testing.md](references/load-testing.md) | Designing a load, stress, soak, or spike test, or analysing its results |
 | [references/memory-leaks.md](references/memory-leaks.md) | Memory growth, leaks, or out-of-memory restarts |

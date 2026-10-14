@@ -7,7 +7,8 @@
 // Zero dependencies (Node.js >= 18). Never shipped.
 //
 // Usage: node tools/validate/run-validator-tests.mjs [--only <case-id>] [--keep]
-// Case files: tests/catalog/catalog-mutations.json, tests/skills/validator-mutations.json
+// Case files: tests/catalog/catalog-mutations.json, tests/skills/validator-mutations.json,
+// tests/catalog/technology-mutations.json
 
 import fs from "node:fs";
 import os from "node:os";
@@ -18,11 +19,12 @@ const repo = path.resolve(import.meta.dirname, "..", "..");
 const argv = process.argv.slice(2);
 const only = argv.includes("--only") ? argv[argv.indexOf("--only") + 1] : null;
 const keep = argv.includes("--keep");
-const COPY = ["plugins", ".claude-plugin", ".github/plugin", ".agents/plugins", "catalog", "tests/skills", "docs/chayen/CAPABILITY_COVERAGE.md"];
-const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json"];
+const COPY = ["plugins", ".claude-plugin", ".github/plugin", ".agents/plugins", "catalog", "tests/skills", "docs/chayen/CAPABILITY_COVERAGE.md", "docs/chayen/TECHNOLOGY_COVERAGE.md", "tests/technology/dotnet/run-fact-checks.mjs"];
+const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json", "tests/catalog/technology-mutations.json"];
 const VALIDATORS = {
   package: (dir) => [path.join(repo, "tools/validate/validate-package.mjs"), dir],
   catalog: (dir) => [path.join(repo, "tools/catalog/check-catalog.mjs"), "--root", dir],
+  technology: (dir) => [path.join(repo, "tools/catalog/check-technology.mjs"), "--root", dir],
 };
 
 const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "chayen-vt-"));

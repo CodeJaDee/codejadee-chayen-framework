@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 19 — Engineering coverage audit |
+| Last executed step | 20 — .NET technology pack (C#, ASP.NET Core) |
+| Step 20 status | DONE (pending user review; 22/22 technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 31/31 .NET framework facts PASS; D-039 PROPOSED) |
 | Step 19 status | DONE (pending user review; static audit 206/206 after 9 fixes; 0/206 VERIFIED; see ENGINEERING_COVERAGE_AUDIT.md) |
 | Step 18 status | DONE (pending user review; D19 9/9 and D20 8/8 IMPLEMENTED, not VERIFIED; all 206 capabilities IMPLEMENTED, D-038) |
 | Step 17 status | DONE (pending user review; D17 10/10 and D18 10/10 IMPLEMENTED, not VERIFIED; chayen-ai-engineering created with the L0 cap raised to 5,500, user-approved, D-037) |
@@ -24,7 +25,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). All 206 capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500); Q-10 proposed for closure. Next: VERIFIED status needs the behaviour and trigger evals (G-11, G-12) and human review (R-33, R-34). |
+| Next step | As directed by the user. Open: Q-11 approval of D-032; D-039 review (.NET pack layout, standard §5.3). All 206 engineering capabilities and 22 .NET technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500). VERIFIED needs the behaviour and trigger evals (G-11, G-12) and human review (R-33, R-34, R-38). |
 | Commits made by agent | None |
 
 ---
@@ -1887,3 +1888,117 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Trigger evals (G-11) | — | NOT_RUN: billed runs need approval (R-32, R-36) |
 | — | Recipe behaviour evals (G-12) | — | NOT_RUN: no runner or fixture repositories |
 | — | Human review (G-15) | — | NOT_RUN: pending (R-33, R-34) |
+
+---
+
+## Step 20 — .NET technology pack (C#, ASP.NET Core)
+
+- **Date:** 2026-10-15
+- **Status:** DONE (pending user review)
+- **Result:** all **22/22** technology capabilities (8 C#, 14 ASP.NET
+  Core) exist with the exact names given, each as a technology section with
+  applicability rules, version notes, steps, and a verification rule, plus
+  positive and negative cases. **0/22 are VERIFIED.** 31 framework facts the
+  guidance relies on were executed and passed. Report:
+  [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md).
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, SKILL_AUTHORING_STANDARD, the engineering
+  catalog (`stack_packs` already lists `dotnet-aspnetcore`), ARCHITECTURE
+  C-05, and the existing .NET content in the backend, testing, data,
+  performance, and devops skills.
+- **Layout (D-039, PROPOSED):** no new skill and no description change (L0
+  stays 5,485 / 5,500). Workflow stays in the recipes; .NET detail is in
+  `kind: technology` references in the skills that handle each request
+  type (TECHNOLOGY_COVERAGE §2).
+- **Shipped content:**
+  - `chayen-backend`: `aspnetcore-webapi.md` rewritten as the base
+    reference (version detection, version gates, API style and
+    architecture rules, C# rules for every endpoint). Its earlier guidance
+    moved into the new topic files `aspnetcore-endpoints.md`,
+    `aspnetcore-pipeline.md`, `aspnetcore-auth.md`,
+    `aspnetcore-data-access.md`, and
+    `aspnetcore-background-services.md`. Nothing was dropped.
+  - `chayen-implementation`: `csharp-types-and-nullability.md`,
+    `csharp-async-and-memory.md`, `csharp-linq-and-serialization.md`,
+    `csharp-project-health.md`.
+  - `chayen-data`: `efcore-migrations.md`.
+  - `chayen-testing`: `dotnet-testing.md`, where the integration
+    section became the aspnet-integration-testing capability.
+  - `chayen-performance`: `aspnetcore-performance.md`.
+  - `chayen-devops`: `aspnetcore-hosting.md`.
+  - The six SKILL.md files gained References rows and workflow pointers.
+- **Requirements:**
+  - Version detection: project file, `global.json`, `LangVersion`,
+    packages, CI images, `dotnet --version`; version notes in every
+    section.
+  - Controllers or minimal APIs: follow the style in use, never convert.
+  - Architecture and dependency rules are constraints. No pattern is
+    imposed (TC-04).
+  - Covered explicitly: async and `CancellationToken`, nullable
+    references, DI, validation, exception handling, the project's test
+    framework, and `WebApplicationFactory`.
+  - EF Core is never assumed: Dapper, ADO.NET, DbUp, and database-first
+    paths are covered, with negative cases.
+- **Catalog and checks:**
+  - `catalog/technology-capabilities.yaml`: 22 records, IDs
+    `TECH-CSHARP-001..008` and `TECH-ASPNET-001..014`.
+  - `tools/catalog/check-technology.mjs` (V-23.1 to V-23.9), wired into
+    `validate-all` as gate G-03b.
+  - 14 negative controls.
+  - 57 technology cases (34 positive, 23 negative).
+  - 7 trigger cases; Claude evals regenerated (142 cases).
+- **Standard amended (D-039):** §5.3 technology capability sections (TC-01
+  to TC-06), LD-03 (a base reference plus one topic file), and §8
+  (`technology-cases.json`). SKILL_QUALITY_GATES gained G-03b.
+- **Framework fact checks:** a .NET 10 fixture API with xUnit tests and a
+  .NET 8 contrast pair, run by `tests/technology/dotnet/run-fact-checks.mjs`.
+  Each capability has at least one fact. Probing changed the guidance in
+  four places:
+  - EF Core scaffolds a plain rename as `RenameColumn`, but a rename plus
+    a type change as drop and add with a data-loss warning. The guidance
+    says both instead of "renames are always drop and add".
+  - On .NET 8, tests need `public partial class Program`; on .NET 10 they
+    do not.
+  - CA2000 is heuristic: it missed an undisposed `FileStream`.
+  - `TreatWarningsAsErrors` turns NuGet audit warnings into build errors.
+- **Process issues fixed during the step:**
+  - The base and topic files first linked each other, which broke the
+    2-hop limit (V-08). They now refer to each other in code spans.
+  - Appending trigger cases by re-serializing JSON reformatted the whole
+    file. It was restored from git (unchanged since the last commit) and
+    the cases were appended in the file's existing style.
+- **Not done:** no new skills, no description changes, no other technology
+  packs. The user's commit `3ab6944` (Step 19) was observed; the agent
+  made no commits.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created (shipped) | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-endpoints.md`, `aspnetcore-pipeline.md`, `aspnetcore-auth.md`, `aspnetcore-data-access.md`, `aspnetcore-background-services.md`; `chayen-implementation/references/csharp-types-and-nullability.md`, `csharp-async-and-memory.md`, `csharp-linq-and-serialization.md`, `csharp-project-health.md`; `chayen-data/references/efcore-migrations.md`; `chayen-performance/references/aspnetcore-performance.md`; `chayen-devops/references/aspnetcore-hosting.md` |
+| Modified (shipped) | `chayen-backend/references/aspnetcore-webapi.md` (rewritten as the base; earlier guidance moved to the topic files), `chayen-testing/references/dotnet-testing.md`; `SKILL.md` of chayen-backend, -implementation, -data, -testing, -performance, -devops; `skills/README.md` |
+| Created (developer) | `catalog/technology-capabilities.yaml`, `tools/catalog/check-technology.mjs`, `tests/skills/technology-cases.json`, `tests/catalog/technology-mutations.json`, `tests/technology/dotnet/README.md`, `run-fact-checks.mjs`, `fixture/src/FactApi/FactApi.csproj`, `fixture/src/FactApi/Program.cs`, `fixture/tests/FactApi.Tests/FactApi.Tests.csproj`, `fixture/tests/FactApi.Tests/FactTests.cs`, `fixture/net8/Api8/Api8.csproj`, `fixture/net8/Api8/Program.cs`, `fixture/net8/Api8.Tests/Api8.Tests.csproj`, `fixture/net8/Api8.Tests/PingTests.cs`, `results/step20-fact-checks.md`; `docs/chayen/TECHNOLOGY_COVERAGE.md`; generated `tests/evals/claude/` cases `pos-impl-csharp-nullability`, `pos-impl-dotnet-analyzers`, `amb-dotnet-sync-over-async`, `amb-efcore-migration`, `pos-testing-webapplicationfactory`, `pos-devops-dotnet8-port`, `neg-explain-csharp-record` |
+| Modified (developer) | `tests/skills/trigger-cases.json` (+7 cases), `tools/validate/validate-all.mjs` (G-03b), `tools/validate/run-validator-tests.mjs` (technology suite and copied files), `tools/catalog/README.md`, `tests/catalog/README.md`, `tests/skills/README.md` |
+| Modified (docs) | `docs/chayen/SKILL_AUTHORING_STANDARD.md` (§5.3, LD-03, §8), `SKILL_QUALITY_GATES.md` (G-03b), `DECISIONS.md` (D-039), `ARCHITECTURE.md` (C-05 as-built note), `CAPABILITY_COVERAGE.md` (pointer), `ACCEPTANCE_MATRIX.md` (snapshot, summary, STK-01, REQ-07, REQ-10), `ISSUES.md` (R-33 note; new R-37, R-38), `IMPLEMENTATION_PLAN.md` (row 20), `PROGRESS.md` |
+| Deleted | None |
+| Scratch only (not in the repository) | Probe projects (`dn`, `fx`, `fx2`, `ca`, `ca2`, `n8`, `sdkpin`, `slntest`), fact-check outputs, lifecycle directory `lc20`, and the edit scripts `step20-*.mjs`; the runner's own temporary copies were deleted after each run |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | .NET fact checks, run 1 (26 facts) | `node tests/technology/dotnet/run-fact-checks.mjs` | PASS: 26/26 |
+| T2 | .NET fact checks, run 2 (31 facts) | same | **FAIL**, exit 1: 30 PASS, TF-30 FAIL (CA2000 did not report an undisposed `FileStream`). The check was retargeted to a `StreamReader` case, and the guidance now calls CA2000 heuristic. |
+| T3 | .NET fact checks, run 3 | same | **PASS**, exit 0: 31 PASS, 0 FAIL, 0 NOT_RUN (SDK 10.0.401; 8.0.406 for TF-22 and TF-24); recorded in `tests/technology/dotnet/results/step20-fact-checks.md` |
+| T4 | Package validator after the skill edits | `node tools/validate/validate-package.mjs` | **FAIL**: 30 V-08 errors (base and topic files linked in a cycle beyond 2 hops). Fixed, then PASS: 0 errors, 0 warnings; L0 5485/5500; 154 references |
+| T5 | Technology checker, first run | `node tools/catalog/check-technology.mjs` | **FAIL**: 2 errors (one case context too thin; coverage doc missing). Fixed, then PASS: V-23.1 to V-23.9, 22 capabilities, 57 cases, 31 facts |
+| T6 | All automated gates | `node tools/validate/validate-all.mjs` | PASS: 5/5 gate groups (G-03b added); validator self-tests 68/68 (53 earlier, plus 1 baseline and 14 technology controls); evals in sync (142 cases, 342 files) |
+| T7 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2 |
+| T8 | Agent Skills reference validator | `agentskills validate` ×13 | PASS: 13/13 |
+| T9 | Native lifecycle (isolated homes) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc20` | PASS: 24/24 |
+| T10 | Engineering coverage audit (regression) | `node tools/catalog/audit-coverage.mjs` | PASS: 206/206 on all ten criteria |
+| — | Trigger evals for the 7 new cases (G-11) | — | NOT_RUN: billed runs need approval (R-32, R-37) |
+| — | Behaviour evals for the 57 technology cases (G-12) | — | NOT_RUN: no runner yet; the fact-check fixture is not an agent eval |
+| — | Human review of the .NET guidance (G-15) | — | NOT_RUN (R-33, R-38) |

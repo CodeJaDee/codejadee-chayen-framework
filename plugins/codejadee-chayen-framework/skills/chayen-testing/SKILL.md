@@ -146,7 +146,7 @@ Load one technology reference for the detected framework (workflow step 1), and 
 
 | Reference | Load when |
 |---|---|
-| [references/dotnet-testing.md](references/dotnet-testing.md) | .NET test projects (xUnit, NUnit, MSTest) are detected |
+| [references/dotnet-testing.md](references/dotnet-testing.md) | .NET test projects (xUnit, NUnit, MSTest) are detected, including ASP.NET Core integration tests with `WebApplicationFactory` |
 | [references/javascript-testing.md](references/javascript-testing.md) | Jest, Vitest, Jasmine/Karma, Testing Library, Playwright, or Cypress is detected |
 | [references/python-testing.md](references/python-testing.md) | pytest, unittest, or Django tests are detected |
 | [references/test-strategy.md](references/test-strategy.md) | Deciding test levels, priorities, and CI integration for a system or feature |

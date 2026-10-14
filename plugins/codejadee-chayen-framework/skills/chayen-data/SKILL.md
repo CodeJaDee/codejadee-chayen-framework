@@ -71,7 +71,9 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
-1. **Identify the engine** and read exactly one engine reference.
+1. **Identify the engine** and read exactly one engine reference. In .NET
+   projects whose schema is managed by EF Core migrations, also read the
+   EF Core migrations reference; never assume EF Core.
 2. **Classify the target environment.** If any command will run against a
    database that is not local and disposable, or the change is destructive,
    read the database safety checklist and apply its gates.
@@ -160,6 +162,7 @@ Load one engine reference (workflow step 1), the safety checklist when step 2 re
 |---|---|
 | [references/sql-server.md](references/sql-server.md) | The engine is SQL Server or Azure SQL (`Microsoft.Data.SqlClient`, `UseSqlServer`, `mssql`, `pyodbc` with a SQL Server driver) |
 | [references/postgresql.md](references/postgresql.md) | The engine is PostgreSQL (`Npgsql`, `UseNpgsql`, `pg`, `postgres`, `psycopg`, `asyncpg`) |
+| [references/efcore-migrations.md](references/efcore-migrations.md) | Workflow step 1: a .NET project whose schema EF Core migrations manage (`Migrations/` with a model snapshot, `dotnet-ef` in the tool manifest) |
 | [references/database-safety.md](references/database-safety.md) | A command will run against a non-local database, or the change is destructive |
 | [references/data-modeling.md](references/data-modeling.md) | Designing tables, keys, constraints, and types |
 | [references/schema-and-data-migration.md](references/schema-and-data-migration.md) | Writing or reviewing a schema migration, moving data, or backfilling a column |

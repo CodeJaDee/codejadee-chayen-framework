@@ -39,21 +39,55 @@ kind: technology
 - **Mock only collaborators at boundaries**, such as repositories or HTTP
   clients. Do not mock the type under test.
 
-## ASP.NET Core integration tests
+## ASP.NET Core integration tests (aspnet-integration-testing)
 
-- **Reuse the project's `WebApplicationFactory<Program>` fixture.**
-  - Customize services with `ConfigureTestServices`.
-  - Use the existing test authentication handler for authorized endpoints.
-- **Assert:**
-  - status codes;
-  - the response body (deserialized);
-  - the Problem Details shape for errors.
-- **Cover authorization:** an anonymous request returns 401, a
-  wrong-role request returns 403, and an allowed request returns success.
-- **Database:** follow the project's approach, such as Testcontainers or a
-  per-test database.
-  - The EF Core InMemory provider does not enforce relational behavior.
-    Avoid it for query or constraint tests.
+**Applies when:** testing an ASP.NET Core app through its real HTTP
+pipeline (routing, middleware, filters, model binding, authentication,
+serialization) with `WebApplicationFactory` and an in-memory test server.
+
+**Not when:** the code under test has no HTTP surface (unit tests), the
+test drives a deployed environment or a browser (end-to-end), or the
+project is not ASP.NET Core.
+
+**Version notes:** `WebApplicationFactory<TEntryPoint>` comes from
+`Microsoft.AspNetCore.Mvc.Testing`, versioned with the framework. With
+top-level statements on .NET 6 to 9, `Program` is internal: tests fail with
+CS0122 until the app declares `public partial class Program { }` (or uses
+`InternalsVisibleTo`). On .NET 10 the test project can reference `Program`
+without it. xUnit v2 and v3 differ in packages and fixture APIs.
+
+**Steps:**
+
+1. Reuse the project's factory or fixture (often a class deriving from
+   `WebApplicationFactory<Program>`, shared through `IClassFixture` or a
+   collection fixture). Create one only if none exists, in the project's
+   test framework.
+2. Choose the test framework, assertion library, and mocking library the
+   project already uses. Do not add new ones.
+3. Replace external dependencies in `ConfigureWebHost` or
+   `WithWebHostBuilder(b => b.ConfigureTestServices(...))`: fake HTTP
+   clients for third-party APIs, a test authentication handler instead of
+   the real identity provider, and test doubles for brokers.
+4. Use a real database engine for data behaviour: Testcontainers or the
+   project's test database, with isolation per test or per class
+   (transactions rolled back, a reset tool, or unique data). SQLite
+   in-memory differs from SQL Server and PostgreSQL; the EF Core InMemory
+   provider does not behave like a relational database.
+5. Set the environment deliberately (`UseEnvironment("Testing")` or the
+   project's choice); Development-only behaviour such as the developer
+   exception page changes responses.
+6. Send real requests with `factory.CreateClient()` and assert the status
+   code, the deserialized body, headers such as `Location`, and the problem
+   details shape for errors.
+7. Cover authorization with three requests: anonymous (401), signed in
+   without permission (403), and allowed (2xx).
+8. Keep tests independent of order and of each other's data; xUnit runs
+   test classes in parallel by default.
+
+**Verify:** the new tests pass with `dotnet test --filter`, fail when the
+behaviour under test is broken (shown by a temporary change or a known-bad
+request), and run in the project's CI test command; report PASS, FAIL, or
+NOT_RUN with the command.
 
 ## Commands
 

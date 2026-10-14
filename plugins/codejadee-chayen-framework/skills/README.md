@@ -16,7 +16,13 @@ Each skill is a directory, `skills/<skill-name>/SKILL.md`, plus optional
 
 The authoring rules are in `docs/chayen/SKILL_AUTHORING_STANDARD.md` in the
 development repository. Capability coverage is tracked in
-`catalog/engineering-capabilities.yaml`.
+`catalog/engineering-capabilities.yaml`, and technology packs in
+`catalog/technology-capabilities.yaml`.
+
+**Technology packs.** The .NET pack (C# and ASP.NET Core, 22 capabilities)
+is a set of `kind: technology` references inside the implementation,
+backend, data, testing, performance, and devops skills, loaded only when a
+.NET project is detected.
 
 | Skill | Scope |
 |---|---|

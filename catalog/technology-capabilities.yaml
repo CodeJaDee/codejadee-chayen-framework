@@ -1,0 +1,556 @@
+# Chayen Technology Capability Catalog
+#
+# Developer-side source of truth for technology packs: stack-specific
+# capabilities that sit beside the 206 engineering capabilities in
+# engineering-capabilities.yaml (which are unchanged). It is NOT shipped and
+# the model never reads it. Each record maps a capability to the entry skill
+# and the technology reference section that implements it (D-039).
+#
+# Inventory source: the user's Step 20 prompt (2026-10-15): 8 C# and 14
+# ASP.NET Core capability names, verbatim. The checker compares against it.
+#
+# Check:  node tools/catalog/check-technology.mjs
+# Guide:  docs/chayen/TECHNOLOGY_COVERAGE.md
+# Facts:  node tests/technology/dotnet/run-fact-checks.mjs
+#
+# Format: the same restricted YAML subset as engineering-capabilities.yaml
+# (D-021). Reference paths are relative to catalog.plugin_root.
+
+catalog:
+  id: chayen-technology-capabilities
+  version: 0.1.0
+  status: PROPOSED
+  date: "2026-10-15"
+  plugin_root: plugins/codejadee-chayen-framework
+  engineering_catalog: catalog/engineering-capabilities.yaml
+
+status_vocabulary: [PLANNED, IN_PROGRESS, IMPLEMENTED, VERIFIED, BLOCKED, DEFERRED]
+
+status_rules:
+  - "PLANNED: no reference section implements the capability yet."
+  - "IMPLEMENTED: the mapped reference has the capability section with applicability, version notes, steps, and verification; evaluation cases exist; verification_evidence names what is still pending."
+  - "VERIFIED: behaviour evals on a fixture repository and trigger evals for the entry skill were executed and passed. Framework fact checks alone never make a capability VERIFIED."
+
+packs:
+  - id: dotnet-aspnetcore
+    title: "C#, ASP.NET Core Web API, and .NET application development"
+    technologies: [csharp, aspnetcore]
+    expected_capabilities: 22
+    detection: "A .csproj or Directory.Build.props; Microsoft.NET.Sdk.Web for ASP.NET Core; TargetFramework and global.json for the version"
+    fact_checks: tests/technology/dotnet/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+capabilities:
+  - id: TECH-CSHARP-001
+    name: csharp-nullability
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Enable, fix, and annotate nullable reference types in C# so the compiler's null analysis matches real behaviour, including framework effects on API models, EF Core columns, and JSON."
+    applies_when: "A C# project enables nullable reference types, has CS86xx warnings, or must annotate an API for null."
+    not_when: "The project is not C#, or the task is a single null reference bug or an endpoint contract alone."
+    inputs:
+      - "Projects and their Nullable settings"
+      - "Nullable warning baseline"
+      - "Public surface and framework consumers of the types"
+    outputs:
+      - "Annotated code with guards and attributes"
+      - "Warning counts before and after"
+      - "List of contract or schema effects"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-types-and-nullability.md
+    section: "Nullable reference types (csharp-nullability)"
+    engineering_capabilities: [CAP-05-002, CAP-05-003, CAP-05-012]
+    fact_checks: [TF-04, TF-13, TF-21]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-04, TF-13, TF-21 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-nullability-* in tests/skills/technology-cases.json; framework facts TF-04, TF-13, TF-21 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CSHARP-002
+    name: csharp-async-concurrency
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Write and fix C# async code with correct cancellation, bounded parallelism, and thread-safe shared state, without sync-over-async or fire-and-forget work."
+    applies_when: "C# code uses async and await, cancellation, parallel work, locks, or shared state, or shows deadlocks or thread pool starvation."
+    not_when: "The race needs a database transaction, or the concurrency design spans services."
+    inputs:
+      - "App model and target framework"
+      - "The async call chain and shared state"
+      - "Analyzer settings"
+    outputs:
+      - "Async-correct code with token propagation"
+      - "Tests for cancellation and concurrent access"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-async-and-memory.md
+    section: "Async and concurrency (csharp-async-concurrency)"
+    engineering_capabilities: [CAP-05-006, CAP-05-002]
+    fact_checks: [TF-29]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-29 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-async-concurrency-* in tests/skills/technology-cases.json; framework facts TF-29 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CSHARP-003
+    name: csharp-memory-disposal
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Own and dispose C# resources correctly, remove leaks from long-lived references, and reduce allocations only where a measurement shows a hot path."
+    applies_when: "C# code owns disposables, leaks handles or memory, implements IDisposable or IAsyncDisposable, or allocates heavily on a measured hot path."
+    not_when: "Memory growth in a running service must be diagnosed from dumps and counters, or a connection pool is exhausted by transactions."
+    inputs:
+      - "Types that own resources and their lifetimes"
+      - "Analyzer output"
+      - "Benchmark or counter data for allocation claims"
+    outputs:
+      - "Disposal and ownership fixes"
+      - "Tests for disposal behaviour"
+      - "Measured or labelled allocation changes"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-async-and-memory.md
+    section: "Memory and disposal (csharp-memory-disposal)"
+    engineering_capabilities: [CAP-05-002, CAP-12-006]
+    fact_checks: [TF-30]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-30 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-memory-disposal-* in tests/skills/technology-cases.json; framework facts TF-30 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CSHARP-004
+    name: csharp-linq-optimization
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Make C# LINQ correct and efficient in memory and when translated by EF Core, preserving semantics and proving speed-ups with measurements."
+    applies_when: "LINQ is slow, enumerates repeatedly, does quadratic lookups, or an EF Core query translates badly or fails to translate."
+    not_when: "SQL plan or index tuning, or finding the bottleneck of a whole service."
+    inputs:
+      - "The query and whether its source is IQueryable or IEnumerable"
+      - "Tests pinning current results"
+      - "Benchmark or generated SQL"
+    outputs:
+      - "Rewritten queries with unchanged semantics"
+      - "Before and after measurements or SQL"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-linq-and-serialization.md
+    section: "LINQ optimization (csharp-linq-optimization)"
+    engineering_capabilities: [CAP-05-003, CAP-05-005, CAP-09-003]
+    fact_checks: [TF-09]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-09 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-linq-optimization-* in tests/skills/technology-cases.json; framework facts TF-09 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CSHARP-005
+    name: csharp-type-design
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Choose and shape C# types (class, record, struct, interface) for semantics, equality, immutability, and visibility, and treat changes to consumed types as compatibility decisions."
+    applies_when: "Creating or reshaping C# types, or changing types other code or packages consume."
+    not_when: "Module or service boundaries, or a system-wide domain model."
+    inputs:
+      - "The type's role and the project's idioms for it"
+      - "Consumers of the type"
+      - "C# version"
+    outputs:
+      - "Type definitions following project idioms"
+      - "Equality tests where equality changed"
+      - "Compatibility notes for public types"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-types-and-nullability.md
+    section: "Type design (csharp-type-design)"
+    engineering_capabilities: [CAP-05-001, CAP-05-003, CAP-05-012]
+    fact_checks: [TF-14]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-14 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-type-design-* in tests/skills/technology-cases.json; framework facts TF-14 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CSHARP-006
+    name: csharp-serialization
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Change C# JSON or XML serialization without breaking wire contracts or opening unsafe deserialization, using the serializer and options the project already has."
+    applies_when: "Serializer options, property names, enums, dates, required members, polymorphism, converters, or a deserialization bug change in C#."
+    not_when: "HTTP contract design, event schema evolution between services, or database JSON columns."
+    inputs:
+      - "Serializer in use and where options are configured"
+      - "Existing wire samples or golden files"
+    outputs:
+      - "Serialization changes with a stable contract"
+      - "Round-trip and golden-file tests"
+      - "Output diff with every difference explained"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-linq-and-serialization.md
+    section: "Serialization (csharp-serialization)"
+    engineering_capabilities: [CAP-05-011, CAP-05-012, CAP-06-003]
+    fact_checks: [TF-12, TF-13]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-12, TF-13 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-serialization-* in tests/skills/technology-cases.json; framework facts TF-12, TF-13 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CSHARP-007
+    name: csharp-code-analysis
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Configure and fix .NET analyzers and code style through editorconfig and project settings, with narrow justified suppressions and approval for stricter build gates."
+    applies_when: "Analyzer or style warnings, editorconfig rules, warnings as errors, suppressions, or dotnet format need work."
+    not_when: "Security scanner triage, CI pipeline wiring, or architecture rule tests."
+    inputs:
+      - "Analyzer configuration and CI enforcement"
+      - "Warning baseline by rule ID"
+    outputs:
+      - "Configuration or code fixes"
+      - "Warning counts per rule before and after"
+      - "Format check result"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-project-health.md
+    section: "Code analysis (csharp-code-analysis)"
+    engineering_capabilities: [CAP-05-003, CAP-05-004]
+    fact_checks: [TF-20, TF-21]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-20, TF-21 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-code-analysis-* in tests/skills/technology-cases.json; framework facts TF-20, TF-21 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CSHARP-008
+    name: csharp-project-maintenance
+    pack: dotnet-aspnetcore
+    technology: csharp
+    purpose: "Maintain .NET project and solution files, SDK pinning, central package versions, lock files, and package updates, with vulnerability and licence checks and approval for major changes."
+    applies_when: "Target frameworks, global.json, shared build files, Central Package Management, package updates, vulnerable packages, lock files, or solution files change."
+    not_when: "Major framework or library upgrades with breaking changes, pipeline design, or licence and SBOM review."
+    inputs:
+      - "Build inventory (SDK pin, frameworks, central versions, lock files, sources)"
+      - "Package listing output"
+    outputs:
+      - "Project file changes in the right place"
+      - "Package listing before and after"
+      - "Restore, build, and test results"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/csharp-project-health.md
+    section: "Project maintenance (csharp-project-maintenance)"
+    engineering_capabilities: [CAP-05-008, CAP-11-004]
+    fact_checks: [TF-22, TF-23, TF-25]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-implementation; framework facts TF-22, TF-23, TF-25 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-csharp-project-maintenance-* in tests/skills/technology-cases.json; framework facts TF-22, TF-23, TF-25 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-001
+    name: aspnet-api-endpoints
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Add or change ASP.NET Core endpoints in the project's existing style (controllers or minimal APIs) with explicit DTOs, declared result types, correct status codes, cancellation, and paging."
+    applies_when: "An HTTP endpoint in an ASP.NET Core project is added, changed, or fixed."
+    not_when: "The API is not ASP.NET Core, the work is contract design, or the change spans database, API, and UI."
+    inputs:
+      - "Detected .NET version and API style"
+      - "The closest analogous endpoint"
+      - "Endpoint behaviour and contract"
+    outputs:
+      - "Endpoint code in the existing style"
+      - "Tests per status code"
+      - "Build and test results"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-endpoints.md
+    section: "Endpoints (aspnet-api-endpoints)"
+    engineering_capabilities: [CAP-06-001, CAP-06-002]
+    fact_checks: [TF-02]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-02 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-api-endpoints-* in tests/skills/technology-cases.json; framework facts TF-02 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-002
+    name: aspnet-request-pipeline
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Add, reorder, or write ASP.NET Core middleware and filters with an order that keeps forwarded headers, errors, CORS, authentication, and caching correct."
+    applies_when: "Middleware or filters are added, removed, reordered, or written, or behaviour depends on order."
+    not_when: "Logic inside one endpoint, or proxy and ingress configuration outside the app."
+    inputs:
+      - "Current middleware order and hosting model"
+      - "Filters in use"
+    outputs:
+      - "Middleware or filter changes"
+      - "HTTP tests for order-dependent behaviour"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-pipeline.md
+    section: "Request pipeline (aspnet-request-pipeline)"
+    engineering_capabilities: [CAP-05-009, CAP-06-002]
+    fact_checks: [TF-27]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-27 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-request-pipeline-* in tests/skills/technology-cases.json; framework facts TF-27 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-003
+    name: aspnet-dependency-injection
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Register services with correct lifetimes, scopes in singletons and background work, IHttpClientFactory, and validated options, following the project's registration style."
+    applies_when: "Services are registered, lifetimes chosen, scope or disposal errors fixed, or configuration bound to options."
+    not_when: "Which layer a service belongs in, or which secret store to use."
+    inputs:
+      - "Registration style and container"
+      - "Dependencies and their state"
+      - "Configuration sections"
+    outputs:
+      - "Registrations with justified lifetimes"
+      - "Validated options"
+      - "Startup and integration test results"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-pipeline.md
+    section: "Dependency injection and options (aspnet-dependency-injection)"
+    engineering_capabilities: [CAP-05-001, CAP-05-009]
+    fact_checks: [TF-10]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-10 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-dependency-injection-* in tests/skills/technology-cases.json; framework facts TF-10 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-004
+    name: aspnet-validation
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Validate ASP.NET Core requests at the boundary with the project's mechanism (DataAnnotations, FluentValidation, endpoint filters, or .NET 10 AddValidation) and one consistent error shape."
+    applies_when: "An ASP.NET Core endpoint must reject invalid input, or validation is missing or inconsistent."
+    not_when: "Business invariants that need data, or injection safety reviews."
+    inputs:
+      - "Validation mechanism in use"
+      - "DTOs and rules"
+      - "Error response shape"
+    outputs:
+      - "Validation rules or validators"
+      - "Tests for valid and each invalid class"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-endpoints.md
+    section: "Request validation (aspnet-validation)"
+    engineering_capabilities: [CAP-06-003, CAP-11-007]
+    fact_checks: [TF-03, TF-04]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-03, TF-04 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-validation-* in tests/skills/technology-cases.json; framework facts TF-03, TF-04 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-005
+    name: aspnet-authentication
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Configure or fix how an ASP.NET Core API identifies callers with the existing scheme, settings from configuration, token validation kept on, and test authentication in tests."
+    applies_when: "Bearer tokens, cookies, OpenID Connect, Identity, or API key authentication is configured or fixed."
+    not_when: "Identity provider selection or identity architecture, or a security review of the setup."
+    inputs:
+      - "Existing schemes and identity provider"
+      - "Token and claim settings"
+      - "Test authentication approach"
+    outputs:
+      - "Authentication configuration from settings"
+      - "HTTP tests for missing, invalid, and valid credentials"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-auth.md
+    section: "Authentication (aspnet-authentication)"
+    engineering_capabilities: [CAP-06-005]
+    fact_checks: [TF-28, TF-07]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-28, TF-07 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-authentication-* in tests/skills/technology-cases.json; framework facts TF-28, TF-07 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-006
+    name: aspnet-authorization
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Protect ASP.NET Core endpoints with policies and resource or ownership checks that follow the project's default protection, tested on anonymous, denied, and allowed paths."
+    applies_when: "Endpoints are protected with roles, claims, scopes, policies, or ownership checks, or a 403 or open endpoint is fixed."
+    not_when: "Permission models across systems, or API-wide access audits."
+    inputs:
+      - "Default protection rule (fallback policy, attributes, groups)"
+      - "Existing policies"
+      - "Ownership rules"
+    outputs:
+      - "Policies and handlers"
+      - "Three-path HTTP tests"
+      - "List of newly protected endpoints"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-auth.md
+    section: "Authorization (aspnet-authorization)"
+    engineering_capabilities: [CAP-06-005, CAP-11-006]
+    fact_checks: [TF-07]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-07 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-authorization-* in tests/skills/technology-cases.json; framework facts TF-07 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-007
+    name: aspnet-openapi
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Keep the ASP.NET Core OpenAPI document accurate with the project's generator, complete response metadata, stable operation IDs, and reviewed diffs."
+    applies_when: "An ASP.NET Core API must describe its endpoints in OpenAPI, or the document is wrong or feeds generated clients."
+    not_when: "Human API documentation, or generating client code from a finished document."
+    inputs:
+      - "Generator in use and document location"
+      - "Changed endpoints and their responses"
+    outputs:
+      - "Endpoint metadata"
+      - "Regenerated document with a reviewed diff"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-endpoints.md
+    section: "OpenAPI documents (aspnet-openapi)"
+    engineering_capabilities: [CAP-05-011, CAP-06-001]
+    fact_checks: [TF-06]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-06 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-openapi-* in tests/skills/technology-cases.json; framework facts TF-06 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-008
+    name: aspnet-exception-handling
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Map failures to consistent ASP.NET Core error responses in one place, with no exception details outside Development, client aborts treated as such, and failures logged once."
+    applies_when: "Unhandled exceptions leak details or return wrong statuses, error shapes are inconsistent, or domain failures must map to HTTP."
+    not_when: "System-wide error handling across layers, or a leak treated as a security finding."
+    inputs:
+      - "Existing error mechanism"
+      - "Known failure types and their statuses"
+    outputs:
+      - "Exception handlers or mappings"
+      - "HTTP tests in a non-Development environment"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-pipeline.md
+    section: "Exception handling and error responses (aspnet-exception-handling)"
+    engineering_capabilities: [CAP-05-007, CAP-06-002]
+    fact_checks: [TF-05, TF-27]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-05, TF-27 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-exception-handling-* in tests/skills/technology-cases.json; framework facts TF-05, TF-27 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-009
+    name: aspnet-background-services
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Write .NET hosted services and workers that respect the stopping token, scope per unit of work, survive iteration failures deliberately, and run safely on several instances."
+    applies_when: "Hosted services, workers, in-process queues, or scheduled work in a .NET host are written or fixed."
+    not_when: "Choosing a job framework or broker, message contract design, or infrastructure scheduling."
+    inputs:
+      - "Mechanism in use (hosted services, job framework, broker)"
+      - "Instance count"
+      - "Host options"
+    outputs:
+      - "Hosted service or job code"
+      - "Tests for one iteration, failure, and cancellation"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-background-services.md
+    section: "Background services (aspnet-background-services)"
+    engineering_capabilities: [CAP-06-008]
+    fact_checks: [TF-11]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-11 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-background-services-* in tests/skills/technology-cases.json; framework facts TF-11 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-010
+    name: aspnet-data-access
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Read and write data from ASP.NET Core through the project's library (EF Core, Dapper, or ADO.NET) with async calls, projections, paging, concurrency handling, transactions, and parameterized SQL."
+    applies_when: "Endpoints, handlers, or jobs read or write data through EF Core, Dapper, or ADO.NET."
+    not_when: "Schema migrations, query plan tuning, or table design."
+    inputs:
+      - "Data access library and pattern"
+      - "Provider and engine"
+      - "Concurrency and retry settings"
+    outputs:
+      - "Data access code in the existing pattern"
+      - "Query tests"
+      - "Inspected SQL for changed EF Core queries"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/aspnetcore-data-access.md
+    section: "Data access in an API (aspnet-data-access)"
+    engineering_capabilities: [CAP-06-002, CAP-09-003, CAP-09-005]
+    fact_checks: [TF-08, TF-09]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-backend; framework facts TF-08, TF-09 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-data-access-* in tests/skills/technology-cases.json; framework facts TF-08, TF-09 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-011
+    name: aspnet-efcore-migrations
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Create, review, script, and apply EF Core migrations only where EF Core manages the schema, catching data-loss scaffolds and keeping shared databases behind approval."
+    applies_when: "A .NET project manages its schema with EF Core migrations and a model change needs a migration, or a migration needs review, scripting, or removal."
+    not_when: "The project uses another migration tool or a database-first model, or the task is query tuning or modeling."
+    inputs:
+      - "Evidence that EF Core migrations manage the schema"
+      - "Context, migrations, and startup projects"
+      - "Tool and package versions"
+    outputs:
+      - "Reviewed migration with data-loss operations named"
+      - "Idempotent script"
+      - "Local apply, rollback, and re-apply results"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/efcore-migrations.md
+    section: "EF Core migrations (aspnet-efcore-migrations)"
+    engineering_capabilities: [CAP-09-002, CAP-09-007]
+    fact_checks: [TF-15, TF-16, TF-17, TF-18, TF-19]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-data; framework facts TF-15, TF-16, TF-17, TF-18, TF-19 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-efcore-migrations-* in tests/skills/technology-cases.json; framework facts TF-15, TF-16, TF-17, TF-18, TF-19 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-012
+    name: aspnet-integration-testing
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Test ASP.NET Core apps through the real HTTP pipeline with WebApplicationFactory, the project's test framework, replaced external dependencies, and a representative database."
+    applies_when: "An ASP.NET Core app is tested through its HTTP pipeline in memory."
+    not_when: "Code without an HTTP surface, deployed or browser end-to-end tests, or non-ASP.NET Core projects."
+    inputs:
+      - "Existing factory or fixture"
+      - "Test, assertion, and mocking libraries"
+      - "Database test approach"
+    outputs:
+      - "HTTP tests with status, body, and error-shape assertions"
+      - "Authorization path tests"
+    entry_skill: chayen-testing
+    reference: skills/chayen-testing/references/dotnet-testing.md
+    section: "ASP.NET Core integration tests (aspnet-integration-testing)"
+    engineering_capabilities: [CAP-10-003, CAP-10-006]
+    fact_checks: [TF-01, TF-24, TF-07]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-testing; framework facts TF-01, TF-24, TF-07 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-integration-testing-* in tests/skills/technology-cases.json; framework facts TF-01, TF-24, TF-07 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-013
+    name: aspnet-performance
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Apply ASP.NET Core framework levers (async, HTTP clients, data access shape, serialization, caching, logging, hosting) to a measured bottleneck, one at a time, with before and after numbers."
+    applies_when: "A measured ASP.NET Core latency, throughput, allocation, or startup problem needs a framework-level fix."
+    not_when: "Nothing has been measured yet, a single SQL query is slow, or the problem is in the browser."
+    inputs:
+      - "Measurement locating the bottleneck"
+      - ".NET version and hosting"
+      - "Existing caches and telemetry"
+    outputs:
+      - "Changes with before and after measurements"
+      - "Claims labelled MEASURED or HYPOTHESIS"
+      - "Functional test results"
+    entry_skill: chayen-performance
+    reference: skills/chayen-performance/references/aspnetcore-performance.md
+    section: "ASP.NET Core performance (aspnet-performance)"
+    engineering_capabilities: [CAP-12-005, CAP-12-009]
+    fact_checks: [TF-31]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-performance; framework facts TF-31 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-performance-* in tests/skills/technology-cases.json; framework facts TF-31 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-ASPNET-014
+    name: aspnet-hosting-deployment
+    pack: dotnet-aspnetcore
+    technology: aspnetcore
+    purpose: "Package, configure, and host ASP.NET Core apps with matching SDK and runtime versions, correct ports, environment configuration, forwarded headers, health checks, shared Data Protection keys, and authorized deploys."
+    applies_when: "An ASP.NET Core app is published, containerized, configured per environment, or hosted, or fails only when hosted."
+    not_when: "Pipeline or infrastructure code design, Dockerfile security review, or endpoint code."
+    inputs:
+      - "Target framework, SDK, and runtime image"
+      - "Hosting target and configuration"
+      - "Health and shutdown settings"
+    outputs:
+      - "Publish or image settings"
+      - "Configuration changes"
+      - "Local start, health, and shutdown results"
+      - "Deploy hand-over with rollback"
+    entry_skill: chayen-devops
+    reference: skills/chayen-devops/references/aspnetcore-hosting.md
+    section: "Hosting and deployment (aspnet-hosting-deployment)"
+    engineering_capabilities: [CAP-13-004, CAP-13-007, CAP-13-010]
+    fact_checks: [TF-26]
+    verification: "Behaviour eval on a .NET fixture repository using the positive and negative cases in tests/skills/technology-cases.json, plus trigger evals for chayen-devops; framework facts TF-26 by run-fact-checks.mjs."
+    verification_evidence: "Step 20: section reviewed against this record (agent review); static check V-23 PASS; cases tc-aspnet-hosting-deployment-* in tests/skills/technology-cases.json; framework facts TF-26 PASS on the .NET 10.0.401 and 8.0.406 SDKs. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    status: IMPLEMENTED

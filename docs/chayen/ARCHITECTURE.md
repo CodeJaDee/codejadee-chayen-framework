@@ -280,6 +280,12 @@ Entry skills are the **only** objects the provider's discovery sees.
 
 ### C-05 Technology Reference Packs
 
+> **As built (Step 20, D-039):** skills cannot link outside their own
+> directory (D-016), so a pack is not a shared `knowledge/stacks/` folder.
+> Its `kind: technology` references live in the skills that use them, and
+> the pack is tracked in `catalog/technology-capabilities.yaml`. See
+> [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md) §2.
+
 - **One pack per technology**, shared by every entry skill. There is one
   canonical copy, with no per-skill duplication.
 

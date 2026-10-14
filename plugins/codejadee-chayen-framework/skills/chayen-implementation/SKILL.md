@@ -78,7 +78,8 @@ If the request does not fit, stop following this skill and continue normally wit
 
 1. **Orient minimally.** Find the stack, versions, and real commands from CI
    files or scripts, plus the analogous code. Do not survey the whole
-   repository.
+   repository. For C# code, also read the one C# reference that matches
+   the change (see References).
 2. **Baseline.** When running commands is permitted, build and run the
    relevant tests before editing. Record pre-existing failures.
 3. **Classify the change,** then read the one matching recipe:
@@ -177,4 +178,8 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 | [references/configuration-and-flags.md](references/configuration-and-flags.md) | Workflow step 3: adding or changing settings, or a feature flag |
 | [references/contract-codegen.md](references/contract-codegen.md) | Workflow step 3: generating or regenerating code from a contract |
 | [references/compatibility.md](references/compatibility.md) | Workflow step 3: changing a public API, event, schema, or library that others consume |
+| [references/csharp-types-and-nullability.md](references/csharp-types-and-nullability.md) | Workflow step 1: C# code, and the change touches nullable reference types or the design of classes, records, structs, or interfaces |
+| [references/csharp-async-and-memory.md](references/csharp-async-and-memory.md) | Workflow step 1: C# code, and the change touches async, cancellation, concurrency, disposal, or allocations |
+| [references/csharp-linq-and-serialization.md](references/csharp-linq-and-serialization.md) | Workflow step 1: C# code, and the change touches LINQ queries or JSON or XML serialization |
+| [references/csharp-project-health.md](references/csharp-project-health.md) | Workflow step 1: .NET projects, and the change touches analyzers, code style, project files, SDK pinning, or NuGet packages |
 | [references/change-summary.md](references/change-summary.md) | Workflow step 7: reporting or handing over a completed change, or auditing the evidence claimed for completed work |

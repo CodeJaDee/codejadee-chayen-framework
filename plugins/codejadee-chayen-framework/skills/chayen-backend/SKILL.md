@@ -85,8 +85,10 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
-1. **Detect the stack.** Then read exactly one technology reference, plus the
-   data access reference if a database is involved.
+1. **Detect the stack and its version.** Then read exactly one technology
+   reference, plus the data access reference if a database is involved.
+   For ASP.NET Core, read the base reference first, then only the one
+   topic file the task needs.
 2. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -172,7 +174,12 @@ Load one technology reference for the detected stack (workflow step 1), and one 
 
 | Reference | Load when |
 |---|---|
-| [references/aspnetcore-webapi.md](references/aspnetcore-webapi.md) | `*.csproj` with `Microsoft.NET.Sdk.Web` is detected |
+| [references/aspnetcore-webapi.md](references/aspnetcore-webapi.md) | `*.csproj` with `Microsoft.NET.Sdk.Web` is detected: read first, for the .NET version, API style, and architecture rules |
+| [references/aspnetcore-endpoints.md](references/aspnetcore-endpoints.md) | ASP.NET Core, and the task touches endpoints, request validation, or OpenAPI |
+| [references/aspnetcore-pipeline.md](references/aspnetcore-pipeline.md) | ASP.NET Core, and the task touches middleware, dependency injection, options, or exception handling |
+| [references/aspnetcore-auth.md](references/aspnetcore-auth.md) | ASP.NET Core, and the task touches authentication or authorization |
+| [references/aspnetcore-data-access.md](references/aspnetcore-data-access.md) | ASP.NET Core, and the task reads or writes data through EF Core, Dapper, or ADO.NET |
+| [references/aspnetcore-background-services.md](references/aspnetcore-background-services.md) | ASP.NET Core or a .NET worker, and the task touches hosted services, queues, or scheduled work |
 | [references/node-servers.md](references/node-servers.md) | Nitro, Elysia, Next.js route handlers, or Nuxt `server/` is detected |
 | [references/python-web-apis.md](references/python-web-apis.md) | FastAPI, Django, or Flask is detected |
 | [references/data-access.md](references/data-access.md) | A database, ORM, SQL, or migration is involved |

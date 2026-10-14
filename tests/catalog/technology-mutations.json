@@ -1,0 +1,90 @@
+{
+  "$comment": "Negative controls for tools/catalog/check-technology.mjs (V-23, D-039). Each case mutates a temporary copy of the repository; the checker must exit 1 with an ERROR line starting with expect.error. Run: node tools/validate/run-validator-tests.mjs",
+  "version": 1,
+  "cases": [
+    {
+      "id": "tech-rename-capability",
+      "description": "A technology capability is renamed away from the Step 20 inventory",
+      "edits": [{ "file": "catalog/technology-capabilities.yaml", "op": "replace", "find": "    name: csharp-nullability\n", "with": "    name: csharp-null-safety\n" }],
+      "expect": { "validator": "technology", "error": "V-23.1 inventory" }
+    },
+    {
+      "id": "tech-omit-capability",
+      "description": "The last inventory capability is removed",
+      "edits": [{ "file": "catalog/technology-capabilities.yaml", "op": "regex", "pattern": "  - id: TECH-ASPNET-014\\n[\\s\\S]*$", "with": "" }],
+      "expect": { "validator": "technology", "error": "V-23.1 inventory" }
+    },
+    {
+      "id": "tech-duplicate-id",
+      "description": "Two records share an id",
+      "edits": [{ "file": "catalog/technology-capabilities.yaml", "op": "replace", "find": "  - id: TECH-CSHARP-002\n", "with": "  - id: TECH-CSHARP-001\n" }],
+      "expect": { "validator": "technology", "error": "V-23.1 inventory" }
+    },
+    {
+      "id": "tech-verified-without-evidence",
+      "description": "A record is VERIFIED while its evidence says the evals are NOT_RUN",
+      "edits": [{ "file": "catalog/technology-capabilities.yaml", "op": "regex", "pattern": "(  - id: TECH-ASPNET-013\\n[\\s\\S]*?    status: )IMPLEMENTED", "with": "$1VERIFIED" }],
+      "expect": { "validator": "technology", "error": "V-23.2 records" }
+    },
+    {
+      "id": "tech-unknown-engineering-capability",
+      "description": "A record links an engineering capability that does not exist",
+      "edits": [{ "file": "catalog/technology-capabilities.yaml", "op": "replace", "find": "    engineering_capabilities: [CAP-06-008]\n", "with": "    engineering_capabilities: [CAP-06-099]\n" }],
+      "expect": { "validator": "technology", "error": "V-23.2 records" }
+    },
+    {
+      "id": "tech-reference-not-listed",
+      "description": "The technology reference is removed from its skill's References table",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/SKILL.md", "op": "regex", "pattern": "\\| \\[references/aspnetcore-performance\\.md\\][^\\n]*\\n", "with": "" }],
+      "expect": { "validator": "technology", "error": "V-23.3 mapping" }
+    },
+    {
+      "id": "tech-section-missing",
+      "description": "A capability section heading loses its capability name",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/csharp-types-and-nullability.md", "op": "replace", "find": "## Type design (csharp-type-design)\n", "with": "## Type design\n" }],
+      "expect": { "validator": "technology", "error": "V-23.4 sections" }
+    },
+    {
+      "id": "tech-orphan-section",
+      "description": "A capability-style section exists without a catalog record",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-endpoints.md", "op": "append", "content": "\n## Unsafe code (csharp-unsafe-code)\n\nGuidance for unsafe code blocks and pointers in C#.\n" }],
+      "expect": { "validator": "technology", "error": "V-23.4 sections" }
+    },
+    {
+      "id": "tech-missing-version-notes",
+      "description": "A section loses its version notes",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-auth.md", "op": "replace", "find": "**Version notes:** `AddAuthorizationBuilder()`", "with": "Version: `AddAuthorizationBuilder()`" }],
+      "expect": { "validator": "technology", "error": "V-23.5 anatomy" }
+    },
+    {
+      "id": "tech-placeholder-in-section",
+      "description": "A placeholder marker appears in a capability section",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/aspnetcore-hosting.md", "op": "replace", "find": "**Steps:**\n\n1. Confirm the target framework", "with": "**Steps:**\n\nTODO\n\n1. Confirm the target framework" }],
+      "expect": { "validator": "technology", "error": "V-23.6 placeholders" }
+    },
+    {
+      "id": "tech-missing-negative-case",
+      "description": "A capability loses its only negative evaluation case",
+      "edits": [{ "file": "tests/skills/technology-cases.json", "op": "regex", "pattern": ",\\n    \\{\\n      \"id\": \"tc-aspnet-performance-neg-01\"[\\s\\S]*?\\n    \\}", "with": "" }],
+      "expect": { "validator": "technology", "error": "V-23.7 cases" }
+    },
+    {
+      "id": "tech-case-wrong-skill",
+      "description": "A positive case expects a skill other than the catalog entry skill",
+      "edits": [{ "file": "tests/skills/technology-cases.json", "op": "replace", "find": "\"expect\": { \"skill\": \"chayen-devops\", \"loads\": \"references/aspnetcore-hosting.md\"", "with": "\"expect\": { \"skill\": \"chayen-backend\", \"loads\": \"references/aspnetcore-hosting.md\"" }],
+      "expect": { "validator": "technology", "error": "V-23.7 cases" }
+    },
+    {
+      "id": "tech-unknown-fact",
+      "description": "A record lists a fact check that does not exist",
+      "edits": [{ "file": "catalog/technology-capabilities.yaml", "op": "replace", "find": "    fact_checks: [TF-26]\n", "with": "    fact_checks: [TF-99]\n" }],
+      "expect": { "validator": "technology", "error": "V-23.8 facts" }
+    },
+    {
+      "id": "tech-coverage-doc-stale",
+      "description": "The generated coverage table no longer matches the catalog",
+      "edits": [{ "file": "docs/chayen/TECHNOLOGY_COVERAGE.md", "op": "replace", "find": "| TECH-CSHARP-001 | `csharp-nullability`", "with": "| TECH-CSHARP-001 | `csharp-nullable`" }],
+      "expect": { "validator": "technology", "error": "V-23.9 coverage-doc" }
+    }
+  ]
+}

@@ -3,106 +3,102 @@ kind: technology
 ---
 # ASP.NET Core Web API
 
-**Applies to:** ASP.NET Core on .NET 6 and later.
-
-- Check `<TargetFramework>` before using any version-specific API.
-- If the project targets an older framework, use only APIs available there.
+**Applies to:** ASP.NET Core Web APIs on .NET 6 and later (a project with
+`Sdk="Microsoft.NET.Sdk.Web"`). Read this file first, then the one topic
+file the task needs (table below).
 
 ## Check the repository first
 
+### Detect the actual .NET version
+
+Never assume the version. Read it, in this order:
+
+| Source | What it tells you |
+|---|---|
+| `<TargetFramework>` or `<TargetFrameworks>` in the `.csproj`, or in `Directory.Build.props` | The runtime and API surface the code compiles against (`net8.0`, `net9.0`, `net10.0`). Multi-targeted projects must compile on every listed framework. |
+| `global.json` (`sdk.version`, `rollForward`) | The SDK the repository pins. It selects the `dotnet` CLI behaviour and the default C# version. |
+| `<LangVersion>` | An explicit C# version. Without it, the C# version follows the target framework. |
+| `Directory.Packages.props` or `<PackageReference>` versions | Versions of `Microsoft.AspNetCore.*`, `Microsoft.EntityFrameworkCore.*`, and `Microsoft.Extensions.*` packages, which should match the framework major version. |
+| CI files and Dockerfiles (`setup-dotnet`, `mcr.microsoft.com/dotnet/aspnet:<tag>`) | The SDK and runtime used to build and run. Report a mismatch with the project file. |
+
+When the commands may be run, `dotnet --version` (in the repository
+directory, so `global.json` applies) and `dotnet --list-sdks` confirm what
+is installed. Report the detected version in the output.
+
+**Version gates.** Use a feature only if the target framework has it. When
+unsure, check the official "What's new in ASP.NET Core" page for that
+version rather than guessing.
+
+| Feature | Available from |
+|---|---|
+| Minimal APIs, `WebApplication`, top-level `Program` | .NET 6 |
+| `MapGroup`, endpoint filters, `TypedResults`, `Results<T1, T2>`, `[AsParameters]`, `AddProblemDetails`, rate limiting and output caching middleware | .NET 7 |
+| `IExceptionHandler`, keyed services, `TimeProvider`, request timeouts middleware, `MapIdentityApi` | .NET 8 |
+| Built-in OpenAPI document generation (`AddOpenApi`, `MapOpenApi`) | .NET 9 |
+| Built-in minimal API validation (`AddValidation`) | .NET 10 |
+
+### Detect the conventions and architecture
+
 | Area | What to look for |
 |---|---|
-| API style | Controllers (`[ApiController]` + `ControllerBase`) or minimal APIs (`MapGet` / `MapGroup`, `TypedResults`). Follow the style in use. |
-| Mediators and patterns | MediatR, CQRS, vertical slices, or plain services. Use them only if they are already present. |
-| Validation | DataAnnotations, FluentValidation, or endpoint filters |
-| Errors | Problem Details (`AddProblemDetails`, `IExceptionHandler`, `UseExceptionHandler`) or a custom middleware / error envelope |
-| Mapping | Manual mapping, AutoMapper, or Mapster |
-| Authentication | `[Authorize]` and policies, the minimal API `RequireAuthorization()`, any fallback policy |
-| OpenAPI | `Microsoft.AspNetCore.OpenApi` (`AddOpenApi`/`MapOpenApi`), Swashbuckle, or NSwag |
+| API style | Controllers (`[ApiController]`, `ControllerBase`, `MapControllers`) or minimal APIs (`MapGet`, `MapGroup`, endpoint classes or extension methods). Some repositories use both: follow the style of the area being changed. |
+| Solution structure | Project references (`<ProjectReference>`) show the dependency direction, for example Api → Application → Domain, with Infrastructure implementing Application interfaces. A new reference must not reverse it. |
+| Architecture rules | Architecture tests (NetArchTest, ArchUnitNET), `Directory.Build.props` rules, ADRs, or `AGENTS.md`. They are constraints, not suggestions. |
+| Patterns in use | MediatR or another mediator, CQRS handlers, vertical slices (`Features/`), repositories, result types (ErrorOr, FluentResults, OneOf), mapping (manual, AutoMapper, Mapster). Use them only if already present. |
+| Data access | EF Core (`DbContext`), Dapper, ADO.NET, or another library. Many projects do not use EF Core. |
+| Validation, errors, auth, OpenAPI | See the topic files. |
 
-## Guidance
+**Never introduce a new architectural pattern automatically.** Adding a
+mediator, repositories, CQRS, a result type, a new layer, or a switch
+between controllers and minimal APIs needs the user's explicit request.
 
-### Endpoints
+## Topic files
 
-- **Request and response DTOs.** Never bind or return EF entities. Entities
-  invite over-posting and leak internal fields.
-- **Controllers:** `ActionResult<T>`.
-- **Minimal APIs:** `TypedResults` with `Results<Ok<T>, NotFound, ...>`,
-  which keeps OpenAPI metadata accurate.
-- **Status codes:**
+| Task | Read |
+|---|---|
+| Endpoints, routes, status codes, request validation, OpenAPI | `aspnetcore-endpoints.md` |
+| Middleware order, dependency injection and options, exception handling | `aspnetcore-pipeline.md` |
+| Authentication or authorization | `aspnetcore-auth.md` |
+| Data access with EF Core, Dapper, or ADO.NET | `aspnetcore-data-access.md` |
+| Hosted services, workers, queues, scheduled work | `aspnetcore-background-services.md` |
 
-  | Situation | Status |
-  |---|---|
-  | Read success | 200 |
-  | Creation | 201 with a location |
-  | Success with no body | 204 |
-  | Validation failure | 400 |
-  | Unauthenticated | 401 |
-  | Forbidden | 403 |
-  | Missing resource | 404 |
-  | Conflict or concurrency | 409 |
-  | Unexpected | 500, never with exception details in production |
+## C# rules that apply to every endpoint
 
-- **Pass `CancellationToken`** from the action or handler through to every
-  async I/O call.
-- **Lists:** paginate (`page`/`pageSize`, or a cursor) with a maximum page
-  size enforced on the server.
-
-### Validation
-
-- **`[ApiController]`** returns a 400 `ValidationProblemDetails`
-  automatically for DataAnnotations failures. Do not duplicate it manually.
-- **FluentValidation:** if the project uses it, add a validator next to the
-  existing ones, and follow how they are registered and invoked.
-- **Minimal APIs:** validate with the project's existing mechanism (endpoint
-  filter or library). Recent .NET versions offer built-in minimal API
-  validation. Use it only if the project's target framework and setup
-  already support it.
-
-### Errors and logging
-
-- Map known domain failures to specific status codes in one place,
-  following the project's handler or middleware.
-- **Use `ILogger<T>` with message templates**, for example
-  `logger.LogWarning("Order {OrderId} not found", id)`, not string
-  interpolation.
-  - Never log secrets, tokens, or full request bodies that carry personal
-    data.
-
-### Dependency injection and configuration
-
-- **Lifetimes.** `DbContext` is scoped. Never inject scoped services into
-  singletons.
-- **Typed settings** use the options pattern (`IOptions<T>`).
-- **Secrets** come from user-secrets locally and from a secret store in
-  deployed environments, never from committed `appsettings*.json`.
-
-### Async
-
-- Use `async`/`await` end to end.
-- No `.Result` or `.Wait()`.
-- No `async void` except event handlers.
+- **Async end to end.** No `.Result`, `.Wait()`, or
+  `.GetAwaiter().GetResult()` on request paths. No `async void`.
+- **Cancellation.** Accept a `CancellationToken` in the action or handler
+  (bound to `HttpContext.RequestAborted`) and pass it to every async I/O
+  call.
+- **Nullable reference types.** When `<Nullable>enable</Nullable>` is set,
+  a non-nullable reference property on an `[ApiController]` model is
+  treated as required: a request without it gets a 400. Declare optional
+  properties as nullable (`string?`). Turning nullable on in an existing API
+  therefore changes its contract.
+- **Logging.** `ILogger<T>` with message templates
+  (`logger.LogWarning("Order {OrderId} not found", id)`), not string
+  interpolation. Never log secrets, tokens, or personal data.
 
 ## Verification commands
 
 ```bash
-dotnet build
-dotnet test                                  # or: dotnet test --filter "FullyQualifiedName~Orders"
-dotnet format --verify-no-changes            # only if the repository uses dotnet format
+dotnet --version                               # in the repository root, so global.json applies
+dotnet build                                   # or the solution or project the CI builds
+dotnet test                                    # or: dotnet test --filter "FullyQualifiedName~Orders"
+dotnet format --verify-no-changes              # only if the repository uses dotnet format
 ```
 
-For HTTP-level tests, see whether the project uses
-`WebApplicationFactory<Program>` (`Microsoft.AspNetCore.Mvc.Testing`).
-Reuse its fixture.
+Report each command as PASS, FAIL, or NOT_RUN with its output summary.
 
 ## Pitfalls
 
-- **Returning `IQueryable` or lazy-loaded entities from endpoints.** This
-  causes serialization cycles and N+1 queries.
-- **Catching `Exception` and returning 200 with an error message.**
-- **Changing route templates or DTO property names** on a published API
-  without versioning or approval.
+- **Assuming the latest .NET.** An API from a newer framework does not
+  compile on the project's target framework, or fails on one of several
+  target frameworks.
+- **Converting the API style.** Rewriting controllers as minimal APIs (or
+  the reverse) as part of an unrelated change.
+- **Adding a project reference that breaks the layering,** for example
+  Domain referencing Infrastructure to reach a `DbContext`.
+- **Changing route templates, DTO property names, or nullability** on a
+  published API without versioning or approval.
 - **`DateTime` with an unknown kind.** Prefer `DateTimeOffset` or UTC,
   following the project's convention.
-- **Missing authorization on new endpoints** when the project relies on
-  per-endpoint attributes rather than a fallback policy.

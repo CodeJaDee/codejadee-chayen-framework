@@ -789,6 +789,48 @@ Decision statuses:
   - REQ-05 moves from IN_PROGRESS to IMPLEMENTED in the acceptance matrix.
   - Description trigger effects are NOT_RUN (R-32).
 
+### D-039 — .NET technology pack in existing skills, with its own catalog and checker
+- **Status:** PROPOSED (executed in Step 20).
+- **Context:** Step 20 asks for first-class C#, ASP.NET Core Web API, and
+  .NET support: 22 named technology capabilities, with technology knowledge
+  kept separate from the general workflow where practical. The L0 budget is
+  at 5,485 / 5,500, the 206-capability engineering catalog is a verbatim
+  inventory, and skills cannot link to each other's files (D-016).
+- **Decision:**
+  - **No new entry skill and no description change.** The pack lives in
+    `kind: technology` references in the skills that handle each kind of
+    request: C# language and project health in `chayen-implementation`
+    (4 files); ASP.NET Core API work in `chayen-backend` (a rewritten base
+    reference plus 5 topic files); EF Core migrations in `chayen-data`;
+    WebApplicationFactory tests in `chayen-testing` (extended
+    `dotnet-testing.md`); ASP.NET Core performance levers in
+    `chayen-performance`; hosting and deployment in `chayen-devops`.
+    Recipes keep the workflow; technology sections hold the .NET detail.
+  - **A separate technology catalog** (`catalog/technology-capabilities.yaml`,
+    IDs `TECH-<TECH>-NNN`, pack `dotnet-aspnetcore` from the engineering
+    catalog's `stack_packs`). The engineering catalog is unchanged, so the
+    206 count and its checker are unaffected.
+  - **Authoring standard amended:** §5.3 (technology capability sections,
+    TC-01 to TC-06), LD-03 (base plus one topic file per stack), and §8
+    (`technology-cases.json`).
+  - **New checker V-23** (`tools/catalog/check-technology.mjs`, gate G-03b)
+    with 14 negative controls, and 57 technology cases.
+  - **Framework fact checks:** a developer-only .NET fixture and runner
+    (`tests/technology/dotnet/`) execute 31 claims the guidance relies on.
+    They use the locally installed SDKs and need no new dependency in the
+    repository tooling (BC-22): the runner is plain Node.js and the fixture
+    restores its own NuGet packages in a temporary directory.
+  - **Status rule:** all 22 are IMPLEMENTED; none is VERIFIED. Fact checks
+    show framework behaviour, not agent behaviour.
+- **Consequences:**
+  - .NET prompts route through existing descriptions. C# language prompts
+    rely on `chayen-implementation`'s general wording, and EF Core
+    migration prompts may reach `chayen-backend` instead of `chayen-data`
+    (R-37). Seven trigger cases were added; trigger evals are NOT_RUN.
+  - Version claims for .NET 6, 7, and 9 are not executed (R-38).
+  - The later technology packs (Angular, SQL Server, and the additional
+    stacks) can follow the same pattern.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

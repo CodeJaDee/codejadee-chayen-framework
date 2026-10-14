@@ -1,0 +1,519 @@
+{
+  "$comment": "Technology capability evaluation cases (Step 20, D-039). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
+  "version": 1,
+  "cases": [
+    {
+      "id": "tc-csharp-nullability-01",
+      "capability": "csharp-nullability",
+      "polarity": "positive",
+      "context": "C# class library targeting net8.0 with no <Nullable> setting; 3 projects in the solution",
+      "prompt": "We want nullable reference types on in our Billing library. Turn it on and fix the warnings without hiding them.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-types-and-nullability.md", "applies": "csharp-nullability" },
+      "checks": ["Reports the target framework and the starting CS86xx warning count", "Enables per project or per file rather than flipping the whole solution unasked", "Does not silence warnings with blanket null-forgiving operators", "Reports warning counts before and after with the build command"]
+    },
+    {
+      "id": "tc-csharp-nullability-02",
+      "capability": "csharp-nullability",
+      "polarity": "positive",
+      "context": "ASP.NET Core API on net8.0 with controllers, EF Core entities in the same solution, <Nullable> disabled",
+      "prompt": "Enable nullable reference types in the Orders project of our C# solution and clean up the warnings.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-types-and-nullability.md", "applies": "csharp-nullability" },
+      "checks": ["Warns that non-nullable DTO properties become required in [ApiController] models (a contract change)", "Warns that EF Core string columns may become NOT NULL and need a migration", "Asks before accepting the contract or schema change"]
+    },
+    {
+      "id": "tc-csharp-nullability-neg-01",
+      "capability": "csharp-nullability",
+      "polarity": "negative",
+      "context": "TypeScript Node service with strictNullChecks off",
+      "prompt": "Turn on strict null checks in our TypeScript service and fix the errors.",
+      "expect": { "not_applies": "csharp-nullability", "skill": "chayen-implementation", "not_loads": "references/csharp-types-and-nullability.md" },
+      "checks": ["Does not apply C# nullable guidance or mention <Nullable>", "Works with tsconfig and the TypeScript compiler"]
+    },
+    {
+      "id": "tc-csharp-async-concurrency-01",
+      "capability": "csharp-async-concurrency",
+      "polarity": "positive",
+      "context": "net8.0 class library used by an ASP.NET Core API; code calls .Result on HttpClient calls; analyzers at default",
+      "prompt": "Our C# PriceService blocks on .Result in a few places and requests pile up under load. Make it properly async.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-async-and-memory.md", "applies": "csharp-async-concurrency" },
+      "checks": ["Removes sync-over-async along the whole call chain", "Adds and forwards CancellationToken parameters", "Follows the project's ConfigureAwait convention instead of imposing one", "Runs the tests and reports the command and result"]
+    },
+    {
+      "id": "tc-csharp-async-concurrency-02",
+      "capability": "csharp-async-concurrency",
+      "polarity": "positive",
+      "context": "netstandard2.0 library plus a net8.0 worker; a static Dictionary is updated from parallel tasks",
+      "prompt": "Sometimes our C# importer throws 'collection was modified' when it runs files in parallel. Fix the thread safety and cap the parallelism.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-async-and-memory.md", "applies": "csharp-async-concurrency" },
+      "checks": ["Uses only APIs available on netstandard2.0 in the library project", "Bounds parallelism explicitly", "Adds a concurrency test or explains why it is NOT_RUN"]
+    },
+    {
+      "id": "tc-csharp-async-concurrency-neg-01",
+      "capability": "csharp-async-concurrency",
+      "polarity": "negative",
+      "context": "ASP.NET Core API on SQL Server; two requests book the same seat",
+      "prompt": "Two customers can book the same seat at the same moment. How should the SQL Server transaction and locking work?",
+      "expect": { "not_applies": "csharp-async-concurrency", "skill": "chayen-data" },
+      "checks": ["Treats it as a database concurrency problem (transactions, isolation, constraints)", "Does not propose in-process locks as the fix for a multi-instance race"]
+    },
+    {
+      "id": "tc-csharp-memory-disposal-01",
+      "capability": "csharp-memory-disposal",
+      "polarity": "positive",
+      "context": "net8.0 console tool creating a new HttpClient per call and StreamReader instances without using",
+      "prompt": "Our C# sync tool runs out of sockets after a few hours. Check how it creates HttpClient and disposes streams.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-async-and-memory.md", "applies": "csharp-memory-disposal" },
+      "checks": ["Replaces per-call HttpClient with IHttpClientFactory or a long-lived instance with a pooled connection lifetime", "Adds using or await using for owned disposables", "Does not dispose objects owned by dependency injection", "Labels any memory improvement as unmeasured unless measured"]
+    },
+    {
+      "id": "tc-csharp-memory-disposal-neg-01",
+      "capability": "csharp-memory-disposal",
+      "polarity": "negative",
+      "context": "Production ASP.NET Core service whose memory grows until the container restarts; no code pointer yet",
+      "prompt": "Our .NET service's memory keeps climbing in production until it gets OOM-killed. Help me find out why.",
+      "expect": { "not_applies": "csharp-memory-disposal", "skill": "chayen-performance" },
+      "checks": ["Starts from measurement (counters, gcdump, dumps) rather than editing disposal code", "Does not claim a leak cause without evidence"]
+    },
+    {
+      "id": "tc-csharp-linq-optimization-01",
+      "capability": "csharp-linq-optimization",
+      "polarity": "positive",
+      "context": "net9.0 library with nested loops of Where(...).First(...) over two lists of 50k items; tests exist; no benchmark project",
+      "prompt": "This C# matching step takes minutes. It does a Where().First() for every order against every customer list. Speed it up without changing results.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-linq-and-serialization.md", "applies": "csharp-linq-optimization" },
+      "checks": ["Replaces repeated searches with a Dictionary, HashSet, or ToLookup built once", "Keeps First versus Single semantics and duplicate handling", "Reports before and after timings with the command, or labels the gain as expected and unmeasured"]
+    },
+    {
+      "id": "tc-csharp-linq-optimization-02",
+      "capability": "csharp-linq-optimization",
+      "polarity": "positive",
+      "context": "net8.0 app with EF Core 8 on SQL Server; a query calls ToList() before Where on a large table",
+      "prompt": "This C# LINQ query loads the whole Orders table before filtering. Fix it so EF Core does the filtering.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-linq-and-serialization.md", "applies": "csharp-linq-optimization" },
+      "checks": ["Moves filtering and projection before materialization", "Inspects the generated SQL (ToQueryString or logging)", "Does not use AsEnumerable over the full table to bypass translation errors"]
+    },
+    {
+      "id": "tc-csharp-linq-optimization-neg-01",
+      "capability": "csharp-linq-optimization",
+      "polarity": "negative",
+      "context": "SQL Server stored procedure with a slow plan; no C# involved",
+      "prompt": "Here is the execution plan for our slow SQL Server stored procedure. Which index would help?",
+      "expect": { "not_applies": "csharp-linq-optimization", "skill": "chayen-data", "not_loads": "references/csharp-linq-and-serialization.md" },
+      "checks": ["Works from the execution plan and indexes", "Does not rewrite C# LINQ"]
+    },
+    {
+      "id": "tc-csharp-type-design-01",
+      "capability": "csharp-type-design",
+      "polarity": "positive",
+      "context": "net8.0 library with DTOs as records and entities as classes; a new Money type is needed",
+      "prompt": "Add a Money type to our C# pricing library and decide whether it should be a record, struct, or class.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-types-and-nullability.md", "applies": "csharp-type-design" },
+      "checks": ["Follows the project's existing idioms for similar types", "Explains equality semantics and tests equal and unequal cases", "Does not introduce new modelling patterns the project does not use"]
+    },
+    {
+      "id": "tc-csharp-type-design-neg-01",
+      "capability": "csharp-type-design",
+      "polarity": "negative",
+      "context": "Monolith being split; the question is about service boundaries",
+      "prompt": "Should our ordering and invoicing modules become separate services, and where should the boundary be?",
+      "expect": { "not_applies": "csharp-type-design", "skill": "chayen-architecture" },
+      "checks": ["Treats it as an architecture boundary decision", "Does not discuss records versus classes"]
+    },
+    {
+      "id": "tc-csharp-serialization-01",
+      "capability": "csharp-serialization",
+      "polarity": "positive",
+      "context": "net8.0 API using System.Text.Json with shared options; a DTO property must be renamed in C#",
+      "prompt": "Rename CustomerName to Name in our C# DTO, but external clients must keep receiving customerName in the JSON.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-linq-and-serialization.md", "applies": "csharp-serialization" },
+      "checks": ["Pins the wire name with [JsonPropertyName]", "Adds or updates a round-trip or golden-file test", "Does not switch serializers"]
+    },
+    {
+      "id": "tc-csharp-serialization-02",
+      "capability": "csharp-serialization",
+      "polarity": "positive",
+      "context": "net6.0 service using Newtonsoft.Json with TypeNameHandling.Auto for polymorphic messages from a queue",
+      "prompt": "We deserialize polymorphic messages from the queue with Newtonsoft.Json. Is our setup OK, and how do we add a new message type?",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-linq-and-serialization.md", "applies": "csharp-serialization" },
+      "checks": ["Flags TypeNameHandling other than None on data from outside the process as unsafe", "Keeps Newtonsoft.Json rather than switching serializers without approval", "Proposes declared known types for the new message"]
+    },
+    {
+      "id": "tc-csharp-serialization-neg-01",
+      "capability": "csharp-serialization",
+      "polarity": "negative",
+      "context": "Several services exchange OrderPlaced events; a field must change",
+      "prompt": "We need to change the OrderPlaced event schema that three services consume. How do we roll it out safely?",
+      "expect": { "not_applies": "csharp-serialization", "skill": "chayen-backend" },
+      "checks": ["Treats it as message schema evolution across services", "Does not limit the answer to serializer attributes"]
+    },
+    {
+      "id": "tc-csharp-code-analysis-01",
+      "capability": "csharp-code-analysis",
+      "polarity": "positive",
+      "context": "net8.0 solution with .editorconfig, TreatWarningsAsErrors off, 400 CA warnings, CI runs dotnet format --verify-no-changes",
+      "prompt": "Our C# build has hundreds of analyzer warnings. Clean up the CA2007 ones and set the rule up properly in editorconfig.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-project-health.md", "applies": "csharp-code-analysis" },
+      "checks": ["Records warning counts by rule before and after", "Configures severity in .editorconfig rather than scattered pragmas", "Runs dotnet format --verify-no-changes or reports it NOT_RUN"]
+    },
+    {
+      "id": "tc-csharp-code-analysis-02",
+      "capability": "csharp-code-analysis",
+      "polarity": "positive",
+      "context": "net9.0 solution; the team wants TreatWarningsAsErrors; NuGet audit is on",
+      "prompt": "Turn on warnings as errors for our .NET solution.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-project-health.md", "applies": "csharp-code-analysis" },
+      "checks": ["Asks for approval before changing the build gate", "Explains that NuGet audit warnings NU1901 to NU1904 would also fail the build", "Shows current warning counts"]
+    },
+    {
+      "id": "tc-csharp-code-analysis-neg-01",
+      "capability": "csharp-code-analysis",
+      "polarity": "negative",
+      "context": "SonarQube report with security hotspots for a .NET API",
+      "prompt": "Triage these SonarQube security findings for our .NET API and tell me which are real.",
+      "expect": { "not_applies": "csharp-code-analysis", "skill": "chayen-security" },
+      "checks": ["Treats findings as security triage with evidence", "Does not just change analyzer severities"]
+    },
+    {
+      "id": "tc-csharp-project-maintenance-01",
+      "capability": "csharp-project-maintenance",
+      "polarity": "positive",
+      "context": "net8.0 solution with Directory.Packages.props (Central Package Management) and packages.lock.json files",
+      "prompt": "dotnet restore warns about a vulnerable System.Text.Json version coming in transitively. Fix it.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-project-health.md", "applies": "csharp-project-maintenance" },
+      "checks": ["Edits Directory.Packages.props, not individual project files", "Finds the dependency path before choosing to update the parent or pin the transitive version", "Updates lock files and reports restore, build, and test results"]
+    },
+    {
+      "id": "tc-csharp-project-maintenance-02",
+      "capability": "csharp-project-maintenance",
+      "polarity": "positive",
+      "context": "Repository with global.json pinning SDK 8.0.4xx; developer machine has SDKs 8 and 10",
+      "prompt": "Which .NET SDK does this repo actually build with, and are our packages up to date?",
+      "expect": { "skill": "chayen-implementation", "loads": "references/csharp-project-health.md", "applies": "csharp-project-maintenance" },
+      "checks": ["Reads global.json and runs dotnet --version in the repository root, or reports NOT_RUN", "Lists outdated and vulnerable packages with the commands", "Does not upgrade majors without approval"]
+    },
+    {
+      "id": "tc-csharp-project-maintenance-neg-01",
+      "capability": "csharp-project-maintenance",
+      "polarity": "negative",
+      "context": "Python service with requirements.txt and pip-audit findings",
+      "prompt": "pip-audit reports two vulnerable packages in our Python service. Update them safely.",
+      "expect": { "not_applies": "csharp-project-maintenance", "skill": "chayen-implementation", "not_loads": "references/csharp-project-health.md" },
+      "checks": ["Uses Python packaging tools", "Does not mention NuGet or .NET project files"]
+    },
+    {
+      "id": "tc-aspnet-api-endpoints-01",
+      "capability": "aspnet-api-endpoints",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API with controllers and EF Core; OrdersController exists",
+      "prompt": "Add GET /api/orders/{id}/items to our ASP.NET Core API, returning 404 when the order does not exist.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-endpoints.md", "applies": "aspnet-api-endpoints" },
+      "checks": ["Adds a controller action next to its siblings and does not convert to minimal APIs", "Returns DTOs, not entities", "Accepts and forwards a CancellationToken", "Tests 200 and 404"]
+    },
+    {
+      "id": "tc-aspnet-api-endpoints-02",
+      "capability": "aspnet-api-endpoints",
+      "polarity": "positive",
+      "context": "ASP.NET Core net6.0 minimal API with MapGet calls in Program.cs; Dapper for data",
+      "prompt": "Add a paginated GET /products endpoint to our minimal API.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-endpoints.md", "applies": "aspnet-api-endpoints" },
+      "checks": ["Keeps the minimal API style", "Does not use TypedResults or MapGroup, which need .NET 7, on the net6.0 target", "Uses Dapper rather than adding EF Core", "Enforces a maximum page size and stable ordering"]
+    },
+    {
+      "id": "tc-aspnet-api-endpoints-neg-01",
+      "capability": "aspnet-api-endpoints",
+      "polarity": "negative",
+      "context": "Spring Boot service in Java",
+      "prompt": "Add a GET /orders/{id} endpoint to our Spring Boot service.",
+      "expect": { "not_applies": "aspnet-api-endpoints", "skill": "none", "not_loads": "references/aspnetcore-endpoints.md" },
+      "checks": ["Does not apply ASP.NET Core guidance to Java", "Continues without the backend skill's .NET references"]
+    },
+    {
+      "id": "tc-aspnet-request-pipeline-01",
+      "capability": "aspnet-request-pipeline",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API behind Nginx; CORS preflights fail; UseCors is called after UseAuthorization",
+      "prompt": "Browser calls to our ASP.NET Core API fail CORS preflight, and redirects use http behind our proxy. Fix the middleware setup.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-pipeline.md", "applies": "aspnet-request-pipeline" },
+      "checks": ["Reorders UseCors before authentication and authorization", "Enables forwarded headers with known proxies or networks rather than trusting all", "Verifies with an HTTP test or reports NOT_RUN"]
+    },
+    {
+      "id": "tc-aspnet-request-pipeline-neg-01",
+      "capability": "aspnet-request-pipeline",
+      "polarity": "negative",
+      "context": "Kubernetes ingress-nginx annotations for an ASP.NET Core service",
+      "prompt": "Set up the ingress-nginx annotations and TLS for our .NET service in Kubernetes.",
+      "expect": { "not_applies": "aspnet-request-pipeline", "skill": "chayen-devops" },
+      "checks": ["Works on ingress and TLS configuration", "Does not change application middleware unless needed for forwarded headers"]
+    },
+    {
+      "id": "tc-aspnet-dependency-injection-01",
+      "capability": "aspnet-dependency-injection",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API; a singleton cache service injects AppDbContext; startup fails in Development",
+      "prompt": "Our API fails at startup with 'Cannot consume scoped service AppDbContext from singleton'. Fix it properly.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-pipeline.md", "applies": "aspnet-dependency-injection" },
+      "checks": ["Explains the captive dependency", "Uses IServiceScopeFactory or changes lifetimes with a reason, not by turning off scope validation", "Confirms the app starts in Development"]
+    },
+    {
+      "id": "tc-aspnet-dependency-injection-neg-01",
+      "capability": "aspnet-dependency-injection",
+      "polarity": "negative",
+      "context": "Team debating Clean Architecture layers for a new .NET system",
+      "prompt": "Which layers should our new .NET system have, and which project should reference which?",
+      "expect": { "not_applies": "aspnet-dependency-injection", "skill": "chayen-architecture" },
+      "checks": ["Treats it as an architecture decision with options", "Does not focus on service lifetimes"]
+    },
+    {
+      "id": "tc-aspnet-validation-01",
+      "capability": "aspnet-validation",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 controllers API with FluentValidation validators registered by assembly scanning",
+      "prompt": "POST /api/customers accepts empty emails and negative credit limits. Add validation.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-endpoints.md", "applies": "aspnet-validation" },
+      "checks": ["Adds a FluentValidation validator in the existing style, not DataAnnotations", "Keeps the existing 400 error shape", "Tests valid and each invalid case"]
+    },
+    {
+      "id": "tc-aspnet-validation-02",
+      "capability": "aspnet-validation",
+      "polarity": "positive",
+      "context": "ASP.NET Core net10.0 minimal API with no validation library",
+      "prompt": "Our minimal API accepts a quantity of 0 on POST /orders. Validate the request.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-endpoints.md", "applies": "aspnet-validation" },
+      "checks": ["Detects net10.0 and considers built-in AddValidation with DataAnnotations", "Asks or explains before adding a validation library", "Tests that an invalid request returns 400 problem details"]
+    },
+    {
+      "id": "tc-aspnet-validation-neg-01",
+      "capability": "aspnet-validation",
+      "polarity": "negative",
+      "context": "ASP.NET Core API; reviewer asks about SQL injection in search",
+      "prompt": "Is our ASP.NET Core search endpoint vulnerable to SQL injection?",
+      "expect": { "not_applies": "aspnet-validation", "skill": "chayen-security" },
+      "checks": ["Reviews query construction for injection", "Does not treat input validation attributes as the injection fix"]
+    },
+    {
+      "id": "tc-aspnet-authentication-01",
+      "capability": "aspnet-authentication",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API using AddJwtBearer with Entra ID; tests use a TestAuthHandler",
+      "prompt": "Our ASP.NET Core API rejects valid tokens from the new tenant with 401. Check the JWT bearer setup.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-auth.md", "applies": "aspnet-authentication" },
+      "checks": ["Inspects authority, audience, and issuer settings from configuration", "Does not disable issuer, audience, or lifetime validation", "Asks for approval before changing authentication", "Uses the test authentication handler in tests"]
+    },
+    {
+      "id": "tc-aspnet-authentication-neg-01",
+      "capability": "aspnet-authentication",
+      "polarity": "negative",
+      "context": "Company choosing between Entra ID and Auth0 for several products",
+      "prompt": "Should we use Entra ID or Auth0 as our identity provider across products?",
+      "expect": { "not_applies": "aspnet-authentication", "skill": "chayen-architecture" },
+      "checks": ["Compares options with trade-offs", "Does not write AddJwtBearer configuration"]
+    },
+    {
+      "id": "tc-aspnet-authorization-01",
+      "capability": "aspnet-authorization",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 minimal API with MapGroup and a FallbackPolicy requiring authentication",
+      "prompt": "Only managers should be able to approve refunds, and only for their own store. Add that to POST /refunds/{id}/approve.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-auth.md", "applies": "aspnet-authorization" },
+      "checks": ["Adds a named policy and a store ownership check (resource-based or query filter)", "Tests anonymous 401, wrong role or store 403, and allowed success", "Asks before changing authorization rules"]
+    },
+    {
+      "id": "tc-aspnet-authorization-neg-01",
+      "capability": "aspnet-authorization",
+      "polarity": "negative",
+      "context": "Express.js API with a role middleware",
+      "prompt": "Only admins should call DELETE /users in our Express API. Add the check.",
+      "expect": { "not_applies": "aspnet-authorization", "skill": "chayen-backend", "not_loads": "references/aspnetcore-auth.md" },
+      "checks": ["Uses the Node server guidance", "Does not mention ASP.NET Core policies"]
+    },
+    {
+      "id": "tc-aspnet-openapi-01",
+      "capability": "aspnet-openapi",
+      "polarity": "positive",
+      "context": "ASP.NET Core net9.0 minimal API using AddOpenApi; generated TypeScript client in the frontend",
+      "prompt": "Our generated client has no error types because the OpenAPI document only shows 200 responses. Fix the API metadata.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-endpoints.md", "applies": "aspnet-openapi" },
+      "checks": ["Adds response metadata or TypedResults unions so error responses appear", "Keeps the existing generator", "Fetches or regenerates the document and reviews the diff, or reports NOT_RUN"]
+    },
+    {
+      "id": "tc-aspnet-openapi-02",
+      "capability": "aspnet-openapi",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 controllers API using Swashbuckle",
+      "prompt": "Add the new /invoices endpoints to our Swagger document with proper response types.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-endpoints.md", "applies": "aspnet-openapi" },
+      "checks": ["Uses Swashbuckle and [ProducesResponseType] rather than switching to Microsoft.AspNetCore.OpenApi", "Does not use AddOpenApi on net8.0"]
+    },
+    {
+      "id": "tc-aspnet-openapi-neg-01",
+      "capability": "aspnet-openapi",
+      "polarity": "negative",
+      "context": "Finished openapi.json; frontend needs a TypeScript client",
+      "prompt": "Generate the TypeScript client from our openapi.json file.",
+      "expect": { "not_applies": "aspnet-openapi", "skill": "chayen-implementation" },
+      "checks": ["Uses the contract code generation workflow", "Does not edit ASP.NET Core endpoint metadata"]
+    },
+    {
+      "id": "tc-aspnet-exception-handling-01",
+      "capability": "aspnet-exception-handling",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API; exceptions return stack traces in staging; domain throws NotFoundException",
+      "prompt": "Our API returns stack traces in staging and NotFoundException becomes a 500. Clean up the error handling.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-pipeline.md", "applies": "aspnet-exception-handling" },
+      "checks": ["Maps NotFoundException to 404 in one place (IExceptionHandler on net8.0 or the existing mechanism)", "Returns problem details without exception messages outside Development", "Tests in a non-Development environment"]
+    },
+    {
+      "id": "tc-aspnet-exception-handling-02",
+      "capability": "aspnet-exception-handling",
+      "polarity": "positive",
+      "context": "ASP.NET Core net6.0 API with custom ErrorHandlingMiddleware and an error envelope",
+      "prompt": "Make cancelled requests stop showing up as 500 errors in our API logs.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-pipeline.md", "applies": "aspnet-exception-handling" },
+      "checks": ["Changes the existing middleware rather than adding IExceptionHandler, which needs .NET 8", "Treats OperationCanceledException with an aborted request as a client abort"]
+    },
+    {
+      "id": "tc-aspnet-exception-handling-neg-01",
+      "capability": "aspnet-exception-handling",
+      "polarity": "negative",
+      "context": "Python FastAPI service with inconsistent error responses",
+      "prompt": "Make our FastAPI service return consistent JSON errors.",
+      "expect": { "not_applies": "aspnet-exception-handling", "skill": "chayen-backend", "not_loads": "references/aspnetcore-pipeline.md" },
+      "checks": ["Uses FastAPI exception handlers", "Does not mention ASP.NET Core problem details middleware"]
+    },
+    {
+      "id": "tc-aspnet-background-services-01",
+      "capability": "aspnet-background-services",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API running 3 instances; a BackgroundService injects AppDbContext and crashes the app on errors",
+      "prompt": "Our nightly cleanup BackgroundService sometimes takes the whole API down and runs three times. Fix it.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-background-services.md", "applies": "aspnet-background-services" },
+      "checks": ["Creates a scope per run for the DbContext", "Catches and logs per-iteration failures deliberately", "Addresses duplicate execution across the three instances", "Does not add Hangfire or Quartz without approval"]
+    },
+    {
+      "id": "tc-aspnet-background-services-neg-01",
+      "capability": "aspnet-background-services",
+      "polarity": "negative",
+      "context": "Team choosing a job platform",
+      "prompt": "Should we use Hangfire, Quartz, or Azure Functions for our scheduled jobs?",
+      "expect": { "not_applies": "aspnet-background-services", "skill": "chayen-architecture" },
+      "checks": ["Compares options with trade-offs", "Does not write a BackgroundService"]
+    },
+    {
+      "id": "tc-aspnet-data-access-01",
+      "capability": "aspnet-data-access",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API using Dapper and SQL Server; no EF Core",
+      "prompt": "Add a repository method to get a customer's open invoices for our invoices endpoint.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-data-access.md", "applies": "aspnet-data-access" },
+      "checks": ["Uses Dapper with parameters and CommandDefinition with the cancellation token", "Does not add EF Core", "Opens the connection from the project's factory"]
+    },
+    {
+      "id": "tc-aspnet-data-access-02",
+      "capability": "aspnet-data-access",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API with EF Core 8, rowversion concurrency tokens, EnableRetryOnFailure",
+      "prompt": "Two admins editing the same product overwrite each other. Return a conflict instead.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-data-access.md", "applies": "aspnet-data-access" },
+      "checks": ["Uses the concurrency token and catches DbUpdateConcurrencyException to return 409", "Keeps the retry execution strategy correct for any explicit transaction", "Tests the conflict path"]
+    },
+    {
+      "id": "tc-aspnet-data-access-neg-01",
+      "capability": "aspnet-data-access",
+      "polarity": "negative",
+      "context": "SQL Server table needs a new index and column",
+      "prompt": "Design the indexes for our Orders table in SQL Server; queries filter by customer and date.",
+      "expect": { "not_applies": "aspnet-data-access", "skill": "chayen-data" },
+      "checks": ["Works on index design", "Does not change API data access code"]
+    },
+    {
+      "id": "tc-aspnet-efcore-migrations-01",
+      "capability": "aspnet-efcore-migrations",
+      "polarity": "positive",
+      "context": "net8.0 solution with Migrations/ and a model snapshot in Infrastructure, startup project Api, dotnet-ef in the tool manifest",
+      "prompt": "I renamed Customer.Name to FullName and changed it to nvarchar(200). Create the EF Core migration.",
+      "expect": { "skill": "chayen-data", "loads": "references/efcore-migrations.md", "applies": "aspnet-efcore-migrations" },
+      "checks": ["Runs migrations add with the correct --project and --startup-project", "Detects a drop and add scaffold and rewrites it to preserve data", "Produces an idempotent script and applies only to a local database", "Asks before applying to any shared database"]
+    },
+    {
+      "id": "tc-aspnet-efcore-migrations-neg-01",
+      "capability": "aspnet-efcore-migrations",
+      "polarity": "negative",
+      "context": "net8.0 API using Dapper with DbUp SQL scripts in /db/scripts; no EF Core packages",
+      "prompt": "Add a DeliveryNotes column to the Orders table.",
+      "expect": { "not_applies": "aspnet-efcore-migrations", "skill": "chayen-data", "not_loads": "references/efcore-migrations.md" },
+      "checks": ["Writes a new DbUp script in the existing folder and naming", "Does not add EF Core or run dotnet ef"]
+    },
+    {
+      "id": "tc-aspnet-efcore-migrations-neg-02",
+      "capability": "aspnet-efcore-migrations",
+      "polarity": "negative",
+      "context": "net8.0 API with a database-first EF Core model scaffolded from SQL Server and an SSDT project",
+      "prompt": "Add an index on Orders.CreatedAt.",
+      "expect": { "not_applies": "aspnet-efcore-migrations", "skill": "chayen-data" },
+      "checks": ["Changes the SSDT project, then re-scaffolds if needed", "Does not create an EF Core migration"]
+    },
+    {
+      "id": "tc-aspnet-integration-testing-01",
+      "capability": "aspnet-integration-testing",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API with xUnit, an existing CustomWebApplicationFactory, Testcontainers for SQL Server",
+      "prompt": "Write integration tests for the new refunds endpoints.",
+      "expect": { "skill": "chayen-testing", "loads": "references/dotnet-testing.md", "applies": "aspnet-integration-testing" },
+      "checks": ["Reuses CustomWebApplicationFactory and Testcontainers", "Covers 401, 403, and allowed paths", "Runs dotnet test with a filter and reports the result"]
+    },
+    {
+      "id": "tc-aspnet-integration-testing-02",
+      "capability": "aspnet-integration-testing",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 minimal API with top-level Program.cs and NUnit tests; no integration tests yet",
+      "prompt": "Set up HTTP-level tests for our API using WebApplicationFactory.",
+      "expect": { "skill": "chayen-testing", "loads": "references/dotnet-testing.md", "applies": "aspnet-integration-testing" },
+      "checks": ["Uses NUnit, not xUnit", "Adds public partial class Program or InternalsVisibleTo because the target is net8.0", "Replaces external dependencies in ConfigureTestServices"]
+    },
+    {
+      "id": "tc-aspnet-integration-testing-neg-01",
+      "capability": "aspnet-integration-testing",
+      "polarity": "negative",
+      "context": "Angular app with Playwright tests against a deployed environment",
+      "prompt": "Write a Playwright test for the checkout flow against staging.",
+      "expect": { "not_applies": "aspnet-integration-testing", "skill": "chayen-testing" },
+      "checks": ["Writes a browser end-to-end test", "Does not use WebApplicationFactory"]
+    },
+    {
+      "id": "tc-aspnet-performance-01",
+      "capability": "aspnet-performance",
+      "polarity": "positive",
+      "context": "ASP.NET Core net8.0 API; dotnet-counters shows a growing thread pool queue and low CPU during a k6 test",
+      "prompt": "Under load our API's p95 jumps to 4 seconds while CPU stays low. dotnet-counters shows the thread pool queue growing. What should we change?",
+      "expect": { "skill": "chayen-performance", "loads": "references/aspnetcore-performance.md", "applies": "aspnet-performance" },
+      "checks": ["Identifies likely sync-over-async or blocking I/O as the hypothesis to confirm", "Does not raise thread pool minimums as the fix", "Requires a before and after k6 run and labels claims MEASURED or HYPOTHESIS"]
+    },
+    {
+      "id": "tc-aspnet-performance-neg-01",
+      "capability": "aspnet-performance",
+      "polarity": "negative",
+      "context": "ASP.NET Core API, no measurements available",
+      "prompt": "Make our ASP.NET Core API faster.",
+      "expect": { "not_applies": "aspnet-performance", "skill": "chayen-performance" },
+      "checks": ["Starts with a baseline and profiling plan before suggesting levers", "Does not apply caching or GC changes without measurement"]
+    },
+    {
+      "id": "tc-aspnet-hosting-deployment-01",
+      "capability": "aspnet-hosting-deployment",
+      "polarity": "positive",
+      "context": "ASP.NET Core app upgraded from net6.0 to net8.0; Kubernetes probes on port 80 now fail; 3 replicas; users get logged out after each deploy",
+      "prompt": "After moving our .NET API to the .NET 8 image, health probes fail and users get logged out on every deploy. Fix the hosting setup.",
+      "expect": { "skill": "chayen-devops", "loads": "references/aspnetcore-hosting.md", "applies": "aspnet-hosting-deployment" },
+      "checks": ["Identifies the default port change to 8080 and aligns probes or ASPNETCORE_HTTP_PORTS", "Persists and shares Data Protection keys across replicas", "Does not deploy or restart anything without authorization"]
+    },
+    {
+      "id": "tc-aspnet-hosting-deployment-neg-01",
+      "capability": "aspnet-hosting-deployment",
+      "polarity": "negative",
+      "context": "Dockerfile for a .NET API; request is a security review",
+      "prompt": "Review our .NET API Dockerfile for security problems.",
+      "expect": { "not_applies": "aspnet-hosting-deployment", "skill": "chayen-security" },
+      "checks": ["Performs a security review with findings", "Does not redesign hosting configuration"]
+    }
+  ]
+}

@@ -14,6 +14,7 @@ const repo = path.resolve(import.meta.dirname, "..", "..");
 const steps = [
   ["G-01 G-02 G-04..G-10 package, skills, references, catalog alignment", "tools/validate/validate-package.mjs", []],
   ["G-03 catalog integrity (V-11)", "tools/catalog/check-catalog.mjs", []],
+  ["G-03b technology catalog (V-23)", "tools/catalog/check-technology.mjs", []],
   ["G-11 trigger eval cases in sync", "tools/evals/generate-claude-evals.mjs", ["--check"]],
   ["G-13 validator self-tests", "tools/validate/run-validator-tests.mjs", []],
 ];

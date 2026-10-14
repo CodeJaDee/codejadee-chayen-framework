@@ -45,6 +45,9 @@ it, and the checker fails when they drift.
 - **0 VERIFIED.** Behaviour and trigger evals have not been executed.
   The Step 19 audit ([ENGINEERING_COVERAGE_AUDIT.md](ENGINEERING_COVERAGE_AUDIT.md))
   found all 206 records passing ten static criteria after nine fixes.
+- **Technology packs** (Step 20) are tracked separately in
+  [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md); they do not change the
+  206 engineering capabilities.
   A catalog entry alone never changes a status (D-022).
 - **0 IN_PROGRESS.** The last one (CAP-18-002 change-passport) became
   IMPLEMENTED in Step 17.

@@ -175,6 +175,28 @@ capabilities: [CAP-DD-NNN, ...]   # recipe only, required
 | `checklist` | Review lenses, signal tables, or hardening lists | At least 2 `##` sections | V-18 |
 | `template` | An output format only | `Template` | V-18 |
 
+### 5.3 Technology capability sections (D-039)
+
+Technology packs add stack-specific capabilities beside the 206 engineering
+capabilities. They are recorded in `catalog/technology-capabilities.yaml`
+and implemented as sections of `kind: technology` references, so the
+general workflow stays in recipes and stack detail stays in technology
+files.
+
+| ID | Rule | Checked by |
+|---|---|---|
+| TC-01 | Each technology capability is exactly one `##` section in the `kind: technology` reference its catalog record names, inside the record's entry skill. The heading ends with the capability name in parentheses, for example `## Request validation (aspnet-validation)`. No other heading in the plugin uses that suffix. | V-23.3, V-23.4 |
+| TC-02 | The section contains, in order: `**Applies when:**`, `**Not when:**` (naming the better fit), `**Version notes:**` (what depends on the framework, language, or package version), `**Steps:**` with at least 4 numbered steps, and `**Verify:**` stating how results are reported (PASS, FAIL, NOT_RUN, or MEASURED). | V-23.5 |
+| TC-03 | The reference's `## Check the repository first` tells the agent how to detect the stack and its actual version before any version-specific advice. | Review |
+| TC-04 | Guidance never imposes a new architectural pattern, library, or style: it detects what the project uses and asks before introducing anything else. | Review |
+| TC-05 | Each capability has at least 1 positive and 1 negative case in `tests/skills/technology-cases.json` (§8). | V-23.7 |
+| TC-06 | Framework behaviour the guidance relies on is executed by the pack's fact checks where practical, and each fact names its capability. A fact check never promotes a capability to VERIFIED. | V-23.8, Review |
+
+A topic split is allowed: a stack may have a base technology reference
+(detection, version, conventions) plus topic files, all listed in the
+References table. Topic files and the base name each other in code spans,
+not links, to stay within the 2-hop limit (V-08).
+
 ---
 
 ## 6. Capability recipes
@@ -237,7 +259,7 @@ capabilities: [CAP-DD-NNN]
 |---|---|---|
 | LD-01 | `SKILL.md` ends with `## References`: a table of `Reference \| Load when`. | V-17 |
 | LD-02 | Each load condition is specific: a detected stack signal, a task shape, or a workflow step. "Always" is only acceptable for a checklist that every run of the skill needs. | Review |
-| LD-03 | The workflow names the step at which each reference is read. Load at most one technology reference per detected stack. | Review |
+| LD-03 | The workflow names the step at which each reference is read. Load at most one technology reference per detected stack, or, for a stack split into a base reference and topic files (§5.3), the base plus the one topic file the task needs. | Review |
 | LD-04 | Never instruct the model to read all references. | Review |
 | LD-05 | Anchored links (`file.md#section`) must point at an existing heading. | V-08 |
 
@@ -249,6 +271,7 @@ capabilities: [CAP-DD-NNN]
 |---|---|---|
 | `tests/skills/trigger-cases.json` | Entry skill | Positive, negative, ambiguous, and unsupported prompts. They generate the Claude evals (`tools/evals/`) and are used by the Codex and Copilot smoke runner (`tests/routing/`). |
 | `tests/skills/recipe-cases.json` | Capability recipe | At least 1 positive and 1 negative case per capability listed in an existing recipe (RC-09) |
+| `tests/skills/technology-cases.json` | Technology capability | At least 1 positive and 1 negative case per technology capability (TC-05). Each case adds `context` (the repository it assumes); positives expect `skill`, `loads`, and `applies`; negatives expect `not_applies`, the better-fit `skill` or `none`, and optionally `not_loads`. |
 
 **Recipe case fields:**
 
