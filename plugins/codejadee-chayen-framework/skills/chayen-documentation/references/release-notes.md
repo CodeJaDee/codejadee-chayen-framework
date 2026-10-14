@@ -64,3 +64,5 @@ format, with breaking changes first and every merged change accounted for.
   reference.
 - No feature, fix, or known issue appears that is not in the range or
   supplied by the user.
+- The range check is reported PASS or FAIL with the `git log` or platform
+  query used, or NOT_RUN when the history was not available.

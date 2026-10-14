@@ -80,3 +80,5 @@ publishing to a registry happens only with approval.
   signature before use.
 - Registry credentials come from the platform, and no artifact was pushed
   by the agent.
+- The pack, sign, and verify steps are reported PASS, FAIL, or NOT_RUN with
+  the command, and steps that only run in the pipeline are NOT_RUN locally.

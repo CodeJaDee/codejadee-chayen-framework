@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 18 — Domains 19 and 20 capabilities |
+| Last executed step | 19 — Engineering coverage audit |
+| Step 19 status | DONE (pending user review; static audit 206/206 after 9 fixes; 0/206 VERIFIED; see ENGINEERING_COVERAGE_AUDIT.md) |
 | Step 18 status | DONE (pending user review; D19 9/9 and D20 8/8 IMPLEMENTED, not VERIFIED; all 206 capabilities IMPLEMENTED, D-038) |
 | Step 17 status | DONE (pending user review; D17 10/10 and D18 10/10 IMPLEMENTED, not VERIFIED; chayen-ai-engineering created with the L0 cap raised to 5,500, user-approved, D-037) |
 | Step 16 status | DONE (pending user review; D15 10/10 and D16 10/10 IMPLEMENTED, not VERIFIED; chayen-modernization folded and chayen-documentation created with the L0 cap raised to 5,200, user-approved, D-036) |
@@ -1813,3 +1814,76 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Recipe behaviour evals (35 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Any search, spatial, realtime, extension, or agent evaluation run described by the recipes | — | NOT_RUN: no fixture repositories in this step |
 | — | Human review of 8 new and 6 extended recipes | — | Pending (R-33, R-34) |
+
+---
+
+## Step 19 — Engineering coverage audit
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** all **206/206** capabilities exist with their exact inventory
+  names and pass ten static coverage criteria, after **9 gaps were found
+  and fixed** in this step. **0/206 are VERIFIED**: behaviour and trigger
+  evaluations have not run. The report is
+  [ENGINEERING_COVERAGE_AUDIT.md](ENGINEERING_COVERAGE_AUDIT.md).
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog, the inventory embedded in
+  `check-catalog.mjs`, the authoring standard (RC rules), and the quality
+  gates.
+- **Audit tool:** `tools/catalog/audit-coverage.mjs` (developer-only, no
+  dependencies, not shipped). Per capability it checks C1 existence with the
+  exact inventory name, C2 mapping, C3 substantive procedure (steps, words,
+  and term coverage of the record's purpose and outputs), C4 entry skill
+  routing, C5 paths, C6 and C7 positive and negative recipe cases consistent
+  with the mapping, C8 inputs and outputs, C9 safety and verification rules,
+  and C10 no placeholders. It also reports duplicates, missing or extra
+  names, orphan recipes, broken mappings, and shared description terms.
+- **First run:** 198/206 passed. The 8 failures (CAP-02-002, 003, 008,
+  CAP-11-010, CAP-13-008, 009, 012, CAP-16-009) were C9: their recipes'
+  Verification sections did not say how checks are reported, which RC-07
+  requires.
+- **Manual review** of the ten lowest term-coverage records found one more
+  gap: the risk-class procedure for CAP-04-003 did not cover availability,
+  one of the five risk dimensions in its record. The other nine were
+  word-form differences.
+- **Fixes:** a reporting rule added to the Verification sections of
+  `stories-and-acceptance.md`, `privacy.md`, `secrets-management.md`,
+  `releases-and-provenance.md`, and `release-notes.md`; a five-dimension
+  rating step and an availability clause added to `task-contract.md`.
+- **Final run:** 206/206 pass all ten criteria; 0 missing, 0 extra, 0
+  duplicate names or IDs, 0 orphan recipes, 0 broken mappings (including
+  every positive and negative recipe case checked against the catalog
+  mapping).
+- **Observations recorded, not fixed:** 48 capabilities share recipes
+  without ID-labelled sections (R-35), and eight false-positive routing risk
+  areas remain unmeasured (R-36).
+- **Not done (out of scope for this step):** no technology packs, no new
+  skills, no description changes.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `docs/chayen/ENGINEERING_COVERAGE_AUDIT.md`, `tools/catalog/audit-coverage.mjs` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-requirements/references/stories-and-acceptance.md`, `chayen-security/references/privacy.md`, `chayen-devops/references/secrets-management.md`, `releases-and-provenance.md`, `chayen-documentation/references/release-notes.md`, `chayen-implementation/references/task-contract.md` |
+| Modified | `tools/catalog/README.md`, `docs/chayen/CAPABILITY_COVERAGE.md` (pointer to the audit), `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (snapshot, summary, REQ-05 and REQ-10 evidence), `ISSUES.md` (R-33 note; new R-35, R-36), `IMPLEMENTATION_PLAN.md` |
+| Deleted | None |
+| Scratch only (not in the repository) | Lifecycle work directory `lc19`, audit JSON and Markdown outputs, and the fix and documentation edit scripts |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Coverage audit, first run | `node tools/catalog/audit-coverage.mjs` | **FAIL**, exit 1: 198/206; 8 C9 failures |
+| T2 | Coverage audit, after fixes | `node tools/catalog/audit-coverage.mjs` | **PASS**, exit 0: 206/206 on all ten criteria; no duplicates, missing items, orphans, or broken mappings |
+| T3 | Package validator | `node tools/validate/validate-package.mjs` | PASS: 0 errors, 0 warnings; L0 5485/5500; 117 recipe files agree with the catalog (206 capabilities) |
+| T4 | Catalog checker | `node tools/catalog/check-catalog.mjs` | PASS: 206 IMPLEMENTED; inventory fingerprint `2f13cad24ff431e3` matches |
+| T5 | All automated gates | `node tools/validate/validate-all.mjs` | PASS: 4/4 gate groups; self-tests 53/53; eval cases in sync (135 cases, 322 files) |
+| T6 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2 |
+| T7 | Agent Skills reference validator | `agentskills validate` ×13 | PASS: 13/13 valid |
+| T8 | Native lifecycle (isolated homes) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc19` | PASS 24/24 on Claude Code, Codex, and Copilot |
+| — | Trigger evals (G-11) | — | NOT_RUN: billed runs need approval (R-32, R-36) |
+| — | Recipe behaviour evals (G-12) | — | NOT_RUN: no runner or fixture repositories |
+| — | Human review (G-15) | — | NOT_RUN: pending (R-33, R-34) |

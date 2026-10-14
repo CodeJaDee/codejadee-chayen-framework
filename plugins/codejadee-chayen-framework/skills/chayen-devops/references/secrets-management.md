@@ -69,3 +69,5 @@ the security skill.
   ignored file, and the template contains no real values.
 - No secret value appears in the output, and no store, role, or secret
   value was changed by the agent.
+- Each check is reported PASS, FAIL, or NOT_RUN with the command used (for
+  example the search command and the build or test run).

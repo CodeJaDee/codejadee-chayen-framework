@@ -39,13 +39,15 @@ the conversation.
      configuration, anything irreversible.
    - Record every match under `Risky actions needing approval`, or write
      `none`.
-   - Assign the highest class that applies, with the reason:
+   - Rate the change on each risk dimension (data loss, security,
+     availability, compatibility, reversibility), then assign the highest
+     class that applies, with the reason:
 
      | Class | When | Required before merge or execution |
      |---|---|---|
      | Low | Internal, reversible, no data, security, or contract impact | Build and tests |
      | Medium | Several modules or a deployable boundary. A behaviour change visible to users. A new dependency. | Approval of the contract, plus tests at the affected levels |
-     | High | Public contract, authentication or authorization, persisted data, production configuration | Explicit approval per risky action, a rollback note, and a staged rollout considered |
+     | High | Public contract, authentication or authorization, persisted data, production configuration, or an availability risk (downtime, capacity, a new single point of failure) | Explicit approval per risky action, a rollback note, and a staged rollout considered |
      | Critical | Irreversible data loss, security-sensitive data exposure, financial effects | Named approver, a rehearsed rollback or restore, and a staged rollout plan |
 
    - Unknown blast radius is not Low. Classify it at least Medium, and say

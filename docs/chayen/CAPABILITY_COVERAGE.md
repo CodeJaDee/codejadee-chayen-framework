@@ -43,6 +43,8 @@ it, and the checker fails when they drift.
   Each has a recipe that meets SKILL_AUTHORING_STANDARD §6, a review against
   its record, passing static gates, and positive and negative recipe cases.
 - **0 VERIFIED.** Behaviour and trigger evals have not been executed.
+  The Step 19 audit ([ENGINEERING_COVERAGE_AUDIT.md](ENGINEERING_COVERAGE_AUDIT.md))
+  found all 206 records passing ten static criteria after nine fixes.
   A catalog entry alone never changes a status (D-022).
 - **0 IN_PROGRESS.** The last one (CAP-18-002 change-passport) became
   IMPLEMENTED in Step 17.

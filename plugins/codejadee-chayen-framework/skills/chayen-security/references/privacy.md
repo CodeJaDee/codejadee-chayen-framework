@@ -69,3 +69,6 @@ compliance determination.
   decide a legal basis or compliance status.
 - Each risk has at least one proposed measure, and open questions name who
   must answer them.
+- Each check is reported PASS or FAIL with the field or risk it applies to,
+  or NOT_RUN with the reason (for example, a data flow that could not be
+  traced in the code).

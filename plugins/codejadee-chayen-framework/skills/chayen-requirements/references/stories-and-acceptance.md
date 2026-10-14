@@ -91,3 +91,6 @@ become further criteria or open decisions.
   vertical slices, not layer tasks.
 - Every edge-case category was considered. For each case, there is an
   expected behaviour or an open decision. None is silently assumed.
+- Each check above is reported PASS or FAIL with the story or criterion it
+  applies to, or NOT_RUN with the reason (for example, a source document
+  that was not available).
