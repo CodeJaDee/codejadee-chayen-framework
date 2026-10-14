@@ -1,13 +1,16 @@
 ---
 kind: recipe
-capabilities: [CAP-04-005]
+capabilities: [CAP-04-005, CAP-15-003, CAP-15-008]
 ---
 # Migration planning
 
 Plan a migration between platforms, frameworks, data stores, or systems as a
 sequence of reversible phases. Each phase has entry and exit criteria, a way
 for the old and new to coexist, a rollback point, and the approvals it needs.
-The plan is a proposal until its owner approves it.
+The plan is a proposal until its owner approves it. Two common shapes have
+their own steps: replacing a legacy system incrementally behind a facade
+(strangler), and splitting a monolith into enforced modules inside one
+deployable before any service extraction.
 
 ## Inputs
 
@@ -61,10 +64,40 @@ The plan is a proposal until its owner approves it.
    The phases are not started by this recipe. Implementation follows per
    phase, after approval.
 
+### Strangler replacement (CAP-15-003)
+
+1. **Place a facade** in front of the legacy system: a reverse proxy (for
+   example YARP), an API gateway route, or an in-code facade.
+2. **Slice by feature, route, or bounded context,** and order the slices by
+   value and risk, starting with a low-risk, read-mostly slice.
+3. **Give every slice a routing switch** (a route rule or flag) and a way
+   to route back to the legacy path.
+4. **Choose the data approach per slice:** the legacy store stays the system
+   of record until cut-over, with change data capture, dual writes, or an
+   anti-corruption layer, and reconciliation checks.
+5. **Define retirement criteria** for the legacy system: all routes moved,
+   no legacy traffic for an agreed period (measured), data migrated and
+   reconciled, and dependents updated. Decommissioning needs approval.
+
+### Modular monolith (CAP-15-008)
+
+1. **Draw the module map** from domain boundaries: each module's public
+   API, the tables it owns (one owner per table), and the allowed
+   dependencies between modules.
+2. **Enforce the boundaries** in the build: internal visibility (internal
+   types, separate projects or packages), lint rules for imports, and a
+   fitness test that fails on a forbidden cross-module reference.
+3. **Order the migration:** move code into module folders or projects,
+   introduce module APIs, replace cross-module table access with API calls,
+   then consider service extraction only for modules with a clear reason.
+
 ## Outputs
 
 The migration plan, written for the owner's approval, plus the inventory and
-the risks behind it.
+the risks behind it. For a strangler replacement: the facade and routing
+design, the slice order, the data sync approach, and the retirement criteria.
+For a modular monolith: the target module map, dependency rules, migration
+order, and boundary enforcement (internal visibility and fitness tests).
 
 ```text
 Migration plan — <source> → <target> — status: proposed (approver: <role>)
@@ -94,3 +127,7 @@ Open decisions: <question> — owner
 - Undocumented consumers appear as `unknown` risks, never as "none".
 - The plan is labelled proposed, with an approver role. Nothing is marked
   approved without a named approver.
+- Every strangler slice has a routing switch and a way to route back to the
+  legacy path.
+- The modular-monolith plan includes a fitness test that fails on a seeded
+  cross-module reference.

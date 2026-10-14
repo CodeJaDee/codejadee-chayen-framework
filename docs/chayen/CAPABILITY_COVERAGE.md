@@ -21,7 +21,7 @@ it, and the checker fails when they drift.
 
 - **206 capabilities in 20 domains**, exactly as inventoried. No name was
   renamed or omitted, and the order is preserved.
-- **149 IMPLEMENTED:**
+- **169 IMPLEMENTED:**
   - D01 9/9 and D02 10/10 (Step 09);
   - D03 10/10 and D04 8/8 (Step 10);
   - D05 12/12 and D06 10/10 (Step 11);
@@ -32,7 +32,10 @@ it, and the checker fails when they drift.
   - D11 14/14 and D12 10/10 (Step 14; D12 in the new `chayen-performance`
     skill, and CAP-11-013 moved to `chayen-security`, D-034);
   - D13 12/12 and D14 10/10 (Step 15; the new `chayen-devops` skill,
-    D-035).
+    D-035);
+  - D15 10/10 and D16 10/10 (Step 16; the new `chayen-documentation`
+    skill, and the planned `chayen-modernization` folded into existing
+    skills, D-036).
 
   Each has a recipe that meets SKILL_AUTHORING_STANDARD §6, a review against
   its record, passing static gates, and positive and negative recipe cases.
@@ -41,15 +44,17 @@ it, and the checker fails when they drift.
 - **1 IN_PROGRESS.** For each, an existing entry skill already ships a
   workflow step, section, or reference that addresses the capability's core
   purpose. The evidence paths are listed in `existing_coverage`.
-- **56 PLANNED.** No shipped content implements them yet.
-- **14 entry skills** are proposed (the ADR-0004 cap): 11 existing
+- **36 PLANNED.** No shipped content implements them yet.
+- **13 entry skills** are mapped (the ADR-0004 cap is 14): 12 existing
   (`chayen-requirements` added in Step 09, `chayen-architecture` in Step 10,
-  `chayen-data` in Step 13, `chayen-performance` in Step 14, and
-  `chayen-devops` in Step 15, the last three with the user's approval,
-  D-033 to D-035) and 3 planned.
+  `chayen-data` in Step 13, `chayen-performance` in Step 14,
+  `chayen-devops` in Step 15, and `chayen-documentation` in Step 16, the
+  last four with the user's approval, D-033 to D-036) and 1 planned
+  (`chayen-ai-engineering`). `chayen-modernization` was removed in Step 16:
+  its capabilities moved to existing skills (D-036).
   The final set still needs approval (Q-10). §5 shows a metadata-budget conflict that the decision must
   resolve.
-- **117 recipe files** are mapped: 89 existing and 28 planned. Step 12
+- **117 recipe files** are mapped: 99 existing and 18 planned. Step 12
   split `device-permissions-and-push.md` out of `hybrid-mobile.md` (D-032),
   and Step 14 added `infrastructure-security-review.md` for CAP-11-013
   (D-034). **57 consolidation groups** let 146 capabilities share a recipe while
@@ -127,7 +132,7 @@ Additional keys:
 |---|---|
 | PLANNED | No shipped content in the mapped entry skill implements the capability. |
 | IN_PROGRESS | The mapped entry skill already ships content that addresses the core purpose, listed in `existing_coverage`. The record is not fully implemented, and nothing is verified at capability level. |
-| IMPLEMENTED | The recipe exists, covers every output in the record without placeholder content, and lists pending `verification_evidence`. **149 after Step 15 (D01–D14).** |
+| IMPLEMENTED | The recipe exists, covers every output in the record without placeholder content, and lists pending `verification_evidence`. **169 after Step 16 (D01–D16).** |
 | VERIFIED | The verification approach was executed and passed, with a recorded result. **None yet.** |
 
 **Why the pilot-covered capabilities are not IMPLEMENTED,** even where a full
@@ -167,10 +172,10 @@ D-016 stops one skill from linking another skill's references.
 
 | Entry skill | State | Owns capabilities from |
 |---|---|---|
-| chayen-repository | existing | D01 |
+| chayen-repository | existing | D01, legacy assessment and debt prioritization (D15, D-036) |
 | chayen-requirements | existing (Step 09) | D02, plus estimation (D04; still PLANNED) |
-| chayen-architecture | existing (Step 10) | D03, decision register, migration planning, and rollout planning (D04; D-029), strangler and modularization (D15, PLANNED), waivers (D18), realtime and multi-region (D19) |
-| chayen-implementation | existing | D04 contract, plan, risk class, and handoff; all of D05, including dependency upgrades (D-031); framework upgrade and breaking-change analysis (D15, PLANNED); safe refactor plan (D15); change passport and evidence audit (D18) |
+| chayen-architecture | existing (Step 10) | D03, decision register, migration planning, and rollout planning (D04; D-029), strangler and modularization (D15), waivers (D18), realtime and multi-region (D19) |
+| chayen-implementation | existing | D04 contract, plan, risk class, and handoff; all of D05, including dependency upgrades (D-031); framework upgrade and breaking-change analysis (D15); dead code and deprecation (D15, D-036); safe refactor plan (D15); change passport and evidence audit (D18) |
 | chayen-backend | existing | D06, plus GraphQL, file processing, webhooks, and payments (D19) |
 | chayen-frontend | existing | D07, D08 (web-technology shells only, D-032), browser extensions (D19) |
 | chayen-data | existing (Step 13, D-033) | D09, data governance (D18; PLANNED), search and geospatial (D19; PLANNED) |
@@ -178,8 +183,7 @@ D-016 stops one skill from linking another skill's references.
 | chayen-security | existing | D11, including read-only container and IaC review (D-034); access and licence reviews (D18; PLANNED) |
 | chayen-performance | existing (Step 14, D-034) | D12 |
 | chayen-devops | existing (Step 15, D-035) | D13, D14 (container and IaC security review moved to chayen-security, D-034), hotfix (D15), policy as code and go/no-go (D18) |
-| chayen-modernization | planned | D15 legacy assessment, dead code, deprecation, and debt prioritization only (D-029, D-031) |
-| chayen-documentation | planned | D16, plus standards checks (D18) |
+| chayen-documentation | existing (Step 16, D-036) | D16, plus standards checks (D18; PLANNED) |
 | chayen-ai-engineering | planned | D17, D20, agent action risk (D18) |
 
 **Domains are a catalog grouping, not a routing unit** (ADR-0004). Three
@@ -198,14 +202,13 @@ The per-skill counts are in §10.
 ### 5.2 Metadata budget conflict (R-27)
 
 The always-loaded metadata (L0) was capped at 4,000 characters (ADR-0004,
-D-017). The user raised the cap to **4,400** in Step 14 (D-034) and to **4,700** in Step 15 (D-035). In Step 07, the six pilot descriptions used **2,332 / 4,000**
-characters, at 358–393 characters each. The 11 existing skills use
-**4,654 / 4,700** after Step 15 (4,224 / 4,400 after Step 14, 3,794 / 4,000
-after Step 13). That leaves 46 characters for the 3 planned skills
-(`chayen-modernization`, `chayen-documentation`,
-`chayen-ai-engineering`), so no further skill fits. Each must merge into an
-existing skill, or the cap must change again, before it is added (Q-10,
-R-27).
+D-017). The user raised the cap to **4,400** in Step 14 (D-034), to **4,700** in Step 15 (D-035), and to **5,200** in Step 16 (D-036). In Step 07, the six pilot descriptions used **2,332 / 4,000**
+characters, at 358–393 characters each. The 12 existing skills use
+**5,051 / 5,200** after Step 16 (4,654 / 4,700 after Step 15, 4,224 / 4,400
+after Step 14). That leaves 149 characters for the one planned skill
+(`chayen-ai-engineering`), which is not enough for a useful description. It
+must merge into an existing skill, or the cap must change again, before it
+is added (Q-10, R-27).
 
 | Option | Arithmetic | Trade-off |
 |---|---|---|
@@ -227,7 +230,7 @@ then re-run the checker. Capability identities do not change.
 
 ## 6. What the shipped skills cover
 
-### 6.1 IMPLEMENTED (Steps 09 to 15)
+### 6.1 IMPLEMENTED (Steps 09 to 16)
 
 | Entry skill | Capabilities | Recipes |
 |---|---|---|
@@ -245,6 +248,8 @@ then re-run the checker. Capability identities do not change.
 | chayen-security | All 14 in D11 | `threat-modeling.md`, `secure-review.md`, `scanner-triage.md`, `secret-exposure-response.md`, `privacy.md`, `sbom-and-licenses.md`, `infrastructure-security-review.md`, `vulnerability-remediation.md`, plus the `review-checklist.md` and `stack-hardening.md` checklists |
 | chayen-performance | All 10 in D12 | `baseline-and-profiling.md`, `load-testing.md`, `memory-leaks.md`, `budgets-and-capacity.md`, `caching.md`, plus the `runtime-tools.md` technology reference |
 | chayen-devops | All 12 in D13 and all 10 in D14 | `build-systems.md`, `pipelines.md`, `containers.md`, `infrastructure-as-code.md`, `environment-parity.md`, `secrets-management.md`, `releases-and-provenance.md`, `release-and-rollout.md`, `observability.md`, `alerting-and-incidents.md`, `rca-and-postmortems.md`, `disaster-recovery.md`, `runbooks.md`, plus the `operations-safety.md` checklist and the `tooling.md` technology reference |
+| chayen-documentation | All 10 in D16 | `project-docs.md`, `api-docs.md`, `architecture-docs.md`, `pull-requests-and-review.md`, `release-notes.md`, `git-workflow.md`, plus the `fact-checking.md` checklist |
+| D15 across five skills | All 10 in D15 | `legacy-assessment.md` and `technical-debt-prioritization.md` (repository), `refactoring.md` (large refactor plans), `upgrades.md` (framework upgrades and breaking changes), and `dead-code-and-deprecation.md` (implementation), `migration-strategy.md` (strangler and modular monolith; architecture), `hotfix.md` (devops) |
 
 These records are IMPLEMENTED, not VERIFIED. Their `verification_evidence`
 says that the recipe and case-level behaviour evals (G-12) and the trigger
@@ -353,7 +358,7 @@ Every record carries its own verification sentence. They follow one pattern.
    IMPLEMENTED or VERIFIED is refused without evidence.
 
 No capability-level verification has run. That is consistent with
-0 VERIFIED. The 149 IMPLEMENTED records name their pending evals in
+0 VERIFIED. The 169 IMPLEMENTED records name their pending evals in
 `verification_evidence`.
 
 ---
@@ -382,31 +387,30 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | D12 | PERFORMANCE | 10 | 0 | 0 | 10 | 0 | chayen-performance (10) |
 | D13 | DEVOPS | 12 | 0 | 0 | 12 | 0 | chayen-devops (12) |
 | D14 | OPERATIONS-SRE | 10 | 0 | 0 | 10 | 0 | chayen-devops (10) |
-| D15 | MODERNIZATION | 10 | 10 | 0 | 0 | 0 | chayen-modernization (4), chayen-implementation (3), chayen-architecture (2), chayen-devops (1) |
-| D16 | DOCUMENTATION | 10 | 10 | 0 | 0 | 0 | chayen-documentation (10) |
+| D15 | MODERNIZATION | 10 | 0 | 0 | 10 | 0 | chayen-repository (2), chayen-implementation (5), chayen-architecture (2), chayen-devops (1) |
+| D16 | DOCUMENTATION | 10 | 0 | 0 | 10 | 0 | chayen-documentation (10) |
 | D17 | AI-ML-LLM | 10 | 10 | 0 | 0 | 0 | chayen-ai-engineering (10) |
 | D18 | GOVERNANCE | 10 | 9 | 1 | 0 | 0 | chayen-documentation (1), chayen-implementation (2), chayen-devops (2), chayen-security (2), chayen-data (1), chayen-architecture (1), chayen-ai-engineering (1) |
 | D19 | SPECIALIZED | 9 | 9 | 0 | 0 | 0 | chayen-backend (4), chayen-architecture (2), chayen-data (2), chayen-frontend (1) |
 | D20 | AGENT-ENGINEERING | 8 | 8 | 0 | 0 | 0 | chayen-ai-engineering (8) |
-| **All** | | **206** | **56** | **1** | **149** | **0** | |
+| **All** | | **206** | **36** | **1** | **169** | **0** | |
 
 ### Totals by entry skill
 
 | Entry skill | Skill file | Capabilities | IN_PROGRESS | Domains | Recipe files (existing / planned) |
 |---|---|---|---|---|---|
-| chayen-repository | existing | 9 | 0 | D01 | 5 / 0 |
+| chayen-repository | existing | 11 | 0 | D01, D15 | 7 / 0 |
 | chayen-requirements | existing | 11 | 0 | D02, D04 | 5 / 0 |
 | chayen-architecture | existing | 18 | 0 | D03, D04, D15, D18, D19 | 8 / 1 |
-| chayen-implementation | existing | 21 | 1 | D04, D05, D15, D18 | 12 / 0 |
+| chayen-implementation | existing | 23 | 1 | D04, D05, D15, D18 | 13 / 0 |
 | chayen-backend | existing | 14 | 0 | D06, D19 | 7 / 1 |
 | chayen-frontend | existing | 19 | 0 | D07, D08, D19 | 11 / 1 |
 | chayen-data | existing | 15 | 0 | D09, D18, D19 | 8 / 2 |
 | chayen-testing | existing | 14 | 0 | D10 | 7 / 0 |
 | chayen-security | existing | 16 | 0 | D11, D18 | 8 / 1 |
 | chayen-performance | existing | 10 | 0 | D12 | 5 / 0 |
-| chayen-devops | existing | 25 | 0 | D13, D14, D15, D18 | 13 / 2 |
-| chayen-modernization | planned | 4 | 0 | D15 | 0 / 3 |
-| chayen-documentation | planned | 11 | 0 | D16, D18 | 0 / 6 |
+| chayen-devops | existing | 25 | 0 | D13, D14, D15, D18 | 14 / 1 |
+| chayen-documentation | existing | 11 | 0 | D16, D18 | 6 / 0 |
 | chayen-ai-engineering | planned | 19 | 0 | D17, D18, D20 | 0 / 11 |
 
 ### Consolidation groups (shared recipe, separate identities)
@@ -430,7 +434,7 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | CG-15 | `skills/chayen-implementation/references/feature-delivery.md` | existing | CAP-05-001 feature-implementation<br>CAP-05-004 safe-code-edit |
 | CG-16 | `skills/chayen-implementation/references/refactoring.md` | existing | CAP-05-003 code-refactoring<br>CAP-15-002 safe-refactor-plan |
 | CG-17 | `skills/chayen-implementation/references/upgrades.md` | existing | CAP-05-008 dependency-upgrade<br>CAP-15-004 framework-version-upgrade<br>CAP-15-005 breaking-change-analysis |
-| CG-18 | `skills/chayen-modernization/references/dead-code-and-deprecation.md` | planned | CAP-15-006 dead-code-analysis<br>CAP-15-007 deprecation-plan |
+| CG-18 | `skills/chayen-implementation/references/dead-code-and-deprecation.md` | existing | CAP-15-006 dead-code-analysis<br>CAP-15-007 deprecation-plan |
 | CG-19 | `skills/chayen-implementation/references/configuration-and-flags.md` | existing | CAP-05-009 configuration-change<br>CAP-05-010 feature-flagging |
 | CG-20 | `skills/chayen-backend/references/api-design.md` | existing | CAP-06-001 api-design<br>CAP-06-004 api-versioning<br>CAP-19-001 graphql-schema-evolution |
 | CG-21 | `skills/chayen-backend/references/api-endpoints.md` | existing | CAP-06-002 api-implementation<br>CAP-06-003 api-contract-validation |
@@ -461,8 +465,8 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 | CG-46 | `skills/chayen-devops/references/observability.md` | existing | CAP-14-001 observability-design<br>CAP-14-002 structured-logging<br>CAP-14-003 metrics-and-slo<br>CAP-14-004 distributed-tracing |
 | CG-47 | `skills/chayen-devops/references/alerting-and-incidents.md` | existing | CAP-14-005 alert-tuning<br>CAP-14-006 production-incident-triage |
 | CG-48 | `skills/chayen-devops/references/rca-and-postmortems.md` | existing | CAP-14-007 root-cause-analysis<br>CAP-14-008 postmortem |
-| CG-49 | `skills/chayen-documentation/references/project-docs.md` | planned | CAP-16-001 readme-maintenance<br>CAP-16-004 developer-onboarding-guide<br>CAP-16-008 knowledge-transfer |
-| CG-50 | `skills/chayen-documentation/references/pull-requests-and-review.md` | planned | CAP-16-005 pull-request-preparation<br>CAP-16-006 code-review-assistant<br>CAP-16-007 review-comment-resolution<br>CAP-18-001 standards-compliance-check |
+| CG-49 | `skills/chayen-documentation/references/project-docs.md` | existing | CAP-16-001 readme-maintenance<br>CAP-16-004 developer-onboarding-guide<br>CAP-16-008 knowledge-transfer |
+| CG-50 | `skills/chayen-documentation/references/pull-requests-and-review.md` | existing | CAP-16-005 pull-request-preparation<br>CAP-16-006 code-review-assistant<br>CAP-16-007 review-comment-resolution<br>CAP-18-001 standards-compliance-check |
 | CG-51 | `skills/chayen-ai-engineering/references/ml-data.md` | planned | CAP-17-001 dataset-readiness<br>CAP-17-005 ml-data-drift |
 | CG-52 | `skills/chayen-ai-engineering/references/ml-experiments-and-evaluation.md` | planned | CAP-17-002 ml-experiment-design<br>CAP-17-003 model-evaluation |
 | CG-53 | `skills/chayen-ai-engineering/references/rag.md` | planned | CAP-17-006 rag-pipeline-design<br>CAP-17-007 retrieval-evaluation |
@@ -696,31 +700,31 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 
 | ID | Capability | Entry skill | Recipe | Group | Status |
 |---|---|---|---|---|---|
-| CAP-15-001 | legacy-system-assessment | chayen-modernization (planned) | legacy-assessment.md (planned) | — | PLANNED |
-| CAP-15-002 | safe-refactor-plan | chayen-implementation | refactoring.md | CG-16 | PLANNED |
-| CAP-15-003 | strangler-migration | chayen-architecture | migration-strategy.md | CG-12 | PLANNED |
-| CAP-15-004 | framework-version-upgrade | chayen-implementation | upgrades.md | CG-17 | PLANNED |
-| CAP-15-005 | breaking-change-analysis | chayen-implementation | upgrades.md | CG-17 | PLANNED |
-| CAP-15-006 | dead-code-analysis | chayen-modernization (planned) | dead-code-and-deprecation.md (planned) | CG-18 | PLANNED |
-| CAP-15-007 | deprecation-plan | chayen-modernization (planned) | dead-code-and-deprecation.md (planned) | CG-18 | PLANNED |
-| CAP-15-008 | monolith-modularization | chayen-architecture | migration-strategy.md | CG-12 | PLANNED |
-| CAP-15-009 | hotfix-preparation | chayen-devops | hotfix.md (planned) | — | PLANNED |
-| CAP-15-010 | technical-debt-prioritization | chayen-modernization (planned) | technical-debt-prioritization.md (planned) | — | PLANNED |
+| CAP-15-001 | legacy-system-assessment | chayen-repository | legacy-assessment.md | — | IMPLEMENTED |
+| CAP-15-002 | safe-refactor-plan | chayen-implementation | refactoring.md | CG-16 | IMPLEMENTED |
+| CAP-15-003 | strangler-migration | chayen-architecture | migration-strategy.md | CG-12 | IMPLEMENTED |
+| CAP-15-004 | framework-version-upgrade | chayen-implementation | upgrades.md | CG-17 | IMPLEMENTED |
+| CAP-15-005 | breaking-change-analysis | chayen-implementation | upgrades.md | CG-17 | IMPLEMENTED |
+| CAP-15-006 | dead-code-analysis | chayen-implementation | dead-code-and-deprecation.md | CG-18 | IMPLEMENTED |
+| CAP-15-007 | deprecation-plan | chayen-implementation | dead-code-and-deprecation.md | CG-18 | IMPLEMENTED |
+| CAP-15-008 | monolith-modularization | chayen-architecture | migration-strategy.md | CG-12 | IMPLEMENTED |
+| CAP-15-009 | hotfix-preparation | chayen-devops | hotfix.md | — | IMPLEMENTED |
+| CAP-15-010 | technical-debt-prioritization | chayen-repository | technical-debt-prioritization.md | — | IMPLEMENTED |
 
 #### D16 DOCUMENTATION (10)
 
 | ID | Capability | Entry skill | Recipe | Group | Status |
 |---|---|---|---|---|---|
-| CAP-16-001 | readme-maintenance | chayen-documentation (planned) | project-docs.md (planned) | CG-49 | PLANNED |
-| CAP-16-002 | api-documentation | chayen-documentation (planned) | api-docs.md (planned) | — | PLANNED |
-| CAP-16-003 | architecture-documentation | chayen-documentation (planned) | architecture-docs.md (planned) | — | PLANNED |
-| CAP-16-004 | developer-onboarding-guide | chayen-documentation (planned) | project-docs.md (planned) | CG-49 | PLANNED |
-| CAP-16-005 | pull-request-preparation | chayen-documentation (planned) | pull-requests-and-review.md (planned) | CG-50 | PLANNED |
-| CAP-16-006 | code-review-assistant | chayen-documentation (planned) | pull-requests-and-review.md (planned) | CG-50 | PLANNED |
-| CAP-16-007 | review-comment-resolution | chayen-documentation (planned) | pull-requests-and-review.md (planned) | CG-50 | PLANNED |
-| CAP-16-008 | knowledge-transfer | chayen-documentation (planned) | project-docs.md (planned) | CG-49 | PLANNED |
-| CAP-16-009 | release-notes | chayen-documentation (planned) | release-notes.md (planned) | — | PLANNED |
-| CAP-16-010 | git-workflow-assistant | chayen-documentation (planned) | git-workflow.md (planned) | — | PLANNED |
+| CAP-16-001 | readme-maintenance | chayen-documentation | project-docs.md | CG-49 | IMPLEMENTED |
+| CAP-16-002 | api-documentation | chayen-documentation | api-docs.md | — | IMPLEMENTED |
+| CAP-16-003 | architecture-documentation | chayen-documentation | architecture-docs.md | — | IMPLEMENTED |
+| CAP-16-004 | developer-onboarding-guide | chayen-documentation | project-docs.md | CG-49 | IMPLEMENTED |
+| CAP-16-005 | pull-request-preparation | chayen-documentation | pull-requests-and-review.md | CG-50 | IMPLEMENTED |
+| CAP-16-006 | code-review-assistant | chayen-documentation | pull-requests-and-review.md | CG-50 | IMPLEMENTED |
+| CAP-16-007 | review-comment-resolution | chayen-documentation | pull-requests-and-review.md | CG-50 | IMPLEMENTED |
+| CAP-16-008 | knowledge-transfer | chayen-documentation | project-docs.md | CG-49 | IMPLEMENTED |
+| CAP-16-009 | release-notes | chayen-documentation | release-notes.md | — | IMPLEMENTED |
+| CAP-16-010 | git-workflow-assistant | chayen-documentation | git-workflow.md | — | IMPLEMENTED |
 
 #### D17 AI-ML-LLM (10)
 
@@ -741,7 +745,7 @@ Do not edit by hand. Run `node tools/catalog/check-catalog.mjs --write-doc`.
 
 | ID | Capability | Entry skill | Recipe | Group | Status |
 |---|---|---|---|---|---|
-| CAP-18-001 | standards-compliance-check | chayen-documentation (planned) | pull-requests-and-review.md (planned) | CG-50 | PLANNED |
+| CAP-18-001 | standards-compliance-check | chayen-documentation | pull-requests-and-review.md | CG-50 | PLANNED |
 | CAP-18-002 | change-passport | chayen-implementation | change-summary.md | CG-14 | IN_PROGRESS |
 | CAP-18-003 | task-evidence-audit | chayen-implementation | change-summary.md | CG-14 | PLANNED |
 | CAP-18-004 | policy-as-code-validation | chayen-devops | policy-as-code.md (planned) | — | PLANNED |

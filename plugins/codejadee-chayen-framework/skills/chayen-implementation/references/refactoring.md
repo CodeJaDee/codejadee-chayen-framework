@@ -1,13 +1,15 @@
 ---
 kind: recipe
-capabilities: [CAP-05-003]
+capabilities: [CAP-05-003, CAP-15-002]
 ---
 # Behaviour-preserving refactoring
 
 Restructure code without changing what it does. Protect the behaviour with
 tests first, change in small verified steps, and keep the public surface
 stable unless a change to it is agreed. A refactor never carries a feature or
-a bug fix.
+a bug fix. A large refactor is planned first as a sequence of small,
+independently releasable steps, each with its own safety net, checkpoint, and
+rollback.
 
 ## Inputs
 
@@ -16,8 +18,12 @@ a bug fix.
 - The existing tests for that code, and the baseline result.
 - The public surface that must stay stable: public methods, routes, events,
   serialized shapes, and database mappings.
+- For a large refactor: the target structure, release cadence and freeze
+  windows, and who reviews each step.
 
 ## Procedure
+
+### Single refactor (CAP-05-003)
 
 1. **State the invariant:** "observable behaviour X stays identical". List
    the public surface that must not change.
@@ -43,12 +49,35 @@ a bug fix.
 7. **Report** the structural goal achieved, the steps taken, the tests
    added, and the before and after results.
 
+### Large refactor plan (CAP-15-002)
+
+1. **Describe the current and target structure,** and list the public
+   surfaces each part of the move touches.
+2. **Map the safety net per area:** existing tests and their coverage of
+   the code that moves, and the characterization tests to add first
+   (approval or golden-master tests for legacy output, contract tests for
+   APIs). Where tests are not feasible, say so and make those steps smaller.
+3. **Slice into steps** that are each behaviour-preserving and releasable on
+   their own: parallel change (expand, migrate callers, contract), branch
+   by abstraction, or a flag that switches between old and new
+   implementations.
+4. **For each step,** give the goal, the files or modules, the tests to add
+   before it, the checkpoint (build and tests green, key metrics
+   unchanged), the rollback (revert the step), and a size class (S, M, L).
+5. **Order the steps** to reduce risk: safety net first, mechanical moves
+   next, behaviour-sensitive moves last. Avoid long-lived branches: each
+   step merges on its own.
+6. **Ask for approval of the plan,** then execute one step at a time with
+   the single refactor procedure above.
+
 ## Outputs
 
 - Refactored code, with any characterization tests added before the change.
 - Before and after test results showing no behaviour change, plus
   confirmation that the public surface is unchanged.
 - The bugs or smells noticed, listed as follow-ups.
+- For a large refactor: a step plan with the safety net (tests to add
+  first), checkpoint, and rollback per step.
 
 ## Technology considerations
 
@@ -68,3 +97,5 @@ a bug fix.
   build, contract or OpenAPI diff, or tests).
 - The diff contains no behaviour change. Any found bugs are listed as
   follow-ups.
+- In a large refactor plan, each step leaves the fixture build green when
+  executed, and characterization tests come before risky moves.

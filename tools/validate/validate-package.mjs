@@ -327,7 +327,7 @@ for (const s of skillDirs) {
     if (!/\bNot (for|a)\b/.test(m.desc)) error(c, `${s}: description lacks a "Not for ..." boundary clause (DS-03)`);
   }
   if (skillDirs.length > 14) error(c, `${skillDirs.length} entry skills > 14`);
-  const L0_CAP = 4700; // 4,000 originally; 4,400 by D-034 (Step 14); 4,700 by D-035 (Step 15); both user-approved
+  const L0_CAP = 5200; // 4,000 originally; 4,400 by D-034 (Step 14), 4,700 by D-035 (Step 15), 5,200 by D-036 (Step 16); all user-approved
   if (total > L0_CAP) error(c, `L0 metadata ${total} chars > ${L0_CAP}`);
   if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} skills, L0 metadata ${total}/${L0_CAP} chars`);
 

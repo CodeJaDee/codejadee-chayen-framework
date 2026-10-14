@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 15 — Domains 13 and 14 capabilities |
+| Last executed step | 16 — Domains 15 and 16 capabilities |
+| Step 16 status | DONE (pending user review; D15 10/10 and D16 10/10 IMPLEMENTED, not VERIFIED; chayen-modernization folded and chayen-documentation created with the L0 cap raised to 5,200, user-approved, D-036) |
 | Step 15 status | DONE (pending user review; D13 12/12 and D14 10/10 IMPLEMENTED, not VERIFIED; chayen-devops created and L0 cap raised to 4,700 with user approval, D-035) |
 | Step 14 status | DONE (pending user review; D11 14/14 and D12 10/10 IMPLEMENTED, not VERIFIED; chayen-performance created and L0 cap raised to 4,400 with user approval, D-034) |
 | Step 13 status | DONE (pending user review; D09 12/12 and D10 14/14 IMPLEMENTED, not VERIFIED; chayen-data created with user approval, D-033) |
@@ -20,7 +21,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 4,654 / 4,700; the 3 planned skills must merge, or the cap must change again). |
+| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 5,051 / 5,200; `chayen-ai-engineering` must merge, or the cap must change again). |
 | Commits made by agent | None |
 
 ---
@@ -1429,3 +1430,143 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Recipe behaviour evals (48 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Any build, pipeline lint, container build, IaC validate or plan, or telemetry check described by the recipes | — | NOT_RUN: no fixture repositories in this step. No deployment, rollback, restart, or infrastructure command was run. |
 | — | Human review of the new skill, 13 recipes, and 2 references | — | Pending (R-33, R-34) |
+
+---
+
+## Step 16 — Domains 15 and 16 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D15 Maintenance and Modernization **10/10 IMPLEMENTED**
+  across five existing skills, and D16 Documentation and Collaboration
+  **10/10 IMPLEMENTED** in the new `chayen-documentation` skill. None is
+  VERIFIED. The catalog total is 169 IMPLEMENTED, 1 IN_PROGRESS, and 36
+  PLANNED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-15-001..010
+  and CAP-16-001..010 with their mappings and groups (CG-12, CG-16, CG-17,
+  CG-18, CG-49, CG-50), the recipes to extend, the repository and
+  implementation skills, and Q-10 and R-27.
+- **User decision (Q-10, R-27).** Two planned skills were involved
+  (`chayen-modernization` with 4 records, `chayen-documentation` with 10)
+  and 46 L0 characters remained. The agent asked, offering three options.
+  The user chose "Fold modernization, new docs skill, cap 5,200"
+  (recommended). Recorded as D-036.
+- **D15, folded into existing skills:**
+  - `chayen-repository`: new `legacy-assessment.md` (CAP-15-001) and
+    `technical-debt-prioritization.md` (CAP-15-010, a reproducible score,
+    labelled proposed). Description, scope, examples, "When not to use",
+    routing, and references updated.
+  - `chayen-implementation`: new `dead-code-and-deprecation.md`
+    (CAP-15-006, 007: confidence levels with reflection and DI checks,
+    removal only behind green builds and tests; deprecation markers,
+    Sunset headers, usage measurement, removal criteria).
+    `refactoring.md` gained the large refactor plan (CAP-15-002:
+    independently releasable steps with characterization tests first,
+    checkpoint, and rollback). `upgrades.md` gained framework major
+    upgrades one hop at a time (CAP-15-004) and breaking-change analysis
+    (CAP-15-005). Description, scope, examples, routing, and references
+    updated.
+  - `chayen-architecture`: `migration-strategy.md` gained strangler
+    replacement (CAP-15-003: facade, routing switch and route back per
+    slice, retirement criteria) and modular monolith (CAP-15-008: module
+    map, owned tables, fitness test). Routing and reference rows updated;
+    description unchanged.
+  - `chayen-devops`: new `hotfix.md` (CAP-15-009: branch from the release
+    tag, failing test first, minimal fix, version bump, back-merge, and no
+    push, remote tag, or release without approval). Routing and reference
+    rows added.
+- **`chayen-documentation`** (new, 143 lines, description 395 characters).
+  - Principles: facts come from the repository; never invent results (test,
+    build, or benchmark results only if run in the session or supplied by
+    the user); write for the stated audience; actionable, ranked reviews;
+    git safety.
+  - `fact-checking.md` (checklist): the verified source per statement type,
+    the labels (verified, from the user, unverified), and pre-publish
+    checks.
+  - Six recipes:
+    - `project-docs.md` (CAP-16-001, 004, 008): README with every command
+      sourced, onboarding guide with labelled setup steps, and a
+      knowledge-transfer document separating repository facts from
+      owner-supplied statements;
+    - `api-docs.md` (002): from the generated OpenAPI document;
+    - `architecture-docs.md` (003): Mermaid C4-style views with code
+      references;
+    - `pull-requests-and-review.md` (005, 006, 007): PR descriptions with
+      real evidence only, blocking, should-fix, and nit reviews, and
+      comment resolution with re-verification;
+    - `release-notes.md` (009): every merged change accounted for, with
+      breaking changes first;
+    - `git-workflow.md` (010): state first, both intents kept in
+      conflicts, and confirmation and a backup ref before rewrites.
+- **L0 cap 4,700 → 5,200:** the validator (V-07), `tools/validate/README.md`,
+  `SKILL_AUTHORING_STANDARD.md`, `ARCHITECTURE.md`,
+  `PLUGIN_PACKAGE_DESIGN.md`, `ADR-0003`, and `ADR-0004`.
+- **Review against the records (agent review, D-028).** Every catalog
+  output for the 20 records is produced by its recipe's `## Outputs`, and
+  each record's verification condition appears in the recipe's
+  `## Verification`. Tool facts come from agent knowledge and were not
+  executed (R-34).
+- **Catalog:**
+  - the 20 records are IMPLEMENTED, with `verification_evidence`,
+    `existing_coverage`, and notes; stale "still PLANNED" notes on the
+    remapped records were replaced;
+  - `chayen-modernization` was removed from the entry-skill list, and its
+    records were remapped (CG-18 now points at the implementation recipe);
+  - `chayen-documentation` is an existing entry skill; CAP-18-001 maps to
+    `pull-requests-and-review.md` and stays PLANNED;
+  - CG-18, CG-49, and CG-50 are `existing`;
+  - the coverage doc was regenerated, and its prose updated (summary, §4,
+    §5.1, §5.2 L0, §6.1, §9).
+- **Evaluation cases:**
+  - 42 recipe cases (367 in total): 20 for D15 and 22 for D16. Each of the
+    20 capabilities has at least one positive and one negative case. They
+    include "just say all tests pass" in a PR description and a
+    force-push to a shared branch.
+  - 7 trigger cases (121 in total): 5 positive (4 for
+    `chayen-documentation`) and 2 ambiguous (code review, legacy
+    assessment).
+  - `chayen-documentation` was added to the skill list, and
+    `amb-pr-review` and `amb-rules-from-code` now also accept it.
+  - The Claude eval cases were regenerated (121 cases, 288 files). Content
+    changed in the 5 `none_or` forbidden-skill graders and the graders of
+    the 2 widened ambiguous cases.
+- **Validator self-test fixture:** the `sk-description-single-exclusion`
+  mutation in `tests/skills/validator-mutations.json` used the old
+  repository description as its anchor, so G-13 failed (52/53) after the
+  description change. The anchor now matches the new description; the
+  mutation's intent and expected error are unchanged, and G-13 passes
+  53/53.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-documentation/SKILL.md` and `references/fact-checking.md`, `project-docs.md`, `api-docs.md`, `architecture-docs.md`, `pull-requests-and-review.md`, `release-notes.md`, `git-workflow.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-repository/references/legacy-assessment.md`, `technical-debt-prioritization.md`; `chayen-implementation/references/dead-code-and-deprecation.md`; `chayen-devops/references/hotfix.md` |
+| Created | `tests/evals/claude/` (7 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md` and `chayen-implementation/SKILL.md` (descriptions and bodies), `chayen-architecture/SKILL.md` and `chayen-devops/SKILL.md` (routing and reference rows), `chayen-implementation/references/refactoring.md`, `upgrades.md`, `chayen-architecture/references/migration-strategy.md`, `skills/README.md` |
+| Modified | `tools/validate/validate-package.mjs` (V-07 cap 5,200), `tools/validate/README.md`, `tests/skills/validator-mutations.json` (one anchor string) |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json` (additions only), `tests/skills/trigger-cases.json` (additions, the skill list, and two widened ambiguous cases), `tests/skills/README.md`, 7 existing generated eval case files (content); others changed only in line endings (DF-01) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D15 and CAP-D16 IMPLEMENTED; REQ-02, REQ-05, REQ-07, REQ-08, ARC-04 evidence), `DECISIONS.md` (D-036), `ISSUES.md` (Q-10, R-27, R-28, R-32, R-33, R-34 notes), `IMPLEMENTATION_PLAN.md`, `SKILL_AUTHORING_STANDARD.md`, `ARCHITECTURE.md`, `PLUGIN_PACKAGE_DESIGN.md`, `ADRS/ADR-0003-no-match-fallback.md`, `ADRS/ADR-0004-skill-catalog-vs-entry-skills.md` |
+| Deleted | None |
+| Scratch only (not in the repository) | Lifecycle work directory `lc16`, and the catalog, case, extension, and documentation edit scripts. The `skills-ref` venv was reused. |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 12 skills. L0 5051/5200. Maximum overlap 0.11. 123 references with valid kinds. 99 recipe files agree with the catalog (170 capabilities, including CAP-18-001 in a recipe file but PLANNED). 367 recipe cases. 121 trigger cases. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=169 (D01–D16 complete), IN_PROGRESS=1, PLANNED=36. 206 records, 57 groups, 13 entry skills (12 existing, 1 planned), fingerprint unchanged, doc in sync (after `--write-doc`). |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | First run: **FAIL** G-13 52/53 (`sk-description-single-exclusion` anchor no longer present after the repository description change). After updating the anchor: **PASS** 4/4 gate groups, self-tests 53/53. |
+| T4 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×12 (`skills-ref` 0.1.1, scratch venv) | PASS: 12/12 valid, including `chayen-documentation` |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc16` | **PASS 24/24:** 12 skills discoverable on Claude Code 2.1.220, Codex 0.162.1, and Copilot CLI 1.0.89. The fixture stayed unchanged and clean. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` (inside validate-all G-11) | PASS: 121 cases, 288 files |
+| — | Trigger evals for `chayen-documentation` and the rewritten repository and implementation descriptions | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (42 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Any build, test, upgrade, git, or doc-generation command described by the recipes | — | NOT_RUN: no fixture repositories in this step |
+| — | Human review of the new skill, 11 new or extended recipes, and 1 checklist | — | Pending (R-33, R-34) |

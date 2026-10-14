@@ -635,6 +635,62 @@ Decision statuses:
     skill but stay PLANNED.
   - Description trigger effects are NOT_RUN (R-32).
 
+### D-036 — Domains 15 and 16: fold modernization into existing skills; new `chayen-documentation` with the L0 cap raised to 5,200
+- **Status:** APPROVED for the structure and the cap change (the user chose
+  "Fold modernization, new docs skill, cap 5,200" when asked in Step 16).
+  The rest is PROPOSED (executed in Step 16).
+- **Context:** six D15 records already lived in existing skills (D-029,
+  D-031, and the devops hotfix mapping). The planned `chayen-modernization`
+  owned only 4 records, and the planned `chayen-documentation` owned 10
+  (plus CAP-18-001). 46 L0 characters remained. The agent offered three
+  options: fold modernization and create documentation with a 5,200 cap
+  (recommended), create both with a 5,600 cap, or fold both with no cap
+  change.
+- **Decision:**
+  - **`chayen-modernization` is removed** from the catalog's entry-skill
+    list (13 mapped entry skills remain, under the 14 cap):
+    - CAP-15-001 (legacy assessment) and CAP-15-010 (debt prioritization)
+      move to `chayen-repository`, which already does the read-only
+      analysis, as `legacy-assessment.md` and
+      `technical-debt-prioritization.md`. The ranking is a proposal; the
+      team decides. The repository description no longer excludes
+      "prioritizing work", and git operations and documentation now hand
+      off to `chayen-documentation`.
+    - CAP-15-006 and CAP-15-007 (dead code, deprecation) move with CG-18 to
+      `chayen-implementation` as `dead-code-and-deprecation.md`.
+  - **Existing recipes extended:** `refactoring.md` (large refactor plans,
+    CAP-15-002), `upgrades.md` (framework major upgrades and breaking-change
+    analysis, CAP-15-004 and 005), `migration-strategy.md` (strangler and
+    modular monolith, CAP-15-003 and 008), plus a new devops `hotfix.md`
+    (CAP-15-009).
+  - **Behaviour-preserving changes** require characterization or regression
+    tests where feasible: large refactor steps, dead-code removal, and
+    hotfixes (a failing test before the fix).
+  - **`chayen-documentation` is created** as the twelfth entry skill (143
+    lines, description 395 characters). Its rule: documentation reflects
+    verified repository facts, and test, build, or benchmark results are
+    reported only if they ran in the session or the user supplied them. A
+    `fact-checking.md` checklist lists the verified source per statement
+    type. Six recipes cover project docs, API docs, architecture docs, pull
+    requests and review, release notes, and git workflow (destructive or
+    shared-history operations need confirmation).
+  - **The L0 cap is 5,200 characters** (about 65 % of Codex's
+    8,000-character fallback).
+  - **Descriptions changed:** `chayen-repository` (380 characters) and
+    `chayen-implementation` (418 characters), with the trigger-case and
+    validator self-test anchor updates that follow:
+    `amb-pr-review` and `amb-rules-from-code` now also accept
+    `chayen-documentation`, and the `sk-description-single-exclusion`
+    mutation's anchor text matches the new repository description (same
+    intent: a boundary clause with one exclusion must fail V-20).
+- **Consequences:**
+  - L0 is 5,051 / 5,200 with 12 skills. Only `chayen-ai-engineering`
+    (D17, D20, and one D18 record) is still planned; 149 characters cannot
+    hold its description (Q-10).
+  - CAP-18-001 (standards checks) maps to `pull-requests-and-review.md` and
+    stays PLANNED.
+  - Description trigger effects are NOT_RUN (R-32).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

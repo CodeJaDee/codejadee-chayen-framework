@@ -20,7 +20,7 @@ development repository. Capability coverage is tracked in
 
 | Skill | Scope |
 |---|---|
-| `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt, unknowns |
+| `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt and its proposed priority, legacy assessment, unknowns |
 | `chayen-requirements` | Requirements analysis: elicitation, stories, acceptance criteria, use cases, business rules, edge cases, NFRs, scope, backlog and sizing, traceability |
 | `chayen-architecture` | Architecture and technical planning: reviews and fitness tests, options and ADRs, decision register, boundaries and domain, data flow, multitenancy, resilience, migration and rollout plans |
 | `chayen-implementation` | Code changes with a task contract and change summary: features, bug fixes, refactors, algorithms, concurrency, error handling, dependency upgrades, configuration and flags, generated code, compatibility |
@@ -31,3 +31,4 @@ development repository. Capability coverage is tracked in
 | `chayen-security` | Advisory security: threat models, secure review (authorization, injection, SSRF, crypto, logging), SAST and dependency triage, exposed secrets, privacy, SBOMs and licences, read-only Dockerfile and IaC review, remediation |
 | `chayen-performance` | Measurement-driven performance (.NET, Node, Python, browser): baselines, profiling, load tests, bottlenecks, memory leaks, latency budgets, capacity, caching, cost; no claim without measurement |
 | `chayen-devops` | Build, delivery, and operations: build systems, CI/CD, Dockerfiles and container hardening, IaC (Terraform, Bicep, Kubernetes, Helm), environments, secrets, packaging and provenance, deploy and rollback checks, observability and SLOs, alerting and incidents, RCA and postmortems, disaster recovery, runbooks; changes files, never environments without approval |
+| `chayen-documentation` | Engineering docs and collaboration from verified repository facts: READMEs, onboarding, API and architecture docs, knowledge transfer, PR descriptions, code review, review comments, release notes, git workflow; never invents commands or test results |

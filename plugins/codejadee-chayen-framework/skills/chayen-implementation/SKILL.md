@@ -1,13 +1,13 @@
 ---
 name: chayen-implementation
-description: Plan and deliver code changes with a task contract, a minimal diff that follows existing conventions, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency upgrades, config and feature flags, concurrency, error handling, generated client code, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.
+description: Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.
 ---
 
 # Implementation
 
 Deliver a code change that does exactly what was asked, follows the project's existing conventions and architecture, and is proven with the project's own toolchain.
 
-**Scope:** code changes in .NET, TypeScript or JavaScript, and Python: cross-layer features, safe edits, bug fixes, refactors, algorithms, concurrency, error handling, dependency upgrades, configuration and feature flags, generated code, and compatibility-preserving changes. Work confined to API endpoints or UI components, test-only work, explanations, and other stacks (for example Unity, Java, native mobile) are outside this scope: do not apply this workflow to them.
+**Scope:** code changes in .NET, TypeScript or JavaScript, and Python: cross-layer features, safe edits, bug fixes, refactors and refactor plans, algorithms, concurrency, error handling, dependency and framework upgrades with breaking-change analysis, dead code and deprecations, configuration and feature flags, generated code, and compatibility-preserving changes. Work confined to API endpoints or UI components, test-only work, explanations, and other stacks (for example Unity, Java, native mobile) are outside this scope: do not apply this workflow to them.
 
 ## When to use
 
@@ -16,6 +16,7 @@ Requests that fit:
 - "Users get logged out randomly. Find the cause and fix it."
 - "Refactor the payment module to remove the duplicated retry logic without changing behavior."
 - "Upgrade AutoMapper to the latest version and fix whatever breaks."
+- "Find the dead code in this project and remove what is safe to remove."
 - "Hide the new checkout flow behind a feature flag."
 - "Two requests sometimes create duplicate orders. Is this a race condition?"
 - "Regenerate the TypeScript client from the updated OpenAPI spec."
@@ -86,11 +87,12 @@ If the request does not fit, stop following this skill and continue normally wit
    |---|---|
    | Feature across layers, or a precise small edit | feature delivery |
    | Defect | bug fix |
-   | Behaviour-preserving restructure | refactoring |
+   | Behaviour-preserving restructure, or a plan for a large refactor | refactoring |
    | Algorithm or data structure choice | algorithm design |
    | Races, deadlocks, async misuse, lost updates | concurrency safety |
    | Error handling consistency | error handling |
-   | Package or library version change | upgrades |
+   | Package, library, or framework version change, or breaking-change analysis | upgrades |
+   | Unused code, or deprecating an API, feature, or library | dead code and deprecation |
    | Settings or feature flags | configuration and flags |
    | Code generated from OpenAPI, GraphQL, protobuf, or JSON Schema | contract codegen |
    | Changing something others depend on | compatibility |
@@ -166,11 +168,12 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 | [references/task-contract.md](references/task-contract.md) | Workflow step 4: the change touches three or more files, or any risky area |
 | [references/feature-delivery.md](references/feature-delivery.md) | Workflow step 3: a feature across layers, or a precise small edit |
 | [references/bug-fix.md](references/bug-fix.md) | Workflow step 3: a defect to reproduce and fix |
-| [references/refactoring.md](references/refactoring.md) | Workflow step 3: a behaviour-preserving restructure |
+| [references/refactoring.md](references/refactoring.md) | Workflow step 3: a behaviour-preserving restructure, or planning a large refactor in steps |
 | [references/algorithm-design.md](references/algorithm-design.md) | Workflow step 3: choosing or replacing an algorithm or data structure |
 | [references/concurrency-safety.md](references/concurrency-safety.md) | Workflow step 3: a suspected race, deadlock, async misuse, or lost update |
 | [references/error-handling.md](references/error-handling.md) | Workflow step 3: making error handling consistent |
-| [references/upgrades.md](references/upgrades.md) | Workflow step 3: upgrading a package or library version |
+| [references/upgrades.md](references/upgrades.md) | Workflow step 3: upgrading a package, library, or framework major version, or analysing breaking changes |
+| [references/dead-code-and-deprecation.md](references/dead-code-and-deprecation.md) | Workflow step 3: finding and removing unused code, or deprecating an API, feature, or library |
 | [references/configuration-and-flags.md](references/configuration-and-flags.md) | Workflow step 3: adding or changing settings, or a feature flag |
 | [references/contract-codegen.md](references/contract-codegen.md) | Workflow step 3: generating or regenerating code from a contract |
 | [references/compatibility.md](references/compatibility.md) | Workflow step 3: changing a public API, event, schema, or library that others consume |

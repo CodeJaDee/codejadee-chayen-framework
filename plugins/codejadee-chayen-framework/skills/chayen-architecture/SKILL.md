@@ -96,7 +96,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | Sequence or data-flow diagrams | sequence and data flow |
    | Tenant isolation | multitenancy |
    | Partial failure, timeouts, retries, degradation | resilience |
-   | Phased migration between platforms or systems | migration strategy |
+   | Phased migration between platforms or systems, strangler replacement, or splitting a monolith into modules | migration strategy |
    | Staged rollout, canary, abort criteria | rollout planning |
 
 4. **Produce the recipe's deliverable,** labelled **proposed**, with its
@@ -168,5 +168,5 @@ If the request does not fit, stop following this skill and continue normally wit
 | [references/sequence-and-dataflow.md](references/sequence-and-dataflow.md) | Workflow step 3: sequence or data-flow diagrams |
 | [references/multitenancy.md](references/multitenancy.md) | Workflow step 3: tenant isolation design |
 | [references/resilience.md](references/resilience.md) | Workflow step 3: designing for partial failure |
-| [references/migration-strategy.md](references/migration-strategy.md) | Workflow step 3: phased migration between platforms, frameworks, or systems |
+| [references/migration-strategy.md](references/migration-strategy.md) | Workflow step 3: phased migration between platforms, frameworks, or systems, a strangler replacement, or a modular-monolith split |
 | [references/rollout-planning.md](references/rollout-planning.md) | Workflow step 3: staged rollout of a change to users |

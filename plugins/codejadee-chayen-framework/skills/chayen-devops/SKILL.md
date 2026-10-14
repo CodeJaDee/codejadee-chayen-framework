@@ -89,6 +89,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | Secret stores, local and CI secrets, rotation | secrets management |
    | Packaging, versioning, signing, provenance | releases and provenance |
    | Post-deploy checks, rollback readiness | release and rollout |
+   | Urgent fix for a released version | hotfix |
    | Logs, metrics, traces, SLOs | observability |
    | Alert noise or gaps, live incident triage | alerting and incidents |
    | Root cause, postmortem | RCA and postmortems |
@@ -171,6 +172,7 @@ Read the safety checklist before remote commands (workflow step 1), the tooling 
 | [references/secrets-management.md](references/secrets-management.md) | Secret stores, local development secrets, CI secrets, rotation |
 | [references/releases-and-provenance.md](references/releases-and-provenance.md) | Packaging, versioning, signing, or provenance of artifacts |
 | [references/release-and-rollout.md](references/release-and-rollout.md) | Post-deploy validation, or proving a rollback works |
+| [references/hotfix.md](references/hotfix.md) | Preparing an urgent fix for a released version from its release tag |
 | [references/observability.md](references/observability.md) | Logs, metrics, traces, SLOs, or dashboards |
 | [references/alerting-and-incidents.md](references/alerting-and-incidents.md) | Alert tuning, or triage of a live incident |
 | [references/rca-and-postmortems.md](references/rca-and-postmortems.md) | Root-cause analysis or a postmortem |

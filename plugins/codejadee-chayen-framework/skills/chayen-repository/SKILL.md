@@ -1,13 +1,13 @@
 ---
 name: chayen-repository
-description: Analyze an existing codebase without changing it. Reports stacks and versions, layout, build and test commands, conventions, project and package dependencies, change impact, git history and code ownership, technical debt, and unknowns, citing evidence for every finding. Use for onboarding or before planning a change. Not for writing code, git operations such as rebase or merge, or prioritizing work.
+description: Analyze an existing codebase without changing it. Reports stacks and versions, layout, build and test commands, conventions, project and package dependencies, change impact, git history and code ownership, technical debt and its priority, legacy assessments, and unknowns, citing evidence for every finding. Not for writing code or docs, or git operations such as rebase or merge.
 ---
 
 # Repository intelligence
 
 Build an evidence-based picture of an existing repository so that later work follows what the project already does, and so that nothing about it is invented.
 
-**Scope:** read-only analysis of a repository that exists on disk: profile, dependencies, change impact, history and ownership, technical debt, and unknowns. Writing or changing code, git operations that change state, prioritizing work, and questions that involve no repository are outside this scope.
+**Scope:** read-only analysis of a repository that exists on disk: profile, dependencies, change impact, history and ownership, technical debt and a proposed debt priority, legacy system assessment, and unknowns. Writing or changing code or documentation, git operations that change state, and questions that involve no repository are outside this scope.
 
 ## When to use
 
@@ -19,6 +19,8 @@ Requests that fit:
 - "When did the discount calculation change, and why?"
 - "Who should review changes to the payments module?"
 - "List the technical debt in this repository, with evidence."
+- "Rank our technical debt so we know what to fix first."
+- "Assess our legacy order system: should we retain, refactor, replatform, or rewrite it?"
 - "Before we start, what don't we know about how this service is deployed?"
 
 ## When not to use
@@ -26,8 +28,8 @@ Requests that fit:
 | Request | Better fit |
 |---|---|
 | Writing or changing code, including refactors and renames | The chayen-implementation, chayen-backend, chayen-frontend, or chayen-testing skill |
-| Git operations: commit, rebase, squash, merge conflicts, branch cleanup | Answer directly |
-| Deciding which debt to fix first, or estimating effort | Answer directly |
+| Git operations: commit, rebase, squash, merge conflicts, branch cleanup | The chayen-documentation skill |
+| Writing a README, onboarding guide, or architecture document | The chayen-documentation skill |
 | Gathering requirements or writing acceptance criteria for new work | The chayen-requirements skill |
 | Conceptual questions with no repository involved, such as "what does git bisect do?" | Answer directly |
 | Vulnerability or dependency CVE review | The chayen-security skill |
@@ -79,6 +81,8 @@ If the request does not fit, stop following this skill and continue normally wit
    | "What depends on X", "what breaks if we change X" | dependencies and impact |
    | "When or why did X change", churn, owners, reviewers | history and ownership |
    | Debt, outdated, or risky areas | technical debt inventory |
+   | Which debt to fix first | technical debt prioritization |
+   | Retain, refactor, replatform, rewrite, or retire a legacy system | legacy assessment |
    | Gaps, assumptions, or what is not known before a task | unknowns and assumptions |
 
 3. **Follow the recipe** within the requested scope. Skip generated and
@@ -148,5 +152,7 @@ If the request does not fit, stop following this skill and continue normally wit
 | [references/dependency-and-impact.md](references/dependency-and-impact.md) | Workflow step 2: dependency questions, or the impact of a proposed change |
 | [references/history-and-ownership.md](references/history-and-ownership.md) | Workflow step 2: when or why something changed, churn, owners, or reviewers |
 | [references/technical-debt-inventory.md](references/technical-debt-inventory.md) | Workflow step 2: cataloguing debt or risky areas |
+| [references/technical-debt-prioritization.md](references/technical-debt-prioritization.md) | Workflow step 2: ranking debt items into a proposed order |
+| [references/legacy-assessment.md](references/legacy-assessment.md) | Workflow step 2: assessing a legacy system and its options |
 | [references/unknowns-and-assumptions.md](references/unknowns-and-assumptions.md) | Workflow step 2: listing gaps and assumptions before a task |
 | [references/stack-detection.md](references/stack-detection.md) | Inside a recipe, when detecting stacks and versions: read only the sections for ecosystems whose manifest files are present |

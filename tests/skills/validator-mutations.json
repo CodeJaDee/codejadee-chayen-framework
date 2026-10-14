@@ -155,7 +155,7 @@
     {
       "id": "sk-description-single-exclusion",
       "description": "Boundary clause names only one exclusion (DS-03)",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": " Not for writing code, git operations such as rebase or merge, or prioritizing work.", "with": " Not for writing code." }],
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md", "op": "replace", "find": " Not for writing code or docs, or git operations such as rebase or merge.", "with": " Not for writing code." }],
       "expect": { "validator": "package", "error": "V-20 description-breadth" }
     },
     {

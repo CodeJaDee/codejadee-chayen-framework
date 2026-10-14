@@ -13,7 +13,8 @@
     "chayen-testing",
     "chayen-security",
     "chayen-performance",
-    "chayen-devops"
+    "chayen-devops",
+    "chayen-documentation"
   ],
   "cases": [
     { "id": "pos-repository-overview", "category": "positive", "prompt": "I just cloned this repository. Give me an overview of how it is structured and how to build it and run its tests.", "expect": { "any_of": ["chayen-repository"] }, "forbid": ["chayen-security"] },
@@ -89,9 +90,9 @@
     { "id": "amb-slow-and-injection", "category": "ambiguous", "prompt": "Our login endpoint is slow and I think it might be vulnerable to SQL injection.", "expect": { "any_of": ["chayen-backend", "chayen-security", "chayen-performance"] }, "forbid": ["chayen-frontend"] },
     { "id": "amb-tests-then-fix", "category": "ambiguous", "prompt": "Write tests for the order validation rules and fix whatever bug they reveal.", "expect": { "any_of": ["chayen-testing", "chayen-implementation", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "amb-where-endpoint", "category": "ambiguous", "prompt": "Where should I add a new API endpoint for refunds in this project, and what should it look like?", "expect": { "any_of": ["chayen-repository", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
-    { "id": "amb-pr-review", "category": "ambiguous", "prompt": "Review this pull request for security problems and missing tests.", "expect": { "any_of": ["chayen-security", "chayen-testing"] } },
+    { "id": "amb-pr-review", "category": "ambiguous", "prompt": "Review this pull request for security problems and missing tests.", "expect": { "any_of": ["chayen-security", "chayen-testing", "chayen-documentation"] } },
     { "id": "amb-form-to-endpoint", "category": "ambiguous", "prompt": "Make the Angular checkout form submit to the new ASP.NET Core payments endpoint and show server validation errors.", "expect": { "any_of": ["chayen-frontend", "chayen-implementation", "chayen-backend"] } },
-    { "id": "amb-rules-from-code", "category": "ambiguous", "prompt": "Document the business rules that our OrderCalculator class implements so the product owner can confirm them.", "expect": { "any_of": ["chayen-requirements", "chayen-repository"] }, "forbid": ["chayen-frontend"] },
+    { "id": "amb-rules-from-code", "category": "ambiguous", "prompt": "Document the business rules that our OrderCalculator class implements so the product owner can confirm them.", "expect": { "any_of": ["chayen-requirements", "chayen-repository", "chayen-documentation"] }, "forbid": ["chayen-frontend"] },
     { "id": "amb-design-then-build", "category": "ambiguous", "prompt": "Design how the notification service should be split into components and then build the first component.", "expect": { "any_of": ["chayen-architecture", "chayen-implementation", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
 
     { "id": "uns-rust-embedded", "category": "unsupported", "prompt": "Write a Rust driver for an I2C temperature sensor on an STM32 microcontroller.", "expect": { "none": true } },
@@ -143,6 +144,14 @@
     { "id": "pos-devops-postmortem", "category": "positive", "prompt": "Turn these incident notes into a blameless postmortem.", "expect": { "any_of": ["chayen-devops"] }, "forbid": ["chayen-requirements"] },
     { "id": "pos-devops-keyvault", "category": "positive", "prompt": "Move our connection strings from appsettings.json into Azure Key Vault.", "expect": { "any_of": ["chayen-devops"] } },
     { "id": "amb-dockerfile-hardening", "category": "ambiguous", "prompt": "Harden our Dockerfile so the container runs as non-root with a read-only filesystem.", "expect": { "any_of": ["chayen-devops", "chayen-security"] }, "forbid": ["chayen-frontend"] },
-    { "id": "neg-kubernetes-concept", "category": "negative", "prompt": "Explain in two sentences what Kubernetes is.", "expect": { "none": true } }
+    { "id": "neg-kubernetes-concept", "category": "negative", "prompt": "Explain in two sentences what Kubernetes is.", "expect": { "none": true } },
+
+    { "id": "pos-documentation-readme", "category": "positive", "prompt": "Update the README so the setup and test commands match what the repository actually uses.", "expect": { "any_of": ["chayen-documentation"] } },
+    { "id": "pos-documentation-pr-description", "category": "positive", "prompt": "Prepare a pull request description for my current changes.", "expect": { "any_of": ["chayen-documentation"] } },
+    { "id": "pos-documentation-release-notes", "category": "positive", "prompt": "Write release notes for version 2.4 from the merged pull requests.", "expect": { "any_of": ["chayen-documentation"] }, "forbid": ["chayen-devops"] },
+    { "id": "pos-documentation-merge-conflict", "category": "positive", "prompt": "I have a merge conflict in OrderService.cs. Help me resolve it.", "expect": { "any_of": ["chayen-documentation"] }, "notes": "Git workflow help moved to chayen-documentation (CAP-16-010, D-036)." },
+    { "id": "pos-implementation-dead-code", "category": "positive", "prompt": "Find the dead code in this .NET solution and remove what is safe to remove.", "expect": { "any_of": ["chayen-implementation"] } },
+    { "id": "amb-code-review", "category": "ambiguous", "prompt": "Review this pull request for correctness and readability.", "expect": { "any_of": ["chayen-documentation", "chayen-testing"] }, "forbid": ["chayen-security"], "notes": "Built-in provider review skills compete for review prompts (R-25); the no-plugin arm matters here." },
+    { "id": "amb-legacy-assessment", "category": "ambiguous", "prompt": "Assess our legacy .NET Framework order system: should we retain, refactor, replatform, or rewrite it?", "expect": { "any_of": ["chayen-repository", "chayen-architecture"] }, "forbid": ["chayen-frontend"] }
   ]
 }

@@ -6,7 +6,7 @@ runs: 3
 max_turns: 8
 timeout_seconds: 180
 allowed_tools: [Read, Glob, Grep, Skill]
-expected_outcome: "invokes chayen-security or chayen-testing"
+expected_outcome: "invokes chayen-security or chayen-testing or chayen-documentation"
 ---
 
 Review this pull request for security problems and missing tests.
