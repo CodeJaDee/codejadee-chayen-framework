@@ -327,8 +327,9 @@ for (const s of skillDirs) {
     if (!/\bNot (for|a)\b/.test(m.desc)) error(c, `${s}: description lacks a "Not for ..." boundary clause (DS-03)`);
   }
   if (skillDirs.length > 14) error(c, `${skillDirs.length} entry skills > 14`);
-  if (total > 4000) error(c, `L0 metadata ${total} chars > 4000`);
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} skills, L0 metadata ${total}/4000 chars`);
+  const L0_CAP = 4400; // raised from 4,000 by D-034 (user-approved in Step 14)
+  if (total > L0_CAP) error(c, `L0 metadata ${total} chars > ${L0_CAP}`);
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} skills, L0 metadata ${total}/${L0_CAP} chars`);
 
   const c2 = "V-07b description-distinctness";
   const stop = new Set("a an and or the of for to in on with by from as is are be use when not such this that it its into than via code covers including".split(" "));

@@ -546,6 +546,53 @@ Decision statuses:
     records, now map to an existing entry skill but stay PLANNED.
   - Description trigger effects are NOT_RUN (R-32).
 
+### D-034 — Domains 11 and 12: new `chayen-performance` with the L0 cap raised to 4,400; container and IaC review moved to security
+- **Status:** APPROVED for the new skill and the cap change (the user chose
+  "New skill, cap to 4,400" when asked in Step 14). The rest is PROPOSED
+  (executed in Step 14).
+- **Context:** D12 was mapped to the planned `chayen-performance`, but only
+  206 L0 characters remained. The agent offered three options: a new skill
+  with the cap raised to 4,400 (recommended), folding D12 into
+  `chayen-backend`, or folding it into `chayen-architecture`.
+- **Decision:**
+  - **The L0 cap is 4,400 characters** (was 4,000, ADR-0004 and D-017).
+    That is about 55 % of Codex's 8,000-character fallback. The validator
+    (V-07), the authoring standard, ARCHITECTURE §8, PLUGIN_PACKAGE_DESIGN,
+    and ADR-0003 and ADR-0004 now state the new cap.
+  - **`chayen-performance` is created** as the tenth entry skill (151
+    lines, description 389 characters). Its central rule is "no
+    measurement, no claim": every statement is labelled MEASURED,
+    ESTIMATED, or HYPOTHESIS, and an optimization is proven only by before
+    and after measurements under the same conditions. Load and profiling
+    sessions against production, shared, or third-party systems need
+    approval. It routes to a `runtime-tools.md` technology reference
+    (.NET, Node or Bun, Python, browser) and 5 recipes.
+  - **`chayen-testing`** now hands load testing to `chayen-performance` by
+    name.
+  - **D11 extends `chayen-security`,** which becomes a router with 8
+    recipes. The two pilot checklists stay as shared references. The
+    description adds threat models, SAST and dependency triage, privacy,
+    SBOMs and licences, and Dockerfile and IaC review (416 characters).
+  - **CAP-11-013 moves to `chayen-security`.** The user asked for all 14 D11
+    capabilities, and the record already listed `chayen-security` as
+    secondary. It is now a read-only review of container and IaC files in
+    the repository (`infrastructure-security-review.md`), with
+    `chayen-devops` as secondary. CG-40 keeps CAP-13-004 and CAP-13-005.
+    Writing infrastructure stays with the planned `chayen-devops`.
+  - **Security boundary:** dynamic scanning, exploits, brute force, and
+    denial of service against live systems stay out of scope. Scanners run
+    locally on the repository.
+  - **Trigger case change:** the ambiguous `amb-slow-and-injection` now also
+    accepts `chayen-performance`.
+- **Consequences:**
+  - L0 is 4,224 / 4,400 with 10 skills. The 4 remaining planned skills
+    (`chayen-devops`, `chayen-modernization`, `chayen-documentation`,
+    `chayen-ai-engineering`) cannot fit in 176 characters: each needs a
+    merge, or a further cap decision (Q-10).
+  - Description trigger effects are NOT_RUN (R-32). The security
+    description changed after Step 06 measured security under-triggering
+    (R-23).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

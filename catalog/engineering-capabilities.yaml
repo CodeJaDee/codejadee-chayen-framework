@@ -83,13 +83,13 @@ entry_skills:
     scope: "Automated testing: strategy, unit, integration, end-to-end, contract and API tests, regression, property-based, mutation and fuzz testing, test data, flaky and failing tests, and coverage gaps."
   - name: chayen-security
     mapping: existing
-    scope: "Advisory application security and privacy: threat models, secure review, scanner triage, dependencies, secrets, authorization and access reviews, validation, SSRF, crypto, privacy, logging, SBOM and licences, and remediation."
+    scope: "Advisory application security and privacy: threat models, secure review, scanner triage, dependencies, secrets, authorization and access reviews, validation, SSRF, crypto, privacy, logging, SBOM and licences, and remediation, and read-only container and IaC security review (D-034)."
   - name: chayen-performance
-    mapping: planned
-    scope: "Measurement-driven performance: baselines, profiling, load tests, bottlenecks, memory leaks, latency budgets, capacity, caching, and cost-performance."
+    mapping: existing
+    scope: "Measurement-driven performance: baselines, profiling, load tests, bottlenecks, memory leaks, latency budgets, capacity, caching, and cost-performance (created in Step 14; L0 cap raised to 4,400, D-034)."
   - name: chayen-devops
     mapping: planned
-    scope: "Build, ship, and operate: build systems, CI and CD, containers, IaC, environments, secrets, releases, deployment and rollback checks (rollout planning moved to chayen-architecture, D-029), provenance, policy as code, observability, alerts, incidents, RCA, postmortems, DR, runbooks, and hotfixes."
+    scope: "Build, ship, and operate: build systems, CI and CD, containers, IaC, environments, secrets, releases, deployment and rollback checks (rollout planning moved to chayen-architecture, D-029), provenance, policy as code, observability, alerts, incidents, RCA, postmortems, DR, runbooks, and hotfixes. Container and IaC security review moved to chayen-security (D-034)."
   - name: chayen-modernization
     mapping: planned
     scope: "Evolve existing systems safely: legacy assessment, dead code, deprecations, and debt prioritization. Migration strategy, strangler, and modularization moved to chayen-architecture (D-029); dependency and framework upgrades and breaking-change analysis moved to chayen-implementation (D-031)."
@@ -365,37 +365,37 @@ consolidation_groups:
     rationale: "Flakiness diagnosis is a branch of failure triage."
   - id: CG-37
     recipe: skills/chayen-security/references/secure-review.md
-    mapping: planned
+    mapping: existing
     members: [CAP-11-002, CAP-11-006, CAP-11-007, CAP-11-008, CAP-11-009, CAP-11-011]
     rationale: "The pilot checklist sections (access control, injection, SSRF, cryptography, logging) are the review lenses of a secure code review."
   - id: CG-38
     recipe: skills/chayen-security/references/scanner-triage.md
-    mapping: planned
+    mapping: existing
     members: [CAP-11-003, CAP-11-004]
     rationale: "SAST and dependency-scanner findings are triaged with the same reachability, exploitability, and suppression rules."
   - id: CG-39
     recipe: skills/chayen-security/references/sbom-and-licenses.md
-    mapping: planned
+    mapping: existing
     members: [CAP-11-012, CAP-18-007]
     rationale: "License obligations are read from the same SBOM component inventory."
   - id: CG-40
     recipe: skills/chayen-devops/references/containers.md
     mapping: planned
-    members: [CAP-11-013, CAP-13-004, CAP-13-005]
-    rationale: "Dockerfile review, container hardening, and container or IaC security review inspect the same files with overlapping checks."
+    members: [CAP-13-004, CAP-13-005]
+    rationale: "Dockerfile authoring and container hardening work on the same files with overlapping checks. CAP-11-013 (read-only security review) moved to chayen-security in Step 14 (D-034)."
   - id: CG-41
     recipe: skills/chayen-performance/references/baseline-and-profiling.md
-    mapping: planned
+    mapping: existing
     members: [CAP-12-001, CAP-12-002, CAP-12-005]
     rationale: "Bottlenecks are found by profiling against a recorded baseline."
   - id: CG-42
     recipe: skills/chayen-performance/references/load-testing.md
-    mapping: planned
+    mapping: existing
     members: [CAP-12-003, CAP-12-004]
     rationale: "Load-test design and analysis share the workload model and the success criteria."
   - id: CG-43
     recipe: skills/chayen-performance/references/budgets-and-capacity.md
-    mapping: planned
+    mapping: existing
     members: [CAP-12-007, CAP-12-008, CAP-12-010]
     rationale: "Latency budgets, capacity plans, and cost trade-offs are one model of demand, resources, and targets."
   - id: CG-44
@@ -3086,11 +3086,13 @@ capabilities:
       - "Threat table with likelihood, impact, mitigation, and owner"
     stacks: [any]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/threat-modeling.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/threat-modeling.md, mapping: existing}
     overlaps: [CAP-03-007]
     verification: "Behaviour eval: for a seeded upload feature, the model includes the expected threats (path traversal, malware, size exhaustion, authz bypass) with mitigations."
-    status: PLANNED
-    notes: "The pilot security workflow sketches threats as the first review step; a threat-model deliverable is not covered."
+    verification_evidence: "Step 14: recipe threat-modeling.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-001-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/threat-modeling.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 14: threat-modeling.md adds the threat-model deliverable the pilot workflow lacked."
 
   - id: CAP-11-002
     name: secure-code-review
@@ -3109,12 +3111,13 @@ capabilities:
       - "Areas not reviewed and recommended enforcing controls"
     stacks: [server-stacks, web-ui-stacks, sql-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: existing}
     consolidation: CG-37
     overlaps: [CAP-16-006]
-    existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md]
     verification: "Trigger eval: Step 06 security prompts under-triggered on Claude (R-23); re-run >=3 times with a fixture workspace. Behaviour eval: the seeded SQL injection and IDOR in the fixture are reported with file and line."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe secure-review.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-002-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/secure-review.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-003
     name: sast-triage
@@ -3133,10 +3136,12 @@ capabilities:
       - "Suppression entries with justification for confirmed false positives"
     stacks: [any]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/scanner-triage.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/scanner-triage.md, mapping: existing}
     consolidation: CG-38
     verification: "Behaviour eval on a fixture SARIF file with one true and one false positive: both verdicts are correct and evidenced."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe scanner-triage.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-003-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/scanner-triage.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-004
     name: dependency-vulnerability-triage
@@ -3155,12 +3160,13 @@ capabilities:
       - "Audit command run and its result, or NOT_RUN"
     stacks: [dotnet-aspnetcore, typescript-javascript, python]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/scanner-triage.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/scanner-triage.md, mapping: existing}
     consolidation: CG-38
     overlaps: [CAP-05-008]
-    existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md]
     verification: "Behaviour eval: audit commands are run or reported NOT_RUN, and the absence of vulnerabilities is never claimed without a run."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe scanner-triage.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-004-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/scanner-triage.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-005
     name: secret-detection-and-rotation-plan
@@ -3179,12 +3185,13 @@ capabilities:
       - "Rotation-first plan, code change to load from configuration, history-rewrite decision for approval"
     stacks: [any]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/secret-exposure-response.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/secret-exposure-response.md, mapping: existing}
     overlaps: [CAP-13-008]
-    existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/review-checklist.md]
     verification: "Behaviour eval: in a fixture with a seeded key, the value is never printed, rotation is listed first, and no history rewrite happens without approval."
-    status: IN_PROGRESS
-    notes: "Step 06 'leaked API key' prompt under-triggered on Claude (R-23)."
+    verification_evidence: "Step 14: recipe secret-exposure-response.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-005-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/secret-exposure-response.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 06 'leaked API key' prompt under-triggered on Claude (R-23). Step 14: secret-exposure-response.md implements the rotation-first procedure."
 
   - id: CAP-11-006
     name: authorization-review
@@ -3203,12 +3210,13 @@ capabilities:
       - "Findings with exploit scenario and fix, plus suggested negative tests"
     stacks: [server-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: existing}
     consolidation: CG-37
     overlaps: [CAP-03-009, CAP-06-005, CAP-18-005]
-    existing_coverage: [skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md]
     verification: "Behaviour eval: the seeded IDOR endpoint in the fixture is found, with a test that would demonstrate it."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe secure-review.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-006-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/secure-review.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-007
     name: input-output-validation
@@ -3227,12 +3235,13 @@ capabilities:
       - "Fixes using parameterization, encoding, or allow-lists"
     stacks: [server-stacks, web-ui-stacks, sql-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: existing}
     consolidation: CG-37
     overlaps: [CAP-07-004]
-    existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/review-checklist.md]
     verification: "Behaviour eval: seeded injection, path traversal, and open redirect in the fixture are each traced to their sink."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe secure-review.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-007-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/secure-review.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-008
     name: ssrf-and-egress-review
@@ -3251,12 +3260,13 @@ capabilities:
       - "Fix: allow-list, resolved-IP checks, redirect limits, egress controls to request from the platform team"
     stacks: [server-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: existing}
     consolidation: CG-37
     overlaps: [CAP-06-009]
-    existing_coverage: [skills/chayen-security/references/review-checklist.md]
     verification: "Behaviour eval: the seeded URL-fetch endpoint is flagged and the proposed fix blocks a 169.254.169.254 request in a test."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe secure-review.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-008-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/secure-review.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-009
     name: crypto-usage-review
@@ -3274,11 +3284,12 @@ capabilities:
       - "Findings (weak algorithm, ECB, static IV, MD5 or SHA1 for passwords, insecure random) with fixes using platform libraries"
     stacks: [dotnet-aspnetcore, typescript-javascript, python]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: existing}
     consolidation: CG-37
-    existing_coverage: [skills/chayen-security/references/review-checklist.md]
     verification: "Behaviour eval: seeded ECB mode and an unsalted SHA-256 password hash in the fixture are both flagged with platform-library fixes."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe secure-review.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-009-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/secure-review.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/references/stack-hardening.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-010
     name: privacy-impact-assessment
@@ -3297,11 +3308,13 @@ capabilities:
       - "Risks and minimization measures, marked advisory and not legal advice"
     stacks: [any]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/privacy.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/privacy.md, mapping: existing}
     overlaps: [CAP-09-011]
     verification: "Behaviour eval: every personal field in the fixture feature appears in the inventory, and the output states it is not legal advice."
-    status: PLANNED
-    notes: "Boundary: the pilot excludes compliance certification and legal writing; this capability stays an engineering privacy review."
+    verification_evidence: "Step 14: recipe privacy.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-010-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/privacy.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Boundary: the pilot excludes compliance certification and legal writing; this capability stays an engineering privacy review. Step 14: privacy.md labels its output advisory and not legal advice."
 
   - id: CAP-11-011
     name: secure-logging
@@ -3320,12 +3333,13 @@ capabilities:
       - "Fixes (redaction, structured fields, event list)"
     stacks: [server-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/secure-review.md, mapping: existing}
     consolidation: CG-37
     overlaps: [CAP-14-002]
-    existing_coverage: [skills/chayen-security/references/review-checklist.md]
     verification: "Behaviour eval: a seeded log statement that writes a password is flagged and the fix redacts it."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe secure-review.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-011-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/secure-review.md, skills/chayen-security/references/review-checklist.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-012
     name: sbom-and-license-review
@@ -3344,11 +3358,13 @@ capabilities:
       - "Licence table with items needing legal review, advisory only"
     stacks: [dotnet-aspnetcore, typescript-javascript, python]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/sbom-and-licenses.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/sbom-and-licenses.md, mapping: existing}
     consolidation: CG-39
     overlaps: [CAP-01-003, CAP-13-012]
     verification: "Behaviour eval: the SBOM includes the fixture's direct and transitive packages, and a seeded copyleft dependency is flagged."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe sbom-and-licenses.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-012-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/sbom-and-licenses.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-11-013
     name: container-iac-security-review
@@ -3366,14 +3382,15 @@ capabilities:
       - "Findings with file and line, risk, and fix"
       - "Scanner suggestions (for example Trivy, Checkov) with commands, run or NOT_RUN"
     stacks: [any]
-    entry_skill: {name: chayen-devops, mapping: planned}
-    secondary_skills: [chayen-security]
-    recipe: {path: skills/chayen-devops/references/containers.md, mapping: planned}
-    consolidation: CG-40
+    entry_skill: {name: chayen-security, mapping: existing}
+    secondary_skills: [chayen-devops]
+    recipe: {path: skills/chayen-security/references/infrastructure-security-review.md, mapping: existing}
     overlaps: [CAP-13-006]
     verification: "Behaviour eval: a seeded root user and a public storage bucket in the fixture are both reported."
-    status: PLANNED
-    notes: "Mapped to chayen-devops because the pilot chayen-security hands off infrastructure hardening without application code."
+    verification_evidence: "Step 14: recipe infrastructure-security-review.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-013-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/infrastructure-security-review.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 14 (D-034): remapped from the planned chayen-devops (CG-40) to chayen-security as a read-only review of container and IaC files; writing infrastructure stays with chayen-devops (CAP-13-004, CAP-13-005, CAP-13-006)."
 
   - id: CAP-11-014
     name: vulnerability-remediation
@@ -3392,10 +3409,11 @@ capabilities:
       - "Staged plan and approval request when the fix could break clients"
     stacks: [server-stacks, web-ui-stacks, sql-stacks]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/vulnerability-remediation.md, mapping: planned}
-    existing_coverage: [skills/chayen-security/SKILL.md, skills/chayen-security/references/stack-hardening.md]
+    recipe: {path: skills/chayen-security/references/vulnerability-remediation.md, mapping: existing}
     verification: "Behaviour eval: the seeded injection is fixed with parameterization, a test demonstrates it, and unrelated code is untouched."
-    status: IN_PROGRESS
+    verification_evidence: "Step 14: recipe vulnerability-remediation.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-11-014-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-security/references/vulnerability-remediation.md, skills/chayen-security/references/stack-hardening.md, skills/chayen-security/SKILL.md]
+    status: IMPLEMENTED
 
   # ---------------------------------------------------------------------------
   # D12 PERFORMANCE (10)
@@ -3416,11 +3434,13 @@ capabilities:
       - "Baseline method and recorded numbers with percentiles and run count"
       - "Re-run command for comparisons"
     stacks: [dotnet-aspnetcore, typescript-javascript, python]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/baseline-and-profiling.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/baseline-and-profiling.md, mapping: existing}
     consolidation: CG-41
     verification: "Behaviour eval: the baseline reports several runs with variance, not a single timing, for the fixture benchmark."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe baseline-and-profiling.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-001-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/baseline-and-profiling.md, skills/chayen-performance/references/runtime-tools.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-002
     name: profiling
@@ -3438,11 +3458,13 @@ capabilities:
       - "Profiling commands and the captured hot paths with evidence"
       - "Next investigation step or fix candidate"
     stacks: [dotnet-aspnetcore, typescript-javascript, python]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/baseline-and-profiling.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/baseline-and-profiling.md, mapping: existing}
     consolidation: CG-41
     verification: "Behaviour eval: for a fixture with a seeded hot loop, the profile output (or the documented command when NOT_RUN) identifies that function."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe baseline-and-profiling.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-002-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/baseline-and-profiling.md, skills/chayen-performance/references/runtime-tools.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-003
     name: load-test-design
@@ -3460,12 +3482,14 @@ capabilities:
       - "Load-test scripts with ramp profiles, think time, and thresholds"
       - "Safety notes: never against production without approval"
     stacks: [any]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/load-testing.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/load-testing.md, mapping: existing}
     consolidation: CG-42
     verification: "Behaviour eval: the generated script has thresholds matching the stated targets and targets a configurable non-production URL."
-    status: PLANNED
-    notes: "The pilot chayen-testing excludes load testing and hands off by name."
+    verification_evidence: "Step 14: recipe load-testing.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-003-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/load-testing.md, skills/chayen-performance/references/runtime-tools.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
+    notes: "Step 14: chayen-testing now hands load testing off to chayen-performance by name."
 
   - id: CAP-12-004
     name: load-test-analysis
@@ -3483,11 +3507,13 @@ capabilities:
       - "Results summary against targets with the saturation point"
       - "Bottleneck hypotheses with the evidence to confirm each"
     stacks: [any]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/load-testing.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/load-testing.md, mapping: existing}
     consolidation: CG-42
     verification: "Behaviour eval: for a fixture results file, the reported p95 and error rate match the data and targets are judged correctly."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe load-testing.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-004-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/load-testing.md, skills/chayen-performance/references/runtime-tools.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-005
     name: bottleneck-analysis
@@ -3505,12 +3531,14 @@ capabilities:
       - "Identified bottleneck with evidence and estimated gain from fixing it"
       - "Verification plan to confirm the improvement"
     stacks: [any]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/baseline-and-profiling.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/baseline-and-profiling.md, mapping: existing}
     consolidation: CG-41
     overlaps: [CAP-07-007, CAP-09-003]
     verification: "Behaviour eval: in a fixture with a seeded sync-over-async call and a slow query, the dominant one is identified from the provided trace."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe baseline-and-profiling.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-005-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/baseline-and-profiling.md, skills/chayen-performance/references/runtime-tools.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-006
     name: memory-leak-analysis
@@ -3528,10 +3556,12 @@ capabilities:
       - "Retention path from root to leaked objects with the responsible code"
       - "Fix and a before and after memory comparison or NOT_RUN"
     stacks: [dotnet-aspnetcore, typescript-javascript, python, web-ui-stacks]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/memory-leaks.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/memory-leaks.md, mapping: existing}
     verification: "Behaviour eval: the seeded static event-handler leak in the fixture is identified and fixed, with heap counts compared."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe memory-leaks.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-006-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/memory-leaks.md, skills/chayen-performance/references/runtime-tools.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-007
     name: latency-budget
@@ -3549,12 +3579,14 @@ capabilities:
       - "Budget table per hop with measured value and headroom"
       - "Hops over budget with recommended action"
     stacks: [any]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/budgets-and-capacity.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/budgets-and-capacity.md, mapping: existing}
     consolidation: CG-43
     overlaps: [CAP-02-009]
     verification: "Behaviour eval: hop budgets sum to no more than the target, and the over-budget hop in the fixture trace is identified."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe budgets-and-capacity.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-007-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/budgets-and-capacity.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-008
     name: capacity-planning
@@ -3572,11 +3604,13 @@ capabilities:
       - "Capacity model with assumptions and headroom"
       - "Scaling triggers and the date or load at which each limit is reached"
     stacks: [any]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/budgets-and-capacity.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/budgets-and-capacity.md, mapping: existing}
     consolidation: CG-43
     verification: "Behaviour eval: the model's arithmetic is reproducible from the stated inputs, and assumptions are listed."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe budgets-and-capacity.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-008-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/budgets-and-capacity.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-009
     name: cache-strategy
@@ -3594,11 +3628,13 @@ capabilities:
       - "Cache design with keys, TTLs, invalidation triggers, and failure behaviour"
       - "Implementation following existing caching abstractions, and hit-rate metrics"
     stacks: [server-stacks, web-ui-stacks]
-    entry_skill: {name: chayen-performance, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
     secondary_skills: [chayen-backend]
-    recipe: {path: skills/chayen-performance/references/caching.md, mapping: planned}
+    recipe: {path: skills/chayen-performance/references/caching.md, mapping: existing}
     verification: "Behaviour eval: updating a product in the fixture invalidates its cached entry, shown by a test."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe caching.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-009-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/caching.md, skills/chayen-performance/references/runtime-tools.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   - id: CAP-12-010
     name: cost-performance-optimization
@@ -3616,11 +3652,13 @@ capabilities:
       - "Ranked savings opportunities with estimated saving and performance risk"
       - "Verification metrics to watch after each change"
     stacks: [any]
-    entry_skill: {name: chayen-performance, mapping: planned}
-    recipe: {path: skills/chayen-performance/references/budgets-and-capacity.md, mapping: planned}
+    entry_skill: {name: chayen-performance, mapping: existing}
+    recipe: {path: skills/chayen-performance/references/budgets-and-capacity.md, mapping: existing}
     consolidation: CG-43
     verification: "Behaviour eval: every saving in the output for a fixture cost report is tied to a utilisation figure and names the target it might affect."
-    status: PLANNED
+    verification_evidence: "Step 14: recipe budgets-and-capacity.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-12-010-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    existing_coverage: [skills/chayen-performance/references/budgets-and-capacity.md, skills/chayen-performance/SKILL.md]
+    status: IMPLEMENTED
 
   # ---------------------------------------------------------------------------
   # D13 DEVOPS (12)
@@ -4950,7 +4988,7 @@ capabilities:
       - "Draft third-party notices file"
     stacks: [any]
     entry_skill: {name: chayen-security, mapping: existing}
-    recipe: {path: skills/chayen-security/references/sbom-and-licenses.md, mapping: planned}
+    recipe: {path: skills/chayen-security/references/sbom-and-licenses.md, mapping: existing}
     consolidation: CG-39
     verification: "Behaviour eval: the notices file for the fixture includes every MIT and Apache-2.0 component with its copyright line, and the output states it is not legal advice."
     status: PLANNED

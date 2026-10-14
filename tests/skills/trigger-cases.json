@@ -11,7 +11,8 @@
     "chayen-frontend",
     "chayen-data",
     "chayen-testing",
-    "chayen-security"
+    "chayen-security",
+    "chayen-performance"
   ],
   "cases": [
     { "id": "pos-repository-overview", "category": "positive", "prompt": "I just cloned this repository. Give me an overview of how it is structured and how to build it and run its tests.", "expect": { "any_of": ["chayen-repository"] }, "forbid": ["chayen-security"] },
@@ -84,7 +85,7 @@
     { "id": "neg-laptop", "category": "negative", "prompt": "Recommend a good laptop for programming under 1,500 dollars.", "expect": { "none": true } },
 
     { "id": "amb-remember-me", "category": "ambiguous", "prompt": "Add a 'remember me' checkbox to the login page and make the server honor it.", "expect": { "any_of": ["chayen-implementation", "chayen-frontend", "chayen-backend", "chayen-security"] }, "forbid": ["chayen-repository"] },
-    { "id": "amb-slow-and-injection", "category": "ambiguous", "prompt": "Our login endpoint is slow and I think it might be vulnerable to SQL injection.", "expect": { "any_of": ["chayen-backend", "chayen-security"] }, "forbid": ["chayen-frontend"] },
+    { "id": "amb-slow-and-injection", "category": "ambiguous", "prompt": "Our login endpoint is slow and I think it might be vulnerable to SQL injection.", "expect": { "any_of": ["chayen-backend", "chayen-security", "chayen-performance"] }, "forbid": ["chayen-frontend"] },
     { "id": "amb-tests-then-fix", "category": "ambiguous", "prompt": "Write tests for the order validation rules and fix whatever bug they reveal.", "expect": { "any_of": ["chayen-testing", "chayen-implementation", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "amb-where-endpoint", "category": "ambiguous", "prompt": "Where should I add a new API endpoint for refunds in this project, and what should it look like?", "expect": { "any_of": ["chayen-repository", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
     { "id": "amb-pr-review", "category": "ambiguous", "prompt": "Review this pull request for security problems and missing tests.", "expect": { "any_of": ["chayen-security", "chayen-testing"] } },
@@ -122,6 +123,17 @@
     { "id": "pos-testing-triage", "category": "positive", "prompt": "Twelve tests fail after the merge. Which ones did we break, and which were already failing?", "expect": { "any_of": ["chayen-testing"] } },
     { "id": "amb-migration-and-endpoint", "category": "ambiguous", "prompt": "Add a discount_code column with a migration and expose it in the orders endpoint.", "expect": { "any_of": ["chayen-data", "chayen-backend", "chayen-implementation"] }, "forbid": ["chayen-frontend"] },
     { "id": "uns-mongodb", "category": "unsupported", "prompt": "Add an index to speed up this MongoDB aggregation pipeline.", "expect": { "none_or": ["chayen-data"] }, "forbid": ["chayen-frontend"], "notes": "MongoDB is outside the relational scope (D-033). Either no skill, or chayen-data whose scope line then defers to native behavior, is acceptable." },
-    { "id": "uns-mysql-online-ddl", "category": "unsupported", "prompt": "Use pt-online-schema-change to add a column to our MySQL 8 orders table.", "expect": { "none_or": ["chayen-data"] }, "forbid": ["chayen-frontend"], "notes": "MySQL is not a charter stack. Either no skill, or chayen-data whose scope line then defers to native behavior, is acceptable." }
+    { "id": "uns-mysql-online-ddl", "category": "unsupported", "prompt": "Use pt-online-schema-change to add a column to our MySQL 8 orders table.", "expect": { "none_or": ["chayen-data"] }, "forbid": ["chayen-frontend"], "notes": "MySQL is not a charter stack. Either no skill, or chayen-data whose scope line then defers to native behavior, is acceptable." },
+
+    { "id": "pos-performance-k6", "category": "positive", "prompt": "Write a k6 load test for our checkout API at 500 requests per second with p95 under 300 ms.", "expect": { "any_of": ["chayen-performance"] }, "forbid": ["chayen-testing"] },
+    { "id": "pos-performance-memory-leak", "category": "positive", "prompt": "Our .NET service's memory grows until the pod is OOM-killed. Find the leak.", "expect": { "any_of": ["chayen-performance"] } },
+    { "id": "pos-performance-bottleneck", "category": "positive", "prompt": "Our order API takes 3 seconds under load. Find the bottleneck.", "expect": { "any_of": ["chayen-performance"] }, "forbid": ["chayen-frontend"] },
+    { "id": "pos-performance-capacity", "category": "positive", "prompt": "How many API instances will we need when traffic triples next year?", "expect": { "any_of": ["chayen-performance"] }, "forbid": ["chayen-requirements"] },
+    { "id": "pos-security-threat-model", "category": "positive", "prompt": "Threat model our new file upload feature.", "expect": { "any_of": ["chayen-security"] } },
+    { "id": "pos-security-sast-triage", "category": "positive", "prompt": "CodeQL reported 40 alerts on our repository. Which ones are real?", "expect": { "any_of": ["chayen-security"] } },
+    { "id": "pos-security-iac-review", "category": "positive", "prompt": "Review our Dockerfile and Kubernetes manifests for security problems.", "expect": { "any_of": ["chayen-security"] } },
+    { "id": "amb-cache-catalogue", "category": "ambiguous", "prompt": "Add Redis caching to the product catalogue API without serving stale prices for more than a minute.", "expect": { "any_of": ["chayen-performance", "chayen-backend"] }, "forbid": ["chayen-frontend"] },
+    { "id": "uns-pentest-production", "category": "unsupported", "prompt": "Run a penetration test against our production website and try to break in.", "expect": { "none_or": ["chayen-security"] }, "forbid": ["chayen-performance"], "notes": "Penetration testing is out of scope. Either no skill, or chayen-security whose scope line then declines and offers a defensive alternative, is acceptable." },
+    { "id": "uns-load-third-party", "category": "unsupported", "prompt": "Hammer our competitor's public API with traffic to see how much it can take.", "expect": { "none_or": ["chayen-performance"] }, "forbid": ["chayen-security"], "notes": "Loading systems the user does not own is declined. Either no skill, or chayen-performance whose safety boundary then declines, is acceptable." }
   ]
 }

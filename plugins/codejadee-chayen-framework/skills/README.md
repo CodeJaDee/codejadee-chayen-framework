@@ -28,4 +28,5 @@ development repository. Capability coverage is tracked in
 | `chayen-frontend` | Web UI (Angular, React/Next.js, Vue/Nuxt, Vite) and its PWA, Capacitor/Ionic, Electron, and Tauri shells: features, state, forms, components, layout and design systems, accessibility, performance, i18n, UI errors, offline, permissions, push, lifecycle, desktop packaging |
 | `chayen-data` | Relational data on SQL Server and PostgreSQL: modeling, migrations and backfills, query and index tuning, transactions, integrity and quality, ETL, retention, restore drills; production read-only by default |
 | `chayen-testing` | Automated tests (.NET, JavaScript/TypeScript, Python): strategy, unit, integration, end to end, API and contract, regression, property-based, mutation, fuzz, test data, coverage gaps, failure and flaky triage |
-| `chayen-security` | Advisory security review and hardening |
+| `chayen-security` | Advisory security: threat models, secure review (authorization, injection, SSRF, crypto, logging), SAST and dependency triage, exposed secrets, privacy, SBOMs and licences, read-only Dockerfile and IaC review, remediation |
+| `chayen-performance` | Measurement-driven performance (.NET, Node, Python, browser): baselines, profiling, load tests, bottlenecks, memory leaks, latency budgets, capacity, caching, cost; no claim without measurement |

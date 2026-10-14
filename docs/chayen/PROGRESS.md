@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 13 — Domains 09 and 10 capabilities |
+| Last executed step | 14 — Domains 11 and 12 capabilities |
+| Step 14 status | DONE (pending user review; D11 14/14 and D12 10/10 IMPLEMENTED, not VERIFIED; chayen-performance created and L0 cap raised to 4,400 with user approval, D-034) |
 | Step 13 status | DONE (pending user review; D09 12/12 and D10 14/14 IMPLEMENTED, not VERIFIED; chayen-data created with user approval, D-033) |
 | Step 12 status | DONE (pending user review; D07 10/10 and D08 8/8 IMPLEMENTED, not VERIFIED; D08 scope D-032 PROPOSED) |
 | Step 11 status | DONE (pending user review; D05 12/12 and D06 10/10 IMPLEMENTED, not VERIFIED) |
@@ -18,7 +19,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 3,794 / 4,000; the 5 planned skills must merge, or the cap must change). |
+| Next step | As directed by the user. Open: Q-11 approval of D-032 (D08 web-technology shells only). Blocking any further entry skill: Q-10 and R-27 (L0 4,224 / 4,400; the 4 planned skills must merge, or the cap must change again). |
 | Commits made by agent | None |
 
 ---
@@ -1164,3 +1165,143 @@ in Step 07. A lifecycle work directory was created under the scratchpad.
 | — | Recipe behaviour evals (58 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
 | — | Any database, migration, mutation, or fuzz run described by the recipes | — | NOT_RUN: no fixture repositories or databases in this step |
 | — | Human review of the new skill, 15 recipes, and 3 references | — | Pending (R-33, R-34) |
+
+---
+
+## Step 14 — Domains 11 and 12 capabilities
+
+- **Date:** 2026-10-14
+- **Status:** DONE (pending user review)
+- **Result:** D11 Security and Privacy **14/14 IMPLEMENTED** in
+  `chayen-security`, and D12 Performance **10/10 IMPLEMENTED** in the new
+  `chayen-performance` skill. None is VERIFIED. The catalog total is 127
+  IMPLEMENTED, 1 IN_PROGRESS, and 78 PLANNED.
+
+### Work performed
+
+- **Read first:** BUILD_CONTRACT, the catalog records for CAP-11-001..014
+  and CAP-12-001..010 with groups CG-37..CG-43, the `chayen-security` skill
+  and its two checklists, and Q-10 and R-27.
+- **User decision (Q-10, R-27).** D12 was mapped to the planned
+  `chayen-performance`, but only 206 L0 characters remained. The agent
+  asked, offering three options. The user chose "New skill, cap to 4,400"
+  (recommended). Recorded as D-034, APPROVED for the new skill and the cap.
+- **Agent decision (D-034, PROPOSED).** CAP-11-013 (container and IaC
+  security review) was mapped to the planned `chayen-devops` (CG-40). The
+  user asked for all 14 D11 capabilities, and the record already listed
+  `chayen-security` as secondary, so it moved to `chayen-security` as a
+  read-only review of files in the repository. CG-40 keeps CAP-13-004 and
+  CAP-13-005.
+- **L0 cap 4,000 → 4,400:** `tools/validate/validate-package.mjs` (V-07,
+  named constant with a D-034 comment), `tools/validate/README.md`,
+  `SKILL_AUTHORING_STANDARD.md` (L0 row, DS-05), `ARCHITECTURE.md` (§4 and
+  §8), `PLUGIN_PACKAGE_DESIGN.md` (V-07 row), `ADR-0003`, and `ADR-0004`.
+- **`chayen-security`** (reused and extended; router, 165 lines).
+  - Description rewritten (416 characters): adds threat models, SAST and
+    dependency triage, privacy, SBOMs and licences, and Dockerfile and IaC
+    review. It keeps injection, XSS, and secrets, because security prompts
+    under-triggered in Step 06 (R-23).
+  - Scope: read-only review of container and IaC files is in scope. Dynamic
+    scanning of live systems, exploits, brute force, and denial of service
+    stay out, and scanners run locally on the repository.
+  - Advisory statement kept. V-10 flagged a negated sentence ("never claim
+    ... that this guidance enforces"), which was reworded.
+  - Eight recipes:
+    - `threat-modeling.md` (CAP-11-001): data flow with trust boundaries,
+      and STRIDE as prompts;
+    - `secure-review.md` (002, 006, 007, 008, 009, 011): the general review
+      plus authorization matrix, source-to-sink, SSRF and egress,
+      cryptography, and logging lenses;
+    - `scanner-triage.md` (003, 004): verdicts with evidence, scoped
+      suppressions, and advisory actions with reachability;
+    - `secret-exposure-response.md` (005): masked findings, rotation first,
+      and history rewrite only with approval;
+    - `privacy.md` (010): personal-data inventory, advisory and not legal
+      advice;
+    - `sbom-and-licenses.md` (012): standard generators, transitive
+      completeness, and licence flags for review;
+    - `infrastructure-security-review.md` (013): Dockerfile, Kubernetes or
+      Helm, and Terraform or Bicep checks, with no cluster or cloud access;
+    - `vulnerability-remediation.md` (014): a failing local test first,
+      the stack's control, a minimal diff, and staged breaking fixes.
+- **`chayen-performance`** (new, 151 lines, description 389 characters).
+  - Central rule: "no measurement, no claim". Every statement is
+    MEASURED, ESTIMATED, or HYPOTHESIS, and static inspection never becomes
+    a proven optimization.
+  - Safety: no load, stress, or profiling sessions against production,
+    shared, or third-party systems without approval, and dumps are handled
+    as sensitive data.
+  - `runtime-tools.md` (technology): .NET, Node or Bun, Python, and browser
+    sections.
+  - Five recipes:
+    - `baseline-and-profiling.md` (CAP-12-001, 002, 005);
+    - `load-testing.md` (003, 004): workload model, thresholds,
+      configurable non-production targets, and analysis against targets;
+    - `memory-leaks.md` (006);
+    - `budgets-and-capacity.md` (007, 008, 010): reproducible arithmetic,
+      with assumptions labelled;
+    - `caching.md` (009).
+- **`chayen-testing`:** the load-testing row in "When not to use" now names
+  `chayen-performance`.
+- **Review against the records (agent review, D-028).** Every catalog
+  output for the 24 records is produced by its recipe's `## Outputs`, and
+  each record's verification condition appears in the recipe's
+  `## Verification`. One fact was corrected during review (.NET 8 images
+  include a non-root user but still start as root unless `USER` is set).
+  Tool and platform facts come from agent knowledge and were not executed
+  (R-34).
+- **Catalog:**
+  - the 24 records are IMPLEMENTED, with `verification_evidence`,
+    `existing_coverage`, and notes (CAP-11-001, 005, 010, 013, CAP-12-003);
+  - `chayen-performance` is an existing entry skill. The `chayen-security`
+    and `chayen-devops` scopes cite D-034;
+  - CG-37, CG-38, CG-39, CG-41, CG-42, and CG-43 are `existing`. CG-40 lost
+    CAP-11-013. `sbom-and-licenses.md` is `existing` for CAP-18-007 too,
+    which stays PLANNED;
+  - the coverage doc was regenerated, and its prose updated (summary, §4,
+    §5.1, §5.2 L0, §6.1, §6.2, §9).
+- **Evaluation cases:**
+  - 55 recipe cases (277 in total): 32 for D11 and 23 for D12. Each of the
+    24 capabilities has at least one positive and one negative case. They
+    include a production pen-test request, an unapproved production load
+    test, and a request to judge a speed-up by reading code.
+  - 10 trigger cases (107 in total): 7 positive (4 for `chayen-performance`),
+    1 ambiguous, and 2 unsupported (production pen test, loading a
+    competitor's API).
+  - `chayen-performance` was added to the skill list, and
+    `amb-slow-and-injection` now also accepts it.
+  - The Claude eval cases were regenerated (107 cases, 253 files). Content
+    changed in 7 existing case files: 5 `none_or` forbidden-skill graders
+    now include `chayen-performance`, and the two files of
+    `amb-slow-and-injection`.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-security/references/threat-modeling.md`, `secure-review.md`, `scanner-triage.md`, `secret-exposure-response.md`, `privacy.md`, `sbom-and-licenses.md`, `infrastructure-security-review.md`, `vulnerability-remediation.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-performance/SKILL.md` and `references/runtime-tools.md`, `baseline-and-profiling.md`, `load-testing.md`, `memory-leaks.md`, `budgets-and-capacity.md`, `caching.md` |
+| Created | `tests/evals/claude/` (10 new generated case directories) |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-security/SKILL.md` (description and body), `chayen-testing/SKILL.md` (one "When not to use" row), `skills/README.md` |
+| Modified | `tools/validate/validate-package.mjs` (V-07 cap 4,400), `tools/validate/README.md` |
+| Modified | `catalog/engineering-capabilities.yaml`, `docs/chayen/CAPABILITY_COVERAGE.md` |
+| Modified | `tests/skills/recipe-cases.json` (additions only), `tests/skills/trigger-cases.json` (additions, the skill list, and one widened ambiguous case), `tests/skills/README.md`, 7 existing generated eval case files (content); others changed only in line endings (DF-01) |
+| Modified | `docs/chayen/PROGRESS.md`, `ACCEPTANCE_MATRIX.md` (CAP-D11 and CAP-D12 IMPLEMENTED; REQ-02, REQ-05, REQ-07, REQ-08, REQ-09, ARC-04 evidence), `DECISIONS.md` (D-034), `ISSUES.md` (Q-10, R-23, R-27, R-28, R-32, R-33, R-34 notes), `IMPLEMENTATION_PLAN.md`, `SKILL_AUTHORING_STANDARD.md`, `ARCHITECTURE.md`, `PLUGIN_PACKAGE_DESIGN.md`, `ADRS/ADR-0003-no-match-fallback.md`, `ADRS/ADR-0004-skill-catalog-vs-entry-skills.md` (L0 cap text) |
+| Deleted | None |
+| Scratch only (not in the repository) | Lifecycle work directory `lc14`, and the catalog and case edit scripts. The `skills-ref` venv was reused. |
+
+### Tests
+
+| # | Test | Command | Result |
+|---|---|---|---|
+| T1 | Package, skills, references, catalog alignment | `node tools/validate/validate-package.mjs` | **PASS:** 0 errors, 0 warnings. 10 skills. L0 4224/4400. Maximum overlap 0.11. 97 references with valid kinds. 76 recipe files agree with the catalog (128 capabilities, including CAP-18-007 in a recipe file but PLANNED). 277 recipe cases. 107 trigger cases. An earlier run in the step had one real V-10 error (a negated enforcement phrase), fixed by rewording. |
+| T2 | Catalog | `node tools/catalog/check-catalog.mjs` | **PASS.** IMPLEMENTED=127 (D01–D12 complete), IN_PROGRESS=1, PLANNED=78. 206 records, 57 groups, 10 existing entry skills, fingerprint unchanged, doc in sync (after `--write-doc`). |
+| T3 | All automated gates | `node tools/validate/validate-all.mjs` | **PASS:** 4/4 gate groups. Self-tests 53/53 (no self-test depends on the old 4,000 value). |
+| T4 | Claude Code validator (2.1.220) | `claude plugin validate --strict` on the plugin and the marketplace | PASS ×2 |
+| T5 | Agent Skills reference validator | `agentskills validate` ×10 (`skills-ref` 0.1.1, scratch venv) | PASS: 10/10 valid, including `chayen-performance` |
+| T6 | Native lifecycle (isolated homes, no model calls) | `bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc14` | **PASS 24/24:** 10 skills discoverable on Claude Code 2.1.220, Codex 0.162.1, and Copilot CLI 1.0.89. The fixture stayed unchanged and clean. |
+| T7 | Eval cases in sync | `node tools/evals/generate-claude-evals.mjs --check` (inside validate-all G-11) | PASS: 107 cases, 253 files |
+| — | Trigger evals for `chayen-performance` and the rewritten security description | — | NOT_RUN: billed runs need approval (R-32) |
+| — | Recipe behaviour evals (55 new cases) | — | NOT_RUN: no runner or fixtures (G-12) |
+| — | Any scanner, audit, SBOM, profiler, benchmark, or load test described by the recipes | — | NOT_RUN: no fixture repositories in this step; no performance or security claim was measured |
+| — | Human review of the new skill, 13 recipes, and 1 reference | — | Pending (R-33, R-34) |

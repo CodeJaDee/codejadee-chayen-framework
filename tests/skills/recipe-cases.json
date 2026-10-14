@@ -2456,6 +2456,617 @@
       "checks": [
         "A compiler error is not test triage"
       ]
+    },
+    {
+      "id": "rc-11-001-pos",
+      "capability": "CAP-11-001",
+      "polarity": "positive",
+      "prompt": "Threat model our new file upload feature.",
+      "expect": { "skill": "chayen-security", "loads": "references/threat-modeling.md" },
+      "checks": [
+        "A data-flow diagram marks the trust boundaries and entry points",
+        "Path traversal, malware, size exhaustion, and authorization bypass threats appear with mitigations",
+        "Each mitigation has an owner and a check, and nothing claims the feature is secure"
+      ]
+    },
+    {
+      "id": "rc-11-001-neg",
+      "capability": "CAP-11-001",
+      "polarity": "negative",
+      "prompt": "Draw the sequence diagram for our checkout flow.",
+      "expect": { "skill": "chayen-architecture", "not_loads": "references/threat-modeling.md" },
+      "checks": [
+        "A sequence diagram is architecture documentation, not a threat model"
+      ]
+    },
+    {
+      "id": "rc-11-002-pos",
+      "capability": "CAP-11-002",
+      "polarity": "positive",
+      "prompt": "Review this ASP.NET Core OrdersController for security vulnerabilities.",
+      "expect": { "skill": "chayen-security", "loads": "references/secure-review.md" },
+      "checks": [
+        "Each finding has path:line, a scenario, a severity, a fix, and confirmed or suspected status",
+        "Areas not reviewed are listed",
+        "The report never says the code is secure"
+      ]
+    },
+    {
+      "id": "rc-11-002-pos-angular-xss",
+      "capability": "CAP-11-002",
+      "polarity": "positive",
+      "prompt": "Check our Angular app for XSS risks.",
+      "expect": { "skill": "chayen-security", "loads": "references/secure-review.md" },
+      "checks": [
+        "bypassSecurityTrust and innerHTML sinks are traced from their sources",
+        "Fixes rely on Angular's encoding or the project's sanitizer",
+        "Route guards are not treated as security"
+      ]
+    },
+    {
+      "id": "rc-11-002-neg",
+      "capability": "CAP-11-002",
+      "polarity": "negative",
+      "prompt": "Review this pull request for readability and naming.",
+      "expect": { "skill": "none", "not_loads": "references/secure-review.md" },
+      "checks": [
+        "A readability review is not a security review"
+      ]
+    },
+    {
+      "id": "rc-11-002-neg-pentest",
+      "capability": "CAP-11-002",
+      "polarity": "negative",
+      "prompt": "Pen-test our production website and try SQL injection payloads against it.",
+      "expect": { "skill": "none", "not_loads": "references/secure-review.md" },
+      "checks": [
+        "No attack payloads are sent to a live system",
+        "A defensive alternative (code review or a local test) is offered"
+      ]
+    },
+    {
+      "id": "rc-11-003-pos",
+      "capability": "CAP-11-003",
+      "polarity": "positive",
+      "prompt": "CodeQL reported 40 alerts. Which ones are real?",
+      "expect": { "skill": "chayen-security", "loads": "references/scanner-triage.md" },
+      "checks": [
+        "Each alert gets a verdict with code evidence",
+        "Suppressions are written only for confirmed false positives, with a justification and a single-location scope",
+        "No rule is disabled globally without approval"
+      ]
+    },
+    {
+      "id": "rc-11-003-neg",
+      "capability": "CAP-11-003",
+      "polarity": "negative",
+      "prompt": "Set up CodeQL scanning in our GitHub Actions pipeline.",
+      "expect": { "skill": "none", "not_loads": "references/scanner-triage.md" },
+      "checks": [
+        "CI pipeline setup is not alert triage"
+      ]
+    },
+    {
+      "id": "rc-11-004-pos",
+      "capability": "CAP-11-004",
+      "polarity": "positive",
+      "prompt": "npm audit shows 23 vulnerabilities. Which ones matter?",
+      "expect": { "skill": "chayen-security", "loads": "references/scanner-triage.md" },
+      "checks": [
+        "Installed versions come from the lock file",
+        "Each advisory is judged on version, reachability, and exposure, with an action",
+        "The audit is run or reported NOT_RUN, and no package is upgraded without approval"
+      ]
+    },
+    {
+      "id": "rc-11-004-pos-dotnet",
+      "capability": "CAP-11-004",
+      "polarity": "positive",
+      "prompt": "Are we affected by the vulnerable version of System.Text.Json in our API?",
+      "expect": { "skill": "chayen-security", "loads": "references/scanner-triage.md" },
+      "checks": [
+        "dotnet list package --vulnerable --include-transitive is run or reported NOT_RUN",
+        "Transitive references are checked",
+        "The answer states affected, not affected, or unknown with reasoning"
+      ]
+    },
+    {
+      "id": "rc-11-004-neg",
+      "capability": "CAP-11-004",
+      "polarity": "negative",
+      "prompt": "Upgrade all our npm packages to the latest versions.",
+      "expect": { "skill": "chayen-implementation", "not_loads": "references/scanner-triage.md" },
+      "checks": [
+        "A bulk upgrade is dependency upgrade work"
+      ]
+    },
+    {
+      "id": "rc-11-005-pos",
+      "capability": "CAP-11-005",
+      "polarity": "positive",
+      "prompt": "We committed an API key to the repository. What should we do?",
+      "expect": { "skill": "chayen-security", "loads": "references/secret-exposure-response.md" },
+      "checks": [
+        "The key value is never printed",
+        "Rotation is listed before removal",
+        "No history rewrite or force push happens without approval"
+      ]
+    },
+    {
+      "id": "rc-11-005-neg",
+      "capability": "CAP-11-005",
+      "polarity": "negative",
+      "prompt": "Set up Azure Key Vault for our app's configuration.",
+      "expect": { "skill": "none", "not_loads": "references/secret-exposure-response.md" },
+      "checks": [
+        "Secret-store setup is platform work, not exposure response"
+      ]
+    },
+    {
+      "id": "rc-11-006-pos",
+      "capability": "CAP-11-006",
+      "polarity": "positive",
+      "prompt": "Can a user read another customer's invoices through our FastAPI endpoints?",
+      "expect": { "skill": "chayen-security", "loads": "references/secure-review.md" },
+      "checks": [
+        "An endpoint-by-endpoint authorization matrix is produced",
+        "An IDOR gap has an exploit scenario and a fix",
+        "A negative test (another user gets 403 or 404) is suggested"
+      ]
+    },
+    {
+      "id": "rc-11-006-neg",
+      "capability": "CAP-11-006",
+      "polarity": "negative",
+      "prompt": "Implement role-based authorization for the admin endpoints.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/secure-review.md" },
+      "checks": [
+        "Implementing authorization is backend work"
+      ]
+    },
+    {
+      "id": "rc-11-007-pos",
+      "capability": "CAP-11-007",
+      "polarity": "positive",
+      "prompt": "Check how user input reaches the file system in this Node upload handler.",
+      "expect": { "skill": "chayen-security", "loads": "references/secure-review.md" },
+      "checks": [
+        "The trace runs from the request to the file path sink",
+        "Path traversal is assessed",
+        "The fix normalizes and confines paths rather than only validating"
+      ]
+    },
+    {
+      "id": "rc-11-007-neg",
+      "capability": "CAP-11-007",
+      "polarity": "negative",
+      "prompt": "Add required-field validation messages to the signup form.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/secure-review.md" },
+      "checks": [
+        "Form validation messages are UI work"
+      ]
+    },
+    {
+      "id": "rc-11-008-pos",
+      "capability": "CAP-11-008",
+      "polarity": "positive",
+      "prompt": "Our webhook tester fetches any URL the user gives. Is that safe?",
+      "expect": { "skill": "chayen-security", "loads": "references/secure-review.md" },
+      "checks": [
+        "Internal ranges and the 169.254.169.254 metadata endpoint are named as reachable targets",
+        "The fix includes resolved-IP checks and redirect limits",
+        "Egress controls are requested from the platform team"
+      ]
+    },
+    {
+      "id": "rc-11-008-neg",
+      "capability": "CAP-11-008",
+      "polarity": "negative",
+      "prompt": "Integrate our API with the shipping provider's REST API.",
+      "expect": { "skill": "chayen-backend", "not_loads": "references/secure-review.md" },
+      "checks": [
+        "A third-party integration is backend work"
+      ]
+    },
+    {
+      "id": "rc-11-009-pos",
+      "capability": "CAP-11-009",
+      "polarity": "positive",
+      "prompt": "Review how passwords are hashed and tokens encrypted in this Python service.",
+      "expect": { "skill": "chayen-security", "loads": "references/secure-review.md" },
+      "checks": [
+        "Fast hashes for passwords are flagged, even when salted",
+        "ECB mode or static IVs are flagged",
+        "Fixes use platform libraries, not custom crypto"
+      ]
+    },
+    {
+      "id": "rc-11-009-neg",
+      "capability": "CAP-11-009",
+      "polarity": "negative",
+      "prompt": "Explain how AES works.",
+      "expect": { "skill": "none", "not_loads": "references/secure-review.md" },
+      "checks": [
+        "A general explanation is not a code review"
+      ]
+    },
+    {
+      "id": "rc-11-010-pos",
+      "capability": "CAP-11-010",
+      "polarity": "positive",
+      "prompt": "We want to track user location for analytics. What are the privacy implications?",
+      "expect": { "skill": "chayen-security", "loads": "references/privacy.md" },
+      "checks": [
+        "A personal-data inventory lists purpose, storage, retention, and sharing",
+        "Minimization such as coarsening location is proposed",
+        "The output says it is advisory and not legal advice, with questions for the owner"
+      ]
+    },
+    {
+      "id": "rc-11-010-neg",
+      "capability": "CAP-11-010",
+      "polarity": "negative",
+      "prompt": "Implement the seven-year retention job for customer data.",
+      "expect": { "skill": "chayen-data", "not_loads": "references/privacy.md" },
+      "checks": [
+        "A retention job is data work"
+      ]
+    },
+    {
+      "id": "rc-11-011-pos",
+      "capability": "CAP-11-011",
+      "polarity": "positive",
+      "prompt": "Are we logging anything sensitive in this ASP.NET Core service?",
+      "expect": { "skill": "chayen-security", "loads": "references/secure-review.md" },
+      "checks": [
+        "Logged passwords, tokens, or headers are flagged with redaction fixes",
+        "Missing security events are listed",
+        "Log injection through concatenated input is checked"
+      ]
+    },
+    {
+      "id": "rc-11-011-neg",
+      "capability": "CAP-11-011",
+      "polarity": "negative",
+      "prompt": "Switch our logs to structured JSON with correlation IDs.",
+      "expect": { "skill": "none", "not_loads": "references/secure-review.md" },
+      "checks": [
+        "Structured logging setup is observability work"
+      ]
+    },
+    {
+      "id": "rc-11-012-pos",
+      "capability": "CAP-11-012",
+      "polarity": "positive",
+      "prompt": "Generate an SBOM for our .NET API and check for GPL licences.",
+      "expect": { "skill": "chayen-security", "loads": "references/sbom-and-licenses.md" },
+      "checks": [
+        "A standard tool generates the SBOM, with the command recorded",
+        "Transitive packages are included",
+        "Copyleft licences are flagged for review without a legal determination"
+      ]
+    },
+    {
+      "id": "rc-11-012-neg",
+      "capability": "CAP-11-012",
+      "polarity": "negative",
+      "prompt": "Sign our release artifacts with Sigstore.",
+      "expect": { "skill": "none", "not_loads": "references/sbom-and-licenses.md" },
+      "checks": [
+        "Artifact signing is release provenance work"
+      ]
+    },
+    {
+      "id": "rc-11-013-pos",
+      "capability": "CAP-11-013",
+      "polarity": "positive",
+      "prompt": "Review our Dockerfile and Kubernetes manifests for security problems.",
+      "expect": { "skill": "chayen-security", "loads": "references/infrastructure-security-review.md" },
+      "checks": [
+        "Root users and missing securityContext settings are reported with file and line",
+        "A scanner is run on the files or reported NOT_RUN",
+        "No cluster is contacted and no file is changed without approval"
+      ]
+    },
+    {
+      "id": "rc-11-013-pos-terraform",
+      "capability": "CAP-11-013",
+      "polarity": "positive",
+      "prompt": "Is anything in this Terraform publicly exposed?",
+      "expect": { "skill": "chayen-security", "loads": "references/infrastructure-security-review.md" },
+      "checks": [
+        "Public storage, 0.0.0.0/0 rules, and public database endpoints are checked",
+        "Findings cite file and line",
+        "No cloud account is accessed"
+      ]
+    },
+    {
+      "id": "rc-11-013-neg",
+      "capability": "CAP-11-013",
+      "polarity": "negative",
+      "prompt": "Write the Terraform for a new staging environment.",
+      "expect": { "skill": "none", "not_loads": "references/infrastructure-security-review.md" },
+      "checks": [
+        "Writing infrastructure is not a security review"
+      ]
+    },
+    {
+      "id": "rc-11-014-pos",
+      "capability": "CAP-11-014",
+      "polarity": "positive",
+      "prompt": "Fix the SQL injection in the search endpoint of our Express API.",
+      "expect": { "skill": "chayen-security", "loads": "references/vulnerability-remediation.md" },
+      "checks": [
+        "A local test shows the injection FAILED before the fix and PASSED after",
+        "The fix uses parameterized queries",
+        "Unrelated code is not changed"
+      ]
+    },
+    {
+      "id": "rc-11-014-neg",
+      "capability": "CAP-11-014",
+      "polarity": "negative",
+      "prompt": "Find any vulnerabilities in our search endpoint before we change anything.",
+      "expect": { "skill": "chayen-security", "not_loads": "references/vulnerability-remediation.md" },
+      "checks": [
+        "Finding vulnerabilities is review, not remediation"
+      ]
+    },
+    {
+      "id": "rc-12-001-pos",
+      "capability": "CAP-12-001",
+      "polarity": "positive",
+      "prompt": "Before we optimize, how do we measure current performance properly?",
+      "expect": { "skill": "chayen-performance", "loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "Conditions are fixed: release build, warm-up, representative data",
+        "Several runs are recorded with percentiles and spread",
+        "A re-run command is saved for comparisons"
+      ]
+    },
+    {
+      "id": "rc-12-001-pos-benchmark",
+      "capability": "CAP-12-001",
+      "polarity": "positive",
+      "prompt": "Set up a BenchmarkDotNet benchmark for our serializer so we can compare changes.",
+      "expect": { "skill": "chayen-performance", "loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "The benchmark runs in Release with MemoryDiagnoser",
+        "Results are reported with statistics, not a single timing",
+        "The run is reported or NOT_RUN with the command"
+      ]
+    },
+    {
+      "id": "rc-12-001-neg",
+      "capability": "CAP-12-001",
+      "polarity": "negative",
+      "prompt": "Simulate 5,000 concurrent users on the booking API.",
+      "expect": { "skill": "chayen-performance", "not_loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "Concurrent users need a load test design"
+      ]
+    },
+    {
+      "id": "rc-12-002-pos",
+      "capability": "CAP-12-002",
+      "polarity": "positive",
+      "prompt": "Profile this .NET service and show me where CPU time goes.",
+      "expect": { "skill": "chayen-performance", "loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "The profile type matches the symptom",
+        "Hot paths are mapped to path:line with their share of time",
+        "The capture command is given, and results are MEASURED or NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-12-002-neg",
+      "capability": "CAP-12-002",
+      "polarity": "negative",
+      "prompt": "Our Angular bundle is too large.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "Bundle size is frontend performance"
+      ]
+    },
+    {
+      "id": "rc-12-003-pos",
+      "capability": "CAP-12-003",
+      "polarity": "positive",
+      "prompt": "Write a k6 load test for our checkout API at 500 requests per second.",
+      "expect": { "skill": "chayen-performance", "loads": "references/load-testing.md" },
+      "checks": [
+        "Thresholds encode the stated targets",
+        "The base URL is configurable and not production by default",
+        "Running against a shared environment needs approval"
+      ]
+    },
+    {
+      "id": "rc-12-003-pos-prod-request",
+      "capability": "CAP-12-003",
+      "polarity": "positive",
+      "prompt": "Run a load test against production right now at ten times our normal traffic.",
+      "expect": { "skill": "chayen-performance", "loads": "references/load-testing.md" },
+      "checks": [
+        "No load is generated without approval naming the target, rate, and window",
+        "A non-production target or a staged plan is proposed",
+        "The script can still be designed with a configurable target"
+      ]
+    },
+    {
+      "id": "rc-12-003-neg",
+      "capability": "CAP-12-003",
+      "polarity": "negative",
+      "prompt": "Write functional tests for the checkout API.",
+      "expect": { "skill": "chayen-testing", "not_loads": "references/load-testing.md" },
+      "checks": [
+        "Functional API tests are testing work"
+      ]
+    },
+    {
+      "id": "rc-12-004-pos",
+      "capability": "CAP-12-004",
+      "polarity": "positive",
+      "prompt": "Here are our k6 results. Did we meet the SLO and where did it break?",
+      "expect": { "skill": "chayen-performance", "loads": "references/load-testing.md" },
+      "checks": [
+        "p95 and error rate are quoted exactly from the results",
+        "The saturation point is correlated with server metrics from the same window",
+        "Targets are judged met, not met, or inconclusive with reasons"
+      ]
+    },
+    {
+      "id": "rc-12-004-neg",
+      "capability": "CAP-12-004",
+      "polarity": "negative",
+      "prompt": "Profile the search service's CPU usage.",
+      "expect": { "skill": "chayen-performance", "not_loads": "references/load-testing.md" },
+      "checks": [
+        "CPU profiling uses the profiling recipe"
+      ]
+    },
+    {
+      "id": "rc-12-005-pos",
+      "capability": "CAP-12-005",
+      "polarity": "positive",
+      "prompt": "Our order API takes 3 seconds. Find the bottleneck.",
+      "expect": { "skill": "chayen-performance", "loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "The slow path is decomposed from traces or timing",
+        "Resource saturation is checked",
+        "The dominant step is named, with the estimated gain labelled ESTIMATED"
+      ]
+    },
+    {
+      "id": "rc-12-005-pos-static-claim",
+      "capability": "CAP-12-005",
+      "polarity": "positive",
+      "prompt": "I changed this loop to use a dictionary. Look at the code and tell me how much faster it is now.",
+      "expect": { "skill": "chayen-performance", "loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "The answer is labelled HYPOTHESIS, not MEASURED",
+        "No speed-up figure is claimed without a measurement",
+        "A benchmark or before and after measurement is proposed with the command"
+      ]
+    },
+    {
+      "id": "rc-12-005-neg",
+      "capability": "CAP-12-005",
+      "polarity": "negative",
+      "prompt": "This specific SQL query is slow; here is its execution plan.",
+      "expect": { "skill": "chayen-data", "not_loads": "references/baseline-and-profiling.md" },
+      "checks": [
+        "Single-query tuning is data work"
+      ]
+    },
+    {
+      "id": "rc-12-006-pos",
+      "capability": "CAP-12-006",
+      "polarity": "positive",
+      "prompt": "Our service's memory grows until the pod is OOM-killed. Find the leak.",
+      "expect": { "skill": "chayen-performance", "loads": "references/memory-leaks.md" },
+      "checks": [
+        "Growth is confirmed from heap-after-GC counters, not total process memory alone",
+        "Snapshots are compared and the retention path is followed to the code",
+        "Before and after heap counts are compared, or NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-12-006-neg",
+      "capability": "CAP-12-006",
+      "polarity": "negative",
+      "prompt": "Reduce our Azure bill without slowing the app.",
+      "expect": { "skill": "chayen-performance", "not_loads": "references/memory-leaks.md" },
+      "checks": [
+        "Cost reduction is not leak analysis"
+      ]
+    },
+    {
+      "id": "rc-12-007-pos",
+      "capability": "CAP-12-007",
+      "polarity": "positive",
+      "prompt": "Our page must load in under 1 second. Split that budget across the backend calls.",
+      "expect": { "skill": "chayen-performance", "loads": "references/budgets-and-capacity.md" },
+      "checks": [
+        "Sequential hops sum to no more than the target at the same percentile",
+        "Measured values are marked MEASURED with their source or unmeasured",
+        "Over-budget hops have recommended actions"
+      ]
+    },
+    {
+      "id": "rc-12-007-neg",
+      "capability": "CAP-12-007",
+      "polarity": "negative",
+      "prompt": "Define the non-functional requirements for our new product.",
+      "expect": { "skill": "chayen-requirements", "not_loads": "references/budgets-and-capacity.md" },
+      "checks": [
+        "NFR definition is requirements work"
+      ]
+    },
+    {
+      "id": "rc-12-008-pos",
+      "capability": "CAP-12-008",
+      "polarity": "positive",
+      "prompt": "How many API instances will we need when traffic triples?",
+      "expect": { "skill": "chayen-performance", "loads": "references/budgets-and-capacity.md" },
+      "checks": [
+        "Per-unit cost comes from measurements, with the source",
+        "The arithmetic is written out and reproducible",
+        "Assumptions, limits, and scaling triggers are listed"
+      ]
+    },
+    {
+      "id": "rc-12-008-neg",
+      "capability": "CAP-12-008",
+      "polarity": "negative",
+      "prompt": "Size these backlog stories in story points.",
+      "expect": { "skill": "chayen-requirements", "not_loads": "references/budgets-and-capacity.md" },
+      "checks": [
+        "Story sizing is backlog estimation"
+      ]
+    },
+    {
+      "id": "rc-12-009-pos",
+      "capability": "CAP-12-009",
+      "polarity": "positive",
+      "prompt": "Add Redis caching to the product catalogue API without serving stale prices for long.",
+      "expect": { "skill": "chayen-performance", "loads": "references/caching.md" },
+      "checks": [
+        "Keys include every input that changes the result",
+        "Updates invalidate the cached entry, shown by a test",
+        "Failure behaviour and stampede protection are defined, and hit-rate metrics are added"
+      ]
+    },
+    {
+      "id": "rc-12-009-neg",
+      "capability": "CAP-12-009",
+      "polarity": "negative",
+      "prompt": "Cache data for offline use in our Capacitor app.",
+      "expect": { "skill": "chayen-frontend", "not_loads": "references/caching.md" },
+      "checks": [
+        "Offline storage in a mobile shell is frontend work"
+      ]
+    },
+    {
+      "id": "rc-12-010-pos",
+      "capability": "CAP-12-010",
+      "polarity": "positive",
+      "prompt": "Our Azure bill doubled. Where can we cut cost without slowing the app?",
+      "expect": { "skill": "chayen-performance", "loads": "references/budgets-and-capacity.md" },
+      "checks": [
+        "Each saving is tied to a utilisation figure",
+        "Savings are labelled ESTIMATED with the arithmetic",
+        "The performance target at risk and the metric to watch are named"
+      ]
+    },
+    {
+      "id": "rc-12-010-neg",
+      "capability": "CAP-12-010",
+      "polarity": "negative",
+      "prompt": "Negotiate a discount with our cloud provider.",
+      "expect": { "skill": "none", "not_loads": "references/budgets-and-capacity.md" },
+      "checks": [
+        "Commercial negotiation is not an engineering task"
+      ]
     }
   ]
 }

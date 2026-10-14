@@ -26,7 +26,7 @@ Requests that fit:
 |---|---|
 | Implementing the feature or fixing the product bug itself | The chayen-backend, chayen-frontend, or chayen-implementation skill |
 | Manual test plans, UAT scripts, or exploratory testing guides | — |
-| Load, stress, or performance benchmarking (k6, JMeter, BenchmarkDotNet) | — |
+| Load, stress, or performance benchmarking (k6, JMeter, BenchmarkDotNet) | The chayen-performance skill |
 | Penetration testing, or fuzzing systems the user does not own | — |
 | Test frameworks for stacks outside .NET, TypeScript/JavaScript, and Python | Not covered here |
 
