@@ -68,6 +68,10 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Detect the runtime** and read the matching section of the runtime
    tools reference.
 2. **Classify the request,** then read the one matching recipe:
@@ -152,3 +156,4 @@ Load the runtime tools section for the detected runtime (workflow step 1), and o
 | [references/memory-leaks.md](references/memory-leaks.md) | Memory growth, leaks, or out-of-memory restarts |
 | [references/budgets-and-capacity.md](references/budgets-and-capacity.md) | Latency budgets, capacity planning, or cost-performance trade-offs |
 | [references/caching.md](references/caching.md) | Designing or fixing a cache |
+| [references/workflow-performance-investigation.md](references/workflow-performance-investigation.md) | Multi-stage performance investigation within this skill's scope; skip for a low-risk direct recipe |

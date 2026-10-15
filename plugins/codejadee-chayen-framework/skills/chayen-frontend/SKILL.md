@@ -78,6 +78,8 @@ If the request does not fit, stop following this skill and continue normally wit
 1. **Detect the framework and its major version.** Read exactly one
    framework reference. If a shell is present and the task touches it,
    also read [references/app-shells.md](references/app-shells.md).
+   In monorepos, use the owning app's versions, builder, manager, and commands;
+   a sibling's framework or root dependency alone does not select this app's stack.
    For Angular, read the base and only the relevant topic from References;
    preserve the detected package manager and configured build/test runners.
    For React/Next.js, likewise read the base plus the relevant topic; preserve

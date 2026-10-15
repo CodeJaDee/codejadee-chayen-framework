@@ -11,7 +11,7 @@ These tools are for **repository maintainers only**.
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
 node tools/validate/validate-package.mjs       # package, skills, references, catalog alignment (detail)
-node tools/validate/run-validator-tests.mjs    # self-tests: 2 baselines + 51 negative controls
+node tools/validate/run-validator-tests.mjs    # self-tests: 4 baselines + 128 negative controls
 ```
 
 The rules come from
@@ -25,7 +25,7 @@ The gates are in
 |---|---|
 | `validate-package.mjs` | The checks below |
 | `run-validator-tests.mjs` | Applies the mutation cases in `tests/catalog/` and `tests/skills/` to temporary repository copies, and asserts that each one fails with the expected check (G-13) |
-| `validate-all.mjs` | Runs the package validator, the catalog checker, the eval-case sync check, and the self-tests |
+| `validate-all.mjs` | Runs the package, engineering catalog, technology, composite workflow/template and eval-case synchronization checks, then validator self-tests (six gate groups) |
 
 ## What `validate-package.mjs` checks
 

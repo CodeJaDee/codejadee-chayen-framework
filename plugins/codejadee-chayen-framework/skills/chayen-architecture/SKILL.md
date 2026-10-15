@@ -172,3 +172,4 @@ If the request does not fit, stop following this skill and continue normally wit
 | [references/realtime-systems.md](references/realtime-systems.md) | Workflow step 3: designing realtime features (transport, scale-out, reconnection) |
 | [references/migration-strategy.md](references/migration-strategy.md) | Workflow step 3: phased migration between platforms, frameworks, or systems, a strangler replacement, or a modular-monolith split |
 | [references/rollout-planning.md](references/rollout-planning.md) | Workflow step 3: staged rollout of a change to users |
+| [references/architecture-decision-record-template.md](references/architecture-decision-record-template.md) | A Architecture Decision Record is needed and the repository has no existing format; use only relevant fields |

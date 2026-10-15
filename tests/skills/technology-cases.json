@@ -4204,6 +4204,96 @@
         "Uses PostgreSQL guidance only",
         "Does not run a portability review"
       ]
+    },
+    {
+      "id": "tc-crossstack-e2e-audit28-angular",
+      "capability": "crossstack-e2e",
+      "polarity": "positive",
+      "context": "Mixed monorepo: apps/admin Angular 17 with Karma; services/orders ASP.NET Core net8.0 with EF Core 8 UseSqlServer; apps/store is unrelated Next.js; SQL Server integration database",
+      "prompt": "Test an order submission from the admin form through the Orders API to SQL Server, including invalid input and a forbidden order.",
+      "expect": { "skill": "chayen-testing", "loads": "references/crossstack-e2e.md", "applies": "crossstack-e2e" },
+      "checks": ["Identifies the Angular app, ASP.NET service, and SQL Server provider independently of the Next sibling", "Uses the configured Karma, .NET, browser, and actual SQL Server integration setup", "Tests validation, 401/403, persisted values, error DTOs, UTC dates and decimal precision", "Does not replace Karma, change framework versions, or migrate the database", "Reports unexecuted browser, database, or agent checks as NOT_RUN"]
+    },
+    {
+      "id": "tc-openapi-contract-sync-audit28-next-postgres",
+      "capability": "openapi-contract-sync",
+      "polarity": "positive",
+      "context": "Mixed monorepo: apps/shop React 18 Next.js 14 App Router; services/catalog ASP.NET Core net8.0 with existing NSwag OpenAPI and EF Core Npgsql PostgreSQL 16; apps/legacy uses Angular and SQL Server",
+      "prompt": "The shop's generated client no longer matches the catalogue API's error and nullable fields. Find the contract drift and repair it.",
+      "expect": { "skill": "chayen-backend", "loads": "references/crossstack-api-contracts.md", "applies": "openapi-contract-sync" },
+      "checks": ["Finds the actual API contract owner rather than assuming Next.js owns the PostgreSQL backend", "Preserves NSwag, the configured generator, React/Next versions, and Npgsql", "Checks nullable, optional, errors, int64/decimal and date-time transport; preserves server-only secrets", "Runs API contract and consumer builds separately, then database/browser tests where available", "Does not migrate to built-in .NET OpenAPI, App Router from Pages, or another database library"]
+    },
+    {
+      "id": "tc-nuxt-data-fetching-audit28-vue-nuxt",
+      "capability": "nuxt-data-fetching",
+      "polarity": "positive",
+      "context": "Mixed workspace with apps/portal Nuxt 3 Vue 3 Vite SSR, apps/widget plain Vue 2 webpack, and shared DTOs; pinned pnpm and existing test scripts",
+      "prompt": "The Nuxt portal fetches the account twice during hydration. Fix the SSR data flow and test it without changing the widget.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/nuxt-app.md", "applies": "nuxt-data-fetching" },
+      "checks": ["Uses portal-local Nuxt/Vue versions, configured data keys, and valid composable context", "Preserves the plain Vue 2 webpack sibling and current pnpm manager", "Checks hydration reuse and user-state isolation with the actual Nuxt fixture", "Does not treat a JavaScript serialization counterexample as a Nuxt SSR test", "Reports missing SSR/browser checks as NOT_RUN rather than installing new tools"]
+    },
+    {
+      "id": "tc-database-portability-review-audit28-query-analysis",
+      "capability": "database-portability-review",
+      "polarity": "positive",
+      "context": "Monorepo services/erp uses SQL Server 2022 compatibility 150 and Dapper; services/search uses PostgreSQL 16 and Npgsql; production inspection is read-only; disposable test databases available",
+      "prompt": "Compare these two slow queries and their plans on SQL Server and PostgreSQL. Explain which rewrites and index suggestions apply to each.",
+      "expect": { "skill": "chayen-data", "loads": "references/database-portability.md", "applies": "database-portability-review" },
+      "checks": ["Records each engine, compatibility level, provider and query owner; loads each matching engine topic", "Distinguishes T-SQL TOP/OFFSET/OUTPUT from PostgreSQL LIMIT/RETURNING and typed parameters", "Uses estimated or captured plans for production; EXPLAIN ANALYZE and actual-plan execution require the permitted test environment", "Compares equivalent data, parameter distributions, isolation, collation and NULL behavior; labels performance claims MEASURED only with evidence", "Does not add indexes, rewrite production schemas, replace Dapper/Npgsql, or claim one engine verifies the other"]
+    },
+    {
+      "id": "tc-angular-signals-audit28-sibling-negative",
+      "capability": "angular-signals",
+      "polarity": "negative",
+      "context": "Root workspace hoists Angular 19 for apps/admin; requested apps/store is React 18 Vite with existing useState; independent manifests and scripts",
+      "prompt": "Fix the store's cart state after an item is removed. Keep its current state library.",
+      "expect": { "skill": "chayen-frontend", "not_applies": "angular-signals", "not_loads": "references/angular-reactivity.md" },
+      "checks": ["Uses the target React app's manifest and state conventions rather than hoisted Angular evidence", "Does not introduce Angular signals or change the sibling app", "Uses store-local configured verification commands"]
+    },
+    {
+      "id": "tc-nuxt-runtime-config-audit28-plain-vue-negative",
+      "capability": "nuxt-runtime-config",
+      "polarity": "negative",
+      "context": "apps/portal uses Nuxt 3 but requested apps/widget is plain Vue 3 with Vite and no Nuxt dependency or generated context",
+      "prompt": "Check whether the widget's VITE_API_URL is public and keep private keys out of its bundle.",
+      "expect": { "skill": "chayen-frontend", "not_applies": "nuxt-runtime-config", "not_loads": "references/nuxt-server.md" },
+      "checks": ["Reviews the owning widget's Vite configuration and built public output", "Does not use Nuxt runtimeConfig, useRuntimeConfig, NUXT overrides or server auto-imports in plain Vue", "Does not replace the builder or add a Nuxt dependency"]
+    },
+    {
+      "id": "tc-postgres-sql-dialect-audit28-sqlserver-negative",
+      "capability": "postgres-sql-dialect",
+      "polarity": "negative",
+      "context": "services/orders uses SQL Server with Dapper and SqlClient; sibling services/reporting uses PostgreSQL and Npgsql; shared repository root",
+      "prompt": "Add deterministic pagination to the Orders query using its existing SQL Server connection.",
+      "expect": { "skill": "chayen-data", "not_applies": "postgres-sql-dialect", "not_loads": "references/postgres-sql.md" },
+      "checks": ["Uses Orders-local SqlClient, T-SQL and column parameter types", "Does not copy LIMIT, ILIKE, RETURNING, PostgreSQL identifier quoting or Npgsql configuration from the sibling", "Preserves Dapper and tests with SQL Server rather than claiming PostgreSQL or SQLite proves it"]
+    },
+    {
+      "id": "tc-typescript-monorepo-audit28-java-sibling",
+      "capability": "typescript-monorepo",
+      "polarity": "positive",
+      "context": "Mixed monorepo has apps/web React TypeScript, packages/contracts TypeScript, services/billing Java Spring Boot pom.xml; pnpm manager and existing build graph",
+      "prompt": "Fix the web app's import from our shared contracts package and verify the affected consumers. Leave billing alone.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/typescript-workspace.md", "applies": "typescript-monorepo" },
+      "checks": ["Uses existing package exports, dependency graph, pinned compiler and pnpm commands for web/contracts", "Does not assume a root tsconfig or change the Java service", "Does not claim Spring Boot implementation support from a JDBC mention in database guidance", "Reports affected consumer checks independently and preserves current workspace tooling"]
+    },
+    {
+      "id": "tc-aspnet-data-access-audit28-legacy-ado",
+      "capability": "aspnet-data-access",
+      "polarity": "positive",
+      "context": "ASP.NET Core net6.0 service uses System.Data.SqlClient ADO.NET with an existing connection factory and SQL Server 2019; unrelated sibling uses EF Core 10",
+      "prompt": "Fix this endpoint's parameterized update so a failed second command rolls back both writes. Keep the current driver.",
+      "expect": { "skill": "chayen-backend", "loads": "references/aspnetcore-data-access.md", "applies": "aspnet-data-access" },
+      "checks": ["Passes the same connection and transaction to both typed commands and tests rollback", "Uses APIs available in the target service's pinned driver and runtime", "Does not add EF Core or swap SqlClient packages due to a sibling's dependencies", "Does not create a schema migration for a transaction bug"]
+    },
+    {
+      "id": "tc-crossstack-date-time-audit28-npgsql-offset",
+      "capability": "crossstack-date-time",
+      "polarity": "positive",
+      "context": "TypeScript client sends a +07:00 ISO date-time; ASP.NET API uses EF Core Npgsql with Npgsql 8 against PostgreSQL timestamptz; original customer zone must be retained",
+      "prompt": "Our timestamp write fails with Npgsql. Fix the round trip without losing the instant or pretending the database stores the original time zone.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/crossstack-types-and-time.md", "applies": "crossstack-date-time" },
+      "checks": ["Distinguishes instant, original zone and offset in the transport and database model", "Uses UTC DateTime or explicitly normalized zero-offset DateTimeOffset for timestamptz", "Does not enable legacy timestamp behavior, change providers or migrate columns silently", "Tests a nonzero offset input and UTC round trip on PostgreSQL, or reports NOT_RUN"]
     }
   ]
 }

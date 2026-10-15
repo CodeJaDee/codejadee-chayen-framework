@@ -69,6 +69,10 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Define the scope** and state it back in one line.
 2. **Classify the request,** then read the one matching recipe:
 
@@ -166,3 +170,4 @@ Load one recipe for the request (workflow step 2), plus the checklists it names 
 | [references/access-reviews.md](references/access-reviews.md) | Reviewing exported role assignments, grants, or repository permissions for least privilege |
 | [references/infrastructure-security-review.md](references/infrastructure-security-review.md) | Reviewing Dockerfiles, Kubernetes manifests, Terraform, or Bicep for misconfiguration |
 | [references/vulnerability-remediation.md](references/vulnerability-remediation.md) | Fixing a confirmed vulnerability |
+| [references/workflow-security-review.md](references/workflow-security-review.md) | Multi-stage security review and remediation within this skill's scope; skip for a low-risk direct recipe |

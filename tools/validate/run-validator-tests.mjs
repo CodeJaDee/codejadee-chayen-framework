@@ -3,12 +3,12 @@
 // Copies the relevant parts of the repository into a temporary directory,
 // applies one declarative mutation per case, runs the validator named by
 // the case, and asserts that it fails with the expected check ID. The
-// unmutated copy must pass both validators first (baseline).
+// unmutated copy must pass every validator first (baseline).
 // Zero dependencies (Node.js >= 18). Never shipped.
 //
 // Usage: node tools/validate/run-validator-tests.mjs [--only <case-id>] [--keep]
 // Case files: tests/catalog/catalog-mutations.json, tests/skills/validator-mutations.json,
-// tests/catalog/technology-mutations.json
+// tests/catalog/technology-mutations.json, tests/catalog/workflow-mutations.json
 
 import fs from "node:fs";
 import os from "node:os";
@@ -19,12 +19,13 @@ const repo = path.resolve(import.meta.dirname, "..", "..");
 const argv = process.argv.slice(2);
 const only = argv.includes("--only") ? argv[argv.indexOf("--only") + 1] : null;
 const keep = argv.includes("--keep");
-const COPY = ["plugins", ".claude-plugin", ".github/plugin", ".agents/plugins", "catalog", "tests/skills", "docs/chayen/CAPABILITY_COVERAGE.md", "docs/chayen/TECHNOLOGY_COVERAGE.md", "tests/technology/dotnet/run-fact-checks.mjs", "tests/technology/angular-typescript/run-fact-checks.mjs", "tests/technology/react-nextjs/run-fact-checks.mjs", "tests/technology/vue-nuxt-vite/run-fact-checks.mjs", "tests/technology/sqlserver/run-fact-checks.mjs", "tests/technology/sqlserver/fixture", "tests/technology/postgres-crossstack/run-fact-checks.mjs", "tests/technology/postgres-crossstack/fixture"];
-const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json", "tests/catalog/technology-mutations.json"];
+const COPY = ["plugins", ".claude-plugin", ".github/plugin", ".agents/plugins", "catalog", "tests/skills", "docs/chayen/CAPABILITY_COVERAGE.md", "docs/chayen/TECHNOLOGY_COVERAGE.md", "docs/chayen/WORKFLOW_COVERAGE.md", "tests/technology/dotnet/run-fact-checks.mjs", "tests/technology/angular-typescript/run-fact-checks.mjs", "tests/technology/react-nextjs/run-fact-checks.mjs", "tests/technology/vue-nuxt-vite/run-fact-checks.mjs", "tests/technology/sqlserver/run-fact-checks.mjs", "tests/technology/sqlserver/fixture", "tests/technology/postgres-crossstack/run-fact-checks.mjs", "tests/technology/postgres-crossstack/fixture"];
+const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json", "tests/catalog/technology-mutations.json", "tests/catalog/workflow-mutations.json"];
 const VALIDATORS = {
   package: (dir) => [path.join(repo, "tools/validate/validate-package.mjs"), dir],
   catalog: (dir) => [path.join(repo, "tools/catalog/check-catalog.mjs"), "--root", dir],
   technology: (dir) => [path.join(repo, "tools/catalog/check-technology.mjs"), "--root", dir],
+  workflows: (dir) => [path.join(repo, "tools/catalog/check-workflows.mjs"), "--root", dir],
 };
 
 const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "chayen-vt-"));

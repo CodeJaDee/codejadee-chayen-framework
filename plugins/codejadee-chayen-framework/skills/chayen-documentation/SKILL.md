@@ -67,6 +67,10 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Load the fact-checking checklist** for any document, description, or
    notes you produce.
 2. **Classify the request,** then read the one matching recipe:
@@ -141,3 +145,4 @@ Load the fact-checking checklist for any written output (workflow step 1), and o
 | [references/pull-requests-and-review.md](references/pull-requests-and-review.md) | Preparing a pull request, reviewing a diff, resolving review comments, or checking code against written standards |
 | [references/release-notes.md](references/release-notes.md) | Writing release notes or a changelog entry |
 | [references/git-workflow.md](references/git-workflow.md) | Branches, commits, rebases, conflict resolution, or history cleanup |
+| [references/workflow-pull-request.md](references/workflow-pull-request.md) | Multi-stage pull request preparation and review within this skill's scope; skip for a low-risk direct recipe |

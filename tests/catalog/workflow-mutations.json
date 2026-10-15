@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "$comment": "STEP 29 negative controls for V-24. Each mutates only a temporary repository copy; no workflow or agent is executed.",
+  "cases": [
+    {
+      "id": "wf29-inventory",
+      "description": "A renamed required workflow is rejected",
+      "edits": [
+        {
+          "file": "catalog/composite-workflows.json",
+          "op": "replace",
+          "find": "\"title\": \"New feature development\"",
+          "with": "\"title\": \"Unrequested workflow\""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.1 inventory"
+      }
+    },
+    {
+      "id": "wf29-owner",
+      "description": "A workflow cannot live under another owner",
+      "edits": [
+        {
+          "file": "catalog/composite-workflows.json",
+          "op": "regex",
+          "pattern": "(\"id\": \"WF-01\",[\\s\\S]*?\"owner\": )\"chayen-implementation\"",
+          "with": "$1\"chayen-data\""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.2 mapping"
+      }
+    },
+    {
+      "id": "wf29-escape",
+      "description": "Reference paths cannot escape the package",
+      "edits": [
+        {
+          "file": "catalog/composite-workflows.json",
+          "op": "replace",
+          "find": "\"reference\": \"skills/chayen-implementation/references/workflow-new-feature.md\"",
+          "with": "\"reference\": \"../workflow-new-feature.md\""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.2 mapping"
+      }
+    },
+    {
+      "id": "wf29-recipe",
+      "description": "A nonexistent capability cannot be reused",
+      "edits": [
+        {
+          "file": "catalog/composite-workflows.json",
+          "op": "regex",
+          "pattern": "(\"id\": \"WF-01\",[\\s\\S]*?\"capabilities\": \\[\\s*)\"CAP-04-001\"",
+          "with": "$1\"CAP-99-999\""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.2 mapping"
+      }
+    },
+    {
+      "id": "wf29-conditional-pack",
+      "description": "Unknown technology pack is rejected",
+      "edits": [
+        {
+          "file": "catalog/composite-workflows.json",
+          "op": "regex",
+          "pattern": "(\"id\": \"WF-01\",[\\s\\S]*?\"technology_packs\": \\[\\s*)\"dotnet-aspnetcore\"",
+          "with": "$1\"unimplemented-framework\""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.2 mapping"
+      }
+    },
+    {
+      "id": "wf29-load-condition",
+      "description": "Composite must be listed in its owner's References table",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md",
+          "op": "regex",
+          "pattern": "^\\| \\[references/workflow-new-feature\\.md\\].*\\n",
+          "flags": "m",
+          "with": ""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.2 mapping"
+      }
+    },
+    {
+      "id": "wf29-approval-control",
+      "description": "Missing actual-approval guard is rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-new-feature.md",
+          "op": "replace",
+          "find": "Approval state starts NOT_PROVIDED.",
+          "with": "Approval state is inferred from completed stages."
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.3 anatomy"
+      }
+    },
+    {
+      "id": "wf29-proportionality",
+      "description": "Missing low-risk stage rules are rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-new-feature.md",
+          "op": "replace",
+          "find": "## Proportionality",
+          "with": "## Unconditional stages"
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.3 anatomy"
+      }
+    },
+    {
+      "id": "wf29-partial",
+      "description": "Missing blocker and partial-completion section is rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-new-feature.md",
+          "op": "replace",
+          "find": "## Blockers and handoff",
+          "with": "## Completion only"
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.3 anatomy"
+      }
+    },
+    {
+      "id": "wf29-stage-exit",
+      "description": "A stage without its exit check is rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-new-feature.md",
+          "op": "replace",
+          "find": " | Acceptance criteria and exclusions are observable; risky actions are identified. |",
+          "with": " |"
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.3 anatomy"
+      }
+    },
+    {
+      "id": "wf29-template-approval",
+      "description": "A generated template cannot default approval to approved",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract-template.md",
+          "op": "replace",
+          "find": "Approval state: NOT_PROVIDED",
+          "with": "Approval state: APPROVED"
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.4 templates"
+      }
+    },
+    {
+      "id": "wf29-template-leaf",
+      "description": "Templates may not link to other files",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract-template.md",
+          "op": "append",
+          "content": "\n[Other format](change-passport-template.md)\n"
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.4 templates"
+      }
+    },
+    {
+      "id": "wf29-adr-proposed",
+      "description": "An ADR must start proposed",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/architecture-decision-record-template.md",
+          "op": "replace",
+          "find": "Status: PROPOSED",
+          "with": "Status: ACCEPTED"
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.4 templates"
+      }
+    },
+    {
+      "id": "wf29-case-mapping",
+      "description": "A positive prompt must expect the matching workflow",
+      "edits": [
+        {
+          "file": "tests/skills/workflow-cases.json",
+          "op": "regex",
+          "pattern": "(\"id\": \"wf-new-feature-positive\"[\\s\\S]*?\"applies\": )\"WF-01\"",
+          "with": "$1\"WF-12\""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.5 cases"
+      }
+    },
+    {
+      "id": "wf29-native-case",
+      "description": "No-match must expect normal native behavior",
+      "edits": [
+        {
+          "file": "tests/skills/workflow-cases.json",
+          "op": "regex",
+          "pattern": "(\"id\": \"wf-native-translation\"[\\s\\S]*?\"workflow\": )\"none\"",
+          "with": "$1\"WF-01\""
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.5 cases"
+      }
+    },
+    {
+      "id": "wf29-coverage",
+      "description": "Stale coverage must be detected",
+      "edits": [
+        {
+          "file": "docs/chayen/WORKFLOW_COVERAGE.md",
+          "op": "replace",
+          "find": "WF-01 New feature development",
+          "with": "WF-01 Stale workflow"
+        }
+      ],
+      "expect": {
+        "validator": "workflows",
+        "error": "V-24.6 coverage"
+      }
+    }
+  ]
+}

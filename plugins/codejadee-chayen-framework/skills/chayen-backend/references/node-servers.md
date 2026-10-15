@@ -21,16 +21,21 @@ kind: technology
 
 ## Nitro and Nuxt server routes
 
-- **Handlers live in `server/api/` or `server/routes/`.** File names define
-  routes and methods (for example `orders/[id].get.ts`).
-- **Use the h3 utilities the project already uses:**
+- **Locate the owning framework and configured source directory first.**
+  Nuxt 3/4 commonly uses `server/api/` or `server/routes/`; standalone
+  Nitro 2 scans `api/` and `routes/` under its configured `srcDir`.
+  Nitro 3 changes scanning and imports: confirm its installed release and
+  `serverDir`/`scanDirs` configuration rather than assuming Nuxt defaults.
+  Never rename `nitropack` to `nitro` or migrate h3 as a side effect.
+- **On compatible h3 versions, use the utilities the project already uses:**
   - `defineEventHandler`;
   - `getQuery` / `getRouterParam`;
   - `readBody`, or the validated variants (`readValidatedBody`,
     `getValidatedQuery`) with the project's schema library;
   - `createError({ statusCode, statusMessage })`.
-- **Runtime config** comes from `useRuntimeConfig()`. Private keys stay out
-  of the `public` section.
+- **Runtime config:** preserve the installed framework's config access and
+  imports. Nuxt's private/`public` split is not a standalone Nitro guarantee;
+  inspect what the application actually serializes to clients.
 - Nuxt version and installed Nitro/h3 determine context and handlers; legacy
   Nuxt 2 serverMiddleware and private/public config retain their conventions.
   Use `nuxt-server.md` for Nuxt-specific work. Private values must also stay

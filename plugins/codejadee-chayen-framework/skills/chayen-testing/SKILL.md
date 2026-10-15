@@ -65,6 +65,10 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Detect the framework and conventions.** Read exactly one technology
    reference.
 2. **Take a baseline:** run the relevant existing tests before changing
@@ -161,3 +165,4 @@ Load one technology reference for the detected framework (workflow step 1), and 
 | [references/test-data.md](references/test-data.md) | Creating builders, factories, or fixtures for test data |
 | [references/failing-and-flaky-tests.md](references/failing-and-flaky-tests.md) | Triaging failing tests, or diagnosing flaky ones |
 | [references/coverage-gaps.md](references/coverage-gaps.md) | Finding the most important untested code from coverage and risk |
+| [references/workflow-testing-regression.md](references/workflow-testing-regression.md) | Multi-stage software testing and regression within this skill's scope; skip for a low-risk direct recipe |

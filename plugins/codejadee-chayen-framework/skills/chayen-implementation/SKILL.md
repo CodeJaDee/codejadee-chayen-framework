@@ -76,12 +76,18 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Orient minimally.** Find the stack, versions, and real commands from CI
    files or scripts, plus the analogous code. Do not survey the whole
    repository. For C# code, also read the one C# reference that matches
    the change (see References).
    For TypeScript or JavaScript language/toolchain changes, read the shared
    base plus only the relevant types, runtime, or workspace topic.
+   In mixed-stack monorepos, map each affected app/service to its own versions,
+   provider, and commands; verify changed packages and affected consumers separately.
 2. **Baseline.** When running commands is permitted, build and run the
    relevant tests before editing. Record pre-existing failures.
 3. **Classify the change,** then read the one matching recipe:
@@ -190,3 +196,12 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 | [references/javascript-runtime.md](references/javascript-runtime.md) | JavaScript or TypeScript async control, runtime support, or ESM/CommonJS boundaries are involved |
 | [references/typescript-workspace.md](references/typescript-workspace.md) | Package-manager integrity, TypeScript workspace boundaries, or effective compiler configuration is involved |
 | [references/change-summary.md](references/change-summary.md) | Workflow step 7: reporting or handing over a completed change, or auditing the evidence claimed for completed work |
+| [references/workflow-new-feature.md](references/workflow-new-feature.md) | Multi-stage new feature development within this skill's scope; skip for a low-risk direct recipe |
+| [references/workflow-bug-repair.md](references/workflow-bug-repair.md) | Multi-stage bug diagnosis and repair within this skill's scope; skip for a low-risk direct recipe |
+| [references/workflow-refactoring.md](references/workflow-refactoring.md) | Multi-stage refactoring within this skill's scope; skip for a low-risk direct recipe |
+| [references/workflow-dependency-upgrade.md](references/workflow-dependency-upgrade.md) | Multi-stage dependency/framework upgrade within this skill's scope; skip for a low-risk direct recipe |
+| [references/task-contract-template.md](references/task-contract-template.md) | A Task Contract is needed and the repository has no existing format; use only relevant fields |
+| [references/implementation-plan-template.md](references/implementation-plan-template.md) | A Implementation Plan is needed and the repository has no existing format; use only relevant fields |
+| [references/risk-assessment-template.md](references/risk-assessment-template.md) | A Risk Assessment is needed and the repository has no existing format; use only relevant fields |
+| [references/verification-report-template.md](references/verification-report-template.md) | A Verification Report is needed and the repository has no existing format; use only relevant fields |
+| [references/change-passport-template.md](references/change-passport-template.md) | A Change Passport is needed and the repository has no existing format; use only relevant fields |

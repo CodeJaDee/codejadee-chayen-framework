@@ -21,6 +21,7 @@ node tools/validate/validate-all.mjs                 # every automated gate belo
 node tools/validate/validate-package.mjs             # G-01, G-02, G-04..G-10 (detail)
 node tools/catalog/check-catalog.mjs                 # G-03 (detail); --write-doc regenerates coverage tables
 node tools/catalog/check-technology.mjs              # G-03b (detail); --write-doc regenerates TECHNOLOGY_COVERAGE.md §6
+node tools/catalog/check-workflows.mjs               # G-03c (V-24); --write-doc regenerates WORKFLOW_COVERAGE.md
 node tools/evals/generate-claude-evals.mjs --check   # G-11
 node tools/validate/run-validator-tests.mjs          # G-13; --only <case-id> --keep for debugging
 bash tests/provider-compatibility/run-lifecycle.sh <scratch-dir>   # G-14 (installs into isolated homes)
@@ -47,6 +48,7 @@ bash tests/provider-compatibility/run-lifecycle.sh <scratch-dir>   # G-14 (insta
 | G-02 | One valid marketplace file per provider | V-01a/b/c, V-01 consistency, X-01 | Automated | Every change |
 | G-03 | Catalog integrity: exactly 206 / 20, unique, verbatim inventory, mappings, status rules, docs in sync | V-11.0–V-11.11 | Automated | Every change |
 | G-03b | Technology catalog: verbatim pack inventories, records, mapping to technology sections, section anatomy, cases, facts, coverage doc in sync (D-039) | V-23.1–V-23.9 | Automated | Every change |
+| G-03c | Twelve composite workflows and seven templates reuse implemented recipes, conditionally select packs, retain approval/partial/no-match controls and have synchronized evaluation/coverage mappings (D-045) | V-24.1–V-24.6 | Automated (static only) | Every change |
 | G-04 | Skill frontmatter is valid YAML, uses only portable fields, and has unique, valid names | V-05, X-02 `skills-ref validate` | Automated | Every change |
 | G-05 | Package contains only allowed content; repo root is not misread by providers | V-09, V-13 | Automated | Every change |
 | G-06 | Entry skill anatomy (standard §4.1) and size budgets | V-17, V-06 | Automated | Every change |

@@ -1,0 +1,1189 @@
+{
+  "step": 28,
+  "date": "2026-10-15",
+  "timezone": "Asia/Bangkok",
+  "node": "v24.15.0",
+  "verification": "Framework facts and synthetic checks only; no agent/provider evaluations or full frontend scenario execution. Earlier reports are not imported. Commands and limits are in docs/chayen/TECHNOLOGY_COVERAGE_AUDIT.md section 6.",
+  "counts": {
+    "PASS": 107,
+    "FAIL": 0,
+    "NOT_RUN": 52
+  },
+  "total": 159,
+  "suites": [
+    {
+      "suite": "dotnet",
+      "runner": "tests/technology/dotnet/run-fact-checks.mjs",
+      "exit_code": 0,
+      "counts": {
+        "PASS": 29,
+        "FAIL": 0,
+        "NOT_RUN": 2
+      },
+      "sdks": [
+        "10.0.400",
+        "10.0.401"
+      ],
+      "rows": [
+        {
+          "id": "TF-01",
+          "capability": "aspnet-integration-testing",
+          "fact": "WebApplicationFactory<Program> reaches a top-level-statement Program on .NET 10 without a hand-written partial class",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-02",
+          "capability": "aspnet-api-endpoints",
+          "fact": "A TypedResults union (Results<Ok<T>, NotFound>) returns 404 for a missing resource",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-03",
+          "capability": "aspnet-validation",
+          "fact": ".NET 10 minimal API validation (AddValidation) returns 400 problem details for DataAnnotations failures",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-04",
+          "capability": "csharp-nullability",
+          "fact": "With nullable enabled, [ApiController] treats a non-nullable reference property as required (400 without [Required])",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-05",
+          "capability": "aspnet-exception-handling",
+          "fact": "IExceptionHandler maps a domain exception to 404; unhandled exceptions become 500 problem details without the message outside Development",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-06",
+          "capability": "aspnet-openapi",
+          "fact": "Microsoft.AspNetCore.OpenApi serves /openapi/v1.json with mapped operations and operation IDs",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-07",
+          "capability": "aspnet-authorization",
+          "fact": "A policy endpoint returns 401 unauthenticated, 403 without the claim, 200 with it (test authentication scheme)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-08",
+          "capability": "aspnet-data-access",
+          "fact": "EF Core parameterizes captured values; ToQueryString() shows DECLARE lines and a parameterized SELECT",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-09",
+          "capability": "csharp-linq-optimization",
+          "fact": "EF Core throws for a predicate it cannot translate instead of evaluating it on the client",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-10",
+          "capability": "aspnet-dependency-injection",
+          "fact": "Development validates the service graph on build (singleton depending on scoped fails); Production does not by default",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-11",
+          "capability": "aspnet-background-services",
+          "fact": "An unhandled exception in a BackgroundService stops the host by default",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-12",
+          "capability": "csharp-serialization",
+          "fact": "System.Text.Json defaults are case-sensitive; JsonSerializerOptions.Web is not",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-13",
+          "capability": "csharp-serialization",
+          "fact": "System.Text.Json ignores nullable annotations unless RespectNullableAnnotations is set",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-14",
+          "capability": "csharp-type-design",
+          "fact": "Record equality is member-wise, but a collection member compares by reference",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-15",
+          "capability": "aspnet-efcore-migrations",
+          "fact": "dotnet ef migrations add scaffolds a migration without contacting a database",
+          "status": "PASS",
+          "note": "exit 0"
+        },
+        {
+          "id": "TF-16",
+          "capability": "aspnet-efcore-migrations",
+          "fact": "dotnet ef migrations has-pending-model-changes exits 0 in sync and non-zero after a model change",
+          "status": "PASS",
+          "note": "in sync exit 0, after change exit 1"
+        },
+        {
+          "id": "TF-17",
+          "capability": "aspnet-efcore-migrations",
+          "fact": "A simple property rename is scaffolded as RenameColumn",
+          "status": "PASS",
+          "note": "RenameColumn scaffolded"
+        },
+        {
+          "id": "TF-18",
+          "capability": "aspnet-efcore-migrations",
+          "fact": "A rename plus type change is scaffolded as DropColumn + AddColumn with a data-loss warning",
+          "status": "PASS",
+          "note": "DropColumn + AddColumn, data-loss warning printed"
+        },
+        {
+          "id": "TF-19",
+          "capability": "aspnet-efcore-migrations",
+          "fact": "dotnet ef migrations script --idempotent guards each migration with IF NOT EXISTS checks",
+          "status": "PASS",
+          "note": "7 IF NOT EXISTS guards for 3 migrations"
+        },
+        {
+          "id": "TF-20",
+          "capability": "csharp-code-analysis",
+          "fact": "dotnet format whitespace --verify-no-changes exits 0 when clean and non-zero on a violation",
+          "status": "PASS",
+          "note": "clean exit 0, violation exit 2"
+        },
+        {
+          "id": "TF-21",
+          "capability": "csharp-code-analysis",
+          "fact": "TreatWarningsAsErrors turns nullable warning CS8618 into a build error",
+          "status": "PASS",
+          "note": "default exit 0 (warning), warnings-as-errors exit 1"
+        },
+        {
+          "id": "TF-22",
+          "capability": "csharp-project-maintenance",
+          "fact": "global.json pins the SDK: dotnet --version reports the pinned version",
+          "status": "NOT_RUN",
+          "note": "no .NET 8 SDK installed to pin"
+        },
+        {
+          "id": "TF-23",
+          "capability": "csharp-project-maintenance",
+          "fact": "SDK 10: dotnet new sln creates a .slnx file, and the noun-first dotnet package list command exists",
+          "status": "PASS",
+          "note": "slnx created: true; dotnet package list --help exit 0"
+        },
+        {
+          "id": "TF-24",
+          "capability": "aspnet-integration-testing",
+          "fact": ".NET 8: WebApplicationFactory<Program> fails with CS0122 until public partial class Program is declared",
+          "status": "NOT_RUN",
+          "note": "the .NET 8 SDK is not installed"
+        },
+        {
+          "id": "TF-25",
+          "capability": "csharp-project-maintenance",
+          "fact": "dotnet list package --vulnerable --include-transitive runs and reports",
+          "status": "PASS",
+          "note": "exit 0"
+        },
+        {
+          "id": "TF-26",
+          "capability": "aspnet-hosting-deployment",
+          "fact": "dotnet publish -c Release produces the application assembly",
+          "status": "PASS",
+          "note": "exit 0"
+        },
+        {
+          "id": "TF-27",
+          "capability": "aspnet-request-pipeline",
+          "fact": "UseStatusCodePages with AddProblemDetails gives an empty-body 404 a problem details body",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-28",
+          "capability": "aspnet-authentication",
+          "fact": "A protected endpoint with no default authentication scheme fails with a server error, not a 401",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "TF-29",
+          "capability": "csharp-async-concurrency",
+          "fact": "Analyzer CA2016 reports a CancellationToken that is not forwarded (AnalysisMode All)",
+          "status": "PASS",
+          "note": "CA2016 reported"
+        },
+        {
+          "id": "TF-30",
+          "capability": "csharp-memory-disposal",
+          "fact": "Analyzer CA2000 reports an undisposed StreamReader (AnalysisMode All); it is a heuristic and misses some cases",
+          "status": "PASS",
+          "note": "CA2000 reported"
+        },
+        {
+          "id": "TF-31",
+          "capability": "aspnet-performance",
+          "fact": "Output caching (AddOutputCache, UseOutputCache, CacheOutput) serves a repeat GET from the cache",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        }
+      ]
+    },
+    {
+      "suite": "angular-typescript",
+      "runner": "tests/technology/angular-typescript/run-fact-checks.mjs",
+      "exit_code": 0,
+      "counts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "NOT_RUN": 19
+      },
+      "versions": {
+        "node": "v24.15.0",
+        "typescript": "unavailable",
+        "angular": "unavailable"
+      },
+      "rows": [
+        {
+          "id": "AF-01",
+          "capability": "angular-component-design",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-02",
+          "capability": "angular-signals",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-03",
+          "capability": "angular-rxjs-interop",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-04",
+          "capability": "angular-state-management",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-05",
+          "capability": "angular-routing",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-06",
+          "capability": "angular-http-client",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-07",
+          "capability": "angular-forms",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-08",
+          "capability": "angular-template-control-flow",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-09",
+          "capability": "angular-dependency-injection",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-10",
+          "capability": "angular-change-detection",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-11",
+          "capability": "angular-ssr-hydration",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-12",
+          "capability": "angular-testing",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-13",
+          "capability": "angular-accessibility",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "AF-14",
+          "capability": "angular-upgrade-migration",
+          "status": "NOT_RUN",
+          "note": "No existing Angular dependency fixture supplied; no packages installed."
+        },
+        {
+          "id": "JF-01",
+          "capability": "typescript-type-safety",
+          "status": "NOT_RUN",
+          "note": "No existing TypeScript compiler supplied; no compiler downloaded."
+        },
+        {
+          "id": "JF-02",
+          "capability": "typescript-api-modeling",
+          "status": "NOT_RUN",
+          "note": "No existing TypeScript compiler supplied; no compiler downloaded."
+        },
+        {
+          "id": "JF-03",
+          "capability": "javascript-async-control",
+          "status": "PASS",
+          "note": "Awaited work stays ordered and bounded; cancellation rejects owned pending I/O"
+        },
+        {
+          "id": "JF-04",
+          "capability": "javascript-runtime-compatibility",
+          "status": "PASS",
+          "note": "Node lacks browser window even when a compiler provides DOM type declarations"
+        },
+        {
+          "id": "JF-05",
+          "capability": "esm-cjs-interop",
+          "status": "PASS",
+          "note": "Node loads an explicit CommonJS export from ESM; require of an .mjs file with top-level await fails"
+        },
+        {
+          "id": "JF-06",
+          "capability": "package-manager-integrity",
+          "status": "NOT_RUN",
+          "note": "No existing npm CLI supplied; no install command run."
+        },
+        {
+          "id": "JF-07",
+          "capability": "typescript-monorepo",
+          "status": "NOT_RUN",
+          "note": "No existing TypeScript compiler supplied; no compiler downloaded."
+        },
+        {
+          "id": "JF-08",
+          "capability": "typescript-config-review",
+          "status": "NOT_RUN",
+          "note": "No existing TypeScript compiler supplied; no compiler downloaded."
+        }
+      ]
+    },
+    {
+      "suite": "react-nextjs",
+      "runner": "tests/technology/react-nextjs/run-fact-checks.mjs",
+      "exit_code": 0,
+      "counts": {
+        "PASS": 3,
+        "FAIL": 0,
+        "NOT_RUN": 13
+      },
+      "versions": {
+        "node": "v24.15.0",
+        "react": "unavailable",
+        "next": "unavailable"
+      },
+      "rows": [
+        {
+          "id": "NF-01",
+          "capability": "nextjs-app-router",
+          "status": "NOT_RUN",
+          "note": "Segment navigation and async request props require a version-matched compiled Next fixture"
+        },
+        {
+          "id": "NF-02",
+          "capability": "nextjs-server-client-boundary",
+          "status": "NOT_RUN",
+          "note": "Forbidden imports and secret-sentinel bundle/RSC checks require a production Next build"
+        },
+        {
+          "id": "NF-03",
+          "capability": "nextjs-server-functions",
+          "status": "PASS",
+          "note": "Synthetic callable entrypoint rejects unauthorized or malformed calls before writing; not a compiled Server Action"
+        },
+        {
+          "id": "NF-04",
+          "capability": "nextjs-route-handlers",
+          "status": "PASS",
+          "note": "Synthetic Web Request/Response handler validates JSON and response/method contracts; not a Next route build"
+        },
+        {
+          "id": "NF-05",
+          "capability": "nextjs-data-caching",
+          "status": "NOT_RUN",
+          "note": "Next cache reuse, invalidation, and cross-user isolation require a production version/config-matched fixture"
+        },
+        {
+          "id": "NF-06",
+          "capability": "nextjs-authentication",
+          "status": "PASS",
+          "note": "Synthetic direct loopback HTTP boundary rejects anonymous, expired, revoked, forbidden and wrong-tenant access before writing"
+        },
+        {
+          "id": "NF-07",
+          "capability": "nextjs-rendering-seo",
+          "status": "NOT_RUN",
+          "note": "Production metadata, status, prerendering, and hydration require a compiled Next/browser fixture"
+        },
+        {
+          "id": "NF-08",
+          "capability": "nextjs-deployment-testing",
+          "status": "NOT_RUN",
+          "note": "Built-artifact start/output/adapter behavior requires the configured production artifact and runtime"
+        },
+        {
+          "id": "RF-01",
+          "capability": "react-component-patterns",
+          "status": "NOT_RUN",
+          "note": "No existing compatible React/ReactDOM dependency fixture supplied."
+        },
+        {
+          "id": "RF-02",
+          "capability": "react-state-effects",
+          "status": "NOT_RUN",
+          "note": "Effect dependency changes, queued state, and unmount cleanup require the configured DOM/browser runner"
+        },
+        {
+          "id": "RF-03",
+          "capability": "react-server-state",
+          "status": "NOT_RUN",
+          "note": "Query invalidation, cancellation, and account isolation require the installed query layer and configured runner"
+        },
+        {
+          "id": "RF-04",
+          "capability": "react-form-handling",
+          "status": "NOT_RUN",
+          "note": "No existing compatible React/ReactDOM dependency fixture supplied."
+        },
+        {
+          "id": "RF-05",
+          "capability": "react-routing",
+          "status": "NOT_RUN",
+          "note": "Deep-link/history behavior requires the installed router and host/browser fixture"
+        },
+        {
+          "id": "RF-06",
+          "capability": "react-render-optimization",
+          "status": "NOT_RUN",
+          "note": "Render improvement requires a reproducible profiler baseline and measured interaction"
+        },
+        {
+          "id": "RF-07",
+          "capability": "react-component-testing",
+          "status": "NOT_RUN",
+          "note": "User interactions and async assertions require the project's configured runner and DOM/browser setup"
+        },
+        {
+          "id": "RF-08",
+          "capability": "react-accessibility",
+          "status": "NOT_RUN",
+          "note": "No existing compatible React/ReactDOM dependency fixture supplied."
+        }
+      ]
+    },
+    {
+      "suite": "vue-nuxt-vite",
+      "runner": "tests/technology/vue-nuxt-vite/run-fact-checks.mjs",
+      "exit_code": 0,
+      "counts": {
+        "PASS": 2,
+        "FAIL": 0,
+        "NOT_RUN": 16
+      },
+      "versions": {
+        "node": "v24.15.0",
+        "vue": "unavailable",
+        "nuxt": "unavailable",
+        "vite": "unavailable"
+      },
+      "rows": [
+        {
+          "id": "BF-01",
+          "capability": "vite-configuration",
+          "status": "NOT_RUN",
+          "note": "No existing Vite dependency supplied; selected framework builder/config remains untested."
+        },
+        {
+          "id": "BF-02",
+          "capability": "vite-build-optimization",
+          "status": "NOT_RUN",
+          "note": "Optimization requires the actual production build and comparable bundle/loading measurements"
+        },
+        {
+          "id": "BF-03",
+          "capability": "vite-environment-safety",
+          "status": "PASS",
+          "note": "JavaScript false env string is truthy and an unrestricted env spread exposes a private sentinel (not Vite bundle verification)"
+        },
+        {
+          "id": "BF-04",
+          "capability": "vite-test-integration",
+          "status": "NOT_RUN",
+          "note": "Runner config inheritance and transforms require the project's configured runner/environment"
+        },
+        {
+          "id": "UF-01",
+          "capability": "nuxt-routing",
+          "status": "NOT_RUN",
+          "note": "Nuxt generated routes, layouts, middleware and SSR navigation require a compiled matching fixture"
+        },
+        {
+          "id": "UF-02",
+          "capability": "nuxt-data-fetching",
+          "status": "NOT_RUN",
+          "note": "SSR/hydration payload reuse, keys and cancellation require a matching Nuxt app and browser"
+        },
+        {
+          "id": "UF-03",
+          "capability": "nuxt-server-api",
+          "status": "NOT_RUN",
+          "note": "Installed Nuxt/Nitro or legacy server endpoint behavior requires its configured server fixture"
+        },
+        {
+          "id": "UF-04",
+          "capability": "nuxt-runtime-config",
+          "status": "PASS",
+          "note": "JavaScript JSON serialization of a config leaks its private sentinel; explicit public DTO excludes it (not Nuxt serialization/overrides)"
+        },
+        {
+          "id": "UF-05",
+          "capability": "nuxt-auto-imports",
+          "status": "NOT_RUN",
+          "note": "Generated imports/types and composable context require Nuxt prepare/build/runtime fixture"
+        },
+        {
+          "id": "UF-06",
+          "capability": "nuxt-modules",
+          "status": "NOT_RUN",
+          "note": "Module/layer/hook compatibility and server/client integration require installed module and Nuxt fixture"
+        },
+        {
+          "id": "UF-07",
+          "capability": "nuxt-rendering-deployment",
+          "status": "NOT_RUN",
+          "note": "Preset/output/runtime overrides and real hydration require a built Nuxt artifact and browser"
+        },
+        {
+          "id": "VF-01",
+          "capability": "vue-composition-api",
+          "status": "NOT_RUN",
+          "note": "No matching existing Vue 3 API/SSR dependency fixture supplied."
+        },
+        {
+          "id": "VF-02",
+          "capability": "vue-reactivity",
+          "status": "NOT_RUN",
+          "note": "No matching existing Vue 3 API/SSR dependency fixture supplied."
+        },
+        {
+          "id": "VF-03",
+          "capability": "vue-composables",
+          "status": "NOT_RUN",
+          "note": "No matching existing Vue 3 API/SSR dependency fixture supplied."
+        },
+        {
+          "id": "VF-04",
+          "capability": "vue-router",
+          "status": "NOT_RUN",
+          "note": "Navigation/history and host fallback require the installed router and configured fixture"
+        },
+        {
+          "id": "VF-05",
+          "capability": "vue-state-management",
+          "status": "NOT_RUN",
+          "note": "SSR store isolation and subscription behavior require the installed Pinia/Vuex or existing state layer"
+        },
+        {
+          "id": "VF-06",
+          "capability": "vue-component-testing",
+          "status": "NOT_RUN",
+          "note": "Component emits/model/async behavior require configured Vue Test Utils/runner and DOM setup"
+        },
+        {
+          "id": "VF-07",
+          "capability": "vue-performance",
+          "status": "NOT_RUN",
+          "note": "Rendering improvement needs comparable profiler evidence and user interaction"
+        }
+      ]
+    },
+    {
+      "suite": "sqlserver",
+      "runner": "tests/technology/sqlserver/run-fact-checks.mjs",
+      "exit_code": 0,
+      "counts": {
+        "PASS": 30,
+        "FAIL": 0,
+        "NOT_RUN": 0
+      },
+      "server": "(localdb)\\ChayenFacts",
+      "environment": "version=17.0.4025.3; edition=Express Edition (64-bit); engine_edition=4; compatibility_level=170; collation=SQL_Latin1_General_CP1_CI_AS; rcsi=False; snapshot=OFF; recovery=SIMPLE",
+      "rows": [
+        {
+          "id": "DR-01",
+          "capability": "data-access recipes",
+          "fact": "Every package in the recipe's Driver references table is referenced by the fixture project",
+          "status": "PASS",
+          "note": "3 packages: Microsoft.EntityFrameworkCore.SqlServer, Dapper, Microsoft.Data.SqlClient"
+        },
+        {
+          "id": "DR-02",
+          "capability": "data-access recipes",
+          "fact": "Every API the table names is used in fixture/SqlServerFacts/DriverReferences.cs",
+          "status": "PASS",
+          "note": "39 API names used"
+        },
+        {
+          "id": "DR-03",
+          "capability": "data-access recipes",
+          "fact": "DriverReferences.cs compiles against those packages (the names resolve)",
+          "status": "PASS",
+          "note": "dotnet build exit 0 (EF Core SQL Server, Dapper, Microsoft.Data.SqlClient)"
+        },
+        {
+          "id": "SF-01",
+          "capability": "sqlserver-tsql",
+          "fact": "SQL Server rejects PostgreSQL forms (LIMIT, ON CONFLICT, RETURNING, ::, ILIKE); TOP, OFFSET/FETCH, OUTPUT, TRY_CAST run",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "PostgreSQL forms rejected with errors 102, 156, 102, 102, 4145 (LIMIT, ON CONFLICT, RETURNING, ::, ILIKE)"
+        },
+        {
+          "id": "SF-02",
+          "capability": "sqlserver-tsql",
+          "fact": "Collation decides case sensitivity: a _CI_ unique constraint rejects 'ALPHA' after 'Alpha'; a _CS_ column accepts both",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-03",
+          "capability": "sqlserver-tsql",
+          "fact": "The EF Core SQL Server provider emits TOP(@p), OFFSET @p/FETCH NEXT @p, [brackets], and LIKE; never LIMIT, ILIKE, or double-quoted names",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-04",
+          "capability": "sqlserver-tsql",
+          "fact": "EF Core translates a collection Contains with parameters, never PostgreSQL = ANY; at compatibility level 120 it emits IN (...) without OPENJSON",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "default options: DECLARE @ids1 int = 1;\r DECLARE @ids2 int = 2;\r DECLARE @ids3 int = 3;\r \r SELECT [o].[Id], [o].[CustomerId], [o].[Number], [o].[Total]\r FROM [Orders] AS [o]\r WHERE [o].[Id] IN (@ids1, @ids2, @ids3) | compatibility level 120: DECLARE @ids1 int = 1;\r DECLARE @ids2 int = 2;\r DECLARE @ids3 int = 3;\r \r SELECT [o].[Id], [o].[CustomerId], [o].[Number], [o].[Total]\r FROM [Orders] AS [o]\r WHERE [o].[Id] IN (@ids1, @ids2, @ids3)"
+        },
+        {
+          "id": "SF-05",
+          "capability": "sqlserver-stored-procedures",
+          "fact": "A parameterized call does not protect a procedure that concatenates into EXEC(); sp_executesql with parameters keeps the payload as data",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-06",
+          "capability": "sqlserver-stored-procedures",
+          "fact": "A procedure's cached plan is compiled for the first parameter value and reused for the next (ParameterCompiledValue)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-07",
+          "capability": "sqlserver-query-plans",
+          "fact": "SET SHOWPLAN_XML returns the estimated plan without executing the statement",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-08",
+          "capability": "sqlserver-query-plans",
+          "fact": "AddWithValue and Dapper strings are nvarchar: against a varchar column the plan has CONVERT_IMPLICIT; SqlDbType.VarChar and DbString IsAnsi seek without it",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-09",
+          "capability": "sqlserver-query-plans",
+          "fact": "EF Core per-row queries issue N+1 commands; a projection issues 1 and a split Include issues 2",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "10 customers: per-row loop 11 commands, projection 1, split Include 2"
+        },
+        {
+          "id": "SF-10",
+          "capability": "sqlserver-query-store",
+          "fact": "Query Store is READ_WRITE for a new database on this version and records executions with runtime statistics after a flush",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "new database query store: READ_WRITE/AUTO"
+        },
+        {
+          "id": "SF-11",
+          "capability": "sqlserver-index-tuning",
+          "fact": "A trivial plan records no missing-index request; a fully optimized query does; the index cuts logical reads for the same query and data (MEASURED)",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "missing-index rows after a trivial plan 0, after a fully optimized query 1; logical reads for the same query and data: before 574, after 2"
+        },
+        {
+          "id": "SF-12",
+          "capability": "sqlserver-locking-deadlocks",
+          "fact": "Opposite lock order deadlocks: one transaction gets error 1205 and is rolled back, the other completes",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-13",
+          "capability": "sqlserver-locking-deadlocks",
+          "fact": "Updating 9,000 rows in one statement escalates to an X table lock; a 1,000-row batch keeps an IX table lock",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-14",
+          "capability": "sqlserver-transactions",
+          "fact": "With READ_COMMITTED_SNAPSHOT off, a reader waits for a writer (1222 under LOCK_TIMEOUT); with it on, the reader gets the last committed value",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-15",
+          "capability": "sqlserver-transactions",
+          "fact": "Without XACT_ABORT a failed statement leaves the transaction committable (partial commit); with XACT_ABORT ON it is rolled back",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-16",
+          "capability": "sqlserver-transactions",
+          "fact": "EF Core SaveChanges is atomic, and changes to AsNoTracking entities are not saved",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-17",
+          "capability": "sqlserver-transactions",
+          "fact": "EnableRetryOnFailure rejects a user-initiated transaction unless it runs inside CreateExecutionStrategy().Execute",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-18",
+          "capability": "sqlserver-schema-evolution",
+          "fact": "WITH NOCHECK leaves a foreign key untrusted; WITH CHECK CHECK CONSTRAINT fails (547) until orphan rows are cleaned",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-19",
+          "capability": "sqlserver-schema-evolution",
+          "fact": "ONLINE = ON index operations depend on the edition (Express rejects them with error 1712)",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "engine edition 4: ONLINE = ON rejected with error 1712"
+        },
+        {
+          "id": "SF-20",
+          "capability": "sqlserver-security",
+          "fact": "A db_datareader member can read but gets 229 on INSERT and 262 on CREATE TABLE",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-21",
+          "capability": "sqlserver-security",
+          "fact": "EXECUTE on a procedure covers its static SQL by ownership chaining, but dynamic SQL inside it is checked against the caller (229)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-22",
+          "capability": "sqlserver-security",
+          "fact": "Concatenated input is injectable; ADO.NET, Dapper, and EF Core SqlQuery parameters keep the same input as data",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-23",
+          "capability": "sqlserver-auditing-temporal",
+          "fact": "A system-versioned table keeps prior rows in UTC periods, answers FOR SYSTEM_TIME AS OF, blocks DROP (13552), and records no actor by itself",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-24",
+          "capability": "sqlserver-backup-recovery",
+          "fact": "BACKUP WITH CHECKSUM and RESTORE VERIFYONLY succeed; a restore to a new name plus DBCC CHECKDB and a row count proves the backup",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-25",
+          "capability": "sqlserver-backup-recovery",
+          "fact": "BACKUP LOG fails in SIMPLE recovery (4208) and in FULL before a base full backup (4214)",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "new database recovery model: SIMPLE"
+        },
+        {
+          "id": "SF-26",
+          "capability": "sqlserver-maintenance",
+          "fact": "Statistics modification_counter counts changes since the last update and UPDATE STATISTICS resets it",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "SF-27",
+          "capability": "sqlserver-maintenance",
+          "fact": "Random GUID keys fragment a clustered index; REBUILD is measured before and after, with DBCC CHECKDB clean",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "clustered index fragmentation: before rebuild 98.9%, after 0.0% (same table, same rows)"
+        }
+      ]
+    },
+    {
+      "suite": "postgres-crossstack",
+      "runner": "tests/technology/postgres-crossstack/run-fact-checks.mjs",
+      "exit_code": 0,
+      "counts": {
+        "PASS": 40,
+        "FAIL": 0,
+        "NOT_RUN": 2
+      },
+      "pg": "postgres (PostgreSQL) 18.6",
+      "sqlServer": "(localdb)\\ChayenFacts",
+      "rows": [
+        {
+          "id": "DR-01",
+          "capability": "data-access recipes",
+          "fact": "Every package in the recipe's Driver references table is referenced by the fixture project or requirements.txt",
+          "status": "PASS",
+          "note": "5 packages: Npgsql.EntityFrameworkCore.PostgreSQL, Npgsql, SQLAlchemy, psycopg, Dapper"
+        },
+        {
+          "id": "DR-02",
+          "capability": "data-access recipes",
+          "fact": "Every API the table names is used in DriverReferences.cs or sqlalchemy_references.py",
+          "status": "PASS",
+          "note": "42 API names used"
+        },
+        {
+          "id": "DR-03",
+          "capability": "data-access recipes",
+          "fact": "DriverReferences.cs compiles against the .NET packages",
+          "status": "PASS",
+          "note": "dotnet build exit 0 (Npgsql.EntityFrameworkCore.PostgreSQL, Npgsql, Dapper)"
+        },
+        {
+          "id": "DR-04",
+          "capability": "data-access recipes",
+          "fact": "sqlalchemy_references.py imports against the pinned Python packages",
+          "status": "PASS",
+          "note": "SQLAlchemy 2.0.43, psycopg 3.2.10"
+        },
+        {
+          "id": "PF-01",
+          "capability": "postgres-sql-dialect",
+          "fact": "Unquoted identifiers fold to lower case; quoted mixed-case names are different names (42P01)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-02",
+          "capability": "postgres-sql-dialect",
+          "fact": "SQL Server forms (TOP, [ ], + on text, GETDATE, ISNULL, OUTPUT) are rejected; LIMIT/OFFSET, RETURNING, ILIKE, ||, COALESCE run",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "SQL Server forms rejected with SQLSTATE 42883, 42601, 42725, 42883, 42883, 42601 (TOP, [ ], + on text, GETDATE, ISNULL, OUTPUT)"
+        },
+        {
+          "id": "PF-03",
+          "capability": "postgres-sql-dialect",
+          "fact": "EF Core Npgsql emits LIMIT @p/OFFSET @p, double-quoted names, and ILIKE; never TOP, FETCH NEXT, or [brackets]",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-04",
+          "capability": "postgres-sql-dialect",
+          "fact": "INSERT ... ON CONFLICT DO UPDATE stays atomic under 20 concurrent upserts (1 row, quantity 20)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-05",
+          "capability": "postgres-explain-analyze",
+          "fact": "EXPLAIN ANALYZE executes the statement (an INSERT inserts); plain EXPLAIN does not; BEGIN ... ROLLBACK discards it",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-06",
+          "capability": "postgres-explain-analyze",
+          "fact": "EXPLAIN (ANALYZE, BUFFERS) reports actual time, rows, loops, shared buffers, and execution time",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-07",
+          "capability": "postgres-index-strategy",
+          "fact": "Expression, partial, and plain B-tree indexes serve only matching predicates (not ILIKE or a leading wildcard); buffers MEASURED before and after",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "shared buffers for the same query and data: before 1667, after expression index 4"
+        },
+        {
+          "id": "PF-08",
+          "capability": "postgres-index-strategy",
+          "fact": "CREATE INDEX CONCURRENTLY fails inside a transaction block (25001) and succeeds outside, leaving a valid index",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-09",
+          "capability": "postgres-mvcc-locking",
+          "fact": "REPEATABLE READ raises a serialization failure (40001) on a concurrent update; no lost update",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-10",
+          "capability": "postgres-mvcc-locking",
+          "fact": "An open transaction blocks ALTER TABLE; lock_timeout makes the migration fail fast (55P03)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-11",
+          "capability": "postgres-mvcc-locking",
+          "fact": "FOR UPDATE SKIP LOCKED gives two concurrent workers different rows",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-12",
+          "capability": "postgres-jsonb",
+          "fact": "jsonb sorts keys and keeps the last duplicate (json keeps text); a jsonb_path_ops GIN index serves @> but not ->> equality",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "@> plan: Bitmap Heap Scan on docs12  (cost=10.65..249.71 rows=403 width=4) | ->> plan: Seq Scan on docs12  (cost=0.00..528.00 rows=100 width=4)"
+        },
+        {
+          "id": "PF-13",
+          "capability": "postgres-jsonb",
+          "fact": "jsonb numbers keep full numeric precision and trailing zeros",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-14",
+          "capability": "postgres-row-level-security",
+          "fact": "RLS: no policy denies; tenant policy filters; '' versus NULL setting pitfall (22P02) and the NULLIF form; owner bypasses until FORCE; superuser always bypasses",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-15",
+          "capability": "postgres-row-level-security",
+          "fact": "An RLS WITH CHECK policy blocks inserting another tenant's row (42501)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-16",
+          "capability": "postgres-partitioning",
+          "fact": "Range partitions are pruned by key predicates; unique constraints must include the key (0A000); rows outside every range fail (23514)",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-17",
+          "capability": "postgres-schema-migrations",
+          "fact": "ADD COLUMN with a constant default keeps the file (no rewrite); a volatile default and a type change rewrite it (relfilenode)",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "relfilenode: start 16433, constant default 16433, volatile default 16446, type change 16454"
+        },
+        {
+          "id": "PF-18",
+          "capability": "postgres-schema-migrations",
+          "fact": "NOT VALID constraints check new rows; VALIDATE fails until orphans are cleaned; DDL rolls back with its transaction",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-19",
+          "capability": "postgres-vacuum-maintenance",
+          "fact": "An open snapshot keeps 1,000 dead rows from being removed by VACUUM; they are removed after it ends; VACUUM cannot run in a transaction (25001)",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "with an open snapshot: 0 removed, 1000 not yet removable; after it ends: 1000 removed"
+        },
+        {
+          "id": "PF-20",
+          "capability": "postgres-vacuum-maintenance",
+          "fact": "A never-analyzed table has no pg_stats rows and reltuples -1; ANALYZE creates them",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-21",
+          "capability": "postgres-backup-recovery",
+          "fact": "pg_dump -Fc, pg_restore into a NEW database, matching row count and checksum, and pg_amcheck prove the dump",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "pg_dump -Fc, pg_restore to a new database, row count and checksum match, pg_amcheck exit 0"
+        },
+        {
+          "id": "PF-22",
+          "capability": "postgres-backup-recovery",
+          "fact": "pg_dump keeps grants to a role but not the role; pg_dumpall --globals-only has CREATE ROLE",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "PF-23",
+          "capability": "postgres-sql-dialect",
+          "fact": "SQLAlchemy compiles one Core query differently for PostgreSQL and SQL Server; on_conflict_do_update upserts; bound parameters keep input as data",
+          "status": "PASS",
+          "note": "same Core query: PostgreSQL LIMIT/OFFSET/ILIKE vs SQL Server ROW_NUMBER() (no server version known at compile time) with lower() LIKE; on_conflict_do_update upserts; bound parameter 0 rows vs f-string 5 rows"
+        },
+        {
+          "id": "PF-24",
+          "capability": "postgres-explain-analyze",
+          "fact": "SQLAlchemy lazy loading issues N+1 statements (6 for 5 customers); selectinload issues 2",
+          "status": "PASS",
+          "note": "5 customers: lazy loading 6 statements, selectinload 2"
+        },
+        {
+          "id": "XF-01",
+          "capability": "openapi-contract-sync",
+          "fact": "The served OpenAPI document matches the committed contract; a serializer naming change alters it and is detected",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "XF-02",
+          "capability": "typed-api-client-generation",
+          "fact": "Types generated by openapi-typescript compile a client; regenerating from the drifted contract makes tsc reject it",
+          "status": "NOT_RUN",
+          "note": "openapi-typescript and typescript are not available (pass --node-tools <node_modules>)"
+        },
+        {
+          "id": "XF-03",
+          "capability": "crossstack-authentication",
+          "fact": "Cookie challenges: .NET 10 JSON API endpoints get 401, HTML endpoints redirect (302); 401/403 after login are distinct",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": ".NET 10.0.12: cookie default challenge for a JSON API endpoint 401, for an HTML endpoint 302 -> http://localhost/Account/Login?ReturnUrl=%2Faccount%2Fpage"
+        },
+        {
+          "id": "XF-04",
+          "capability": "crossstack-error-contract",
+          "fact": "Validation (400), unhandled (500), and not found (404) all return application/problem+json; no exception text leaks",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "validation error keys: Number, Total"
+        },
+        {
+          "id": "XF-05",
+          "capability": "crossstack-date-time",
+          "fact": "PostgreSQL timestamptz stores an instant shown in the session zone; timestamp silently drops the offset",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "XF-06",
+          "capability": "crossstack-date-time",
+          "fact": "Npgsql rejects DateTime Kind=Unspecified for timestamptz and Kind=Utc for timestamp; timestamptz reads back as Utc",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "DateTime Kind validation rejected incompatible values; nonzero DateTimeOffset rejected (ArgumentException); normalized UTC value round-tripped as 2026-01-01T03:00:00.0000000Z"
+        },
+        {
+          "id": "XF-07",
+          "capability": "crossstack-date-time",
+          "fact": "JavaScript reads a zone-less date-time in the browser's zone and a date-only string as UTC midnight",
+          "status": "PASS",
+          "note": "runtime zone Asia/Bangkok: a zone-less date-time shifts by -7 h from UTC; a date-only value is UTC midnight, so formatting it locally can show the previous or next day"
+        },
+        {
+          "id": "XF-08",
+          "capability": "crossstack-date-time",
+          "fact": "System.Text.Json writes DateTimeOffset with its offset, Utc with Z, Unspecified with no zone; the contract still says date-time and integer|string",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "{\"id\":1,\"number\":\"SO-1\",\"total\":19.99,\"placedAt\":\"2026-01-01T10:00:00+07:00\",\"createdUtc\":\"2026-01-01T03:00:00Z\",\"localUnspecified\":\"2026-01-01T10:00:00\",\"bigId\":9007199254740993}"
+        },
+        {
+          "id": "XF-09",
+          "capability": "typed-api-client-generation",
+          "fact": "JSON numbers above 2^53 lose digits in JavaScript (9007199254740993 -> ...992); decimal arithmetic is binary floating point",
+          "status": "PASS",
+          "note": "9007199254740993 parses as 9007199254740992; 19.99*100 = 1998.9999999999998; string-encoded ids keep their digits"
+        },
+        {
+          "id": "XF-10",
+          "capability": "crossstack-cors-csrf",
+          "fact": "CORS answers an allowed preflight with credentials; a disallowed origin gets no CORS headers but the request still executes; wildcard plus credentials is rejected",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "wildcard origin with credentials: The CORS protocol does not allow specifying a wildcard (any) origin and credentials at the same time. Configure the CORS policy by listing individual origins if credentials needs to be supported."
+        },
+        {
+          "id": "XF-11",
+          "capability": "crossstack-cors-csrf",
+          "fact": "A form POST without an antiforgery token is rejected (400); with the token it succeeds",
+          "status": "PASS",
+          "note": "xUnit Passed"
+        },
+        {
+          "id": "XF-12",
+          "capability": "crossstack-e2e",
+          "fact": "A real browser logs in with a cookie, calls the API from an allowed origin, reads contract fields; a disallowed origin is blocked in the browser while the server still executes",
+          "status": "NOT_RUN",
+          "note": "playwright-core is not available (pass --node-tools <node_modules>)"
+        },
+        {
+          "id": "XF-13",
+          "capability": "database-portability-review",
+          "fact": "SQL Server and PostgreSQL differ on case and trailing-space comparison, NULL ordering, and NULLs in unique constraints",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "SQL Server (tempdb, default collation) vs PostgreSQL: 'Alpha'='ALPHA' 1/false; 'a'='a  ' 1/false; NULLs sort first/last; UNIQUE allows one/many NULLs"
+        },
+        {
+          "id": "XF-14",
+          "capability": "database-portability-review",
+          "fact": "The same EF Core LINQ query translates to different SQL on the SQL Server and Npgsql providers",
+          "status": "PASS",
+          "note": "xUnit Passed",
+          "observed": "Npgsql: -- @term_contains='%abc%'\r -- @p='10'\r SELECT o.\"Id\", o.\"CustomerEmail\", o.\"Number\", o.\"PlacedAt\", o.\"Total\"\r FROM \"Orders\" AS o\r WHERE o.\"CustomerEmail\" LIKE @term_contains\r ORDER BY o.\"Id\"\r LIMIT @p | SqlServer: DECLARE @p int = 10;\r DECLARE @term_contains nvarchar(4000) = N'%abc%';\r \r SELECT TOP(@p) [o].[Id], [o].[CustomerEmail], [o].[Number], [o].[PlacedAt], [o].[Total]\r FROM [Orders] AS [o]\r WHERE [o].[CustomerEmail] LIKE @term_contains ESCAPE N'\\'\r ORDER BY [o].[Id]"
+        }
+      ]
+    }
+  ]
+}

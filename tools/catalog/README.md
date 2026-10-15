@@ -13,6 +13,8 @@ node tools/catalog/check-catalog.mjs --dump-json  # print the parsed catalog as 
 node tools/catalog/audit-coverage.mjs             # ten-criterion coverage audit; exit 1 on any failure
 node tools/catalog/check-technology.mjs           # V-23 technology catalog check (D-039)
 node tools/catalog/check-technology.mjs --write-doc  # also regenerate docs/chayen/TECHNOLOGY_COVERAGE.md §6
+node tools/catalog/check-workflows.mjs             # V-24 composite workflow and template coverage
+node tools/catalog/check-workflows.mjs --write-doc # regenerate WORKFLOW_COVERAGE.md
 node tools/catalog/audit-coverage.mjs --markdown  # per-domain and per-capability tables (ENGINEERING_COVERAGE_AUDIT.md §3, §9)
 ```
 
@@ -27,6 +29,7 @@ another copy. They are used for negative-control runs: see
 | `catalog-lib.mjs` | The shared restricted-YAML parser. `tools/validate/validate-package.mjs` also uses it (V-19). |
 | `check-technology.mjs` | V-23: checks `catalog/technology-capabilities.yaml` against the Step 20 inventory, the technology reference sections (anatomy TC-01 to TC-06), `tests/skills/technology-cases.json`, the engineering catalog, and the .NET fact list; keeps `docs/chayen/TECHNOLOGY_COVERAGE.md` in sync. |
 | `audit-coverage.mjs` | The Step 19 coverage audit: ten static criteria per capability (catalog, mapping, procedure, entry skill, paths, positive and negative cases, inputs and outputs, safety and verification, no placeholders), plus duplicate, orphan, mapping, and description-term checks. See `docs/chayen/ENGINEERING_COVERAGE_AUDIT.md`. |
+| `check-workflows.mjs` | V-24: 12 composite checklists and seven template leaves, catalog/recipe and conditional technology mappings, staged anatomy, approval/evidence defaults, 47 evaluation specifications and coverage sync. No agent or workflow execution. |
 
 ## What it checks (validator V-11)
 

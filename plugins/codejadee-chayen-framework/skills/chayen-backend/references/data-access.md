@@ -15,6 +15,11 @@ not database administration.
 | Naming | Table and column casing. PostgreSQL projects often use snake_case through a naming convention. |
 | Patterns | Repository/unit-of-work, direct `DbContext` use in handlers, query objects. Follow the existing one. |
 
+Read the actual provider and library versions independently of the .NET target.
+`FromSql`/`ExecuteSql` need EF Core 7+; older projects retain supported
+`FromSqlInterpolated`/`ExecuteSqlInterpolated` APIs. Do not upgrade a dependency
+or generate a migration merely to use an example from this reference.
+
 ## Query safety
 
 - **Always parameterize.**

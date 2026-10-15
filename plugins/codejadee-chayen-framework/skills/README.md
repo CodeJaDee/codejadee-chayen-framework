@@ -14,6 +14,14 @@ Each skill is a directory, `skills/<skill-name>/SKILL.md`, plus optional
 
 ## Entry skills (0.1.0-dev)
 
+Twelve composite workflows are conditional checklist references in the existing
+skills, alongside seven reusable template leaves. They reuse capability recipes,
+select technology topics by task and owner, and retain scope, actual approval,
+evidence and partial-completion rules. No new skill or runtime is introduced.
+For small low-risk tasks use a direct recipe; no matching workflow means normal
+native behavior. Workflow and template evaluations are specifications, not
+executed provider results.
+
 The authoring rules are in `docs/chayen/SKILL_AUTHORING_STANDARD.md` in the
 development repository. Capability coverage is tracked in
 `catalog/engineering-capabilities.yaml`, and technology packs in

@@ -73,6 +73,10 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Classify every command you might run** with the operations safety
    checklist. Read it before any command that touches a remote system.
 2. **Detect the platform** and read the matching section of the tooling
@@ -190,3 +194,5 @@ Read the safety checklist before remote commands (workflow step 1), the tooling 
 | [references/rca-and-postmortems.md](references/rca-and-postmortems.md) | Root-cause analysis or a postmortem |
 | [references/disaster-recovery.md](references/disaster-recovery.md) | Planning recovery from major failures |
 | [references/runbooks.md](references/runbooks.md) | Writing runbooks for alerts or operational tasks |
+| [references/workflow-incident-investigation.md](references/workflow-incident-investigation.md) | Multi-stage production incident investigation within this skill's scope; skip for a low-risk direct recipe |
+| [references/workflow-release-readiness.md](references/workflow-release-readiness.md) | Multi-stage release readiness assessment within this skill's scope; skip for a low-risk direct recipe |

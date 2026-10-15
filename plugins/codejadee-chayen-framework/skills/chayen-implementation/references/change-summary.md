@@ -12,6 +12,11 @@ report and flags any that do not hold.
 
 ## Inputs
 
+Use the repository's format first; otherwise `verification-report-template.md`
+and `change-passport-template.md` are reusable output formats listed by the
+entry skill. Select only the needed artifact, retain explicit NOT_RUN checks,
+and record approval only from an actual authorized process, never from a draft.
+
 - The list of changed files, from the diff or the working tree status.
 - The task contract, if one was used, and its acceptance criteria.
 - Every build, test, lint, and typecheck command that was run, with the

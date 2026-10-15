@@ -75,6 +75,10 @@ rejects `Unspecified`/`Local` kinds; `System.Text.Json` writes
 and zone-less date-times as local time. `Temporal` availability depends on
 the runtime.
 
+Npgsql 6+ also requires a zero-offset `DateTimeOffset` for `timestamptz`;
+normalize explicitly before writing. PostgreSQL retains the instant, not the
+original offset or zone; preserve those separately when required.
+
 **Steps:**
 
 1. Classify each value: an instant (store `timestamptz` or

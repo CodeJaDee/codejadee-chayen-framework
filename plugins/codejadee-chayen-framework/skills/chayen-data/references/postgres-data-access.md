@@ -21,6 +21,14 @@ SQL Server code or settings for PostgreSQL as if they were interchangeable.
 
 ## Driver references
 
+Check EF Core, its Npgsql provider, and the driver independently: they must
+be compatible, and the installed .NET SDK alone does not establish support.
+`ToQueryString` and `AsSplitQuery` need EF Core 5+; `FromSql`, `ExecuteSql`,
+and `ExecuteUpdateAsync` need 7+; `SqlQuery` supports scalar results from 7
+and unmapped CLR result types from 8. Retain older supported APIs when absent.
+Direct `NpgsqlBatch` needs Npgsql 6+, `NpgsqlDataSource`/builder need 7+,
+and `EnableDynamicJson` needs 8+. Do not upgrade or replace a driver for these examples.
+
 | Library | Package | APIs these recipes name |
 |---|---|---|
 | EF Core Npgsql provider | `Npgsql.EntityFrameworkCore.PostgreSQL` | `UseNpgsql`, `EnableRetryOnFailure`, `MapEnum`, `ToQueryString`, `AsNoTracking`, `AsSplitQuery`, `FromSql`, `ExecuteUpdateAsync`, `CreateExecutionStrategy`, `BeginTransactionAsync`, `DbUpdateConcurrencyException`, `IsRowVersion`, `HasColumnType`, `HasMethod`, `HasFilter`, `ILike` |
@@ -59,8 +67,9 @@ transaction, mapping, or performance problem is in that code.
   (ANALYZE, BUFFERS)` and command counts on the same data.
 - **Time zones, types, and precision:** from Npgsql 6, `timestamptz` maps to
   `DateTime` with `Kind=Utc` and rejects `Unspecified`/`Local` values;
-  `timestamp` rejects `Utc`; use `DateTimeOffset` or UTC consistently and
-  `HasPrecision` for `numeric`.
+  `timestamp` rejects `Utc`; `DateTimeOffset` for `timestamptz` must have
+  offset zero (normalize explicitly). Store any required original zone or
+  offset separately; use `HasPrecision` for `numeric`.
 - **PostgreSQL-specific behavior:** enums via `MapEnum` (provider 9+),
   `jsonb` via `HasColumnType("jsonb")` or owned/complex types, arrays, and
   case-sensitive text comparison.
@@ -102,8 +111,8 @@ and the inspected SQL, and MEASURED for performance claims.
   SQLSTATE handling (`23505`, `23503`, `40001`).
 - **Performance measurement:** `EXPLAIN (ANALYZE, BUFFERS)` on a copy;
   `COPY` through `BeginBinaryImportAsync` for bulk loads, measured.
-- **Time zones, types, and precision:** UTC `DateTime` or `DateTimeOffset`
-  for `timestamptz`; `numeric` reads as `decimal`, which cannot hold every
+- **Time zones, types, and precision:** UTC `DateTime` or zero-offset
+  `DateTimeOffset` for `timestamptz`; `numeric` reads as `decimal`, which cannot hold every
   PostgreSQL `numeric` value (read larger ones as text); JSON POCOs need
   `EnableDynamicJson` on the builder (Npgsql 8+).
 - **PostgreSQL-specific behavior:** one `NpgsqlDataSource` per connection

@@ -45,6 +45,18 @@ public class CrossEngineFacts(PgDb db)
         Insert(utc, unspecified);
         using var cmd = new NpgsqlCommand("SELECT at FROM times06", c);
         Assert.Equal(DateTimeKind.Utc, ((DateTime)cmd.ExecuteScalar()!).Kind);
+
+        var withOffset = new DateTimeOffset(2026, 1, 1, 10, 0, 0, TimeSpan.FromHours(7));
+        using var offsetCmd = new NpgsqlCommand("SELECT @instant::timestamptz", c);
+        var parameter = new NpgsqlParameter("instant", NpgsqlDbType.TimestampTz) { Value = withOffset };
+        offsetCmd.Parameters.Add(parameter);
+        var offsetError = Assert.ThrowsAny<Exception>(() => offsetCmd.ExecuteScalar());
+        Assert.Contains("offset", offsetError.ToString(), StringComparison.OrdinalIgnoreCase);
+        using var normalizedConnection = db.Open();
+        using var normalizedCmd = new NpgsqlCommand("SELECT @instant::timestamptz", normalizedConnection);
+        normalizedCmd.Parameters.Add(new NpgsqlParameter("instant", NpgsqlDbType.TimestampTz) { Value = withOffset.ToUniversalTime() });
+        Assert.Equal(withOffset.UtcDateTime, (DateTime)normalizedCmd.ExecuteScalar()!);
+        Observed.Write("XF06", $"DateTime Kind validation rejected incompatible values; nonzero DateTimeOffset rejected ({offsetError.GetType().Name}); normalized UTC value round-tripped as {withOffset.UtcDateTime:O}");
     }
 
     [Fact] // database-portability-review

@@ -56,8 +56,9 @@ the conversation.
    assumption that changes the outcome. Otherwise proceed, and keep the
    contract visible.
 6. **Keep the contract current.**
-   - Before each risky action, ask for approval of that action. Approval of
-     the contract is not enough.
+   - Before each risky action, check the recorded action/target authorization;
+     ask only if missing or outside its scope. Approval of the contract alone
+     is not enough, and a generated record is never approval evidence.
    - If the scope changes, update the contract and re-confirm it.
 
 ## Outputs
@@ -73,6 +74,12 @@ the conversation.
   skipped.
 
 ## Template
+
+Prefer the repository's format. Otherwise `task-contract-template.md`,
+`implementation-plan-template.md` and `risk-assessment-template.md` provide
+reusable formats for the contract, ordered plan and risk dimensions. Load only
+the artifact needed through the entry skill's References table. Approval fields
+stay NOT_PROVIDED unless supported by actual action-specific authorization.
 
 ```text
 Task contract

@@ -7,7 +7,29 @@ is defined in [BUILD_CONTRACT.md](BUILD_CONTRACT.md) §5.1.
 A row may be marked `VERIFIED` only when its verification evidence column
 cites an executed test and its recorded result (BC-10, BC-13).
 
-**Snapshot:** after Step 27 (2026-10-15).
+**Snapshot:** after Step 29 (2026-10-15).
+
+**STEP 29 traceability:** [WORKFLOW_COVERAGE.md](WORKFLOW_COVERAGE.md) maps
+all 12 composite workflows and seven reusable formats to existing recipes and
+conditional technology packs (D-045). ARC-08..ARC-10 are now IMPLEMENTED;
+REQ-07..REQ-09 retain their existing statuses because live native-agent
+behavior is not established by static checks. V-24 PASS; six automated gate
+groups and 132/132 validator tests PASS. All 47 workflow/template behavior
+evaluations are NOT_RUN; no requirement or capability is marked VERIFIED.
+
+**STEP 28 audit traceability:** [TECHNOLOGY_COVERAGE_AUDIT.md](TECHNOLOGY_COVERAGE_AUDIT.md)
+reviews STK-01..STK-09 and STK-13, the embedded EF Core/Dapper/ADO.NET/Npgsql
+recipes and cross-stack contracts, and the preservation/verification concerns
+in REQ-07..REQ-10. STK-10..STK-12 general backend guidance is distinguished
+from cataloged packs; Java STK-14 remains PLANNED. Static gates pass for all
+108 technology capabilities and 295 specifications. Current local facts:
+107 PASS, 0 FAIL, 52 NOT_RUN in
+[STEP 28 results](../../tests/technology/audit/results/step28-fact-checks.json).
+Full agent/frontend scenarios and the maintainer runtime declaration remain
+open (R-49, R-50): **STEP 28 PARTIAL; that audit did not change requirement/
+capability statuses or summary counts.** STEP 29's ARC updates are listed above.
+Historical verification cells below
+retain their original step-specific meaning; they are not current rerun claims.
 
 ## Summary
 
@@ -18,9 +40,9 @@ cites an executed test and its recorded result (BC-10, BC-13).
 | Exclusions (EX) | 7 | 0 | 0 | 7 | 0 |
 | Providers (PRV) | 3 | 0 | 3 | 0 | 0 |
 | Stack coverage (STK) | 14 | 1 | 3 | 10 | 0 |
-| Architecture components (ARC) | 14 | 1 | 6 | 7 | 0 |
+| Architecture components (ARC) | 14 | 0 | 4 | 10 | 0 |
 | Capability domains (CAP) | 20 | 0 | 0 | 20 | 0 |
-| **Total** | **85** | **2** | **21** | **62** | **0** |
+| **Total** | **85** | **1** | **19** | **65** | **0** |
 
 Step 27 adds 10 PostgreSQL and 8 cross-stack technology capabilities plus
 PostgreSQL data access recipes, all IMPLEMENTED and V-23 validated, with 64
@@ -221,9 +243,9 @@ No row is `VERIFIED`, because these remain open:
 | ARC-05 | C-05 Technology Reference Packs | 11–19, 05 | Skill-local stack references (D-016): aspnetcore-webapi, data-access, node-servers, python-web-apis, angular, react-nextjs, vue-nuxt, dotnet/javascript/python testing, stack-hardening, stack-detection | V-06, V-08, V-12, behavioural suite | V-06, V-08, V-12 PASS; behavioural suite: NOT_RUN; shared knowledge packs deferred (U-11/U-13) | IN_PROGRESS |
 | ARC-06 | C-06 Skill Applicability Rules | 09, 05, 06 | When to use / When not to use / gate sentence / precedence in every SKILL.md | Negative, gate, and convention-conflict suites (ADR-0003) | V-17 PASS; Step 06 negative suite 10/10 silent; unsupported: Claude 7/7, Codex 2/2 silent, Copilot 0/2 (gate did not prevent activation; no misapplied guidance observed) Step 08: `**Scope:**` gate line added to all 6 pilots (R-24 recommendation); effect on Copilot over-activation: NOT_RUN. | IMPLEMENTED |
 | ARC-07 | C-07 Progressive Reference Loading | 05, 09 | Routing tables load one reference per detected stack; ≤2 hops; skill-local | V-06..V-08, reference-load checks (U-11, AS-04) | V-06, V-08 PASS; reference-load checks: NOT_RUN | IN_PROGRESS |
-| ARC-08 | C-08 Composite Development Workflows | 09 | — | V-06, V-08, behavioural suite | — | PLANNED |
-| ARC-09 | C-09 Task Contract Templates | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md | V-12, behavioural suite (contract produced when required) | V-12 PASS; behaviour: NOT_RUN Step 08: task-contract.md converted to a `kind: recipe` file (CAP-04-001..003) with Procedure and Verification; V-18/V-19/V-22 PASS. Step 10: task contract gains a Low/Medium/High/Critical risk class scale and a proposed/approved status line (D-030); CAP-04-001..003 IMPLEMENTED. | IN_PROGRESS |
-| ARC-10 | C-10 Evidence and Change Passport Templates | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md; verification tables in all skills | V-12, behavioural suite (NOT_RUN reported honestly) | V-12 PASS; behaviour: NOT_RUN Step 08: change-summary.md converted to a `kind: recipe` file (CAP-04-007, CAP-18-002); V-18/V-19/V-22 PASS. Step 10: CAP-04-007 handoff-summary IMPLEMENTED (change-summary.md); CAP-18-002 still IN_PROGRESS. | IN_PROGRESS |
+| ARC-08 | C-08 Composite Development Workflows | 29, 09 | Twelve owner-local workflow checklists; catalog/composite-workflows.json; WORKFLOW_COVERAGE.md | V-06/V-08/V-24 and behavioral evaluation | STEP 29: V-24 PASS for 12 workflows, 47 specifications and mapped recipe/technology/template references; six automated gate groups and 132/132 self-tests PASS. Live agent/provider workflow execution NOT_RUN (R-51). | IMPLEMENTED |
+| ARC-09 | C-09 Task Contract Templates | 29, 09, 05 | Existing task-contract.md recipe plus task-contract-template.md, implementation-plan-template.md and risk-assessment-template.md in implementation | V-12/V-18/V-24 and behavioral suite | STEP 29: reusable template leaves and owning recipe references validated; approvals default NOT_PROVIDED, repository formats first, proportional output. Template behavior evaluations NOT_RUN. Earlier Step 08/10 recipe and risk scale remain implemented. | IMPLEMENTED |
+| ARC-10 | C-10 Evidence and Change Passport Templates | 29, 09, 05 | Existing change-summary.md/session-handoff.md/decision-records.md recipes plus verification-report-template.md, change-passport-template.md, context-capsule-template.md and architecture-decision-record-template.md | V-12/V-18/V-24 and behavioral suite | STEP 29: four reusable evidence/passport/handoff/ADR formats validated; exact evidence, NOT_RUN, partial outcomes and real approval source retained. ADR starts PROPOSED. Live behavior NOT_RUN, no VERIFIED promotion. | IMPLEMENTED |
 | ARC-11 | C-11 Security and Trust Guidance | 09, 05 | plugins/codejadee-chayen-framework/skills/chayen-security/ (SKILL.md, review-checklist.md, stack-hardening.md) | V-10, security behaviour cases (ADR-0007) | V-10 PASS; security behaviour cases: NOT_RUN | IMPLEMENTED |
 | ARC-12 | C-12 Developer-only Validators | 04, 05 | tools/validate/validate-package.mjs: V-01a–c, V-02–V-10, V-12, V-13, V-16, V-17; tools/catalog/check-catalog.mjs: V-11 (zero deps) | Validator self-tests on good and bad fixtures | Repo: 0 errors 0 warnings. Mutated copies: Step 04 (12 errors) and Step 05 (21 errors) all injected faults detected. CI + committed fixtures: NOT_RUN; V-11 implemented in Step 07 (18/18 mutated catalogs rejected); V-14, V-15 not implemented Step 08: V-03 unsupported fields, V-05 strict frontmatter + duplicate names, V-08 anchors + unreachable refs, V-17 revised, V-18 reference kinds, V-19 catalog alignment, V-20 breadth, V-22 recipe cases; self-tests `run-validator-tests.mjs` 52/52 (2 baselines + 50 negative controls); `validate-all.mjs`. | IN_PROGRESS |
 | ARC-13 | C-13 Evaluation and Compatibility Test Suites | 05, 10, 20, 06 | tests/skills/trigger-cases.json, tests/evals/claude/ (staged via generator --stage), tests/routing/ (run-smoke.mjs, smoke-cases.json, results/), tests/provider-compatibility/ (run-lifecycle.sh, VS Code procedures, results/) | Suites executed, with results recorded | Executed Step 06: lifecycle 24/24; Claude eval 48 cases + 25 re-runs; Codex 7/7 + disabled 1/1; Copilot 5/7 + disabled 1/1. Statistical baseline and fixture workspaces: NOT_RUN Step 08: tests/catalog/catalog-mutations.json (19), tests/skills/validator-mutations.json (31), tests/skills/recipe-cases.json (10 cases, execution NOT_RUN). | IN_PROGRESS |

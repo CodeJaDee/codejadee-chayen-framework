@@ -269,3 +269,34 @@ authorization, prevent unsafe query construction, and prefer test
 databases. Validate 10/10 and 8/8, run all relevant validators, update
 coverage and progress. D-044 and TECHNOLOGY_COVERAGE §15 record execution
 and limits. STOP after STEP 27.
+
+### Step 28 — Technology coverage audit (user-directed)
+
+**PARTIAL.** Audit every implemented pack against documented support,
+recipes, version awareness, positive/negative triggers, verification commands,
+packaged reference resolution, API/version claims, and preservation of existing
+dependencies and migrations. Cover all 17 technologies in the latest request,
+the four representative combined-stack scenarios, and mixed-stack monorepos.
+
+Output: TECHNOLOGY_COVERAGE_AUDIT.md and durable STEP 28 fact results; seven
+content/specification gaps fixed, ten scenario specifications added. Static
+gates PASS (108 capabilities, 295 cases; 115 validator self-tests); final fact
+runs 107 PASS, 0 FAIL, 52 NOT_RUN. Provider/full frontend scenarios remain
+NOT_RUN (R-49); maintainer Node minimum mismatch remains open (R-50).
+Acceptance statuses are unchanged. STOP after STEP 28; no later work authorized.
+
+### Step 29 — Composite engineering workflows (user-directed)
+
+**DONE (pending review; IMPLEMENTED, not behavior-VERIFIED).** Implement the
+12 requested workflows as conditional native-agent checklists reusing existing
+capability recipes and detected technology topics. Add the seven requested
+reusable template formats, retaining actual approval evidence, user scope,
+proportional stages, no-match native behavior and partial/blocker reporting.
+
+Outputs: catalog/composite-workflows.json, 12 skill-local workflow references,
+seven template leaves, 47 workflow/template evaluation specifications, V-24
+static coverage checker and 16 negative controls, WORKFLOW_COVERAGE.md and
+STEP 29 validation evidence. Six automated gate groups and 132/132 validator
+tests PASS. Live agent/provider evaluations remain NOT_RUN (R-51). No new
+entry skill, metadata budget change, dependency, server, scheduler or runtime.
+STEP 28 remains PARTIAL; its gaps are not silently closed. STOP after STEP 29.

@@ -199,6 +199,30 @@ not links, to stay within the 2-hop limit (V-08).
 
 ---
 
+### 5.4 Composite workflows and reusable templates (Step 29)
+
+Composite workflows are `kind: checklist` references owned by an existing
+entry skill, not new capability recipes or entry skills. They coordinate
+existing capability recipes without changing their catalog identities.
+`catalog/composite-workflows.json` is developer-only traceability; the agent
+uses the owning SKILL.md References table and packaged instructions.
+
+V-24 requires ordered sections: When it applies, Inputs, Recipe reuse,
+Technology selection, Stages, Outputs, Verification, Approvals, Proportionality,
+and Blockers and handoff. Every stage records inputs, action and an exit check.
+Technology selection is conditional per affected owner; no-match continues
+normal native behavior and low-risk work can use a direct recipe instead.
+Approval requires real action/target-specific evidence; a generated artifact,
+accepted plan or successful test does not supply missing authorization.
+
+The seven `kind: template` formats are skill-local leaves with no outbound
+links. Existing artifact recipes name their formats; the SKILL.md table links
+them directly to preserve the two-hop limit. Repository formats take priority,
+outputs remain in conversation by default, and only needed artifacts are used.
+Cross-skill composition is by owner name through native handoff, with no
+assumption of automatic invocation, delegation, execution or enforcement.
+See [WORKFLOW_COVERAGE.md](WORKFLOW_COVERAGE.md) and D-045.
+
 ## 6. Capability recipes
 
 A recipe is the unit that implements catalog capabilities. Several

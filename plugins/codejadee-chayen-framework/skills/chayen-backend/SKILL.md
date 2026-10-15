@@ -85,8 +85,14 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Detect the stack and its version.** Then read exactly one technology
    reference, plus the data access reference if a database is involved.
+   In monorepos, use the owning service's manifests, provider, versions, and
+   commands; a sibling app's dependencies do not select this service's stack.
    For ASP.NET Core, read the base reference first, then only the one
    topic file the task needs.
    For Next.js, use nextjs-server as the base instead of node-servers, then
@@ -201,3 +207,4 @@ Load one technology reference for the detected stack (workflow step 1), and one 
 | [references/external-integrations.md](references/external-integrations.md) | Calling an internal or third-party HTTP service, or sending or receiving webhooks |
 | [references/file-processing.md](references/file-processing.md) | Processing uploaded or received files |
 | [references/idempotency-and-consistency.md](references/idempotency-and-consistency.md) | Safe retries, duplicate requests or messages, double effects, or payment and ledger consistency |
+| [references/workflow-api-integration.md](references/workflow-api-integration.md) | Multi-stage api development and integration within this skill's scope; skip for a low-risk direct recipe |

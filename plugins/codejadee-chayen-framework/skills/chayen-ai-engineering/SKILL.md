@@ -162,3 +162,4 @@ Load the tooling section for the detected stack (workflow step 1), and one recip
 | [references/agent-skills.md](references/agent-skills.md) | Authoring, reviewing, or migrating agent skills and plugins |
 | [references/provider-compatibility.md](references/provider-compatibility.md) | Checking skills or plugins against each provider and surface |
 | [references/session-handoff.md](references/session-handoff.md) | Handing a session over to another session or agent |
+| [references/context-capsule-template.md](references/context-capsule-template.md) | A Context Capsule / Agent Handoff is needed and the repository has no existing format; use only relevant fields |

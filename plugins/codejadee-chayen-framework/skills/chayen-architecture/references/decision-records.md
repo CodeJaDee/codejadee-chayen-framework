@@ -71,6 +71,11 @@ as waivers with scope, risk, compensating controls, approver, and expiry.
 
 ## Outputs
 
+Use the repository's ADR format first, otherwise the reusable
+`architecture-decision-record-template.md` listed by the entry skill. A new ADR
+starts PROPOSED; record acceptance only with the authorized decision evidence,
+and keep decision approval separate from approval to execute risky actions.
+
 - An option comparison table, and a recommendation labelled proposed.
 - An ADR in the repository's format, or this default:
 

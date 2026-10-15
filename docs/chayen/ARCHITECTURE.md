@@ -16,6 +16,15 @@
 >
 > All are replaceable without structural change.
 >
+> **Step 29 amendments (D-045):**
+> - C-08 is implemented as 12 composite `kind: checklist` references in
+>   existing entry skills, retaining the D-016 skill-local layout.
+> - C-09/C-10 are implemented as seven reusable `kind: template` leaf
+>   references in implementation, architecture and AI-engineering.
+> - [WORKFLOW_COVERAGE.md](WORKFLOW_COVERAGE.md) maps all workflows to
+>   existing recipes and conditional technology packs. V-24 checks static
+>   coverage; native-agent behavior remains NOT_RUN. No runtime is added.
+>
 > **Step 08 amendments:**
 > - The `SKILL.md` anatomy in C-04 is superseded by
 >   [SKILL_AUTHORING_STANDARD.md](SKILL_AUTHORING_STANDARD.md) §4 (D-025):

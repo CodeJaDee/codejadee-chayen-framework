@@ -4,7 +4,9 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 27 — PostgreSQL engineering and cross-stack integration (Steps 24–25 unrecorded, R-45) |
+| Last executed step | 29 — Composite engineering workflows and reusable templates |
+| Step 29 status | DONE (pending review; 12 workflows and seven reusable template leaves IMPLEMENTED; V-24 PASS; 47 workflow/template evaluation specifications; six automated gate groups and 132/132 validator tests PASS; live agent/provider behavior NOT_RUN, R-51; D-045 layout PROPOSED). |
+| Step 28 status | PARTIAL — all 11 packs / 108 capabilities and 17 required technologies audited; 7 gaps fixed; 295 technology specifications; final fact runs 107 PASS / 0 FAIL / 52 NOT_RUN; 5/5 automated gates and 115/115 self-tests PASS. Full frontend/mixed-stack agent scenarios remain NOT_RUN (R-49); maintainer Node 18 declaration conflicts with import.meta.dirname (R-50). See TECHNOLOGY_COVERAGE_AUDIT.md. |
 | Step 27 status | DONE (pending review; PostgreSQL 10/10 and cross-stack 8/8 IMPLEMENTED, 0 VERIFIED; V-23 PASS incl. V-23.10 for both recipe files; DR-01..04, PF-01..24, XF-01..14 PASS (42/42) on PostgreSQL 18.6, .NET 10, Node, Chromium; 5/5 gate groups, 115/115 self-tests; D-044 PROPOSED) |
 | Step 26 status | DONE (pending review; SQL Server 12/12 IMPLEMENTED, 0 VERIFIED; V-23 PASS incl. V-23.10 data access recipes; DR-01..03 driver references PASS; SF-01..27 PASS on SQL Server 2025 Express LocalDB; 5/5 gate groups, 104/104 self-tests; D-043 layout PROPOSED) |
 | Step 23 status | DONE (pending review; 18/18 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 94/94 self-tests; 2 supporting JS checks PASS, 16 NOT_RUN; frontend/backend target warnings at 213/202 lines; D-042 layout PROPOSED) |
@@ -30,7 +32,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after Step 27; await user direction. Confirm Steps 24–25 (R-45); D-043/D-044 layout review pending. All 206 engineering and 108 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Agent behaviour/trigger evaluations and untested platforms remain NOT_RUN (R-46..R-48). |
+| Next step | STOP after STEP 29; await user review. No later step started. STEP 28 remains PARTIAL (R-49, R-50); Steps 24–25 remain unrecorded (R-45); D-043..D-045 layout reviews pending. All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED; 13 skills and L0 5,485 / 5,500 unchanged. |
 | Commits made by agent | None |
 
 ---
@@ -2777,3 +2779,252 @@ Agent behaviour and other platforms remain NOT_RUN. STEP 26 ends here.
 PostgreSQL, ORM/driver, API, client, and browser facts on local, temporary
 infrastructure. Agent behaviour and other platforms remain NOT_RUN. STEP 27
 ends here.
+
+---
+
+## Step 28 — Technology coverage audit
+
+- **Date:** 2026-10-15 (Asia/Bangkok)
+- **Status:** PARTIAL. Audit and scoped content/specification fixes are
+  implemented; full required frontend/provider scenarios remain NOT_RUN
+  (R-49), and the existing maintainer Node 18 compatibility declaration is
+  inconsistent with its code (R-50). STOP after STEP 28.
+- **Scope:** all 11 implemented packs, 108 technology capabilities and 57
+  mapped technology references; all 17 technologies in the latest prompt.
+  General Nitro/Elysia/Python guidance is distinguished from dedicated packs;
+  Java/Spring Boot remains outside implementation scope. Steps 24–25 were
+  not inferred or implemented (R-45).
+
+### Work performed and findings
+
+- Created [TECHNOLOGY_COVERAGE_AUDIT.md](TECHNOLOGY_COVERAGE_AUDIT.md):
+  eight-check matrix, technology-specific recipes/versions/commands,
+  inventory, findings, representative/mixed-stack scenarios, primary-source
+  checks, actual verification and a separate NOT_RUN register.
+- Fixed seven content/specification gaps: packaged support index and stale
+  skill count, per-owner stack detection, local EF/provider API version gates,
+  Npgsql zero-offset semantics, standalone Nitro versus Nuxt conventions,
+  combined-stack/sibling-negative specifications, and engine-specific null
+  sorting guidance. No dependency, migration, description/L0, or consumer
+  application was changed.
+- Added ten `audit28` technology specifications, bringing the set to
+  295 (183 positive/112 negative); regenerated the coverage table. These are
+  specifications, not executed provider results.
+- Extended the existing PostgreSQL XF-06 fact with nonzero DateTimeOffset
+  rejection and normalized UTC round-trip assertions. Re-executed the full
+  PostgreSQL/cross-stack runner after the final fixture change.
+- Preserved the 206 engineering and 108 technology capability statuses:
+  all IMPLEMENTED, 0 VERIFIED. R-49 records runtime/provider gaps; R-50
+  records the maintainer Node 18/import.meta.dirname mismatch. No new
+  architecture decision or approval was inferred, and no later step started.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `docs/chayen/TECHNOLOGY_COVERAGE_AUDIT.md` |
+| Created | `tests/technology/audit/results/step28-fact-checks.json` |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/ISSUES.md` (R-49, R-50) |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` (Step 28 only) |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` (audit traceability; statuses unchanged) |
+| Modified | `docs/chayen/TECHNOLOGY_COVERAGE.md` (generated case counts only) |
+| Modified | `plugins/codejadee-chayen-framework/README.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/data-access.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/node-servers.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/crossstack-types-and-time.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-data-access.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-data-access.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/references/database-portability.md` |
+| Modified | `tests/skills/technology-cases.json` |
+| Modified | `tests/technology/postgres-crossstack/fixture/PostgresFacts/CrossEngineFacts.cs` |
+| Deleted | None |
+
+### Tests actually executed
+
+Commands ran from the repository root; `$scratch` was
+`$env:TEMP/chayen-step28-audit`. Exact individual results are retained in
+[the STEP 28 result artifact](../../tests/technology/audit/results/step28-fact-checks.json).
+The six fact suites total **107 PASS, 0 FAIL, 52 NOT_RUN** (159 checks);
+zero exit means no executed fact failed, not that skipped facts passed.
+
+| Check | Command | Observed final outcome |
+|---|---|---|
+| Automated gates, before and after changes | `node tools/validate/validate-all.mjs` | PASS, exit 0: 5/5 gate groups, 115/115 validator self-tests. G-11 here is specification sync only (182 cases, 433 files), not live agent triggering. |
+| Technology mapping/specs and coverage | `node tools/catalog/check-technology.mjs --write-doc`, then `node tools/catalog/check-technology.mjs` | PASS, exit 0: 108 capabilities, 295 specifications, seven library recipes; coverage synchronized. |
+| Engineering regression audit | `node tools/catalog/audit-coverage.mjs` | PASS, exit 0: 206/206 pass ten static criteria; existing 48 unsectioned shared capabilities remain R-35. |
+| Package/links/budgets | `node tools/validate/validate-package.mjs` | PASS, exit 0: 202 reference files reachable, 117 recipe files, 445 recipe cases; 13 skills, L0 5,485/5,500. Existing target-size warnings: backend 206 and frontend 215 lines; both below hard 300. |
+| C#/ASP.NET/.NET | `node tests/technology/dotnet/run-fact-checks.mjs --json "$scratch/dotnet.json"` | 29 PASS, 0 FAIL, 2 NOT_RUN; exit 0. .NET 10 SDK available; TF-22/24 need missing SDK 8. |
+| Angular/shared TS/JS | `node tests/technology/angular-typescript/run-fact-checks.mjs --report "$scratch/angular-typescript.md"` | 3 PASS (JF-03/04/05), 0 FAIL, 19 NOT_RUN; exit 0. No supplied Angular/TS compiler/npm fixture. |
+| React/Next | `node tests/technology/react-nextjs/run-fact-checks.mjs --report "$scratch/react-nextjs.md"` | 3 PASS, 0 FAIL, 13 NOT_RUN; exit 0. PASS only synthetic NF-03/04/06 JS/Web boundary checks. |
+| Vue/Nuxt/Vite | `node tests/technology/vue-nuxt-vite/run-fact-checks.mjs --report "$scratch/vue-nuxt-vite.md"` | 2 PASS, 0 FAIL, 16 NOT_RUN; exit 0. UF-04/BF-03 only JS exposure counterexamples. |
+| SQL Server/EF/Dapper/ADO.NET | `node tests/technology/sqlserver/run-fact-checks.mjs --report "$scratch/sqlserver.md" --json "$scratch/sqlserver.json"` | 30 PASS, 0 FAIL, 0 NOT_RUN; exit 0. DR-01..03, SF-01..27 on SQL Server 17.0.4025.3 Express LocalDB. |
+| PostgreSQL/Npgsql/cross-stack | `node tests/technology/postgres-crossstack/run-fact-checks.mjs --report "$scratch/postgres-crossstack.md" --json "$scratch/postgres-crossstack.json" --pg-bin "$env:TEMP/chpg/pgsql/bin" --python "$env:TEMP/chpy/Scripts/python.exe"` | 40 PASS, 0 FAIL, 2 NOT_RUN; exit 0. DR-01..04, PF-01..24, 12/14 XF checks on PostgreSQL 18.6 and .NET 10, including extended XF-06 and both-engine XF-13/14. XF-02/12 need unavailable Node tools. |
+| Additional packaged Markdown links | `node --input-type=module` with the exact PowerShell script in TECHNOLOGY_COVERAGE_AUDIT §8 | PASS: 217 files, 248 local links, zero missing/escaping targets; skill heading anchors also checked by V-08. |
+| Diff whitespace | `git diff --check` | PASS, exit 0. |
+
+An initial PostgreSQL run without a binary path reported 12 PASS/30 NOT_RUN;
+the final run supplied existing `%TEMP%/chpg/pgsql/bin` and the existing
+Python environment. While developing XF-06, the new positive assertion failed
+after reusing the connection from an intentionally rejected parameter write;
+it now uses a fresh connection and the complete suite re-run passed.
+These attempts are not added to the final check totals.
+
+### Unexecuted verification, risks, and stop
+
+- Full Angular/ASP.NET/SQL Server, React/Next/PostgreSQL and Vue/Nuxt
+  frontend/SSR/browser scenarios, all ten agent scenario evaluations, and
+  provider-native G-11/G-12 behavior runs: **NOT_RUN** (R-49).
+- The artifact lists all 52 skipped facts. Missing framework fixtures,
+  .NET 8, TS/generator and Playwright Node tools are not treated as passes.
+  Current Node is 24.15.0; earlier reports on Node 26 were not reused.
+- Node 18 maintainer-tool compatibility is contradicted by source/API
+  evidence, not executed here; R-50 remains open. Existing R-35..R-48 and
+  pending layout decisions remain open; no historical status is rewritten.
+- Primary API documentation was checked for the audit findings; links/date
+  and limits are in TECHNOLOGY_COVERAGE_AUDIT §7. Live documentation checks
+  are not application/runtime verification.
+- All runtime access was local/disposable. The existing LocalDB ChayenFacts
+  instance remains. One diagnostic --keep run left a stopped temporary
+  PostgreSQL fixture at `%TEMP%/chayen-pgx-facts-hW2HSS`; final runner clusters
+  were stopped and deleted. Consolidated scratch reports are outside the
+  plugin; no new package installation or global configuration change.
+- No commits, push, publication, release, instruction-file edits, or work
+  beyond STEP 28. **STEP 28 PARTIAL; STOP.**
+
+---
+
+## Step 29 — Composite engineering workflows and reusable templates
+
+- **Date:** 2026-10-15 (Asia/Bangkok)
+- **Status:** DONE (pending review; static content IMPLEMENTED, native-agent
+  behavior NOT_RUN). STOP after STEP 29. STEP 28 remains PARTIAL.
+
+### Work performed
+
+- Read BUILD_CONTRACT.md, ARCHITECTURE.md and the completed engineering and
+  technology catalogs. Preserved the existing uncommitted STEP 28 work.
+- Added the exact 12 composite workflows as skill-local checklist references
+  across eight existing owners. Each defines applicability and exclusions,
+  inputs, existing recipe reuse, conditional technology selection, staged
+  inputs/actions/exit checks, outputs, verification, approval evidence,
+  proportionality, blockers and handoff. No matching workflow continues normal
+  native behavior; small tasks use direct recipes and relevant checks.
+- Added the seven requested reusable format leaves: Task Contract,
+  Implementation Plan, Risk Assessment, Verification Report, Change Passport,
+  Context Capsule / Agent Handoff and Architecture Decision Record. Four
+  existing artifact recipes now name the reusable formats. Repository formats
+  take precedence; artifacts remain in conversation unless files are requested
+  or established by the repository. Approval defaults remain NOT_PROVIDED.
+- Added developer-only composite-workflows.json, V-24 static checks, generated
+  WORKFLOW_COVERAGE.md, 47 workflow/template evaluation specifications and 16
+  validator mutations. Integrated V-24 as the sixth automated gate group and
+  a fourth baseline validator. Native workflow execution is never performed
+  by the checker or by the catalog.
+- Kept 13 entry skills, their descriptions and L0 5,485/5,500 unchanged.
+  Engineering remains 206 IMPLEMENTED and technology 108 IMPLEMENTED; new
+  workflow records are 12 IMPLEMENTED, all 0 VERIFIED. ARC-08..ARC-10 become
+  IMPLEMENTED; the acceptance summary now has 65 IMPLEMENTED, 19 IN_PROGRESS,
+  one PLANNED and zero VERIFIED rows. D-045 scope follows the explicit user
+  request; layout is PROPOSED, not claimed accepted.
+
+### File ledger (STEP 29 delta only)
+
+This ledger excludes unchanged files already dirty from STEP 28. No files
+were deleted; no user instruction file, dependency or marketplace was changed.
+
+| Action | Path |
+|---|---|
+| Created | `catalog/composite-workflows.json` |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` |
+| Modified | `docs/chayen/ARCHITECTURE.md` |
+| Modified | `docs/chayen/DECISIONS.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` |
+| Modified | `docs/chayen/ISSUES.md` |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/SKILL_AUTHORING_STANDARD.md` |
+| Modified | `docs/chayen/SKILL_QUALITY_GATES.md` |
+| Created | `docs/chayen/WORKFLOW_COVERAGE.md` |
+| Modified | `plugins/codejadee-chayen-framework/README.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/context-capsule-template.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/session-handoff.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-architecture/references/architecture-decision-record-template.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-architecture/references/decision-records.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-architecture/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/workflow-api-integration.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/workflow-schema-migration.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-devops/references/workflow-incident-investigation.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-devops/references/workflow-release-readiness.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-devops/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-documentation/references/workflow-pull-request.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-documentation/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-passport-template.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/implementation-plan-template.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/risk-assessment-template.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract-template.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/verification-report-template.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-bug-repair.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-dependency-upgrade.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-new-feature.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-refactoring.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-performance/references/workflow-performance-investigation.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-performance/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-security/references/workflow-security-review.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-security/SKILL.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-testing/references/workflow-testing-regression.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/README.md` |
+| Created | `tests/catalog/workflow-mutations.json` |
+| Created | `tests/skills/workflow-cases.json` |
+| Created | `tests/workflows/results/step29-validation.md` |
+| Created | `tools/catalog/check-workflows.mjs` |
+| Modified | `tools/catalog/README.md` |
+| Modified | `tools/validate/README.md` |
+| Modified | `tools/validate/run-validator-tests.mjs` |
+| Modified | `tools/validate/validate-all.mjs` |
+| Deleted | None |
+
+### Verification actually executed
+
+| Check | Exact command | Observed result |
+|---|---|---|
+| Workflow coverage generation | `node tools/catalog/check-workflows.mjs --write-doc` | PASS, exit 0; V-24.1..6, generated coverage |
+| Workflow/template static check | `node tools/catalog/check-workflows.mjs` | PASS, exit 0; 12 workflows, seven template leaves, 47 specifications |
+| Approval control smoke | `node tools/validate/run-validator-tests.mjs --only wf29-approval-control` | PASS, 5/5; four baselines and missing-approval-control mutation |
+| All automated gates | `node tools/validate/validate-all.mjs` | PASS, exit 0; six gate groups and 132/132 self-tests (four baselines plus 128 mutations, 16 new). G-11 is case-file sync only: 182 cases/433 files. |
+| Package and reference validation | `node tools/validate/validate-package.mjs` | PASS, exit 0; 221 references reachable within two hops, 117 recipes, 445 recipe cases; three target-size warnings, no hard-limit failures |
+| Engineering regression | `node tools/catalog/audit-coverage.mjs` | PASS, exit 0; 206/206 capabilities pass ten static criteria, zero broken mappings/orphan recipes |
+| Technology regression | `node tools/catalog/check-technology.mjs` | PASS, exit 0; 108 capabilities, 295 specifications, synchronized coverage |
+| Whitespace | `git diff --check` | PASS, exit 0 |
+
+Durable results: tests/workflows/results/step29-validation.md. These checks
+validate content, mappings and checker rejection behavior. They do not execute
+agents, approve tasks, deliver features or prove framework/runtime behavior.
+
+### Decisions, risks, unexecuted checks and stop
+
+- D-045 records the user-directed scope, existing owner-local layout,
+  conditional composition, proportional artifacts and actual approval evidence.
+  No new architecture pattern or reference-kind exception was introduced.
+- R-51: all 47 native-agent workflow/template behavior cases and provider
+  routing/handoff evaluations are NOT_RUN. Quoted/generated approvals, valid
+  prior authorization reuse, no-match/low-risk behavior, partial completion and
+  missing mandatory release evidence require live transcript evaluation before
+  any VERIFIED promotion.
+- Three acknowledged target-size warnings: implementation 208 lines, backend
+  211 and frontend 215, all under the 300-line hard limit. L0 is unchanged.
+- Existing STEP 28 R-49/R-50, unrecorded Steps 24–25 R-45 and pending earlier
+  layout decisions remain open. Its 52 NOT_RUN facts were not rerun or promoted.
+- Application/framework tests, native-provider lifecycle/model execution and
+  production operations are NOT_RUN in STEP 29. No consumer project, database,
+  credential, production configuration, publication, commit or release changed.
+- **STOP after STEP 29.** No later step was started.

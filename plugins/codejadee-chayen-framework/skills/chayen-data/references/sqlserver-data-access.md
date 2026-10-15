@@ -17,12 +17,20 @@ migrations reference listed in the skill's References table.
 | Area | What to look for |
 |---|---|
 | Library | `Microsoft.EntityFrameworkCore.SqlServer` and a `DbContext`; `Dapper` (`QueryAsync`, `ExecuteAsync`); plain `SqlConnection`/`SqlCommand`; several of them side by side |
-| Provider | `UseSqlServer` (or `UseAzureSql` on newer EF Core), `Microsoft.Data.SqlClient` versus the deprecated `System.Data.SqlClient`; PostgreSQL providers (`UseNpgsql`, `Npgsql`) mean this file does not apply |
+| Provider | `UseSqlServer` (or `UseAzureSql` on EF Core 9+), `Microsoft.Data.SqlClient` versus the deprecated `System.Data.SqlClient`; PostgreSQL providers (`UseNpgsql`, `Npgsql`) mean this file does not apply |
 | Versions | EF Core, Dapper, and SqlClient package versions; the database compatibility level and isolation settings of each environment |
 | Patterns | Repositories or direct `DbContext` use, a connection factory, unit of work, retry policy, how transactions and `CancellationToken` are passed |
 | Tests | Integration tests against SQL Server (LocalDB, a container, a shared test server), EF Core InMemory or SQLite substitutes, data reset tools |
 
 ## Driver references
+
+These are version-dependent APIs, not a minimum-version compatibility promise.
+`ToQueryString`, `AsSplitQuery`, and `AsNoTrackingWithIdentityResolution` need
+EF Core 5+; `FromSql`, `ExecuteSql`, `ExecuteUpdateAsync`, and
+`ExecuteDeleteAsync` need 7+. `SqlQuery` supports scalar results from 7 and
+unmapped CLR result types from 8; `UseAzureSql` needs 9+. Retain older supported
+APIs when installed versions lack these. Check Dapper and SqlClient exports
+(including retry helpers) against their resolved packages before use.
 
 | Library | Package | APIs these recipes name |
 |---|---|---|

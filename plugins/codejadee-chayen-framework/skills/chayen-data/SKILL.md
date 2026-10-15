@@ -71,6 +71,10 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## Workflow
 
+For a matching multi-stage task, load only its composite workflow from References.
+For low-risk work, use the direct capability recipe and proportional artifacts.
+No matching workflow => continue normal native behavior.
+
 1. **Identify the engine** and read exactly one engine reference. In .NET
    projects whose schema is managed by EF Core migrations, also read the
    EF Core migrations reference; never assume EF Core. On SQL Server or
@@ -189,3 +193,4 @@ Load one engine reference (workflow step 1), the safety checklist when step 2 re
 | [references/backup-restore.md](references/backup-restore.md) | Planning or running a restore drill |
 | [references/search-and-indexing.md](references/search-and-indexing.md) | Implementing or tuning search and keeping an index in sync |
 | [references/geospatial.md](references/geospatial.md) | Storing or querying spatial data |
+| [references/workflow-schema-migration.md](references/workflow-schema-migration.md) | Multi-stage database schema migration within this skill's scope; skip for a low-risk direct recipe |

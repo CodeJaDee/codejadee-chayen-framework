@@ -1,0 +1,441 @@
+{
+  "version": 1,
+  "step": 29,
+  "plugin_root": "plugins/codejadee-chayen-framework",
+  "status": "IMPLEMENTED",
+  "verification": "Static mapping and specification checks only; agent/provider behavior remains NOT_RUN.",
+  "workflows": [
+    {
+      "id": "WF-01",
+      "title": "New feature development",
+      "owner": "chayen-implementation",
+      "reference": "skills/chayen-implementation/references/workflow-new-feature.md",
+      "capabilities": [
+        "CAP-04-001",
+        "CAP-05-001",
+        "CAP-06-002",
+        "CAP-07-001",
+        "CAP-10-007",
+        "CAP-04-007"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "vite",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "task-contract",
+        "implementation-plan",
+        "risk-assessment",
+        "verification-report",
+        "change-passport"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-02",
+      "title": "Bug diagnosis and repair",
+      "owner": "chayen-implementation",
+      "reference": "skills/chayen-implementation/references/workflow-bug-repair.md",
+      "capabilities": [
+        "CAP-05-002",
+        "CAP-01-004",
+        "CAP-10-014",
+        "CAP-10-007",
+        "CAP-04-007"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "task-contract",
+        "verification-report",
+        "change-passport",
+        "context-capsule"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-03",
+      "title": "Refactoring",
+      "owner": "chayen-implementation",
+      "reference": "skills/chayen-implementation/references/workflow-refactoring.md",
+      "capabilities": [
+        "CAP-05-003",
+        "CAP-15-002",
+        "CAP-10-007",
+        "CAP-04-007"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "sqlserver",
+        "postgresql"
+      ],
+      "templates": [
+        "implementation-plan",
+        "risk-assessment",
+        "verification-report",
+        "change-passport",
+        "architecture-decision-record"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-04",
+      "title": "API development and integration",
+      "owner": "chayen-backend",
+      "reference": "skills/chayen-backend/references/workflow-api-integration.md",
+      "capabilities": [
+        "CAP-06-001",
+        "CAP-06-002",
+        "CAP-06-003",
+        "CAP-06-009",
+        "CAP-06-010",
+        "CAP-10-005"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "nextjs",
+        "nuxt",
+        "typescript-javascript",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "task-contract",
+        "risk-assessment",
+        "verification-report",
+        "change-passport"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-05",
+      "title": "Database schema migration",
+      "owner": "chayen-data",
+      "reference": "skills/chayen-data/references/workflow-schema-migration.md",
+      "capabilities": [
+        "CAP-09-002",
+        "CAP-09-007",
+        "CAP-09-008",
+        "CAP-09-006",
+        "CAP-09-012"
+      ],
+      "technology_packs": [
+        "sqlserver",
+        "postgresql",
+        "dotnet-aspnetcore",
+        "crossstack"
+      ],
+      "templates": [
+        "task-contract",
+        "implementation-plan",
+        "risk-assessment",
+        "verification-report",
+        "change-passport"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-06",
+      "title": "Software testing and regression",
+      "owner": "chayen-testing",
+      "reference": "skills/chayen-testing/references/workflow-testing-regression.md",
+      "capabilities": [
+        "CAP-10-001",
+        "CAP-10-007",
+        "CAP-10-014",
+        "CAP-10-013",
+        "CAP-10-005"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "vite",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "implementation-plan",
+        "verification-report",
+        "context-capsule"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-07",
+      "title": "Security review and remediation",
+      "owner": "chayen-security",
+      "reference": "skills/chayen-security/references/workflow-security-review.md",
+      "capabilities": [
+        "CAP-11-002",
+        "CAP-11-003",
+        "CAP-11-014",
+        "CAP-11-006",
+        "CAP-10-007"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "risk-assessment",
+        "implementation-plan",
+        "verification-report",
+        "change-passport"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-08",
+      "title": "Performance investigation",
+      "owner": "chayen-performance",
+      "reference": "skills/chayen-performance/references/workflow-performance-investigation.md",
+      "capabilities": [
+        "CAP-12-001",
+        "CAP-12-002",
+        "CAP-12-005",
+        "CAP-12-003",
+        "CAP-09-003"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "typescript-javascript",
+        "angular",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "implementation-plan",
+        "risk-assessment",
+        "verification-report",
+        "change-passport"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-09",
+      "title": "Dependency/framework upgrade",
+      "owner": "chayen-implementation",
+      "reference": "skills/chayen-implementation/references/workflow-dependency-upgrade.md",
+      "capabilities": [
+        "CAP-05-008",
+        "CAP-15-004",
+        "CAP-15-005",
+        "CAP-10-007",
+        "CAP-13-007"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "vite",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "task-contract",
+        "implementation-plan",
+        "risk-assessment",
+        "verification-report",
+        "change-passport"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-10",
+      "title": "Production incident investigation",
+      "owner": "chayen-devops",
+      "reference": "skills/chayen-devops/references/workflow-incident-investigation.md",
+      "capabilities": [
+        "CAP-14-006",
+        "CAP-14-007",
+        "CAP-14-008",
+        "CAP-15-009",
+        "CAP-14-010"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "typescript-javascript",
+        "nextjs",
+        "nuxt",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "risk-assessment",
+        "verification-report",
+        "context-capsule",
+        "change-passport"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-11",
+      "title": "Pull request preparation and review",
+      "owner": "chayen-documentation",
+      "reference": "skills/chayen-documentation/references/workflow-pull-request.md",
+      "capabilities": [
+        "CAP-16-005",
+        "CAP-16-006",
+        "CAP-16-007",
+        "CAP-18-001",
+        "CAP-18-003"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "vite",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "verification-report",
+        "change-passport",
+        "risk-assessment"
+      ],
+      "status": "IMPLEMENTED"
+    },
+    {
+      "id": "WF-12",
+      "title": "Release readiness assessment",
+      "owner": "chayen-devops",
+      "reference": "skills/chayen-devops/references/workflow-release-readiness.md",
+      "capabilities": [
+        "CAP-18-008",
+        "CAP-13-009",
+        "CAP-13-012",
+        "CAP-13-010",
+        "CAP-13-011",
+        "CAP-16-009"
+      ],
+      "technology_packs": [
+        "dotnet-aspnetcore",
+        "angular",
+        "typescript-javascript",
+        "react",
+        "nextjs",
+        "vue",
+        "nuxt",
+        "vite",
+        "sqlserver",
+        "postgresql",
+        "crossstack"
+      ],
+      "templates": [
+        "risk-assessment",
+        "implementation-plan",
+        "verification-report",
+        "change-passport",
+        "context-capsule"
+      ],
+      "status": "IMPLEMENTED"
+    }
+  ],
+  "templates": [
+    {
+      "id": "task-contract",
+      "title": "Task Contract",
+      "owner": "chayen-implementation",
+      "capability": "CAP-04-001",
+      "reference": "skills/chayen-implementation/references/task-contract-template.md"
+    },
+    {
+      "id": "implementation-plan",
+      "title": "Implementation Plan",
+      "owner": "chayen-implementation",
+      "capability": "CAP-04-002",
+      "reference": "skills/chayen-implementation/references/implementation-plan-template.md"
+    },
+    {
+      "id": "risk-assessment",
+      "title": "Risk Assessment",
+      "owner": "chayen-implementation",
+      "capability": "CAP-04-003",
+      "reference": "skills/chayen-implementation/references/risk-assessment-template.md"
+    },
+    {
+      "id": "verification-report",
+      "title": "Verification Report",
+      "owner": "chayen-implementation",
+      "capability": "CAP-18-003",
+      "reference": "skills/chayen-implementation/references/verification-report-template.md"
+    },
+    {
+      "id": "change-passport",
+      "title": "Change Passport",
+      "owner": "chayen-implementation",
+      "capability": "CAP-18-002",
+      "reference": "skills/chayen-implementation/references/change-passport-template.md"
+    },
+    {
+      "id": "context-capsule",
+      "title": "Context Capsule / Agent Handoff",
+      "owner": "chayen-ai-engineering",
+      "capability": "CAP-20-007",
+      "reference": "skills/chayen-ai-engineering/references/context-capsule-template.md"
+    },
+    {
+      "id": "architecture-decision-record",
+      "title": "Architecture Decision Record",
+      "owner": "chayen-architecture",
+      "capability": "CAP-03-003",
+      "reference": "skills/chayen-architecture/references/architecture-decision-record-template.md"
+    }
+  ]
+}

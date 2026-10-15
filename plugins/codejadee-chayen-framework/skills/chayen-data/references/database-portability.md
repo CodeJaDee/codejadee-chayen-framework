@@ -48,8 +48,9 @@ date/time mapping).
 3. Compare generated SQL: run the same ORM queries through each provider
    (`ToQueryString()`, SQLAlchemy dialect compilation) and review
    differences in paging, string matching, and parameter types.
-4. Decide per difference: make behaviour explicit (collations, `ORDER BY ...
-   NULLS LAST`, explicit constraints, UTC instants), isolate engine-specific
+4. Decide per difference: make behaviour explicit (collations, PostgreSQL
+   `ORDER BY ... NULLS LAST` versus a SQL Server `CASE` sort key for nulls,
+   explicit constraints, UTC instants), isolate engine-specific
    code behind the existing abstraction, or document that a feature is
    engine-specific. Do not add a new abstraction layer unasked.
 5. Test on every target engine with the same data and assertions; results
