@@ -7,7 +7,7 @@ is defined in [BUILD_CONTRACT.md](BUILD_CONTRACT.md) §5.1.
 A row may be marked `VERIFIED` only when its verification evidence column
 cites an executed test and its recorded result (BC-10, BC-13).
 
-**Snapshot:** after Step 26 (2026-10-15).
+**Snapshot:** after Step 27 (2026-10-15).
 
 ## Summary
 
@@ -17,10 +17,18 @@ cites an executed test and its recorded result (BC-10, BC-13).
 | Core requirements (REQ) | 10 | 0 | 9 | 1 | 0 |
 | Exclusions (EX) | 7 | 0 | 0 | 7 | 0 |
 | Providers (PRV) | 3 | 0 | 3 | 0 | 0 |
-| Stack coverage (STK) | 14 | 1 | 4 | 9 | 0 |
+| Stack coverage (STK) | 14 | 1 | 3 | 10 | 0 |
 | Architecture components (ARC) | 14 | 1 | 6 | 7 | 0 |
 | Capability domains (CAP) | 20 | 0 | 0 | 20 | 0 |
-| **Total** | **85** | **2** | **22** | **61** | **0** |
+| **Total** | **85** | **2** | **21** | **62** | **0** |
+
+Step 27 adds 10 PostgreSQL and 8 cross-stack technology capabilities plus
+PostgreSQL data access recipes, all IMPLEMENTED and V-23 validated, with 64
+specifications and nine trigger prompts. 42 executed checks PASS (driver
+references, PostgreSQL 18.6 engine and ORM facts, .NET API contract/auth/
+error/CORS facts, Node date and precision facts, and a Chromium end-to-end
+flow); agent evaluations remain NOT_RUN. Cross-stack work has no STK row: it
+is recorded in TECHNOLOGY_COVERAGE §15 and PROGRESS Step 27.
 
 Step 26 adds the 12 SQL Server technology capabilities and three data access
 recipes, all IMPLEMENTED and V-23 validated, with 39 capability and 9 recipe
@@ -199,7 +207,7 @@ No row is `VERIFIED`, because these remain open:
 | STK-10 | Nitro | Additional | 16, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 28 records apply to `nitro` explicitly or through a stack group (8 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
 | STK-11 | Elysia | Additional | 16, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 28 records apply to `elysia` explicitly or through a stack group (8 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
 | STK-12 | Python | Additional | 17, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 74 records apply to `python` explicitly or through a stack group (15 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
-| STK-13 | PostgreSQL | Additional | 17, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 24 records apply to `postgresql` explicitly or through a stack group (4 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
+| STK-13 | PostgreSQL | Additional | 27, 17, 05 | 10 technology sections in `chayen-data` (expanded `postgresql.md` plus five topic references) and EF Core Npgsql, Npgsql, SQLAlchemy, and other data access recipes; cross-stack portability review; TECHNOLOGY_COVERAGE §15 | Catalog/specs, executed engine/ORM facts on a temporary cluster, behavior/trigger evaluations | `node tools/catalog/check-technology.mjs` PASS: 10/10 sections, 20 positive/10 negative specs, V-23.10 recipes and 11 recipe cases. `node tests/technology/postgres-crossstack/run-fact-checks.mjs --report tests/technology/postgres-crossstack/results/step27-fact-checks.md ...`: DR-01..04 and PF-01..24 PASS on PostgreSQL 18.6 only. Managed services, other majors, and agent evaluations NOT_RUN (R-47, R-48) | IMPLEMENTED |
 | STK-14 | Java | Optional extension | 19 | — | Catalog coverage + trigger suite (only if Q-08 approves) | Catalog (Step 07): 0 records list `java` (optional pack, Q-08) | PLANNED |
 
 ## Architecture components (design: ARCHITECTURE.md §3–§4)

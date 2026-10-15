@@ -73,8 +73,9 @@ If the request does not fit, stop following this skill and continue normally wit
 
 1. **Identify the engine** and read exactly one engine reference. In .NET
    projects whose schema is managed by EF Core migrations, also read the
-   EF Core migrations reference; never assume EF Core. On SQL Server, also
-   read the one SQL Server topic reference that matches the request.
+   EF Core migrations reference; never assume EF Core. On SQL Server or
+   PostgreSQL, also read the one topic reference for that engine that
+   matches the request; never treat the two engines as interchangeable.
 2. **Classify the target environment.** If any command will run against a
    database that is not local and disposable, or the change is destructive,
    read the database safety checklist and apply its gates.
@@ -169,6 +170,13 @@ Load one engine reference (workflow step 1), the safety checklist when step 2 re
 | [references/sqlserver-operations.md](references/sqlserver-operations.md) | SQL Server: backup and restore proof, recovery models, statistics, index maintenance, or integrity checks |
 | [references/sqlserver-data-access.md](references/sqlserver-data-access.md) | SQL Server data access code through EF Core (`UseSqlServer`), Dapper, or ADO.NET (`Microsoft.Data.SqlClient`) |
 | [references/postgresql.md](references/postgresql.md) | The engine is PostgreSQL (`Npgsql`, `UseNpgsql`, `pg`, `postgres`, `psycopg`, `asyncpg`) |
+| [references/postgres-sql.md](references/postgres-sql.md) | PostgreSQL: writing or porting SQL, upserts, identifiers, types, or `jsonb` columns and their indexes |
+| [references/postgres-query-tuning.md](references/postgres-query-tuning.md) | PostgreSQL: `EXPLAIN ANALYZE` evidence, N+1 shapes, or index design and concurrent index builds |
+| [references/postgres-concurrency-security.md](references/postgres-concurrency-security.md) | PostgreSQL: isolation, serialization failures, locks and lock timeouts, queues, or row-level security |
+| [references/postgres-schema-changes.md](references/postgres-schema-changes.md) | PostgreSQL: schema migrations on live tables, constraints, rewrites, or declarative partitioning |
+| [references/postgres-operations.md](references/postgres-operations.md) | PostgreSQL: vacuum, analyze, bloat, wraparound, or backup, restore, and point-in-time recovery |
+| [references/postgres-data-access.md](references/postgres-data-access.md) | PostgreSQL data access code through EF Core Npgsql, Npgsql, SQLAlchemy, or another ORM or driver found in the project |
+| [references/database-portability.md](references/database-portability.md) | Code, schema, or tests must work on both SQL Server and PostgreSQL, or a move between them is reviewed |
 | [references/efcore-migrations.md](references/efcore-migrations.md) | Workflow step 1: a .NET project whose schema EF Core migrations manage (`Migrations/` with a model snapshot, `dotnet-ef` in the tool manifest) |
 | [references/database-safety.md](references/database-safety.md) | A command will run against a non-local database, or the change is destructive |
 | [references/data-modeling.md](references/data-modeling.md) | Designing tables, keys, constraints, and types |

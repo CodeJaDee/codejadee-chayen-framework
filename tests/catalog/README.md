@@ -50,3 +50,9 @@ version notes, case mapping, fact references, and four V-23.10 data access
 controls (a missing recipe topic, a driver API or package the fixture does
 not reference, a wrong recipe case). The baseline also copies the SQL Server
 runner and its fixture project for static checks; nothing is built or run.
+
+Step 27 adds eleven PostgreSQL and cross-stack controls: both inventories,
+the cross-stack scope rule, a missing and an orphan section, version notes,
+case mapping, fact references, a missing recipe topic, an unpinned Python
+package, and a SQLAlchemy API the imported fixture no longer uses. The
+baseline copies the Step 27 runner and fixtures for static checks only.

@@ -60,12 +60,12 @@ it without a YAML library:
 Every file in the subset is also valid YAML 1.2. In Step 07, a PyYAML parse
 produced data identical to this parser's output.
 
-## Technology packs after Step 26
+## Technology packs after Step 27
 
-`node tools/catalog/check-technology.mjs` checks 90 records: 22 .NET, 14
-Angular, 8 shared TS/JS, 8 React, 8 Next.js, 7 Vue, 7 Nuxt, 4 Vite, and 12 SQL Server capabilities. `--write-doc` refreshes the generated
+`node tools/catalog/check-technology.mjs` checks 108 records: 22 .NET, 14
+Angular, 8 shared TS/JS, 8 React, 8 Next.js, 7 Vue, 7 Nuxt, 4 Vite, 12 SQL Server, 10 PostgreSQL, and 8 cross-stack capabilities. `--write-doc` refreshes the generated
 table in TECHNOLOGY_COVERAGE.md. It validates inventory, mapping, ordered
-section anatomy, cases, and AF/JF/TF/RF/NF/VF/UF/BF/SF fact IDs. These are static gates; they do
+section anatomy, cases, and AF/JF/TF/RF/NF/VF/UF/BF/SF/PF/XF fact IDs. These are static gates; they do
 not execute agent evaluations or framework facts. Fact commands and current
 PASS/NOT_RUN limits are recorded separately in PROGRESS. Step 22's three
 executed NF checks are synthetic Web-standard boundaries, not compiled Next
@@ -76,3 +76,7 @@ Step 26 adds V-23.10 for the SQL Server data access recipes: three library
 sections, ten required topics each, steps and a verify rule, recipe cases,
 and a Driver references table whose packages and APIs must appear in the
 fact fixture that `tests/technology/sqlserver/run-fact-checks.mjs` compiles.
+Step 27 extends V-23.10 to a list of recipe files (SQL Server and
+PostgreSQL), with packages pinned in a .NET project or `requirements.txt`.
+A pack marked `scope: cross-stack` is exempt from the engineering
+stack-pack membership check (D-044).

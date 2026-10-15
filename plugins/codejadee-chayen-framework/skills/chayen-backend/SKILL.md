@@ -194,6 +194,8 @@ Load one technology reference for the detected stack (workflow step 1), and one 
 | [references/api-design.md](references/api-design.md) | Designing a new API contract, versioning one, or evolving a GraphQL schema |
 | [references/api-endpoints.md](references/api-endpoints.md) | Implementing or fixing endpoints, validating requests, or checking responses against the contract |
 | [references/authn-authz.md](references/authn-authz.md) | Implementing authentication or authorization |
+| [references/crossstack-api-contracts.md](references/crossstack-api-contracts.md) | A front end or other consumer depends on the API: OpenAPI contract sync, drift checks, or the error response contract |
+| [references/crossstack-auth-boundaries.md](references/crossstack-auth-boundaries.md) | A browser front end and the API must agree on sessions or tokens, 401/403 challenges, CORS, or CSRF defences |
 | [references/messaging.md](references/messaging.md) | Publishing or consuming events, or designing queues |
 | [references/background-jobs.md](references/background-jobs.md) | Scheduled or background work |
 | [references/external-integrations.md](references/external-integrations.md) | Calling an internal or third-party HTTP service, or sending or receiving webhooks |

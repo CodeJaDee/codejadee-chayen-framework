@@ -1,5 +1,5 @@
 {
-  "$comment": "Technology capability evaluation cases (Steps 20–23 and 26, D-039..D-043). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
+  "$comment": "Technology capability evaluation cases (Steps 20–23, 26, and 27, D-039..D-044). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
   "version": 1,
   "cases": [
     {
@@ -3326,6 +3326,883 @@
       },
       "checks": [
         "Does not apply SQL Server maintenance guidance"
+      ]
+    },
+    {
+      "id": "tc-postgres-sql-dialect-01",
+      "capability": "postgres-sql-dialect",
+      "polarity": "positive",
+      "context": "Node API on PostgreSQL 16 using pg; queries ported from an older SQL Server app",
+      "prompt": "Our report query uses TOP and ISNULL from the old system and fails on Postgres. Rewrite it.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-sql.md",
+        "applies": "postgres-sql-dialect"
+      },
+      "checks": [
+        "Confirms PostgreSQL from the pg dependency or connection string",
+        "Uses LIMIT with a deterministic ORDER BY and COALESCE",
+        "Keeps values as $1-style parameters",
+        "Runs on a disposable PostgreSQL database or reports NOT_RUN"
+      ]
+    },
+    {
+      "id": "tc-postgres-sql-dialect-upsert",
+      "capability": "postgres-sql-dialect",
+      "polarity": "positive",
+      "context": "ASP.NET Core with EF Core Npgsql 9 on PostgreSQL 15; inventory table with unique (sku, warehouse_id)",
+      "prompt": "Make the stock increment safe when two requests add the same SKU at once.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-sql.md",
+        "applies": "postgres-sql-dialect"
+      },
+      "checks": [
+        "Uses INSERT ... ON CONFLICT DO UPDATE backed by the unique index",
+        "Does not use MERGE without checking version or SQL Server UPDLOCK patterns",
+        "Adds a concurrent test"
+      ]
+    },
+    {
+      "id": "tc-postgres-sql-dialect-identifiers",
+      "capability": "postgres-sql-dialect",
+      "polarity": "positive",
+      "context": "EF Core Npgsql project with quoted PascalCase tables plus hand-written SQL using unquoted names",
+      "prompt": "Our raw SQL says relation orders does not exist but the table is there. Fix it.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-sql.md",
+        "applies": "postgres-sql-dialect"
+      },
+      "checks": [
+        "Explains unquoted identifier folding versus quoted \"Orders\"",
+        "Follows the existing quoting convention",
+        "Does not rename tables"
+      ]
+    },
+    {
+      "id": "tc-postgres-sql-dialect-neg-01",
+      "capability": "postgres-sql-dialect",
+      "polarity": "negative",
+      "context": "ASP.NET Core API on SQL Server 2022 with Dapper",
+      "prompt": "Add paging to our customer search query.",
+      "expect": {
+        "not_applies": "postgres-sql-dialect",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-sql.md"
+      },
+      "checks": [
+        "Uses SQL Server paging, not LIMIT",
+        "Does not load PostgreSQL guidance"
+      ]
+    },
+    {
+      "id": "tc-postgres-jsonb-01",
+      "capability": "postgres-jsonb",
+      "polarity": "positive",
+      "context": "PostgreSQL 16 table events with a jsonb payload; queries filter on payload->>'tenant'",
+      "prompt": "Queries on the tenant inside our jsonb payload are slow. What should we index?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-sql.md",
+        "applies": "postgres-jsonb"
+      },
+      "checks": [
+        "Explains GIN serves @> but not ->> equality",
+        "Proposes an expression index or a real column for tenant",
+        "Checks the plan before and after"
+      ]
+    },
+    {
+      "id": "tc-postgres-jsonb-precision",
+      "capability": "postgres-jsonb",
+      "polarity": "positive",
+      "context": "Django on PostgreSQL storing prices inside jsonb, consumed by a React app",
+      "prompt": "Prices with many digits come out slightly wrong in the UI. Fix the JSON handling.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-sql.md",
+        "applies": "postgres-jsonb"
+      },
+      "checks": [
+        "Notes jsonb numeric keeps precision but JavaScript numbers do not",
+        "Sends money as strings or minor units",
+        "Tests a precision round trip"
+      ]
+    },
+    {
+      "id": "tc-postgres-jsonb-neg-01",
+      "capability": "postgres-jsonb",
+      "polarity": "negative",
+      "context": "MongoDB Atlas orders collection",
+      "prompt": "Index the nested status field in our MongoDB orders documents.",
+      "expect": {
+        "not_applies": "postgres-jsonb",
+        "skill": "none"
+      },
+      "checks": [
+        "Does not apply PostgreSQL jsonb guidance"
+      ]
+    },
+    {
+      "id": "tc-postgres-explain-analyze-01",
+      "capability": "postgres-explain-analyze",
+      "polarity": "positive",
+      "context": "PostgreSQL 15 production reachable read-only; Rails-like service using SQLAlchemy",
+      "prompt": "This Postgres query takes 9 seconds in production. Here is the SQL; make it faster.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-query-tuning.md",
+        "applies": "postgres-explain-analyze"
+      },
+      "checks": [
+        "Uses plain EXPLAIN or pg_stat_statements in production, not EXPLAIN ANALYZE of writes",
+        "Measures EXPLAIN (ANALYZE, BUFFERS) on a copy",
+        "Reports MEASURED before and after or labels the gain expected"
+      ]
+    },
+    {
+      "id": "tc-postgres-explain-analyze-n-plus-one",
+      "capability": "postgres-explain-analyze",
+      "polarity": "positive",
+      "context": "FastAPI with SQLAlchemy 2.0 on PostgreSQL; a list endpoint touches order.customer in a loop",
+      "prompt": "The orders endpoint runs hundreds of queries per request. Fix it.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-query-tuning.md",
+        "applies": "postgres-explain-analyze"
+      },
+      "checks": [
+        "Counts statements with an event listener",
+        "Uses selectinload or joinedload",
+        "Adds a test asserting the statement count"
+      ]
+    },
+    {
+      "id": "tc-postgres-explain-analyze-neg-01",
+      "capability": "postgres-explain-analyze",
+      "polarity": "negative",
+      "context": "SQL Server 2019 with an actual execution plan attached",
+      "prompt": "Here is the SQL Server execution plan for our slow query. Why is it slow?",
+      "expect": {
+        "not_applies": "postgres-explain-analyze",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-query-tuning.md"
+      },
+      "checks": [
+        "Reads the SQL Server plan",
+        "Does not suggest EXPLAIN ANALYZE"
+      ]
+    },
+    {
+      "id": "tc-postgres-index-strategy-01",
+      "capability": "postgres-index-strategy",
+      "polarity": "positive",
+      "context": "PostgreSQL 14, 60M-row users table, login looks up lower(email); Alembic migrations",
+      "prompt": "Add the right index for case-insensitive email login without downtime.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-query-tuning.md",
+        "applies": "postgres-index-strategy"
+      },
+      "checks": [
+        "Uses an expression index on lower(email)",
+        "Builds CONCURRENTLY in an Alembic autocommit block",
+        "Checks indisvalid and handles an INVALID index",
+        "Measures before and after"
+      ]
+    },
+    {
+      "id": "tc-postgres-index-strategy-ilike",
+      "capability": "postgres-index-strategy",
+      "polarity": "positive",
+      "context": "EF Core Npgsql 8 app searching product names with ILIKE '%term%'",
+      "prompt": "Product search is slow. Add an index.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-query-tuning.md",
+        "applies": "postgres-index-strategy"
+      },
+      "checks": [
+        "Explains a B-tree cannot serve a leading wildcard",
+        "Proposes pg_trgm GIN only with approval to add the extension",
+        "Measures the plan"
+      ]
+    },
+    {
+      "id": "tc-postgres-index-strategy-neg-01",
+      "capability": "postgres-index-strategy",
+      "polarity": "negative",
+      "context": "SQL Server 2019 Standard with missing-index DMV output",
+      "prompt": "Which missing index suggestions should we create?",
+      "expect": {
+        "not_applies": "postgres-index-strategy",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-query-tuning.md"
+      },
+      "checks": [
+        "Uses SQL Server index guidance",
+        "Does not mention CREATE INDEX CONCURRENTLY"
+      ]
+    },
+    {
+      "id": "tc-postgres-mvcc-locking-01",
+      "capability": "postgres-mvcc-locking",
+      "polarity": "positive",
+      "context": "PostgreSQL 16 job table processed by several workers that sometimes pick the same job",
+      "prompt": "Two workers sometimes process the same job. Fix the claim query.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-concurrency-security.md",
+        "applies": "postgres-mvcc-locking"
+      },
+      "checks": [
+        "Uses FOR UPDATE SKIP LOCKED in a short transaction",
+        "Tests two concurrent workers"
+      ]
+    },
+    {
+      "id": "tc-postgres-mvcc-locking-serialization",
+      "capability": "postgres-mvcc-locking",
+      "polarity": "positive",
+      "context": "Transfers run at REPEATABLE READ on PostgreSQL and fail with 40001 under load",
+      "prompt": "Our transfer endpoint randomly fails with could not serialize access. What do we do?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-concurrency-security.md",
+        "applies": "postgres-mvcc-locking"
+      },
+      "checks": [
+        "Explains 40001 as expected under REPEATABLE READ",
+        "Retries the whole transaction, bounded",
+        "Does not lower isolation without analysis"
+      ]
+    },
+    {
+      "id": "tc-postgres-mvcc-locking-lock-timeout",
+      "capability": "postgres-mvcc-locking",
+      "polarity": "positive",
+      "context": "Busy PostgreSQL 15 database; a migration adding a column hung and blocked the site",
+      "prompt": "Our ALTER TABLE migration froze production yesterday. How do we stop that happening?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-concurrency-security.md",
+        "applies": "postgres-mvcc-locking"
+      },
+      "checks": [
+        "Sets lock_timeout and statement_timeout in migrations",
+        "Identifies the long transaction holding the lock",
+        "Retries in a quiet window"
+      ]
+    },
+    {
+      "id": "tc-postgres-mvcc-locking-neg-01",
+      "capability": "postgres-mvcc-locking",
+      "polarity": "negative",
+      "context": "SQL Server 2022 with RCSI off and readers blocked by writers",
+      "prompt": "Readers wait on writers in our SQL Server database. Fix the blocking.",
+      "expect": {
+        "not_applies": "postgres-mvcc-locking",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-concurrency-security.md"
+      },
+      "checks": [
+        "Uses SQL Server isolation guidance",
+        "Does not claim readers never block as on PostgreSQL"
+      ]
+    },
+    {
+      "id": "tc-postgres-row-level-security-01",
+      "capability": "postgres-row-level-security",
+      "polarity": "positive",
+      "context": "Multi-tenant SaaS on PostgreSQL 15 with tenant_id columns; app connects as the table owner",
+      "prompt": "Enforce tenant isolation in the database with row-level security.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-concurrency-security.md",
+        "applies": "postgres-row-level-security"
+      },
+      "checks": [
+        "Uses a non-owner, non-superuser app role or FORCE ROW LEVEL SECURITY",
+        "Writes USING and WITH CHECK policies with NULLIF(current_setting(...), '')",
+        "Sets the tenant with set_config(..., true) per transaction",
+        "Tests per tenant as the real role"
+      ]
+    },
+    {
+      "id": "tc-postgres-row-level-security-pooling",
+      "capability": "postgres-row-level-security",
+      "polarity": "positive",
+      "context": "Supabase-style PostgreSQL with PgBouncer in transaction mode and SET app.tenant_id per session",
+      "prompt": "Sometimes users see another tenant's rows. Investigate our RLS setup.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-concurrency-security.md",
+        "applies": "postgres-row-level-security"
+      },
+      "checks": [
+        "Identifies session-level settings leaking through transaction pooling",
+        "Moves to transaction-local set_config",
+        "Tests with the pooler"
+      ]
+    },
+    {
+      "id": "tc-postgres-row-level-security-neg-01",
+      "capability": "postgres-row-level-security",
+      "polarity": "negative",
+      "context": "SQL Server 2019 multi-tenant database",
+      "prompt": "Add row-level security for tenants in SQL Server.",
+      "expect": {
+        "not_applies": "postgres-row-level-security",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-concurrency-security.md"
+      },
+      "checks": [
+        "Uses SQL Server security policies",
+        "Does not use CREATE POLICY syntax"
+      ]
+    },
+    {
+      "id": "tc-postgres-partitioning-01",
+      "capability": "postgres-partitioning",
+      "polarity": "positive",
+      "context": "PostgreSQL 16 events table with 2 billion rows; 90-day retention; queries filter by occurred_at",
+      "prompt": "Should we partition the events table, and how?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-schema-changes.md",
+        "applies": "postgres-partitioning"
+      },
+      "checks": [
+        "Justifies partitioning by pruning and retention",
+        "Includes the partition key in unique constraints",
+        "Plans future partitions and the default partition decision",
+        "Shows pruning in EXPLAIN"
+      ]
+    },
+    {
+      "id": "tc-postgres-partitioning-neg-01",
+      "capability": "postgres-partitioning",
+      "polarity": "negative",
+      "context": "PostgreSQL table with 50,000 rows and lookups by id",
+      "prompt": "Partition our 50k-row customers table to make it faster.",
+      "expect": {
+        "not_applies": "postgres-partitioning",
+        "skill": "chayen-data"
+      },
+      "checks": [
+        "Explains indexes fit and partitioning adds cost",
+        "Does not create partitions"
+      ]
+    },
+    {
+      "id": "tc-postgres-schema-migrations-01",
+      "capability": "postgres-schema-migrations",
+      "polarity": "positive",
+      "context": "Prisma Migrate on PostgreSQL 15; orders table 300M rows",
+      "prompt": "Change orders.amount from integer to numeric(12,2) without an outage.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-schema-changes.md",
+        "applies": "postgres-schema-migrations"
+      },
+      "checks": [
+        "Identifies a type change rewrite",
+        "Plans expand, backfill in batches, switch, contract",
+        "Sets lock_timeout and asks for approval before production"
+      ]
+    },
+    {
+      "id": "tc-postgres-schema-migrations-fk",
+      "capability": "postgres-schema-migrations",
+      "polarity": "positive",
+      "context": "Django on PostgreSQL 14 with orphan rows in order_items",
+      "prompt": "Add the missing foreign key from order_items to orders.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-schema-changes.md",
+        "applies": "postgres-schema-migrations"
+      },
+      "checks": [
+        "Adds the constraint NOT VALID first",
+        "Counts and cleans orphans with approval",
+        "Runs VALIDATE CONSTRAINT afterwards"
+      ]
+    },
+    {
+      "id": "tc-postgres-schema-migrations-neg-01",
+      "capability": "postgres-schema-migrations",
+      "polarity": "negative",
+      "context": "SQL Server 2019 Standard with DbUp scripts",
+      "prompt": "Add a NOT NULL column to our big SQL Server Orders table safely.",
+      "expect": {
+        "not_applies": "postgres-schema-migrations",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-schema-changes.md"
+      },
+      "checks": [
+        "Uses SQL Server schema guidance",
+        "Does not apply PostgreSQL rewrite rules"
+      ]
+    },
+    {
+      "id": "tc-postgres-vacuum-maintenance-01",
+      "capability": "postgres-vacuum-maintenance",
+      "polarity": "positive",
+      "context": "PostgreSQL 15; table sessions has millions of dead tuples despite autovacuum",
+      "prompt": "Autovacuum runs constantly but sessions keeps growing. Why?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-operations.md",
+        "applies": "postgres-vacuum-maintenance"
+      },
+      "checks": [
+        "Checks for long or idle-in-transaction sessions and replication slots",
+        "Explains dead rows not yet removable",
+        "Tunes per-table settings after removing the blocker"
+      ]
+    },
+    {
+      "id": "tc-postgres-vacuum-maintenance-neg-01",
+      "capability": "postgres-vacuum-maintenance",
+      "polarity": "negative",
+      "context": "SQL Server 2019 with a nightly index rebuild job",
+      "prompt": "Our nightly SQL Server index rebuild bloats the log. Should we change it?",
+      "expect": {
+        "not_applies": "postgres-vacuum-maintenance",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-operations.md"
+      },
+      "checks": [
+        "Uses SQL Server maintenance guidance",
+        "Does not mention VACUUM"
+      ]
+    },
+    {
+      "id": "tc-postgres-backup-recovery-01",
+      "capability": "postgres-backup-recovery",
+      "polarity": "positive",
+      "context": "Self-managed PostgreSQL 16 with pg_dump nightly and RLS policies referencing roles",
+      "prompt": "Plan a restore drill that proves our Postgres backups restore.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-operations.md",
+        "applies": "postgres-backup-recovery"
+      },
+      "checks": [
+        "Restores into a new database with globals (roles) first",
+        "Checks counts, checksums, and pg_amcheck",
+        "Measures against RTO and RPO"
+      ]
+    },
+    {
+      "id": "tc-postgres-backup-recovery-pitr",
+      "capability": "postgres-backup-recovery",
+      "polarity": "positive",
+      "context": "Amazon RDS for PostgreSQL with automated backups; RPO 5 minutes",
+      "prompt": "Can we restore our database to 10:42 this morning? Plan a drill.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-operations.md",
+        "applies": "postgres-backup-recovery"
+      },
+      "checks": [
+        "Uses the provider point-in-time restore to a new instance",
+        "Does not overwrite the existing instance",
+        "Records the recovered point"
+      ]
+    },
+    {
+      "id": "tc-postgres-backup-recovery-neg-01",
+      "capability": "postgres-backup-recovery",
+      "polarity": "negative",
+      "context": "SQL Server 2022 database in SIMPLE recovery",
+      "prompt": "Can we restore our SQL Server database to 10:42 this morning?",
+      "expect": {
+        "not_applies": "postgres-backup-recovery",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-operations.md"
+      },
+      "checks": [
+        "Uses SQL Server recovery-model guidance",
+        "Does not mention pg_dump or WAL"
+      ]
+    },
+    {
+      "id": "tc-openapi-contract-sync-01",
+      "capability": "openapi-contract-sync",
+      "polarity": "positive",
+      "context": "ASP.NET Core 10 API with AddOpenApi and a committed openapi.json; Angular client generated from it",
+      "prompt": "We renamed a DTO property. Make sure the OpenAPI contract and the Angular client stay in sync.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/crossstack-api-contracts.md",
+        "applies": "openapi-contract-sync"
+      },
+      "checks": [
+        "Regenerates the document from the build and diffs it with the committed contract",
+        "Classifies the rename as breaking and asks before shipping",
+        "Regenerates and type-checks the Angular client"
+      ]
+    },
+    {
+      "id": "tc-openapi-contract-sync-ci",
+      "capability": "openapi-contract-sync",
+      "polarity": "positive",
+      "context": "FastAPI service with a design-first openapi.yaml and a React consumer",
+      "prompt": "Add a CI check that fails when the API drifts from openapi.yaml.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/crossstack-api-contracts.md",
+        "applies": "openapi-contract-sync"
+      },
+      "checks": [
+        "Compares served or generated output with the committed contract",
+        "Uses the project's existing tools or proposes one with approval"
+      ]
+    },
+    {
+      "id": "tc-openapi-contract-sync-neg-01",
+      "capability": "openapi-contract-sync",
+      "polarity": "negative",
+      "context": "GraphQL API with a schema.graphql and Apollo clients",
+      "prompt": "Keep our GraphQL schema and client queries in sync.",
+      "expect": {
+        "not_applies": "openapi-contract-sync",
+        "skill": "chayen-backend",
+        "not_loads": "references/crossstack-api-contracts.md"
+      },
+      "checks": [
+        "Does not apply OpenAPI contract guidance"
+      ]
+    },
+    {
+      "id": "tc-typed-api-client-generation-01",
+      "capability": "typed-api-client-generation",
+      "polarity": "positive",
+      "context": "React app using openapi-typescript 7 to generate types from the backend contract",
+      "prompt": "Regenerate our API types for the new orders endpoint and fix whatever breaks.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/crossstack-types-and-time.md",
+        "applies": "typed-api-client-generation"
+      },
+      "checks": [
+        "Uses the pinned generator and committed contract",
+        "Does not hand-edit generated files",
+        "Type-checks the app and fixes consumers",
+        "Flags 64-bit ids and decimals typed as number"
+      ]
+    },
+    {
+      "id": "tc-typed-api-client-generation-bigint",
+      "capability": "typed-api-client-generation",
+      "polarity": "positive",
+      "context": "Angular client generated with ng-openapi-gen; API returns long ids above 2^53",
+      "prompt": "Some order ids in the UI end in 2 instead of 3. Fix it.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/crossstack-types-and-time.md",
+        "applies": "typed-api-client-generation"
+      },
+      "checks": [
+        "Explains JavaScript number precision loss",
+        "Changes the contract to send ids as strings",
+        "Regenerates the client and tests a large id"
+      ]
+    },
+    {
+      "id": "tc-typed-api-client-generation-neg-01",
+      "capability": "typed-api-client-generation",
+      "polarity": "negative",
+      "context": "Vue app with a hand-written axios client and no generator",
+      "prompt": "Add a call to the new orders endpoint in our client.",
+      "expect": {
+        "not_applies": "typed-api-client-generation",
+        "skill": "chayen-frontend"
+      },
+      "checks": [
+        "Keeps the hand-written client",
+        "Does not introduce a generator unasked"
+      ]
+    },
+    {
+      "id": "tc-crossstack-authentication-01",
+      "capability": "crossstack-authentication",
+      "polarity": "positive",
+      "context": "Angular SPA and ASP.NET Core 8 API using cookie authentication on the same site",
+      "prompt": "When the session expires, API calls return the login page HTML and the app breaks. Fix it.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/crossstack-auth-boundaries.md",
+        "applies": "crossstack-authentication"
+      },
+      "checks": [
+        "Makes API calls receive 401 instead of a redirect",
+        "Notes .NET 10 changes this default for API endpoints",
+        "Handles 401 once in the client",
+        "Tests anonymous, expired, signed-in, forbidden"
+      ]
+    },
+    {
+      "id": "tc-crossstack-authentication-403",
+      "capability": "crossstack-authentication",
+      "polarity": "positive",
+      "context": "React SPA with a Node API; users without the admin role get redirected to sign-in repeatedly",
+      "prompt": "Non-admin users get stuck in a login loop on the admin page.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/crossstack-auth-boundaries.md",
+        "applies": "crossstack-authentication"
+      },
+      "checks": [
+        "Distinguishes 401 from 403",
+        "Keeps authorization on the server",
+        "Shows an authorization message instead of re-login"
+      ]
+    },
+    {
+      "id": "tc-crossstack-authentication-neg-01",
+      "capability": "crossstack-authentication",
+      "polarity": "negative",
+      "context": "Operations team administering a self-hosted Keycloak server",
+      "prompt": "Create a new realm and client in our Keycloak server.",
+      "expect": {
+        "not_applies": "crossstack-authentication",
+        "skill": "none"
+      },
+      "checks": [
+        "Does not apply cross-stack authentication guidance"
+      ]
+    },
+    {
+      "id": "tc-crossstack-error-contract-01",
+      "capability": "crossstack-error-contract",
+      "polarity": "positive",
+      "context": "ASP.NET Core 10 API returning a mix of plain strings, custom objects, and problem details; Vue front end",
+      "prompt": "Our front end shows 'undefined' for most API errors. Standardize the error responses.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/crossstack-api-contracts.md",
+        "applies": "crossstack-error-contract"
+      },
+      "checks": [
+        "Chooses problem details for every path",
+        "Removes internal exception text",
+        "Makes the client accept application/problem+json",
+        "Tests each status code"
+      ]
+    },
+    {
+      "id": "tc-crossstack-error-contract-neg-01",
+      "capability": "crossstack-error-contract",
+      "polarity": "negative",
+      "context": "React component that renders an error banner",
+      "prompt": "Make our error banner component prettier.",
+      "expect": {
+        "not_applies": "crossstack-error-contract",
+        "skill": "chayen-frontend"
+      },
+      "checks": [
+        "Does not change API error contracts"
+      ]
+    },
+    {
+      "id": "tc-crossstack-date-time-01",
+      "capability": "crossstack-date-time",
+      "polarity": "positive",
+      "context": "PostgreSQL timestamp columns, ASP.NET Core API with DateTime, React UI in Bangkok and New York",
+      "prompt": "Order times show seven hours off for some users. Fix the dates end to end.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/crossstack-types-and-time.md",
+        "applies": "crossstack-date-time"
+      },
+      "checks": [
+        "Classifies values as instants and moves to timestamptz/DateTimeOffset with UTC",
+        "Explains zone-less strings parsed as local time",
+        "Tests a round trip in a non-UTC zone"
+      ]
+    },
+    {
+      "id": "tc-crossstack-date-time-date-only",
+      "capability": "crossstack-date-time",
+      "polarity": "positive",
+      "context": "Birthdays stored as date and sent as ISO date strings to a Next.js UI",
+      "prompt": "Birthdays show one day early for US users.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/crossstack-types-and-time.md",
+        "applies": "crossstack-date-time"
+      },
+      "checks": [
+        "Explains date-only strings parse as UTC midnight",
+        "Keeps calendar dates out of time-zone conversion",
+        "Tests near midnight"
+      ]
+    },
+    {
+      "id": "tc-crossstack-date-time-npgsql",
+      "capability": "crossstack-date-time",
+      "polarity": "positive",
+      "context": "EF Core Npgsql 8 app writing DateTime.Now to timestamptz",
+      "prompt": "Saving orders throws 'Cannot write DateTime with Kind=Local' after the upgrade.",
+      "expect": {
+        "skill": "chayen-implementation",
+        "loads": "references/crossstack-types-and-time.md",
+        "applies": "crossstack-date-time"
+      },
+      "checks": [
+        "Explains Npgsql 6+ UTC-only timestamptz mapping",
+        "Uses UTC or DateTimeOffset rather than the legacy switch by default",
+        "Tests the round trip"
+      ]
+    },
+    {
+      "id": "tc-crossstack-date-time-neg-01",
+      "capability": "crossstack-date-time",
+      "polarity": "negative",
+      "context": "Python script computing the number of business days in a month",
+      "prompt": "Count business days in a month in this utility function.",
+      "expect": {
+        "not_applies": "crossstack-date-time",
+        "skill": "chayen-implementation",
+        "not_loads": "references/crossstack-types-and-time.md"
+      },
+      "checks": [
+        "Does not apply cross-layer date guidance to a single-layer calculation"
+      ]
+    },
+    {
+      "id": "tc-crossstack-cors-csrf-01",
+      "capability": "crossstack-cors-csrf",
+      "polarity": "positive",
+      "context": "Vue SPA on app.example.com calling an ASP.NET Core API on api.example.com with cookies",
+      "prompt": "Fix the CORS error our SPA gets when calling the API with credentials.",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/crossstack-auth-boundaries.md",
+        "applies": "crossstack-cors-csrf"
+      },
+      "checks": [
+        "Lists explicit origins with credentials, never a wildcard",
+        "Explains CORS does not stop the request reaching the server",
+        "Adds CSRF protection for cookie state changes",
+        "Tests allowed and disallowed origins"
+      ]
+    },
+    {
+      "id": "tc-crossstack-cors-csrf-csrf",
+      "capability": "crossstack-cors-csrf",
+      "polarity": "positive",
+      "context": "Server-rendered forms plus fetch calls with cookie sessions on Express",
+      "prompt": "Do our cookie-authenticated POST endpoints need CSRF protection?",
+      "expect": {
+        "skill": "chayen-backend",
+        "loads": "references/crossstack-auth-boundaries.md",
+        "applies": "crossstack-cors-csrf"
+      },
+      "checks": [
+        "Explains cookies are sent cross-site depending on SameSite",
+        "Adds tokens or a required custom header",
+        "Tests a POST without a token"
+      ]
+    },
+    {
+      "id": "tc-crossstack-cors-csrf-neg-01",
+      "capability": "crossstack-cors-csrf",
+      "polarity": "negative",
+      "context": "Two backend services calling each other over HTTP with mTLS",
+      "prompt": "Configure CORS between our two backend services.",
+      "expect": {
+        "not_applies": "crossstack-cors-csrf",
+        "skill": "chayen-backend",
+        "not_loads": "references/crossstack-auth-boundaries.md"
+      },
+      "checks": [
+        "Explains CORS does not apply without a browser"
+      ]
+    },
+    {
+      "id": "tc-crossstack-e2e-01",
+      "capability": "crossstack-e2e",
+      "polarity": "positive",
+      "context": "Playwright suite for a Nuxt front end and ASP.NET Core API with a PostgreSQL test container",
+      "prompt": "Add an end-to-end test for login and viewing an order.",
+      "expect": {
+        "skill": "chayen-testing",
+        "loads": "references/crossstack-e2e.md",
+        "applies": "crossstack-e2e"
+      },
+      "checks": [
+        "Starts the API with a test database, never a shared one",
+        "Logs in through the UI once and reuses state",
+        "Asserts contract fields and dates in the UI",
+        "Waits on conditions, not sleeps"
+      ]
+    },
+    {
+      "id": "tc-crossstack-e2e-neg-01",
+      "capability": "crossstack-e2e",
+      "polarity": "negative",
+      "context": "React component library with Vitest and Testing Library",
+      "prompt": "Test that the Button component calls onClick.",
+      "expect": {
+        "not_applies": "crossstack-e2e",
+        "skill": "chayen-testing",
+        "not_loads": "references/crossstack-e2e.md"
+      },
+      "checks": [
+        "Uses a component test, not a browser end-to-end flow"
+      ]
+    },
+    {
+      "id": "tc-database-portability-review-01",
+      "capability": "database-portability-review",
+      "polarity": "positive",
+      "context": "Product supporting SQL Server and PostgreSQL through EF Core; CI runs only SQL Server",
+      "prompt": "Customers on Postgres report missing search results. Review our portability.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/database-portability.md",
+        "applies": "database-portability-review"
+      },
+      "checks": [
+        "Identifies case-sensitive comparison on PostgreSQL",
+        "Compares generated SQL per provider",
+        "Adds the PostgreSQL engine to tests"
+      ]
+    },
+    {
+      "id": "tc-database-portability-review-sqlite",
+      "capability": "database-portability-review",
+      "polarity": "positive",
+      "context": "API tested on SQLite in memory, production on PostgreSQL",
+      "prompt": "Our tests pass but production fails on duplicate NULL keys. Why?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/database-portability.md",
+        "applies": "database-portability-review"
+      },
+      "checks": [
+        "Explains engine differences in NULL uniqueness and types",
+        "Moves integration tests to PostgreSQL"
+      ]
+    },
+    {
+      "id": "tc-database-portability-review-neg-01",
+      "capability": "database-portability-review",
+      "polarity": "negative",
+      "context": "Single PostgreSQL 16 database with no other engine planned",
+      "prompt": "Write the query for the monthly sales report.",
+      "expect": {
+        "not_applies": "database-portability-review",
+        "skill": "chayen-data",
+        "not_loads": "references/database-portability.md"
+      },
+      "checks": [
+        "Uses PostgreSQL guidance only",
+        "Does not run a portability review"
       ]
     }
   ]

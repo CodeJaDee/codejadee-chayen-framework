@@ -179,6 +179,7 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 | [references/dead-code-and-deprecation.md](references/dead-code-and-deprecation.md) | Workflow step 3: finding and removing unused code, or deprecating an API, feature, or library |
 | [references/configuration-and-flags.md](references/configuration-and-flags.md) | Workflow step 3: adding or changing settings, or a feature flag |
 | [references/contract-codegen.md](references/contract-codegen.md) | Workflow step 3: generating or regenerating code from a contract |
+| [references/crossstack-types-and-time.md](references/crossstack-types-and-time.md) | Typed API clients generated from OpenAPI, or dates, times, time zones, and numeric precision crossing database, API, and client |
 | [references/compatibility.md](references/compatibility.md) | Workflow step 3: changing a public API, event, schema, or library that others consume |
 | [references/csharp-types-and-nullability.md](references/csharp-types-and-nullability.md) | Workflow step 1: C# code, and the change touches nullable reference types or the design of classes, records, structs, or interfaces |
 | [references/csharp-async-and-memory.md](references/csharp-async-and-memory.md) | Workflow step 1: C# code, and the change touches async, cancellation, concurrency, disposal, or allocations |

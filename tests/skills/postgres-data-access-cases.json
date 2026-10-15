@@ -1,0 +1,187 @@
+{
+  "$comment": "Step 27 PostgreSQL data access recipe cases (D-044). Positive cases: route to expect.skill, load expect.loads, and apply the recipe section in expect.applies_recipe. Negative cases: the recipe must not be applied and expect.not_loads must not be read; expect.skill is the better fit or none. Validated by tools/catalog/check-technology.mjs (V-23.10). Agent execution: NOT_RUN (G-12). Never shipped.",
+  "version": 1,
+  "cases": [
+    {
+      "id": "pg-efcore-01",
+      "recipe": "EF Core Npgsql provider recipe",
+      "polarity": "positive",
+      "context": "ASP.NET Core 8 with EF Core Npgsql 8; DateTime.Now saved to timestamptz",
+      "prompt": "Saving orders fails with a Kind=Local error since we upgraded Npgsql. Fix it properly.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-data-access.md",
+        "applies_recipe": "EF Core Npgsql provider recipe"
+      },
+      "checks": [
+        "Explains UTC-only timestamptz mapping since Npgsql 6",
+        "Uses UTC or DateTimeOffset",
+        "Adds a PostgreSQL integration test"
+      ]
+    },
+    {
+      "id": "pg-efcore-02",
+      "recipe": "EF Core Npgsql provider recipe",
+      "polarity": "positive",
+      "context": "EF Core Npgsql 9 with EnableRetryOnFailure and a RepeatableRead transfer",
+      "prompt": "Transfers sometimes throw serialization errors and sometimes the retry strategy errors. Fix both.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-data-access.md",
+        "applies_recipe": "EF Core Npgsql provider recipe"
+      },
+      "checks": [
+        "Wraps the transaction in CreateExecutionStrategy",
+        "Retries the whole unit on 40001",
+        "Tests on PostgreSQL, not SQLite"
+      ]
+    },
+    {
+      "id": "pg-efcore-neg-01",
+      "recipe": "EF Core Npgsql provider recipe",
+      "polarity": "negative",
+      "context": "EF Core with UseSqlServer on SQL Server 2022",
+      "prompt": "Optimize the SQL that this EF Core query generates.",
+      "expect": {
+        "not_applies_recipe": "EF Core Npgsql provider recipe",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-data-access.md"
+      },
+      "checks": [
+        "Uses SQL Server provider guidance",
+        "Does not apply Npgsql behaviour"
+      ]
+    },
+    {
+      "id": "pg-npgsql-01",
+      "recipe": "Npgsql recipe",
+      "polarity": "positive",
+      "context": "Worker using NpgsqlDataSource to insert 2 million rows one INSERT at a time",
+      "prompt": "Our nightly import into Postgres takes two hours. Make it faster.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-data-access.md",
+        "applies_recipe": "Npgsql recipe"
+      },
+      "checks": [
+        "Uses COPY via BeginBinaryImportAsync",
+        "Measures against the current approach",
+        "Reports MEASURED"
+      ]
+    },
+    {
+      "id": "pg-npgsql-neg-01",
+      "recipe": "Npgsql recipe",
+      "polarity": "negative",
+      "context": "ADO.NET with Microsoft.Data.SqlClient on SQL Server",
+      "prompt": "Batch our inserts in the SqlClient data layer.",
+      "expect": {
+        "not_applies_recipe": "Npgsql recipe",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-data-access.md"
+      },
+      "checks": [
+        "Uses SqlBulkCopy guidance",
+        "Does not mention NpgsqlBatch"
+      ]
+    },
+    {
+      "id": "pg-sqlalchemy-01",
+      "recipe": "SQLAlchemy recipe",
+      "polarity": "positive",
+      "context": "FastAPI with SQLAlchemy 2.0 and psycopg 3 on PostgreSQL 16",
+      "prompt": "Build a search filter from user input in our SQLAlchemy repository safely.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-data-access.md",
+        "applies_recipe": "SQLAlchemy recipe"
+      },
+      "checks": [
+        "Uses bound parameters, never f-strings",
+        "Compiles SQL with the PostgreSQL dialect for review",
+        "Tests an injection-shaped input on PostgreSQL"
+      ]
+    },
+    {
+      "id": "pg-sqlalchemy-02",
+      "recipe": "SQLAlchemy recipe",
+      "polarity": "positive",
+      "context": "SQLAlchemy ORM with lazy relationships; Alembic migrations",
+      "prompt": "The customers page issues hundreds of queries. Fix it.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-data-access.md",
+        "applies_recipe": "SQLAlchemy recipe"
+      },
+      "checks": [
+        "Counts statements with an event listener",
+        "Uses selectinload",
+        "Asserts the statement count in a test"
+      ]
+    },
+    {
+      "id": "pg-sqlalchemy-neg-01",
+      "recipe": "SQLAlchemy recipe",
+      "polarity": "negative",
+      "context": "Django project using the Django ORM on PostgreSQL",
+      "prompt": "Fix the N+1 queries on our Django orders page.",
+      "expect": {
+        "not_applies_recipe": "SQLAlchemy recipe",
+        "skill": "chayen-data",
+        "not_loads": "references/postgres-data-access.md"
+      },
+      "checks": [
+        "Uses Django select_related or prefetch_related through the other configurations recipe",
+        "Does not introduce SQLAlchemy"
+      ]
+    },
+    {
+      "id": "pg-other-01",
+      "recipe": "Other ORM and driver configurations recipe",
+      "polarity": "positive",
+      "context": "Next.js app using Prisma with provider postgresql and a $queryRawUnsafe report",
+      "prompt": "Make our Prisma raw report query safe and keep it fast.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-data-access.md",
+        "applies_recipe": "Other ORM and driver configurations recipe"
+      },
+      "checks": [
+        "Replaces $queryRawUnsafe with tagged $queryRaw parameters",
+        "Checks the plan on PostgreSQL",
+        "Adds a test"
+      ]
+    },
+    {
+      "id": "pg-other-02",
+      "recipe": "Other ORM and driver configurations recipe",
+      "polarity": "positive",
+      "context": "Dapper over Npgsql filtering by a list of ids",
+      "prompt": "Our Dapper query with a big id list is slow on Postgres.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/postgres-data-access.md",
+        "applies_recipe": "Other ORM and driver configurations recipe"
+      },
+      "checks": [
+        "Uses = ANY(@ids) with one array parameter",
+        "Measures before and after"
+      ]
+    },
+    {
+      "id": "pg-other-neg-01",
+      "recipe": "Other ORM and driver configurations recipe",
+      "polarity": "negative",
+      "context": "Spring Boot with Hibernate on MySQL 8",
+      "prompt": "Fix the lazy loading in our Hibernate repository.",
+      "expect": {
+        "not_applies_recipe": "Other ORM and driver configurations recipe",
+        "skill": "none",
+        "not_loads": "references/postgres-data-access.md"
+      },
+      "checks": [
+        "Does not apply PostgreSQL recipes to MySQL"
+      ]
+    }
+  ]
+}

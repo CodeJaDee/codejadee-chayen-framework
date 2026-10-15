@@ -509,6 +509,103 @@
       "expect": {
         "none": true
       }
+    },
+    {
+      "id": "pos-data-postgres-rls",
+      "category": "positive",
+      "prompt": "Enforce tenant isolation in our Postgres database with row-level security policies, and test it as the app role.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-data-postgres-vacuum",
+      "category": "positive",
+      "prompt": "Autovacuum runs constantly on our Postgres sessions table but the table keeps growing. Find out why and fix it.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      }
+    },
+    {
+      "id": "pos-data-postgres-explain",
+      "category": "positive",
+      "prompt": "Here is EXPLAIN ANALYZE output for a slow PostgreSQL query from our SQLAlchemy service. Make it faster.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-data-db-portability",
+      "category": "positive",
+      "prompt": "Our product runs on both SQL Server and PostgreSQL through EF Core. Review whether our queries behave the same on both engines.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      }
+    },
+    {
+      "id": "pos-backend-openapi-drift",
+      "category": "positive",
+      "prompt": "The OpenAPI document our API serves no longer matches the committed contract the frontend client is generated from. Fix the drift and add a CI check.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      }
+    },
+    {
+      "id": "pos-backend-cors-credentials",
+      "category": "positive",
+      "prompt": "Our SPA gets a CORS error when it calls the API with cookies. Fix the CORS policy without opening it to every origin.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-impl-timezone-roundtrip",
+      "category": "positive",
+      "prompt": "Order times show seven hours off between our Postgres database, the .NET API, and the React UI. Fix the dates end to end.",
+      "expect": {
+        "any_of": [
+          "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "pos-testing-crossstack-e2e",
+      "category": "positive",
+      "prompt": "Add a Playwright end-to-end test that logs in and views an order through our real API and a test database.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      }
+    },
+    {
+      "id": "neg-explain-postgres-mvcc",
+      "category": "negative",
+      "prompt": "Briefly explain what MVCC means in PostgreSQL, without changing any files.",
+      "expect": {
+        "none": true
+      }
     }
   ]
 }

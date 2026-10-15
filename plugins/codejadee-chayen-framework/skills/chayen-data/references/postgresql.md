@@ -23,6 +23,52 @@ Supabase, Neon).
 | Keys | `bigint GENERATED ... AS IDENTITY`, `serial` in older schemas, or `uuid` |
 | Time | `timestamptz` for instants, and the session `TimeZone` setting |
 
+## Detect the engine and provider
+
+Confirm PostgreSQL from a concrete signal before applying PostgreSQL
+guidance, and record it:
+
+| Signal | PostgreSQL | Not PostgreSQL |
+|---|---|---|
+| .NET | `Npgsql.EntityFrameworkCore.PostgreSQL`, `UseNpgsql`, `Npgsql`, `NpgsqlDataSource` | `UseSqlServer`, `Microsoft.Data.SqlClient`, `UseMySql`, `UseSqlite` |
+| Python, Node, others | `postgresql+psycopg`/`psycopg2`/`asyncpg`, `django.db.backends.postgresql`, Prisma `provider = "postgresql"`, `pg`, Drizzle `pg-core`, `pgx`, `jdbc:postgresql:` | `mssql`, `mysql`, `sqlite` |
+| Connection strings and tools | `Host=`/`Port=5432`, `postgres://` URLs, `psql`, `pg_dump`, `postgres` images, Testcontainers `PostgreSql` | `Server=`, `Initial Catalog`, `sqlcmd` |
+
+When signals disagree (SQLite in tests, PostgreSQL in production; or SQL
+Server and PostgreSQL side by side), name both, treat the production engine
+as the target, and say which test results do not carry over. Then read the
+version (`server_version_num`), extensions, collation and locale, time zone,
+and isolation default with read-only queries.
+
+**Production and shared environments:** inspect only with bounded,
+read-only queries (catalog views, `pg_stat_*`, plain `EXPLAIN`), for
+example with `default_transaction_read_only=on` and a `statement_timeout`,
+on a replica where one exists, and only with access the user provided for
+that purpose. Reproduce and change on a test or disposable database.
+
+## PostgreSQL is not SQL Server
+
+Never treat the two engines as interchangeable, even through the same ORM:
+
+| Topic | PostgreSQL | SQL Server |
+|---|---|---|
+| Paging, upsert, returning rows | `LIMIT`/`OFFSET`, `ON CONFLICT`, `RETURNING` | `TOP`, `OFFSET ... FETCH`, `UPDLOCK, HOLDLOCK` patterns, `OUTPUT` |
+| Identifiers | Unquoted names fold to lower case; `"Name"` is case-sensitive | `[Name]`; case sensitivity follows collation |
+| Text comparison | Case-sensitive by default; `'a' = 'a  '` is false for `text` | Case-insensitive by default (`_CI_`); trailing spaces ignored |
+| `NULL` | Sorts last ascending; unique constraints allow many `NULL`s | Sorts first; a unique constraint allows one `NULL` |
+| Readers and writers | MVCC: readers never block writers; old row versions need vacuum | Readers wait for writers unless read committed snapshot is on |
+| Concurrency errors | SQLSTATE `40001`, `40P01`, `55P03` | Error numbers 1205, 3960, 1222 |
+| Time | `timestamptz` stores an instant; `timestamp` drops offsets | `datetimeoffset` keeps the offset; `datetime2` has none |
+| Operations | `VACUUM`/`ANALYZE`, `pg_dump`, WAL archiving, `CREATE INDEX CONCURRENTLY` | Index/statistics maintenance, `BACKUP`, log backups, `ONLINE = ON` |
+
+## Topic references
+
+Load at most one PostgreSQL topic reference for the request: SQL dialect
+and JSONB, EXPLAIN and indexes, MVCC and row-level security, partitioning
+and migrations, vacuum and backups, or the EF Core Npgsql, Npgsql,
+SQLAlchemy, and other data access recipes. Each is listed in the skill's
+References table.
+
 ## Guidance
 
 ### Types

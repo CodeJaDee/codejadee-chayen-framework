@@ -6,9 +6,9 @@
 # the model never reads it. Each record maps a capability to the entry skill
 # and the technology reference section that implements it (D-039).
 #
-# Inventory sources: user Steps 20–23 and 26 (2026-10-15), verbatim:
+# Inventory sources: user Steps 20–23, 26, and 27 (2026-10-15), verbatim:
 # 22 .NET, 14 Angular, 8 shared TS/JS, 8 React, 8 Next.js, 7 Vue, 7 Nuxt, 4 Vite,
-# 12 SQL Server.
+# 12 SQL Server, 10 PostgreSQL, 8 cross-stack.
 #
 # Check:  node tools/catalog/check-technology.mjs
 # Guide:  docs/chayen/TECHNOLOGY_COVERAGE.md
@@ -17,6 +17,7 @@
 #         node tests/technology/react-nextjs/run-fact-checks.mjs (includes synthetic boundary checks)
 #         node tests/technology/vue-nuxt-vite/run-fact-checks.mjs (includes JS exposure counterexamples)
 #         node tests/technology/sqlserver/run-fact-checks.mjs (disposable LocalDB database; driver references)
+#         node tests/technology/postgres-crossstack/run-fact-checks.mjs (temporary PostgreSQL cluster, API, browser)
 #
 # Format: the same restricted YAML subset as engineering-capabilities.yaml
 # (D-021). Reference paths are relative to catalog.plugin_root.
@@ -107,6 +108,23 @@ packs:
     expected_capabilities: 12
     detection: "SqlServer EF Core provider, Microsoft.Data.SqlClient, SQL Server connection strings, sqlcmd/.sqlproj, mssql images; then read-only version, edition, compatibility level, collation, isolation, and recovery model"
     fact_checks: tests/technology/sqlserver/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: postgresql
+    title: "PostgreSQL engineering, with EF Core Npgsql, Npgsql, SQLAlchemy, and other data access recipes"
+    technologies: [postgresql]
+    expected_capabilities: 10
+    detection: "Npgsql EF Core provider or Npgsql, psycopg/asyncpg/SQLAlchemy postgresql dialects, Prisma postgresql, pg, postgres:// URLs, psql/pg_dump, postgres images; then read-only version, extensions, collation, time zone, and isolation"
+    fact_checks: tests/technology/postgres-crossstack/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: crossstack
+    title: "Cross-stack integration between front ends, APIs, and databases"
+    scope: cross-stack
+    technologies: [crossstack]
+    expected_capabilities: 8
+    detection: "A front end and an API (and their database) in one repository or contract: OpenAPI documents, generated clients, browser origins, cookie or token auth, end-to-end runners, more than one database engine"
+    fact_checks: tests/technology/postgres-crossstack/run-fact-checks.mjs
     status: IMPLEMENTED
 
 capabilities:
@@ -2130,4 +2148,406 @@ capabilities:
     fact_checks: [SF-26, SF-27]
     verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-26, SF-27 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
     verification_evidence: "Step 26: mapped section and tc-sqlserver-maintenance-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-26, SF-27 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-001
+    name: postgres-sql-dialect
+    pack: postgresql
+    technology: postgresql
+    purpose: "Write, port, and review SQL for the detected PostgreSQL version, extensions, and collation using PostgreSQL forms, identifier folding, deliberate types, and parameters instead of SQL Server syntax."
+    applies_when: "Queries, views, functions, or raw SQL inside an ORM run on PostgreSQL, or SQL is ported to PostgreSQL."
+    not_when: "The engine is SQL Server or another engine, or the work is plan tuning or a schema change."
+    inputs:
+      - "Engine, major version, extensions, collation"
+      - "The statements and their callers"
+    outputs:
+      - "PostgreSQL SQL valid for the detected version"
+      - "Disposable-database test results"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-sql.md
+    section: "PostgreSQL SQL dialect (postgres-sql-dialect)"
+    engineering_capabilities: [CAP-09-003, CAP-09-006]
+    fact_checks: [PF-01, PF-02, PF-03, PF-04, PF-23]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-01, PF-02, PF-03, PF-04, PF-23 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-sql-dialect-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-01, PF-02, PF-03, PF-04, PF-23 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-002
+    name: postgres-explain-analyze
+    pack: postgresql
+    technology: postgresql
+    purpose: "Diagnose slow PostgreSQL queries and ORM query shapes with read-only estimates in shared environments and EXPLAIN (ANALYZE, BUFFERS) measurements on disposable copies."
+    applies_when: "A PostgreSQL query is slow, reads too many buffers, differs between environments, or ORM SQL and N+1 patterns must be checked."
+    not_when: "The fix is an index decision, a maintenance cause, or the engine is not PostgreSQL."
+    inputs:
+      - "Exact statement and parameter types"
+      - "A disposable or restored copy"
+      - "Statement counts per request"
+    outputs:
+      - "Root cause from the plan"
+      - "Before and after measurements"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-query-tuning.md
+    section: "EXPLAIN ANALYZE evidence (postgres-explain-analyze)"
+    engineering_capabilities: [CAP-09-003, CAP-12-005]
+    fact_checks: [PF-05, PF-06, PF-24]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-05, PF-06, PF-24 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-explain-analyze-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-05, PF-06, PF-24 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-003
+    name: postgres-index-strategy
+    pack: postgresql
+    technology: postgresql
+    purpose: "Choose, build, and remove PostgreSQL indexes (B-tree, expression, partial, covering, GIN, GiST, BRIN) from measured queries, with concurrent builds outside transactions and stated write costs."
+    applies_when: "PostgreSQL indexes are added, changed, removed, or built on live tables."
+    not_when: "The query has not been measured, or the need is full-text search design."
+    inputs:
+      - "Measured target queries"
+      - "Existing indexes and usage"
+      - "Migration tool transaction mode"
+    outputs:
+      - "Index change in the migration tool"
+      - "Before and after buffers and write cost"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-query-tuning.md
+    section: "Index strategy (postgres-index-strategy)"
+    engineering_capabilities: [CAP-09-004, CAP-09-003]
+    fact_checks: [PF-07, PF-08]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-07, PF-08 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-index-strategy-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-07, PF-08 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-004
+    name: postgres-mvcc-locking
+    pack: postgresql
+    technology: postgresql
+    purpose: "Choose PostgreSQL transaction boundaries and isolation, handle serialization failures and deadlocks with whole-unit retries, build SKIP LOCKED queues, and protect live traffic from DDL locks."
+    applies_when: "Isolation, lost updates, serialization failures, deadlocks, lock waits, job queues, or DDL beside live traffic on PostgreSQL."
+    not_when: "The database is SQL Server, the problem is vacuum or bloat, or the operation spans services."
+    inputs:
+      - "Invariant to protect"
+      - "Isolation default and ORM transactions"
+      - "Retry policy"
+    outputs:
+      - "Transaction design and code"
+      - "Race, retry, and lock-timeout tests"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-concurrency-security.md
+    section: "MVCC, locking, and isolation (postgres-mvcc-locking)"
+    engineering_capabilities: [CAP-09-005, CAP-06-010]
+    fact_checks: [PF-09, PF-10, PF-11]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-09, PF-10, PF-11 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-mvcc-locking-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-09, PF-10, PF-11 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-005
+    name: postgres-jsonb
+    pack: postgresql
+    technology: postgresql
+    purpose: "Store, query, index, validate, and migrate PostgreSQL jsonb columns, keeping relational fields in columns and precision intact from database to client."
+    applies_when: "jsonb or json columns are stored, queried, indexed, validated, or migrated on PostgreSQL."
+    not_when: "The store is a document database, or the JSON is only an unpersisted API payload."
+    inputs:
+      - "Document shapes and query patterns"
+      - "Existing GIN or expression indexes"
+    outputs:
+      - "Column versus document decision"
+      - "Index, constraint, and precision tests"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-sql.md
+    section: "JSONB documents in relational tables (postgres-jsonb)"
+    engineering_capabilities: [CAP-09-001, CAP-09-006]
+    fact_checks: [PF-12, PF-13]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-12, PF-13 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-jsonb-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-12, PF-13 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-006
+    name: postgres-row-level-security
+    pack: postgresql
+    technology: postgresql
+    purpose: "Enforce and test PostgreSQL row-level security for tenants or owners with explicit policies, safe per-transaction tenant settings, and real application roles that do not bypass policies."
+    applies_when: "Tenant or ownership isolation is enforced inside PostgreSQL with policies, or an RLS setup is reviewed."
+    not_when: "Isolation lives only in application queries and RLS was not requested, or a codebase-wide security review."
+    inputs:
+      - "Roles and table owners"
+      - "Tenant model and how it is passed"
+      - "Pooling mode"
+    outputs:
+      - "Policies and role setup through migrations"
+      - "Per-tenant, missing-tenant, and cross-tenant tests"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-concurrency-security.md
+    section: "Row-level security (postgres-row-level-security)"
+    engineering_capabilities: [CAP-11-006, CAP-03-009]
+    fact_checks: [PF-14, PF-15]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-14, PF-15 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-row-level-security-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-14, PF-15 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-007
+    name: postgres-partitioning
+    pack: postgresql
+    technology: postgresql
+    purpose: "Design and maintain PostgreSQL range, list, or hash partitioning from measured pruning and retention needs, including key-inclusive constraints, future partitions, and safe conversions."
+    applies_when: "Partitioned tables are designed, added, maintained, queried, or a large table is converted on PostgreSQL."
+    not_when: "The table is small or queries do not filter on a natural key, or the engine is not PostgreSQL."
+    inputs:
+      - "Query predicates and retention rules"
+      - "Table size and growth"
+    outputs:
+      - "Partition design and creation plan"
+      - "Routing, pruning, and retention tests"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-schema-changes.md
+    section: "Declarative partitioning (postgres-partitioning)"
+    engineering_capabilities: [CAP-09-001, CAP-09-011]
+    fact_checks: [PF-16]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-16 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-partitioning-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-16 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-008
+    name: postgres-schema-migrations
+    pack: postgresql
+    technology: postgresql
+    purpose: "Write and review PostgreSQL schema migrations that avoid unexpected rewrites and long locks, using expand and contract, NOT VALID constraints, concurrent indexes, and lock timeouts tested on a test database."
+    applies_when: "A PostgreSQL schema migration is written or reviewed in any tool, especially on large or busy tables."
+    not_when: "The migration targets SQL Server, or the change is a data backfill alone."
+    inputs:
+      - "Migration tool and transaction mode"
+      - "Table sizes and traffic"
+    outputs:
+      - "Phased migration with rollback"
+      - "Apply, rollback, re-apply results on a test database"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-schema-changes.md
+    section: "Safe schema migrations (postgres-schema-migrations)"
+    engineering_capabilities: [CAP-09-002, CAP-09-007]
+    fact_checks: [PF-17, PF-18]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-17, PF-18 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-schema-migrations-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-17, PF-18 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-009
+    name: postgres-vacuum-maintenance
+    pack: postgresql
+    technology: postgresql
+    purpose: "Diagnose and fix PostgreSQL dead tuples, bloat, stale statistics, and wraparound risk by removing cleanup blockers first and tuning autovacuum per table from measured state."
+    applies_when: "Dead tuples, bloat, stale statistics, wraparound warnings, or autovacuum settings need review on PostgreSQL."
+    not_when: "A single query needs tuning with no maintenance cause, or the managed service controls the setting."
+    inputs:
+      - "Table statistics and autovacuum settings"
+      - "Long transactions and replication slots"
+    outputs:
+      - "Blocker removal and tuning plan"
+      - "Before and after measurements"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-operations.md
+    section: "Vacuum, analyze, and bloat (postgres-vacuum-maintenance)"
+    engineering_capabilities: [CAP-09-004, CAP-12-005]
+    fact_checks: [PF-19, PF-20]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-19, PF-20 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-vacuum-maintenance-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-19, PF-20 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-POSTGRES-010
+    name: postgres-backup-recovery
+    pack: postgresql
+    technology: postgresql
+    purpose: "Prove PostgreSQL backups by restoring logical or physical backups, including global roles, into a new database or instance and checking usability against RPO and RTO."
+    applies_when: "A PostgreSQL restore drill, backup method choice, RPO and RTO check, or restore runbook is needed."
+    not_when: "Provisioning replication or backup infrastructure, or the engine is SQL Server."
+    inputs:
+      - "Backup method and schedule"
+      - "RPO and RTO"
+      - "A non-production restore target"
+    outputs:
+      - "Measured drill with integrity checks"
+      - "Runbook from what actually ran"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/postgres-operations.md
+    section: "Backup and point-in-time recovery (postgres-backup-recovery)"
+    engineering_capabilities: [CAP-09-012]
+    fact_checks: [PF-21, PF-22]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts PF-21, PF-22 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-postgres-backup-recovery-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts PF-21, PF-22 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-001
+    name: openapi-contract-sync
+    pack: crossstack
+    technology: crossstack
+    purpose: "Keep an API's served OpenAPI document, the committed contract, and its consumers in sync, classifying breaking changes and failing CI on drift."
+    applies_when: "An API change must stay in sync with its OpenAPI document and consumers, or the served and committed documents drift."
+    not_when: "Client code generation, or GraphQL and gRPC schemas."
+    inputs:
+      - "Contract source and committed artifact"
+      - "Consumers and generators"
+    outputs:
+      - "Updated contract with breaking-change classification"
+      - "Served-versus-committed comparison"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/crossstack-api-contracts.md
+    section: "OpenAPI contract synchronization (openapi-contract-sync)"
+    engineering_capabilities: [CAP-06-003, CAP-05-012]
+    fact_checks: [XF-01]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-01 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-openapi-contract-sync-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-01 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-002
+    name: typed-api-client-generation
+    pack: crossstack
+    technology: crossstack
+    purpose: "Generate and review typed API clients from the committed OpenAPI contract with the project's pinned generator, type-checking consumers and reviewing risky number, date, and nullability mappings."
+    applies_when: "Typed API clients or types are generated, regenerated, or reviewed from an OpenAPI document."
+    not_when: "The API contract itself changes, or the project has no generator and none was requested."
+    inputs:
+      - "Generator, version, and config"
+      - "Committed contract"
+    outputs:
+      - "Regenerated client"
+      - "Consumer type-check and drift check"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/crossstack-types-and-time.md
+    section: "Typed API client generation (typed-api-client-generation)"
+    engineering_capabilities: [CAP-05-011, CAP-10-005]
+    fact_checks: [XF-02, XF-09]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-02, XF-09 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-typed-api-client-generation-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-02, XF-09 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-003
+    name: crossstack-authentication
+    pack: crossstack
+    technology: crossstack
+    purpose: "Align front-end and API authentication (sessions or tokens, expiry, refresh, sign-out) with server-enforced authorization and machine-readable 401 and 403 challenges, without weakening existing controls."
+    applies_when: "A front end and an API must agree on login, session or token handling, challenges, or authorization of browser API calls."
+    not_when: "Server-only authentication configuration, or identity provider administration."
+    inputs:
+      - "Authentication scheme and topology"
+      - "Framework version challenge defaults"
+    outputs:
+      - "Aligned flow and challenge handling"
+      - "Anonymous, signed-in, forbidden, expiry tests"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/crossstack-auth-boundaries.md
+    section: "Authentication across front end and API (crossstack-authentication)"
+    engineering_capabilities: [CAP-06-005, CAP-11-006]
+    fact_checks: [XF-03]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-03 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-crossstack-authentication-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-03 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-004
+    name: crossstack-error-contract
+    pack: crossstack
+    technology: crossstack
+    purpose: "Define one documented API error shape such as problem details for validation, not found, conflict, authorization, and unhandled errors, and make front-end parsing match it without leaking internals."
+    applies_when: "API error responses are defined, changed, or consumed across backend and front end."
+    not_when: "Server-side exception internals with no response change, or a UI-only rendering concern."
+    inputs:
+      - "Current error shapes per status code"
+      - "Consumer error handling"
+    outputs:
+      - "Documented error contract"
+      - "Per-status shape, media type, and no-leak tests"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/crossstack-api-contracts.md
+    section: "Error contract (crossstack-error-contract)"
+    engineering_capabilities: [CAP-05-007, CAP-07-010]
+    fact_checks: [XF-04]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-04 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-crossstack-error-contract-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-04 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-005
+    name: crossstack-date-time
+    pack: crossstack
+    technology: crossstack
+    purpose: "Classify and carry instants, calendar dates, and local times with zones explicitly through database types, drivers, serializers, contracts, and clients, keeping numeric precision intact."
+    applies_when: "Dates and times or related numeric precision cross database, API, and client code, or off-by-hours, off-by-one-day, or precision bugs appear."
+    not_when: "A purely local calculation in one layer, or calendar rules that need a requirements decision."
+    inputs:
+      - "Types per layer"
+      - "Time zone sources"
+    outputs:
+      - "Explicit boundary mappings"
+      - "Round-trip tests in a non-UTC zone"
+    entry_skill: chayen-implementation
+    reference: skills/chayen-implementation/references/crossstack-types-and-time.md
+    section: "Dates, times, and precision across layers (crossstack-date-time)"
+    engineering_capabilities: [CAP-05-001, CAP-09-006]
+    fact_checks: [XF-05, XF-06, XF-07, XF-08]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-05, XF-06, XF-07, XF-08 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-crossstack-date-time-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-05, XF-06, XF-07, XF-08 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-006
+    name: crossstack-cors-csrf
+    pack: crossstack
+    technology: crossstack
+    purpose: "Configure CORS with explicit origins and credentials only where needed, treat it as a browser read permission rather than access control, and protect cookie-authenticated state changes from CSRF."
+    applies_when: "CORS is configured or reviewed for a browser front end, cookie endpoints need CSRF protection, or CORS errors are diagnosed."
+    not_when: "Server-to-server calls with no browser, or a general web security review."
+    inputs:
+      - "Topology and origins per environment"
+      - "Cookie settings and antiforgery"
+    outputs:
+      - "CORS policy and CSRF defences"
+      - "Allowed and disallowed origin and CSRF tests"
+    entry_skill: chayen-backend
+    reference: skills/chayen-backend/references/crossstack-auth-boundaries.md
+    section: "CORS and CSRF boundaries (crossstack-cors-csrf)"
+    engineering_capabilities: [CAP-11-007, CAP-06-005]
+    fact_checks: [XF-10, XF-11]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-10, XF-11 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-crossstack-cors-csrf-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-10, XF-11 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-007
+    name: crossstack-e2e
+    pack: crossstack
+    technology: crossstack
+    purpose: "Write and review a few deterministic browser end-to-end tests that run the real front end, API, and a test database together and assert cross-layer agreement."
+    applies_when: "End-to-end tests drive a browser through a front end, its API, and a database."
+    not_when: "A single layer can be tested in isolation, or the request is load testing."
+    inputs:
+      - "Configured runner and topology"
+      - "Test database and seed data"
+      - "Test users"
+    outputs:
+      - "Journey tests with artifacts"
+      - "Runner command results per journey"
+    entry_skill: chayen-testing
+    reference: skills/chayen-testing/references/crossstack-e2e.md
+    section: "Browser to API to database flows (crossstack-e2e)"
+    engineering_capabilities: [CAP-10-004, CAP-10-003]
+    fact_checks: [XF-12]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-12 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-crossstack-e2e-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-12 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-CROSSSTACK-008
+    name: database-portability-review
+    pack: crossstack
+    technology: crossstack
+    purpose: "Review code, schemas, and tests that must work on both SQL Server and PostgreSQL by comparing semantics and generated SQL and testing every target engine with the same assertions."
+    applies_when: "Code, schema, or tests must run on both SQL Server and PostgreSQL, tests use another engine than production, or a move between them is reviewed."
+    not_when: "Only one engine is used with no move planned, or the migration programme itself."
+    inputs:
+      - "Engines per environment"
+      - "Raw SQL and engine-specific mappings"
+    outputs:
+      - "Semantic difference list with decisions"
+      - "Per-engine test results"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/database-portability.md
+    section: "Cross-engine review (database-portability-review)"
+    engineering_capabilities: [CAP-04-005, CAP-09-007]
+    fact_checks: [XF-13, XF-14]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; facts XF-13, XF-14 by tests/technology/postgres-crossstack/run-fact-checks.mjs; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 27: mapped section and tc-database-portability-review-* specifications; tests/technology/postgres-crossstack/results/step27-fact-checks.md records facts XF-13, XF-14 on a temporary local PostgreSQL 18.6 cluster, .NET 10, Node, and Chromium, which describe those versions only. Behavior/trigger evaluations NOT_RUN."
     status: IMPLEMENTED

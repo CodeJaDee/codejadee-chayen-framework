@@ -47,6 +47,13 @@ auditing, backup and maintenance, plus EF Core, Dapper, and ADO.NET data
 access recipes. The engine and provider are detected first; PostgreSQL
 syntax is never applied, and production inspection stays read-only.
 
+PostgreSQL (10) adds data topics for SQL and JSONB, EXPLAIN and indexes,
+MVCC and row-level security, partitioning and migrations, vacuum and
+backups, plus EF Core Npgsql, Npgsql, SQLAlchemy, and other data access
+recipes. Cross-stack (8) adds API contract and error, authentication and
+CORS/CSRF topics in backend, typed clients and date/time in implementation,
+end-to-end tests in testing, and a database portability review in data.
+
 | Skill | Scope |
 |---|---|
 | `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt and its proposed priority, legacy assessment, unknowns |

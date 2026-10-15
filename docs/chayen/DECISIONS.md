@@ -950,6 +950,42 @@ Decision statuses:
   `chayen-data/SKILL.md` is 183 lines (under the 200 target). The local
   LocalDB instance `ChayenFacts` remains on the developer machine for
   re-runs. No commit, release, production access, or later step.
+### D-044 — Step 27 PostgreSQL and cross-stack guidance
+- **Status:** scope ACCEPTED (explicit user prompt "Execute STEP 27 ONLY",
+  2026-10-15); layout, pack scope rule, and fixtures PROPOSED pending review.
+- **Scope:** the user's exact 10 PostgreSQL and 8 cross-stack capabilities,
+  and PostgreSQL data access recipes for EF Core Npgsql, Npgsql, SQLAlchemy
+  (when applicable), and other ORM/driver configurations found in a project.
+- **Layout:** PostgreSQL in `chayen-data` (expanded `postgresql.md` base and
+  five topic references, plus `postgres-data-access.md`). Cross-stack
+  capabilities go to the skill that owns each request: contracts, errors,
+  authentication, and CORS/CSRF in `chayen-backend`; typed clients and
+  date/time in `chayen-implementation`; end-to-end in `chayen-testing`;
+  portability in `chayen-data`. No new skill, description, or metadata change.
+- **Pack scope rule:** `crossstack` is not an engineering-catalog stack pack,
+  so the technology catalog marks it `scope: cross-stack` and V-23.1 skips the
+  stack-pack membership check for that scope only (control
+  `tech27-crossstack-scope`). The engineering catalog is unchanged.
+- **Checker:** V-23.10 now validates a list of recipe files (SQL Server and
+  PostgreSQL), each with required topics, steps, verify rules, recipe cases,
+  and driver packages pinned in a .NET project or `requirements.txt` with
+  their APIs used by a compiled or imported fixture file.
+- **Fixtures and tools (BC-22):** `tests/technology/postgres-crossstack` adds
+  developer-only .NET projects (Npgsql 10.0.2, Npgsql.EntityFrameworkCore.PostgreSQL
+  10.0.1, Dapper 2.1.66, EF Core SQL Server 10.0.8, Microsoft.AspNetCore.OpenApi
+  and Mvc.Testing 10.0.12, xUnit 2.9.3) and a pinned `requirements.txt`
+  (SQLAlchemy 2.0.43, psycopg 3.2.10). The runner installs nothing; it takes
+  existing tools by option. For this run the agent downloaded, outside the
+  repository: the official PostgreSQL 18.6 Windows binaries (EDB zip, SHA-256
+  e2246ba9...84e2), a Python venv with the pinned requirements, and
+  playwright-core 1.56.1, openapi-typescript 7.9.1, and TypeScript 5.9.3 in
+  the session scratch folder. None is part of the plugin or the repository.
+- **Verification:** V-23.1..10 PASS for 108 records; 53 technology, 11
+  recipe, and 9 trigger cases; 11 mutation controls (115/115 self-tests);
+  `run-fact-checks.mjs` 42/42 PASS. Agent evaluations NOT_RUN.
+- **Consequences:** 108 technology records IMPLEMENTED, 0 VERIFIED; backend
+  SKILL.md is 204 lines (target 200, hard limit 300). No commit, release,
+  production access, or later step.
 
 ## Architecture assumptions (checked in Step 02)
 

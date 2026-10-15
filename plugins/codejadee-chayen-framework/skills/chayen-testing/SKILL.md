@@ -155,6 +155,7 @@ Load one technology reference for the detected framework (workflow step 1), and 
 | [references/python-testing.md](references/python-testing.md) | pytest, unittest, or Django tests are detected |
 | [references/test-strategy.md](references/test-strategy.md) | Deciding test levels, priorities, and CI integration for a system or feature |
 | [references/test-authoring.md](references/test-authoring.md) | Writing unit, integration, end-to-end, or regression tests |
+| [references/crossstack-e2e.md](references/crossstack-e2e.md) | Browser end-to-end tests that run the real front end, API, and a test database together |
 | [references/api-and-contract-tests.md](references/api-and-contract-tests.md) | Testing API endpoints, or verifying consumer and provider contracts |
 | [references/advanced-test-techniques.md](references/advanced-test-techniques.md) | Property-based, mutation, or fuzz testing |
 | [references/test-data.md](references/test-data.md) | Creating builders, factories, or fixtures for test data |

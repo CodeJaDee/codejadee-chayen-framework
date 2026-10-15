@@ -656,6 +656,182 @@
       "validator": "technology",
       "error": "V-23.10 data-access"
      }
+    },
+    {
+     "id": "tech27-postgres-inventory",
+     "description": "A PostgreSQL capability is renamed away from the Step 27 inventory",
+     "edits": [
+      {
+       "file": "catalog/technology-capabilities.yaml",
+       "op": "replace",
+       "find": "    name: postgres-jsonb\n",
+       "with": "    name: postgres-json\n"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.1 inventory"
+     }
+    },
+    {
+     "id": "tech27-crossstack-inventory",
+     "description": "A cross-stack capability is renamed away from the Step 27 inventory",
+     "edits": [
+      {
+       "file": "catalog/technology-capabilities.yaml",
+       "op": "replace",
+       "find": "    name: crossstack-e2e\n",
+       "with": "    name: crossstack-browser-tests\n"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.1 inventory"
+     }
+    },
+    {
+     "id": "tech27-crossstack-scope",
+     "description": "The cross-stack pack loses its scope and is not an engineering stack pack",
+     "edits": [
+      {
+       "file": "catalog/technology-capabilities.yaml",
+       "op": "replace",
+       "find": "    scope: cross-stack\n",
+       "with": ""
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.1 inventory"
+     }
+    },
+    {
+     "id": "tech27-postgres-section",
+     "description": "A PostgreSQL section loses its capability suffix",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-schema-changes.md",
+       "op": "replace",
+       "find": "## Declarative partitioning (postgres-partitioning)",
+       "with": "## Declarative partitioning"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.4 sections"
+     }
+    },
+    {
+     "id": "tech27-crossstack-orphan",
+     "description": "An unknown cross-stack capability heading is rejected",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/crossstack-e2e.md",
+       "op": "append",
+       "content": "\n## Other (crossstack-unlisted-operation)\n"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.4 sections"
+     }
+    },
+    {
+     "id": "tech27-version",
+     "description": "A PostgreSQL section loses its Version notes label",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-sql.md",
+       "op": "replace",
+       "find": "**Version notes:** `INSERT ... ON CONFLICT` needs 9.5;",
+       "with": "Version: `INSERT ... ON CONFLICT` needs 9.5;"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.5 anatomy"
+     }
+    },
+    {
+     "id": "tech27-case-mapping",
+     "description": "crossstack-e2e loses its only negative case",
+     "edits": [
+      {
+       "file": "tests/skills/technology-cases.json",
+       "op": "replace",
+       "find": "\"not_applies\": \"crossstack-e2e\"",
+       "with": "\"not_applies\": \"crossstack-cors-csrf\""
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.7 cases"
+     }
+    },
+    {
+     "id": "tech27-fact-reference",
+     "description": "A cross-stack record lists an undefined fact",
+     "edits": [
+      {
+       "file": "catalog/technology-capabilities.yaml",
+       "op": "replace",
+       "find": "    fact_checks: [XF-12]\n",
+       "with": "    fact_checks: [XF-99]\n"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.8 facts"
+     }
+    },
+    {
+     "id": "tech27-recipe-topic",
+     "description": "The SQLAlchemy recipe drops a required topic",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-data-access.md",
+       "op": "replace",
+       "find": "- **Time zones, types, and precision:** `TIMESTAMP(timezone=True)`",
+       "with": "- `TIMESTAMP(timezone=True)`"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.10 data-access"
+     }
+    },
+    {
+     "id": "tech27-python-package",
+     "description": "A Python package named by the recipes is not pinned in requirements.txt",
+     "edits": [
+      {
+       "file": "tests/technology/postgres-crossstack/fixture/python/requirements.txt",
+       "op": "replace",
+       "find": "SQLAlchemy==2.0.43\n",
+       "with": ""
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.10 data-access"
+     }
+    },
+    {
+     "id": "tech27-python-api",
+     "description": "A SQLAlchemy API named by the recipes is not used by the imported fixture",
+     "edits": [
+      {
+       "file": "tests/technology/postgres-crossstack/fixture/python/sqlalchemy_references.py",
+       "op": "regex",
+       "pattern": "selectinload",
+       "flags": "g",
+       "with": "joinedload"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.10 data-access"
+     }
     }
   ]
 }

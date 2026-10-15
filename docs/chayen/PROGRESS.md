@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 26 — Microsoft SQL Server guidance and data access recipes (Steps 24–25 unrecorded, R-45) |
+| Last executed step | 27 — PostgreSQL engineering and cross-stack integration (Steps 24–25 unrecorded, R-45) |
+| Step 27 status | DONE (pending review; PostgreSQL 10/10 and cross-stack 8/8 IMPLEMENTED, 0 VERIFIED; V-23 PASS incl. V-23.10 for both recipe files; DR-01..04, PF-01..24, XF-01..14 PASS (42/42) on PostgreSQL 18.6, .NET 10, Node, Chromium; 5/5 gate groups, 115/115 self-tests; D-044 PROPOSED) |
 | Step 26 status | DONE (pending review; SQL Server 12/12 IMPLEMENTED, 0 VERIFIED; V-23 PASS incl. V-23.10 data access recipes; DR-01..03 driver references PASS; SF-01..27 PASS on SQL Server 2025 Express LocalDB; 5/5 gate groups, 104/104 self-tests; D-043 layout PROPOSED) |
 | Step 23 status | DONE (pending review; 18/18 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 94/94 self-tests; 2 supporting JS checks PASS, 16 NOT_RUN; frontend/backend target warnings at 213/202 lines; D-042 layout PROPOSED) |
 | Step 22 status | DONE (pending review; 16/16 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 85/85 self-tests; 3 synthetic boundary checks PASS, 13 NOT_RUN; one 206-line frontend target warning; D-041 layout PROPOSED) |
@@ -29,7 +30,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after Step 26; await user direction. Confirm Steps 24–25 (R-45); D-043 layout review pending. All 206 engineering and 90 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Agent behaviour/trigger evaluations and non-Express SQL Server platforms remain NOT_RUN (R-46). |
+| Next step | STOP after Step 27; await user direction. Confirm Steps 24–25 (R-45); D-043/D-044 layout review pending. All 206 engineering and 108 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Agent behaviour/trigger evaluations and untested platforms remain NOT_RUN (R-46..R-48). |
 | Commits made by agent | None |
 
 ---
@@ -2639,3 +2640,140 @@ NOT_RUN. STEP 23 ends here.
 **Runtime Verification:** Verified for the validators and for SQL Server
 engine/ORM/driver behaviour on one local, disposable LocalDB database.
 Agent behaviour and other platforms remain NOT_RUN. STEP 26 ends here.
+
+
+## Step 27 — PostgreSQL engineering and cross-stack integration
+
+- **Date:** 2026-10-15
+- **Status:** DONE (pending user review). STOP after STEP 27.
+- **Result:** PostgreSQL 10/10 and cross-stack 8/8 IMPLEMENTED and V-23
+  validated; PostgreSQL data access recipes (EF Core Npgsql, Npgsql,
+  SQLAlchemy, other configurations) checked by V-23.10. 42/42 executed
+  checks PASS (DR-01..04, PF-01..24, XF-01..14). 0 VERIFIED. Report:
+  [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md) §15.
+
+### Evidence reviewed and work performed
+
+- Read BUILD_CONTRACT, the technology catalog and checker, PROGRESS, the
+  existing `postgresql.md`, `contract-codegen.md`, `api-and-contract-tests.md`,
+  `authn-authz.md`, and the four affected SKILL.md files. The working tree was
+  clean at `9e2bd6c` (Step 26 committed by the user).
+- **Environment:** no PostgreSQL, SQLAlchemy, or psycopg was installed, and
+  the Docker daemon was not running. The agent downloaded, outside the
+  repository: the official PostgreSQL 18.6 Windows binaries (EDB zip,
+  SHA-256 e2246ba91d22345bc3d017586c09ede52d9df180b1eeb480f050445f1cad84e2)
+  into the user temp folder, a Python venv with SQLAlchemy 2.0.43 and
+  psycopg 3.2.10 (a short path was needed: psycopg's DLL failed to load from
+  the long scratch path), and playwright-core 1.56.1, openapi-typescript
+  7.9.1, and TypeScript 5.9.3 into the session scratch folder. The cached
+  Playwright Chromium 1228 was used as the browser. Nothing was installed
+  system-wide (D-044).
+- **References:** expanded `postgresql.md` (detection, "PostgreSQL is not SQL
+  Server" table, read-only production rule, existing content kept); new
+  `postgres-sql.md`, `postgres-query-tuning.md`,
+  `postgres-concurrency-security.md`, `postgres-schema-changes.md`,
+  `postgres-operations.md`, `postgres-data-access.md`,
+  `database-portability.md` (data); `crossstack-api-contracts.md`,
+  `crossstack-auth-boundaries.md` (backend); `crossstack-types-and-time.md`
+  (implementation); `crossstack-e2e.md` (testing). SKILL.md References rows
+  added in four skills and one workflow sentence in data. No description or
+  L0 change (5,485 / 5,500); 202 references.
+- **Documentation check:** 28 claims checked against official sources:
+  25 confirmed, 2 narrowed, 1 not documented (stated as observed). One more
+  (PostgreSQL 18 `EXPLAIN ANALYZE` prints buffers by default) confirmed by
+  execution (TECHNOLOGY_COVERAGE §16).
+- **Catalog and checker:** packs `postgresql` and `crossstack` (`scope:
+  cross-stack`), TECH-POSTGRES-001..010 and TECH-CROSSSTACK-001..008; the
+  checker gains both inventories, section prefixes, `PF`/`XF` facts, the
+  cross-stack scope exemption, and a list-based V-23.10 for SQL Server and
+  PostgreSQL recipe files (.NET projects and `requirements.txt`).
+- **Fixtures:** `tests/technology/postgres-crossstack` with `PostgresFacts`
+  (xUnit, temporary cluster, LocalDB `tempdb` for XF-13), `CrossStackApi` plus
+  `CrossStackFacts` (WebApplicationFactory; committed contract snapshot),
+  `python/` (SQLAlchemy facts and import-only references), `node/` (client
+  facts, typed client, browser end to end), and a runner that starts and
+  deletes a localhost-only cluster.
+- **Corrections from execution (no assertion weakened to pass):**
+  superusers bypass RLS even with `FORCE` (owner case moved to a
+  non-superuser role); `current_setting(..., true)` reads `''` after a
+  transaction-local set (22P02 on cast; policies now use `NULLIF`); .NET 10
+  cookie auth returns 401 for API endpoints and redirects HTML endpoints;
+  SQLAlchemy's SQL Server dialect uses `ROW_NUMBER()` without a known server
+  version; Node on Windows ignores `TZ` (XF-07 compares against the runtime's
+  own zone). The first full-runner attempt hung because `pg_ctl start`
+  inherited the runner's pipes; it was stopped, the orphaned temporary
+  cluster shut down and deleted, and the runner fixed (`stdio: "ignore"`).
+- **Cases:** 53 technology cases (35 positive, 18 negative; total 285), 11
+  recipe cases (7/4), 9 trigger prompts (total 182 cases, 433 files), 11
+  mutation controls (total 115).
+
+### Decisions, risks, and open questions
+
+- **D-044:** user-directed scope ACCEPTED; layout, the `scope: cross-stack`
+  rule, and fixtures PROPOSED.
+- **R-47:** facts cover PostgreSQL 18.6 with the `C` locale, one .NET 10
+  API, one Node runtime and zone, one browser. Managed services, PgBouncer,
+  ICU collations, older majors, and physical PITR were not executed.
+- **R-48:** agent behaviour and trigger evaluations NOT_RUN; cross-stack
+  routing is the most ambiguous. Backend SKILL.md is 204 lines (target 200).
+- **R-45 (open from Step 26):** Steps 24–25 remain unrecorded.
+- **Local state left on the machine:** `%TEMP%\chpg` (PostgreSQL binaries),
+  `%TEMP%\chpy` (Python venv), the scratch `node-tools`, the LocalDB instance
+  `ChayenFacts` from Step 26, and IDE-generated, git-ignored `bin/`/`obj/`
+  folders in the new .NET fixtures. They can be deleted at any time; the
+  runner reports NOT_RUN without them.
+- No production or shared database access, plugin dependency, commit,
+  push, release, or later-step work.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-sql.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-query-tuning.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-concurrency-security.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-schema-changes.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-operations.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-data-access.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/database-portability.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/crossstack-api-contracts.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/crossstack-auth-boundaries.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/crossstack-types-and-time.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-testing/references/crossstack-e2e.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/references/postgresql.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/{chayen-data,chayen-backend,chayen-implementation,chayen-testing}/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `catalog/technology-capabilities.yaml` |
+| Modified | `tools/catalog/check-technology.mjs`, `tools/catalog/README.md`, `tools/validate/run-validator-tests.mjs` |
+| Created | `tests/technology/postgres-crossstack/run-fact-checks.mjs`, `README.md`, `results/step27-fact-checks.md` |
+| Created | `tests/technology/postgres-crossstack/fixture/PostgresFacts/{PostgresFacts.csproj, PgDb.cs, Model.cs, SqlFacts.cs, PlanFacts.cs, ConcurrencyFacts.cs, SchemaOpsFacts.cs, CrossEngineFacts.cs, DriverReferences.cs}` |
+| Created | `tests/technology/postgres-crossstack/fixture/CrossStackApi/{CrossStackApi.csproj, Program.cs, contract/openapi.v1.json}` |
+| Created | `tests/technology/postgres-crossstack/fixture/CrossStackFacts/{CrossStackFacts.csproj, ApiFacts.cs}` |
+| Created | `tests/technology/postgres-crossstack/fixture/python/{requirements.txt, sqlalchemy_facts.py, sqlalchemy_references.py}` |
+| Created | `tests/technology/postgres-crossstack/node/{client-facts.mjs, typed-client.mjs, e2e.mjs}` |
+| Created | `tests/skills/postgres-data-access-cases.json` |
+| Modified | `tests/skills/technology-cases.json`, `tests/skills/trigger-cases.json`, `tests/skills/README.md` |
+| Modified | `tests/catalog/technology-mutations.json`, `tests/catalog/README.md` |
+| Created | `tests/evals/claude/{pos-data-postgres-rls, pos-data-postgres-vacuum, pos-data-postgres-explain, pos-data-db-portability, pos-backend-openapi-drift, pos-backend-cors-credentials, pos-impl-timezone-roundtrip, pos-testing-crossstack-e2e, neg-explain-postgres-mvcc}/` (generated) |
+| Modified | `docs/chayen/TECHNOLOGY_COVERAGE.md`, `ACCEPTANCE_MATRIX.md`, `DECISIONS.md`, `ISSUES.md`, `IMPLEMENTATION_PLAN.md`, `PROGRESS.md` |
+| Deleted | None |
+
+### Tests and observed outcomes
+
+| Test | Command | Result |
+|---|---|---|
+| Technology catalog (10/10, 8/8) | `node tools/catalog/check-technology.mjs --write-doc`, then `node tools/catalog/check-technology.mjs` | PASS: 0 errors; 108 records match the Steps 20–23, 26, and 27 inventories; ordered anatomy for all 18 new sections; 285 cases; PF/XF facts linked; V-23.10 PASS for both recipe files (SQL Server 3×10 topics, PostgreSQL 4×11 topics, packages pinned, APIs used) |
+| Driver references and facts | `node tests/technology/postgres-crossstack/run-fact-checks.mjs --report tests/technology/postgres-crossstack/results/step27-fact-checks.md --pg-bin <bin> --python <python> --node-tools <node_modules>` | PASS, exit 0: 42 PASS, 0 FAIL, 0 NOT_RUN. PostgreSQL 18.6 temporary cluster on 127.0.0.1; LocalDB `tempdb`; Chromium 149. MEASURED: 1,667 vs 4 shared buffers (expression index); 1,000 dead rows not removable under an open snapshot, all removed after; SQLAlchemy 6 vs 2 statements |
+| Package and content validation | `node tools/validate/validate-package.mjs` | PASS: 0 errors, 2 warnings (backend 204, frontend 213 lines above the 200 target); 202 references; L0 5,485 / 5,500 |
+| Trigger artifacts | `node tools/evals/generate-claude-evals.mjs`, then `--check` | PASS: 182 cases, 433 files; no content change to existing evals; agent trigger execution NOT_RUN |
+| Automated regression | `node tools/validate/validate-all.mjs` | PASS, exit 0: 5/5 gate groups; validator self-tests 115/115 including all 11 Step 27 controls |
+| Engineering coverage | `node tools/catalog/audit-coverage.mjs` | PASS, exit 0: 206/206 pass all 10 criteria; engineering catalog unchanged |
+| Native manifests | `claude plugin validate --strict plugins/codejadee-chayen-framework`; `claude plugin validate --strict .claude-plugin/marketplace.json` (Claude Code 2.1.270) | PASS for both |
+| Diff hygiene | `git -c core.safecrlf=false diff --check` | PASS: no whitespace errors |
+| Other platforms | Managed PostgreSQL, older majors, ICU locales, PgBouncer, physical PITR, other browsers | NOT_RUN (R-47) |
+| Agent behaviour/trigger evaluations and human review | G-11/G-12/G-15 | NOT_RUN; no capability promoted to VERIFIED |
+
+**Runtime Verification:** Verified for the validators and for the executed
+PostgreSQL, ORM/driver, API, client, and browser facts on local, temporary
+infrastructure. Agent behaviour and other platforms remain NOT_RUN. STEP 27
+ends here.

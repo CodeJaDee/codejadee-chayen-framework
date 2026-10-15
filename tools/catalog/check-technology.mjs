@@ -2,7 +2,7 @@
 // Developer-only checker for the technology capability catalog (V-23, D-039).
 // Zero dependencies (Node.js >= 18). Never shipped.
 //
-// Checks catalog/technology-capabilities.yaml against the user's Steps 20–23 and 26
+// Checks catalog/technology-capabilities.yaml against the user's Steps 20–23, 26, and 27
 // inventory, the shipped technology reference sections, the evaluation cases
 // in tests/skills/technology-cases.json, the engineering catalog, and the
 // framework fact-check lists. Optionally regenerates the tables in
@@ -19,7 +19,7 @@ const argv = process.argv.slice(2);
 const root = argv.includes("--root") ? path.resolve(argv[argv.indexOf("--root") + 1]) : path.resolve(import.meta.dirname, "..", "..");
 const writeDoc = argv.includes("--write-doc");
 
-// The user's Steps 20–23 and 26 inventories (2026-10-15), verbatim and in order.
+// The user's Steps 20–23, 26, and 27 inventories (2026-10-15), verbatim and in order.
 const INVENTORY = {
   "dotnet-aspnetcore": {
     csharp: ["csharp-nullability", "csharp-async-concurrency", "csharp-memory-disposal", "csharp-linq-optimization",
@@ -54,18 +54,41 @@ const INVENTORY = {
       "sqlserver-index-tuning", "sqlserver-locking-deadlocks", "sqlserver-transactions", "sqlserver-schema-evolution",
       "sqlserver-security", "sqlserver-auditing-temporal", "sqlserver-backup-recovery", "sqlserver-maintenance"],
   },
+  postgresql: {
+    postgresql: ["postgres-sql-dialect", "postgres-explain-analyze", "postgres-index-strategy", "postgres-mvcc-locking",
+      "postgres-jsonb", "postgres-row-level-security", "postgres-partitioning", "postgres-schema-migrations",
+      "postgres-vacuum-maintenance", "postgres-backup-recovery"],
+  },
+  crossstack: {
+    crossstack: ["openapi-contract-sync", "typed-api-client-generation", "crossstack-authentication", "crossstack-error-contract",
+      "crossstack-date-time", "crossstack-cors-csrf", "crossstack-e2e", "database-portability-review"],
+  },
 };
-// Step 26 data access recipes: one section per library, each covering every required topic,
-// plus a "Driver references" table whose packages and APIs the fact fixture compiles (DR-01..03).
-const DATA_ACCESS = {
-  reference: "skills/chayen-data/references/sqlserver-data-access.md",
-  recipes: ["EF Core SQL Server provider recipe", "Dapper recipe", "ADO.NET recipe"],
-  packages: ["Microsoft.EntityFrameworkCore.SqlServer", "Dapper", "Microsoft.Data.SqlClient"],
-  topics: ["Parameterized queries", "Query translation", "Tracking and no-tracking", "N+1 query risks", "Transactions and isolation",
-    "Indexing trade-offs", "Safe schema migrations", "Database integration testing", "Performance measurement", "SQL Server-specific behavior"],
-  fixture: "tests/technology/sqlserver/fixture/SqlServerFacts",
-  cases: "tests/skills/sqlserver-data-access-cases.json",
-};
+// Data access recipes (Steps 26 and 27): one section per library, each covering every required topic,
+// plus a "Driver references" table whose packages appear in the fixture manifests and whose APIs appear
+// in the fixture reference files that the fact runners compile or import (DR checks).
+const BASE_TOPICS = ["Parameterized queries", "Query translation", "Tracking and no-tracking", "N+1 query risks", "Transactions and isolation",
+  "Indexing trade-offs", "Safe schema migrations", "Database integration testing", "Performance measurement"];
+const DATA_ACCESS = [
+  {
+    reference: "skills/chayen-data/references/sqlserver-data-access.md",
+    recipes: ["EF Core SQL Server provider recipe", "Dapper recipe", "ADO.NET recipe"],
+    packages: ["Microsoft.EntityFrameworkCore.SqlServer", "Dapper", "Microsoft.Data.SqlClient"],
+    topics: [...BASE_TOPICS, "SQL Server-specific behavior"],
+    manifests: ["tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj"],
+    refs: ["tests/technology/sqlserver/fixture/SqlServerFacts/DriverReferences.cs"],
+    cases: "tests/skills/sqlserver-data-access-cases.json",
+  },
+  {
+    reference: "skills/chayen-data/references/postgres-data-access.md",
+    recipes: ["EF Core Npgsql provider recipe", "Npgsql recipe", "SQLAlchemy recipe", "Other ORM and driver configurations recipe"],
+    packages: ["Npgsql.EntityFrameworkCore.PostgreSQL", "Npgsql", "SQLAlchemy", "psycopg", "Dapper"],
+    topics: [...BASE_TOPICS, "Time zones, types, and precision", "PostgreSQL-specific behavior"],
+    manifests: ["tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj", "tests/technology/postgres-crossstack/fixture/python/requirements.txt"],
+    refs: ["tests/technology/postgres-crossstack/fixture/PostgresFacts/DriverReferences.cs", "tests/technology/postgres-crossstack/fixture/python/sqlalchemy_references.py"],
+    cases: "tests/skills/postgres-data-access-cases.json",
+  },
+];
 const FACT_FILES = {
   "dotnet-aspnetcore": "tests/technology/dotnet/run-fact-checks.mjs",
   angular: "tests/technology/angular-typescript/run-fact-checks.mjs",
@@ -76,6 +99,8 @@ const FACT_FILES = {
   nuxt: "tests/technology/vue-nuxt-vite/run-fact-checks.mjs",
   vite: "tests/technology/vue-nuxt-vite/run-fact-checks.mjs",
   sqlserver: "tests/technology/sqlserver/run-fact-checks.mjs",
+  postgresql: "tests/technology/postgres-crossstack/run-fact-checks.mjs",
+  crossstack: "tests/technology/postgres-crossstack/run-fact-checks.mjs",
 };
 const DOC = "docs/chayen/TECHNOLOGY_COVERAGE.md";
 const BEGIN = "<!-- BEGIN GENERATED: check-technology -->", END = "<!-- END GENERATED: check-technology -->";
@@ -116,7 +141,8 @@ const STATUS = new Set(cat.status_vocabulary ?? []);
       else if (rec.technology !== t) error(c, `${n}: technology ${rec.technology}, inventory ${t}`);
     });
     for (const [, n] of expected) if (!actual.some((x) => x.name === n)) error(c, `${packId}: inventory capability ${n} has no record`);
-    if (!(eng.stack_packs ?? []).includes(packId)) error(c, `${packId} is not a stack pack in the engineering catalog`);
+    // Cross-stack packs span stacks, so they are not engineering-catalog stack packs (D-044).
+    if (pack.scope !== "cross-stack" && !(eng.stack_packs ?? []).includes(packId)) error(c, `${packId} is not a stack pack in the engineering catalog`);
   }
   const ids = new Set(), names = new Set();
   for (const x of caps) {
@@ -124,7 +150,7 @@ const STATUS = new Set(cat.status_vocabulary ?? []);
     if (names.has(x.name)) error(c, `duplicate name ${x.name}`); names.add(x.name);
     if (!packs.has(x.pack)) error(c, `${x.id}: unknown pack ${x.pack}`);
   }
-  if (!has(c)) pass(c, `${caps.length} records match the Steps 20–23 and 26 inventories exactly (names, order, technology); ids and names unique`);
+  if (!has(c)) pass(c, `${caps.length} records match the Steps 20–23, 26, and 27 inventories exactly (names, order, technology); ids and names unique`);
 }
 
 { // V-23.2 record fields and status
@@ -182,7 +208,7 @@ const sections = {};
   const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith(".md") ? [path.join(d, e.name)] : []));
   for (const f of walk(path.join(root, pluginRoot, "skills"))) {
     const rel = path.relative(path.join(root, pluginRoot), f).split(path.sep).join("/");
-    for (const m of fs.readFileSync(f, "utf8").replace(/\r\n/g, "\n").matchAll(/^## .*\(((?:csharp|aspnet|angular|typescript|javascript|esm|package|react|nextjs|vue|nuxt|vite|sqlserver)-[a-z0-9-]+)\)\s*$/gm)) {
+    for (const m of fs.readFileSync(f, "utf8").replace(/\r\n/g, "\n").matchAll(/^## .*\(((?:csharp|aspnet|angular|typescript|javascript|esm|package|react|nextjs|vue|nuxt|vite|sqlserver|postgres|openapi|typed|crossstack|database)-[a-z0-9-]+)\)\s*$/gm)) {
       (seen[m[1]] ??= []).push(rel);
       if (!names.has(m[1])) error(c, `${rel}: section for "${m[1]}" has no catalog record (orphan)`);
     }
@@ -272,7 +298,7 @@ const caseCount = {};
   const c = "V-23.8 facts";
   for (const [packId, rel] of Object.entries(FACT_FILES)) {
     if (!exists(rel)) { error(c, `${packId}: ${rel} is missing`); continue; }
-    const allFacts = new Map([...read(rel).matchAll(/"((?:TF|AF|JF|RF|NF|VF|UF|BF|SF)-\d{2})": \["([a-z0-9-]+)"/g)].map((m) => [m[1], m[2]]));
+    const allFacts = new Map([...read(rel).matchAll(/"((?:TF|AF|JF|RF|NF|VF|UF|BF|SF|PF|XF)-\d{2})": \["([a-z0-9-]+)"/g)].map((m) => [m[1], m[2]]));
     const packCaps = caps.filter((x) => x.pack === packId);
     const packNames = new Set(packCaps.map((x) => x.name));
     const facts = new Map([...allFacts].filter(([, name]) => packNames.has(name)));
@@ -287,40 +313,44 @@ const caseCount = {};
   }
 }
 
-{ // V-23.10 SQL Server data access recipes: sections, required topics, steps, verify rule, driver references
+{ // V-23.10 data access recipes: sections, required topics, steps, verify rule, driver references, recipe cases
   const c = "V-23.10 data-access";
-  const refRel = `${pluginRoot}/${DATA_ACCESS.reference}`;
-  const local = DATA_ACCESS.reference.replace(/^skills\/[^/]+\//, "");
-  if (!exists(refRel)) error(c, `${DATA_ACCESS.reference} is missing`);
-  else {
+  const skills = new Set((eng.entry_skills ?? []).filter((s) => s.mapping === "existing").map((s) => s.name));
+  const summary = [];
+  for (const spec of DATA_ACCESS) {
+    const refRel = `${pluginRoot}/${spec.reference}`;
+    const local = spec.reference.replace(/^skills\/[^/]+\//, "");
+    if (!exists(refRel)) { error(c, `${spec.reference} is missing`); continue; }
     const text = read(refRel);
     if (!/^---\nkind: technology\n---\n/.test(text)) error(c, `${local} must be a kind: technology reference`);
     if (!read(`${pluginRoot}/skills/chayen-data/SKILL.md`).split("\n").some((l) => l.startsWith("|") && l.includes(`](${local})`))) error(c, `${local} is not listed in the chayen-data References table`);
-    for (const r of DATA_ACCESS.recipes) {
+    for (const r of spec.recipes) {
       const s = sectionOf(text, r);
-      if (s === null) { error(c, `"## ${r}" is missing`); continue; }
-      for (const t of DATA_ACCESS.topics) if (!s.includes(`**${t}:**`)) error(c, `${r}: missing topic "**${t}:**"`);
+      if (s === null) { error(c, `${local}: "## ${r}" is missing`); continue; }
+      for (const tp of spec.topics) if (!s.includes(`**${tp}:**`)) error(c, `${r}: missing topic "**${tp}:**"`);
       const steps = /\*\*Steps:\*\*([\s\S]*?)(?=\n\*\*Verify:\*\*|$)/.exec(s)?.[1] ?? "";
       if ((steps.match(/^\d+\.\s+\S/gm) ?? []).length < 4) error(c, `${r}: needs at least 4 numbered steps`);
       if (!/\*\*Verify:\*\*[\s\S]*(PASS|FAIL|NOT_RUN|MEASURED)/.test(s)) error(c, `${r}: "**Verify:**" must say how results are reported`);
     }
     const rows = (sectionOf(text, "Driver references") ?? "").split("\n").filter((l) => /^\|/.test(l) && !/^\|\s*-/.test(l)).slice(1)
       .map((l) => l.split("|").slice(1, -1).map((x) => x.trim()));
-    const csprojRel = `${DATA_ACCESS.fixture}/SqlServerFacts.csproj`, refsRel = `${DATA_ACCESS.fixture}/DriverReferences.cs`;
-    const csproj = exists(csprojRel) ? read(csprojRel) : "", refs = exists(refsRel) ? read(refsRel) : "";
-    if (!csproj || !refs) error(c, `${csprojRel} or ${refsRel} is missing`);
-    for (const p of DATA_ACCESS.packages) if (!rows.some((r) => r[1] === `\`${p}\``)) error(c, `Driver references table does not name package ${p}`);
-    for (const [lib, pkg, apis] of rows) {
-      const name = (pkg ?? "").replace(/`/g, "");
-      if (!new RegExp(`Include="${name.replace(/\./g, "\\.")}" Version="[^"]+"`).test(csproj)) error(c, `${lib}: package ${name} is not referenced by ${csprojRel}`);
+    const manifests = spec.manifests.map((m) => (exists(m) ? read(m) : (error(c, `${m} is missing`), ""))).join("\n");
+    const refs = spec.refs.map((m) => (exists(m) ? read(m) : (error(c, `${m} is missing`), ""))).join("\n");
+    const named = rows.flatMap((r) => (r[1] ?? "").split(",").map((x) => x.replace(/`/g, "").trim()));
+    for (const p of spec.packages) if (!named.includes(p)) error(c, `${local}: Driver references table does not name package ${p}`);
+    for (const [lib, pkgs, apis] of rows) {
+      for (const name of (pkgs ?? "").split(",").map((x) => x.replace(/`/g, "").trim()).filter(Boolean)) {
+        const esc = name.replace(/\./g, "\\.");
+        if (!new RegExp(`Include="${esc}" Version="[^"]+"`).test(manifests) && !new RegExp(`^${esc}(\\[[^\\]]*\\])?==`, "mi").test(manifests))
+          error(c, `${lib}: package ${name} is not pinned in ${spec.manifests.join(" or ")}`);
+      }
       for (const api of (apis ?? "").split(",").map((x) => x.replace(/`/g, "").trim()).filter(Boolean))
-        if (!new RegExp(`\\b${api}\\b`).test(refs)) error(c, `${lib}: API ${api} is not used in ${refsRel}, so the build does not prove it resolves`);
+        if (!new RegExp(`\\b${api}\\b`).test(refs)) error(c, `${lib}: API ${api} is not used in ${spec.refs.join(" or ")}, so the build or import does not prove it resolves`);
     }
-    let spec = null;
-    try { spec = JSON.parse(read(DATA_ACCESS.cases)); } catch (e) { error(c, `${DATA_ACCESS.cases}: ${e.message}`); }
-    const skills = new Set((eng.entry_skills ?? []).filter((s) => s.mapping === "existing").map((s) => s.name));
-    const ids = new Set(), tally = Object.fromEntries(DATA_ACCESS.recipes.map((r) => [r, { positive: 0, negative: 0 }]));
-    for (const k of spec?.cases ?? []) {
+    let cases = null;
+    try { cases = JSON.parse(read(spec.cases)); } catch (e) { error(c, `${spec.cases}: ${e.message}`); }
+    const ids = new Set(), tally = Object.fromEntries(spec.recipes.map((r) => [r, { positive: 0, negative: 0 }]));
+    for (const k of cases?.cases ?? []) {
       if (ids.has(k.id)) error(c, `duplicate case id ${k.id}`); ids.add(k.id);
       if (!tally[k.recipe]) { error(c, `${k.id}: unknown recipe ${k.recipe}`); continue; }
       if (typeof k.prompt !== "string" || k.prompt.length < 10 || /chayen/i.test(k.prompt)) error(c, `${k.id}: prompt missing or mentions Chayen (REQ-03)`);
@@ -332,9 +362,10 @@ const caseCount = {};
       else if (!["positive", "negative"].includes(k.polarity)) error(c, `${k.id}: polarity must be positive or negative`);
       if (k.polarity in tally[k.recipe]) tally[k.recipe][k.polarity] += 1;
     }
-    for (const [r, t] of Object.entries(tally)) if (t.positive < 1 || t.negative < 1) error(c, `${r}: needs >=1 positive and >=1 negative case, has ${t.positive}/${t.negative}`);
-    if (!has(c)) pass(c, `${DATA_ACCESS.recipes.length} recipes cover ${DATA_ACCESS.topics.length} topics each; ${rows.length} driver packages and their APIs are referenced by the compiled fixture; ${spec.cases.length} recipe cases`);
+    for (const [r, tl] of Object.entries(tally)) if (tl.positive < 1 || tl.negative < 1) error(c, `${r}: needs >=1 positive and >=1 negative case, has ${tl.positive}/${tl.negative}`);
+    summary.push(`${local}: ${spec.recipes.length} recipes x ${spec.topics.length} topics, ${named.length} packages, ${cases?.cases?.length ?? 0} cases`);
   }
+  if (!has(c)) pass(c, `${summary.join("; ")}; every package is pinned and every API is used by a compiled or imported fixture`);
 }
 
 // Generated coverage tables

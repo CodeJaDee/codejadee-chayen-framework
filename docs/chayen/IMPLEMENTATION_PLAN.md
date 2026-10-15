@@ -256,3 +256,16 @@ migrations, test-versus-production differences, comparable measurements,
 and read-only production inspection. Validate 12/12, verify ORM/driver
 references, update coverage and progress. D-043 and TECHNOLOGY_COVERAGE §13
 record execution and limits. STOP after STEP 26.
+
+### Step 27 — PostgreSQL and cross-stack integration (user-directed)
+
+Implement the user's exact 10 PostgreSQL and 8 cross-stack capabilities and
+PostgreSQL data access recipes (EF Core Npgsql, Npgsql, SQLAlchemy when
+applicable, other configurations found in the project): never treat SQL
+Server and PostgreSQL as interchangeable, review PostgreSQL transaction and
+indexing behaviour, time zones, types, precision, and schema changes,
+validate front-end/back-end contracts, respect authentication and
+authorization, prevent unsafe query construction, and prefer test
+databases. Validate 10/10 and 8/8, run all relevant validators, update
+coverage and progress. D-044 and TECHNOLOGY_COVERAGE §15 record execution
+and limits. STOP after STEP 27.
