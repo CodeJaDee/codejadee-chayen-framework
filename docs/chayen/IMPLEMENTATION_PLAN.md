@@ -319,3 +319,36 @@ native permission test was executed; R-52 remains OPEN. No hooks, background
 process, telemetry, credentials requirement, upload or runtime dependency.
 Acceptance/catalog statuses remain unchanged; STEP 28 stays PARTIAL. STOP after
 STEP 30; no later step or external action is authorized by this implementation.
+
+### Step 31 — Final native provider compatibility validation (user-directed)
+
+**PARTIAL (static validation complete; native runtime NOT_TESTED).**
+
+**Scope.** Validate items 1–10 (manifest, marketplace source, native install,
+discoverability, skills shown, automatic, explicit, no-match fallback,
+reference loading, disable/update/uninstall) for Claude Code, OpenAI Codex
+and GitHub Copilot. CLI and VS Code surfaces are assessed separately.
+
+**Executed.**
+
+- Re-read S13, S15 and S18.
+- Recorded provider versions.
+- Inspected the installed provider code for manifest and marketplace
+  precedence.
+- Ran the offline gates, `claude plugin validate --strict` with both Claude
+  binaries, and the new read-only `check-identity.mjs` (15/15).
+
+**Not executed.** The lifecycle opt-in was denied by the session permission
+classifier. Model probes and VS Code UIs were not run.
+
+**Outputs.**
+
+- FINAL_PROVIDER_COMPATIBILITY.md
+- tests/provider-compatibility/README.md: the existing file, extended with
+  runbook R-0..R-10
+- tests/provider-compatibility/check-identity.mjs
+- PROVIDER_COMPATIBILITY_MATRIX §9
+
+**Gate.** Release gate OPEN (R-53). Version update risk R-54. No provider-specific
+catalog copy was needed. No manifest, marketplace or skill changed. STOP
+after STEP 31.

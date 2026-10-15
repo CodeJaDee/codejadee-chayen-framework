@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 30 — Security hardening and plugin trust review |
+| Last executed step | 31 — Final native provider compatibility validation |
+| Step 31 status | PARTIAL — static validation complete: manifests, marketplaces, precedence (from the installed provider code of Claude Code 2.1.270/2.1.299, Codex 0.160.1/0.162.0-alpha, Copilot 1.0.97, VS Code 1.141.1 + Copilot 0.69.0), identity and discovery (check-identity 15/15, 13 skills / 221 references), validate-all 8/8 groups, strict validate PASS. Native install/invocation/reference/lifecycle checks NOT_TESTED on every surface (lifecycle opt-in denied by the session permission classifier; R-53). Version unchanged, update risk R-54. Codex IDE extension UNSUPPORTED. Release gate OPEN. |
 | Step 30 status | DONE (pending review; 238 package files / 13 entries / 221 references, three marketplaces and 57 developer assets statically reviewed; instruction priority, safe staging/mutations, parser/eval metadata and provider opt-in hardened; V-25 and eight offline gate groups PASS, 32/32 security tests and 132/132 validator tests PASS; 23 JavaScript plus one shell syntax check PASS. Native provider/model/install, advisory and runtime defenses NOT_RUN; R-52 OPEN). |
 | Step 29 status | DONE (pending review; 12 workflows and seven reusable template leaves IMPLEMENTED; V-24 PASS; 47 workflow/template evaluation specifications; six automated gate groups and 132/132 validator tests PASS; live agent/provider behavior NOT_RUN, R-51; D-045 layout PROPOSED). |
 | Step 28 status | PARTIAL — all 11 packs / 108 capabilities and 17 required technologies audited; 7 gaps fixed; 295 technology specifications; final fact runs 107 PASS / 0 FAIL / 52 NOT_RUN; 5/5 automated gates and 115/115 self-tests PASS. Full frontend/mixed-stack agent scenarios remain NOT_RUN (R-49); maintainer Node 18 declaration conflicts with import.meta.dirname (R-50). See TECHNOLOGY_COVERAGE_AUDIT.md. |
@@ -33,7 +34,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after STEP 30; await user review. No later step started. STEP 28 remains PARTIAL (R-49/R-50); native workflow/security behavior remains NOT_RUN (R-51/R-52), and Steps 24–25 unrecorded (R-45). All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED; 13 descriptions and L0 5,485 / 5,500 unchanged. |
+| Next step | STOP after STEP 31; await user review. Release gate OPEN: run tests/provider-compatibility/README.md R-1..R-10 under an authorized process (R-53) and decide the next version (R-54). STEP 28 remains PARTIAL (R-49/R-50); native workflow/security behaviour remains NOT_RUN (R-51/R-52); Steps 24–25 unrecorded (R-45). All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED. |
 | Commits made by agent | None |
 
 ---
@@ -3165,3 +3166,101 @@ setting was changed.
 | Created | `tests/security/results/step30-syntax-checks.json` |
 | Created | `tools/validate/check-security.mjs` |
 | Created | `tools/validate/safe-paths.mjs` |
+
+---
+
+## Step 31 — Final native provider compatibility validation
+
+- **Date:** 2026-10-15
+- **Status:** PARTIAL. Static and shipped-code validation is complete. Native
+  runtime validation was not executed, and the release gate is OPEN.
+- **Scope:** STEP 31 only. Baseline clean `main` at b8e8dcd. No commit,
+  push, publish, install, external marketplace change, or later step.
+
+### Work performed
+
+- Read the provider research, the compatibility matrix, the format and
+  package decisions, the POC report, the Step 06 results, the BUILD_CONTRACT,
+  all three marketplace files, and both manifests.
+- Re-read the official pages S13 (Codex plugins), S15 (Copilot CLI plugin
+  reference) and S18 (VS Code agent plugins) on 2026-10-15. There is no
+  contradiction with Step 02. The new facts are in
+  FINAL_PROVIDER_COMPATIBILITY.md §4.3.
+- Recorded the provider versions for every CLI and VS Code surface.
+- Determined manifest and marketplace precedence from the **installed
+  provider code**, without executing any provider:
+  - Claude Code binaries 2.1.270 and 2.1.299 contain no Agent Plugins
+    reference.
+  - Codex 0.160.1 and 0.162.0-alpha string tables.
+  - The Copilot 1.0.97 `runtime.node` string table.
+  - The VS Code 1.141.1 workbench marketplace and manifest detection
+    functions, and the `chat.plugins.enabled` default and policy.
+  - The Codex extension bundle (plugin RPC code present; documented as
+    unsupported).
+- Read-only checks of real provider homes:
+  - no `chayen-*` name collision among 30 personal skills;
+  - no stale Chayen install;
+  - the Codex config has only a project trust entry.
+  - Nothing was written to any provider home.
+- Added the read-only `tests/provider-compatibility/check-identity.mjs`
+  (IC-01..IC-13).
+- Extended the existing `tests/provider-compatibility/README.md` with the
+  full runbook R-0..R-10 and five shared probes:
+  - P-AUTO, P-EXPL, P-NONE, P-NONE-2;
+  - P-REF, which is new and covers reference loading.
+  - The existing content was kept.
+- Updated the skill counts in the two VS Code procedures.
+- **Attempted and denied:**
+  `CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycle.sh <scratch>/lc31`.
+  The session's permission classifier refused it ("Safety Bypass Flag"). It
+  was not retried or worked around.
+  - Billed model probes need the same kind of opt-in and were not attempted.
+- No provider-specific catalog copy was created. None is required (§6 of the
+  final report).
+
+### Actual verification
+
+| Command / method | Observed result |
+|---|---|
+| `node tools/validate/validate-all.mjs` (before and after changes) | All 8 gate groups PASS; 132/132 validator self-tests; 182 trigger cases / 433 files in sync; 5 known size-target warnings |
+| `claude plugin validate --strict plugins/codejadee-chayen-framework` (CLI 2.1.270 and VS Code bundled 2.1.299) | `✔ Validation passed`, exit 0, both |
+| `claude plugin validate --strict .` (marketplace; both binaries) | `✔ Validation passed`, exit 0, both |
+| `node tests/provider-compatibility/check-identity.mjs` | 15/15 PASS, exit 0; totals 13 skills, 221 references, 238 files |
+| `node --check tests/provider-compatibility/check-identity.mjs` | syntax OK |
+| Shipped-code inspection (grep of the installed binaries and bundles) | See FINAL_PROVIDER_COMPATIBILITY.md §4.1 |
+| `git diff --check` | PASS (only CRLF normalisation notices) |
+| Native lifecycle, install, discovery, auto/explicit/no-match/reference probes, disable/update/uninstall, both VS Code UIs, remote marketplace | **NOT_RUN** (NOT_TESTED in the matrix), with exact steps in the runbook |
+
+### Decisions, risks and open questions
+
+- **No new decision.**
+  - D-009 and D-013 still hold: one package, dual manifest, three native
+    marketplace files.
+  - The Agent Plugins `$schema` stays at 1.0.0, although Copilot accepts
+    1.1.0, because Codex embeds only 1.0.0.
+- **R-53 (new):** no native runtime evidence exists for the current 13-skill
+  package. The release gate is OPEN.
+- **R-54 (new):** `version` is still `0.1.0-dev`, so updates may not reach
+  existing installs (Claude Code pins to `version`). Changing it needs
+  release approval.
+- **Q-02 still open:** Codex IDE extension (UNSUPPORTED).
+- **Unchanged:** R-45, R-49..R-52 and DF-01/DF-02.
+
+### File ledger (STEP 31 only)
+
+| Action | Path |
+|---|---|
+| Created | `docs/chayen/FINAL_PROVIDER_COMPATIBILITY.md` |
+| Created | `tests/provider-compatibility/check-identity.mjs` |
+| Modified | `tests/provider-compatibility/README.md` (existing file extended; requested as "CREATE") |
+| Modified | `tests/provider-compatibility/claude-code-vscode.md` (skill count) |
+| Modified | `tests/provider-compatibility/copilot-vscode.md` (skill count) |
+| Modified | `docs/chayen/PROVIDER_COMPATIBILITY_MATRIX.md` (§9) |
+| Modified | `docs/chayen/PROVIDER_SPEC_RESEARCH.md` (UNVERIFIED status after STEP 31) |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` (REQ-01, REQ-10, PRV-CC/CX/GH evidence; statuses unchanged) |
+| Modified | `docs/chayen/ISSUES.md` (R-53, R-54) |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` (Step 31 section) |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Deleted | None |
+
+No manifest, marketplace file, skill or reference was changed. STOP after STEP 31.

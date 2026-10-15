@@ -305,3 +305,17 @@ provider guarantees that a skill will be triggered.
 | U-04, U-05, U-06, U-08, U-09, U-10, U-11, U-12, U-13 | Unchanged (open) |
 | U-07 | Unchanged. The official schema download (2026-10-14) is still 1.0.0. |
 | **U-14 (new)** | Copilot CLI `plugin enable` / `disable` failed on runtime 1.0.68. Behaviour on 1.0.91 is untested. |
+
+### UNVERIFIED item status after STEP 31 (2026-10-15; installed provider code + re-read S13, S15, S18)
+
+Details are in [FINAL_PROVIDER_COMPATIBILITY.md](FINAL_PROVIDER_COMPATIBILITY.md) §4.3.
+
+| ID | Status after STEP 31 |
+|---|---|
+| U-01 | **Resolved statically.** Neither Claude Code 2.1.270 nor 2.1.299 references Agent Plugins. Both strict-validate the dual-manifest package. Skill loading with both manifests was observed in Step 06 (6 skills); for 13 skills it is NOT_TESTED. |
+| U-04 | **Resolved statically for VS Code 1.141.1:** `marketplace.json` → `.plugin/marketplace.json` → `.github/plugin/marketplace.json` → `.claude-plugin/marketplace.json`. Runtime NOT_TESTED. |
+| U-05 | Unchanged for VS Code. S18 still says only that plugin skills "show up in the Configure Skills menu". |
+| U-07 | **Resolved for Copilot:** CLI 1.0.97 and S15 accept 1.0.0 and 1.1.0. VS Code accepts any `agent-plugins.org/schemas/*/plugin.schema.json`. Codex 0.160.1 embeds 1.0.0 only. Keep 1.0.0. |
+| U-09 | **Partly resolved:** `chat.plugins.enabled` defaults to `true` in VS Code 1.141.1, and the org policy `ChatPluginsEnabled` can disable it. No overall preview label in S18. |
+| U-13 | Moot. The package ships no extra top-level directory (IC-13). |
+| Codex per-plugin update (part of U-03) | Still UNVERIFIED. 0.160.1 exposes only `add`, `list`, `marketplace {add,list,upgrade,remove}`, and `remove`, and `upgrade` refreshes Git snapshots only. |

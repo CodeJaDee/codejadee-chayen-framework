@@ -26,7 +26,7 @@ is still UNVERIFIED (U-04). The Copilot CLI reads
 |---|---|---|
 | 1 | Add the marketplace in settings: `"chat.plugins.marketplaces": ["file:///<repo>"]`. After a push, use `"CodeJaDee/codejadee-chayen-framework"` instead. | The marketplace appears in the Extensions view under `@agentPlugins` |
 | 2 | Install `codejadee-chayen-framework` from the Extensions view (`@agentPlugins`). Alternatively, use **Chat: Install Plugin From Source** with the local path. | Listed in **Agent Plugins – Installed** |
-| 3 | Open the **Configure Skills** menu. | Six `chayen-*` skills are listed under the plugin |
+| 3 | Open the **Configure Skills** menu. | All `chayen-*` skills (13 as of STEP 31; re-derive per README R-0) are listed under the plugin |
 | 4 | In Agent mode: "Fix this ASP.NET Core API bug: GET /api/orders/{id} returns 500 when the order has no customer." | The `chayen-backend` skill is loaded (shown in the chat's references / used skills) |
 | 5 | "Explain today's weather in Bangkok." | No Chayen skill |
 | 6 | "Build a SwiftUI settings screen for my iOS app with a dark mode toggle." | Ideally no Chayen skill. **Known risk:** the Copilot CLI activated `chayen-frontend` here (Step 06). Record the result. |

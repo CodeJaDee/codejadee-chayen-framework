@@ -125,3 +125,42 @@ Full details are in [POC_REPORT.md](POC_REPORT.md) and
 | U-12 | Resolved, **negatively**: cases outside the plugin cannot load it (D-018). |
 | U-14 | Resolved: Copilot enable/disable works on 1.0.91 and later with `<plugin>@<marketplace>`. |
 | U-03 | Codex disable via `-c` override does not work. Use `config.toml`. |
+
+## 9. STEP 31 final validation (2026-10-15)
+
+The full per-check matrix, versions, and evidence are in
+[FINAL_PROVIDER_COMPATIBILITY.md](FINAL_PROVIDER_COMPATIBILITY.md). The
+runbook is `tests/provider-compatibility/README.md`.
+
+**Package:** 13 skills, 221 references, version `0.1.0-dev`.
+
+**Not executed in STEP 31:**
+
+- The native lifecycle opt-in was denied by the session's permission
+  classifier.
+- No model probes were attempted.
+- Runtime rows are NOT_TESTED. Step 06 rows (§8) describe the earlier
+  6-skill package only.
+
+### 9.1 Which file each surface uses (from the installed provider code)
+
+| Surface (version) | Marketplace read here | Manifest read here | Basis |
+|---|---|---|---|
+| Claude Code CLI 2.1.270 / VS Code ext 2.1.299 | `.claude-plugin/marketplace.json` | `.claude-plugin/plugin.json`. The root Agent Plugins file is not recognised (no `agent-plugins.org` in either binary). | `plugin validate --strict` PASS with both binaries |
+| Codex CLI 0.160.1 | `.agents/plugins/marketplace.json` (before `.claude-plugin/`) | Root `plugin.json` (Agent Plugins 1.0.0) | Binary strings; Step 04 runtime |
+| Codex IDE ext 26.1007.21434 | — | — | UNSUPPORTED (S13, re-read). Bundles codex 0.162.0-alpha with plugin RPCs, not exposed in documentation. |
+| Copilot CLI 1.0.97 | `.github/plugin/marketplace.json` (after `marketplace.json`, `.plugin/`; before `.claude-plugin/`) | Root `plugin.json` (accepts schemas 1.0.0 and 1.1.0) | Runtime string table; S15 |
+| VS Code 1.141.1 + Copilot Chat 0.69.0 | `.github/plugin/marketplace.json` (same order as the CLI) | Root `plugin.json` with `$schema` prefix `agent-plugins.org/schemas/` | Workbench code. `chat.plugins.enabled` defaults to `true`, and the policy `ChatPluginsEnabled` can disable it. |
+
+### 9.2 Status changes
+
+| Cell / item | Before | After STEP 31 |
+|---|---|---|
+| §3 `.claude-plugin/marketplace.json` for VS Code | UNVERIFIED | SUPPORTED (fallback, 4th in order; VS Code 1.141.1 code) |
+| §3 Root `marketplace.json` / `.github/plugin/marketplace.json` for VS Code | UNVERIFIED | SUPPORTED (VS Code 1.141.1 code) |
+| §2 `.claude-plugin/plugin.json` for Codex | UNVERIFIED | Candidate path present in the 0.160.1 binary. Not used here, because the root manifest exists. |
+| U-04 | Open | Resolved statically (VS Code 1.141.1). Runtime NOT_TESTED. |
+| U-07 | Open | Copilot accepts 1.0.0 and 1.1.0. The package stays on 1.0.0 (the cross-provider intersection). |
+| U-09 | Open | Partly resolved: plugins on by default, policy-controllable |
+| Static identity (`check-identity.mjs`) | — | 15/15 PASS. One identity, no duplicate skills, no shadowing manifest or marketplace. |
+| Runtime items 3–10, all surfaces | Step 06: 6-skill package | NOT_TESTED for the current package. Release gate OPEN (R-53). Update path risk R-54 (version unchanged). |

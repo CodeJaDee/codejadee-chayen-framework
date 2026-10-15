@@ -20,7 +20,7 @@ through either surface appears in the other.
 |---|---|---|
 | 1 | In the Claude Code panel, type `/plugins` and open **Manage plugins**. On **Marketplaces**, add `<repo>`. After a push, `CodeJaDee/codejadee-chayen-framework` can be added instead. | Marketplace `codejadee` is listed |
 | 2 | On **Plugins**, find `codejadee-chayen-framework` and choose **Install for you**. | Installed, with no restart needed |
-| 3 | Type `/`. | `codejadee-chayen-framework:chayen-backend` and the five other skills are listed |
+| 3 | Type `/`. | `codejadee-chayen-framework:chayen-backend` and the other `chayen-*` skills are listed (13 in total as of STEP 31) |
 | 4 | New session: "Fix this ASP.NET Core API bug: GET /api/orders/{id} returns 500 when the order has no customer." | The session shows the `chayen-backend` skill loaded |
 | 5 | New session: "Explain today's weather in Bangkok." | No Chayen skill loaded |
 | 6 | New session: "Build a SwiftUI settings screen for my iOS app with a dark mode toggle." | No Chayen skill loaded. If one loads, record it. |
