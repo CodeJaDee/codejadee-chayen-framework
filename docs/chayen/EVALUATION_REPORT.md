@@ -11,6 +11,8 @@
 | Gaps | [EVALUATION_GAPS.md](EVALUATION_GAPS.md) |
 | Provider spend | About $6.44 on Claude Code, across 31 billed runs: 1 empty-workspace check, 13 in Run A, 4 in the re-run, 13 in Run B. 1 Copilot attempt failed authentication before any model call. |
 
+> **STEP 34 audit update.** An independent re-run (Run C, 13 probes, 2026-10-15) scored 9/13. Pooled over 43 runs: automatic routing 12/22 (55%), explicit invocation 6/6, no-match 12/12, wrong skill 0/18, references 10/22. These pooled figures supersede the Step 32-only numbers below. See [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md) §4.
+
 ## 1. Summary
 
 1. **Every evaluation category now has an executable, traceable suite.**

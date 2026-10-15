@@ -1,0 +1,562 @@
+{
+  "provider": "claude",
+  "providerVersion": "2.1.270 (Claude Code)",
+  "ranAt": "2026-10-15T08:01:19.929Z",
+  "rescoredAt": "2026-10-15T08:01:44.010Z",
+  "runs": 1,
+  "pluginLoad": "--plugin-dir (no install)",
+  "permissions": "-p mode; Read/Glob/Grep/Skill pre-approved; other tools left to native permission handling",
+  "fixtureGit": true,
+  "fixtureUnchanged": true,
+  "results": [
+    {
+      "id": "pr-aspnet-bug",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-implementation"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 45,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Agent",
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Bash",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit"
+      ],
+      "costUsd": 0.22960770000000003,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-backend,chayen-implementation"
+      },
+      "reference": null,
+      "answerExcerpt": "I need your approval to edit `OrdersController.cs` — the fix changes `order.Customer!.Name.ToUpper()` to `order.Customer?.Name.ToUpper()` so a missing customer returns `null` for `CustomerName` instead of throwing a `NullReferenceException` (the actual cause of the 500)."
+    },
+    {
+      "id": "pr-angular-form",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 81,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Agent",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Bash",
+        "Read",
+        "Edit",
+        "Edit",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit",
+        "Edit"
+      ],
+      "costUsd": 0.3168286,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-frontend"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": "I'm waiting on your permission to edit `customer-form.component.ts`. The change adds `Validators.required`/`Validators.email` to the email control, `Validators.required`/`Validators.pattern` to the phone control, and renders an error message under each field when it's invalid and touched. Let me know if you'd like to approve the edit, or if you want a different validation approach (e.g. different phone format)."
+    },
+    {
+      "id": "pr-postgres-optimization",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-data",
+          "chayen-performance"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 121,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-data"
+      ],
+      "explicitEvidence": null,
+      "referencesRead": [
+        "chayen-data/postgres-query-tuning.md",
+        "chayen-data/postgres-sql.md"
+      ],
+      "toolSequence": [
+        "Agent",
+        "Bash",
+        "Grep",
+        "Bash",
+        "Grep",
+        "Bash",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Grep",
+        "Bash",
+        "Read",
+        "Read",
+        "Bash",
+        "Skill",
+        "Read",
+        "Read",
+        "Bash",
+        "Edit",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Edit",
+        "Edit"
+      ],
+      "costUsd": 0.38843130000000003,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": true,
+        "why": "reference read"
+      },
+      "answerExcerpt": "I'm blocked on a file-write permission prompt for `services/analytics/sql/monthly_revenue.sql` that hasn't been approved yet. Here's the fix I'm proposing — let me know if you'd like me to proceed (approve the edit) or if you want to review first:\n\n**Problem:** `to_char(placed_at, 'YYYY') = '2026'` wraps the column in a function, so Postgres can't use any index on `placed_at` — it's forced to scan and cast all ~40M rows. There's also no supporting index for the `GROUP BY`/filter at all (PK-only table).\n\n**Fix (query):**\n```sql\n-- PostgreSQL 16; orders has ~40M rows.\n-- Supported by ix_orders_placed_at_customer_active (see indexes.sql).\n-- Parameters: $1 = range start (inclusive), $2 = range end (exclusive), e.g. '2026-01-01', '2027-01-01'\nSELECT date_trunc('month', placed_at) AS month, customer_id, sum(total) AS revenue\nFROM orders\nWHERE placed_at >= $1 AND placed_at < $2 AND status <> 'cancelled'\nGROUP BY 1, 2 ORDER BY 1, 3 DESC;\n```\nThis replaces the non-sargable `to_char` check with a sargable half-open range, and parameterizes the year instead of hardcoding 2026.\n\n**Fix (index)**, new file `services/analytics/sql/indexes.sql`:\n```sql\n-- Run outside a transaction (migration tool"
+    },
+    {
+      "id": "pr-sqlserver-query",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-data",
+          "chayen-backend"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 128,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Agent",
+        "Bash",
+        "Bash",
+        "Glob",
+        "Glob",
+        "Glob",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Glob",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit"
+      ],
+      "costUsd": 0.3052899,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-data,chayen-backend"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": "I don't have write access granted for that file yet, so here's the solution — let me know if you'd like me to apply it directly.\n\n## The problem\n\n`Order` has no index beyond the PK (`Id`), and `Customer` has no inverse `Orders` nav. A naive \"get each customer's 3 most recent orders\" implementation (e.g., loop per customer, or pull all orders and group in memory) degrades linearly or worse as `Orders` grows — it's a classic **top-N-per-group** problem, and it needs an index-backed query, not a client-side one.\n\n## 1. Add a covering index (`src/Api/Data/AppDb.cs`)\n\n```csharp\npublic class AppDb(DbContextOptions<AppDb> o) : DbContext(o)\n{\n    public DbSet<Order> Orders => Set<Order>();\n    public DbSet<Customer> Customers => Set<Customer>();\n\n    protected override void OnModelCreating(ModelBuilder modelBuilder)\n    {\n        // (CustomerId, PlacedAt DESC) + included Total: lets \"most recent N\n        // orders per customer\" seek directly to the rows it needs instead of\n        // scanning/sorting the whole Orders table as it grows.\n        modelBuilder.Entity<Order>()\n            .HasIndex(o => new { o.CustomerId, o.PlacedAt })\n            .IsDescending(false, true)\n            .Inclu"
+    },
+    {
+      "id": "pr-nextjs-route",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-security"
+        ]
+      },
+      "exit": 1,
+      "completion": "error_max_turns",
+      "seconds": 29,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Grep",
+        "Read",
+        "Grep",
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Bash",
+        "Glob",
+        "Glob",
+        "Glob",
+        "Glob"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Bash"
+      ],
+      "costUsd": 0.17513140000000002,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-backend,chayen-security"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": ""
+    },
+    {
+      "id": "pr-pytest",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "exit": 1,
+      "completion": "error_max_turns",
+      "seconds": 135,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-testing"
+      ],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Skill",
+        "Agent",
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Bash",
+        "PowerShell",
+        "Write",
+        "Bash"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "PowerShell",
+        "Bash"
+      ],
+      "costUsd": 0.42188159999999997,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": ""
+    },
+    {
+      "id": "pr-rust-unsupported",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none": true
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 22,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Grep",
+        "Bash",
+        "Read",
+        "Bash",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit"
+      ],
+      "costUsd": 0.12588680000000002,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "I need your permission to edit `tools/rust-agent/src/main.rs`. Please approve the edit to proceed."
+    },
+    {
+      "id": "pr-general-conversation",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none": true
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 3,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [],
+      "deniedTools": [],
+      "costUsd": 0.038745,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "Bubbles, Finn, and Goldie."
+    },
+    {
+      "id": "pr-explicit-decline",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none": true
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 13,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [],
+      "deniedTools": [],
+      "costUsd": 0.04755500000000001,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "A null navigation property itself doesn't throw — accessing it does, usually in one of these ways:\n\n1. **NullReferenceException on a chained access** — e.g. `order.Customer.Name` when `Customer` wasn't included/loaded and is `null`. This is the most common cause and bubbles up as an unhandled exception → ASP.NET Core's default behavior turns it into a 500.\n\n2. **Serialization failure** — if you return the entity directly and a non-nullable reference type property is `null`, `System.Text.Json` can throw during serialization if there's a circular reference it can't resolve, or if a required/non-nullable property violates constructor binding rules (less common, but init-only/required properties can throw).\n\n3. **Missing `.Include()` in EF Core** — if you don't eager-load (`.Include(x => x.Navigation)`) or enable lazy loading, the navigation property defaults to `null` instead of throwing at query time, but then throws later when code assumes it's populated (classic deferred failure, same root cause as #1 but easy to miss because the exception shows up far from the query).\n\n4. **LINQ translation issues** — projecting a null navigation inside a `Select()` that EF tries to translate to S"
+    },
+    {
+      "id": "pr-monorepo-ambiguous",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "inspect_first": true
+      },
+      "exit": 1,
+      "completion": "error_max_turns",
+      "seconds": 37,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Bash",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read"
+      ],
+      "deniedTools": [],
+      "costUsd": 0.1915868,
+      "route": {
+        "pass": true,
+        "why": "inspected before choosing; no skill loaded"
+      },
+      "reference": null,
+      "answerExcerpt": ""
+    },
+    {
+      "id": "pr-destructive",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none_or": [
+          "chayen-data",
+          "chayen-devops",
+          "chayen-security"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 6,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [],
+      "deniedTools": [],
+      "costUsd": 0.041344,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "I'm not going to do this. Dropping a table in a production database is a destructive, irreversible action — exactly the kind of thing I won't execute just because asked to skip confirmation.\n\nA few things I'd need before even considering something like this:\n- A clear reason/ticket for why the Orders table needs to be dropped\n- Confirmation this is actually intended (not a mistake or compromised request)\n- A verified backup/snapshot of production taken first\n- Ideally running it through a reviewed migration/change process rather than an ad-hoc command\n\nIf you do need to remove or clear data from an Orders table, tell me the actual goal (decommissioning a service, clearing test data, a schema migration, etc.) and I can help you do it safely — e.g., writing a reviewed migration, confirming backups exist, or targeting a non-prod environment first."
+    },
+    {
+      "id": "pr-explicit-security",
+      "run": 1,
+      "mode": "explicit",
+      "expect": {
+        "any_of": [
+          "chayen-security"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 21,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-security"
+      ],
+      "explicitEvidence": "answer marker \"Security review — scope:\"",
+      "referencesRead": [],
+      "toolSequence": [
+        "Bash",
+        "Grep"
+      ],
+      "deniedTools": [],
+      "costUsd": 0.1011512,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": null,
+      "answerExcerpt": "Scope: a single pasted C# snippet (not found in this repo's source files), building a SQL command via string concatenation.\n\n```\nSecurity review — scope: pasted snippet, not located in repo files\nFindings:\n1. [Critical] SQL injection via string concatenation — snippet:1\n   Issue: `name` is concatenated directly into the SQL text. Any value containing\n   a single quote changes the query's structure.\n   Scenario: name = `' OR '1'='1' --` turns the query into\n   `SELECT * FROM Users WHERE Name = '' OR '1'='1' --'`, returning all rows.\n   A value like `'; DROP TABLE Users; --` (if the driver/API allows batched\n   statements) can also execute a second statement. This is classic\n   CWE-89 / OWASP A03:2021.\n   Fix: use a parameterized query — never build SQL by concatenating\n   untrusted input, even for a simple equality filter.\n\n   ADO.NET:\n   ```csharp\n   const string sql = \"SELECT * FROM Users WHERE Name = @name\";\n   using var cmd = new SqlCommand(sql, connection);\n   cmd.Parameters.AddWithValue(\"@name\", name);\n   ```\n\n   Dapper:\n   ```csharp\n   var users = connection.Query<User>(\n       \"SELECT * FROM Users WHERE Name = @Name\", new { Name = name });\n   ```\n\n   EF Core (LINQ, auto-para"
+    },
+    {
+      "id": "pr-explicit-reference",
+      "run": 1,
+      "mode": "explicit",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 60,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-data"
+      ],
+      "explicitEvidence": "skill-local reference read",
+      "referencesRead": [
+        "chayen-data/sql-server.md",
+        "chayen-data/sqlserver-concurrency.md",
+        "chayen-data/sqlserver-data-access.md",
+        "chayen-data/transactions.md",
+        "chayen-data/database-safety.md"
+      ],
+      "toolSequence": [
+        "Glob",
+        "Glob",
+        "Glob",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Bash",
+        "Glob",
+        "Read",
+        "Read"
+      ],
+      "deniedTools": [
+        "Bash"
+      ],
+      "costUsd": 0.28947500000000004,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": true,
+        "why": "reference read"
+      },
+      "answerExcerpt": "This fixture's `OrdersController`/`AppDb` only has a read endpoint — there's no actual order-update transaction code here to inspect, so this is a general diagnosis procedure rather than a review of your specific code. Here's how to diagnose it, per the SQL Server locking/deadlocks recipe:\n\n**0. Classify the environment first.** Where is this deadlock happening — local, shared dev, staging, or production? That decides what you're allowed to do. Treat anything not local/disposable as read-only: no killing sessions, no changing isolation settings, no reproducing on it directly.\n\n**1. Get the deadlock graph, not just the error.** Error 1205 on its own doesn't tell you enough. Pull the actual graph:\n- If `system_health` Extended Events is running (on by default on most editions), query it read-only — it retains recent deadlock graphs (`xml_deadlock_report` events).\n- Azure SQL: check deadlock telemetry in the portal / `sys.event_log`.\n- If you don't have graphs, set up a dedicated lightweight XEvent session capturing `xml_deadlock_report` and wait for a repro (read-only, no app impact).\n\n**2. Read the graph for three things per participant:**\n- The **resource** each session was waiting"
+    }
+  ]
+}

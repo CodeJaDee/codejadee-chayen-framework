@@ -57,8 +57,8 @@ In testing on Claude Code (2026-10-15), native permissions held throughout:
 
 1. **That a skill is used.** Selection is decided by the model from the
    skill descriptions.
-   - Measured on Claude Code: 14 of 20 relevant runs loaded the right
-     skill.
+   - Measured on Claude Code: automatic selection loaded the right skill
+     in 12 of 22 relevant runs (55%).
    - Some tasks (a Next.js route handler) never triggered one.
    - Competing personal, project, or built-in skills can be chosen
      instead.
@@ -94,7 +94,7 @@ In testing on Claude Code (2026-10-15), native permissions held throughout:
 |---|---|
 | Verification status | All 206 engineering capabilities, 108 technology capabilities, and 12 workflows are **implemented, not verified** |
 | Provider evidence | Current-build behaviour was measured on Claude Code CLI only. Codex and Copilot results are from an earlier build; VS Code is untested. |
-| Routing | Next.js server-route tasks did not trigger a skill (0/4). pytest tasks were unstable (2/4). |
+| Routing | Automatic selection: 12/22 relevant runs (55%). Next.js server-route tasks did not trigger a skill (0/5); pytest 3/5; ASP.NET, Angular and SQL Server 2/3 each. |
 | Path handling | Before a fix in this build, agents sometimes looked for project files next to the plugin after loading a skill (3 of 7 runs; all blocked). After the fix: 0 of 7, a small sample. |
 | Licence | Not yet chosen. No licence is granted until one is published. |
 

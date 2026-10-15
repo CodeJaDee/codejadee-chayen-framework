@@ -75,7 +75,8 @@ They need an authorized environment and test identities.
 - [ ] **Routing probes** on Claude Code, plus Copilot if an isolated test
   sign-in is available:
   `tests/evaluation/run-provider-probes.mjs`, ≥2 runs. Compare against the
-  2026-10-15 baseline (14/20 positive, 8/8 no-match).
+  2026-10-15 baseline (automatic 12/22, explicit 6/6, no-match 12/12;
+  43 pooled runs).
 
 ## E. Documentation
 

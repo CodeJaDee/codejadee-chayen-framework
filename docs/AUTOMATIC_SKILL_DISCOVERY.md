@@ -37,7 +37,7 @@ when:
 - you explicitly ask the agent not to use skills.
 
 In testing (Claude Code, 2026-10-15), prompts of these kinds loaded no
-Chayen skill in **8 of 8** runs.
+Chayen skill in **12 of 12** runs.
 
 A loaded skill also has its own boundary. Each skill says what it does not
 cover and hands off by name: for example, "the chayen-data skill" for
@@ -84,21 +84,25 @@ When you want a specific skill, name it:
 
 ## Measured behaviour
 
-Real Claude Code runs (2.1.270, 13 probes, 2–4 runs each, 2026-10-15) gave
+Real Claude Code runs (2.1.270, 13 probes, 3–5 runs each, 43 runs in total, 2026-10-15) gave
 these results:
 
 | Measure | Result |
 |---|---|
-| Relevant skill loaded for a matching task | 14 of 20 runs |
-| Wrong skill loaded | 0 of 14 loads |
+| Relevant skill loaded automatically for a matching task | 12 of 22 runs (55%) |
+| Named skill loaded on explicit invocation | 6 of 6 runs |
+| Wrong skill loaded | 0 of 18 loads |
 | Skill loaded when none should | 0 of 8 runs |
-| Skill-specific reference read | 8 of 16 runs |
+| Skill-specific reference read | 10 of 22 runs |
 
 Known weak spots:
 
-- A Next.js route-handler bug loaded no skill in 4 of 4 runs. The agent
+- A Next.js route-handler bug loaded no skill in 5 of 5 runs. The agent
   still fixed it correctly.
-- A pytest task loaded the testing skill in only 2 of 4 runs.
+- A pytest task loaded the testing skill in only 3 of 5 runs.
+- Clear ASP.NET, Angular and SQL Server tasks loaded their skill in 2 of 3
+  runs each. When the agent started by delegating exploration to a
+  sub-agent, it often never loaded a skill.
 
 Other providers have only results for an earlier build. Full data:
 [docs/chayen/EVALUATION_REPORT.md](chayen/EVALUATION_REPORT.md).

@@ -52,8 +52,9 @@ in the manifests is still `0.1.0-dev`. Changing it is a release step (see
 
 - Nothing is behaviour-verified. Current-build provider evidence covers
   Claude Code CLI only:
-  - 14 of 20 relevant runs loaded the right skill;
-  - 8 of 8 no-match runs stayed native;
+  - automatic routing loaded the right skill in 12 of 22 relevant runs
+    (55%; explicit invocation 6 of 6);
+  - 12 of 12 no-match runs stayed native;
   - Next.js route tasks did not trigger a skill.
 - Native marketplace install of this build has not been run. Earlier-build
   installs passed on all three CLIs.

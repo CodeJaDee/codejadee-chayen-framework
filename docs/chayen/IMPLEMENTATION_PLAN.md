@@ -423,3 +423,30 @@ and the identity checks.
 security contact was invented (R-56). Manifests are unchanged, still
 `0.1.0-dev` (R-54). Nothing was pushed, tagged, or published. STOP after
 STEP 33.
+### Step 34 — Final independent completeness audit (user-directed)
+
+**DONE (pending owner decision).** Recommendation: **NO-GO** for public
+release; **CONDITIONAL-GO** for a limited internal pilot.
+
+**Executed:**
+
+- Re-ran all 20 validator and test commands and the 6 fact suites: all exit
+  0; facts 107/0/52.
+- An independent audit script over 206 capabilities, 108 technology
+  records, and the package.
+- Re-derived the Step 32 probe records from raw transcripts (30/30 match).
+- A new Claude Code probe run (Run C: 9/13). Pooled 43 runs: automatic
+  12/22, explicit 6/6, no-match 12/12.
+
+**Outputs:** FINAL_AUDIT_REPORT.md, RELEASE_READINESS.md,
+KNOWN_LIMITATIONS.md.
+
+**Changes made by the audit:**
+
+- EX-01..EX-07 VERIFIED by release inspection;
+- stale acceptance cells annotated;
+- user docs, changelog, and checklist corrected to the pooled routing
+  figures;
+- DF-03 recorded (D-009 status inconsistency, stale plan overview).
+
+Nothing published, pushed, or tagged. STOP after STEP 34.

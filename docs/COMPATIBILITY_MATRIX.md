@@ -33,19 +33,20 @@ never assumed for VS Code.
 | Native install from a local marketplace | Verified (earlier build) | Not tested | Verified (earlier build) | Unsupported | Verified (earlier build) | Not tested |
 | Install from the GitHub marketplace | Not tested | Not tested | Not tested | Unsupported | Not tested | Not tested |
 | Plugin and skills discoverable | **Verified**: 13/13 skills, plugin loaded from its folder | Not tested | Verified (earlier build) | Unsupported | Verified (earlier build) | Not tested |
-| Automatic invocation | **Verified**: 14/20 relevant runs. Next.js route 0/4, pytest 2/4. | Not tested | Verified (earlier build), 3/3 | Unsupported | Verified (earlier build), 3/3 | Not tested |
-| No-match: native behaviour preserved | **Verified**: 8/8 | Not tested | Verified (earlier build) | Unsupported | Partial (earlier build): Unity and SwiftUI over-activated | Not tested |
-| Explicit invocation | **Verified**: 4/4 | Not tested | Verified (earlier build) | Unsupported | Verified (earlier build) | Not tested |
-| Skill references loaded | **Verified**: 8/16 runs | Not tested | Not tested | Unsupported | Not tested | Not tested |
+| Automatic invocation | **Measured**: 12/22 relevant runs (55%). Next.js route 0/5, pytest 3/5. | Not tested | Verified (earlier build), 3/3 | Unsupported | Verified (earlier build), 3/3 | Not tested |
+| No-match: native behaviour preserved | **Verified**: 12/12 | Not tested | Verified (earlier build) | Unsupported | Partial (earlier build): Unity and SwiftUI over-activated | Not tested |
+| Explicit invocation | **Verified**: 6/6 | Not tested | Verified (earlier build) | Unsupported | Verified (earlier build) | Not tested |
+| Skill references loaded | **Measured**: 10/22 runs | Not tested | Not tested | Unsupported | Not tested | Not tested |
 | Disable / enable | Verified (earlier build) | Not tested | Verified (earlier build), via `config.toml` | Unsupported | Verified (earlier build) | Not tested |
 | Update | Not tested; see the version note below | Not tested | Not tested; no per-plugin command | Unsupported | Command ran (earlier build); no version change was tested | Not tested |
 | Uninstall | Verified (earlier build) | Not tested | Verified (earlier build) | Unsupported | Verified (earlier build); local marketplace only disabled it | Not tested |
 | Project files unchanged by install or use | Verified | Not tested | Verified (earlier build) | Unsupported | Verified (earlier build) | Not tested |
 
-**Where the "Verified" results come from**
+**Where the "Verified" and "Measured" results come from**
 
-- Claude Code results for this build come from 31 recorded runs on
-  2026-10-15, with the plugin loaded from its folder (`--plugin-dir`).
+- Claude Code results for this build come from 43 recorded runs: four run
+  sets on 2026-10-15, including the STEP 34 audit re-run. The plugin was
+  loaded from its folder (`--plugin-dir`).
   Marketplace installation of this build has not been run.
 - Results marked "earlier build" are from 2026-10-14, for the 6-skill build.
 - Copilot and Codex probes for this build could not run in the test

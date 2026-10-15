@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 33 — Distribution preparation |
+| Last executed step | 34 — Final independent completeness audit |
+| Step 34 status | DONE: audit complete. Recommendation NO-GO public / CONDITIONAL-GO internal pilot. All 26 automated runs exit 0 (facts 107/0/52); independent audit clean; Step 32 records reproduced 30/30; Run C 9/13; pooled automatic routing 12/22, no-match 12/12. EX-01..EX-07 VERIFIED; charter criteria 1–2 NOT MET, 3 PARTIAL, 4 MET. Awaiting owner. |
 | Step 33 status | DONE (pending review): user docs (README, SECURITY, CHANGELOG, 11 docs/ guides), release metadata, marketplace listing drafts, licence proposal and release checklist in docs/distribution/; G-14 docs gate PASS (18 files, 5/5 negative controls); 9 gate groups PASS. Not released: licence, publisher identity, public URL and security contact pending owner (R-56); version unchanged (R-54). |
 | Step 32 status | DONE for the executable scope (pending review): suite over 15 categories and 4 evidence levels; static/traceability PASS (206/206, 108/108, 12/12, 11/11 routing examples); facts 107/0/52; Claude Code probes 31 billed runs, positive routing 14/20, no-match 8/8, precision 14/14, references 8/16, verification evidence 3/10. Copilot/Codex/VS Code/plugin-eval NOT_RUN. Path guard added to 13 skills (D-046). No VERIFIED promotion (R-55). |
 | Step 31 status | PARTIAL — static validation complete: manifests, marketplaces, precedence (from the installed provider code of Claude Code 2.1.270/2.1.299, Codex 0.160.1/0.162.0-alpha, Copilot 1.0.97, VS Code 1.141.1 + Copilot 0.69.0), identity and discovery (check-identity 15/15, 13 skills / 221 references), validate-all 8/8 groups, strict validate PASS. Native install/invocation/reference/lifecycle checks NOT_TESTED on every surface (lifecycle opt-in denied by the session permission classifier; R-53). Version unchanged, update risk R-54. Codex IDE extension UNSUPPORTED. Release gate OPEN. |
@@ -36,7 +37,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after STEP 33; await user review. Owner decisions in docs/distribution/RELEASE_CHECKLIST.md §A (R-56), then version bump (R-54) and provider re-verification (R-53) before any release. Open: R-55, R-49, R-51, R-52, R-45. All records remain IMPLEMENTED, 0 VERIFIED. |
+| Next step | STOP after STEP 34; awaiting project-owner approval. See RELEASE_READINESS.md §3 (path to GO) and §4 (pilot conditions). Blockers: R-56, R-53, R-54, untested Codex/Copilot/VS Code, routing 55% (R-55); DF-03 for owner. |
 | Commits made by agent | None |
 
 ---
@@ -3490,3 +3491,87 @@ status, from STEP 31 and STEP 32 evidence.
 | Deleted | None. Manifests and marketplace files are unchanged. |
 
 STOP after STEP 33.
+---
+
+## Step 34 — Final independent completeness audit
+
+- **Date:** 2026-10-15
+- **Status:** DONE (audit complete). Release decision pending the project
+  owner.
+  - **Recommendation:** NO-GO for public release; CONDITIONAL-GO for a
+    limited internal pilot.
+- **Scope:** STEP 34 only. Baseline clean `main` at 1d75c70, in sync with
+  `origin/main`. No commit, push, tag, publication, submission, version
+  change, or install.
+- **Independence:** earlier completion claims were not assumed.
+  - Every available validator and automated test was re-run.
+  - An independent audit script was written that does not use the project
+    validators.
+  - Recorded provider results were re-derived from the raw transcripts.
+  - A new actual-provider run was executed.
+
+### Actual verification
+
+| Command / method | Observed result |
+|---|---|
+| T01 `node tools/validate/validate-all.mjs` | 9 gate groups PASS |
+| T02 `node tools/validate/check-docs.mjs --list-external` | 18 files, 0 errors |
+| T03 `node tests/provider-compatibility/check-identity.mjs` | 15/15 |
+| T04 `node tools/validate/check-security.mjs` | V-25 PASS, 0 errors |
+| T05 `node --test tests/security/boundaries.test.mjs` | 32/32 pass |
+| T06–T13 validate-package, check-catalog, audit-coverage, check-technology, check-workflows, eval `--check`, validator self-tests, evaluation suite | All exit 0; 132/132 self-tests; 186 cases / 441 files in sync |
+| T14–T17 `claude plugin validate --strict` (plugin and marketplace; CLI 2.1.270 and bundled 2.1.299) | `✔ Validation passed` ×4 |
+| T18–T20 `node --check` on 28 `.mjs` files; `bash -n run-lifecycle.sh`; `git diff --check` | All pass |
+| F1–F6 six `run-fact-checks.mjs` suites | 107 PASS / 0 FAIL / 52 NOT_RUN |
+| Independent audit script (scratch) | 206 unique IDs, 20 domains, 117 recipes. 206/206 recipes exist, declare their ID, are linked, have ≥406 words, and have positive and negative cases. 0 broken links, 0 unreachable references, 108/108 technology records. Package: 236 .md + 2 .json. 0 forbidden components, 0 secret hits. 3 flag types reviewed by hand: all false positives. |
+| `run-provider-probes.mjs --rescore` on the Step 32 raw transcripts | Run A, re-run, Run B: 30/30 records MATCH the committed summaries |
+| `run-provider-probes.mjs --allow-provider-calls --provider claude` (Run C, about $2.67) | 9/13. ASP.NET, Angular and SQL Server loaded no skill this time; Next.js again none. Fixture unchanged; 13/13 skills discovered. |
+| `run-evaluation-suite.mjs --facts … --probes` ×4 | Pooled 43 runs: automatic 12/22, explicit 6/6, no-match 12/12, wrong skill 0/18, references 10/22 |
+
+No validator or regression test failed. Provider probe failures and
+untested surfaces are listed in FINAL_AUDIT_REPORT §§2, 4, 5. Lifecycle
+install, Copilot, Codex, VS Code and `claude plugin eval` were NOT_RUN
+(reasons in §1).
+
+### Findings and corrections
+
+- **Charter success criteria:**
+  - 1 (all rows VERIFIED or DEFERRED): NOT MET;
+  - 2 (native install of this build per provider): NOT MET;
+  - 3 (positive and negative triggers): PARTIAL;
+  - 4 (automated validation): MET.
+- **Acceptance:**
+  - EX-01..EX-07 moved to VERIFIED, because the release inspection was
+    executed;
+  - stale cells annotated (REQ-02, REQ-06, ARC-01, ARC-04);
+  - REQ-02 and REQ-04 evidence appended.
+- **Routing reliability was overstated** by the Step 32-only figures. These
+  were corrected to the pooled figures:
+  - docs/AUTOMATIC_SKILL_DISCOVERY.md, docs/COMPATIBILITY_MATRIX.md,
+    docs/SECURITY_AND_LIMITATIONS.md;
+  - CHANGELOG.md;
+  - docs/distribution/RELEASE_CHECKLIST.md;
+  - EVALUATION_REPORT.md (a note);
+  - R-55.
+
+  Automatic invocation is relabelled "Measured", not "Verified".
+- **DF-03 (new):** D-009 status inconsistency between DECISIONS.md and
+  PLUGIN_FORMAT_DECISION.md, and a stale IMPLEMENTATION_PLAN overview. Left
+  for the owner.
+- **Blockers B-1..B-5:** R-56, R-53, R-54, untested providers and VS Code,
+  and 55% automatic routing.
+
+### File ledger (STEP 34 only)
+
+| Action | Path |
+|---|---|
+| Created | `docs/chayen/FINAL_AUDIT_REPORT.md` |
+| Created | `docs/chayen/RELEASE_READINESS.md` |
+| Created | `docs/chayen/KNOWN_LIMITATIONS.md` |
+| Created | `tests/evaluation/results/step34-claude-run-c.json` (path-free) |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md`, `docs/chayen/ISSUES.md`, `docs/chayen/EVALUATION_REPORT.md`, `docs/chayen/IMPLEMENTATION_PLAN.md`, `docs/chayen/PROGRESS.md` |
+| Modified | `docs/AUTOMATIC_SKILL_DISCOVERY.md`, `docs/COMPATIBILITY_MATRIX.md`, `docs/SECURITY_AND_LIMITATIONS.md`, `CHANGELOG.md`, `docs/distribution/RELEASE_CHECKLIST.md` (metric corrections only) |
+| Deleted | None. No shipped plugin file, manifest, or marketplace file changed. |
+
+Audit logs, raw transcripts and fact JSON stay in session scratch. STOP
+after STEP 34; awaiting project-owner approval.
