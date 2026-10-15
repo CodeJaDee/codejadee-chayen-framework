@@ -16,8 +16,9 @@ This is a **pilot build** with 13 entry skills. The list is in
 
 - Skills activate automatically when a request matches their description.
 - Requests that match no skill are handled by the agent normally.
-- Trigger reliability has not yet been measured. See
-  `docs/chayen/PROGRESS.md` in the repository.
+- Trigger reliability is only partly measured (Claude Code, 2026-10-15). See
+  `docs/COMPATIBILITY_MATRIX.md` and `docs/SECURITY_AND_LIMITATIONS.md` in the
+  repository.
 
 ## Technology coverage
 

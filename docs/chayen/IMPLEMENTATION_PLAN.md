@@ -399,3 +399,27 @@ not authorized), VS Code, and `claude plugin eval` at full size.
 
 **Open.** Next.js under-trigger and pytest instability are recorded (R-55,
 EG-01..EG-20). STOP after STEP 32.
+
+### Step 33 — Distribution preparation (user-directed)
+
+**DONE (pending review). Not released.**
+
+**User documentation:**
+
+- `README.md`, `SECURITY.md`, `CHANGELOG.md`;
+- 11 guides in `docs/`: getting started, three install guides,
+  automatic discovery, technologies, skills catalog, workflows, security and
+  limitations, compatibility matrix, contributing.
+
+**Release material** in `docs/distribution/`: licence proposal, proposed
+release metadata, marketplace listing drafts, release checklist. The folder
+is named `distribution` because `.gitignore` ignores `[Rr]elease/`.
+
+**Validation.** New documentation gate G-14 (`tools/validate/check-docs.mjs`,
+5/5 negative controls). Manifest metadata validated against the git remote
+and the identity checks.
+
+**Not done.** No licence, publisher identity, public URL, privacy policy, or
+security contact was invented (R-56). Manifests are unchanged, still
+`0.1.0-dev` (R-54). Nothing was pushed, tagged, or published. STOP after
+STEP 33.

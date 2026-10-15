@@ -20,6 +20,7 @@ const steps = [
   ["G-03c composite workflows and templates (V-24)", "tools/catalog/check-workflows.mjs", []],
   ["G-11 trigger eval cases in sync", "tools/evals/generate-claude-evals.mjs", ["--check"]],
   ["G-13 validator self-tests", "tools/validate/run-validator-tests.mjs", []],
+  ["G-14 user and release documentation links and identifiers", "tools/validate/check-docs.mjs", []],
 ];
 let failed = 0;
 for (const [label, script, args] of steps) {

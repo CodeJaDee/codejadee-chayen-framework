@@ -27,8 +27,9 @@ The gates are in
 |---|---|
 | `validate-package.mjs` | The checks below |
 | `run-validator-tests.mjs` | Applies the mutation cases in `tests/catalog/` and `tests/skills/` to temporary repository copies, and asserts that each one fails with the expected check (G-13) |
-| `validate-all.mjs` | Runs security preflight and offline boundary tests, package, engineering catalog, technology, composite workflow/template and eval synchronization checks, then validator self-tests (eight gate groups). Failed security preflight stops later gates. |
+| `validate-all.mjs` | Runs security preflight and offline boundary tests, package, engineering catalog, technology, composite workflow/template and eval synchronization checks, then validator self-tests and the documentation check (nine gate groups). Failed security preflight stops later gates. |
 | `check-security.mjs` | V-25 metadata-only profile, authority guards, link/path confinement, heuristic secret patterns, source hashes, URL and fixture dependency inventory; `--write-report` writes only the fixed STEP 30 report |
+| `check-docs.mjs` | STEP 33 documentation gate (G-14): relative links and anchors (D-01, D-02), `<plugin>@<marketplace>` identifiers (D-03), skill names (D-04), and `-dev` versions (D-05) in README.md, SECURITY.md, CHANGELOG.md, docs/*.md and docs/distribution/*.md. External links are listed, not fetched. |
 | `safe-paths.mjs` | Rejects absolute/traversal paths and linked descendants for scratch mutation and staging |
 
 ## What `validate-package.mjs` checks

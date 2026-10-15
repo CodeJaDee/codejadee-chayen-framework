@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 32 — Comprehensive evaluation suite |
+| Last executed step | 33 — Distribution preparation |
+| Step 33 status | DONE (pending review): user docs (README, SECURITY, CHANGELOG, 11 docs/ guides), release metadata, marketplace listing drafts, licence proposal and release checklist in docs/distribution/; G-14 docs gate PASS (18 files, 5/5 negative controls); 9 gate groups PASS. Not released: licence, publisher identity, public URL and security contact pending owner (R-56); version unchanged (R-54). |
 | Step 32 status | DONE for the executable scope (pending review): suite over 15 categories and 4 evidence levels; static/traceability PASS (206/206, 108/108, 12/12, 11/11 routing examples); facts 107/0/52; Claude Code probes 31 billed runs, positive routing 14/20, no-match 8/8, precision 14/14, references 8/16, verification evidence 3/10. Copilot/Codex/VS Code/plugin-eval NOT_RUN. Path guard added to 13 skills (D-046). No VERIFIED promotion (R-55). |
 | Step 31 status | PARTIAL — static validation complete: manifests, marketplaces, precedence (from the installed provider code of Claude Code 2.1.270/2.1.299, Codex 0.160.1/0.162.0-alpha, Copilot 1.0.97, VS Code 1.141.1 + Copilot 0.69.0), identity and discovery (check-identity 15/15, 13 skills / 221 references), validate-all 8/8 groups, strict validate PASS. Native install/invocation/reference/lifecycle checks NOT_TESTED on every surface (lifecycle opt-in denied by the session permission classifier; R-53). Version unchanged, update risk R-54. Codex IDE extension UNSUPPORTED. Release gate OPEN. |
 | Step 30 status | DONE (pending review; 238 package files / 13 entries / 221 references, three marketplaces and 57 developer assets statically reviewed; instruction priority, safe staging/mutations, parser/eval metadata and provider opt-in hardened; V-25 and eight offline gate groups PASS, 32/32 security tests and 132/132 validator tests PASS; 23 JavaScript plus one shell syntax check PASS. Native provider/model/install, advisory and runtime defenses NOT_RUN; R-52 OPEN). |
@@ -35,7 +36,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after STEP 32; await user review. Open: R-55 (evaluation residuals, EVALUATION_GAPS EG-01..EG-20), R-53/R-54 (provider release gate), STEP 28 PARTIAL (R-49), R-51/R-52, R-45. All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED. |
+| Next step | STOP after STEP 33; await user review. Owner decisions in docs/distribution/RELEASE_CHECKLIST.md §A (R-56), then version bump (R-54) and provider re-verification (R-53) before any release. Open: R-55, R-49, R-51, R-52, R-45. All records remain IMPLEMENTED, 0 VERIFIED. |
 | Commits made by agent | None |
 
 ---
@@ -3383,3 +3384,109 @@ No manifest, marketplace file, skill or reference was changed. STOP after STEP 3
 
 Raw transcripts, fact JSON and logs stay in the session scratch directory,
 because they contain local paths. STOP after STEP 32.
+---
+
+## Step 33 — Distribution preparation
+
+- **Date:** 2026-10-15
+- **Status:** DONE, pending review. **Not released.**
+- **Scope:** STEP 33 only. Baseline clean `main` at c5d4905, in sync with
+  `origin/main`. No commit, push, tag, publication, marketplace submission,
+  version change, or licence file.
+
+### Work performed
+
+- **User documentation:**
+  - `README.md`, `SECURITY.md`, `CHANGELOG.md` (an `[Unreleased]` section,
+    proposed `0.1.0`);
+  - in `docs/`: GETTING_STARTED, INSTALL_CLAUDE_CODE, INSTALL_CODEX,
+    INSTALL_COPILOT, AUTOMATIC_SKILL_DISCOVERY, SUPPORTED_TECHNOLOGIES,
+    SKILLS_CATALOG, DEVELOPMENT_WORKFLOWS, SECURITY_AND_LIMITATIONS,
+    COMPATIBILITY_MATRIX, CONTRIBUTING.
+
+  All ten required topics are covered:
+  - what Chayen is and is not;
+  - native install;
+  - normal prompts;
+  - automatic selection;
+  - no-match behaviour;
+  - technology detection;
+  - explicit invocation per provider;
+  - disable, update and uninstall per provider and surface;
+  - bug and skill requests;
+  - what cannot be guaranteed.
+- **Release material** in `docs/distribution/`:
+  - LICENSE_PROPOSAL (options A–D; no LICENSE file);
+  - RELEASE_METADATA (current metadata validated, proposed changes not
+    applied, owner-only items);
+  - MARKETPLACE_LISTINGS (drafts for Claude Code, Codex and Copilot; not
+    submitted);
+  - RELEASE_CHECKLIST.
+- **Facts established for the docs, read-only:**
+  - `git remote` is `https://github.com/CodeJaDee/codejadee-chayen-framework`;
+  - `gh repo view` reports the repository as **PRIVATE** with issues
+    enabled and no licence;
+  - the private vulnerability reporting API returned "Not Found";
+  - all git authors are the `0xPratyaDev7x` account (also "Pratya S.");
+  - there are no AI co-author trailers.
+
+  Credits follow the user's wording: Project Owner, Git-history
+  contributors, an AI-assisted development note, and the licence pending.
+  No email addresses were published.
+- **Documentation gate.** Added `tools/validate/check-docs.mjs` and
+  registered it as G-14 in `validate-all.mjs`. It checks links, anchors,
+  plugin identifiers, skill names, and `-dev` versions.
+- **Shipped plugin README:** replaced the outdated "not yet measured" line
+  with a pointer to the measured status.
+- **Defect found and fixed:** the Visual Studio `.gitignore` rule
+  `[Rr]elease/` silently ignored `docs/release/`. The folder was renamed to
+  `docs/distribution/`; `.gitignore` is unchanged.
+
+### Actual verification
+
+| Command | Observed result |
+|---|---|
+| `node tools/validate/check-docs.mjs --list-external` | PASS: 18 files, 0 errors. Two external links listed and not fetched (keepachangelog.com, semver.org). |
+| Negative controls on a scratch copy (broken link, missing anchor, wrong identifier, unknown skill, wrong `-dev` version) | 5/5 detected, as D-01..D-05 |
+| `node tools/validate/validate-all.mjs` | 9 gate groups PASS, including G-14; 132/132 validator self-tests |
+| `node tests/provider-compatibility/check-identity.mjs` | 15/15 PASS |
+| `claude plugin validate --strict plugins/codejadee-chayen-framework` and `.` (2.1.270) | `✔ Validation passed` (both) |
+| `node tools/validate/check-security.mjs` | V-25 PASS; package still 238 files, 0 errors |
+| `node tools/evals/run-evaluation-suite.mjs` | Static and traceability levels PASS |
+| Manifest metadata vs `git remote get-url origin` | `homepage` and `repository` match in both manifests. `license` is absent in both. Copilot entry and `metadata.version` are `0.1.0-dev` (parity). |
+| `git check-ignore` on `docs/release/*` and `docs/distribution/*` | The former was ignored by `.gitignore:23`; the latter is not |
+| `git diff --check` | PASS (only CRLF notices) |
+
+No provider install, model call, network write, push, or publication was
+executed. Install instructions are labelled with their actual verification
+status, from STEP 31 and STEP 32 evidence.
+
+### Decisions, risks and open questions
+
+- **R-56 (new):** distribution prerequisites only the owner can supply:
+  - licence;
+  - publisher or legal identity;
+  - public URL;
+  - security contact;
+  - support channel.
+- **Q-05** annotated with the proposal.
+- **Unchanged:** R-53 (install re-verification), R-54 (version), R-55
+  (evaluation residuals), Q-02, Q-08. All capability, technology and
+  workflow records remain IMPLEMENTED, 0 VERIFIED.
+- **Acceptance:** GOV-18 added as IMPLEMENTED (user review pending); REQ-01
+  evidence updated.
+
+### File ledger (STEP 33 only)
+
+| Action | Path |
+|---|---|
+| Created | `README.md`, `SECURITY.md`, `CHANGELOG.md` |
+| Created | `docs/GETTING_STARTED.md`, `docs/INSTALL_CLAUDE_CODE.md`, `docs/INSTALL_CODEX.md`, `docs/INSTALL_COPILOT.md`, `docs/AUTOMATIC_SKILL_DISCOVERY.md`, `docs/SUPPORTED_TECHNOLOGIES.md`, `docs/SKILLS_CATALOG.md`, `docs/DEVELOPMENT_WORKFLOWS.md`, `docs/SECURITY_AND_LIMITATIONS.md`, `docs/COMPATIBILITY_MATRIX.md`, `docs/CONTRIBUTING.md` |
+| Created | `docs/distribution/LICENSE_PROPOSAL.md`, `docs/distribution/RELEASE_METADATA.md`, `docs/distribution/MARKETPLACE_LISTINGS.md`, `docs/distribution/RELEASE_CHECKLIST.md` |
+| Created | `tools/validate/check-docs.mjs` |
+| Modified | `tools/validate/validate-all.mjs` (G-14), `tools/validate/README.md` |
+| Modified | `plugins/codejadee-chayen-framework/README.md` (status line only) |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md`, `ISSUES.md`, `IMPLEMENTATION_PLAN.md`, `PROGRESS.md` |
+| Deleted | None. Manifests and marketplace files are unchanged. |
+
+STOP after STEP 33.
