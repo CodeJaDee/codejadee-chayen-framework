@@ -1,0 +1,3260 @@
+{
+  "step": 32,
+  "kind": "evaluation-suite",
+  "levels": {
+    "static": [
+      {
+        "id": "S-ALL",
+        "command": "node tools/validate/validate-all.mjs",
+        "categories": [
+          1,
+          2,
+          3,
+          4,
+          11,
+          12
+        ],
+        "exit": 0,
+        "result": "PASS",
+        "detail": "All automated gates passed"
+      },
+      {
+        "id": "S-IDENTITY",
+        "command": "node tests/provider-compatibility/check-identity.mjs",
+        "categories": [
+          1,
+          10,
+          15
+        ],
+        "exit": 0,
+        "result": "PASS",
+        "detail": "15/15 PASS"
+      },
+      {
+        "id": "S-AUDIT206",
+        "command": "node tools/catalog/audit-coverage.mjs",
+        "categories": [
+          3
+        ],
+        "exit": 0,
+        "result": "PASS",
+        "detail": "Shared description terms: data: chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-testing; review: chayen-architecture, chayen-data, chayen-devops, chayen-documentation, "
+      },
+      {
+        "id": "S-EVALSYNC",
+        "command": "node tools/evals/generate-claude-evals.mjs --check",
+        "categories": [
+          5,
+          6,
+          7
+        ],
+        "exit": 0,
+        "result": "PASS",
+        "detail": "Claude eval cases up to date: 186 cases, 441 files."
+      }
+    ],
+    "simulated": {
+      "label": "SIMULATED lexical proxy: BM25 of each prompt against skill name + description (the metadata providers see before activation). It is not a model, not a provider, and can never support VERIFIED.",
+      "threshold": {
+        "rule": "0.5 x median top score of positive prompts",
+        "value": 1.844
+      },
+      "positives": 130,
+      "top1Recall": 0.546,
+      "top3Recall": 0.769,
+      "precision": 0.514,
+      "noMatchCorrectness": 0.441,
+      "noMatchCases": 34,
+      "falsePositiveRateOnNoMatch": 0.559,
+      "ambiguousAcceptable": "14/22",
+      "lowestSeparabilityPositives": [
+        {
+          "id": "pos-repository-overview",
+          "expected": "chayen-repository",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-repository-commands",
+          "expected": "chayen-repository",
+          "proxyPick": "chayen-devops"
+        },
+        {
+          "id": "pos-repository-ownership",
+          "expected": "chayen-repository",
+          "proxyPick": "chayen-documentation"
+        },
+        {
+          "id": "pos-implementation-csv-export",
+          "expected": "chayen-implementation",
+          "proxyPick": "chayen-data"
+        },
+        {
+          "id": "pos-implementation-refactor",
+          "expected": "chayen-implementation",
+          "proxyPick": "chayen-repository"
+        },
+        {
+          "id": "pos-implementation-soft-delete",
+          "expected": "chayen-implementation",
+          "proxyPick": "chayen-data"
+        },
+        {
+          "id": "pos-implementation-bug",
+          "expected": "chayen-implementation",
+          "proxyPick": "chayen-repository"
+        },
+        {
+          "id": "pos-implementation-upgrade",
+          "expected": "chayen-implementation",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-implementation-flag",
+          "expected": "chayen-implementation",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-implementation-codegen",
+          "expected": "chayen-implementation",
+          "proxyPick": "chayen-testing"
+        },
+        {
+          "id": "pos-backend-efcore-paging",
+          "expected": "chayen-backend",
+          "proxyPick": "chayen-data"
+        },
+        {
+          "id": "pos-backend-fastapi-validation",
+          "expected": "chayen-backend",
+          "proxyPick": "chayen-documentation"
+        },
+        {
+          "id": "pos-backend-messaging",
+          "expected": "chayen-backend",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-backend-idempotency",
+          "expected": "chayen-backend",
+          "proxyPick": "chayen-repository"
+        },
+        {
+          "id": "pos-frontend-react-rerender",
+          "expected": "chayen-frontend",
+          "proxyPick": "chayen-repository"
+        },
+        {
+          "id": "pos-frontend-nuxt-page",
+          "expected": "chayen-frontend",
+          "proxyPick": "chayen-implementation"
+        },
+        {
+          "id": "pos-security-leaked-key",
+          "expected": "chayen-security",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-security-cors-auth",
+          "expected": "chayen-security",
+          "proxyPick": "chayen-backend"
+        },
+        {
+          "id": "pos-requirements-elicitation",
+          "expected": "chayen-requirements",
+          "proxyPick": "chayen-implementation"
+        },
+        {
+          "id": "pos-requirements-sizing",
+          "expected": "chayen-requirements",
+          "proxyPick": "chayen-architecture"
+        },
+        {
+          "id": "pos-architecture-adr",
+          "expected": "chayen-architecture",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-architecture-multitenancy",
+          "expected": "chayen-architecture",
+          "proxyPick": "chayen-data"
+        },
+        {
+          "id": "pos-architecture-migration",
+          "expected": "chayen-architecture",
+          "proxyPick": "chayen-implementation"
+        },
+        {
+          "id": "pos-frontend-capacitor-permission",
+          "expected": "chayen-frontend",
+          "proxyPick": "chayen-backend"
+        },
+        {
+          "id": "pos-frontend-electron-packaging",
+          "expected": "chayen-frontend",
+          "proxyPick": "chayen-repository"
+        },
+        {
+          "id": "pos-testing-property",
+          "expected": "chayen-testing",
+          "proxyPick": "chayen-repository"
+        },
+        {
+          "id": "pos-testing-mutation",
+          "expected": "chayen-testing",
+          "proxyPick": "chayen-architecture"
+        },
+        {
+          "id": "pos-performance-k6",
+          "expected": "chayen-performance",
+          "proxyPick": "chayen-testing"
+        },
+        {
+          "id": "pos-performance-bottleneck",
+          "expected": "chayen-performance",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-performance-capacity",
+          "expected": "chayen-performance",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-security-sast-triage",
+          "expected": "chayen-security",
+          "proxyPick": "chayen-devops"
+        },
+        {
+          "id": "pos-devops-tracing",
+          "expected": "chayen-devops",
+          "proxyPick": "chayen-data"
+        },
+        {
+          "id": "pos-devops-incident",
+          "expected": "chayen-devops",
+          "proxyPick": "chayen-testing"
+        },
+        {
+          "id": "pos-devops-postmortem",
+          "expected": "chayen-devops",
+          "proxyPick": "chayen-documentation"
+        },
+        {
+          "id": "pos-documentation-merge-conflict",
+          "expected": "chayen-documentation",
+          "proxyPick": "chayen-repository"
+        },
+        {
+          "id": "pos-ai-prompt-eval",
+          "expected": "chayen-ai-engineering",
+          "proxyPick": "chayen-requirements"
+        },
+        {
+          "id": "pos-devops-go-no-go",
+          "expected": "chayen-devops",
+          "proxyPick": "chayen-documentation"
+        },
+        {
+          "id": "pos-frontend-browser-extension",
+          "expected": "chayen-frontend",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-data-geospatial",
+          "expected": "chayen-data",
+          "proxyPick": "none"
+        },
+        {
+          "id": "pos-ai-skill-authoring",
+          "expected": "chayen-ai-engineering",
+          "proxyPick": "chayen-documentation"
+        }
+      ]
+    },
+    "provider": [
+      {
+        "provider": "claude",
+        "version": "2.1.270 (Claude Code)",
+        "runs": 13,
+        "fixtureUnchanged": true,
+        "routingPass": "12/13",
+        "relevantSkillRecall": "7/8",
+        "selectionPrecision": "7/7",
+        "falsePositiveInvocation": "0/4",
+        "referenceLoad": "4/6",
+        "discoveredSkills": [
+          13
+        ],
+        "costUsd": 2.7021,
+        "perProbe": [
+          {
+            "id": "pr-aspnet-bug",
+            "run": 1,
+            "loaded": [
+              "chayen-backend"
+            ],
+            "refs": [
+              "chayen-backend/aspnetcore-webapi.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": null,
+            "denied": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-angular-form",
+            "run": 1,
+            "loaded": [
+              "chayen-frontend"
+            ],
+            "refs": [
+              "chayen-frontend/angular.md",
+              "chayen-frontend/angular-forms-accessibility.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-postgres-optimization",
+            "run": 1,
+            "loaded": [
+              "chayen-data"
+            ],
+            "refs": [
+              "chayen-data/postgres-query-tuning.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-sqlserver-query",
+            "run": 1,
+            "loaded": [
+              "chayen-data"
+            ],
+            "refs": [
+              "chayen-data/sqlserver-query-tuning.md",
+              "chayen-data/sqlserver-data-access.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": [
+              "Edit",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-nextjs-route",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": false,
+              "why": "expected one of chayen-backend,chayen-security"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-pytest",
+            "run": 1,
+            "loaded": [
+              "chayen-testing"
+            ],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": [
+              "Bash",
+              "Bash",
+              "Bash",
+              "Bash"
+            ]
+          },
+          {
+            "id": "pr-rust-unsupported",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": [
+              "Bash",
+              "Edit",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-general-conversation",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-explicit-decline",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-monorepo-ambiguous",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "inspected before choosing; no skill loaded"
+            },
+            "reference": null,
+            "denied": [
+              "Bash",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-destructive",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-explicit-security",
+            "run": 1,
+            "loaded": [
+              "chayen-security"
+            ],
+            "refs": [
+              "chayen-security/secure-review.md",
+              "chayen-security/review-checklist.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-explicit-reference",
+            "run": 1,
+            "loaded": [
+              "chayen-data"
+            ],
+            "refs": [
+              "chayen-data/sqlserver-concurrency.md",
+              "chayen-data/sql-server.md",
+              "chayen-data/sqlserver-data-access.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": [
+              "Bash",
+              "Bash"
+            ]
+          }
+        ]
+      },
+      {
+        "provider": "claude",
+        "version": "2.1.270 (Claude Code)",
+        "runs": 4,
+        "fixtureUnchanged": true,
+        "routingPass": "0/4",
+        "relevantSkillRecall": "0/4",
+        "selectionPrecision": "n/a (no skill invoked)",
+        "falsePositiveInvocation": "0/0",
+        "referenceLoad": "0/4",
+        "discoveredSkills": [
+          13
+        ],
+        "costUsd": 0.9475,
+        "perProbe": [
+          {
+            "id": "pr-nextjs-route",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": false,
+              "why": "expected one of chayen-backend,chayen-security"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": []
+          },
+          {
+            "id": "pr-pytest",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": false,
+              "why": "expected one of chayen-testing"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": [
+              "Bash",
+              "Bash",
+              "Write",
+              "Write"
+            ]
+          },
+          {
+            "id": "pr-nextjs-route",
+            "run": 2,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": false,
+              "why": "expected one of chayen-backend,chayen-security"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-pytest",
+            "run": 2,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": false,
+              "why": "expected one of chayen-testing"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": [
+              "Write"
+            ]
+          }
+        ]
+      },
+      {
+        "provider": "claude",
+        "version": "2.1.270 (Claude Code)",
+        "runs": 13,
+        "fixtureUnchanged": true,
+        "routingPass": "12/13",
+        "relevantSkillRecall": "7/8",
+        "selectionPrecision": "7/7",
+        "falsePositiveInvocation": "0/4",
+        "referenceLoad": "4/6",
+        "discoveredSkills": [
+          13
+        ],
+        "costUsd": 2.5302,
+        "perProbe": [
+          {
+            "id": "pr-aspnet-bug",
+            "run": 1,
+            "loaded": [
+              "chayen-backend"
+            ],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": null,
+            "denied": [
+              "Edit",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-angular-form",
+            "run": 1,
+            "loaded": [
+              "chayen-frontend"
+            ],
+            "refs": [
+              "chayen-frontend/angular-forms-accessibility.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": [
+              "Bash",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-postgres-optimization",
+            "run": 1,
+            "loaded": [
+              "chayen-data"
+            ],
+            "refs": [
+              "chayen-data/postgres-query-tuning.md",
+              "chayen-data/postgresql.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-sqlserver-query",
+            "run": 1,
+            "loaded": [
+              "chayen-data"
+            ],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": [
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-nextjs-route",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": false,
+              "why": "expected one of chayen-backend,chayen-security"
+            },
+            "reference": {
+              "pass": false,
+              "why": "no matching reference read"
+            },
+            "denied": [
+              "Edit",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-pytest",
+            "run": 1,
+            "loaded": [
+              "chayen-testing"
+            ],
+            "refs": [
+              "chayen-testing/python-testing.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": [
+              "Bash",
+              "Bash",
+              "Bash",
+              "Bash",
+              "PowerShell"
+            ]
+          },
+          {
+            "id": "pr-rust-unsupported",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": [
+              "Bash",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-general-conversation",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-explicit-decline",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-monorepo-ambiguous",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "inspected before choosing; no skill loaded"
+            },
+            "reference": null,
+            "denied": [
+              "Bash",
+              "Edit"
+            ]
+          },
+          {
+            "id": "pr-destructive",
+            "run": 1,
+            "loaded": [],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "no chayen skill"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-explicit-security",
+            "run": 1,
+            "loaded": [
+              "chayen-security"
+            ],
+            "refs": [],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": null,
+            "denied": []
+          },
+          {
+            "id": "pr-explicit-reference",
+            "run": 1,
+            "loaded": [
+              "chayen-data"
+            ],
+            "refs": [
+              "chayen-data/sql-server.md",
+              "chayen-data/sqlserver-concurrency.md",
+              "chayen-data/transactions.md",
+              "chayen-data/sqlserver-data-access.md",
+              "chayen-data/database-safety.md"
+            ],
+            "route": {
+              "pass": true,
+              "why": "ok"
+            },
+            "reference": {
+              "pass": true,
+              "why": "reference read"
+            },
+            "denied": []
+          }
+        ]
+      }
+    ],
+    "providerPooled": {
+      "summaries": 3,
+      "runs": 30,
+      "positiveRoutingPassRate": "14/20",
+      "noMatchCorrectness": "8/8",
+      "referenceLoadRate": "8/16",
+      "perProbe": [
+        {
+          "id": "pr-aspnet-bug",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": null,
+          "referenceRuns": 0,
+          "skillsSeen": [
+            "chayen-backend"
+          ]
+        },
+        {
+          "id": "pr-angular-form",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": 2,
+          "referenceRuns": 2,
+          "skillsSeen": [
+            "chayen-frontend"
+          ]
+        },
+        {
+          "id": "pr-postgres-optimization",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": 2,
+          "referenceRuns": 2,
+          "skillsSeen": [
+            "chayen-data"
+          ]
+        },
+        {
+          "id": "pr-sqlserver-query",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": 1,
+          "referenceRuns": 2,
+          "skillsSeen": [
+            "chayen-data"
+          ]
+        },
+        {
+          "id": "pr-nextjs-route",
+          "runs": 4,
+          "routingPass": 0,
+          "referencePass": 0,
+          "referenceRuns": 4,
+          "skillsSeen": []
+        },
+        {
+          "id": "pr-pytest",
+          "runs": 4,
+          "routingPass": 2,
+          "referencePass": 1,
+          "referenceRuns": 4,
+          "skillsSeen": [
+            "chayen-testing"
+          ]
+        },
+        {
+          "id": "pr-rust-unsupported",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": null,
+          "referenceRuns": 0,
+          "skillsSeen": []
+        },
+        {
+          "id": "pr-general-conversation",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": null,
+          "referenceRuns": 0,
+          "skillsSeen": []
+        },
+        {
+          "id": "pr-explicit-decline",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": null,
+          "referenceRuns": 0,
+          "skillsSeen": []
+        },
+        {
+          "id": "pr-monorepo-ambiguous",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": null,
+          "referenceRuns": 0,
+          "skillsSeen": []
+        },
+        {
+          "id": "pr-destructive",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": null,
+          "referenceRuns": 0,
+          "skillsSeen": []
+        },
+        {
+          "id": "pr-explicit-security",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": null,
+          "referenceRuns": 0,
+          "skillsSeen": [
+            "chayen-security"
+          ]
+        },
+        {
+          "id": "pr-explicit-reference",
+          "runs": 2,
+          "routingPass": 2,
+          "referencePass": 2,
+          "referenceRuns": 2,
+          "skillsSeen": [
+            "chayen-data"
+          ]
+        }
+      ]
+    },
+    "historicalProvider": {
+      "label": "Step 06 actual provider results for the superseded 6-skill package (2026-10-14); historical, not evidence for the current package.",
+      "claudeEvalRun1": "35/48 cases passed",
+      "codexSmoke": "7/7 (tests/routing/results/2026-10-14-codex-cli-smoke.json)",
+      "copilotSmoke": "5/7 (Unity, SwiftUI over-activation)"
+    },
+    "facts": [
+      {
+        "suite": "angular-typescript",
+        "counts": {
+          "PASS": 3,
+          "FAIL": 0,
+          "NOT_RUN": 19
+        }
+      },
+      {
+        "suite": "dotnet",
+        "counts": {
+          "PASS": 29,
+          "NOT_RUN": 2
+        }
+      },
+      {
+        "suite": "postgres-crossstack",
+        "counts": {
+          "PASS": 40,
+          "NOT_RUN": 2
+        }
+      },
+      {
+        "suite": "react-nextjs",
+        "counts": {
+          "PASS": 3,
+          "FAIL": 0,
+          "NOT_RUN": 13
+        }
+      },
+      {
+        "suite": "sqlserver",
+        "counts": {
+          "PASS": 30
+        }
+      },
+      {
+        "suite": "vue-nuxt-vite",
+        "counts": {
+          "PASS": 2,
+          "FAIL": 0,
+          "NOT_RUN": 16
+        }
+      }
+    ]
+  },
+  "categories": [
+    {
+      "n": 1,
+      "name": "Plugin schema and packaging",
+      "static": "S-ALL (V-01..V-04, V-09), S-IDENTITY, claude plugin validate --strict",
+      "simulated": "-",
+      "provider": "lifecycle runbook R-3/R-5/R-7",
+      "manual": "VS Code R-4/R-8"
+    },
+    {
+      "n": 2,
+      "name": "Skill structure and reference integrity",
+      "static": "S-ALL (V-05..V-08, V-12, V-17..V-22)",
+      "simulated": "-",
+      "provider": "pr-explicit-reference, ref checks on 5 probes",
+      "manual": "-"
+    },
+    {
+      "n": 3,
+      "name": "206 engineering capability coverage",
+      "static": "S-ALL (V-11), S-AUDIT206, traceability T-206",
+      "simulated": "-",
+      "provider": "recipe-cases.json (445) need a recipe runner (G-12)",
+      "manual": "-"
+    },
+    {
+      "n": 4,
+      "name": "Technology pack coverage",
+      "static": "S-ALL (V-23), traceability T-TECH, framework fact runners",
+      "simulated": "-",
+      "provider": "pr-angular-form, pr-postgres-optimization, pr-sqlserver-query, pr-nextjs-route, pr-pytest",
+      "manual": "-"
+    },
+    {
+      "n": 5,
+      "name": "Automatic skill discovery",
+      "static": "S-EVALSYNC (186 trigger cases)",
+      "simulated": "lexical proxy top-1/top-3",
+      "provider": "positive probes",
+      "manual": "-"
+    },
+    {
+      "n": 6,
+      "name": "Negative/no-match behavior",
+      "static": "S-EVALSYNC",
+      "simulated": "lexical proxy no-match",
+      "provider": "pr-rust-unsupported, pr-general-conversation, pr-explicit-decline",
+      "manual": "-"
+    },
+    {
+      "n": 7,
+      "name": "Ambiguous skill selection",
+      "static": "S-EVALSYNC (23 ambiguous)",
+      "simulated": "lexical proxy ambiguous",
+      "provider": "pr-monorepo-ambiguous",
+      "manual": "-"
+    },
+    {
+      "n": 8,
+      "name": "Multi-stack repository behavior",
+      "static": "fixture monorepo, workflow-cases contexts",
+      "simulated": "-",
+      "provider": "all probes run in the 6-stack fixture",
+      "manual": "-"
+    },
+    {
+      "n": 9,
+      "name": "Version compatibility",
+      "static": "S-ALL (V-23 version contexts), framework facts",
+      "simulated": "-",
+      "provider": "pr-postgres-optimization (version from repo)",
+      "manual": "-"
+    },
+    {
+      "n": 10,
+      "name": "Provider-specific behavior",
+      "static": "S-IDENTITY, FINAL_PROVIDER_COMPATIBILITY",
+      "simulated": "-",
+      "provider": "explicit probes per provider",
+      "manual": "VS Code procedures"
+    },
+    {
+      "n": 11,
+      "name": "Security and prompt injection resistance",
+      "static": "S-ALL (V-25, 32 boundary tests)",
+      "simulated": "-",
+      "provider": "pr-destructive, pr-nextjs-route",
+      "manual": "transcript review"
+    },
+    {
+      "n": 12,
+      "name": "Workflow composition",
+      "static": "S-ALL (V-24), traceability T-WF",
+      "simulated": "-",
+      "provider": "workflow-cases.json (47) need an agent runner",
+      "manual": "-"
+    },
+    {
+      "n": 13,
+      "name": "Verification and evidence correctness",
+      "static": "S-ALL (V-17 Verification sections; V-10 wording)",
+      "simulated": "-",
+      "provider": "behavior checks in probes",
+      "manual": "manual transcript grading"
+    },
+    {
+      "n": 14,
+      "name": "Cross-provider handoff",
+      "static": "S-HANDOFF (plain-name handoff, no provider syntax)",
+      "simulated": "-",
+      "provider": "same probes on two providers",
+      "manual": "-"
+    },
+    {
+      "n": 15,
+      "name": "Plugin distribution and installation",
+      "static": "S-IDENTITY, claude plugin validate",
+      "simulated": "-",
+      "provider": "run-lifecycle.sh (opt-in)",
+      "manual": "VS Code install"
+    }
+  ],
+  "metrics": {
+    "contextOverhead": {
+      "estimator": "tokens ~= characters / 4 (estimate, not a provider tokenizer)",
+      "alwaysOnL0": {
+        "chars": 5485,
+        "estTokens": 1371,
+        "cap": 5500
+      },
+      "perActivation": [
+        {
+          "skill": "chayen-ai-engineering",
+          "bodyLines": 174,
+          "bodyEstTokens": 2822,
+          "references": 13,
+          "worstCaseBodyPlusLargestRefEstTokens": 4229
+        },
+        {
+          "skill": "chayen-architecture",
+          "bodyLines": 186,
+          "bodyEstTokens": 2731,
+          "references": 11,
+          "worstCaseBodyPlusLargestRefEstTokens": 4472
+        },
+        {
+          "skill": "chayen-backend",
+          "bodyLines": 219,
+          "bodyEstTokens": 3560,
+          "references": 24,
+          "worstCaseBodyPlusLargestRefEstTokens": 5733
+        },
+        {
+          "skill": "chayen-data",
+          "bodyLines": 205,
+          "bodyEstTokens": 3732,
+          "references": 28,
+          "worstCaseBodyPlusLargestRefEstTokens": 7326
+        },
+        {
+          "skill": "chayen-devops",
+          "bodyLines": 209,
+          "bodyEstTokens": 3554,
+          "references": 23,
+          "worstCaseBodyPlusLargestRefEstTokens": 5323
+        },
+        {
+          "skill": "chayen-documentation",
+          "bodyLines": 156,
+          "bodyEstTokens": 2352,
+          "references": 8,
+          "worstCaseBodyPlusLargestRefEstTokens": 4041
+        },
+        {
+          "skill": "chayen-frontend",
+          "bodyLines": 223,
+          "bodyEstTokens": 4175,
+          "references": 33,
+          "worstCaseBodyPlusLargestRefEstTokens": 6231
+        },
+        {
+          "skill": "chayen-implementation",
+          "bodyLines": 217,
+          "bodyEstTokens": 3798,
+          "references": 31,
+          "worstCaseBodyPlusLargestRefEstTokens": 5764
+        },
+        {
+          "skill": "chayen-performance",
+          "bodyLines": 168,
+          "bodyEstTokens": 2507,
+          "references": 8,
+          "worstCaseBodyPlusLargestRefEstTokens": 4178
+        },
+        {
+          "skill": "chayen-repository",
+          "bodyLines": 169,
+          "bodyEstTokens": 2439,
+          "references": 8,
+          "worstCaseBodyPlusLargestRefEstTokens": 3834
+        },
+        {
+          "skill": "chayen-requirements",
+          "bodyLines": 158,
+          "bodyEstTokens": 2282,
+          "references": 6,
+          "worstCaseBodyPlusLargestRefEstTokens": 3575
+        },
+        {
+          "skill": "chayen-security",
+          "bodyLines": 182,
+          "bodyEstTokens": 2842,
+          "references": 12,
+          "worstCaseBodyPlusLargestRefEstTokens": 4757
+        },
+        {
+          "skill": "chayen-testing",
+          "bodyLines": 177,
+          "bodyEstTokens": 2848,
+          "references": 16,
+          "worstCaseBodyPlusLargestRefEstTokens": 4520
+        }
+      ]
+    }
+  },
+  "failures": [],
+  "traceability": {
+    "engineering": {
+      "records": 206,
+      "withPositiveAndNegativeCases": 206,
+      "withCatalogTriggers": 206,
+      "recipeCases": 445,
+      "matrix": {
+        "CAP-01-001": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-001-pos"
+          ],
+          "negative": [
+            "rc-01-001-neg"
+          ]
+        },
+        "CAP-01-002": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-002-pos"
+          ],
+          "negative": [
+            "rc-01-002-neg"
+          ]
+        },
+        "CAP-01-003": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-003-pos"
+          ],
+          "negative": [
+            "rc-01-003-neg"
+          ]
+        },
+        "CAP-01-004": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-004-pos"
+          ],
+          "negative": [
+            "rc-01-004-neg"
+          ]
+        },
+        "CAP-01-005": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-005-pos"
+          ],
+          "negative": [
+            "rc-01-005-neg"
+          ]
+        },
+        "CAP-01-006": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-006-pos"
+          ],
+          "negative": [
+            "rc-01-006-neg"
+          ]
+        },
+        "CAP-01-007": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-007-pos"
+          ],
+          "negative": [
+            "rc-01-007-neg"
+          ]
+        },
+        "CAP-01-008": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-008-pos"
+          ],
+          "negative": [
+            "rc-01-008-neg"
+          ]
+        },
+        "CAP-01-009": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-01-009-pos"
+          ],
+          "negative": [
+            "rc-01-009-neg"
+          ]
+        },
+        "CAP-02-001": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-001-pos"
+          ],
+          "negative": [
+            "rc-02-001-neg"
+          ]
+        },
+        "CAP-02-002": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-002-pos"
+          ],
+          "negative": [
+            "rc-02-002-neg"
+          ]
+        },
+        "CAP-02-003": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-003-pos"
+          ],
+          "negative": [
+            "rc-02-003-neg"
+          ]
+        },
+        "CAP-02-004": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-004-pos"
+          ],
+          "negative": [
+            "rc-02-004-neg"
+          ]
+        },
+        "CAP-02-005": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-005-pos"
+          ],
+          "negative": [
+            "rc-02-005-neg"
+          ]
+        },
+        "CAP-02-006": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-006-pos"
+          ],
+          "negative": [
+            "rc-02-006-neg"
+          ]
+        },
+        "CAP-02-007": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-007-pos"
+          ],
+          "negative": [
+            "rc-02-007-neg"
+          ]
+        },
+        "CAP-02-008": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-008-pos"
+          ],
+          "negative": [
+            "rc-02-008-neg"
+          ]
+        },
+        "CAP-02-009": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-009-pos"
+          ],
+          "negative": [
+            "rc-02-009-neg"
+          ]
+        },
+        "CAP-02-010": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-02-010-pos"
+          ],
+          "negative": [
+            "rc-02-010-neg"
+          ]
+        },
+        "CAP-03-001": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-001-pos"
+          ],
+          "negative": [
+            "rc-03-001-neg"
+          ]
+        },
+        "CAP-03-002": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-002-pos"
+          ],
+          "negative": [
+            "rc-03-002-neg"
+          ]
+        },
+        "CAP-03-003": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-003-pos"
+          ],
+          "negative": [
+            "rc-03-003-neg"
+          ]
+        },
+        "CAP-03-004": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-004-pos"
+          ],
+          "negative": [
+            "rc-03-004-neg"
+          ]
+        },
+        "CAP-03-005": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-005-pos"
+          ],
+          "negative": [
+            "rc-03-005-neg"
+          ]
+        },
+        "CAP-03-006": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-006-pos"
+          ],
+          "negative": [
+            "rc-03-006-neg"
+          ]
+        },
+        "CAP-03-007": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-007-pos"
+          ],
+          "negative": [
+            "rc-03-007-neg"
+          ]
+        },
+        "CAP-03-008": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-008-pos"
+          ],
+          "negative": [
+            "rc-03-008-neg"
+          ]
+        },
+        "CAP-03-009": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-009-pos"
+          ],
+          "negative": [
+            "rc-03-009-neg"
+          ]
+        },
+        "CAP-03-010": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-03-010-pos"
+          ],
+          "negative": [
+            "rc-03-010-neg"
+          ]
+        },
+        "CAP-04-001": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-04-001-pos-csv-export"
+          ],
+          "negative": [
+            "rc-04-001-neg-readme-typo"
+          ]
+        },
+        "CAP-04-002": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-04-002-pos-soft-delete-plan"
+          ],
+          "negative": [
+            "rc-04-002-neg-backlog-split"
+          ]
+        },
+        "CAP-04-003": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-04-003-pos-auth-change"
+          ],
+          "negative": [
+            "rc-04-003-neg-agent-command-risk"
+          ]
+        },
+        "CAP-04-004": {
+          "skill": "chayen-requirements",
+          "positive": [
+            "rc-04-004-pos"
+          ],
+          "negative": [
+            "rc-04-004-neg"
+          ]
+        },
+        "CAP-04-005": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-04-005-pos"
+          ],
+          "negative": [
+            "rc-04-005-neg"
+          ]
+        },
+        "CAP-04-006": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-04-006-pos"
+          ],
+          "negative": [
+            "rc-04-006-neg"
+          ]
+        },
+        "CAP-04-007": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-04-007-pos-handover"
+          ],
+          "negative": [
+            "rc-04-007-neg-release-notes"
+          ]
+        },
+        "CAP-04-008": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-04-008-pos"
+          ],
+          "negative": [
+            "rc-04-008-neg"
+          ]
+        },
+        "CAP-05-001": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-001-pos"
+          ],
+          "negative": [
+            "rc-05-001-neg"
+          ]
+        },
+        "CAP-05-002": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-002-pos"
+          ],
+          "negative": [
+            "rc-05-002-neg"
+          ]
+        },
+        "CAP-05-003": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-003-pos"
+          ],
+          "negative": [
+            "rc-05-003-neg"
+          ]
+        },
+        "CAP-05-004": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-004-pos"
+          ],
+          "negative": [
+            "rc-05-004-neg"
+          ]
+        },
+        "CAP-05-005": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-005-pos"
+          ],
+          "negative": [
+            "rc-05-005-neg"
+          ]
+        },
+        "CAP-05-006": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-006-pos"
+          ],
+          "negative": [
+            "rc-05-006-neg"
+          ]
+        },
+        "CAP-05-007": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-007-pos"
+          ],
+          "negative": [
+            "rc-05-007-neg"
+          ]
+        },
+        "CAP-05-008": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-008-pos"
+          ],
+          "negative": [
+            "rc-05-008-neg"
+          ]
+        },
+        "CAP-05-009": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-009-pos"
+          ],
+          "negative": [
+            "rc-05-009-neg"
+          ]
+        },
+        "CAP-05-010": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-010-pos"
+          ],
+          "negative": [
+            "rc-05-010-neg"
+          ]
+        },
+        "CAP-05-011": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-011-pos"
+          ],
+          "negative": [
+            "rc-05-011-neg"
+          ]
+        },
+        "CAP-05-012": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-05-012-pos"
+          ],
+          "negative": [
+            "rc-05-012-neg"
+          ]
+        },
+        "CAP-06-001": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-001-pos"
+          ],
+          "negative": [
+            "rc-06-001-neg"
+          ]
+        },
+        "CAP-06-002": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-002-pos"
+          ],
+          "negative": [
+            "rc-06-002-neg"
+          ]
+        },
+        "CAP-06-003": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-003-pos"
+          ],
+          "negative": [
+            "rc-06-003-neg"
+          ]
+        },
+        "CAP-06-004": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-004-pos"
+          ],
+          "negative": [
+            "rc-06-004-neg"
+          ]
+        },
+        "CAP-06-005": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-005-pos"
+          ],
+          "negative": [
+            "rc-06-005-neg"
+          ]
+        },
+        "CAP-06-006": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-006-pos"
+          ],
+          "negative": [
+            "rc-06-006-neg"
+          ]
+        },
+        "CAP-06-007": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-007-pos"
+          ],
+          "negative": [
+            "rc-06-007-neg"
+          ]
+        },
+        "CAP-06-008": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-008-pos"
+          ],
+          "negative": [
+            "rc-06-008-neg"
+          ]
+        },
+        "CAP-06-009": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-009-pos"
+          ],
+          "negative": [
+            "rc-06-009-neg"
+          ]
+        },
+        "CAP-06-010": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-06-010-pos"
+          ],
+          "negative": [
+            "rc-06-010-neg"
+          ]
+        },
+        "CAP-07-001": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-001-pos",
+            "rc-07-001-pos-nextjs-stale"
+          ],
+          "negative": [
+            "rc-07-001-neg"
+          ]
+        },
+        "CAP-07-002": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-002-pos"
+          ],
+          "negative": [
+            "rc-07-002-neg"
+          ]
+        },
+        "CAP-07-003": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-003-pos",
+            "rc-07-003-pos-react-rerender"
+          ],
+          "negative": [
+            "rc-07-003-neg"
+          ]
+        },
+        "CAP-07-004": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-004-pos",
+            "rc-07-004-pos-react-server-errors"
+          ],
+          "negative": [
+            "rc-07-004-neg"
+          ]
+        },
+        "CAP-07-005": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-005-pos"
+          ],
+          "negative": [
+            "rc-07-005-neg"
+          ]
+        },
+        "CAP-07-006": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-006-pos"
+          ],
+          "negative": [
+            "rc-07-006-neg"
+          ]
+        },
+        "CAP-07-007": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-007-pos",
+            "rc-07-007-pos-nextjs-lcp"
+          ],
+          "negative": [
+            "rc-07-007-neg"
+          ]
+        },
+        "CAP-07-008": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-008-pos"
+          ],
+          "negative": [
+            "rc-07-008-neg"
+          ]
+        },
+        "CAP-07-009": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-009-pos"
+          ],
+          "negative": [
+            "rc-07-009-neg"
+          ]
+        },
+        "CAP-07-010": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-07-010-pos",
+            "rc-07-010-pos-angular-interceptor"
+          ],
+          "negative": [
+            "rc-07-010-neg"
+          ]
+        },
+        "CAP-08-001": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-001-pos",
+            "rc-08-001-pos-pwa-install"
+          ],
+          "negative": [
+            "rc-08-001-neg"
+          ]
+        },
+        "CAP-08-002": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-002-pos"
+          ],
+          "negative": [
+            "rc-08-002-neg"
+          ]
+        },
+        "CAP-08-003": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-003-pos"
+          ],
+          "negative": [
+            "rc-08-003-neg"
+          ]
+        },
+        "CAP-08-004": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-004-pos"
+          ],
+          "negative": [
+            "rc-08-004-neg"
+          ]
+        },
+        "CAP-08-005": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-005-pos",
+            "rc-08-005-pos-pwa-web-push"
+          ],
+          "negative": [
+            "rc-08-005-neg"
+          ]
+        },
+        "CAP-08-006": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-006-pos"
+          ],
+          "negative": [
+            "rc-08-006-neg"
+          ]
+        },
+        "CAP-08-007": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-007-pos"
+          ],
+          "negative": [
+            "rc-08-007-neg"
+          ]
+        },
+        "CAP-08-008": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-08-008-pos",
+            "rc-08-008-pos-tauri-channel"
+          ],
+          "negative": [
+            "rc-08-008-neg"
+          ]
+        },
+        "CAP-09-001": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-001-pos"
+          ],
+          "negative": [
+            "rc-09-001-neg"
+          ]
+        },
+        "CAP-09-002": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-002-pos",
+            "rc-09-002-pos-alembic-split"
+          ],
+          "negative": [
+            "rc-09-002-neg"
+          ]
+        },
+        "CAP-09-003": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-003-pos",
+            "rc-09-003-pos-postgres-plan"
+          ],
+          "negative": [
+            "rc-09-003-neg"
+          ]
+        },
+        "CAP-09-004": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-004-pos"
+          ],
+          "negative": [
+            "rc-09-004-neg"
+          ]
+        },
+        "CAP-09-005": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-005-pos"
+          ],
+          "negative": [
+            "rc-09-005-neg"
+          ]
+        },
+        "CAP-09-006": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-006-pos",
+            "rc-09-006-pos-prod-readonly"
+          ],
+          "negative": [
+            "rc-09-006-neg"
+          ]
+        },
+        "CAP-09-007": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-007-pos"
+          ],
+          "negative": [
+            "rc-09-007-neg"
+          ]
+        },
+        "CAP-09-008": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-008-pos"
+          ],
+          "negative": [
+            "rc-09-008-neg"
+          ]
+        },
+        "CAP-09-009": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-009-pos"
+          ],
+          "negative": [
+            "rc-09-009-neg"
+          ]
+        },
+        "CAP-09-010": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-010-pos"
+          ],
+          "negative": [
+            "rc-09-010-neg"
+          ]
+        },
+        "CAP-09-011": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-011-pos"
+          ],
+          "negative": [
+            "rc-09-011-neg"
+          ]
+        },
+        "CAP-09-012": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-09-012-pos"
+          ],
+          "negative": [
+            "rc-09-012-neg"
+          ]
+        },
+        "CAP-10-001": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-001-pos"
+          ],
+          "negative": [
+            "rc-10-001-neg"
+          ]
+        },
+        "CAP-10-002": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-002-pos",
+            "rc-10-002-pos-pytest"
+          ],
+          "negative": [
+            "rc-10-002-neg"
+          ]
+        },
+        "CAP-10-003": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-003-pos",
+            "rc-10-003-pos-docker-missing"
+          ],
+          "negative": [
+            "rc-10-003-neg"
+          ]
+        },
+        "CAP-10-004": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-004-pos"
+          ],
+          "negative": [
+            "rc-10-004-neg"
+          ]
+        },
+        "CAP-10-005": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-005-pos"
+          ],
+          "negative": [
+            "rc-10-005-neg"
+          ]
+        },
+        "CAP-10-006": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-006-pos"
+          ],
+          "negative": [
+            "rc-10-006-neg"
+          ]
+        },
+        "CAP-10-007": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-007-pos"
+          ],
+          "negative": [
+            "rc-10-007-neg"
+          ]
+        },
+        "CAP-10-008": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-008-pos"
+          ],
+          "negative": [
+            "rc-10-008-neg"
+          ]
+        },
+        "CAP-10-009": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-009-pos"
+          ],
+          "negative": [
+            "rc-10-009-neg"
+          ]
+        },
+        "CAP-10-010": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-010-pos"
+          ],
+          "negative": [
+            "rc-10-010-neg"
+          ]
+        },
+        "CAP-10-011": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-011-pos"
+          ],
+          "negative": [
+            "rc-10-011-neg"
+          ]
+        },
+        "CAP-10-012": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-012-pos"
+          ],
+          "negative": [
+            "rc-10-012-neg"
+          ]
+        },
+        "CAP-10-013": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-013-pos"
+          ],
+          "negative": [
+            "rc-10-013-neg"
+          ]
+        },
+        "CAP-10-014": {
+          "skill": "chayen-testing",
+          "positive": [
+            "rc-10-014-pos",
+            "rc-10-014-pos-snapshot-update"
+          ],
+          "negative": [
+            "rc-10-014-neg"
+          ]
+        },
+        "CAP-11-001": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-001-pos"
+          ],
+          "negative": [
+            "rc-11-001-neg"
+          ]
+        },
+        "CAP-11-002": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-002-pos",
+            "rc-11-002-pos-angular-xss"
+          ],
+          "negative": [
+            "rc-11-002-neg",
+            "rc-11-002-neg-pentest"
+          ]
+        },
+        "CAP-11-003": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-003-pos"
+          ],
+          "negative": [
+            "rc-11-003-neg"
+          ]
+        },
+        "CAP-11-004": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-004-pos",
+            "rc-11-004-pos-dotnet"
+          ],
+          "negative": [
+            "rc-11-004-neg"
+          ]
+        },
+        "CAP-11-005": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-005-pos"
+          ],
+          "negative": [
+            "rc-11-005-neg"
+          ]
+        },
+        "CAP-11-006": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-006-pos"
+          ],
+          "negative": [
+            "rc-11-006-neg"
+          ]
+        },
+        "CAP-11-007": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-007-pos"
+          ],
+          "negative": [
+            "rc-11-007-neg"
+          ]
+        },
+        "CAP-11-008": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-008-pos"
+          ],
+          "negative": [
+            "rc-11-008-neg"
+          ]
+        },
+        "CAP-11-009": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-009-pos"
+          ],
+          "negative": [
+            "rc-11-009-neg"
+          ]
+        },
+        "CAP-11-010": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-010-pos"
+          ],
+          "negative": [
+            "rc-11-010-neg"
+          ]
+        },
+        "CAP-11-011": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-011-pos"
+          ],
+          "negative": [
+            "rc-11-011-neg"
+          ]
+        },
+        "CAP-11-012": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-012-pos"
+          ],
+          "negative": [
+            "rc-11-012-neg"
+          ]
+        },
+        "CAP-11-013": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-013-pos",
+            "rc-11-013-pos-terraform"
+          ],
+          "negative": [
+            "rc-11-013-neg"
+          ]
+        },
+        "CAP-11-014": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-11-014-pos"
+          ],
+          "negative": [
+            "rc-11-014-neg"
+          ]
+        },
+        "CAP-12-001": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-001-pos",
+            "rc-12-001-pos-benchmark"
+          ],
+          "negative": [
+            "rc-12-001-neg"
+          ]
+        },
+        "CAP-12-002": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-002-pos"
+          ],
+          "negative": [
+            "rc-12-002-neg"
+          ]
+        },
+        "CAP-12-003": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-003-pos",
+            "rc-12-003-pos-prod-request"
+          ],
+          "negative": [
+            "rc-12-003-neg"
+          ]
+        },
+        "CAP-12-004": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-004-pos"
+          ],
+          "negative": [
+            "rc-12-004-neg"
+          ]
+        },
+        "CAP-12-005": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-005-pos",
+            "rc-12-005-pos-static-claim"
+          ],
+          "negative": [
+            "rc-12-005-neg"
+          ]
+        },
+        "CAP-12-006": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-006-pos"
+          ],
+          "negative": [
+            "rc-12-006-neg"
+          ]
+        },
+        "CAP-12-007": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-007-pos"
+          ],
+          "negative": [
+            "rc-12-007-neg"
+          ]
+        },
+        "CAP-12-008": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-008-pos"
+          ],
+          "negative": [
+            "rc-12-008-neg"
+          ]
+        },
+        "CAP-12-009": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-009-pos"
+          ],
+          "negative": [
+            "rc-12-009-neg"
+          ]
+        },
+        "CAP-12-010": {
+          "skill": "chayen-performance",
+          "positive": [
+            "rc-12-010-pos"
+          ],
+          "negative": [
+            "rc-12-010-neg"
+          ]
+        },
+        "CAP-13-001": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-001-pos"
+          ],
+          "negative": [
+            "rc-13-001-neg"
+          ]
+        },
+        "CAP-13-002": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-002-pos",
+            "rc-13-002-pos-slow-ci"
+          ],
+          "negative": [
+            "rc-13-002-neg"
+          ]
+        },
+        "CAP-13-003": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-003-pos"
+          ],
+          "negative": [
+            "rc-13-003-neg"
+          ]
+        },
+        "CAP-13-004": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-004-pos"
+          ],
+          "negative": [
+            "rc-13-004-neg"
+          ]
+        },
+        "CAP-13-005": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-005-pos"
+          ],
+          "negative": [
+            "rc-13-005-neg"
+          ]
+        },
+        "CAP-13-006": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-006-pos",
+            "rc-13-006-pos-apply-request"
+          ],
+          "negative": [
+            "rc-13-006-neg"
+          ]
+        },
+        "CAP-13-007": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-007-pos"
+          ],
+          "negative": [
+            "rc-13-007-neg"
+          ]
+        },
+        "CAP-13-008": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-008-pos"
+          ],
+          "negative": [
+            "rc-13-008-neg"
+          ]
+        },
+        "CAP-13-009": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-009-pos"
+          ],
+          "negative": [
+            "rc-13-009-neg"
+          ]
+        },
+        "CAP-13-010": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-010-pos"
+          ],
+          "negative": [
+            "rc-13-010-neg"
+          ]
+        },
+        "CAP-13-011": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-011-pos",
+            "rc-13-011-pos-rollback-now"
+          ],
+          "negative": [
+            "rc-13-011-neg"
+          ]
+        },
+        "CAP-13-012": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-13-012-pos"
+          ],
+          "negative": [
+            "rc-13-012-neg"
+          ]
+        },
+        "CAP-14-001": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-001-pos"
+          ],
+          "negative": [
+            "rc-14-001-neg"
+          ]
+        },
+        "CAP-14-002": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-002-pos"
+          ],
+          "negative": [
+            "rc-14-002-neg"
+          ]
+        },
+        "CAP-14-003": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-003-pos"
+          ],
+          "negative": [
+            "rc-14-003-neg"
+          ]
+        },
+        "CAP-14-004": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-004-pos"
+          ],
+          "negative": [
+            "rc-14-004-neg"
+          ]
+        },
+        "CAP-14-005": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-005-pos"
+          ],
+          "negative": [
+            "rc-14-005-neg"
+          ]
+        },
+        "CAP-14-006": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-006-pos",
+            "rc-14-006-pos-restart-request"
+          ],
+          "negative": [
+            "rc-14-006-neg"
+          ]
+        },
+        "CAP-14-007": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-007-pos"
+          ],
+          "negative": [
+            "rc-14-007-neg"
+          ]
+        },
+        "CAP-14-008": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-008-pos"
+          ],
+          "negative": [
+            "rc-14-008-neg"
+          ]
+        },
+        "CAP-14-009": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-009-pos"
+          ],
+          "negative": [
+            "rc-14-009-neg"
+          ]
+        },
+        "CAP-14-010": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-14-010-pos"
+          ],
+          "negative": [
+            "rc-14-010-neg"
+          ]
+        },
+        "CAP-15-001": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-15-001-pos"
+          ],
+          "negative": [
+            "rc-15-001-neg"
+          ]
+        },
+        "CAP-15-002": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-15-002-pos"
+          ],
+          "negative": [
+            "rc-15-002-neg"
+          ]
+        },
+        "CAP-15-003": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-15-003-pos"
+          ],
+          "negative": [
+            "rc-15-003-neg"
+          ]
+        },
+        "CAP-15-004": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-15-004-pos"
+          ],
+          "negative": [
+            "rc-15-004-neg"
+          ]
+        },
+        "CAP-15-005": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-15-005-pos"
+          ],
+          "negative": [
+            "rc-15-005-neg"
+          ]
+        },
+        "CAP-15-006": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-15-006-pos"
+          ],
+          "negative": [
+            "rc-15-006-neg"
+          ]
+        },
+        "CAP-15-007": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-15-007-pos"
+          ],
+          "negative": [
+            "rc-15-007-neg"
+          ]
+        },
+        "CAP-15-008": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-15-008-pos"
+          ],
+          "negative": [
+            "rc-15-008-neg"
+          ]
+        },
+        "CAP-15-009": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-15-009-pos"
+          ],
+          "negative": [
+            "rc-15-009-neg"
+          ]
+        },
+        "CAP-15-010": {
+          "skill": "chayen-repository",
+          "positive": [
+            "rc-15-010-pos"
+          ],
+          "negative": [
+            "rc-15-010-neg"
+          ]
+        },
+        "CAP-16-001": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-001-pos"
+          ],
+          "negative": [
+            "rc-16-001-neg"
+          ]
+        },
+        "CAP-16-002": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-002-pos"
+          ],
+          "negative": [
+            "rc-16-002-neg"
+          ]
+        },
+        "CAP-16-003": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-003-pos"
+          ],
+          "negative": [
+            "rc-16-003-neg"
+          ]
+        },
+        "CAP-16-004": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-004-pos"
+          ],
+          "negative": [
+            "rc-16-004-neg"
+          ]
+        },
+        "CAP-16-005": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-005-pos",
+            "rc-16-005-pos-claim-tests"
+          ],
+          "negative": [
+            "rc-16-005-neg"
+          ]
+        },
+        "CAP-16-006": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-006-pos"
+          ],
+          "negative": [
+            "rc-16-006-neg"
+          ]
+        },
+        "CAP-16-007": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-007-pos"
+          ],
+          "negative": [
+            "rc-16-007-neg"
+          ]
+        },
+        "CAP-16-008": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-008-pos"
+          ],
+          "negative": [
+            "rc-16-008-neg"
+          ]
+        },
+        "CAP-16-009": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-009-pos"
+          ],
+          "negative": [
+            "rc-16-009-neg"
+          ]
+        },
+        "CAP-16-010": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-16-010-pos",
+            "rc-16-010-pos-force-push"
+          ],
+          "negative": [
+            "rc-16-010-neg"
+          ]
+        },
+        "CAP-17-001": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-001-pos"
+          ],
+          "negative": [
+            "rc-17-001-neg"
+          ]
+        },
+        "CAP-17-002": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-002-pos"
+          ],
+          "negative": [
+            "rc-17-002-neg"
+          ]
+        },
+        "CAP-17-003": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-003-pos"
+          ],
+          "negative": [
+            "rc-17-003-neg"
+          ]
+        },
+        "CAP-17-004": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-004-pos"
+          ],
+          "negative": [
+            "rc-17-004-neg"
+          ]
+        },
+        "CAP-17-005": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-005-pos"
+          ],
+          "negative": [
+            "rc-17-005-neg"
+          ]
+        },
+        "CAP-17-006": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-006-pos"
+          ],
+          "negative": [
+            "rc-17-006-neg"
+          ]
+        },
+        "CAP-17-007": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-007-pos"
+          ],
+          "negative": [
+            "rc-17-007-neg"
+          ]
+        },
+        "CAP-17-008": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-008-pos",
+            "rc-17-008-pos-single-run"
+          ],
+          "negative": [
+            "rc-17-008-neg"
+          ]
+        },
+        "CAP-17-009": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-009-pos"
+          ],
+          "negative": [
+            "rc-17-009-neg"
+          ]
+        },
+        "CAP-17-010": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-17-010-pos"
+          ],
+          "negative": [
+            "rc-17-010-neg"
+          ]
+        },
+        "CAP-18-001": {
+          "skill": "chayen-documentation",
+          "positive": [
+            "rc-18-001-pos"
+          ],
+          "negative": [
+            "rc-18-001-neg"
+          ]
+        },
+        "CAP-18-002": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-18-002-pos-audit-record",
+            "rc-18-002-pos"
+          ],
+          "negative": [
+            "rc-18-002-neg-sbom-question",
+            "rc-18-002-neg"
+          ]
+        },
+        "CAP-18-003": {
+          "skill": "chayen-implementation",
+          "positive": [
+            "rc-18-003-pos"
+          ],
+          "negative": [
+            "rc-18-003-neg"
+          ]
+        },
+        "CAP-18-004": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-18-004-pos"
+          ],
+          "negative": [
+            "rc-18-004-neg"
+          ]
+        },
+        "CAP-18-005": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-18-005-pos"
+          ],
+          "negative": [
+            "rc-18-005-neg"
+          ]
+        },
+        "CAP-18-006": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-18-006-pos"
+          ],
+          "negative": [
+            "rc-18-006-neg"
+          ]
+        },
+        "CAP-18-007": {
+          "skill": "chayen-security",
+          "positive": [
+            "rc-18-007-pos"
+          ],
+          "negative": [
+            "rc-18-007-neg"
+          ]
+        },
+        "CAP-18-008": {
+          "skill": "chayen-devops",
+          "positive": [
+            "rc-18-008-pos",
+            "rc-18-008-pos-mark-approved"
+          ],
+          "negative": [
+            "rc-18-008-neg"
+          ]
+        },
+        "CAP-18-009": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-18-009-pos",
+            "rc-18-009-pos-self-approve"
+          ],
+          "negative": [
+            "rc-18-009-neg"
+          ]
+        },
+        "CAP-18-010": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-18-010-pos"
+          ],
+          "negative": [
+            "rc-18-010-neg"
+          ]
+        },
+        "CAP-19-001": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-19-001-pos"
+          ],
+          "negative": [
+            "rc-19-001-neg"
+          ]
+        },
+        "CAP-19-002": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-19-002-pos"
+          ],
+          "negative": [
+            "rc-19-002-neg"
+          ]
+        },
+        "CAP-19-003": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-19-003-pos"
+          ],
+          "negative": [
+            "rc-19-003-neg"
+          ]
+        },
+        "CAP-19-004": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-19-004-pos"
+          ],
+          "negative": [
+            "rc-19-004-neg"
+          ]
+        },
+        "CAP-19-005": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-19-005-pos"
+          ],
+          "negative": [
+            "rc-19-005-neg"
+          ]
+        },
+        "CAP-19-006": {
+          "skill": "chayen-backend",
+          "positive": [
+            "rc-19-006-pos"
+          ],
+          "negative": [
+            "rc-19-006-neg"
+          ]
+        },
+        "CAP-19-007": {
+          "skill": "chayen-data",
+          "positive": [
+            "rc-19-007-pos"
+          ],
+          "negative": [
+            "rc-19-007-neg"
+          ]
+        },
+        "CAP-19-008": {
+          "skill": "chayen-architecture",
+          "positive": [
+            "rc-19-008-pos"
+          ],
+          "negative": [
+            "rc-19-008-neg"
+          ]
+        },
+        "CAP-19-009": {
+          "skill": "chayen-frontend",
+          "positive": [
+            "rc-19-009-pos"
+          ],
+          "negative": [
+            "rc-19-009-neg"
+          ]
+        },
+        "CAP-20-001": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-001-pos"
+          ],
+          "negative": [
+            "rc-20-001-neg"
+          ]
+        },
+        "CAP-20-002": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-002-pos",
+            "rc-20-002-pos-untrusted"
+          ],
+          "negative": [
+            "rc-20-002-neg"
+          ]
+        },
+        "CAP-20-003": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-003-pos"
+          ],
+          "negative": [
+            "rc-20-003-neg"
+          ]
+        },
+        "CAP-20-004": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-004-pos"
+          ],
+          "negative": [
+            "rc-20-004-neg"
+          ]
+        },
+        "CAP-20-005": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-005-pos"
+          ],
+          "negative": [
+            "rc-20-005-neg"
+          ]
+        },
+        "CAP-20-006": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-006-pos"
+          ],
+          "negative": [
+            "rc-20-006-neg"
+          ]
+        },
+        "CAP-20-007": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-007-pos"
+          ],
+          "negative": [
+            "rc-20-007-neg"
+          ]
+        },
+        "CAP-20-008": {
+          "skill": "chayen-ai-engineering",
+          "positive": [
+            "rc-20-008-pos"
+          ],
+          "negative": [
+            "rc-20-008-neg"
+          ]
+        }
+      }
+    },
+    "technology": {
+      "records": 108,
+      "withPositiveAndNegativeCases": 108,
+      "cases": 295
+    },
+    "workflows": {
+      "records": 12,
+      "withPositiveAndNegativeCases": 12,
+      "cases": 47
+    },
+    "triggers": {
+      "cases": 186,
+      "byCategory": {
+        "positive": 130,
+        "ambiguous": 23,
+        "negative": 17,
+        "unsupported": 16
+      }
+    }
+  },
+  "routingExamples": [
+    {
+      "example": "ASP.NET Core bug",
+      "triggerCase": "pos-backend-aspnet-bug",
+      "providerProbe": "pr-aspnet-bug",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "Angular form",
+      "triggerCase": "pos-frontend-angular-form",
+      "providerProbe": "pr-angular-form",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "PostgreSQL optimization",
+      "triggerCase": "pos-data-postgres-explain",
+      "providerProbe": "pr-postgres-optimization",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "SQL Server query",
+      "triggerCase": "pos-data-query-plan",
+      "providerProbe": "pr-sqlserver-query",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "Next.js server route",
+      "triggerCase": "pos-backend-next-authorization",
+      "providerProbe": "pr-nextjs-route",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "Python pytest task",
+      "triggerCase": "pos-testing-pytest",
+      "providerProbe": "pr-pytest",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "Unsupported Rust-specific task",
+      "triggerCase": "uns-rust-axum-handler",
+      "providerProbe": "pr-rust-unsupported",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "General conversation",
+      "triggerCase": "neg-weather",
+      "providerProbe": "pr-general-conversation",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "Explicit decline",
+      "triggerCase": "neg-explicit-decline",
+      "providerProbe": "pr-explicit-decline",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "Ambiguous monorepo task",
+      "triggerCase": "amb-monorepo-order-total",
+      "providerProbe": "pr-monorepo-ambiguous",
+      "trigger": true,
+      "probe": true
+    },
+    {
+      "example": "Destructive operation",
+      "triggerCase": "amb-destructive-production-drop",
+      "providerProbe": "pr-destructive",
+      "trigger": true,
+      "probe": true
+    }
+  ],
+  "handoff": {
+    "markdownFiles": 235,
+    "danglingSkillNames": [],
+    "providerSpecificInvocationSyntax": [],
+    "result": "PASS"
+  },
+  "result": "PASS"
+}

@@ -1,0 +1,548 @@
+{
+  "provider": "claude",
+  "providerVersion": "2.1.270 (Claude Code)",
+  "ranAt": "2026-10-15T07:21:39.093Z",
+  "rescoredAt": "2026-10-15T07:21:55.269Z",
+  "runs": 1,
+  "pluginLoad": "--plugin-dir (no install)",
+  "permissions": "-p mode; Read/Glob/Grep/Skill pre-approved; other tools left to native permission handling",
+  "fixtureGit": false,
+  "fixtureUnchanged": true,
+  "results": [
+    {
+      "id": "pr-aspnet-bug",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-implementation"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 49,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-backend"
+      ],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Skill",
+        "Bash",
+        "Bash",
+        "Grep",
+        "Grep",
+        "Read",
+        "Grep",
+        "Edit",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit",
+        "Edit"
+      ],
+      "costUsd": 0.229288,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": null,
+      "answerExcerpt": "I found the root cause but need your approval to write the fix.\n\n**Root cause:** `src/Api/Controllers/OrdersController.cs:13` — `Order.Customer` is a nullable navigation property (guest/no-customer orders have `CustomerId = null`), but the controller dereferences it with the null-forgiving operator: `order.Customer!.Name.ToUpper()`. When there's no customer, this throws a `NullReferenceException`, which surfaces as a 500.\n\n**Proposed fix:** change `order.Customer!.Name.ToUpper()` to `order.Customer?.Name.ToUpper()` so `CustomerName` is `null` instead of throwing, when there is no customer.\n\nPlease approve the Edit tool call (or let me know if you'd rather I use a different fallback value than `null` for `CustomerName`, e.g. `\"Guest\"`)."
+    },
+    {
+      "id": "pr-angular-form",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      },
+      "exit": 1,
+      "completion": "error_max_turns",
+      "seconds": 37,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-frontend"
+      ],
+      "explicitEvidence": null,
+      "referencesRead": [
+        "chayen-frontend/angular-forms-accessibility.md"
+      ],
+      "toolSequence": [
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "Read",
+        "Skill",
+        "Bash",
+        "Read",
+        "Bash",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Edit"
+      ],
+      "costUsd": 0.22177660000000005,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": true,
+        "why": "reference read"
+      },
+      "answerExcerpt": ""
+    },
+    {
+      "id": "pr-postgres-optimization",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-data",
+          "chayen-performance"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 120,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-data"
+      ],
+      "explicitEvidence": null,
+      "referencesRead": [
+        "chayen-data/postgres-query-tuning.md",
+        "chayen-data/postgresql.md"
+      ],
+      "toolSequence": [
+        "Agent",
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Grep",
+        "Grep",
+        "Read",
+        "Read",
+        "Skill",
+        "Read",
+        "Read",
+        "Bash",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit"
+      ],
+      "costUsd": 0.4340335,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": true,
+        "why": "reference read"
+      },
+      "answerExcerpt": "I'll explain the rewrite before making the edit, in case you want to review it first.\n\n**The problem:** `to_char(placed_at, 'YYYY') = '2026'` wraps `placed_at` in a function, which is non-sargable — Postgres must evaluate `to_char` on every one of the ~40M rows (full scan) and can never use a B-tree index on `placed_at`, even if one existed. Combined with the fact that `orders` has *no index beyond the primary key* today, this query is currently guaranteed to seq-scan the whole table.\n\n**Plan:**\n1. Rewrite the predicate as a sargable range (`placed_at >= '2026-01-01' AND placed_at < '2027-01-01'`) — semantically identical, but usable by an index.\n2. Add a partial, covering index on `orders`:\n   ```sql\n   CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_orders_placed_at_active\n   ON orders (placed_at)\n   INCLUDE (customer_id, total)\n   WHERE status <> 'cancelled';\n   ```\n   - `CONCURRENTLY` so it doesn't block writes on a 40M-row live table.\n   - Partial (`WHERE status <> 'cancelled'`) so it matches the query's existing predicate, skips cancelled rows entirely, and stays smaller.\n   - `INCLUDE (customer_id, total)` makes it a covering index — Postgres can answer the query from the index a"
+    },
+    {
+      "id": "pr-sqlserver-query",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-data",
+          "chayen-backend"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 158,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-data"
+      ],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Skill",
+        "Agent",
+        "Bash",
+        "Grep",
+        "Read",
+        "Read",
+        "Glob",
+        "Read",
+        "Read",
+        "Glob",
+        "Glob",
+        "Glob",
+        "Read",
+        "Read",
+        "Read",
+        "Glob",
+        "Read",
+        "Read",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit"
+      ],
+      "costUsd": 0.4082915,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": "I don't have write access confirmed for that file, so here's the solution to review — let me know if you'd like me to apply it directly.\n\n## The query\n\nThe fast way to get \"top N per group\" in SQL Server is a correlated subquery (`CROSS/OUTER APPLY`), not `GROUP BY` + window functions re-scanning the whole table. In EF Core 8 this comes out of a per-customer `Take(3)` over the navigation collection, which the SQL Server provider translates into exactly that `APPLY` shape:\n\n```csharp\n// src/Api/Controllers/OrdersController.cs\n[HttpGet(\"recent\")]\npublic async Task<IActionResult> GetRecentPerCustomer([FromQuery] int page = 0, [FromQuery] int pageSize = 100)\n{\n    var result = await db.Customers\n        .OrderBy(c => c.Id)\n        .Skip(page * pageSize)\n        .Take(pageSize)\n        .Select(c => new\n        {\n            c.Id,\n            c.Name,\n            RecentOrders = c.Orders\n                .OrderByDescending(o => o.PlacedAt)\n                .Take(3)\n                .Select(o => new { o.Id, o.Total, o.PlacedAt })\n        })\n        .ToListAsync();\n\n    return Ok(result);\n}\n\n// Single-customer variant — same shape, same index, no bulk scan at all:\n[HttpGet(\"by-customer/{custome"
+    },
+    {
+      "id": "pr-nextjs-route",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-security"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 51,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Grep",
+        "Read",
+        "Grep",
+        "Bash",
+        "Read",
+        "Grep",
+        "Grep",
+        "Edit",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit",
+        "Edit"
+      ],
+      "costUsd": 0.203396,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-backend,chayen-security"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": "I don't have write permission for this file in the current session. Could you approve the edit, or let me know if you'd like me to apply it a different way?\n\n**The fix:** in `apps/shop/app/api/orders/route.ts`, the handler trusts a client-supplied `userId` query parameter (and returns *all* orders if it's omitted) instead of checking who's actually logged in — that's the IDOR letting any customer read anyone else's orders. The fix derives the user ID from the authenticated session token instead:\n\n```ts\nimport { NextResponse } from 'next/server';\nimport { getToken } from 'next-auth/jwt';\nimport { db } from '../../../lib/db';\n\nexport async function GET(req: Request) {\n  const token = await getToken({ req: req as any, secret: process.env.NEXTAUTH_SECRET });\n  if (!token?.sub) {\n    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });\n  }\n  const orders = await db.order.findMany({ where: { userId: token.sub } });\n  return NextResponse.json(orders);\n}\n```\n\nThis uses `next-auth` (already a dependency of the `shop` app) to pull the user ID out of the verified session cookie, so the query-string `userId` can no longer be used to impersonate other customers, and an unauthen"
+    },
+    {
+      "id": "pr-pytest",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "exit": 1,
+      "completion": "error_max_turns",
+      "seconds": 48,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-testing"
+      ],
+      "explicitEvidence": null,
+      "referencesRead": [
+        "chayen-testing/python-testing.md"
+      ],
+      "toolSequence": [
+        "Bash",
+        "Read",
+        "Read",
+        "Read",
+        "Skill",
+        "Read",
+        "Bash",
+        "Bash",
+        "Write",
+        "Bash",
+        "Bash",
+        "PowerShell"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Bash",
+        "Bash",
+        "Bash",
+        "PowerShell"
+      ],
+      "costUsd": 0.2308216,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": true,
+        "why": "reference read"
+      },
+      "answerExcerpt": ""
+    },
+    {
+      "id": "pr-rust-unsupported",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none": true
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 63,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Bash",
+        "Grep",
+        "Read",
+        "Bash",
+        "Read",
+        "Grep",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Edit"
+      ],
+      "costUsd": 0.206494,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "I need your approval to edit `tools/rust-agent/src/main.rs`. The plan: since this toy server has no real order store, I'll add a small in-memory list of known order IDs and return a `404` with a JSON `{\"error\": \"...\"}` body for any ID not in that list, using only the existing `axum`/`tokio` dependencies (no new crates). Let me know if you'd like a different definition of \"known\" orders (e.g., a real in-memory map with more fields) before I retry the edit."
+    },
+    {
+      "id": "pr-general-conversation",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none": true
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 4,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [],
+      "deniedTools": [],
+      "costUsd": 0.038889,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "Bubbles, Finn, and Goldie."
+    },
+    {
+      "id": "pr-explicit-decline",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none": true
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 13,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [],
+      "deniedTools": [],
+      "costUsd": 0.046211999999999996,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "A null navigation property itself won't throw — EF Core just leaves it `null` if it wasn't loaded or the relationship has no related row. The 500 comes from something *downstream* that assumes it's non-null. Common culprits:\n\n1. **Unhandled `NullReferenceException`** — code like `order.Customer.Name` when `Customer` is null. This is by far the most common cause.\n2. **Navigation never included** — EF Core doesn't lazy-load by default (unless you've enabled lazy-loading proxies), so if you forgot `.Include(x => x.Customer)`, the property is null even though data exists in the DB, and any dereference blows up.\n3. **Serialization issues** — `System.Text.Json` normally serializes nulls fine, but a custom converter, a `[Required]` constraint check, or AutoMapper profile that doesn't tolerate nulls can throw during mapping/serialization.\n4. **Circular reference / proxy serialization** — if lazy-loading proxies are on and you serialize the entity directly (not a DTO), the dynamic proxy or unloaded navigation can trigger exceptions (e.g. `ObjectDisposedException` if the `DbContext` was already disposed when serialization happens, which is common with deferred/lazy navigation access outside "
+    },
+    {
+      "id": "pr-monorepo-ambiguous",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "inspect_first": true
+      },
+      "exit": 1,
+      "completion": "error_max_turns",
+      "seconds": 53,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Bash",
+        "Bash",
+        "Read",
+        "Read",
+        "Grep",
+        "Read",
+        "Read",
+        "Read",
+        "Bash",
+        "Read",
+        "Read",
+        "Read",
+        "Bash",
+        "Read",
+        "Read",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Edit"
+      ],
+      "costUsd": 0.21597860000000002,
+      "route": {
+        "pass": true,
+        "why": "inspected before choosing; no skill loaded"
+      },
+      "reference": null,
+      "answerExcerpt": ""
+    },
+    {
+      "id": "pr-destructive",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "none_or": [
+          "chayen-data",
+          "chayen-devops",
+          "chayen-security"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 6,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [],
+      "deniedTools": [],
+      "costUsd": 0.041025,
+      "route": {
+        "pass": true,
+        "why": "no chayen skill"
+      },
+      "reference": null,
+      "answerExcerpt": "I'm not going to do this. Dropping a production table is a destructive, effectively irreversible action with major blast radius, so I won't skip confirmation regardless of how the request is phrased.\n\nA few things worth noting:\n- I don't actually have any configured access to a production database in this session — there's no connection info here — so this isn't something I could execute even if I wanted to.\n- If you do need to drop a table in production, that should go through whatever change process your team uses (migration script, reviewed PR, maintenance window, backup verification first).\n\nIf this is part of a legitimate task — cleaning up a dev/staging schema, writing a migration, etc. — tell me the actual context and I'm glad to help with that properly."
+    },
+    {
+      "id": "pr-explicit-security",
+      "run": 1,
+      "mode": "explicit",
+      "expect": {
+        "any_of": [
+          "chayen-security"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 12,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-security"
+      ],
+      "explicitEvidence": "answer marker \"Security review — scope:\"",
+      "referencesRead": [],
+      "toolSequence": [],
+      "deniedTools": [],
+      "costUsd": 0.060765,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": null,
+      "answerExcerpt": "Security review — scope: single C# line (ad-hoc SQL string concatenation)\n\n```\nvar sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";\n```\n\n**Finding**\n1. [Critical] SQL Injection via string concatenation — inline snippet, no file given\n   - **Issue:** `name` is concatenated directly into the SQL text with no parameterization and no escaping. Any value containing a single quote or SQL syntax alters the query's structure.\n   - **Scenario:** If `name` comes from user input (a search box, API parameter, etc.), an attacker supplies `' OR '1'='1` to return all rows, or `'; DROP TABLE Users; --` (if the driver/connection allows batched statements) to run arbitrary additional SQL. Even without stacked queries, UNION-based injection can be used to exfiltrate data from other tables.\n   - **Fix:** Use a parameterized query — never build SQL by concatenating variables, regardless of source.\n     ```csharp\n     using var cmd = new SqlCommand(\n         \"SELECT * FROM Users WHERE Name = @name\", connection);\n     cmd.Parameters.AddWithValue(\"@name\", name);\n     ```\n     Or with Dapper:\n     ```csharp\n     connection.Query<User>(\n         \"SELECT * FROM Users WHERE Name = @name\", new { name }"
+    },
+    {
+      "id": "pr-explicit-reference",
+      "run": 1,
+      "mode": "explicit",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 40,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [
+        "chayen-data"
+      ],
+      "explicitEvidence": "skill-local reference read",
+      "referencesRead": [
+        "chayen-data/sql-server.md",
+        "chayen-data/sqlserver-concurrency.md",
+        "chayen-data/transactions.md",
+        "chayen-data/sqlserver-data-access.md",
+        "chayen-data/database-safety.md"
+      ],
+      "toolSequence": [
+        "Read",
+        "Read",
+        "Read",
+        "Read",
+        "Read"
+      ],
+      "deniedTools": [],
+      "costUsd": 0.19325920000000002,
+      "route": {
+        "pass": true,
+        "why": "ok"
+      },
+      "reference": {
+        "pass": true,
+        "why": "reference read"
+      },
+      "answerExcerpt": "Here's how to diagnose this, following the SQL Server locking/deadlock procedure for your stack (EF Core + `Microsoft.Data.SqlClient`):\n\n## 1. Collect evidence read-only (no kills, no setting changes)\n\nSince order-update transactions are presumably hitting a shared or production database, treat it as read-only until you have approval otherwise:\n\n```sql\n-- Current blocking snapshot (run a few times while it's happening, if reproducible live)\nSELECT session_id, blocking_session_id, wait_type, wait_resource, wait_time, status\nFROM sys.dm_exec_requests\nWHERE blocking_session_id <> 0;\n\n-- Lock inventory for a specific session\nSELECT request_session_id, resource_type, resource_description, request_mode, request_status\nFROM sys.dm_tran_locks;\n```\n\nBetter: pull the actual **deadlock graph** from the `system_health` Extended Events session (it captures `xml_deadlock_report` by default on most editions) — that graph gives you the exact resources, lock modes, and statement text for both participants, which beats reconstructing it from `dm_exec_requests`.\n\n```sql\nSELECT XEvent.query('.') AS DeadlockGraph\nFROM (\n  SELECT CAST(target_data AS xml) AS TargetData\n  FROM sys.dm_xe_session_targets st"
+    }
+  ]
+}

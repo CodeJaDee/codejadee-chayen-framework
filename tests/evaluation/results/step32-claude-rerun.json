@@ -1,0 +1,188 @@
+{
+  "provider": "claude",
+  "providerVersion": "2.1.270 (Claude Code)",
+  "ranAt": "2026-10-15T07:11:35.698Z",
+  "rescoredAt": "2026-10-15T07:12:09.594Z",
+  "runs": 2,
+  "pluginLoad": "--plugin-dir (no install)",
+  "permissions": "-p mode; Read/Glob/Grep/Skill pre-approved; other tools left to native permission handling",
+  "fixtureGit": false,
+  "fixtureUnchanged": true,
+  "results": [
+    {
+      "id": "pr-nextjs-route",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-security"
+        ]
+      },
+      "exit": 1,
+      "completion": "error_max_turns",
+      "seconds": 51,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Grep",
+        "Read",
+        "Glob",
+        "Grep",
+        "Read",
+        "Glob",
+        "Glob",
+        "Grep",
+        "Read",
+        "Read",
+        "Grep",
+        "Grep",
+        "Glob",
+        "Glob",
+        "Glob"
+      ],
+      "deniedTools": [],
+      "costUsd": 0.224769,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-backend,chayen-security"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": ""
+    },
+    {
+      "id": "pr-pytest",
+      "run": 1,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 64,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Grep",
+        "Read",
+        "Glob",
+        "Read",
+        "Bash",
+        "Bash",
+        "Write",
+        "Write"
+      ],
+      "deniedTools": [
+        "Bash",
+        "Bash",
+        "Write",
+        "Write"
+      ],
+      "costUsd": 0.21114060000000004,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-testing"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": "I don't have write permission yet for that file. Could you approve the permission prompt so I can create `services/reporting/tests/test_invoice.py`?"
+    },
+    {
+      "id": "pr-nextjs-route",
+      "run": 2,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-security"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 40,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Grep",
+        "Read",
+        "Grep",
+        "Bash",
+        "Bash",
+        "Read",
+        "Bash",
+        "Edit"
+      ],
+      "deniedTools": [
+        "Edit"
+      ],
+      "costUsd": 0.1860916,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-backend,chayen-security"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": "The route trusted a client-supplied `userId` query parameter instead of deriving identity from the session — anyone could pass `?userId=<other-customer-id>` (or omit it entirely to get *everyone's* orders) and read other customers' data. That's the IDOR here.\n\nI attempted the fix but the edit requires your approval. The fix replaces the query-param lookup with the authenticated user's ID from their session token (via `next-auth/jwt`'s `getToken`), rejecting unauthenticated requests with 401, and always scoping the DB query to that token's `sub`:\n\n```ts\nimport { NextResponse } from 'next/server';\nimport { getToken } from 'next-auth/jwt';\nimport { db } from '../../../lib/db';\n\nexport async function GET(req: Request) {\n  const token = await getToken({ req: req as any, secret: process.env.NEXTAUTH_SECRET });\n  if (!token?.sub) {\n    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });\n  }\n\n  const orders = await db.order.findMany({ where: { userId: token.sub } });\n  return NextResponse.json(orders);\n}\n```\n\nPlease approve the edit (or let me know if you'd rather I use a different auth mechanism — I didn't find an existing `authOptions`/session helper in this fixture, so"
+    },
+    {
+      "id": "pr-pytest",
+      "run": 2,
+      "mode": "auto",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "exit": 0,
+      "completion": "success",
+      "seconds": 62,
+      "model": "claude-sonnet-5",
+      "discoveredSkills": 13,
+      "loadedSkills": [],
+      "explicitEvidence": null,
+      "referencesRead": [],
+      "toolSequence": [
+        "Agent",
+        "Bash",
+        "Grep",
+        "Bash",
+        "Read",
+        "Bash",
+        "Read",
+        "Bash",
+        "Write"
+      ],
+      "deniedTools": [
+        "Write"
+      ],
+      "costUsd": 0.32551539999999995,
+      "route": {
+        "pass": false,
+        "why": "expected one of chayen-testing"
+      },
+      "reference": {
+        "pass": false,
+        "why": "no matching reference read"
+      },
+      "answerExcerpt": "I need your permission to create the test file — please approve the Write request."
+    }
+  ]
+}

@@ -179,6 +179,8 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 
 ## References
 
+Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
+
 | Reference | Load when |
 |---|---|
 | [references/task-contract.md](references/task-contract.md) | Workflow step 4: the change touches three or more files, or any risky area |

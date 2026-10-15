@@ -183,7 +183,7 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## References
 
-Load one framework reference (workflow step 1), the app-shell reference only when a shell is involved, and one recipe (workflow step 2).
+Load one framework reference (workflow step 1), the app-shell reference only when a shell is involved, and one recipe (workflow step 2). Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
 
 | Reference | Load when |
 |---|---|

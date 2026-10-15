@@ -179,6 +179,8 @@ No matching workflow => continue normal native behavior.
 
 Read the safety checklist before remote commands (workflow step 1), the tooling section for the detected platform (step 2), and one recipe (step 3).
 
+Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
+
 | Reference | Load when |
 |---|---|
 | [references/operations-safety.md](references/operations-safety.md) | Any command will touch a remote system, an environment, a registry, or state |

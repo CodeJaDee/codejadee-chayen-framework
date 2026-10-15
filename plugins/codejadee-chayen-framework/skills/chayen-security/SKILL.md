@@ -163,7 +163,7 @@ verification table.
 
 ## References
 
-Load one recipe for the request (workflow step 2), plus the checklists it names (workflow step 3).
+Load one recipe for the request (workflow step 2), plus the checklists it names (workflow step 3). Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
 
 | Reference | Load when |
 |---|---|

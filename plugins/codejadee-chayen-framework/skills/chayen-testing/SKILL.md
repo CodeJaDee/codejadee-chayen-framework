@@ -154,7 +154,7 @@ Report every test or suite with exactly one status:
 
 ## References
 
-Load one technology reference for the detected framework (workflow step 1), and one recipe for the request (workflow step 3).
+Load one technology reference for the detected framework (workflow step 1), and one recipe for the request (workflow step 3). Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
 
 | Reference | Load when |
 |---|---|

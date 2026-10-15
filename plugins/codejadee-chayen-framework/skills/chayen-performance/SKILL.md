@@ -153,7 +153,7 @@ No matching workflow => continue normal native behavior.
 
 ## References
 
-Load the runtime tools section for the detected runtime (workflow step 1), and one recipe (workflow step 2).
+Load the runtime tools section for the detected runtime (workflow step 1), and one recipe (workflow step 2). Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
 
 | Reference | Load when |
 |---|---|

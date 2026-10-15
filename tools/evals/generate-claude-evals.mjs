@@ -2,7 +2,7 @@
 // Developer-only generator: turns the provider-neutral trigger cases in
 // tests/skills/trigger-cases.json into Claude Code `claude plugin eval` cases
 // under tests/evals/claude/<case-id>/ (prompt.md + graders/*.md).
-// Zero dependencies (Node.js >= 18). Never shipped with the plugin.
+// Zero dependencies (Node.js >= 20.11, for import.meta.dirname). Never shipped with the plugin.
 //
 // Usage:
 //   node tools/evals/generate-claude-evals.mjs                # (re)write the committed cases
@@ -132,7 +132,7 @@ if (stageDir) {
   for (const [rel, body] of expected) {
     const p = path.join(outDir, rel);
     if (!fs.existsSync(p)) problems.push(`missing ${rel}`);
-    else if (fs.readFileSync(p, "utf8") !== body) problems.push(`stale ${rel}`);
+    else if (fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n") !== body) problems.push(`stale ${rel}`); // CRLF checkouts are not stale (DF-01)
   }
   for (const rel of listExisting(outDir)) if (!expected.has(rel)) problems.push(`orphan ${rel}`);
   if (problems.length) { console.error(problems.join("\n")); console.error(`\n${problems.length} problem(s). Run: node tools/evals/generate-claude-evals.mjs`); process.exit(1); }

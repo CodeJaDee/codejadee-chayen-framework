@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Developer-only static validator for the Chayen plugin package and its
-// marketplace files. Zero dependencies (Node.js >= 18). Never shipped and
+// marketplace files. Zero dependencies (Node.js >= 20.11, for import.meta.dirname). Never shipped and
 // never required by plugin users.
 //
 // Usage: node tools/validate/validate-package.mjs [repoRoot]

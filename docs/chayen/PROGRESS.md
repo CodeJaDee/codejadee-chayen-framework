@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 31 — Final native provider compatibility validation |
+| Last executed step | 32 — Comprehensive evaluation suite |
+| Step 32 status | DONE for the executable scope (pending review): suite over 15 categories and 4 evidence levels; static/traceability PASS (206/206, 108/108, 12/12, 11/11 routing examples); facts 107/0/52; Claude Code probes 31 billed runs, positive routing 14/20, no-match 8/8, precision 14/14, references 8/16, verification evidence 3/10. Copilot/Codex/VS Code/plugin-eval NOT_RUN. Path guard added to 13 skills (D-046). No VERIFIED promotion (R-55). |
 | Step 31 status | PARTIAL — static validation complete: manifests, marketplaces, precedence (from the installed provider code of Claude Code 2.1.270/2.1.299, Codex 0.160.1/0.162.0-alpha, Copilot 1.0.97, VS Code 1.141.1 + Copilot 0.69.0), identity and discovery (check-identity 15/15, 13 skills / 221 references), validate-all 8/8 groups, strict validate PASS. Native install/invocation/reference/lifecycle checks NOT_TESTED on every surface (lifecycle opt-in denied by the session permission classifier; R-53). Version unchanged, update risk R-54. Codex IDE extension UNSUPPORTED. Release gate OPEN. |
 | Step 30 status | DONE (pending review; 238 package files / 13 entries / 221 references, three marketplaces and 57 developer assets statically reviewed; instruction priority, safe staging/mutations, parser/eval metadata and provider opt-in hardened; V-25 and eight offline gate groups PASS, 32/32 security tests and 132/132 validator tests PASS; 23 JavaScript plus one shell syntax check PASS. Native provider/model/install, advisory and runtime defenses NOT_RUN; R-52 OPEN). |
 | Step 29 status | DONE (pending review; 12 workflows and seven reusable template leaves IMPLEMENTED; V-24 PASS; 47 workflow/template evaluation specifications; six automated gate groups and 132/132 validator tests PASS; live agent/provider behavior NOT_RUN, R-51; D-045 layout PROPOSED). |
@@ -34,7 +35,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after STEP 31; await user review. Release gate OPEN: run tests/provider-compatibility/README.md R-1..R-10 under an authorized process (R-53) and decide the next version (R-54). STEP 28 remains PARTIAL (R-49/R-50); native workflow/security behaviour remains NOT_RUN (R-51/R-52); Steps 24–25 unrecorded (R-45). All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED. |
+| Next step | STOP after STEP 32; await user review. Open: R-55 (evaluation residuals, EVALUATION_GAPS EG-01..EG-20), R-53/R-54 (provider release gate), STEP 28 PARTIAL (R-49), R-51/R-52, R-45. All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED. |
 | Commits made by agent | None |
 
 ---
@@ -3264,3 +3265,121 @@ setting was changed.
 | Deleted | None |
 
 No manifest, marketplace file, skill or reference was changed. STOP after STEP 31.
+---
+
+## Step 32 — Comprehensive evaluation suite
+
+- **Date:** 2026-10-15
+- **Status:** DONE for the executable scope, pending review.
+  - Copilot, Codex, VS Code and full `claude plugin eval` were not
+    executable or authorized here; they are recorded as NOT_RUN.
+  - No behavior is VERIFIED.
+- **Scope:** STEP 32 only. Baseline clean `main` at 51a2d5d. No commit, push,
+  publish, marketplace install, credential copy or later step.
+- **Authority:** the user's request to "run every test executable in the
+  current environment" was taken as authorization for:
+  - local fact runners;
+  - bounded billed Claude Code probes, each loading the plugin read-only via
+    `--plugin-dir`.
+
+  The STEP 31 lifecycle denial was respected: no install-based run was
+  attempted.
+
+### Work performed
+
+- **Suite.**
+  - Built `tools/evals/run-evaluation-suite.mjs` (offline) covering 15
+    categories and four separated evidence levels: static, simulated,
+    actual provider, manual.
+  - Added `tests/evaluation/`: README, 13 provider probes, the probe runner
+    with offline `--rescore`, a six-stack fixture monorepo, and path-free
+    results.
+- **Traceability, now executable:**
+  - 206/206 engineering records have positive and negative recipe cases,
+    plus catalog triggers;
+  - 108/108 technology records and 12/12 workflows have positive and
+    negative cases;
+  - the 11 requested routing examples each map to a trigger case and a
+    provider probe.
+- **Trigger cases.** Added 4 (186 total):
+  - `neg-explicit-decline`;
+  - `uns-rust-axum-handler`;
+  - `amb-monorepo-order-total`;
+  - `amb-destructive-production-drop`.
+
+  Regenerated the Claude eval cases (441 files).
+- **Executed** all six technology fact runners and 31 billed Claude Code
+  runs:
+  - one empty-workspace check;
+  - Run A: 13 probes;
+  - a re-run of the Next.js and pytest probes, ×2 each;
+  - Run B: 13 probes on the current package.
+- **Copilot attempt:** the isolated home was unauthenticated (exit 1, no
+  model call). Codex was not attempted, because it needs an install.
+- **Fixes:**
+  - explicit-invocation evidence rule and transcript-based routing scoring;
+  - path-resolution guard in all 13 SKILL.md files (D-046);
+  - DF-01 CRLF check;
+  - R-50 Node declaration;
+  - fixture copy filter and git long paths;
+  - path scrubbing of results.
+- **Environment note.** IDE C# tooling restored
+  `tests/evaluation/fixture/src/Api` in place (`bin/` and `obj/`, which are
+  git-ignored, appeared seconds after the copy). The runner now excludes
+  them.
+
+### Actual verification
+
+| Command | Observed result |
+|---|---|
+| `node tools/validate/validate-all.mjs` (final) | 8 gate groups PASS; 132/132 validator self-tests; 186 cases / 441 files in sync; 5 known size warnings |
+| `node tools/validate/check-security.mjs` | V-25 PASS: 238 package files, 13 entries, 221 references, 67 developer assets, 32 fixture dependency references, 0 errors |
+| `node tools/evals/run-evaluation-suite.mjs --write --facts <scratch> --probes <3 summaries>` | Exit 0: S-ALL, S-IDENTITY 15/15, S-AUDIT206, S-EVALSYNC, T-206 206/206, T-TECH 108/108, T-WF 12/12, T-ROUTING 11/11, S-HANDOFF PASS. Simulated proxy: top-1 0.546, top-3 0.769, no-match 0.441. |
+| `node tests/technology/<6 packs>/run-fact-checks.mjs` (PostgreSQL with `--pg-bin` and `--python` from the STEP 28 temporary installs) | 107 PASS / 0 FAIL / 52 NOT_RUN (dotnet 29/0/2, SQL Server 30/0/0, PostgreSQL+cross-stack 40/0/2, Angular/TS 3/0/19, React/Next 3/0/13, Vue/Nuxt/Vite 2/0/16) |
+| `node tests/evaluation/run-provider-probes.mjs --allow-provider-calls --provider claude --out <scratch>` (Runs A and B), plus `--only pr-nextjs-route,pr-pytest --runs 2` | Claude Code 2.1.270, `claude-sonnet-5`: Run A 12/13, re-run 0/4, Run B 12/13 (after `--rescore`); fixture unchanged in all sets; about $6.44 in total |
+| Pooled across 30 recorded runs | Positive routing 14/20, precision 14/14, no-match 8/8, references 8/16, 13/13 skills discovered, completion 22/26 (turn limit 4) |
+| Agent-read behavior grading (model-authored text only) | Most routing-adjacent behavior passed both runs; verification-evidence items 3/10; repository rule cited 0/2 |
+| Path-resolution transcripts | Repository-root path attempts in skill-loaded transcripts: 3/7 before the guard, 0/7 after (one-sided Fisher p ≈ 0.10) |
+| `node tools/evals/generate-claude-evals.mjs --check` with a CRLF copy, and with a content change | Exit 0 and exit 1 respectively (DF-01 fixed) |
+| `node --check` on the 4 new or changed scripts | Syntax OK |
+| `git diff --check` | PASS (only CRLF normalisation notices) |
+
+### Decisions, risks and open questions
+
+- **D-046 (new):** evaluation evidence levels, probe scoring rules, and the
+  path-resolution guard. Scope is ACCEPTED; wording and rules are PROPOSED.
+- **R-55 (new):** evaluation residuals. See EVALUATION_GAPS.md EG-01..EG-20.
+  Highlights:
+  - Next.js route under-trigger (0/4);
+  - pytest instability (2/4);
+  - verification quality 3/10;
+  - single provider, with no baseline arm.
+- **Resolved:** DF-01 FIXED; R-50 RESOLVED (the declaration is corrected;
+  the 20.11 minimum itself is untested).
+- **Unchanged:** R-53/R-54 (provider release gate), R-45, R-49, R-51, R-52.
+  Descriptions and L0 are unchanged (5,485/5,500).
+- **Statuses:** all acceptance, catalog, technology and workflow statuses
+  are unchanged. Nothing was promoted to VERIFIED.
+
+### File ledger (STEP 32 only)
+
+| Action | Path |
+|---|---|
+| Created | `docs/chayen/EVALUATION_REPORT.md` |
+| Created | `docs/chayen/EVALUATION_GAPS.md` |
+| Created | `tools/evals/run-evaluation-suite.mjs` |
+| Created | `tests/evaluation/README.md` |
+| Created | `tests/evaluation/provider-probes.json` |
+| Created | `tests/evaluation/run-provider-probes.mjs` |
+| Created | `tests/evaluation/fixture/` (18 files: ASP.NET Core, Angular, Next.js, Python, PostgreSQL SQL, Rust, AGENTS.md, README.md) |
+| Created | `tests/evaluation/results/step32-evaluation.json`, `step32-claude-run-a.json`, `step32-claude-rerun.json`, `step32-claude-run-b.json` |
+| Created | `tests/evals/claude/{neg-explicit-decline,uns-rust-axum-handler,amb-monorepo-order-total,amb-destructive-production-drop}/` (generated) |
+| Modified | `plugins/codejadee-chayen-framework/skills/*/SKILL.md` (all 13: path-resolution guard) |
+| Modified | `tests/skills/trigger-cases.json`, `tests/skills/README.md`, `tests/routing/README.md` |
+| Modified | `tools/evals/generate-claude-evals.mjs` (DF-01, Node declaration) |
+| Modified | `tools/catalog/check-catalog.mjs`, `tools/catalog/check-technology.mjs`, `tools/catalog/README.md`, `tools/validate/README.md`, `tools/validate/run-validator-tests.mjs`, `tools/validate/validate-all.mjs`, `tools/validate/validate-package.mjs` (Node declaration only) |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md`, `DECISIONS.md`, `ISSUES.md`, `IMPLEMENTATION_PLAN.md`, `PROGRESS.md` |
+| Deleted | None |
+
+Raw transcripts, fact JSON and logs stay in the session scratch directory,
+because they contain local paths. STOP after STEP 32.

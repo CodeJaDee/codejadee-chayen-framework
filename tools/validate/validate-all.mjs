@@ -3,7 +3,7 @@
 // one-line result per gate. It is a convenience for maintainers working in
 // this repository. It is not a Chayen CLI: it is never shipped, has no
 // package.json or bin entry, and plugin users never run it.
-// Zero dependencies (Node.js >= 18).
+// Zero dependencies (Node.js >= 20.11, for import.meta.dirname).
 //
 // Usage: node tools/validate/validate-all.mjs
 

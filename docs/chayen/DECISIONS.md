@@ -1024,6 +1024,47 @@ Decision statuses:
   runtime workflow scenarios remain NOT_RUN, so workflows are IMPLEMENTED,
   not VERIFIED. No dependency, commit, release or later step.
 
+### D-046 — STEP 32 evaluation suite, evidence levels and the path-resolution guard
+
+- **Status:** scope ACCEPTED from the explicit user request "Execute STEP 32
+  ONLY" (2026-10-15). The guard wording and the probe scoring rules are
+  PROPOSED pending review.
+- **Evidence levels:** static validation, simulated (lexical proxy), actual
+  provider invocation, and manual verification are reported separately and
+  never pooled.
+  - The simulated proxy can never support VERIFIED.
+  - Agent-read transcript grading is labelled as such and is not human
+    verification.
+- **Suite:** `tools/evals/run-evaluation-suite.mjs` (offline) aggregates the
+  static gates. It adds executable traceability checks for 206 engineering,
+  108 technology and 12 workflow records and the 11 requested routing
+  examples, a static cross-skill handoff check, context-overhead estimates,
+  and summaries of recorded provider results.
+- **Provider probes:** `tests/evaluation/run-provider-probes.mjs` loads the
+  plugin with `--plugin-dir` (no install) against
+  `tests/evaluation/fixture`. Billed calls need `--allow-provider-calls`;
+  Copilot needs an isolated `COPILOT_HOME`. Codex is out of scope until a
+  lifecycle install is authorized.
+- **Scoring rules:**
+  - Routing is judged from the transcript. Turn-limit exits are reported as
+    completion, not as routing failures.
+  - An explicit `/plugin:skill` invocation counts as loaded only with
+    observable evidence: a read of a skill-local reference, or the declared
+    output marker.
+  - Runs are pooled only while every skill description is identical.
+- **Guard:** one sentence in all 13 SKILL.md files, next to the References
+  table: "Reference links resolve from this skill's directory; resolve every
+  project file from the user's working directory, never from the skill's
+  location." It responds to 3/7 skill-loaded transcripts that targeted paths
+  under the plugin's repository; there were 0/7 afterwards. That is not yet
+  significant (EG-19). Descriptions and the L0 metadata are unchanged.
+  Five bodies grew by 2 lines; all stay below the hard limit of 300.
+- **Not changed:** the Next.js under-trigger (0/4) and pytest instability
+  (2/4) are recorded as EG-16 and EG-17. Description changes wait for
+  multi-run evidence.
+- **No VERIFIED promotion**, no dependency, commit, release, install or later
+  step.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

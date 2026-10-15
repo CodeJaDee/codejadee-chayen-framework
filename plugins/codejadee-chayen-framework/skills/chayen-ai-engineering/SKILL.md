@@ -154,7 +154,7 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## References
 
-Load the tooling section for the detected stack (workflow step 1), and one recipe (workflow step 2).
+Load the tooling section for the detected stack (workflow step 1), and one recipe (workflow step 2). Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
 
 | Reference | Load when |
 |---|---|

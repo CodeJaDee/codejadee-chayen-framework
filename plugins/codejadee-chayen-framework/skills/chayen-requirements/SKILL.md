@@ -145,6 +145,8 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## References
 
+Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
+
 | Reference | Load when |
 |---|---|
 | [references/requirements-record.md](references/requirements-record.md) | Workflow step 3: producing any requirements output |

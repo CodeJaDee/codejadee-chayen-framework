@@ -188,7 +188,7 @@ No matching workflow => continue normal native behavior.
 
 ## References
 
-Load one technology reference for the detected stack (workflow step 1), and one recipe for the request (workflow step 2).
+Load one technology reference for the detected stack (workflow step 1), and one recipe for the request (workflow step 2). Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
 
 | Reference | Load when |
 |---|---|

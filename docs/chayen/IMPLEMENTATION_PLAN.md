@@ -352,3 +352,50 @@ classifier. Model probes and VS Code UIs were not run.
 **Gate.** Release gate OPEN (R-53). Version update risk R-54. No provider-specific
 catalog copy was needed. No manifest, marketplace or skill changed. STOP
 after STEP 31.
+
+### Step 32 — Comprehensive evaluation suite (user-directed)
+
+**DONE for the executable scope (pending review). Behavior not VERIFIED.**
+
+**Suite.** 15 categories across four separated evidence levels:
+
+- static;
+- simulated (a lexical proxy);
+- actual provider invocation;
+- manual.
+
+`tools/evals/run-evaluation-suite.mjs` checks the static gates and
+traceability: 206/206 engineering, 108/108 technology and 12/12 workflow
+records with positive and negative cases, and the 11/11 requested routing
+examples. It also checks cross-skill handoff, measures context overhead, and
+pools recorded provider results.
+
+**Executed.**
+
+- All six fact runners: 107 pass, 0 fail, 52 not run.
+- 31 billed Claude Code runs (`tests/evaluation/run-provider-probes.mjs`,
+  six-stack fixture, about $6.44). Results:
+
+  | Measure | Result |
+  |---|---|
+  | Positive routing | 14/20 |
+  | No-match | 8/8 |
+  | Precision | 14/14 |
+  | References | 8/16 |
+  | Verification evidence | 3/10 |
+
+**Not executed.** Copilot (unauthenticated isolated home), Codex (install
+not authorized), VS Code, and `claude plugin eval` at full size.
+
+**Fixes.**
+
+- 4 trigger cases;
+- explicit-invocation and completion scoring, plus `--rescore`;
+- a path-resolution guard in all 13 skills (D-046);
+- DF-01;
+- the R-50 declaration;
+- fixture copy and git long paths;
+- path-free summaries.
+
+**Open.** Next.js under-trigger and pytest instability are recorded (R-55,
+EG-01..EG-20). STOP after STEP 32.

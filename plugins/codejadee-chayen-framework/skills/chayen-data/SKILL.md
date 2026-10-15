@@ -170,7 +170,7 @@ No matching workflow => continue normal native behavior.
 
 ## References
 
-Load one engine reference (workflow step 1), the safety checklist when step 2 requires it, and one recipe (workflow step 3).
+Load one engine reference (workflow step 1), the safety checklist when step 2 requires it, and one recipe (workflow step 3). Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
 
 | Reference | Load when |
 |---|---|

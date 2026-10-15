@@ -6,7 +6,7 @@ These tools are for **repository maintainers only**.
 - Plugin users never run them.
 - They are not a Chayen CLI: no `package.json`, no `bin` entry, nothing to
   install.
-- They have no runtime dependencies. They need Node.js 18 or later.
+- They have no runtime dependencies. They need Node.js 20.11 or later (the scripts use `import.meta.dirname`). Executed on Node 24.15.0; 20.11 is the documented minimum, not a tested version.
 
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
@@ -69,8 +69,8 @@ installation, restore, provider model call or lifecycle install is part of
 `validate-all.mjs`. Static scanning cannot prove absence of prompt injection,
 secrets, malware or vulnerable dependencies. See `docs/chayen/SECURITY_MODEL.md`,
 `THREAT_MODEL.md` and `PLUGIN_TRUST_REVIEW.md` for the reviewed boundaries.
-STEP 30 executed Node 24.15.0 only; the older Node 18 declaration above remains
-an unresolved compatibility claim (R-50), not verified support.
+STEP 32 corrected the maintainer runtime declaration to Node.js 20.11 or later
+(R-50); only Node 24.15.0 has been executed.
 
 Default eval generation changes committed fixture files. `--check` reads only;
 `--stage <existing-scratch-parent>` creates a fresh child and refuses existing

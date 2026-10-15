@@ -4,7 +4,7 @@
 // applies one declarative mutation per case, runs the validator named by
 // the case, and asserts that it fails with the expected check ID. The
 // unmutated copy must pass every validator first (baseline).
-// Zero dependencies (Node.js >= 18). Never shipped.
+// Zero dependencies (Node.js >= 20.11, for import.meta.dirname). Never shipped.
 //
 // Usage: node tools/validate/run-validator-tests.mjs [--only <case-id>] [--keep]
 // Case files: tests/catalog/catalog-mutations.json, tests/skills/validator-mutations.json,

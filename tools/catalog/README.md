@@ -4,7 +4,7 @@ This tool is for **repository maintainers only**.
 
 - It is not part of the plugin package (`plugins/`).
 - Plugin users never run it.
-- It has no dependencies. It needs Node.js 18 or later.
+- It has no dependencies. It needs Node.js 20.11 or later (the scripts use `import.meta.dirname`). Executed on Node 24.15.0; 20.11 is the documented minimum, not a tested version.
 
 ```bash
 node tools/catalog/check-catalog.mjs              # check; exit 1 on any error

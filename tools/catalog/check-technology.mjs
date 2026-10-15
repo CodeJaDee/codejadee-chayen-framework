@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Developer-only checker for the technology capability catalog (V-23, D-039).
-// Zero dependencies (Node.js >= 18). Never shipped.
+// Zero dependencies (Node.js >= 20.11, for import.meta.dirname). Never shipped.
 //
 // Checks catalog/technology-capabilities.yaml against the user's Steps 20–23, 26, and 27
 // inventory, the shipped technology reference sections, the evaluation cases

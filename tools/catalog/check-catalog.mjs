@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Developer-only checker for the Chayen Engineering Capability Catalog
 // (catalog/engineering-capabilities.yaml). Implements validator V-11 from
-// ARCHITECTURE C-03/C-12. Zero dependencies (Node.js >= 18). Never shipped.
+// ARCHITECTURE C-03/C-12. Zero dependencies (Node.js >= 20.11, for import.meta.dirname). Never shipped.
 //
 // Usage:
 //   node tools/catalog/check-catalog.mjs               # check; exit 1 on any error

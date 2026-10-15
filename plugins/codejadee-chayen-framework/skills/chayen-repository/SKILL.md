@@ -154,6 +154,8 @@ If the request does not fit, stop following this skill and continue normally wit
 
 ## References
 
+Reference links resolve from this skill's directory; resolve every project file from the user's working directory, never from the skill's location.
+
 | Reference | Load when |
 |---|---|
 | [references/repository-profile.md](references/repository-profile.md) | Workflow step 2: overview, layout, commands, conventions, or "where does X belong" |

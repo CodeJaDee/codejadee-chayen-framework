@@ -6,7 +6,7 @@ to use its static guidance. STEP 30 did not run any provider test.
 
 | File | Purpose |
 |---|---|
-| `../skills/trigger-cases.json` | Canonical prompt/expected-skill specifications; 182 cases at STEP 30 |
+| `../skills/trigger-cases.json` | Canonical prompt/expected-skill specifications; 186 cases at STEP 32 |
 | `smoke-cases.json` | Small routing subset plus explicit invocation and disabled-plugin cases |
 | `run-smoke.mjs` | Separately authorized Copilot/Codex runner; raw outputs can be sensitive |
 | `results/` | Historical STEP 06 summaries; not evidence for current skill bodies |
