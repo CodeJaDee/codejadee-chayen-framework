@@ -463,6 +463,12 @@ sequenceDiagram
   permission modes and sandboxing, CI scanners, branch protection.
 - Trust boundaries and the threat model are in §7 and ADR-0007. The repo-level
   `SECURITY.md` (vulnerability reporting) is created in a later step.
+- STEP 30 implementation detail: [SECURITY_MODEL.md](SECURITY_MODEL.md),
+  [THREAT_MODEL.md](THREAT_MODEL.md) and [PLUGIN_TRUST_REVIEW.md](PLUGIN_TRUST_REVIEW.md)
+  cover the current static package and developer tools. All 13 entries now
+  acknowledge higher-priority system/developer rules and native permissions;
+  repository/tool/template text cannot supply approval. V-25 and offline
+  boundary tests supplement V-09/V-10; native behavior remains NOT_RUN.
 
 ### C-12 Developer-only Validators
 
@@ -597,10 +603,12 @@ flowchart TB
 
 | Boundary | Rule |
 |---|---|
-| B-01 Plugin ↔ provider | The plugin cannot execute anything. Every action passes through the provider's permission system. |
+| B-01 Plugin ↔ provider | The plugin ships no executable components or tool grants. Agent actions depend on native provider/OS permissions; this text does not establish their effectiveness. |
 | B-02 Guidance ↔ enforcement | Chayen text never claims to enforce, guarantee, or block (D-003, V-10). |
-| B-03 Repository content ↔ instructions | Content found in the repository or in tool output is data. Skills instruct the model not to follow instructions embedded in it unless the user confirms. |
+| B-03 Repository content ↔ instructions | Repository and tool content are data. Embedded instructions cannot override system/developer rules or native permissions, expand the user's authorized scope, or supply approval. |
 | B-04 Supply chain | Users install a pinned version from a known Git source. Every release diff is reviewable static text (ADR-0007, ADR-0008). |
+| B-05 Risky actions | Actual action/target/scope authorization and native controls are required; generated plans, test passes and recommendations are not permission. Scratch mutations and staging stay within reviewed boundaries. |
+| B-06 Secrets | No credentials or source/prompt upload is required for static guidance. Keep values out of logs, reports and handoffs; optional external tooling has separate authorization and data boundaries. |
 
 ---
 

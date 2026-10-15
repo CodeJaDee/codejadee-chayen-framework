@@ -7,7 +7,7 @@ These tests check that the plugin behaves natively on each provider surface.
 
 | File | Purpose |
 |---|---|
-| `run-lifecycle.sh` | **Automated, no model cost.** Native lifecycle per CLI in isolated config homes: marketplace add, install, list, discover skills, disable, enable, uninstall, marketplace remove. Also checks that a git fixture application is unchanged. |
+| `run-lifecycle.sh` | **Optional, no model calls.** Native CLI lifecycle with config-home overrides: marketplace add, install, discover, disable/enable, uninstall/remove; may cause provider traffic or cache changes. Checks a disposable fixture for changes. |
 | `claude-code-vscode.md` | Manual procedure: Claude Code VS Code extension |
 | `copilot-vscode.md` | Manual procedure: GitHub Copilot Chat in VS Code (agent plugins) |
 | `codex-vscode.md` | Codex IDE extension. Plugins are unsupported by the provider. Records what to re-check. |
@@ -18,11 +18,21 @@ Routing behaviour (which skill a prompt activates) is in `tests/routing/`.
 ## Running the automated lifecycle check
 
 ```bash
-bash tests/provider-compatibility/run-lifecycle.sh /tmp/chayen-lifecycle   # any empty scratch path
+CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycle.sh /tmp/chayen-lifecycle-fresh
 ```
 
-- **Isolation.** It uses `CLAUDE_CONFIG_DIR`, `CODEX_HOME`, and
-  `COPILOT_HOME`, so the user's real configuration is not modified.
+- **Review/authorization first.** Inspect the script, native binaries and
+  copied package. The opt-in flag records caller intent, not approval evidence.
+  Use a fresh directory outside the repository with an existing scratch parent;
+  existing directories and linked package sources are refused. It no longer
+  deletes a supplied work directory. STEP 30 performed syntax checking only.
+- **Isolation request.** It supplies `CLAUDE_CONFIG_DIR`, `CODEX_HOME`, and
+  `COPILOT_HOME`. These overrides are not an OS sandbox or proof that a provider
+  leaves other caches, account stores or settings unchanged. Use a disposable
+  environment with minimal permissions; do not supply or copy personal secrets.
+- **Traffic.** Native CLIs may contact provider services or update caches. This
+  is not an offline gate. No credential is required to use the static plugin;
+  mark tests NOT_RUN if approved test access is unavailable.
 - **Local marketplace.** It installs from a **local copy** of the
   repository. It does not test a remote GitHub marketplace, which needs the
   repository to be pushed.

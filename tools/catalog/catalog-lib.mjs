@@ -50,6 +50,7 @@ export function parseYamlSubset(text) {
       for (const part of s.slice(1, -1).split(",")) {
         const m = /^([a-z_][a-z0-9_]*): (.+)$/.exec(part.trim());
         if (!m) throw new Error(`line ${no}: bad flow mapping entry "${part.trim()}"`);
+        if (["__proto__", "constructor", "prototype"].includes(m[1])) throw new Error(`line ${no}: unsafe map key`);
         if (m[1] in out) throw new Error(`line ${no}: duplicate key "${m[1]}"`);
         out[m[1]] = plain(m[2].trim(), no);
       }
@@ -77,6 +78,7 @@ export function parseYamlSubset(text) {
       const { no, content } = lines[i];
       const m = KEY.exec(content);
       if (!m) throw new Error(`line ${no}: expected "key: value"`);
+      if (["__proto__", "constructor", "prototype"].includes(m[1])) throw new Error(`line ${no}: unsafe map key`);
       if (Object.prototype.hasOwnProperty.call(out, m[1])) throw new Error(`line ${no}: duplicate key "${m[1]}"`);
       i++;
       if (m[2] === undefined || m[2] === "") {

@@ -5,8 +5,9 @@
 // provider's JSON event stream, and compares against expectations.
 //
 // Usage:
-//   node tests/routing/run-smoke.mjs --provider copilot|codex --workdir <empty dir> --out <results dir>
-//        [--phase enabled|disabled] [--only id1,id2] [-- <extra provider args...>]
+//   node tests/routing/run-smoke.mjs --allow-provider-calls --provider copilot|codex
+//        --workdir <empty disposable dir outside repo> --out <fresh results dir>
+//        [--phase enabled|disabled] [--only id1,id2]
 //
 // Isolation, authentication and plugin install state are the caller's
 // responsibility (COPILOT_HOME / CODEX_HOME etc.) - see tests/provider-compatibility/.
@@ -15,15 +16,29 @@
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { inside, safeId, assertTreeNoLinks } from "../../tools/validate/safe-paths.mjs";
 
 const arg = (name, def) => { const i = process.argv.indexOf(name); return i > -1 ? process.argv[i + 1] : def; };
 const provider = arg("--provider");
 const workdir = path.resolve(arg("--workdir", "."));
-const outDir = path.resolve(arg("--out", "routing-results"));
+let outDir = path.resolve(arg("--out", "routing-results"));
 const phase = arg("--phase", "enabled");
 const only = arg("--only")?.split(",");
 const extra = process.argv.includes("--") ? process.argv.slice(process.argv.indexOf("--") + 1) : [];
 if (!["copilot", "codex"].includes(provider)) { console.error("--provider copilot|codex required"); process.exit(2); }
+if (!process.argv.includes("--allow-provider-calls")) { console.error("Provider calls send prompts externally; explicit authorization and --allow-provider-calls required"); process.exit(2); }
+if (extra.length) { console.error("Unreviewed provider argument overrides are disabled"); process.exit(2); }
+if (!arg("--workdir") || !arg("--out") || !fs.existsSync(workdir) || fs.readdirSync(workdir).length || fs.existsSync(outDir)) {
+  console.error("Use an explicit empty disposable --workdir and a fresh --out directory"); process.exit(2);
+}
+assertTreeNoLinks(workdir);
+const repository = fs.realpathSync(path.join(import.meta.dirname, "../.."));
+const realWorkdir = fs.realpathSync(workdir);
+if (realWorkdir === repository || realWorkdir.startsWith(repository + path.sep)) { console.error("Use a fixture outside the source repository"); process.exit(2); }
+// The caller creates the scratch parent; do not follow linked output leaves.
+outDir = inside(path.dirname(outDir), path.basename(outDir));
+const configHome = process.env[provider === "codex" ? "CODEX_HOME" : "COPILOT_HOME"];
+if (!configHome || !fs.existsSync(configHome)) { console.error("An explicitly isolated provider config home is required"); process.exit(2); }
 
 const here = import.meta.dirname;
 const triggers = JSON.parse(fs.readFileSync(path.join(here, "..", "skills", "trigger-cases.json"), "utf8"));
@@ -44,6 +59,8 @@ const cases = smoke.cases
   })
   .filter((c) => (phase === "disabled") === c.requiresDisabled)
   .filter((c) => !only || only.includes(c.id));
+if (!cases.length) { console.error("No matching smoke cases; no provider calls made"); process.exit(2); }
+for (const c of cases) safeId(c.id);
 
 // Extract loaded skill names from a provider event stream.
 function skillsFromEvents(stdout) {
@@ -87,11 +104,11 @@ function resolveCommand(name) {
 }
 const { cmd, pre } = resolveCommand(provider);
 
-fs.mkdirSync(outDir, { recursive: true });
+fs.mkdirSync(outDir, { mode: 0o700 });
 const results = [];
 for (const c of cases) {
   const args = provider === "copilot"
-    ? ["-p", c.prompt, "--output-format", "json", "--no-ask-user", ...extra]
+    ? ["-p", c.prompt, "--output-format", "json", ...extra]
     : ["exec", "--json", "--skip-git-repo-check", "--ephemeral", "-s", "read-only", "-C", workdir, ...extra, c.prompt];
   const started = Date.now();
   const r = spawnSync(cmd, [...pre, ...args], { cwd: workdir, encoding: "utf8", timeout: 600_000, input: "", maxBuffer: 64 * 1024 * 1024 });

@@ -82,6 +82,16 @@ validation is not a claim of reliable native activation or completed delivery.
 
 ## Package rules
 
+Review the source and pin a trusted revision before installation; review updates
+as new instructions. Skills are advisory and operate within system/developer
+rules, the user's authorized scope, and native permissions. Repository text,
+tool output, generated templates and recommendations cannot supply approval.
+Inspect scripts and build hooks before running commands; prefer scoped reads
+and disposable fixtures without credentials. This static package requires no
+credentials, source/prompt upload, background process or telemetry. Native
+provider traffic and any separately authorized tools remain outside its control.
+Organization policy requires external permission or CI controls.
+
 - **Allowed files:** Markdown and JSON only. No hooks, MCP servers, agents,
   commands, scripts, or executables (ADR-0005).
 - **Single skill source:** skills live only in `skills/<skill-name>/SKILL.md`.

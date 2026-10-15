@@ -1,0 +1,145 @@
+{
+  "step": 30,
+  "node": "v24.15.0",
+  "method": "Node --check only; no module execution, provider or network",
+  "checks": [
+    {
+      "file": "tools/catalog/audit-coverage.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/catalog/catalog-lib.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/catalog/check-catalog.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/catalog/check-technology.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/catalog/check-workflows.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/evals/generate-claude-evals.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/validate/check-security.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/validate/run-validator-tests.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/validate/safe-paths.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/validate/validate-all.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tools/validate/validate-package.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/routing/run-smoke.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/security/boundaries.test.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/angular-typescript/run-fact-checks.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/dotnet/run-fact-checks.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/node/client-facts.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/node/e2e.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/node/typed-client.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/run-fact-checks.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/react-nextjs/fixture/server-boundaries.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/react-nextjs/run-fact-checks.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/sqlserver/run-fact-checks.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    },
+    {
+      "file": "tests/technology/vue-nuxt-vite/run-fact-checks.mjs",
+      "status": "PASS",
+      "exit": 0,
+      "detail": "syntax only; module not executed"
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { inside, safeId, assertTreeNoLinks } from "./safe-paths.mjs";
 
 const repo = path.resolve(import.meta.dirname, "..", "..");
 const argv = process.argv.slice(2);
@@ -28,21 +29,28 @@ const VALIDATORS = {
   workflows: (dir) => [path.join(repo, "tools/catalog/check-workflows.mjs"), "--root", dir],
 };
 
-const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "chayen-vt-"));
+const tmpRoot = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), "chayen-vt-"));
 function freshCopy(name) {
-  const dir = path.join(tmpRoot, name);
+  const dir = inside(tmpRoot, safeId(name));
+  fs.mkdirSync(dir);
   for (const rel of COPY) {
-    const src = path.join(repo, rel);
-    if (fs.existsSync(src)) fs.cpSync(src, path.join(dir, rel), { recursive: true });
+    const src = inside(repo, rel);
+    if (fs.existsSync(src)) fs.cpSync(src, inside(dir, rel), {
+      recursive: true,
+      filter: source => {
+        if (fs.lstatSync(source).isSymbolicLink()) throw new Error("refusing a linked fixture source");
+        return !["bin", "obj", "node_modules", ".git"].includes(path.basename(source));
+      },
+    });
   }
   return dir;
 }
 function run(validator, dir) {
-  const r = spawnSync(process.execPath, VALIDATORS[validator](dir), { encoding: "utf8" });
+  const r = spawnSync(process.execPath, VALIDATORS[validator](dir), { encoding: "utf8", timeout: 30_000 });
   return { status: r.status, out: `${r.stdout}${r.stderr}` };
 }
 function apply(dir, e) {
-  const file = e.file ? path.join(dir, e.file) : null;
+  const file = e.file ? inside(dir, e.file) : null;
   const read = () => fs.readFileSync(file, "utf8").replace(/\r\n/g, "\n");
   switch (e.op) {
     case "replace": {
@@ -60,7 +68,12 @@ function apply(dir, e) {
     case "write": fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, e.content); break;
     case "append": fs.appendFileSync(file, e.content.repeat(e.repeat ?? 1)); break;
     case "delete": fs.rmSync(file, { recursive: true }); break;
-    case "copydir": fs.cpSync(path.join(dir, e.from), path.join(dir, e.to), { recursive: true }); break;
+    case "copydir": {
+      const source = inside(dir, e.from), target = inside(dir, e.to);
+      assertTreeNoLinks(source);
+      fs.cpSync(source, target, { recursive: true });
+      break;
+    }
     default: throw new Error(`unknown op ${e.op}`);
   }
 }
@@ -91,7 +104,10 @@ for (const suite of SUITES) {
     rows.push(`${ok ? "PASS" : "FAIL"}  ${c.id}: expect ${c.expect.validator} ${c.expect.error} → exit ${r.status}${hit ? `; ${hit.slice(0, 140)}` : "; expected error not reported"}`);
   }
 }
-if (!keep) fs.rmSync(tmpRoot, { recursive: true, force: true });
+if (!keep) {
+  if (path.dirname(tmpRoot) !== fs.realpathSync(os.tmpdir()) || !path.basename(tmpRoot).startsWith("chayen-vt-")) throw new Error("unexpected temporary cleanup target");
+  fs.rmSync(tmpRoot, { recursive: true, force: true });
+}
 console.log(rows.join("\n"));
 const total = rows.length;
 console.log(`\n${total - failed}/${total} passed${keep ? ` (kept ${tmpRoot})` : ""}`);

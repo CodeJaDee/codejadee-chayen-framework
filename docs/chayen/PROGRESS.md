@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 29 — Composite engineering workflows and reusable templates |
+| Last executed step | 30 — Security hardening and plugin trust review |
+| Step 30 status | DONE (pending review; 238 package files / 13 entries / 221 references, three marketplaces and 57 developer assets statically reviewed; instruction priority, safe staging/mutations, parser/eval metadata and provider opt-in hardened; V-25 and eight offline gate groups PASS, 32/32 security tests and 132/132 validator tests PASS; 23 JavaScript plus one shell syntax check PASS. Native provider/model/install, advisory and runtime defenses NOT_RUN; R-52 OPEN). |
 | Step 29 status | DONE (pending review; 12 workflows and seven reusable template leaves IMPLEMENTED; V-24 PASS; 47 workflow/template evaluation specifications; six automated gate groups and 132/132 validator tests PASS; live agent/provider behavior NOT_RUN, R-51; D-045 layout PROPOSED). |
 | Step 28 status | PARTIAL — all 11 packs / 108 capabilities and 17 required technologies audited; 7 gaps fixed; 295 technology specifications; final fact runs 107 PASS / 0 FAIL / 52 NOT_RUN; 5/5 automated gates and 115/115 self-tests PASS. Full frontend/mixed-stack agent scenarios remain NOT_RUN (R-49); maintainer Node 18 declaration conflicts with import.meta.dirname (R-50). See TECHNOLOGY_COVERAGE_AUDIT.md. |
 | Step 27 status | DONE (pending review; PostgreSQL 10/10 and cross-stack 8/8 IMPLEMENTED, 0 VERIFIED; V-23 PASS incl. V-23.10 for both recipe files; DR-01..04, PF-01..24, XF-01..14 PASS (42/42) on PostgreSQL 18.6, .NET 10, Node, Chromium; 5/5 gate groups, 115/115 self-tests; D-044 PROPOSED) |
@@ -32,7 +33,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after STEP 29; await user review. No later step started. STEP 28 remains PARTIAL (R-49, R-50); Steps 24–25 remain unrecorded (R-45); D-043..D-045 layout reviews pending. All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED; 13 skills and L0 5,485 / 5,500 unchanged. |
+| Next step | STOP after STEP 30; await user review. No later step started. STEP 28 remains PARTIAL (R-49/R-50); native workflow/security behavior remains NOT_RUN (R-51/R-52), and Steps 24–25 unrecorded (R-45). All 206 engineering, 108 technology and 12 workflow records remain IMPLEMENTED, 0 VERIFIED; 13 descriptions and L0 5,485 / 5,500 unchanged. |
 | Commits made by agent | None |
 
 ---
@@ -3028,3 +3029,139 @@ agents, approve tasks, deliver features or prove framework/runtime behavior.
   production operations are NOT_RUN in STEP 29. No consumer project, database,
   credential, production configuration, publication, commit or release changed.
 - **STOP after STEP 29.** No later step was started.
+
+
+## Step 30 — Security hardening and plugin trust review
+
+- **Date:** 2026-10-15
+- **Status:** DONE for the requested offline security review/hardening scope,
+  pending independent/user review; native runtime defenses are not VERIFIED.
+- **Scope:** STEP 30 only. Baseline clean main at 705ad1b. No commit, push,
+  release, external marketplace edit, install or later step performed.
+- **Authority:** the user's STEP 30 request authorizes these scoped local
+  security changes. No provider use, billing, deployment, destructive consumer
+  operation or organization risk acceptance is inferred. Recommendations,
+  generated records and opt-in flags are not approval evidence.
+
+### Review coverage and changes
+
+- Reviewed both metadata-only manifests, all three local marketplace sources,
+  every entry SKILL.md and all 221 reference/template files. Package inventory
+  is 238 files: 236 Markdown plus two JSON, with 117 recipes, 76 technology
+  references, 20 checklists and eight templates (seven introduced in STEP 29).
+  Whole-file scan/hash evidence and the review method/limits are retained;
+  contextual inspection does not claim line-by-line semantic certification.
+- SECURITY_MODEL.md, THREAT_MODEL.md and PLUGIN_TRUST_REVIEW.md cover all ten
+  requested threats, least privilege, actual authorization, supply-chain and
+  native permission boundaries. Architecture/acceptance traceability updated;
+  requirement/catalog statuses and summary counts remain unchanged.
+- Corrected user-first precedence in all 13 entries to respect higher-priority
+  system/developer rules and native permissions. Explicitly retain untrusted
+  repository/tool/template data, script inspection, no approval promotion and
+  no credentials/upload requirement. Descriptions and L0 remain unchanged.
+- Hardened mutation/staging paths, case IDs, linked inputs and temp cleanup;
+  fresh staging refuses existing destinations instead of deleting them.
+  Restricted YAML keys and eval category/skill metadata reject unsafe input.
+  Security/package parser diagnostics suppress raw input that could leak a
+  secret. Added V-25 static preflight and offline boundary regressions.
+- Optional lifecycle runner no longer deletes the supplied directory; requires
+  explicit opt-in, fresh scratch and successful setup. Optional routing runner
+  requires provider-call opt-in, empty outside-repo workdir, fresh output and
+  explicit config home; removes arbitrary overrides/no-ask default. Docs remove
+  routine trust bypass, real-home installs and personal-auth copying advice.
+  Neither runner's actual provider path was executed.
+- Inventoried 57 developer executable/dependency sources before execution of
+  reviewed static tools; package/build/runtime fixture code stayed unexecuted.
+  Eleven package URL literals and 31 direct fixture dependency declarations
+  recorded without fetch/restore/advisory checks. No always-on hook, background
+  process, telemetry, runtime engine/dependency, credential request or external
+  source/prompt upload introduced.
+
+### Actual verification (offline)
+
+| Command / method | Observed result |
+|---|---|
+| node tools/validate/check-security.mjs --write-report | PASS V-25; 238 files, 13 entries, 221 references, 57 developer assets, 11 package URL literals, 31 direct fixture declarations; zero enforced-profile findings. |
+| node --test --test-reporter=tap tests/security/boundaries.test.mjs | 32/32 PASS, zero FAIL/SKIP; traversal/ID/junction controls, parser keys, safe staging with sentinel preservation, eval metadata rejection, provider opt-in refusal, package-profile negatives and suppressed malformed-secret diagnostics. |
+| node tools/validate/validate-all.mjs | Eight gate groups PASS; includes the same 32 security tests, 132/132 validator tests (four baselines + 128 negatives), all package/catalog/workflow/technology checks and 182 trigger / 433 generated-file synchronization. |
+| node tools/validate/validate-package.mjs | Zero errors; five size-target warnings acknowledged: backend 219, data 205, devops 207, frontend 223, implementation 215 lines; each below hard limit 300. |
+| node --check on every inventoried .mjs | 23/23 PASS, syntax only; module bodies not executed by this check. |
+| C:/Program Files/Git/bin/bash.exe -n tests/provider-compatibility/run-lifecycle.sh | Exit 0; syntax only, no shell body/provider execution. |
+| git diff --check | PASS; normal Windows LF/CRLF notices do not change the content verdict. |
+
+Environment: Windows PowerShell, Node 24.15.0. Durable records:
+[static inventory](../../tests/security/results/step30-static-review.json),
+[boundary TAP](../../tests/security/results/step30-boundaries.tap),
+[gate output](../../tests/security/results/step30-gates.txt), and
+[syntax checks](../../tests/security/results/step30-syntax-checks.json).
+Scripts/imports and effect sites were inspected before execution; no external
+repository instruction was treated as authority to run a command.
+
+### Unexecuted verification and residual risks
+
+Native-agent prompt injection/forged approval scenarios, provider install,
+authentication/UI and permission effectiveness, billed model/routing/workflow
+tests, remote installation/update/provenance, live links/advisories, package
+restore, technology/database/browser/runtime tests and CI/OS ACL controls are
+**NOT_RUN**. Historical provider/technology facts were not rerun. R-52 records
+these limits: static instruction guards are advisory, heuristic scans can miss
+secrets/malicious content, local checks cannot defend against a malicious
+maintainer/validator, and path checks do not eliminate host races. Real controls
+remain with the provider, OS, account and external CI. No security certification,
+organization-policy enforcement or release approval is claimed.
+
+STEP 28 remains PARTIAL (R-49/R-50); STEP 29 behavior remains NOT_RUN (R-51).
+Engineering 206, technology 108 and workflows 12 stay IMPLEMENTED, zero VERIFIED.
+No decision/waiver is claimed accepted merely because this review was written.
+STOP after STEP 30.
+
+### File ledger (STEP 30 only)
+
+Baseline was clean. No files were deleted; the existing manifests and
+marketplace definitions were reviewed without modification. No consumer
+AGENTS.md/CLAUDE.md file, credential, dependency version or native permission
+setting was changed.
+
+| Action | Path |
+|---|---|
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` |
+| Modified | `docs/chayen/ARCHITECTURE.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` |
+| Modified | `docs/chayen/ISSUES.md` |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/SKILL_QUALITY_GATES.md` |
+| Modified | `plugins/codejadee-chayen-framework/README.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/agent-governance.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-architecture/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-devops/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-documentation/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-performance/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-requirements/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-security/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md` |
+| Modified | `tests/provider-compatibility/README.md` |
+| Modified | `tests/provider-compatibility/run-lifecycle.sh` |
+| Modified | `tests/routing/README.md` |
+| Modified | `tests/routing/run-smoke.mjs` |
+| Modified | `tools/catalog/catalog-lib.mjs` |
+| Modified | `tools/evals/generate-claude-evals.mjs` |
+| Modified | `tools/validate/README.md` |
+| Modified | `tools/validate/run-validator-tests.mjs` |
+| Modified | `tools/validate/validate-all.mjs` |
+| Modified | `tools/validate/validate-package.mjs` |
+| Created | `docs/chayen/PLUGIN_TRUST_REVIEW.md` |
+| Created | `docs/chayen/SECURITY_MODEL.md` |
+| Created | `docs/chayen/THREAT_MODEL.md` |
+| Created | `tests/security/boundaries.test.mjs` |
+| Created | `tests/security/results/step30-boundaries.tap` |
+| Created | `tests/security/results/step30-gates.txt` |
+| Created | `tests/security/results/step30-static-review.json` |
+| Created | `tests/security/results/step30-syntax-checks.json` |
+| Created | `tools/validate/check-security.mjs` |
+| Created | `tools/validate/safe-paths.mjs` |

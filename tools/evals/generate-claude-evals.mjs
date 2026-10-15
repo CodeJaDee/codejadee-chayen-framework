@@ -21,20 +21,35 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { inside, safeId, assertTreeNoLinks } from "../validate/safe-paths.mjs";
 
 const root = path.resolve(import.meta.dirname, "..", "..");
-const casesFile = path.join(root, "tests", "skills", "trigger-cases.json");
-const outDir = path.join(root, "tests", "evals", "claude");
+const casesFile = inside(root, "tests/skills/trigger-cases.json");
+const outDir = inside(root, "tests/evals/claude");
 const check = process.argv.includes("--check");
 const stageIdx = process.argv.indexOf("--stage");
 const stageDir = stageIdx > -1 ? path.resolve(process.argv[stageIdx + 1] ?? "") : null;
 
 const spec = JSON.parse(fs.readFileSync(casesFile, "utf8"));
+safeId(spec.plugin);
+for (const name of spec.skills) safeId(name);
+const declaredSkills = new Set(spec.skills);
+const caseIds = new Set();
+for (const c of spec.cases) {
+  safeId(c.id);
+  if (!["positive", "negative", "ambiguous", "unsupported"].includes(c.category)) throw new Error("unsafe eval category");
+  for (const name of [...(c.expect.any_of ?? []), ...(c.expect.none_or ?? []), ...(c.forbid ?? [])]) {
+    safeId(name);
+    if (!declaredSkills.has(name)) throw new Error("undeclared eval skill");
+  }
+  if (caseIds.has(c.id)) throw new Error("duplicate eval case identifier");
+  caseIds.add(c.id);
+}
 
 const skillAlt = (names) => `(?:${names.join("|")})`;
 const skillRegex = (names) => `'"skill"\\s*:\\s*"(?:[\\w-]+:)?${skillAlt(names)}"'`;
 const anyChayenRegex = `'"skill"\\s*:\\s*"(?:[\\w-]+:)?chayen-'`;
-const yamlStr = (s) => `"${String(s).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+const yamlStr = (s) => JSON.stringify(String(s));
 
 function grader({ inputMatch, min, max, arm }) {
   const lines = ["---", "type: tool_used", "tool: Skill", `input_match: ${inputMatch}`, `min: ${min}`];
@@ -99,15 +114,20 @@ function listExisting(dir, base = dir, out = []) {
 
 if (stageDir) {
   if (!process.argv[stageIdx + 1]) { console.error("--stage requires a directory"); process.exit(2); }
-  const src = path.join(root, "plugins", spec.plugin);
-  const dest = path.join(stageDir, spec.plugin);
-  if (dest.startsWith(path.join(root, "plugins"))) { console.error("refusing to stage inside the shipped plugins/ directory"); process.exit(2); }
-  fs.rmSync(dest, { recursive: true, force: true });
+  if (!fs.existsSync(stageDir)) { console.error("--stage requires an existing scratch parent"); process.exit(2); }
+  const src = inside(root, `plugins/${spec.plugin}`);
+  const dest = inside(stageDir, spec.plugin);
+  const packageRoot = fs.realpathSync(path.join(root, "plugins"));
+  if (dest === packageRoot || dest.startsWith(packageRoot + path.sep)) { console.error("refusing to stage inside the shipped plugins/ directory"); process.exit(2); }
+  if (fs.existsSync(dest)) { console.error("refusing to overwrite an existing staging destination; use a fresh scratch parent"); process.exit(2); }
+  assertTreeNoLinks(src);
+  fs.mkdirSync(dest);
   fs.cpSync(src, dest, { recursive: true });
   for (const [rel, body] of expected) { const p = path.join(dest, "evals", rel); fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, body); }
   console.log(`Staged plugin + ${spec.cases.length} eval cases at ${dest}`);
-  console.log(`Run: claude plugin eval "${dest}" --ablation none --runs 1 --trust-plugin --no-publish --max-cost-usd <usd>`);
+  console.log("Staging is local only. Review the copy before separately authorizing any billed provider evaluation; prompts may leave the machine.");
 } else if (check) {
+  if (fs.existsSync(outDir)) assertTreeNoLinks(outDir);
   const problems = [];
   for (const [rel, body] of expected) {
     const p = path.join(outDir, rel);
@@ -118,6 +138,7 @@ if (stageDir) {
   if (problems.length) { console.error(problems.join("\n")); console.error(`\n${problems.length} problem(s). Run: node tools/evals/generate-claude-evals.mjs`); process.exit(1); }
   console.log(`Claude eval cases up to date: ${spec.cases.length} cases, ${expected.size} files.`);
 } else {
+  if (fs.existsSync(outDir)) assertTreeNoLinks(outDir);
   for (const rel of listExisting(outDir)) if (!expected.has(rel)) fs.rmSync(path.join(outDir, rel));
   for (const [rel, body] of expected) { const p = path.join(outDir, rel); fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, body); }
   // remove now-empty case directories

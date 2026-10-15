@@ -1,17 +1,32 @@
 #!/usr/bin/env bash
-# Developer-only native lifecycle check (no model calls, no cost).
+# Developer-only native lifecycle check (no model calls; CLI traffic may occur).
 # For each available CLI, in an ISOLATED config home under $WORK, from a git fixture repo:
 #   marketplace add (local copy of this repo) -> install -> list/details -> disable -> enable -> uninstall -> marketplace remove
 # then verifies the fixture repo is byte-identical and git-clean (installing modifies no application code).
 #
-# Usage: tests/provider-compatibility/run-lifecycle.sh <work-dir>
+# Usage after review/authorization: CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycle.sh <fresh-work-dir>
 # Requires: git, node; optional: claude, codex, copilot on PATH. Never shipped with the plugin.
-# The user's real ~/.claude, ~/.codex and ~/.copilot are not touched (CLAUDE_CONFIG_DIR, CODEX_HOME, COPILOT_HOME).
+# Config-home overrides request isolation; native CLI/OS behavior is not sandboxed here.
 set -u
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
 WORK="${1:?usage: run-lifecycle.sh <work-dir>}"
-rm -rf "$WORK" && mkdir -p "$WORK"/{mp,fixture/src,home-claude,home-codex,home-copilot}
-cp -r "$REPO"/.claude-plugin "$REPO"/.agents "$REPO"/.github "$REPO"/plugins "$WORK/mp/"
+if [ "${CHAYEN_ALLOW_PROVIDER_LIFECYCLE:-}" != 1 ]; then
+  echo "Provider lifecycle requires explicit authorization and CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1" >&2; exit 2
+fi
+if [ -e "$WORK" ] || [ -L "$WORK" ]; then
+  echo "Refusing an existing work directory; choose a fresh scratch directory" >&2; exit 2
+fi
+WORK_PARENT="$(cd -- "$(dirname -- "$WORK")" && pwd -P)" || exit 2
+WORK_LEAF="$(basename -- "$WORK")"
+case "$WORK_LEAF" in ''|.|..|*[!a-zA-Z0-9._-]*) echo "Unsafe work directory name" >&2; exit 2;; esac
+WORK="$WORK_PARENT/$WORK_LEAF"
+case "$WORK/" in "$REPO/"*) echo "Use scratch outside the repository" >&2; exit 2;; esac
+mkdir -- "$WORK" || exit 2
+mkdir -p "$WORK"/{mp,fixture/src,home-claude,home-codex,home-copilot} || exit 2
+if find "$REPO/plugins" "$REPO/.claude-plugin" "$REPO/.agents" "$REPO/.github" -type l -print -quit | grep -q .; then
+  echo "Refusing linked installation sources" >&2; exit 2
+fi
+cp -r "$REPO"/.claude-plugin "$REPO"/.agents "$REPO"/.github "$REPO"/plugins "$WORK/mp/" || exit 2
 winpath() { if command -v cygpath >/dev/null; then cygpath -w "$1"; else echo "$1"; fi; }
 MP="$(winpath "$WORK/mp")"
 ID="codejadee-chayen-framework@codejadee"
@@ -24,10 +39,10 @@ check() { if [ "$2" = 0 ]; then echo "PASS  $1"; PASS=$((PASS+1)); else echo "FA
 ( cd "$WORK/fixture" && printf 'namespace App;\npublic class OrdersController { }\n' > src/OrdersController.cs \
   && printf '# App rules\n' > AGENTS.md && printf '# Claude rules\n' > CLAUDE.md \
   && git init -q && git config core.longpaths true && git config core.autocrlf false && git add -A \
-  && git -c user.email=t@t -c user.name=t commit -qm fixture )
+  && git -c user.email=t@t -c user.name=t commit -qm fixture ) || exit 2
 treehash() { (cd "$WORK/fixture" && find . -path ./.git -prune -o -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | cut -c1-16); }
 H1="$(treehash)"
-cd "$WORK/fixture"
+cd "$WORK/fixture" || exit 2
 
 if command -v claude >/dev/null; then
   export CLAUDE_CONFIG_DIR="$(winpath "$WORK/home-claude")" DISABLE_AUTOUPDATER=1 CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1

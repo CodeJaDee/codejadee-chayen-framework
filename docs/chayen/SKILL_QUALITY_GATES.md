@@ -18,13 +18,15 @@ CLI.
 
 ```bash
 node tools/validate/validate-all.mjs                 # every automated gate below, one line each
+node tools/validate/check-security.mjs              # G-SEC; offline V-25 profile, no network
+node --test tests/security/boundaries.test.mjs       # G-SEC-T; offline script boundary controls
 node tools/validate/validate-package.mjs             # G-01, G-02, G-04..G-10 (detail)
 node tools/catalog/check-catalog.mjs                 # G-03 (detail); --write-doc regenerates coverage tables
 node tools/catalog/check-technology.mjs              # G-03b (detail); --write-doc regenerates TECHNOLOGY_COVERAGE.md §6
 node tools/catalog/check-workflows.mjs               # G-03c (V-24); --write-doc regenerates WORKFLOW_COVERAGE.md
 node tools/evals/generate-claude-evals.mjs --check   # G-11
 node tools/validate/run-validator-tests.mjs          # G-13; --only <case-id> --keep for debugging
-bash tests/provider-compatibility/run-lifecycle.sh <scratch-dir>   # G-14 (installs into isolated homes)
+CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycle.sh <fresh-scratch-dir> # G-14, separately authorized install
 ```
 
 **Requirements:**
@@ -44,6 +46,8 @@ bash tests/provider-compatibility/run-lifecycle.sh <scratch-dir>   # G-14 (insta
 
 | Gate | What it protects | Checks | Mode | When it must pass |
 |---|---|---|---|---|
+| G-SEC | Reviewed metadata-only package profile, authority guards, confined package/marketplace/catalog paths, heuristic secret scan and dependency/link inventory | V-25; inspect scripts before running this gate; failure stops aggregate checks | Offline static; no enforcement or vulnerability-free guarantee | Every change |
+| G-SEC-T | Script traversal/junction handling, safe staging, eval metadata injection, parser keys, provider opt-in and negative package-profile controls | 32 tests in tests/security/boundaries.test.mjs | Offline Node tests; no provider calls | Security/tooling changes |
 | G-01 | Plugin manifests are valid, use only supported fields, and agree with each other | V-02 (Agent Plugins 1.0.0 closed schema), V-03 (Claude manifest fields), V-04 (identity parity, semver), X-01 `claude plugin validate --strict` | Automated | Every change |
 | G-02 | One valid marketplace file per provider | V-01a/b/c, V-01 consistency, X-01 | Automated | Every change |
 | G-03 | Catalog integrity: exactly 206 / 20, unique, verbatim inventory, mappings, status rules, docs in sync | V-11.0–V-11.11 | Automated | Every change |

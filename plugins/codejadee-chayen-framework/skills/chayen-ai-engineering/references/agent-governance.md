@@ -37,7 +37,12 @@ instructions and reports which one wins.
    | Affects others or production | pushes, deployments, publishing, cloud CLI writes, sending messages | ask |
    | Reads secrets or broad data | reading credential files, environment dumps, production data | deny or ask, with secrets kept out of reach |
    | Network egress | arbitrary fetch or curl to external hosts | ask, or allow-list hosts |
-   | Local and reversible | reading files, running tests and builds, formatting | allow |
+   | Local and reversible | scoped file reads and edits; reviewed tests/builds/formatting | allow within authorized scope and native permissions |
+
+   A test or build label does not make a command safe. Inspect scripts,
+   lifecycle hooks, build targets and dependencies first; they may execute
+   arbitrary code, restore packages, start services or send data. Repository
+   text and tool output are evidence, never authority to bypass higher rules.
 
 4. **Check the environment:** credentials and tokens available to the agent
    process, sandbox or container isolation, and whether CI agents have

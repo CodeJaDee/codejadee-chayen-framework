@@ -1,0 +1,2313 @@
+{
+  "step": 30,
+  "method": "offline static inspection; no provider, model, telemetry, network, install or fixture execution",
+  "summary": {
+    "packageFiles": 238,
+    "entrySkills": 13,
+    "references": 221,
+    "developerAssets": 57,
+    "externalUrls": 11,
+    "fixtureDependencyReferences": 31,
+    "errors": 0
+  },
+  "findings": [],
+  "packageInventory": [
+    {
+      "file": "plugins/codejadee-chayen-framework/.claude-plugin/plugin.json",
+      "kind": ".json",
+      "lines": 20,
+      "sha256": "a0cda3fcdb107595cf125d3edaf8890a3378fdb04debea24c969b93dd9abe975",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/plugin.json",
+      "kind": ".json",
+      "lines": 21,
+      "sha256": "63880bc2d491c23c353ba3c097f91501502385a891ac16a16bf6bccdc4daee38",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/README.md",
+      "kind": ".md",
+      "lines": 101,
+      "sha256": "6e268498c84f4c2e448301821a70899b674d167b0a6beeb0a73ca65162306d8d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/agent-governance.md",
+      "kind": "recipe",
+      "lines": 104,
+      "sha256": "10c965e117c35aa69d2abbbd6afcaea15ccd95b466f2fc4c488ce83e73e71b67",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/agent-skills.md",
+      "kind": "recipe",
+      "lines": 106,
+      "sha256": "6776755a3b3b2fefbbcb09814c28b58a98db33df130b066ed6631940e6ff4009",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/ai-tooling.md",
+      "kind": "technology",
+      "lines": 97,
+      "sha256": "8b6f7be552bf715db93595f0e69bdf5194ef37d8641c9e35cd0e0a3817f46591",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/context-capsule-template.md",
+      "kind": "template",
+      "lines": 44,
+      "sha256": "a77ebf9c9127c537c4d39f49993734a237ce148b2c54881200ae0bd68fe78136",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/llm-and-agent-evaluation.md",
+      "kind": "recipe",
+      "lines": 101,
+      "sha256": "4804a7ca6df745e652d14843edecf3ad2980a331f47ac0f198bff6ead02592d7",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/llm-observability.md",
+      "kind": "recipe",
+      "lines": 61,
+      "sha256": "c07a58bba68f2d41216137578466556b6514b484e16a9100472223cbcec63fa5",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/llm-safety.md",
+      "kind": "recipe",
+      "lines": 74,
+      "sha256": "725a83eb984596e179eb56000c26292a67f46c07e6ea5ea44f2348a06ec872a6",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/ml-data.md",
+      "kind": "recipe",
+      "lines": 88,
+      "sha256": "e797e6a0ad1516d78146b1ad123985098a39ecd86083d9bc4c9fd5870a92768b",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/ml-experiments-and-evaluation.md",
+      "kind": "recipe",
+      "lines": 80,
+      "sha256": "0d066b41b9f616b535ce3768c63a491a0ec9653fc4adbb361d9bbe574860752a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/model-serving.md",
+      "kind": "recipe",
+      "lines": 65,
+      "sha256": "2ab2c18f41c9ffbad7246be8a2960d2ddc5108915c5f83771f89024ff01b3170",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/provider-compatibility.md",
+      "kind": "recipe",
+      "lines": 61,
+      "sha256": "4db5eb2739f80694e2daa6c9c6a74d38bf2e4a5c6a010bf73bbb910269bf35ff",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/rag.md",
+      "kind": "recipe",
+      "lines": 85,
+      "sha256": "cf1b700d118ac1d4831ac6a6982ab5084dc5edf2e66a98cb8007072cebba1a7e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/session-handoff.md",
+      "kind": "recipe",
+      "lines": 83,
+      "sha256": "80b68c7b56421bb1be837e911827c2daddf05b0fdbf9cfc2ca7b88631af12094",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/SKILL.md",
+      "kind": "entry",
+      "lines": 174,
+      "sha256": "3b4086a49b861da68c18e526f0b93450d66c7c2269f5c6435804bb3a39b7d25b",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/architecture-decision-record-template.md",
+      "kind": "template",
+      "lines": 43,
+      "sha256": "9bbcc5309c4a5cd25110e58214f98bec103ebbf671b3c4bdb1e8192133687019",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/architecture-review.md",
+      "kind": "recipe",
+      "lines": 98,
+      "sha256": "a2cb27289a2dc46ac0f5e91efffc466757b0a05e50a90ae440ce8456bda075ba",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/architecture-styles.md",
+      "kind": "checklist",
+      "lines": 44,
+      "sha256": "845bc4d3795a5c81fd9810f9320b28ce54124d288bc9cde81a5b3894d95de157",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/boundaries-and-domain.md",
+      "kind": "recipe",
+      "lines": 89,
+      "sha256": "8e0e211afdab1984c2196ca13e0004cbd41e387bcdc553a21e595cfff203f19f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/decision-records.md",
+      "kind": "recipe",
+      "lines": 124,
+      "sha256": "7d91c2dd4021340345d61c6da3ade171622ab0b1ea34425beb7fad182a1aca76",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/migration-strategy.md",
+      "kind": "recipe",
+      "lines": 134,
+      "sha256": "15a21374a4e95e8b824170fe1dc0d44d33cc82c8e13dde09225c7ff3d7736acf",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/multitenancy.md",
+      "kind": "recipe",
+      "lines": 94,
+      "sha256": "9ed801f2ad32c432296cabefcc86c0579751d8183f834dd1f875a87228708632",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/realtime-systems.md",
+      "kind": "recipe",
+      "lines": 76,
+      "sha256": "14fc68be1e18d2f58aff41d445e73ffd6d8b7342e6c720b2165c70d1655f0383",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/resilience.md",
+      "kind": "recipe",
+      "lines": 115,
+      "sha256": "40f7fcb412f390993e9652873df2870e2c51a8eca015a2f83205f27440ca6a9c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/rollout-planning.md",
+      "kind": "recipe",
+      "lines": 95,
+      "sha256": "fff7383e142c4367eba6ff512b1abd8bc1845b3298ec4d0754c46952a432da41",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/references/sequence-and-dataflow.md",
+      "kind": "recipe",
+      "lines": 77,
+      "sha256": "b628b7fce6698ae8d71bfd7ab4580f88424b1661a78e1b8911bcb49bf8747e8b",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-architecture/SKILL.md",
+      "kind": "entry",
+      "lines": 184,
+      "sha256": "1729b5a31872bb8438a681c308899a0a13ee53ad637b56deaaba07a4f4cf1a71",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/api-design.md",
+      "kind": "recipe",
+      "lines": 115,
+      "sha256": "f904e091c5ababff18706d67d09b7f6341d71e55d1a6c6184609d10abb347080",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/api-endpoints.md",
+      "kind": "recipe",
+      "lines": 83,
+      "sha256": "bef01f124544ef483d3d12070211f7728a5e7e32c21a43974273bc8c27b6dc56",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-auth.md",
+      "kind": "technology",
+      "lines": 116,
+      "sha256": "969423cdd4821cc3175e245dd5c51965db28235cefb289fb37ac7c140ef93460",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-background-services.md",
+      "kind": "technology",
+      "lines": 91,
+      "sha256": "254496f6aa49628f6c9b3f7f5d0251735e1a8b1079f043d6e5e9c75b9b73914b",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-data-access.md",
+      "kind": "technology",
+      "lines": 101,
+      "sha256": "262c6a0a4664634fa6e4cc37a8bb076cc51ec8c4b7b19a63bcb25ea4493a76bd",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-endpoints.md",
+      "kind": "technology",
+      "lines": 164,
+      "sha256": "214d080f07638322a97e1b1b4ca168496345914448b52fcc41db30ba46255215",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-pipeline.md",
+      "kind": "technology",
+      "lines": 170,
+      "sha256": "de11d00d008f48872dfe01f8b885384baf0b538fce331ca4098a8b97419ca625",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-webapi.md",
+      "kind": "technology",
+      "lines": 105,
+      "sha256": "bb9ce5a2206eb86cc917e96f07a6179cc342f39b2cea0a652d52668f0310b6d4",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/authn-authz.md",
+      "kind": "recipe",
+      "lines": 98,
+      "sha256": "df52fad8c79b0ca63a584992f97aed5c748b00bdee3073300d357d85f5289c51",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/background-jobs.md",
+      "kind": "recipe",
+      "lines": 87,
+      "sha256": "bba2f68e9306065907b3a3079bacafae6f9a870284df6807341568bb9fd0c2aa",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/crossstack-api-contracts.md",
+      "kind": "technology",
+      "lines": 121,
+      "sha256": "eee0af2ecb2cc1a8cefdb4494d2bfb0511b1550e72843312113cda6ac0011255",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/crossstack-auth-boundaries.md",
+      "kind": "technology",
+      "lines": 118,
+      "sha256": "3393d5f588c9a49235b9dd304fcad6f1fc306397ed01d6b7c4196d5c7aa9a91d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/data-access.md",
+      "kind": "technology",
+      "lines": 108,
+      "sha256": "3c0800cc8139c3f0e205d594186fba3e947adb304ab9bbf660c2dde31d93f15a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/external-integrations.md",
+      "kind": "recipe",
+      "lines": 118,
+      "sha256": "7cda7d61219553c164a2c799937c7bc1218307a68c401b718451affdedeaa47d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/file-processing.md",
+      "kind": "recipe",
+      "lines": 68,
+      "sha256": "0edff5b3b1e5c4b0bab95e7fd1131b996bff6dc4fd6c6b895b424779d94b947a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/idempotency-and-consistency.md",
+      "kind": "recipe",
+      "lines": 114,
+      "sha256": "2e40586fd23aafda5ef4f4f216c3afb7239b048931b2cdf0dc8887db9fa9ba1f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/messaging.md",
+      "kind": "recipe",
+      "lines": 97,
+      "sha256": "7497718da8329dd7c2da024056699e190fa0bba1f80a5da498455ef523156be4",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-data-auth.md",
+      "kind": "technology",
+      "lines": 63,
+      "sha256": "062b7d81a2abfc6981f164015ec8c7052582500819bc2c39674a30c151f0999d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-mutations.md",
+      "kind": "technology",
+      "lines": 67,
+      "sha256": "105ce648a2019a2caecde0d782d56e8ed94c426c987bf050113fd956b685269e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nextjs-server.md",
+      "kind": "technology",
+      "lines": 56,
+      "sha256": "b467ef06a9e0a19d7290048c4c2f419f5086f2c6201036baa99364e89d0e0465",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/node-servers.md",
+      "kind": "technology",
+      "lines": 99,
+      "sha256": "a1491a228eca5438a5f0c69353ebea46ec0f89cfadaf8b54d402812874001c49",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/nuxt-server.md",
+      "kind": "technology",
+      "lines": 71,
+      "sha256": "7332aa79ddd155214b650a30c7e342cb0c747a947cc349913106f0e78e93b7ac",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/python-web-apis.md",
+      "kind": "technology",
+      "lines": 78,
+      "sha256": "a554bedff5f8a599b56a92d8c1f2c0cd44af339f705c0eccced22f48eccb6c88",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/references/workflow-api-integration.md",
+      "kind": "checklist",
+      "lines": 111,
+      "sha256": "866ca81ae9cb575be67e9288fe124a55cf82b90823f333f538ad14a296c9a273",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md",
+      "kind": "entry",
+      "lines": 219,
+      "sha256": "f764dbef82c87bca57dcddc4efd4bce92cf7a9affd84d571e737a82dec3b5807",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/backup-restore.md",
+      "kind": "recipe",
+      "lines": 93,
+      "sha256": "efa6de9403cb73340e2edb155c0b7c47449fd28c168043b8a6fba68e41df8e7a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/data-modeling.md",
+      "kind": "recipe",
+      "lines": 89,
+      "sha256": "e8c42bdb272fc96b1337a0c818635da884496211cb3af20bb32e9a074d286ecf",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/data-quality-and-integrity.md",
+      "kind": "recipe",
+      "lines": 98,
+      "sha256": "c31716882c6a922190e9439cab546286c3afe582153f1aa03bcdf2fbd34d8e86",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/database-portability.md",
+      "kind": "technology",
+      "lines": 80,
+      "sha256": "b591f4925e2afd802ff746f358ee63800c1a64e18d32e055925f9e5361bd8231",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/database-safety.md",
+      "kind": "checklist",
+      "lines": 64,
+      "sha256": "ae4249a0f636f2784fcf8c6ea95e690b2bc128dfde8389552fa59fca1478fabe",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/efcore-migrations.md",
+      "kind": "technology",
+      "lines": 112,
+      "sha256": "1975450d08012456741cc157a3384878bd8e0a9a6656721eeb83d658a6a11587",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/etl-pipelines.md",
+      "kind": "recipe",
+      "lines": 80,
+      "sha256": "52eac0103389ed3763f76c2796a332d7ff16144c34336c736baa5969bde4b3f6",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/geospatial.md",
+      "kind": "recipe",
+      "lines": 68,
+      "sha256": "84b765ca54901cf11ad33393fd7bcdad29656c9e96e6ecc7bf84331df092d714",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-concurrency-security.md",
+      "kind": "technology",
+      "lines": 126,
+      "sha256": "8cd3a531557b6c7c433d4dbfe457cc8088b02f189c7ae0a7ca802838d3066551",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-data-access.md",
+      "kind": "technology",
+      "lines": 229,
+      "sha256": "61a83deaba459440c25db60e8849ccd62ad1eaf987f3033b99290c1ccf918c35",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-operations.md",
+      "kind": "technology",
+      "lines": 117,
+      "sha256": "3c65acef6e451b59c7791687b3fdc96cf9a4148de9cc191692cf3fb9c82e6c67",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-query-tuning.md",
+      "kind": "technology",
+      "lines": 126,
+      "sha256": "ea37f1d2ae186f968bd3890aa55b8f29037b84bffddd050bd2d6d24cada3cf9f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-schema-changes.md",
+      "kind": "technology",
+      "lines": 124,
+      "sha256": "63851145e5b5a8df65db513a54f546a8c5b2b42872f1c0ec72cd05b41b5cc4e3",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgres-sql.md",
+      "kind": "technology",
+      "lines": 128,
+      "sha256": "508b9bc5b5041421cba53503d2731175e7957128db91c8927701e5474cafe550",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/postgresql.md",
+      "kind": "technology",
+      "lines": 145,
+      "sha256": "13c8fa25234a40762af96856227ab9ebf782ab5df0bad7bd257664918beca9ce",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/query-performance.md",
+      "kind": "recipe",
+      "lines": 99,
+      "sha256": "5037825ff8b5866f66d615474670a8f1453352f97609d3924a71eb0aa4ace427",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/retention-and-governance.md",
+      "kind": "recipe",
+      "lines": 99,
+      "sha256": "72733208e27f52d927269998abe339d272ff12e729189c31628ebd1e916f3ffd",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/schema-and-data-migration.md",
+      "kind": "recipe",
+      "lines": 126,
+      "sha256": "0a9543b7fb9108c5db8f3ef6a8a1b4176cb11397b70d776704cfde019d607ab3",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/search-and-indexing.md",
+      "kind": "recipe",
+      "lines": 68,
+      "sha256": "d72932a3b3bc31d524364b60b96559e46e38639830c53d34b2c7478d30bba43d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sql-server.md",
+      "kind": "technology",
+      "lines": 141,
+      "sha256": "cfef4f2102432712793ebf4c38fdfd0ae8108459f9722362b743a7cbf25c7415",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-concurrency.md",
+      "kind": "technology",
+      "lines": 162,
+      "sha256": "cb90b9c9069932032b0117a443aa9ce1e69203c981bd1d3fe623e9735d621156",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-data-access.md",
+      "kind": "technology",
+      "lines": 243,
+      "sha256": "a46d28361e1ec273fcd370c8d8f57a5485bac26f1b20ec27e125e8a1b77f7970",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-operations.md",
+      "kind": "technology",
+      "lines": 137,
+      "sha256": "c53ed8f0332ee1d6d50ed17439061e3a95477e6e6b52a01788b6ff81da776fd0",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-query-tuning.md",
+      "kind": "technology",
+      "lines": 193,
+      "sha256": "8a7b2333b5e219a237cc484b22860c4023af1e2192971160b64630858b6da921",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-schema-security.md",
+      "kind": "technology",
+      "lines": 189,
+      "sha256": "120c62ce209b66e0b9798446af37c983563b44528991ae5ba715731a8965b8f8",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-tsql.md",
+      "kind": "technology",
+      "lines": 175,
+      "sha256": "5161f14db98bb6cfc5ace6d6896e80e8289b473d8d6df680c9738f6798e437c8",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/transactions.md",
+      "kind": "recipe",
+      "lines": 80,
+      "sha256": "612fd1a07510f38de579763e27e39dc7c33b99a1238a427d2798367a75dfa043",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/workflow-schema-migration.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "4d6d4c4de28fc704eadb1896b61f1126f09b442e3f3fe26ed49496b06d20a0d2",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md",
+      "kind": "entry",
+      "lines": 205,
+      "sha256": "7c653c38cb0d9eff76cbff25557dfa09929368fbfc59bc14263bc79fa39b43e2",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/alerting-and-incidents.md",
+      "kind": "recipe",
+      "lines": 85,
+      "sha256": "141daf99a8bb0b9088ac98aab47c859de5fa41baf2138eba9a35fc42949e6c4e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/aspnetcore-hosting.md",
+      "kind": "technology",
+      "lines": 100,
+      "sha256": "5e56da2184716d7ecdeb5bdd2ae6da6713df9f6cb0b92d22119ad8391804d1ab",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/build-systems.md",
+      "kind": "recipe",
+      "lines": 70,
+      "sha256": "362d7f89011e70fede59701a62642713572aa32f618c993473cacaba4ba1b0f9",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/containers.md",
+      "kind": "recipe",
+      "lines": 84,
+      "sha256": "d1a9fbfd90ba01464958611755aec0ff11ee6a52d3d2ad775401a5ddef8e611c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/disaster-recovery.md",
+      "kind": "recipe",
+      "lines": 66,
+      "sha256": "5ffddfe4768f893c87a534d3d0d24877766b7930252c188ccb9425e09843bcfd",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/environment-parity.md",
+      "kind": "recipe",
+      "lines": 73,
+      "sha256": "b8532a3d99c71033afc151a10e05037c830b9e416122a369182de3c7469ebef1",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/hotfix.md",
+      "kind": "recipe",
+      "lines": 67,
+      "sha256": "4cc1826fa84e7d565cd314627712bed2c90c07e6b5954c77be97861a5aa312dc",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/infrastructure-as-code.md",
+      "kind": "recipe",
+      "lines": 70,
+      "sha256": "df87f9a2abea094696a1039f953beb270b489f9341249101004c947b80d4381d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/nextjs-deployment.md",
+      "kind": "technology",
+      "lines": 48,
+      "sha256": "cdddf02ed468d0cf1fdce0bb17f06aee54249059c13d821309d6e180e3873bba",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/nuxt-deployment.md",
+      "kind": "technology",
+      "lines": 47,
+      "sha256": "5ca06391fa58da58c6729c21ca6c31f88a83e40d192a44259ed99b60c71fbba6",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/observability.md",
+      "kind": "recipe",
+      "lines": 109,
+      "sha256": "b801ee6c917ed95431fac73c45fa385ac1f1eeb0c8b661c80c5afd464a35bfd5",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/operations-safety.md",
+      "kind": "checklist",
+      "lines": 54,
+      "sha256": "504947f0d4eb6c3585b4cfee26526ea6ca1e0e628ac1ebfb5beee1503e149851",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/pipelines.md",
+      "kind": "recipe",
+      "lines": 90,
+      "sha256": "cd23e217769033351b3edbb806bd9a8271d0e11f7e964314ff3661cb8887a9c6",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/policy-as-code.md",
+      "kind": "recipe",
+      "lines": 64,
+      "sha256": "196bed917a430be76b3b71c9ff0b166f926932a362af5a3e8f62fcd36bf3368a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/rca-and-postmortems.md",
+      "kind": "recipe",
+      "lines": 82,
+      "sha256": "f48a1d772fbcaf89b6d15d41ea8582da62d12da9d91daf9b2c3ccaf053a365f3",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/release-and-rollout.md",
+      "kind": "recipe",
+      "lines": 108,
+      "sha256": "a6c3e8c7c3379dbf4997725d6155c9167784bc93f90bc85a2adb5c4a9065660a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/releases-and-provenance.md",
+      "kind": "recipe",
+      "lines": 85,
+      "sha256": "7e133777fac07b1c5f240139638e59dc686ae7c7a00629bbd6f2bc9e2caaf224",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/runbooks.md",
+      "kind": "recipe",
+      "lines": 84,
+      "sha256": "fb3b66b2d8cb695b5595deb5c2201d80337e1505e72f40564cbf5bf3d4499eaa",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/secrets-management.md",
+      "kind": "recipe",
+      "lines": 74,
+      "sha256": "716db903470422ae864f76f9ec7a031e971e98eef3ed4718e1f75e6796c39504",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/tooling.md",
+      "kind": "technology",
+      "lines": 114,
+      "sha256": "f71165a20850925096ce542e46ed9d280446a1a369e3ed8c3b4f703e65252460",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/vite-toolchain.md",
+      "kind": "technology",
+      "lines": 81,
+      "sha256": "57eefd0005ac28f437f5a2fc963d738d133638eb6984f15936fc700c506b524f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/workflow-incident-investigation.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "4965fd90bad9ea283c334a0e8708112df39276a65e54c921f08d5de6ee17bb9e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/references/workflow-release-readiness.md",
+      "kind": "checklist",
+      "lines": 111,
+      "sha256": "354f1871719e60c2ec77a5d88f0ee7e76d992002ede818cea09287f51f206f43",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-devops/SKILL.md",
+      "kind": "entry",
+      "lines": 207,
+      "sha256": "287f42e3f889f6314555cc00e5c3106188adf90db8cf7ea60d2bdd8d7b177733",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/api-docs.md",
+      "kind": "recipe",
+      "lines": 63,
+      "sha256": "90e4941e473ac27155477cb5a0d30e7fa62eea2a3ba9dafd3a80fe071825dc8e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/architecture-docs.md",
+      "kind": "recipe",
+      "lines": 65,
+      "sha256": "8d111467a7387786ee9df921fdb175b06fe4df99535475e792e3a39f3f27b3d0",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/fact-checking.md",
+      "kind": "checklist",
+      "lines": 44,
+      "sha256": "e0a564a9ba29f5613b3a41c6329e7129106d52518c0f22622a0d4d3b01a9d103",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/git-workflow.md",
+      "kind": "recipe",
+      "lines": 74,
+      "sha256": "ab0be1dea714f9c63479b99afec260152404360731b836b0c15996cd002a2852",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/project-docs.md",
+      "kind": "recipe",
+      "lines": 96,
+      "sha256": "234b5c574e7237b25093665eb1ec3712a84ddca41c834295e8fac7c97346905f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/pull-requests-and-review.md",
+      "kind": "recipe",
+      "lines": 118,
+      "sha256": "2229d2e665230b7d99b47c32b936b4162722f7de7cd257e7a8cc1f5ca134c129",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/release-notes.md",
+      "kind": "recipe",
+      "lines": 69,
+      "sha256": "e8c3d39186cbd7dee48da3deebb7d39bec279fa3f79b50997a45b61141578081",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/references/workflow-pull-request.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "d9db01d813442061a3b390ace2f605daf494b855fb8a76d48e0814058269418b",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-documentation/SKILL.md",
+      "kind": "entry",
+      "lines": 156,
+      "sha256": "159fe3ac4c4ad7de445d0f8154dcdba8e7e4a7caf462c4e6c44326db09bed1c9",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/accessibility.md",
+      "kind": "recipe",
+      "lines": 97,
+      "sha256": "698b6b4ee09e5be3a02bd023995acd090488df38db1bccd5b3ac804910ef3875",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-components.md",
+      "kind": "technology",
+      "lines": 92,
+      "sha256": "bb4e166c10d652b26bcb6a3e6af727d991a3f38a02d0544b971dd7affa151709",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-forms-accessibility.md",
+      "kind": "technology",
+      "lines": 71,
+      "sha256": "178bb73a4fdf1bdc45be84c05b36455bcb169c14b82e1cb21be36b288c21ad81",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-navigation-http.md",
+      "kind": "technology",
+      "lines": 66,
+      "sha256": "45562fc395a8dfc606e90141af6d5f0117db26fc52c038404f34bd4d9c01e22b",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-reactivity.md",
+      "kind": "technology",
+      "lines": 100,
+      "sha256": "d5c8165d6b9e533d34d872dc1c356b8886edd3f42936e80f7c28c3da4851cfdf",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular-ssr-upgrades.md",
+      "kind": "technology",
+      "lines": 57,
+      "sha256": "6327bf3a19ce6d691718dbe38851ca6e5af9274550e431ba4f74f35c996963e7",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/angular.md",
+      "kind": "technology",
+      "lines": 140,
+      "sha256": "da87d65ad0201597863a1e7ce1034fd45ff8c9cd8e91c8929633cea82cfbccf3",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/app-shells.md",
+      "kind": "technology",
+      "lines": 125,
+      "sha256": "09c9d107e796d50556a1a5929487b0d664191b6a05851b2de698f41788789cdd",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/browser-extensions.md",
+      "kind": "recipe",
+      "lines": 70,
+      "sha256": "d86ffdf42f604fc336223be4456ea8a0d0d97f0c0206187e971fa4eaa4ce554d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/component-architecture.md",
+      "kind": "recipe",
+      "lines": 84,
+      "sha256": "dafbf47465c0bd495f5abbf0f9231b8c757c144e788bae79be09bda431af1436",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/desktop-packaging.md",
+      "kind": "recipe",
+      "lines": 117,
+      "sha256": "c9fbb8f514692cbfcb874edc28ff13ac39645212381ff460a2f0ab14df9370eb",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/device-permissions-and-push.md",
+      "kind": "recipe",
+      "lines": 137,
+      "sha256": "728078c1c37712151ce8e9dbc66facb139a699083f0a1b62c4663dd6e8256785",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/frontend-error-handling.md",
+      "kind": "recipe",
+      "lines": 91,
+      "sha256": "544f3931aa549bc60be5ca3511e5d803d12c2117335656d3f6638de852c0537d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/frontend-performance.md",
+      "kind": "recipe",
+      "lines": 94,
+      "sha256": "f58d679bcef40c740000c9c433131c1a1ff535f494fbb98048aa9d403f554471",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/hybrid-mobile.md",
+      "kind": "recipe",
+      "lines": 141,
+      "sha256": "ef9d1d9d01c6070789e3d9c133bbdbf24027f01c016056fd5c5aa1dd717b9290",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/internationalization.md",
+      "kind": "recipe",
+      "lines": 93,
+      "sha256": "22f6009f1f82543f5943f905383e7229302776d42fd86283d60a4c67515b5465",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/layout-and-design-system.md",
+      "kind": "recipe",
+      "lines": 103,
+      "sha256": "c59bd809fe51241c54de7c3369ebc1f30d344281dcc7a5b31be6ba19e09935bc",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nextjs-rendering-seo.md",
+      "kind": "technology",
+      "lines": 46,
+      "sha256": "44c005b4cdd9cdd6038a56d2a023f916c2772624248be3b29e5531ffe8c61cd5",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nextjs-routing-boundaries.md",
+      "kind": "technology",
+      "lines": 62,
+      "sha256": "d3dfabcde93e337bcda6d1e15e6430af9e38babeac5433fc2ac3e4d2e294030d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nuxt-app.md",
+      "kind": "technology",
+      "lines": 80,
+      "sha256": "6bfcd62469b5c184380696a421c0e36ff7ce75467c315d28ff47c48056b98855",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/nuxt-modules.md",
+      "kind": "technology",
+      "lines": 45,
+      "sha256": "2264a1790d491df8f10b017b6bc40eab788c95031227bb1680942e4bfb6120f4",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/offline-and-mobile-performance.md",
+      "kind": "recipe",
+      "lines": 134,
+      "sha256": "c839bc55a01ab61beeffdf15092ddf525f3007b33841fcde5a0306028775b26d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-components-state.md",
+      "kind": "technology",
+      "lines": 69,
+      "sha256": "b40e9422cda236bfc46fa288dbcc68404a2347cffa8dde2eb1dcea7e238fa97e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-data-forms.md",
+      "kind": "technology",
+      "lines": 72,
+      "sha256": "695a03b74d388011b5c9688bf50cf5054d365cfc6259c4ee3494705a1bd3a0f9",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-navigation-accessibility.md",
+      "kind": "technology",
+      "lines": 63,
+      "sha256": "22428b2627195efbffc2c15852c08e4b6e8c4166e6ed2709b1c0b11aa590aa98",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-nextjs.md",
+      "kind": "technology",
+      "lines": 135,
+      "sha256": "8cee405526b97d153d9f7e7b87e2b4aec13d7457eadfb4a6da7133e3d3fd3ef2",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/react-rendering.md",
+      "kind": "technology",
+      "lines": 45,
+      "sha256": "f97edbd1290601d2bfc1890717093fed09fe8d64a7b554ed5267ed1203c6daae",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/ui-features.md",
+      "kind": "recipe",
+      "lines": 127,
+      "sha256": "b929781d689525d4ccbe051b8b0772bb0db86962f6bbc6da7f07f1e0cb1405fd",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/ui-states.md",
+      "kind": "checklist",
+      "lines": 57,
+      "sha256": "f2f361fdc4ad3201ea4a823648d8cc311381afb5cf05ef2ff96e47953b85d3f7",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-composition.md",
+      "kind": "technology",
+      "lines": 87,
+      "sha256": "8dcc3ea0ca2647fa2cf79461c5fb276d35213a08432c3848551a9786a0633070",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-nuxt.md",
+      "kind": "technology",
+      "lines": 125,
+      "sha256": "2d670640fa7fd752fca2f3b5a6a4dccd5525e97ec0e1345658b347695c3eb868",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-performance.md",
+      "kind": "technology",
+      "lines": 45,
+      "sha256": "90066a930be473855c7ba30831d285c8d1f28ba179f689d72cb83adf067d83ce",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/references/vue-routing-state.md",
+      "kind": "technology",
+      "lines": 61,
+      "sha256": "2a982a613d5c556ec5cacd28f092d2a167015e88e76f7737a1cc8c0274768e85",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md",
+      "kind": "entry",
+      "lines": 223,
+      "sha256": "e88706dc0e059acd9cc3048080ce3027f2dca77b3f8480c82412bae988f4ea00",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/algorithm-design.md",
+      "kind": "recipe",
+      "lines": 73,
+      "sha256": "44c14cfbae0030ce9ec2e63de51536ae5fb1dea833fb9003b59e1cecd47ae5b7",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/bug-fix.md",
+      "kind": "recipe",
+      "lines": 85,
+      "sha256": "40ed92a2d94f5fa7e116a942213131ef4f618edf9854d71fc62ea1c5df295a2f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-passport-template.md",
+      "kind": "template",
+      "lines": 44,
+      "sha256": "5aa335d66015d72876dad9a3762f1909c9099a68a9708248bfdf058de96852c0",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md",
+      "kind": "recipe",
+      "lines": 138,
+      "sha256": "c45052e6e3b79a4d07cb235bf86142b1c681fd4d5c3904e07e9a98c6804152a5",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/compatibility.md",
+      "kind": "recipe",
+      "lines": 84,
+      "sha256": "da27f71a8f3af35346e93fec2a08a6ee2bdd9fe44bc9d059ac6775eae813a4a1",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/concurrency-safety.md",
+      "kind": "recipe",
+      "lines": 92,
+      "sha256": "2005d4e434ea34ccb173a04f005b78081edc504dae69b63feaea668199c4437d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/configuration-and-flags.md",
+      "kind": "recipe",
+      "lines": 79,
+      "sha256": "19ad409d5e68fdec5a8cb4af83acf3a082015059a30251e3c802ff040431d786",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/contract-codegen.md",
+      "kind": "recipe",
+      "lines": 76,
+      "sha256": "883edeeaca1acc3f5d2686b97aa1d0125d93c13d1017643accbd340cf8b90f91",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/crossstack-types-and-time.md",
+      "kind": "technology",
+      "lines": 124,
+      "sha256": "a75d6b6806136a7da8587445100636556afcfa941604d7d0f54745e4d6ed83d1",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/csharp-async-and-memory.md",
+      "kind": "technology",
+      "lines": 132,
+      "sha256": "4484e224b3d7d5a509d585503bdd832b5c84f7d361b2e1ae4032799b3246093c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/csharp-linq-and-serialization.md",
+      "kind": "technology",
+      "lines": 132,
+      "sha256": "e3ee4f9d098b8b09ec1426ec7bd6120bd7248d32daeb0448c699a95e87084535",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/csharp-project-health.md",
+      "kind": "technology",
+      "lines": 145,
+      "sha256": "0019e8b48eaf3e05242aa5999f0cda207ae083bf47ef692d0b14986049d898ec",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/csharp-types-and-nullability.md",
+      "kind": "technology",
+      "lines": 144,
+      "sha256": "f183580c111dfbd48a021960258c43e779d134df9b8db3832bcc161cb6a6e13a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/dead-code-and-deprecation.md",
+      "kind": "recipe",
+      "lines": 85,
+      "sha256": "36fc988aa719b6b8b78cacc6a057ecad7143c043687b6784d805031fd8bb8cc5",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/error-handling.md",
+      "kind": "recipe",
+      "lines": 84,
+      "sha256": "bbb221fd9094adfe2a750b2e6b2bd5f98d16aba89910162b7a2a5e7ec3cee938",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/feature-delivery.md",
+      "kind": "recipe",
+      "lines": 82,
+      "sha256": "7471a5bb037a7e7708c127d1b2950de2cf2f35af63232a1dbb651c2988a9e9e9",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/implementation-plan-template.md",
+      "kind": "template",
+      "lines": 44,
+      "sha256": "3a645103786282d3c305cb715fd657b45368539d69da04e5b8223197ad1d1317",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/javascript-runtime.md",
+      "kind": "technology",
+      "lines": 86,
+      "sha256": "0e687a0cbb2ae7c4b20e83c962fa65b919071cf76000449034d7d12f2191031a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/refactoring.md",
+      "kind": "recipe",
+      "lines": 102,
+      "sha256": "06fe09b4d2f605f2bc8ea59443cb257657cf342b223321eb7b8a774e17401183",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/risk-assessment-template.md",
+      "kind": "template",
+      "lines": 43,
+      "sha256": "c6ce617b2cc6dc17741c5607cd6a9bbabe5b480b49027ea68b2be8bd6a963bdb",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract-template.md",
+      "kind": "template",
+      "lines": 45,
+      "sha256": "3a92fe007ce82fefea600a29adcdefc4d83f6cdf9b7d1784d43b7d6f9b707fd0",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md",
+      "kind": "recipe",
+      "lines": 154,
+      "sha256": "93dae4de6dd8170a07fc169d3a9679814d1232143c56608d9bd56aa85e361b73",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/typescript-javascript.md",
+      "kind": "technology",
+      "lines": 54,
+      "sha256": "ed2d5140b7f1fc9c99bd74d2ee5ea0a37d35a7a7da34dcd2b3a6455565320511",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/typescript-types.md",
+      "kind": "technology",
+      "lines": 73,
+      "sha256": "6c623135619acb55a37842a8d37720ac3c6818cbf6af293e385d884fdfcfc950",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/typescript-workspace.md",
+      "kind": "technology",
+      "lines": 85,
+      "sha256": "f36d5565a5d4a17cd0a3cda6dab43b896ab78c2e662a12bee3873c11092dd121",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/upgrades.md",
+      "kind": "recipe",
+      "lines": 133,
+      "sha256": "d8450ef3721cb3bd07090b0fd91b73a7d78156a945f0931fb9aae9111834f566",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/verification-report-template.md",
+      "kind": "template",
+      "lines": 43,
+      "sha256": "700601b51b25ada91e2b9e64a7557e2792b060b65f67bc8dcb38474fd9d1f338",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-bug-repair.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "20236ed94015139011cfe80ab8e7805b5d8c67c70427032690c5aa7ba2335a67",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-dependency-upgrade.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "a830fff5587f8841d4809b2de8e1f5d51497d0f99f4fbba7e557928577691714",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-new-feature.md",
+      "kind": "checklist",
+      "lines": 111,
+      "sha256": "63afde658a0ca4e4db5b0aadd6c92a505797c4c1a6f8212ab7aaddc348948bc7",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-refactoring.md",
+      "kind": "checklist",
+      "lines": 109,
+      "sha256": "257afff179af1de2587f97849617a89689b766ed32d6405e5acf953c75ccd067",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md",
+      "kind": "entry",
+      "lines": 215,
+      "sha256": "4b35513d4c7d43585fb2370d2fee9032b5eef70f1e3e4baf705f88cb62c111f2",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/aspnetcore-performance.md",
+      "kind": "technology",
+      "lines": 97,
+      "sha256": "ded769bde4021bc7667ffc444b51f12506d2e8798b1f73284996a997983f533a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/baseline-and-profiling.md",
+      "kind": "recipe",
+      "lines": 104,
+      "sha256": "fa9b3ae682b1f3172b57225c8f6b2e877f9187147abcfd534b5c3a1ae090bcf9",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/budgets-and-capacity.md",
+      "kind": "recipe",
+      "lines": 96,
+      "sha256": "9f118e925713d194fb033e66fda8f925eeffc9aafee604e2b5fafde4ad9edc37",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/caching.md",
+      "kind": "recipe",
+      "lines": 83,
+      "sha256": "9da9e15353b342f54cc271cf71a3dc65587af5600b2f52e9636fe821be1f97fb",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/load-testing.md",
+      "kind": "recipe",
+      "lines": 94,
+      "sha256": "7435d49952dab947dbd3d56e90071f14eb5738da23439f3b24ed6dde21ab5430",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/memory-leaks.md",
+      "kind": "recipe",
+      "lines": 70,
+      "sha256": "6aeccddd08f27f2db5d20d1d0d90aa27640e4f843a8bc6a2d6b8c6c6a6cb4807",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/runtime-tools.md",
+      "kind": "technology",
+      "lines": 95,
+      "sha256": "8ed21392aa57821e3c0f9aa1cfd8c96bd1fb21b79763f8588793edf865e465c7",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/references/workflow-performance-investigation.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "df7dc3ef8aa70bb4de8780a3cfad9f03b891850615a49803bc4a3e9920b35e0e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-performance/SKILL.md",
+      "kind": "entry",
+      "lines": 168,
+      "sha256": "1fe52f7e054370b8798783281f6cff7c21893dbad150902f50220ecb9f0e6b4c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md",
+      "kind": "recipe",
+      "lines": 117,
+      "sha256": "05bc5bb85c53c9519d676a216378df69e4f8cf7851671f03c18123ab15885f90",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/history-and-ownership.md",
+      "kind": "recipe",
+      "lines": 105,
+      "sha256": "e16e0270d5e92e2a5303556f4e10983d71a7b54eeb93bb8722ed726a68a4dabf",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/legacy-assessment.md",
+      "kind": "recipe",
+      "lines": 73,
+      "sha256": "d527cedcdde1785be5242cce3c9266ee2051c8d57692ed7e127e4dc3d87dcf85",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/repository-profile.md",
+      "kind": "recipe",
+      "lines": 114,
+      "sha256": "5f8d8c5d88029f51b226252358b412dd6c38b66d56ce1e3fd362e31d1a3e4a37",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/stack-detection.md",
+      "kind": "checklist",
+      "lines": 134,
+      "sha256": "4820a1be4843af813ddf858a47e7057e27abeb9f9f00f7bc1fffef04ef45f3b0",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/technical-debt-inventory.md",
+      "kind": "recipe",
+      "lines": 77,
+      "sha256": "3ca8295fe7751fefc3a77e6286c0cb88ace9f9a9e7898d2eb54aaca545d21af6",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/technical-debt-prioritization.md",
+      "kind": "recipe",
+      "lines": 70,
+      "sha256": "a9c26ddc24a99fef39e1157a77074251f2cbc29b877f0fe1c84cd3b00ccf594d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/unknowns-and-assumptions.md",
+      "kind": "recipe",
+      "lines": 81,
+      "sha256": "ec0908165e8e93e5b0a30ed0ed282968525f580f44cf4c74bc0c2f35d4ddfacd",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-repository/SKILL.md",
+      "kind": "entry",
+      "lines": 167,
+      "sha256": "7ec8737013ef3ae043e2fa2faa5ae16538f6ed9f3e17efd8caaaeccb29e3fee5",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/references/elicitation-and-modeling.md",
+      "kind": "recipe",
+      "lines": 111,
+      "sha256": "65a57432ccf592e700c98bc4b2fec50e40f1d034ae42703f0cf250e265a1b029",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/references/nonfunctional-requirements.md",
+      "kind": "recipe",
+      "lines": 81,
+      "sha256": "de827edf4a07fb2372faf369ef8aac74a00c9c28e299d6ae911460f02f62604d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/references/requirement-traceability.md",
+      "kind": "recipe",
+      "lines": 82,
+      "sha256": "1f633fda8d39be7ac137227590dd8eb6c49bb8bb4be578c5655cc562722ff20d",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/references/requirements-record.md",
+      "kind": "template",
+      "lines": 37,
+      "sha256": "cf81cedeb22b3617e633861deec763fa8f470376b1e3e062a1b1c4c5366a182e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/references/scope-and-backlog.md",
+      "kind": "recipe",
+      "lines": 114,
+      "sha256": "78795eb9bba58223c1ce1e321ac6014ecd80a337fc48d045015be9dbf16c6e0f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/references/stories-and-acceptance.md",
+      "kind": "recipe",
+      "lines": 97,
+      "sha256": "1422e10265c282e93615b0082949c9790ee16f2400d8858566bed2736689d025",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-requirements/SKILL.md",
+      "kind": "entry",
+      "lines": 156,
+      "sha256": "c9733d052077ed51e048d730c62382bc1a120d4a5253768256886e203dfb849b",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/access-reviews.md",
+      "kind": "recipe",
+      "lines": 68,
+      "sha256": "ce6851d46a85ea369de4a970c38c1c8a410483ed058ec928e02a3dbbd494fd6f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/infrastructure-security-review.md",
+      "kind": "recipe",
+      "lines": 81,
+      "sha256": "ef3607ea68aee4a5612b4b3fa86a95ab8d4189dd9131dbcec599e4f31c7bf0dd",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/privacy.md",
+      "kind": "recipe",
+      "lines": 75,
+      "sha256": "9dd392a26d1d7a175e76072b4c9accca74dab88fa60a809dd464ae64d00ae767",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/review-checklist.md",
+      "kind": "checklist",
+      "lines": 121,
+      "sha256": "16384e22170410ea9482ed8c5fa4e8524286f5e21b89ed43200b8762d7adc22c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/sbom-and-licenses.md",
+      "kind": "recipe",
+      "lines": 93,
+      "sha256": "970da27d27957eda3bc0a91cc5b16048c8743a4757722e40f36954b24a372622",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/scanner-triage.md",
+      "kind": "recipe",
+      "lines": 90,
+      "sha256": "c92c81cccd6c3014d4324935257fa17679215de202bed4740c560e770a0f86d5",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/secret-exposure-response.md",
+      "kind": "recipe",
+      "lines": 70,
+      "sha256": "3cedc94f3ece1ee18ff1ae714769c1120d852b5cd72eac6ce79d080976f74911",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/secure-review.md",
+      "kind": "recipe",
+      "lines": 141,
+      "sha256": "7c62ea63145b3770fdaff54cf5bac6c97dd2d3f8f4fec072c6f9fa25a26de78a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/stack-hardening.md",
+      "kind": "checklist",
+      "lines": 130,
+      "sha256": "d42422c8d16673a323c11dbaab31ef3138007a5b738b026b13d96b7f5ed724a3",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/threat-modeling.md",
+      "kind": "recipe",
+      "lines": 80,
+      "sha256": "9b8829021bc50c304b8894ffa55d735b776987095a29af876d9999a9785df5ef",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/vulnerability-remediation.md",
+      "kind": "recipe",
+      "lines": 73,
+      "sha256": "40b521ddaef7d15300d0091188bed1b5bd7ee1da81d8ccb9257785c2dac11e2a",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/references/workflow-security-review.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "5f7b22207ab3f3190db5e2a31b81a55cee25103bb3f4d57e5ac80b616745a316",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-security/SKILL.md",
+      "kind": "entry",
+      "lines": 182,
+      "sha256": "7aca1b2d83d10d8390f64135cc7e45d417d4b68cf7ad1b3c5d45fd80c62cc0ca",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/advanced-test-techniques.md",
+      "kind": "recipe",
+      "lines": 102,
+      "sha256": "beea4fa675b06bca3e68131f362c2e6ab4502b5f19e3df0eb6cf61111ae22749",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/angular-testing.md",
+      "kind": "technology",
+      "lines": 58,
+      "sha256": "2f405b53808d0c650414fda0d24d0f460bfc5acafe2507285c220b4968cbec4c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/api-and-contract-tests.md",
+      "kind": "recipe",
+      "lines": 96,
+      "sha256": "1573cba21b7d6cbd74c4baca5a1273d064ffa142be7691c8521e3dc34c8edaa3",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/coverage-gaps.md",
+      "kind": "recipe",
+      "lines": 71,
+      "sha256": "feb62f963240bf2faa394a2499e52002720e554bf43295954faaabcfef84623f",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/crossstack-e2e.md",
+      "kind": "technology",
+      "lines": 85,
+      "sha256": "b5e3acb1cba62dfc5d3d6d5e7d18372839cc9e52e7b2a3dbe8ea7babb4cee5bf",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/dotnet-testing.md",
+      "kind": "technology",
+      "lines": 112,
+      "sha256": "d1e6f90c8a9956bc448c11e6f60983aba2d6c94d1a590c84a7df0e55c6aae41e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/failing-and-flaky-tests.md",
+      "kind": "recipe",
+      "lines": 108,
+      "sha256": "f36dc78b66cfccf2ae8aeedbe939d586ae7bcb9fb0b6609b7cdf91b1c9ea2024",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/javascript-testing.md",
+      "kind": "technology",
+      "lines": 95,
+      "sha256": "b0eae7c571acd8a56afe46df449b54df94911e0695cccd4548d8a71df02fdc17",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/python-testing.md",
+      "kind": "technology",
+      "lines": 71,
+      "sha256": "3d05107aee5b26e0529eb029897969017ad7416c17251dcb3cb46c207d50011c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/react-testing.md",
+      "kind": "technology",
+      "lines": 52,
+      "sha256": "0ce432456a38b5ece38e3b54ed779782273fb0b850e29feef9f61a70e75ed832",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/test-authoring.md",
+      "kind": "recipe",
+      "lines": 109,
+      "sha256": "077b130d74ae5f643071ef8ca3625f68ca8b57b4ea278a499960d310b2e4a59c",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/test-data.md",
+      "kind": "recipe",
+      "lines": 69,
+      "sha256": "531c2c9a5648c80cc494db0b91885b0b5bd4f8e27ac2b991dd31c7ea6f27bd29",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/test-strategy.md",
+      "kind": "recipe",
+      "lines": 83,
+      "sha256": "dd99818e8fa08f510ec477685d8622180dfa3beda5b5a300bda1818f30327c2e",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/vite-testing.md",
+      "kind": "technology",
+      "lines": 46,
+      "sha256": "2671275d842391488921d59c5c30ed02d7a2fbf6d96f97a4e2c99e0a59ac9eb8",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/vue-testing.md",
+      "kind": "technology",
+      "lines": 49,
+      "sha256": "fd07c2990136179c35269c9f8b03ad2e13c7f02064a3bd0bc97ea7b10e5886fb",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/references/workflow-testing-regression.md",
+      "kind": "checklist",
+      "lines": 110,
+      "sha256": "120c8e2163b1a9ae57846e019ee97f572954d85e63239541cd57570134f848ad",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md",
+      "kind": "entry",
+      "lines": 177,
+      "sha256": "cd4087b14ced58144060bd63e68ead92be1efd546d27f36e15903f724a2f2197",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    },
+    {
+      "file": "plugins/codejadee-chayen-framework/skills/README.md",
+      "kind": ".md",
+      "lines": 80,
+      "sha256": "18523c42e5fc56582f2dd2f652b5b567a412568233ca180f5928282dfade87cf",
+      "review": "whole-file static scan; contextual findings triaged in PLUGIN_TRUST_REVIEW.md"
+    }
+  ],
+  "externalUrls": [
+    "http://evil.localhost/",
+    "http://localhost/",
+    "http://localhost:5000/api/counter",
+    "http://localhost:5000/api/orders",
+    "http://localhost:5000/openapi/v1.json",
+    "http://localhost:5173/",
+    "http://localhost:8080/health",
+    "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+    "https://github.com/CodeJaDee",
+    "https://github.com/CodeJaDee/codejadee-chayen-framework",
+    "https://tools.ietf.org/html/rfc9110#section-15.5.1"
+  ],
+  "developerAssetInventory": [
+    {
+      "file": "tools/catalog/audit-coverage.mjs",
+      "sha256": "d1227f980f8310c167e6e9c55ee8a4cb3c83be260e2746e8c9a5cf45e4af9077",
+      "effectSignals": [
+        "exec"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/catalog/catalog-lib.mjs",
+      "sha256": "bb20103954be663818f4fabf8e4e8256536ae534f30cc7b72a90e8e5e4aed4f9",
+      "effectSignals": [
+        "exec"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/catalog/check-catalog.mjs",
+      "sha256": "02a507b8918a9a4fd6bcd1f3a37ff5a9b3fff990c2bbe6576092ee011694ada0",
+      "effectSignals": [
+        "exec",
+        "writeFileSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/catalog/check-technology.mjs",
+      "sha256": "70c66b5dc6a21ecf556ec3b13a167dab8c3b0de3cfc0544961de21249f197cde",
+      "effectSignals": [
+        "exec",
+        "writeFileSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/catalog/check-workflows.mjs",
+      "sha256": "56826ce3869bf220cf40162dea3b71faa016233e5bda94b9b506d8d72510e508",
+      "effectSignals": [
+        "exec",
+        "writeFileSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/evals/generate-claude-evals.mjs",
+      "sha256": "648a3d5cb69dc39500dabe7b77790c65afea12e0a2cb142ae1af277038cda79c",
+      "effectSignals": [
+        "cpSync",
+        "writeFileSync",
+        "rmSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/validate/check-security.mjs",
+      "sha256": "9d7f96ec3560f64712b266ddecc2663decfe382d3c093a647e369375e3d810b1",
+      "effectSignals": [
+        "exec",
+        "writeFileSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/validate/run-validator-tests.mjs",
+      "sha256": "710750af27e24ea759f0232db0c1062c72d98f8a3ca9111cbc861eafc0ffa921",
+      "effectSignals": [
+        "cpSync",
+        "spawnSync",
+        "writeFileSync",
+        "rmSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/validate/safe-paths.mjs",
+      "sha256": "10d2ba0f10c85723331d60e8bc88cc2452fffd4aa0eb143d9f7f43e4fada690b",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/validate/validate-all.mjs",
+      "sha256": "35d7be8fb700e2bec38c3dac6f559bfaf2f949d82b08112a4428e42bbf6f602d",
+      "effectSignals": [
+        "spawnSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tools/validate/validate-package.mjs",
+      "sha256": "c4a3f1e41920f6e0597a20bc5bf13b6f1f34c63156f62aaaddaad0a99bcc431f",
+      "effectSignals": [
+        "exec"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/provider-compatibility/run-lifecycle.sh",
+      "sha256": "f283adef85a4bf1e9d0f7c7c7d1aa2d2293670e7ebfee5dcaa864078e8d82797",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/routing/run-smoke.mjs",
+      "sha256": "5a24fd656f89ecd25f17ed560d1d6b1ad1d369035e0c0361602b42b4c4dd5f52",
+      "effectSignals": [
+        "spawnSync",
+        "writeFileSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/security/boundaries.test.mjs",
+      "sha256": "eb57591fc07c5c2e7fe2570673e5ed05274a2e17b89f875674c9c558812feccd",
+      "effectSignals": [
+        "rmSync",
+        "writeFileSync",
+        "spawnSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/angular-typescript/run-fact-checks.mjs",
+      "sha256": "213c821087365dc9286e24ebe465aa6942ff267f79f985d0faad924158b27dc6",
+      "effectSignals": [
+        "writeFileSync",
+        "spawnSync",
+        "rmSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8/Api8.csproj",
+      "sha256": "f6c77195e53b99a98ffa61a75d72002d2ed0edc196a1670ab1ee5516f09baea2",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8/Program.cs",
+      "sha256": "dc90eb879bf3e625a13ff7009a91115d8d7281c1e42a9447997f86206b73a835",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8.Tests/Api8.Tests.csproj",
+      "sha256": "dc79e11e2698d40308812f83396335a63611cf05cfe6995b475584c52c80a612",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8.Tests/PingTests.cs",
+      "sha256": "558fc8ec50b76cdd10d87d28baa654c29fc4c26f0e84a9ca03047cd24bdc0e79",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/src/FactApi/FactApi.csproj",
+      "sha256": "d270435293270204e54320c11650dc3c0c5201a422d68b008309e703759aea32",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/src/FactApi/Program.cs",
+      "sha256": "68bc4d2c0b987d2af389907249fd75193c5414984870913248f8ae0345ce1a5a",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/tests/FactApi.Tests/FactApi.Tests.csproj",
+      "sha256": "27493bfffbac1d8c2b4745e342116852660e13b8450cb197883fe0bd602c563c",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/tests/FactApi.Tests/FactTests.cs",
+      "sha256": "49fd79a17f49723c5e19f690f37ad2032616cfd8078b59b52014427b5aca3467",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/dotnet/run-fact-checks.mjs",
+      "sha256": "a70fe5339b4ad1b1c103f86f0d3e93c061ca72409cafdc46ab64cf05f9c07459",
+      "effectSignals": [
+        "spawnSync",
+        "writeFileSync",
+        "cpSync",
+        "exec",
+        "rmSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackApi/CrossStackApi.csproj",
+      "sha256": "8d25e1d3e30e15271561a49bc1b65bb60d8491d8797dba2a30ab681ff723a0ce",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackApi/Program.cs",
+      "sha256": "4db12da95cc9acfb7877bd694ffec3c03a922373fcde0fd3c243027f9c445be7",
+      "effectSignals": [
+        "fetch"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackFacts/ApiFacts.cs",
+      "sha256": "89d9b34448c788d80392fbac8a99c692d356a91ea18bab95426e316e04238d46",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackFacts/CrossStackFacts.csproj",
+      "sha256": "88a6d66f04fcf80778885ea2ddae2ab6e6b82c2fed6c510d0a249fb3a8cd3b4d",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/ConcurrencyFacts.cs",
+      "sha256": "e74a8b48246607e97f2ad74928958879126013cfe24cb2c5c23862d45ee28b5d",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/CrossEngineFacts.cs",
+      "sha256": "931ce035b919e2f858b2416a704b85d9036d071b0e0692bcf14ce5191037eed7",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/DriverReferences.cs",
+      "sha256": "90121668bc1f71bffcf98f503cde020da119cc0ed1550c2e9ffbd8edb67fd5ce",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/Model.cs",
+      "sha256": "c01dd8c9a7979f0346da8b7834cead6acde758efcc9aece373a5ea08a9a1a3bf",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PgDb.cs",
+      "sha256": "2160766f2da0710f1c16efa55e6eeedc681447bccb71ac23e71dadb96d9de335",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PlanFacts.cs",
+      "sha256": "1bdbe5216554b8480b40033d11a8b4734b0ef387f505cc8109125bd14cc28b0d",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "sha256": "b3dcb80bc4a918eb1c25ea629bd0e6890522445d431888f16696079d941fcc4c",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/SchemaOpsFacts.cs",
+      "sha256": "737394b9c3b633d6fe774006c40aa95b665ac68261c49fbef04e950941a90f50",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/SqlFacts.cs",
+      "sha256": "e1a463d5aa537cd75a73ebd4f1e870681eab853ed9833318d0a06154f4490505",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/python/requirements.txt",
+      "sha256": "232bb8219635752626a98ff79ec0de34fe86aac8e87dbbe694274a1f99684356",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/python/sqlalchemy_facts.py",
+      "sha256": "eb5e3a85419fb0d9b4c3a7209b3835ac820d515f322718b99ff26539bfb3cd70",
+      "effectSignals": [
+        "connect",
+        "listen"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/python/sqlalchemy_references.py",
+      "sha256": "3a2dd9bfe57f37ac4a0b62b114d9e0324e9f2e12674d92c352965aa5c6a698ac",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/node/client-facts.mjs",
+      "sha256": "7c85ba5ad54866d5d07fb3ad84b15e4cbe2bda4ab65934f20abf1e846937382d",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/node/e2e.mjs",
+      "sha256": "262212b28a0c72687dbc4e08903a88a31722efbb5eac4bdf99722b5345a29f31",
+      "effectSignals": [
+        "listen",
+        "fetch"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/node/typed-client.mjs",
+      "sha256": "029eb5bc3541f237debbb9684a7a508835e124801d13ee5c38b3f8a9e46f98b5",
+      "effectSignals": [
+        "writeFileSync",
+        "exec",
+        "rmSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/run-fact-checks.mjs",
+      "sha256": "a11691bdcca6d6379d3c3e4db32eee4c5f6c04738e857640ccdf1ca65c01b1cd",
+      "effectSignals": [
+        "spawnSync",
+        "listen",
+        "cpSync",
+        "exec",
+        "writeFileSync",
+        "rmSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/react-nextjs/fixture/server-boundaries.mjs",
+      "sha256": "4eaf9b3afd9eb961adcd27b0ec2a8bb771e8bc37d2a49b4da13faa2ec61da097",
+      "effectSignals": [
+        "exec"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/react-nextjs/run-fact-checks.mjs",
+      "sha256": "2e023cd337d58ecece5c1521b687282d22f00a02e5e3e8597746ac47afc6fb04",
+      "effectSignals": [
+        "listen",
+        "fetch",
+        "writeFileSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/ConcurrencyFacts.cs",
+      "sha256": "31a0502da657ed17e6e8c9c522a947c0e6b990c154b4891ac349a8ca0ff952c5",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/DriverReferences.cs",
+      "sha256": "ccaf14b6e6b0519c5141ab6821c357103a4f0f6cd5ebf2b56cdc2537884702b2",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/FactDb.cs",
+      "sha256": "5a0d49ee71ebd7f9a836ee8939b15fd17b762c534551cb084b7afd8b9415ff00",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/Model.cs",
+      "sha256": "e5e4b0f1a6368e701bfb0b270962838c73a35fa5fa1c5cabc21181f5b30e6e17",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/OperationsFacts.cs",
+      "sha256": "48fac00296da489a27c0f64289f363b01d4bc73b0d418e68ff20d97ae373ba95",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/PlanFacts.cs",
+      "sha256": "5ff4ddfa49c8bca4bef516b1a7b8911a57469c1a2d0ea9f8ed230fbd1d6996a0",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SchemaSecurityFacts.cs",
+      "sha256": "c782969a8ca89a40606ed967ac17e6775cb96a9b66958c6264d79386478a1d00",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+      "sha256": "ba71b729782757a3b4aa236270da8de79b274f8d170bb1aa3b39ffcabcdfea39",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/TsqlFacts.cs",
+      "sha256": "df7411c44288b567be937843f895cbb24bb60c721280ee9680868ea18d2b9401",
+      "effectSignals": [],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/sqlserver/run-fact-checks.mjs",
+      "sha256": "19e67fea8ea90b6d7435a8c8ae5c237e10203dfab778c55ae79854220f96a6d7",
+      "effectSignals": [
+        "spawnSync",
+        "cpSync",
+        "exec",
+        "writeFileSync",
+        "rmSync"
+      ],
+      "executedByThisCheck": false
+    },
+    {
+      "file": "tests/technology/vue-nuxt-vite/run-fact-checks.mjs",
+      "sha256": "80026508650b797d3d984d9ebc2472233d326e1a77cccf68f46fcea8f395e2d1",
+      "effectSignals": [
+        "rmSync",
+        "writeFileSync"
+      ],
+      "executedByThisCheck": false
+    }
+  ],
+  "fixtureDependencies": [
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8.Tests/Api8.Tests.csproj",
+      "package": "Microsoft.AspNetCore.Mvc.Testing",
+      "version": "8.0.11",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8.Tests/Api8.Tests.csproj",
+      "package": "Microsoft.NET.Test.Sdk",
+      "version": "17.14.1",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8.Tests/Api8.Tests.csproj",
+      "package": "xunit",
+      "version": "2.9.3",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/net8/Api8.Tests/Api8.Tests.csproj",
+      "package": "xunit.runner.visualstudio",
+      "version": "3.1.5",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/src/FactApi/FactApi.csproj",
+      "package": "Microsoft.AspNetCore.OpenApi",
+      "version": "10.0.12",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/src/FactApi/FactApi.csproj",
+      "package": "Microsoft.EntityFrameworkCore.SqlServer",
+      "version": "10.0.12",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/src/FactApi/FactApi.csproj",
+      "package": "Microsoft.EntityFrameworkCore.Design",
+      "version": "10.0.12",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/tests/FactApi.Tests/FactApi.Tests.csproj",
+      "package": "Microsoft.AspNetCore.Mvc.Testing",
+      "version": "10.0.12",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/tests/FactApi.Tests/FactApi.Tests.csproj",
+      "package": "Microsoft.NET.Test.Sdk",
+      "version": "17.14.1",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/tests/FactApi.Tests/FactApi.Tests.csproj",
+      "package": "xunit",
+      "version": "2.9.3",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/dotnet/fixture/tests/FactApi.Tests/FactApi.Tests.csproj",
+      "package": "xunit.runner.visualstudio",
+      "version": "3.1.5",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackApi/CrossStackApi.csproj",
+      "package": "Microsoft.AspNetCore.OpenApi",
+      "version": "10.0.12",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackFacts/CrossStackFacts.csproj",
+      "package": "Microsoft.AspNetCore.Mvc.Testing",
+      "version": "10.0.12",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackFacts/CrossStackFacts.csproj",
+      "package": "Microsoft.NET.Test.Sdk",
+      "version": "17.14.1",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackFacts/CrossStackFacts.csproj",
+      "package": "xunit",
+      "version": "2.9.3",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/CrossStackFacts/CrossStackFacts.csproj",
+      "package": "xunit.runner.visualstudio",
+      "version": "3.1.5",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "package": "Npgsql.EntityFrameworkCore.PostgreSQL",
+      "version": "10.0.1",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "package": "Npgsql",
+      "version": "10.0.2",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "package": "Dapper",
+      "version": "2.1.66",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "package": "Microsoft.EntityFrameworkCore.SqlServer",
+      "version": "10.0.8",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "package": "Microsoft.NET.Test.Sdk",
+      "version": "17.14.1",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "package": "xunit",
+      "version": "2.9.3",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/PostgresFacts/PostgresFacts.csproj",
+      "package": "xunit.runner.visualstudio",
+      "version": "3.1.5",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/python/requirements.txt",
+      "package": "SQLAlchemy",
+      "version": "2.0.43",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/postgres-crossstack/fixture/python/requirements.txt",
+      "package": "psycopg",
+      "version": "3.2.10",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+      "package": "Microsoft.EntityFrameworkCore.SqlServer",
+      "version": "10.0.8",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+      "package": "Dapper",
+      "version": "2.1.66",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+      "package": "Microsoft.Data.SqlClient",
+      "version": "6.1.1",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+      "package": "Microsoft.NET.Test.Sdk",
+      "version": "17.14.1",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+      "package": "xunit",
+      "version": "2.9.3",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    },
+    {
+      "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+      "package": "xunit.runner.visualstudio",
+      "version": "3.1.5",
+      "scope": "developer fixture only; advisory status NOT_RUN"
+    }
+  ],
+  "limitations": [
+    "Pattern scanning is heuristic and does not establish absence of secrets or malicious instructions.",
+    "No prompt-injection, native permission, provider authentication, installation, OS ACL, dependency advisory or live URL test was executed.",
+    "Repository scripts remain trusted maintainer code; malicious code can bypass checks in the same checkout. Use external permissions, isolated review and CI controls.",
+    "Source inventories exclude generated/dependency/result folders and do not include credentials or user configuration outside this repository."
+  ]
+}

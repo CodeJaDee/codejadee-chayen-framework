@@ -12,6 +12,8 @@ These tools are for **repository maintainers only**.
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
 node tools/validate/validate-package.mjs       # package, skills, references, catalog alignment (detail)
 node tools/validate/run-validator-tests.mjs    # self-tests: 4 baselines + 128 negative controls
+node tools/validate/check-security.mjs        # offline V-25 profile; no commands/network
+node --test tests/security/boundaries.test.mjs # offline adversarial script controls
 ```
 
 The rules come from
@@ -25,7 +27,9 @@ The gates are in
 |---|---|
 | `validate-package.mjs` | The checks below |
 | `run-validator-tests.mjs` | Applies the mutation cases in `tests/catalog/` and `tests/skills/` to temporary repository copies, and asserts that each one fails with the expected check (G-13) |
-| `validate-all.mjs` | Runs the package, engineering catalog, technology, composite workflow/template and eval-case synchronization checks, then validator self-tests (six gate groups) |
+| `validate-all.mjs` | Runs security preflight and offline boundary tests, package, engineering catalog, technology, composite workflow/template and eval synchronization checks, then validator self-tests (eight gate groups). Failed security preflight stops later gates. |
+| `check-security.mjs` | V-25 metadata-only profile, authority guards, link/path confinement, heuristic secret patterns, source hashes, URL and fixture dependency inventory; `--write-report` writes only the fixed STEP 30 report |
+| `safe-paths.mjs` | Rejects absolute/traversal paths and linked descendants for scratch mutation and staging |
 
 ## What `validate-package.mjs` checks
 
@@ -56,6 +60,24 @@ The gates are in
 Exit code `1` means at least one error.
 
 ## Limits
+
+Inspect these scripts and imported helpers before executing them from a new
+checkout. The checkout controls the validators too: passing a repository's own
+checks does not establish trust. Run in a disposable environment with minimal
+permissions, no secrets and network disabled when practical. No dependency
+installation, restore, provider model call or lifecycle install is part of
+`validate-all.mjs`. Static scanning cannot prove absence of prompt injection,
+secrets, malware or vulnerable dependencies. See `docs/chayen/SECURITY_MODEL.md`,
+`THREAT_MODEL.md` and `PLUGIN_TRUST_REVIEW.md` for the reviewed boundaries.
+STEP 30 executed Node 24.15.0 only; the older Node 18 declaration above remains
+an unresolved compatibility claim (R-50), not verified support.
+
+Default eval generation changes committed fixture files. `--check` reads only;
+`--stage <existing-scratch-parent>` creates a fresh child and refuses existing
+destinations. Neither staging nor generated prompts authorize provider calls.
+Mutation tests use fresh temporary copies and confined relative paths. These
+guards do not prevent concurrent filesystem replacement or malicious script
+edits; OS isolation and trusted external CI still matter.
 
 - This script is **not** a full JSON Schema validator. It re-implements the
   rules of the official Agent Plugins schema. Full schema validation was run

@@ -14,11 +14,23 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { inside, assertTreeNoLinks } from "./safe-paths.mjs";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
 
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, "..", ".."));
 const PLUGIN_DIR_REL = "plugins/codejadee-chayen-framework";
 const AGENT_PLUGINS_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json";
+
+// Refuse linked package inputs before reading manifests or following references.
+try {
+  const target = inside(root, PLUGIN_DIR_REL);
+  if (fs.existsSync(target)) assertTreeNoLinks(target);
+  for (const rel of [".claude-plugin/marketplace.json", ".github/plugin/marketplace.json", ".agents/plugins/marketplace.json"])
+    inside(root, rel);
+} catch {
+  console.log("ERROR V-09 plugin-content: refusing symlink or junction in review inputs");
+  process.exit(1);
+}
 
 const results = [];
 const error = (check, msg) => results.push({ level: "ERROR", check, msg });
@@ -33,7 +45,7 @@ const isStr = (v) => typeof v === "string";
 function readJson(check, rel) {
   if (!exists(rel)) { error(check, `missing file ${rel}`); return null; }
   try { return JSON.parse(fs.readFileSync(abs(rel), "utf8")); }
-  catch (e) { error(check, `${rel}: invalid JSON (${e.message})`); return null; }
+  catch { error(check, `${rel}: invalid JSON (raw parser diagnostic suppressed)`); return null; }
 }
 
 // Relative source path rules shared by all marketplaces: "./" prefix, no "..",

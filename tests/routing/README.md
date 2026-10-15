@@ -1,66 +1,70 @@
 # Routing tests (developer-only)
 
-These tests check which skill a natural prompt activates. Each run is a
-**billed model call**. None of this is shipped with the plugin.
+These optional tests send synthetic prompts to native providers and may incur
+model charges. They are outside the distributable plugin and are never needed
+to use its static guidance. STEP 30 did not run any provider test.
 
 | File | Purpose |
 |---|---|
-| `../skills/trigger-cases.json` | The source of truth: 48 cases (positive, negative, ambiguous, unsupported) |
-| `smoke-cases.json` | An 8-case subset, plus explicit-invocation and disabled-plugin cases, for providers without an eval tool |
-| `run-smoke.mjs` | Smoke runner for the Copilot CLI (`-p --output-format json`) and the Codex CLI (`exec --json`). It parses which `chayen-*` skills were loaded. |
-| `results/` | Path-free result summaries (Step 06) |
+| `../skills/trigger-cases.json` | Canonical prompt/expected-skill specifications; 182 cases at STEP 30 |
+| `smoke-cases.json` | Small routing subset plus explicit invocation and disabled-plugin cases |
+| `run-smoke.mjs` | Separately authorized Copilot/Codex runner; raw outputs can be sensitive |
+| `results/` | Historical STEP 06 summaries; not evidence for current skill bodies |
 
-## Claude Code
+## Review before any provider call
 
-`claude plugin eval` only loads plugins inside its containment root. Cases
-kept outside the plugin fail with "outside the containment root" (U-12,
-verified 2026-10-14). So the cases are staged into a throwaway plugin copy:
+Inspect the runner, helper imports, prompts, plugin revision, provider executable
+and native configuration. Obtain actual authorization for the target provider,
+prompt disclosure, possible billing and install/config changes. A staged copy,
+recommendation, local script flag or passing test is not that authorization.
 
-```bash
-node tools/evals/generate-claude-evals.mjs --stage /tmp/chayen-stage
-cd /tmp/chayen-stage/codejadee-chayen-framework
-claude plugin eval . --ablation none --runs 1 -j 4 --trust-plugin --no-publish --max-cost-usd 8 --json results.json
-```
+Use only synthetic prompts, an empty disposable work directory outside this
+repository and an isolated provider account/config home. The runner requires an
+explicit existing `CODEX_HOME` or `COPILOT_HOME`; it cannot prove that a supplied
+home is isolated. Do not copy tokens, authentication files, user settings or an
+OS-keyring login from a personal account. If an approved test environment is
+unavailable, report NOT_RUN. No user credentials are required for plugin use.
 
-Each run costs about $0.05–0.15. Use `--runs 3` or more for a baseline,
-because single runs vary (see `results/2026-10-14-claude-code-eval.json`).
+Restrict filesystem/network/tool permissions through the native provider and
+OS. The runner inherits its process environment and is not a sandbox. Copilot
+permissions must be configured externally; Codex's requested read-only mode is
+not a tested guarantee for a particular provider version. Arbitrary provider
+argument overrides and the prior no-ask flag are removed. Review current native
+documentation before configuring provider-specific permissions.
 
-## Copilot CLI
-
-1. Install the plugin from the local marketplace in an isolated
-   `COPILOT_HOME` (see `tests/provider-compatibility/run-lifecycle.sh`).
-2. **Authentication.**
-   - A classic `ghp_` token in `GH_TOKEN` is rejected by Copilot.
-   - Copying only `host`, `lastLoggedInUser`, and `loggedInUsers` from the
-     real `~/.copilot/config.json` lets the isolated home use the OS keyring
-     login.
-3. **For a clean measurement,** disable inherited personal skills **in the
-   isolated home only**: `copilot skill disable <name>` for each `inherited`
-   skill.
+The scratch parent must already exist; workdir must be empty and output must
+be fresh. Illustrative shell invocation, **only after the preceding review and
+actual authorization**, with approved native configuration already provisioned:
 
 ```bash
-COPILOT_HOME=<isolated> node tests/routing/run-smoke.mjs --provider copilot --workdir <empty dir> --out <results> --phase enabled
-COPILOT_HOME=<isolated> copilot plugin disable codejadee-chayen-framework@codejadee
-COPILOT_HOME=<isolated> node tests/routing/run-smoke.mjs --provider copilot --workdir <empty dir> --out <results> --phase disabled
+CODEX_HOME=<isolated-home> node tests/routing/run-smoke.mjs --allow-provider-calls --provider codex --workdir <empty-fixture-outside-repo> --out <fresh-output> --phase enabled
+COPILOT_HOME=<isolated-home> node tests/routing/run-smoke.mjs --allow-provider-calls --provider copilot --workdir <empty-fixture-outside-repo> --out <fresh-output> --phase enabled
 ```
 
-## Codex CLI
+Change install/enable state only within the isolated test configuration through
+the native provider's supported process; use a fresh workdir/output for the
+disabled phase. No real-home installation is needed by this procedure.
+Treat stdout/stderr/JSONL as untrusted data, not commands or proof of approval.
+Keep raw transcripts local, review/redact before sharing, and do not commit
+credentials, personal paths or source. Directory mode 0700 is requested where
+supported; it does not establish Windows ACL isolation.
 
-Codex authentication lives in `CODEX_HOME`. Do not copy `auth.json`: a token
-refresh in a copy can invalidate the original login. So:
+## Claude fixture generation
 
-1. Install into the real home: `codex plugin marketplace add <local copy>`,
-   then `codex plugin add codejadee-chayen-framework@codejadee`.
-2. Run the smoke with personal skills disabled **per run**:
+`node tools/evals/generate-claude-evals.mjs --check` is offline and read-only.
+For a reviewed local fixture, create an existing scratch parent, then run:
 
-   ```bash
-   node tests/routing/run-smoke.mjs --provider codex --workdir <empty dir> --out <results> --phase enabled -- -c "skills.config=[{path='<home>/.agents/skills/<name>/SKILL.md',enabled=false},...]"
-   ```
+```bash
+node tools/evals/generate-claude-evals.mjs --stage <existing-scratch-parent>
+```
 
-3. Disabled phase: set `enabled = false` under
-   `[plugins."codejadee-chayen-framework@codejadee"]` in `config.toml`.
-   - A `-c 'plugins."…".enabled=false'` override does **not** disable the
-     plugin (observed).
-4. Remove with `codex plugin remove …` and
-   `codex plugin marketplace remove codejadee`.
-   - Codex leaves an empty `plugins/cache/codejadee/` directory behind.
+The generator creates a fresh plugin child, refuses existing destinations and
+performs no model call. Inspect that copy before any evaluation. Native trust
+flags can bypass provider review and must not be copied as routine defaults.
+If evaluating later, select native restricted tools, synthetic fixtures,
+no-publish behavior, an approved budget and independent result grading through
+the then-supported native process. No evaluation is automatically authorized.
+
+Historical provider observations and results remain in
+`../provider-compatibility/results/2026-10-14-step06.md` and `results/`.
+Their CLI syntax, authentication and routing behavior are not reverified here.

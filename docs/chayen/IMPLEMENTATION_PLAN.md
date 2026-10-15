@@ -28,7 +28,7 @@ change the shape of the steps after them. Any re-plan is recorded in
 | 17 | Domains 17 and 18 capabilities (as executed) | New `chayen-ai-engineering` (user-approved, L0 cap raised to 5,500, D-037) with 8 recipes and an AI tooling reference (D17 10/10, plus CAP-18-010); the other nine D18 records in existing skills, with two new recipes (policy as code, access reviews) and six extended ones (D18 10/10); 43 recipe cases; 7 trigger cases; two validator self-test fixtures retargeted | REQ-05 (D17, D18), REQ-02..REQ-04, REQ-07..REQ-09 | DONE (pending review) |
 | 18 | Domains 19 and 20 capabilities (as executed) | D19 in backend, architecture, data, and frontend (4 new recipes, 4 extended; frontend description names browser extensions); D20 in `chayen-ai-engineering` (3 new recipes, 2 extended; description names agent skills); all 206 capabilities IMPLEMENTED (D-038); 35 recipe cases; 7 trigger cases; seven validator self-test fixtures retargeted | REQ-05 (D19, D20), REQ-02..REQ-04, REQ-07..REQ-09 | DONE (pending review) |
 | 19 | Engineering coverage audit (as executed) | `docs/chayen/ENGINEERING_COVERAGE_AUDIT.md`; `tools/catalog/audit-coverage.mjs` (ten static criteria per capability); 9 recipe gaps fixed; 206/206 pass static criteria, 0/206 VERIFIED | REQ-05, REQ-08, REQ-10 | DONE (pending review) |
-| 20 | .NET technology pack (as executed) | `catalog/technology-capabilities.yaml` (22 C# and ASP.NET Core capabilities); 12 new and 2 changed technology references in 6 existing skills; `tools/catalog/check-technology.mjs` (V-23) with 14 negative controls; 57 technology cases; 7 trigger cases; .NET fact checks `tests/technology/dotnet/` (31/31 PASS); `docs/chayen/TECHNOLOGY_COVERAGE.md` (D-039) | STK-01, REQ-07, REQ-08, REQ-10 | DONE (pending review) |
+| 20 | .NET technology pack (as executed) | `catalog/technology-capabilities.yaml` (22 C# and ASP.NET Core capabilities); 12 new and 2 changed technology references in 6 existing skills; `tools/catalog/check-technology.mjs` (V-23) with 14 negative controls; 57 technology cases; 7 trigger cases; .NET fact checks `tests/technology/dotnet/` (32/32 PASS); `docs/chayen/TECHNOLOGY_COVERAGE.md` (D-039) | STK-01, REQ-07, REQ-08, REQ-10 | DONE (pending review) |
 | 21 | Angular and shared TypeScript/JavaScript technology support (user-directed, D-040) | 14 Angular and 8 shared TS/JS sections in existing skills; 52 new technology cases; 8 trigger cases; 9 new mutation controls; V-23 validation; 8 TS/JS framework facts PASS, 14 Angular facts NOT_RUN; coverage/progress updated | STK-02, STK-04, REQ-07, REQ-08, REQ-10 | DONE (pending review) |
 | 22 | React and Next.js technology guidance (user-directed, D-041) | 8 React and 8 Next.js capabilities; 11 new references in existing skills; 40 evaluation cases, 8 trigger prompts, 8 mutation controls; V-23 validation; 3 synthetic boundary checks PASS, 13 NOT_RUN; coverage/progress | STK-05, STK-06, REQ-07, REQ-08, REQ-09, REQ-10 | DONE (pending review) |
 | 23 | Vue, Nuxt, and Vite engineering guidance (user-directed, D-042) | 7 Vue, 7 Nuxt, 4 Vite capabilities; 10 new references; 44 cases, 8 trigger prompts, 9 mutation controls; V-23 validation; 2 supporting JS checks PASS, 16 NOT_RUN; coverage/progress | STK-07, STK-08, STK-09, REQ-07, REQ-08, REQ-09, REQ-10 | DONE (pending review) |
@@ -300,3 +300,22 @@ STEP 29 validation evidence. Six automated gate groups and 132/132 validator
 tests PASS. Live agent/provider evaluations remain NOT_RUN (R-51). No new
 entry skill, metadata budget change, dependency, server, scheduler or runtime.
 STEP 28 remains PARTIAL; its gaps are not silently closed. STOP after STEP 29.
+
+### Step 30 — Security hardening (user-directed)
+
+**DONE (pending review; offline security scope only).** Review both manifests,
+all 13 entry skills, all 221 references/templates, three marketplaces,
+developer scripts/imports, links, dependency declarations and optional
+executables. Model all ten requested threats; preserve native instruction and
+permission priority and actual approval evidence. Add SECURITY_MODEL.md,
+THREAT_MODEL.md and PLUGIN_TRUST_REVIEW.md with explicit limitations.
+
+Harden entry precedence, mutation/staging paths and linked inputs, parser/eval
+metadata handling and optional provider opt-in/fresh-fixture boundaries. Add
+V-25 static preflight and 32 offline security regressions. Eight automated gate
+groups PASS, including 132 validator tests; 23 JavaScript and one shell syntax
+checks PASS. No provider/model/install/network, technology runtime, advisory or
+native permission test was executed; R-52 remains OPEN. No hooks, background
+process, telemetry, credentials requirement, upload or runtime dependency.
+Acceptance/catalog statuses remain unchanged; STEP 28 stays PARTIAL. STOP after
+STEP 30; no later step or external action is authorized by this implementation.

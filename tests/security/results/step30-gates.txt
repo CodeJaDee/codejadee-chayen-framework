@@ -1,0 +1,10 @@
+PASS  G-SEC offline security profile (V-25): Provider behavior, live links, dependency advisories and runtime defenses NOT_RUN; static PASS is not a security guarantee.
+PASS  G-SEC-T offline security boundary regressions: ℹ duration_ms 981.2613
+PASS  G-01 G-02 G-04..G-10 package, skills, references, catalog alignment: 0 error(s), 5 warning(s), root=C:\Users\pratya_s\source\repos\@Codejadee\codejadee-chayen-framework\codejadee-chayen-framework
+PASS  G-03 catalog integrity (V-11): PASS: 0 errors, 0 warning(s)
+PASS  G-03b technology catalog (V-23): 0 error(s); 108 technology capabilities, root=C:\Users\pratya_s\source\repos\@Codejadee\codejadee-chayen-framework\codejadee-chayen-framework
+PASS  G-03c composite workflows and templates (V-24): 0 error(s); workflow checks are static, agent/provider behavior NOT_RUN
+PASS  G-11 trigger eval cases in sync: Claude eval cases up to date: 182 cases, 433 files.
+PASS  G-13 validator self-tests: 132/132 passed
+
+All automated gates passed

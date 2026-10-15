@@ -12,6 +12,8 @@ import { spawnSync } from "node:child_process";
 
 const repo = path.resolve(import.meta.dirname, "..", "..");
 const steps = [
+  ["G-SEC offline security profile (V-25)", "tools/validate/check-security.mjs", []],
+  ["G-SEC-T offline security boundary regressions", "tests/security/boundaries.test.mjs", []],
   ["G-01 G-02 G-04..G-10 package, skills, references, catalog alignment", "tools/validate/validate-package.mjs", []],
   ["G-03 catalog integrity (V-11)", "tools/catalog/check-catalog.mjs", []],
   ["G-03b technology catalog (V-23)", "tools/catalog/check-technology.mjs", []],
@@ -21,12 +23,17 @@ const steps = [
 ];
 let failed = 0;
 for (const [label, script, args] of steps) {
-  const r = spawnSync(process.execPath, [path.join(repo, script), ...args], { encoding: "utf8", cwd: repo });
+  const nodeArgs = script.endsWith(".test.mjs") ? ["--test", path.join(repo, script)] : [path.join(repo, script), ...args];
+  const r = spawnSync(process.execPath, nodeArgs, { encoding: "utf8", cwd: repo, timeout: 300_000 });
   const out = `${r.stdout}${r.stderr}`.trim().split("\n");
   const ok = r.status === 0;
   if (!ok) failed++;
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}: ${out.at(-1)}`);
   if (!ok) for (const l of out.filter((x) => /^(ERROR|FAIL)/.test(x)).slice(0, 10)) console.log(`        ${l}`);
+  if (!ok && script.endsWith("check-security.mjs")) {
+    console.log("Security preflight failed; remaining gates NOT_RUN. Review source before continuing.");
+    break;
+  }
 }
 console.log(failed ? `\n${failed} gate group(s) failed` : "\nAll automated gates passed");
 process.exit(failed ? 1 : 0);
