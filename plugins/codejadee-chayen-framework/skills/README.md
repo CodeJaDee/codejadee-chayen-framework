@@ -41,6 +41,12 @@ testing, and devops. Version and selected-builder evidence distinguish plain
 Vue, Nuxt context, and Vite configuration; SSR/private-config and existing
 manager/test conventions remain explicit. No additional entry skill is added.
 
+SQL Server (12) adds topic references in data: T-SQL and procedures, plans,
+Query Store and indexes, locking and transactions, schema, security and
+auditing, backup and maintenance, plus EF Core, Dapper, and ADO.NET data
+access recipes. The engine and provider are detected first; PostgreSQL
+syntax is never applied, and production inspection stays read-only.
+
 | Skill | Scope |
 |---|---|
 | `chayen-repository` | Read-only repository intelligence: profile, dependencies, change impact, history and ownership, technical debt and its proposed priority, legacy assessment, unknowns |

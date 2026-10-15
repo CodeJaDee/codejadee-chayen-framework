@@ -44,3 +44,9 @@ also includes the RF/NF runner definitions; it does not execute framework apps.
 Step 23 adds nine Vue/Nuxt/Vite controls for inventory, missing/orphan sections,
 version notes, case mapping, and fact references. The baseline copies the
 VF/UF/BF runner definitions for static checking, not framework execution.
+
+Step 26 adds ten SQL Server controls: inventory, missing and orphan sections,
+version notes, case mapping, fact references, and four V-23.10 data access
+controls (a missing recipe topic, a driver API or package the fixture does
+not reference, a wrong recipe case). The baseline also copies the SQL Server
+runner and its fixture project for static checks; nothing is built or run.

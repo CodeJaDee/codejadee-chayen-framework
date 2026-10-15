@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 23 — Vue, Nuxt, and Vite engineering guidance |
+| Last executed step | 26 — Microsoft SQL Server guidance and data access recipes (Steps 24–25 unrecorded, R-45) |
+| Step 26 status | DONE (pending review; SQL Server 12/12 IMPLEMENTED, 0 VERIFIED; V-23 PASS incl. V-23.10 data access recipes; DR-01..03 driver references PASS; SF-01..27 PASS on SQL Server 2025 Express LocalDB; 5/5 gate groups, 104/104 self-tests; D-043 layout PROPOSED) |
 | Step 23 status | DONE (pending review; 18/18 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 94/94 self-tests; 2 supporting JS checks PASS, 16 NOT_RUN; frontend/backend target warnings at 213/202 lines; D-042 layout PROPOSED) |
 | Step 22 status | DONE (pending review; 16/16 new capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 5/5 gate groups, 85/85 self-tests; 3 synthetic boundary checks PASS, 13 NOT_RUN; one 206-line frontend target warning; D-041 layout PROPOSED) |
 | Step 21 status | DONE (pending user review; 22/22 new technology capabilities IMPLEMENTED, 0 VERIFIED; V-23 PASS; 8 TS/JS facts PASS, 14 Angular facts NOT_RUN; automated gates 5/5, self-tests 77/77; D-040 layout PROPOSED) |
@@ -28,7 +29,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after Step 23; await user direction. D-042 layout review pending. All 206 engineering and 78 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Framework/browser/artifact and agent evaluations remain NOT_RUN; Step 23 JS exposure counterexamples are separate (R-43, R-44). |
+| Next step | STOP after Step 26; await user direction. Confirm Steps 24–25 (R-45); D-043 layout review pending. All 206 engineering and 90 technology capabilities IMPLEMENTED in 13 skills (L0 5,485 / 5,500), 0 VERIFIED. Agent behaviour/trigger evaluations and non-Express SQL Server platforms remain NOT_RUN (R-46). |
 | Commits made by agent | None |
 
 ---
@@ -2495,3 +2496,146 @@ Repository-relative paths; generated evaluations listed individually.
 **Runtime Verification:** Verified for executed validators and supporting
 JavaScript counterexamples. Framework/browser/artifact behavior remains
 NOT_RUN. STEP 23 ends here.
+
+
+
+## Step 26 — Microsoft SQL Server guidance and data access recipes
+
+- **Date:** 2026-10-15
+- **Status:** DONE (pending user review). STOP after STEP 26.
+- **Result:** SQL Server 12/12 IMPLEMENTED and V-23 validated; EF Core SQL
+  Server provider, Dapper, and ADO.NET data access recipes added and checked
+  by the new V-23.10. ORM/driver references resolve (DR-01..03 PASS). 27/27
+  engine and ORM facts PASS on a disposable LocalDB database. 0 VERIFIED.
+  Report: [TECHNOLOGY_COVERAGE.md](TECHNOLOGY_COVERAGE.md) §13.
+
+### Evidence reviewed and work performed
+
+- Read BUILD_CONTRACT, IMPLEMENTATION_PLAN, PROGRESS, the technology catalog
+  and checker, `chayen-data` SKILL.md and its references (existing
+  `sql-server.md`, `efcore-migrations.md`), the backend's
+  `aspnetcore-data-access.md`, the .NET fact runner, case/trigger/mutation
+  formats, and the validators. The working tree was clean at the start.
+- **Step numbering:** PROGRESS ended at Step 23; no record of Steps 24 or 25
+  exists (`tests/technology/nitro-elysia/results` is an empty, untracked
+  folder, left untouched). Step 26 was executed as instructed; nothing was
+  inferred or done for Steps 24–25 (R-45).
+- **References (chayen-data):** expanded `sql-server.md` with engine and
+  provider detection, a T-SQL-versus-PostgreSQL table, and the read-only
+  production rule (existing content kept). Added `sqlserver-tsql.md`,
+  `sqlserver-query-tuning.md`, `sqlserver-concurrency.md`,
+  `sqlserver-schema-security.md`, `sqlserver-operations.md` (12 capability
+  sections) and `sqlserver-data-access.md` (three recipes, each covering the
+  ten required topics, with steps, a verify rule, and a Driver references
+  table). SKILL.md: workflow step 1 sentence and six References rows (183
+  lines). Backend `aspnetcore-data-access.md`: one pointer sentence. No
+  description, skill, or L0 change (5,485 / 5,500); 191 references.
+- **Official documentation:** 23 version-specific claims were fact-checked
+  against Microsoft Learn, the EF Core docs, the Dapper repository, and
+  SqlClient release notes on 2026-10-15; 18 confirmed as stated, 5 narrowed
+  and corrected in the guidance (TECHNOLOGY_COVERAGE §14).
+- **Catalog and checker:** pack `sqlserver` and TECH-SQLSERVER-001..012;
+  `check-technology.mjs` gains the exact Step 26 inventory, the `sqlserver-`
+  section prefix, `SF` fact IDs, and V-23.10 (recipe sections, topics,
+  steps, verify rule, recipe cases, packages and APIs present in the
+  compiled fixture).
+- **Fact fixture:** `tests/technology/sqlserver` (xUnit, .NET 10; EF Core
+  SQL Server 10.0.8, Dapper 2.1.66, Microsoft.Data.SqlClient 6.1.1, all from
+  the local NuGet cache). It runs only against LocalDB or a loopback server,
+  in a database it creates and drops. The runner created a dedicated LocalDB
+  instance `ChayenFacts`; the user's other instances were not touched. One
+  early run failed during setup (a T-SQL collation conflict in the
+  fixture's own environment query) and left one empty fact database in that
+  instance; it was dropped and the fixture now cleans up on setup failure.
+  After every later run, 0 fact databases remained.
+- **Corrections from execution:** the first run gave 25/27. SF-01 showed
+  `ILIKE` fails with error 4145, not a syntax error; SF-11 showed that a
+  trivial plan records no missing-index request. Both were corrected in the
+  test and stated in the guidance; no assertion was weakened to pass.
+- **Cases:** 39 technology cases (27 positive, 12 negative; total 232),
+  9 data access recipe cases (6 positive, 3 negative), 7 trigger prompts
+  (total 173 cases, 412 files), 10 mutation controls (total 104).
+- **Docs:** TECHNOLOGY_COVERAGE (header, summary, mapping, §13, §14, generated
+  table), ACCEPTANCE_MATRIX (STK-03 IMPLEMENTED, summary), DECISIONS D-043,
+  ISSUES R-45, R-46 and a DF-01 note, IMPLEMENTATION_PLAN, four READMEs.
+
+### Decisions, risks, and open questions
+
+- **D-043:** user-directed scope ACCEPTED; layout and fixture PROPOSED. The
+  fixture's packages are developer-only test dependencies (BC-22), never
+  shipped.
+- **R-45:** Steps 24–25 are unrecorded. Please confirm whether they were
+  skipped, renumbered, or done elsewhere.
+- **R-46:** facts cover SQL Server 2025 Express only; Enterprise/Standard,
+  Azure SQL Database, Managed Instance, and older versions are stated from
+  documentation. Routing of SQL Server prompts among data, performance,
+  security, and backend is unmeasured; agent evaluations NOT_RUN.
+- **DF-01 (existing):** on this checkout the eval sync check reported 231
+  stale files before any Step 26 change, because of CRLF line endings.
+  Regenerating made the gate pass; `git diff` shows no content change for
+  those files.
+- **Local state left on the machine:** LocalDB instance `ChayenFacts`
+  (remove with `sqllocaldb stop ChayenFacts && sqllocaldb delete ChayenFacts`);
+  an IDE-generated, git-ignored `obj/` folder in the fixture.
+- No production or shared database access, dependency added to the plugin,
+  commit, push, release, or later-step work.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-tsql.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-query-tuning.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-concurrency.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-schema-security.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-operations.md` |
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-data-access.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/references/sql-server.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/chayen-backend/references/aspnetcore-data-access.md` |
+| Modified | `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `catalog/technology-capabilities.yaml` |
+| Modified | `tools/catalog/check-technology.mjs` |
+| Modified | `tools/catalog/README.md` |
+| Modified | `tools/validate/run-validator-tests.mjs` |
+| Created | `tests/technology/sqlserver/run-fact-checks.mjs` |
+| Created | `tests/technology/sqlserver/README.md` |
+| Created | `tests/technology/sqlserver/results/step26-fact-checks.md` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/FactDb.cs` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/Model.cs` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/TsqlFacts.cs` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/PlanFacts.cs` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/ConcurrencyFacts.cs` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/SchemaSecurityFacts.cs` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/OperationsFacts.cs` |
+| Created | `tests/technology/sqlserver/fixture/SqlServerFacts/DriverReferences.cs` |
+| Created | `tests/skills/sqlserver-data-access-cases.json` |
+| Modified | `tests/skills/technology-cases.json` |
+| Modified | `tests/skills/trigger-cases.json` |
+| Modified | `tests/skills/README.md` |
+| Modified | `tests/catalog/technology-mutations.json` |
+| Modified | `tests/catalog/README.md` |
+| Created | `tests/evals/claude/{pos-data-sqlserver-deadlock, pos-data-sqlserver-query-store, pos-data-sqlserver-temporal, pos-data-sqlserver-least-privilege, pos-data-dapper-varchar-scan, pos-data-sqlserver-restore-simple, neg-explain-sqlserver-vs-postgres}/` (generated) |
+| Regenerated, no content change | 231 existing files under `tests/evals/claude/` (LF instead of CRLF; DF-01) |
+| Modified | `docs/chayen/TECHNOLOGY_COVERAGE.md`, `ACCEPTANCE_MATRIX.md`, `DECISIONS.md`, `ISSUES.md`, `IMPLEMENTATION_PLAN.md`, `PROGRESS.md` |
+| Deleted | None |
+
+### Tests and observed outcomes
+
+| Test | Command | Result |
+|---|---|---|
+| Technology catalog (12/12) | `node tools/catalog/check-technology.mjs --write-doc`, then `node tools/catalog/check-technology.mjs` | PASS: 0 errors; 90 records match the Steps 20–23 and 26 inventories; 12/12 SQL Server sections with ordered anatomy; 232 cases; 27 SF facts linked; V-23.10 PASS (3 recipes × 10 topics, 3 driver packages, 9 recipe cases); coverage table regenerated |
+| ORM/driver references and engine facts | `node tests/technology/sqlserver/run-fact-checks.mjs --report tests/technology/sqlserver/results/step26-fact-checks.md` | PASS, exit 0: 30 PASS, 0 FAIL, 0 NOT_RUN (DR-01..03, SF-01..27) on `(localdb)\ChayenFacts`, SQL Server 2025 Express 17.0.4025.3, compatibility level 170, `SQL_Latin1_General_CP1_CI_AS`, RCSI off, SIMPLE recovery. MEASURED: N+1 11 vs 1 vs 2 commands; 574 vs 2 logical reads; fragmentation 99.1% vs 0.0% |
+| Package and content validation | `node tools/validate/validate-package.mjs` | PASS: 0 errors, 2 existing warnings (frontend 213, backend 202 lines above the 200 target); 191 references; L0 5,485 / 5,500 |
+| Trigger artifacts | `node tools/evals/generate-claude-evals.mjs`, then `--check` | PASS after regeneration: 173 cases, 412 files. Before any change, `--check` reported 231 stale files on this CRLF checkout (DF-01). Agent trigger execution NOT_RUN |
+| Automated regression | `node tools/validate/validate-all.mjs` | PASS, exit 0: 5/5 gate groups; validator self-tests 104/104, including all 10 Step 26 controls |
+| Engineering coverage | `node tools/catalog/audit-coverage.mjs` | PASS, exit 0: 206/206 pass all 10 criteria; engineering catalog unchanged |
+| Native manifests | `claude plugin validate --strict plugins/codejadee-chayen-framework`; `claude plugin validate --strict .claude-plugin/marketplace.json` (Claude Code 2.1.270) | PASS, exit 0 for both |
+| Diff hygiene | `git -c core.safecrlf=false diff --check` | PASS: no whitespace errors |
+| Other editions and platforms | Enterprise/Standard, Azure SQL Database, Managed Instance, older versions | NOT_RUN: not available here (R-46) |
+| Agent behaviour/trigger evaluations and human review | G-11/G-12/G-15 | NOT_RUN; no capability promoted to VERIFIED |
+
+**Runtime Verification:** Verified for the validators and for SQL Server
+engine/ORM/driver behaviour on one local, disposable LocalDB database.
+Agent behaviour and other platforms remain NOT_RUN. STEP 26 ends here.

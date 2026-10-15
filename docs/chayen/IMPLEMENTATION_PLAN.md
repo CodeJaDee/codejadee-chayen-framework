@@ -241,3 +241,18 @@ plain Vue/Nuxt distinctions, conventions, SSR/browser/private-config boundaries,
 selected builder and configured test/package-manager tooling. Add recipes,
 examples, evaluations, validation, coverage and progress. D-042 and
 TECHNOLOGY_COVERAGE §11 record execution and limits. STOP after STEP 23.
+
+### Steps 24–25 — not recorded
+
+No prompt, file, or progress entry for Steps 24 and 25 exists in this
+repository. They were not executed or inferred in Step 26 (R-45).
+
+### Step 26 — Microsoft SQL Server guidance (user-directed)
+
+Implement the user's exact 12 SQL Server capabilities and data access recipes
+for the EF Core SQL Server provider, Dapper, and ADO.NET: engine/provider
+detection, no PostgreSQL syntax on SQL Server, no destructive production
+migrations, test-versus-production differences, comparable measurements,
+and read-only production inspection. Validate 12/12, verify ORM/driver
+references, update coverage and progress. D-043 and TECHNOLOGY_COVERAGE §13
+record execution and limits. STOP after STEP 26.

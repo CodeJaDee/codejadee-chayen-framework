@@ -6,8 +6,9 @@
 # the model never reads it. Each record maps a capability to the entry skill
 # and the technology reference section that implements it (D-039).
 #
-# Inventory sources: user Steps 20–23 (2026-10-15), verbatim:
-# 22 .NET, 14 Angular, 8 shared TS/JS, 8 React, 8 Next.js, 7 Vue, 7 Nuxt, 4 Vite.
+# Inventory sources: user Steps 20–23 and 26 (2026-10-15), verbatim:
+# 22 .NET, 14 Angular, 8 shared TS/JS, 8 React, 8 Next.js, 7 Vue, 7 Nuxt, 4 Vite,
+# 12 SQL Server.
 #
 # Check:  node tools/catalog/check-technology.mjs
 # Guide:  docs/chayen/TECHNOLOGY_COVERAGE.md
@@ -15,6 +16,7 @@
 #         node tests/technology/angular-typescript/run-fact-checks.mjs
 #         node tests/technology/react-nextjs/run-fact-checks.mjs (includes synthetic boundary checks)
 #         node tests/technology/vue-nuxt-vite/run-fact-checks.mjs (includes JS exposure counterexamples)
+#         node tests/technology/sqlserver/run-fact-checks.mjs (disposable LocalDB database; driver references)
 #
 # Format: the same restricted YAML subset as engineering-capabilities.yaml
 # (D-021). Reference paths are relative to catalog.plugin_root.
@@ -97,6 +99,14 @@ packs:
     expected_capabilities: 4
     detection: "Selected Vite build from scripts/dependencies/config owner, resolved Vite/plugins/runtime and runner"
     fact_checks: tests/technology/vue-nuxt-vite/run-fact-checks.mjs
+    status: IMPLEMENTED
+
+  - id: sqlserver
+    title: "Microsoft SQL Server and Azure SQL engineering, with EF Core, Dapper, and ADO.NET data access recipes"
+    technologies: [sqlserver]
+    expected_capabilities: 12
+    detection: "SqlServer EF Core provider, Microsoft.Data.SqlClient, SQL Server connection strings, sqlcmd/.sqlproj, mssql images; then read-only version, edition, compatibility level, collation, isolation, and recovery model"
+    fact_checks: tests/technology/sqlserver/run-fact-checks.mjs
     status: IMPLEMENTED
 
 capabilities:
@@ -1844,4 +1854,280 @@ capabilities:
     fact_checks: [BF-04]
     verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; configured framework/build/browser tests; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
     verification_evidence: "Step 23: mapped section and tc-vite-test-integration-* specifications; tests/technology/vue-nuxt-vite/results/step23-fact-checks.md records executed supporting JS checks and NOT_RUN framework limits. Behavior/trigger evaluations NOT_RUN; synthetic exposure checks do not prove Nuxt/Vite privacy."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-001
+    name: sqlserver-tsql
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Write, port, and review T-SQL for the detected SQL Server version, compatibility level, and collation, using T-SQL forms instead of PostgreSQL syntax, deterministic ordering, and typed parameters."
+    applies_when: "Queries, views, functions, scripts, or raw SQL inside EF Core, Dapper, or ADO.NET run on SQL Server or Azure SQL, or SQL is ported to SQL Server."
+    not_when: "The engine is PostgreSQL, MySQL, or SQLite, or the work is procedure design or plan tuning."
+    inputs:
+      - "Engine, version, compatibility level, and collation"
+      - "The statements and their callers"
+      - "Expected results"
+    outputs:
+      - "T-SQL valid for the detected version and level"
+      - "Local or disposable test runs with results"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-tsql.md
+    section: "Dialect-correct T-SQL (sqlserver-tsql)"
+    engineering_capabilities: [CAP-09-003, CAP-09-006]
+    fact_checks: [SF-01, SF-02, SF-03, SF-04]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-01, SF-02, SF-03, SF-04 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-tsql-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-01, SF-02, SF-03, SF-04 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-002
+    name: sqlserver-stored-procedures
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Create, change, review, and call SQL Server stored procedures, functions, triggers, and dynamic SQL with sp_executesql parameters, ownership-chaining-aware permissions, and parameter sniffing handled from measurements."
+    applies_when: "Procedures, functions, triggers, or T-SQL dynamic SQL are created, changed, reviewed, or called on SQL Server or Azure SQL."
+    not_when: "The project keeps SQL in the application without procedures, or only a plan needs reading."
+    inputs:
+      - "Procedure conventions and deployment tool"
+      - "Callers and their parameter types"
+      - "Permission model"
+    outputs:
+      - "Procedure change deployed through the project's tool"
+      - "Tests for results, rollback, injection input, and a low-privilege caller"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-tsql.md
+    section: "Stored procedures and dynamic SQL (sqlserver-stored-procedures)"
+    engineering_capabilities: [CAP-09-003, CAP-11-007]
+    fact_checks: [SF-05, SF-06]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-05, SF-06 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-stored-procedures-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-05, SF-06 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-003
+    name: sqlserver-query-plans
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Diagnose slow SQL Server queries from estimated, cached, or actual plans and comparable logical-read measurements, including implicit conversions, row estimate gaps, and N+1 query shapes from ORMs."
+    applies_when: "A SQL Server query is slow, reads too much, differs between environments, or an ORM query's SQL must be inspected."
+    not_when: "Regression history is needed first, the fix is an index decision, or the engine is not SQL Server."
+    inputs:
+      - "The exact statement and parameter types"
+      - "Read-only plan access or a local copy"
+      - "Latency target"
+    outputs:
+      - "Root cause from the plan"
+      - "Before and after measurements on the same data"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-query-tuning.md
+    section: "Execution plans (sqlserver-query-plans)"
+    engineering_capabilities: [CAP-09-003, CAP-12-005]
+    fact_checks: [SF-07, SF-08, SF-09]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-07, SF-08, SF-09 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-query-plans-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-07, SF-08, SF-09 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-004
+    name: sqlserver-query-store
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Use SQL Server Query Store to find regressed queries, compare plans and runtime statistics across windows, and choose durable fixes before approved plan forcing or hints."
+    applies_when: "A SQL Server or Azure SQL query regressed after a deployment, upgrade, or statistics change, or top consumers over time are needed."
+    not_when: "Query Store is off and cannot be enabled, or a single local query needs a plan review."
+    inputs:
+      - "Query Store state and retention"
+      - "The regression window"
+      - "Deployment history"
+    outputs:
+      - "Query and plan IDs with compared runtime statistics"
+      - "Fix or approved forcing with a removal condition"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-query-tuning.md
+    section: "Query Store history and regressions (sqlserver-query-store)"
+    engineering_capabilities: [CAP-09-003, CAP-12-001]
+    fact_checks: [SF-10]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-10 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-query-store-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-10 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-005
+    name: sqlserver-index-tuning
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Design, consolidate, add, or remove SQL Server indexes from measured queries, treating missing-index suggestions as hints and stating write cost, edition limits, and build plans."
+    applies_when: "SQL Server indexes are added, changed, consolidated, or removed, or missing-index suggestions are reviewed."
+    not_when: "The query has not been measured yet, or the table is being designed from scratch."
+    inputs:
+      - "Measured target queries"
+      - "Existing indexes and usage"
+      - "Edition and table size"
+    outputs:
+      - "Index change in the migration tool"
+      - "Before and after reads and write cost"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-query-tuning.md
+    section: "Index design and tuning (sqlserver-index-tuning)"
+    engineering_capabilities: [CAP-09-004, CAP-09-003]
+    fact_checks: [SF-11]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-11 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-index-tuning-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-11 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-006
+    name: sqlserver-locking-deadlocks
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Diagnose and fix SQL Server blocking, lock escalation, and deadlocks from read-only evidence, consistent access order, batching below escalation thresholds, and whole-transaction retries."
+    applies_when: "SQL Server sessions block each other, deadlocks or lock timeouts occur, or a large batch runs beside live traffic."
+    not_when: "A new operation's isolation or boundary is being chosen, or contention is outside the database."
+    inputs:
+      - "Blocking or deadlock evidence"
+      - "Statements and their order"
+      - "Isolation settings"
+    outputs:
+      - "Fix with a two-session reproduction"
+      - "Batching plan and retry path"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-concurrency.md
+    section: "Blocking, lock escalation, and deadlocks (sqlserver-locking-deadlocks)"
+    engineering_capabilities: [CAP-09-005, CAP-12-005]
+    fact_checks: [SF-12, SF-13]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-12, SF-13 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-locking-deadlocks-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-12, SF-13 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-007
+    name: sqlserver-transactions
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Choose SQL Server transaction boundaries, isolation levels, snapshot settings, XACT_ABORT error handling, rowversion concurrency, and retry strategies from the environment's actual isolation settings."
+    applies_when: "Transaction boundaries, isolation, snapshot settings, rollback behaviour, retries, or rowversion concurrency are decided on SQL Server."
+    not_when: "An existing deadlock is being diagnosed, or the operation spans services."
+    inputs:
+      - "Invariant to protect"
+      - "Isolation settings per environment"
+      - "Data access library and retry policy"
+    outputs:
+      - "Transaction design and code"
+      - "Race, rollback, and retry tests"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-concurrency.md
+    section: "Transactions and isolation (sqlserver-transactions)"
+    engineering_capabilities: [CAP-09-005, CAP-06-010]
+    fact_checks: [SF-14, SF-15, SF-16, SF-17]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-14, SF-15, SF-16, SF-17 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-transactions-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-14, SF-15, SF-16, SF-17 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-008
+    name: sqlserver-schema-evolution
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Plan and review SQL Server schema changes as expand, migrate, contract steps, classifying locking and data effects per edition and revalidating constraints after cleanup."
+    applies_when: "Columns, constraints, tables, or indexes change on SQL Server while an application version runs, or a migration script is reviewed."
+    not_when: "The change is not modelled yet, or the target engine is not SQL Server."
+    inputs:
+      - "The schema change and migration tool"
+      - "Edition per environment"
+      - "Table sizes and running code"
+    outputs:
+      - "Phased migration with rollback"
+      - "Apply, rollback, re-apply results on a disposable database"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-schema-security.md
+    section: "Online schema changes (sqlserver-schema-evolution)"
+    engineering_capabilities: [CAP-09-002, CAP-09-007]
+    fact_checks: [SF-18, SF-19]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-18, SF-19 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-schema-evolution-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-18, SF-19 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-009
+    name: sqlserver-security
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Design and test least-privilege SQL Server principals, grants, procedure permissions, dynamic SQL safety, and requested data protection such as row-level security, masking, Always Encrypted, or TDE."
+    applies_when: "SQL Server principals, roles, grants, dynamic SQL injection, row-level security, masking, or encryption features are designed or reviewed."
+    not_when: "A codebase-wide injection or secrets review, or server and identity provisioning."
+    inputs:
+      - "Application principals and grants"
+      - "Sensitive data and tenancy rules"
+      - "Requested protection features"
+    outputs:
+      - "Grant scripts in the deployment tool"
+      - "Impersonation tests for allowed and denied operations"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-schema-security.md
+    section: "Permissions and data protection (sqlserver-security)"
+    engineering_capabilities: [CAP-11-006, CAP-11-007]
+    fact_checks: [SF-20, SF-21, SF-22]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-20, SF-21, SF-22 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-security-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-20, SF-21, SF-22 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-010
+    name: sqlserver-auditing-temporal
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Implement SQL Server row history with temporal tables, actor capture, audit trails, and tamper evidence by matching each question to the right feature and testing history behaviour."
+    applies_when: "A SQL Server or Azure SQL project needs row history, as-of queries, change auditing, or tamper evidence."
+    not_when: "Application or security event logging, or retention of existing history."
+    inputs:
+      - "Audit questions to answer"
+      - "Version and edition"
+      - "Retention requirements"
+    outputs:
+      - "Temporal or audit configuration through migrations"
+      - "History, as-of, and actor tests"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-schema-security.md
+    section: "Auditing and temporal history (sqlserver-auditing-temporal)"
+    engineering_capabilities: [CAP-09-011, CAP-11-011]
+    fact_checks: [SF-23]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-23 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-auditing-temporal-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-23 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-011
+    name: sqlserver-backup-recovery
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Prove SQL Server backups by restoring to a new name, running integrity and application checks, and measuring restore time and recovery point against RPO and RTO."
+    applies_when: "A SQL Server restore drill, recovery model choice, backup check against RPO and RTO, or restore runbook is needed."
+    not_when: "Backup infrastructure, high availability topology, or a PostgreSQL engine."
+    inputs:
+      - "Recovery model and backup history"
+      - "RPO and RTO"
+      - "A non-production restore target"
+    outputs:
+      - "Measured drill with integrity checks"
+      - "Runbook from what actually ran"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-operations.md
+    section: "Backup and recovery proof (sqlserver-backup-recovery)"
+    engineering_capabilities: [CAP-09-012]
+    fact_checks: [SF-24, SF-25]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-24, SF-25 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-backup-recovery-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-24, SF-25 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
+    status: IMPLEMENTED
+
+  - id: TECH-SQLSERVER-012
+    name: sqlserver-maintenance
+    pack: sqlserver
+    technology: sqlserver
+    purpose: "Review and change SQL Server statistics, index maintenance, integrity checks, and job schedules from measured state, cost, and edition limits rather than fixed thresholds."
+    applies_when: "SQL Server statistics, index rebuilds, integrity checks, log growth, or maintenance schedules are reviewed or changed."
+    not_when: "A single slow query needs tuning, or the platform already manages the maintenance."
+    inputs:
+      - "Existing jobs and schedules"
+      - "Statistics and fragmentation state"
+      - "Edition and scheduler"
+    outputs:
+      - "Maintenance change with schedule"
+      - "Before and after measurements and integrity results"
+    entry_skill: chayen-data
+    reference: skills/chayen-data/references/sqlserver-operations.md
+    section: "Routine maintenance (sqlserver-maintenance)"
+    engineering_capabilities: [CAP-09-004, CAP-09-006]
+    fact_checks: [SF-26, SF-27]
+    verification: "V-23 inventory, mapping, ordered anatomy, cases and fact-ID checks; SQL Server facts SF-26, SF-27 by tests/technology/sqlserver/run-fact-checks.mjs on a disposable local database; G-12/G-11 behavior/trigger evaluations required for VERIFIED."
+    verification_evidence: "Step 26: mapped section and tc-sqlserver-maintenance-* specifications; tests/technology/sqlserver/results/step26-fact-checks.md records facts SF-26, SF-27 on LocalDB (SQL Server 2025 Express), which describe that engine and edition only. Behavior/trigger evaluations NOT_RUN."
     status: IMPLEMENTED

@@ -6,7 +6,9 @@ kind: technology
 Stack detail for the data access recipe in ASP.NET Core. Read
 `aspnetcore-webapi.md` first for the version and the
 conventions. Do not assume EF Core: many .NET projects use Dapper, plain
-ADO.NET, or another library, and some use more than one.
+ADO.NET, or another library, and some use more than one. On SQL Server,
+the data skill's SQL Server data access recipes cover provider translation,
+parameter types, isolation, and plan measurement for the same libraries.
 
 ## Check the repository first
 

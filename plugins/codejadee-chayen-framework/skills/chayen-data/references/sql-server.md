@@ -23,6 +23,57 @@ Azure SQL Managed Instance.
 | Access and migrations | EF Core (`UseSqlServer`), Dapper with `Microsoft.Data.SqlClient`, DbUp, Flyway, SSDT `.sqlproj`, or `sqlpackage` |
 | Conventions | Schema names (`dbo` or feature schemas), PascalCase or snake_case, key types (`int` or `bigint IDENTITY`, `uniqueidentifier`) |
 
+## Detect the engine and provider
+
+Confirm SQL Server from at least one concrete signal before applying any
+SQL Server guidance, and record which signal it was:
+
+| Signal | SQL Server | Not SQL Server |
+|---|---|---|
+| .NET | `Microsoft.EntityFrameworkCore.SqlServer`, `UseSqlServer`/`UseAzureSql`, `Microsoft.Data.SqlClient` or `System.Data.SqlClient` | `UseNpgsql`/`Npgsql`, `UseMySql`, `UseSqlite`, `UseOracle` |
+| Other stacks | Prisma `provider = "sqlserver"`, `mssql`/`tedious`, `mssql+pyodbc` or `mssql-django`, `mssql-jdbc`, `go-mssqldb` | `postgresql`, `pg`, `psycopg`, `mysql2` |
+| Connection strings and tools | `Server=`/`Data Source=` with `Initial Catalog`, `*.database.windows.net`, `(localdb)`, `sqlcmd`, `.sqlproj`, `sqlpackage` | `Host=` with `Port=5432`, `psql`, `pg_dump` |
+| Containers and CI | `mcr.microsoft.com/mssql/server`, Testcontainers `MsSql` | `postgres` images |
+
+When signals disagree (for example SQLite in tests and SQL Server in
+production), name both, treat the production engine as the target, and say
+which test results do not carry over. Then read the version, edition,
+`EngineEdition`, compatibility level, collation, isolation settings,
+recovery model, and Query Store state with read-only queries. Select
+catalog values as separate columns: concatenating catalog columns with
+different collations fails with a collation conflict.
+
+**Production and shared environments:** inspect only with bounded,
+read-only queries (catalog views, DMVs, estimated plans, Query Store), with
+`ApplicationIntent=ReadOnly` (`sqlcmd -K ReadOnly`) where a readable
+secondary exists, and only with access the user provided for that purpose.
+Do the reproduction and every change on a local or disposable database.
+
+## T-SQL, not PostgreSQL
+
+Never write PostgreSQL syntax for SQL Server, including in raw SQL inside
+an ORM:
+
+| PostgreSQL | SQL Server |
+|---|---|
+| `LIMIT n OFFSET m` | `TOP (n)`, or `ORDER BY ... OFFSET m ROWS FETCH NEXT n ROWS ONLY` |
+| `INSERT ... ON CONFLICT` | `UPDATE` then `INSERT` in one transaction with `UPDLOCK, HOLDLOCK`, backed by a unique constraint |
+| `RETURNING` | `OUTPUT inserted.*` (with `INTO` when the table has triggers) |
+| `x::int`, `ILIKE` | `CAST`/`TRY_CAST`; `LIKE` under a case-insensitive collation or an explicit `COLLATE` |
+| `"Name"`, `serial`, `nextval('s')`, `boolean`, `now()` | `[Name]`, `IDENTITY`, `NEXT VALUE FOR s`, `bit`, `SYSUTCDATETIME()` |
+| `jsonb`, `= ANY(@array)` | `nvarchar(max)` with JSON functions (native `json` from SQL Server 2025), a table-valued parameter or `IN` with parameters |
+| `EXPLAIN (ANALYZE)`, `pg_stat_statements`, `VACUUM`, `CREATE INDEX CONCURRENTLY` | Estimated or actual plans, Query Store, statistics and index maintenance, `ONLINE = ON` where the edition supports it |
+
+Equivalents are not always identical: check collation, `NULL` handling,
+and concurrency behaviour, and run the statement on a local SQL Server.
+
+## Topic references
+
+Load at most one SQL Server topic reference for the request: T-SQL and
+procedures, plans and indexes, locking and transactions, schema, security
+and auditing, backup and maintenance, or the EF Core, Dapper, and ADO.NET
+data access recipes. Each is listed in the skill's References table.
+
 ## Guidance
 
 ### Types and keys

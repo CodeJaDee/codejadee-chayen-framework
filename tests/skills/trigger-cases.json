@@ -432,6 +432,83 @@
       "expect": {
         "none": true
       }
+    },
+    {
+      "id": "pos-data-sqlserver-deadlock",
+      "category": "positive",
+      "prompt": "We get SQL Server deadlocks (error 1205) every night between the billing job and the API. Here is the deadlock graph; fix it.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-data-sqlserver-query-store",
+      "category": "positive",
+      "prompt": "Since Tuesday's release the invoice report is five times slower on Azure SQL. Use Query Store to find out which plan changed.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      }
+    },
+    {
+      "id": "pos-data-sqlserver-temporal",
+      "category": "positive",
+      "prompt": "We need to see what a product's price was on any past date in our SQL Server database. Add that history.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-data-sqlserver-least-privilege",
+      "category": "positive",
+      "prompt": "Our API connects to SQL Server as db_owner. Set up least-privilege database roles and grants for it.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      }
+    },
+    {
+      "id": "pos-data-dapper-varchar-scan",
+      "category": "positive",
+      "prompt": "Looking up products by code scans the whole SQL Server table even though Code is an indexed varchar column. Fix our Dapper query.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "pos-data-sqlserver-restore-simple",
+      "category": "positive",
+      "prompt": "Our SQL Server database is in SIMPLE recovery. Can we restore it to 10:42 this morning if something goes wrong? Plan a drill.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      }
+    },
+    {
+      "id": "neg-explain-sqlserver-vs-postgres",
+      "category": "negative",
+      "prompt": "Briefly explain how SQL Server and PostgreSQL differ in their default isolation behaviour, without changing any files.",
+      "expect": {
+        "none": true
+      }
     }
   ]
 }

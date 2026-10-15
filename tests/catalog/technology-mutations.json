@@ -497,6 +497,165 @@
         "validator": "technology",
         "error": "V-23.8 facts"
       }
+    },
+    {
+     "id": "tech26-sqlserver-inventory",
+     "description": "A SQL Server capability is renamed away from the Step 26 inventory",
+     "edits": [
+      {
+       "file": "catalog/technology-capabilities.yaml",
+       "op": "replace",
+       "find": "    name: sqlserver-query-store\n",
+       "with": "    name: sqlserver-query-history\n"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.1 inventory"
+     }
+    },
+    {
+     "id": "tech26-sqlserver-section",
+     "description": "A SQL Server section loses its capability suffix",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-operations.md",
+       "op": "replace",
+       "find": "## Routine maintenance (sqlserver-maintenance)",
+       "with": "## Routine maintenance"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.4 sections"
+     }
+    },
+    {
+     "id": "tech26-sqlserver-orphan",
+     "description": "An unknown SQL Server capability heading is rejected",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-operations.md",
+       "op": "append",
+       "content": "\n## Other (sqlserver-unlisted-operation)\n"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.4 sections"
+     }
+    },
+    {
+     "id": "tech26-sqlserver-version",
+     "description": "A SQL Server section loses its Version notes label",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-tsql.md",
+       "op": "replace",
+       "find": "**Version notes:** `CREATE OR ALTER` needs SQL Server 2016 SP1;",
+       "with": "Version: `CREATE OR ALTER` needs SQL Server 2016 SP1;"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.5 anatomy"
+     }
+    },
+    {
+     "id": "tech26-sqlserver-case-mapping",
+     "description": "sqlserver-maintenance loses its only negative case",
+     "edits": [
+      {
+       "file": "tests/skills/technology-cases.json",
+       "op": "replace",
+       "find": "\"not_applies\": \"sqlserver-maintenance\"",
+       "with": "\"not_applies\": \"sqlserver-backup-recovery\""
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.7 cases"
+     }
+    },
+    {
+     "id": "tech26-sqlserver-fact-reference",
+     "description": "A SQL Server record lists an undefined fact",
+     "edits": [
+      {
+       "file": "catalog/technology-capabilities.yaml",
+       "op": "replace",
+       "find": "    fact_checks: [SF-10]\n",
+       "with": "    fact_checks: [SF-99]\n"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.8 facts"
+     }
+    },
+    {
+     "id": "tech26-data-access-topic",
+     "description": "The Dapper recipe drops a required topic",
+     "edits": [
+      {
+       "file": "plugins/codejadee-chayen-framework/skills/chayen-data/references/sqlserver-data-access.md",
+       "op": "replace",
+       "find": "- **N+1 query risks:** a query per parent row in a loop.",
+       "with": "- A query per parent row in a loop."
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.10 data-access"
+     }
+    },
+    {
+     "id": "tech26-driver-api",
+     "description": "A driver API named by the recipes is no longer used by the compiled fixture",
+     "edits": [
+      {
+       "file": "tests/technology/sqlserver/fixture/SqlServerFacts/DriverReferences.cs",
+       "op": "replace",
+       "find": "table.AsTableValuedParameter(\"dbo.IdList\")",
+       "with": "table"
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.10 data-access"
+     }
+    },
+    {
+     "id": "tech26-driver-package",
+     "description": "A driver package named by the recipes is not referenced by the fixture project",
+     "edits": [
+      {
+       "file": "tests/technology/sqlserver/fixture/SqlServerFacts/SqlServerFacts.csproj",
+       "op": "replace",
+       "find": "    <PackageReference Include=\"Dapper\" Version=\"2.1.66\" />\n",
+       "with": ""
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.10 data-access"
+     }
+    },
+    {
+     "id": "tech26-data-access-case",
+     "description": "A negative recipe case names the wrong recipe",
+     "edits": [
+      {
+       "file": "tests/skills/sqlserver-data-access-cases.json",
+       "op": "replace",
+       "find": "\"not_applies_recipe\": \"ADO.NET recipe\"",
+       "with": "\"not_applies_recipe\": \"Dapper recipe\""
+      }
+     ],
+     "expect": {
+      "validator": "technology",
+      "error": "V-23.10 data-access"
+     }
     }
   ]
 }

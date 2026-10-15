@@ -1,5 +1,5 @@
 {
-  "$comment": "Technology capability evaluation cases (Steps 20–23, D-039..D-042). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
+  "$comment": "Technology capability evaluation cases (Steps 20–23 and 26, D-039..D-043). Positive cases: the request should route to expect.skill, load expect.loads (skill-relative), and apply the section for expect.applies. Negative cases: the capability in expect.not_applies must not be applied; expect.skill is the better fit or none; expect.not_loads, when present, must not be read. context describes the fixture repository the case assumes. Checks are observable behaviour assertions for a human or model grader. Validated by tools/catalog/check-technology.mjs (V-23). Never shipped.",
   "version": 1,
   "cases": [
     {
@@ -2669,6 +2669,663 @@
         "Retains configured Jest transform/alias setup",
         "Does not assume Vite requires Vitest",
         "Runs current tests and production build separately"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-tsql-01",
+      "capability": "sqlserver-tsql",
+      "polarity": "positive",
+      "context": "ASP.NET Core API on SQL Server 2019 (compatibility level 150) using Dapper with SQL strings in repository classes",
+      "prompt": "Our search query uses LIMIT and ILIKE copied from a blog and fails on our database. Rewrite it so it runs here.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-tsql.md",
+        "applies": "sqlserver-tsql"
+      },
+      "checks": [
+        "Confirms SQL Server from the SqlClient package or connection string before rewriting",
+        "Uses TOP or OFFSET/FETCH with a deterministic ORDER BY instead of LIMIT",
+        "Replaces ILIKE with LIKE under the column collation or an explicit COLLATE and explains case sensitivity",
+        "Keeps every value parameterized",
+        "Runs the statement on a local SQL Server or reports NOT_RUN"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-tsql-upsert",
+      "capability": "sqlserver-tsql",
+      "polarity": "positive",
+      "context": "SQL Server 2022 database managed with DbUp scripts; dbo.Inventory has a unique key on (Sku, WarehouseId)",
+      "prompt": "Write an upsert for inventory counts in our next DbUp script.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-tsql.md",
+        "applies": "sqlserver-tsql"
+      },
+      "checks": [
+        "Does not use INSERT ... ON CONFLICT",
+        "Uses UPDATE then INSERT in one transaction with UPDLOCK, HOLDLOCK (or MERGE with HOLDLOCK if that is the house style)",
+        "Relies on the unique constraint and handles error 2627/2601",
+        "Adds a concurrent-execution test on a local database"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-tsql-compat-level",
+      "capability": "sqlserver-tsql",
+      "polarity": "positive",
+      "context": "SQL Server 2022 instance, but the application database is at compatibility level 120",
+      "prompt": "Use STRING_SPLIT to parse the comma-separated tag list in this query.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-tsql.md",
+        "applies": "sqlserver-tsql"
+      },
+      "checks": [
+        "Reads the database compatibility level, not only the server version",
+        "States that STRING_SPLIT needs level 130",
+        "Offers an alternative or asks before raising the level, and does not change it silently"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-tsql-neg-01",
+      "capability": "sqlserver-tsql",
+      "polarity": "negative",
+      "context": "Node.js service using pg against PostgreSQL 16",
+      "prompt": "Add pagination with LIMIT and OFFSET to our orders query.",
+      "expect": {
+        "not_applies": "sqlserver-tsql",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-tsql.md"
+      },
+      "checks": [
+        "Keeps PostgreSQL syntax",
+        "Does not load SQL Server guidance or convert to TOP or OFFSET/FETCH"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-stored-procedures-01",
+      "capability": "sqlserver-stored-procedures",
+      "polarity": "positive",
+      "context": "SQL Server 2019 with procedures in an SSDT .sqlproj; usp_SearchCustomers concatenates @sortColumn into EXEC",
+      "prompt": "Our customer search procedure builds the ORDER BY by concatenating a parameter. Make it safe without changing the callers.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-tsql.md",
+        "applies": "sqlserver-stored-procedures"
+      },
+      "checks": [
+        "Uses sp_executesql with typed parameters",
+        "Validates the sort column against an allow-list and wraps it in QUOTENAME",
+        "Notes that dynamic SQL needs the caller's permissions",
+        "Adds tests with an injection-shaped input and a low-privilege user",
+        "Deploys through the .sqlproj, not by hand"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-stored-procedures-sniffing",
+      "capability": "sqlserver-stored-procedures",
+      "polarity": "positive",
+      "context": "SQL Server 2019 (level 150); dbo.GetOrdersByStatus is fast for rare statuses and slow for 'Open'",
+      "prompt": "This procedure is sometimes fast and sometimes very slow with the same code. Fix it.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-tsql.md",
+        "applies": "sqlserver-stored-procedures"
+      },
+      "checks": [
+        "Identifies parameter sniffing from the cached plan's compiled parameter values",
+        "Measures before choosing RECOMPILE, OPTIMIZE FOR, or a split",
+        "Does not add WITH RECOMPILE to every procedure",
+        "Reports MEASURED or NOT_RUN"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-stored-procedures-neg-01",
+      "capability": "sqlserver-stored-procedures",
+      "polarity": "negative",
+      "context": "PostgreSQL 15 with PL/pgSQL functions that build dynamic SQL with format()",
+      "prompt": "Refactor our PL/pgSQL function that builds dynamic SQL so it is safe.",
+      "expect": {
+        "not_applies": "sqlserver-stored-procedures",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-tsql.md"
+      },
+      "checks": [
+        "Uses PostgreSQL format() with %I/%L or EXECUTE ... USING",
+        "Does not mention sp_executesql or QUOTENAME"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-query-plans-01",
+      "capability": "sqlserver-query-plans",
+      "polarity": "positive",
+      "context": "SQL Server 2022 production reachable only through a readable secondary; EF Core 8 application",
+      "prompt": "This SQL Server query takes 12 seconds in production. Here is the query; make it faster.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-query-tuning.md",
+        "applies": "sqlserver-query-plans"
+      },
+      "checks": [
+        "Uses only read-only inspection in production (estimated or cached plan, Query Store)",
+        "Reproduces on a local or restored copy with SET STATISTICS IO, TIME",
+        "Checks parameter types for CONVERT_IMPLICIT",
+        "Reports MEASURED before and after on the same data, or labels the gain expected, not measured"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-query-plans-n-plus-one",
+      "capability": "sqlserver-query-plans",
+      "polarity": "positive",
+      "context": "ASP.NET Core with EF Core 9 on SQL Server; the order history page loads customers then queries orders per customer in a loop",
+      "prompt": "The order history page runs hundreds of SQL queries per request. Fix it.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-query-tuning.md",
+        "applies": "sqlserver-query-plans"
+      },
+      "checks": [
+        "Identifies the N+1 pattern from the loop",
+        "Replaces it with a projection or Include (split query where collections multiply rows)",
+        "Adds a test that counts commands",
+        "Compares command count and reads before and after"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-query-plans-neg-01",
+      "capability": "sqlserver-query-plans",
+      "polarity": "negative",
+      "context": "PostgreSQL 16; the user pasted EXPLAIN (ANALYZE, BUFFERS) output",
+      "prompt": "Here's the EXPLAIN ANALYZE output of our slow PostgreSQL query. Why is it slow?",
+      "expect": {
+        "not_applies": "sqlserver-query-plans",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-query-tuning.md"
+      },
+      "checks": [
+        "Reads the PostgreSQL plan",
+        "Does not use SQL Server plan operators or SET STATISTICS IO"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-query-store-01",
+      "capability": "sqlserver-query-store",
+      "polarity": "positive",
+      "context": "Azure SQL Database with Query Store on; the regression began after Tuesday's deployment",
+      "prompt": "Since Tuesday's release the invoice report is five times slower on Azure SQL. Find out why.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-query-tuning.md",
+        "applies": "sqlserver-query-store"
+      },
+      "checks": [
+        "Reads Query Store state read-only",
+        "Compares the query's plans and runtime statistics before and after the release",
+        "Prefers a durable fix over plan forcing",
+        "Asks for approval before forcing a plan or adding a hint"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-query-store-off-2017",
+      "capability": "sqlserver-query-store",
+      "polarity": "positive",
+      "context": "SQL Server 2017 on-premises; Query Store is OFF for the database",
+      "prompt": "Use Query Store to find our worst queries from last week.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-query-tuning.md",
+        "applies": "sqlserver-query-store"
+      },
+      "checks": [
+        "Detects that Query Store is off (the default before SQL Server 2022)",
+        "States that no history exists for last week",
+        "Does not enable Query Store without the owner's approval",
+        "Falls back to cached-plan DMVs"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-query-store-neg-01",
+      "capability": "sqlserver-query-store",
+      "polarity": "negative",
+      "context": "PostgreSQL 15 with pg_stat_statements enabled",
+      "prompt": "List our top queries by total execution time from pg_stat_statements.",
+      "expect": {
+        "not_applies": "sqlserver-query-store",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-query-tuning.md"
+      },
+      "checks": [
+        "Queries pg_stat_statements",
+        "Does not mention Query Store"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-index-tuning-01",
+      "capability": "sqlserver-index-tuning",
+      "polarity": "positive",
+      "context": "SQL Server 2019 Standard edition; 80M-row Orders table; the missing-index DMV lists 14 suggestions",
+      "prompt": "Which of these SQL Server missing-index suggestions should we actually create?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-query-tuning.md",
+        "applies": "sqlserver-index-tuning"
+      },
+      "checks": [
+        "Evaluates suggestions against measured queries and existing indexes",
+        "States the write and storage cost",
+        "Notes ONLINE = ON is unavailable on Standard and plans the build window",
+        "Ships indexes through the migration tool"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-index-tuning-efcore",
+      "capability": "sqlserver-index-tuning",
+      "polarity": "positive",
+      "context": "EF Core 8 migrations manage the schema on SQL Server 2022 Enterprise",
+      "prompt": "Add an index for the customer orders lookup through our EF Core migrations.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-query-tuning.md",
+        "applies": "sqlserver-index-tuning"
+      },
+      "checks": [
+        "Models the index with HasIndex so migrations own it",
+        "Chooses key order and included columns from the query",
+        "Measures logical reads before and after on a local copy"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-index-tuning-neg-01",
+      "capability": "sqlserver-index-tuning",
+      "polarity": "negative",
+      "context": "MongoDB Atlas orders collection",
+      "prompt": "Which indexes should our MongoDB orders collection have?",
+      "expect": {
+        "not_applies": "sqlserver-index-tuning",
+        "skill": "none"
+      },
+      "checks": [
+        "Does not apply SQL Server index guidance"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-locking-deadlocks-01",
+      "capability": "sqlserver-locking-deadlocks",
+      "polarity": "positive",
+      "context": "SQL Server 2019; a nightly billing job and the API both update dbo.Accounts; error 1205 in logs; a deadlock graph is attached",
+      "prompt": "We get deadlocks every night between the billing job and the API. Here is the deadlock graph.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-concurrency.md",
+        "applies": "sqlserver-locking-deadlocks"
+      },
+      "checks": [
+        "Reads the resources, lock modes, and statement order from the graph",
+        "Fixes the access order or adds the index that removes the scan",
+        "Retries the whole transaction, bounded",
+        "Reproduces with two sessions on a local database"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-locking-deadlocks-backfill",
+      "capability": "sqlserver-locking-deadlocks",
+      "polarity": "positive",
+      "context": "SQL Server 2022; 40M-row Customers table; readers use locking read committed",
+      "prompt": "Backfill NormalizedEmail on the Customers table without blocking the app.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-concurrency.md",
+        "applies": "sqlserver-locking-deadlocks"
+      },
+      "checks": [
+        "Batches below the lock escalation threshold in short transactions",
+        "Logs progress and is restartable",
+        "Asks for approval before running on production",
+        "Checks that a batch holds an IX, not X, table lock"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-locking-deadlocks-neg-01",
+      "capability": "sqlserver-locking-deadlocks",
+      "polarity": "negative",
+      "context": "Node workers coordinate with a Redis-based distributed lock",
+      "prompt": "Our Redis distributed lock makes workers wait for minutes. Fix the contention.",
+      "expect": {
+        "not_applies": "sqlserver-locking-deadlocks",
+        "skill": "chayen-backend"
+      },
+      "checks": [
+        "Does not apply SQL Server locking guidance"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-transactions-01",
+      "capability": "sqlserver-transactions",
+      "polarity": "positive",
+      "context": "ASP.NET Core with EF Core 8 on SQL Server 2022 (READ_COMMITTED_SNAPSHOT off); EnableRetryOnFailure is configured",
+      "prompt": "Booking a seat must never double-book. Wrap the availability check and the insert in a transaction.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-concurrency.md",
+        "applies": "sqlserver-transactions"
+      },
+      "checks": [
+        "Reads the database isolation settings",
+        "Uses UPDLOCK, HOLDLOCK or a unique constraint for the check-then-insert",
+        "Runs the transaction inside CreateExecutionStrategy because retries are enabled",
+        "Adds a two-connection race test"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-transactions-azure-rcsi",
+      "capability": "sqlserver-transactions",
+      "polarity": "positive",
+      "context": "Azure SQL Database (READ_COMMITTED_SNAPSHOT on) in production; developers test on local SQL Server containers with it off",
+      "prompt": "Our stock check passes locally but oversells in Azure. Why?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-concurrency.md",
+        "applies": "sqlserver-transactions"
+      },
+      "checks": [
+        "Identifies the isolation difference between environments",
+        "Explains the stale read in check-then-act under read committed snapshot",
+        "Fixes with a lock hint or constraint",
+        "Tests with the target's isolation settings"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-transactions-xact-abort",
+      "capability": "sqlserver-transactions",
+      "polarity": "positive",
+      "context": "SQL Server 2019 stored procedures without SET XACT_ABORT; partially saved payment batches observed",
+      "prompt": "Some payment batches end up half saved after an error. Fix the procedure.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-concurrency.md",
+        "applies": "sqlserver-transactions"
+      },
+      "checks": [
+        "Adds SET XACT_ABORT ON with TRY/CATCH and IF @@TRANCOUNT > 0 ROLLBACK",
+        "Adds a forced-failure test proving nothing is committed"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-transactions-neg-01",
+      "capability": "sqlserver-transactions",
+      "polarity": "negative",
+      "context": "Order and payment microservices with separate databases",
+      "prompt": "Make the order and payment services commit together.",
+      "expect": {
+        "not_applies": "sqlserver-transactions",
+        "skill": "chayen-architecture"
+      },
+      "checks": [
+        "Does not propose a single database transaction across services"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-schema-evolution-01",
+      "capability": "sqlserver-schema-evolution",
+      "polarity": "positive",
+      "context": "SQL Server 2019 Standard; 200M-row Orders table; DbUp scripts",
+      "prompt": "Rename Orders.Ref to ExternalReference and make it NOT NULL without downtime.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-schema-security.md",
+        "applies": "sqlserver-schema-evolution"
+      },
+      "checks": [
+        "Plans expand, migrate, contract across releases",
+        "Backfills in batches",
+        "Adds NOT NULL safely for this edition",
+        "Provides rollback and asks for approval before production"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-schema-evolution-fk-orphans",
+      "capability": "sqlserver-schema-evolution",
+      "polarity": "positive",
+      "context": "SQL Server 2022; legacy OrderLines contains orphan rows; EF Core migrations",
+      "prompt": "Add the missing foreign key from OrderLines to Orders.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-schema-security.md",
+        "applies": "sqlserver-schema-evolution"
+      },
+      "checks": [
+        "Counts orphan rows before adding the constraint",
+        "Uses WITH NOCHECK, approved cleanup, then WITH CHECK CHECK CONSTRAINT",
+        "Verifies is_not_trusted is 0 afterwards"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-schema-evolution-neg-01",
+      "capability": "sqlserver-schema-evolution",
+      "polarity": "negative",
+      "context": "PostgreSQL 14 with Alembic migrations",
+      "prompt": "Add a NOT NULL column with a default to our large PostgreSQL events table.",
+      "expect": {
+        "not_applies": "sqlserver-schema-evolution",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-schema-security.md"
+      },
+      "checks": [
+        "Uses PostgreSQL behavior and Alembic",
+        "Does not apply SQL Server edition or online-index rules"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-security-01",
+      "capability": "sqlserver-security",
+      "polarity": "positive",
+      "context": "ASP.NET Core API connects to SQL Server 2022 as db_owner; migrations run with the same login",
+      "prompt": "Set up least-privilege database access for our API on SQL Server.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-schema-security.md",
+        "applies": "sqlserver-security"
+      },
+      "checks": [
+        "Separates application and migration principals",
+        "Grants on schemas or procedures instead of db_owner",
+        "Tests allowed and denied operations with EXECUTE AS USER",
+        "Delivers grants as scripts and never prints passwords"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-security-rls",
+      "capability": "sqlserver-security",
+      "polarity": "positive",
+      "context": "Multi-tenant SQL Server 2019 database with TenantId on every table",
+      "prompt": "Enforce tenant isolation in the database with row-level security.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-schema-security.md",
+        "applies": "sqlserver-security"
+      },
+      "checks": [
+        "Creates a security policy with a predicate function",
+        "Sets tenant context with SESSION_CONTEXT",
+        "Tests each tenant's principal and a cross-tenant attempt"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-security-neg-01",
+      "capability": "sqlserver-security",
+      "polarity": "negative",
+      "context": "C# repository with string-built SQL across 40 files",
+      "prompt": "Do a security review of our codebase for SQL injection.",
+      "expect": {
+        "not_applies": "sqlserver-security",
+        "skill": "chayen-security"
+      },
+      "checks": [
+        "Does not treat a codebase-wide review as database permission design"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-auditing-temporal-01",
+      "capability": "sqlserver-auditing-temporal",
+      "polarity": "positive",
+      "context": "SQL Server 2019 with EF Core 8 migrations; a Prices table",
+      "prompt": "We need to see what a product's price was on any past date.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-schema-security.md",
+        "applies": "sqlserver-auditing-temporal"
+      },
+      "checks": [
+        "Proposes a system-versioned temporal table through migrations",
+        "Queries with FOR SYSTEM_TIME AS OF in UTC",
+        "Plans history retention"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-auditing-temporal-actor",
+      "capability": "sqlserver-auditing-temporal",
+      "polarity": "positive",
+      "context": "SQL Server 2022 database that already uses temporal tables for contracts",
+      "prompt": "Auditors want to know who changed each contract row.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-schema-security.md",
+        "applies": "sqlserver-auditing-temporal"
+      },
+      "checks": [
+        "States that temporal tables do not record the actor",
+        "Adds an actor column or uses SQL Server Audit",
+        "Asks for approval for audit configuration"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-auditing-temporal-neg-01",
+      "capability": "sqlserver-auditing-temporal",
+      "polarity": "negative",
+      "context": "Node API sending application logs to Elasticsearch",
+      "prompt": "Add structured audit logging of login attempts to our API logs.",
+      "expect": {
+        "not_applies": "sqlserver-auditing-temporal",
+        "skill": "chayen-security"
+      },
+      "checks": [
+        "Does not propose temporal tables"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-backup-recovery-01",
+      "capability": "sqlserver-backup-recovery",
+      "polarity": "positive",
+      "context": "SQL Server 2019 on a VM, FULL recovery, nightly full and 15-minute log backups; RPO 15 minutes, RTO 2 hours",
+      "prompt": "Plan a restore drill for our production SQL Server database.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-operations.md",
+        "applies": "sqlserver-backup-recovery"
+      },
+      "checks": [
+        "Restores to a new name on a non-production server",
+        "Runs DBCC CHECKDB and application checks",
+        "Measures duration against the RTO and the recovered point against the RPO",
+        "Never restores over an existing database"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-backup-recovery-simple",
+      "capability": "sqlserver-backup-recovery",
+      "polarity": "positive",
+      "context": "SQL Server 2022 database in SIMPLE recovery; the stated RPO is 15 minutes",
+      "prompt": "Can we restore our database to 10:42 this morning if something goes wrong?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-operations.md",
+        "applies": "sqlserver-backup-recovery"
+      },
+      "checks": [
+        "States SIMPLE recovery has no point-in-time restore",
+        "Explains FULL recovery with log backups",
+        "Treats the change as an approval-gated operations change"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-backup-recovery-azure",
+      "capability": "sqlserver-backup-recovery",
+      "polarity": "positive",
+      "context": "Azure SQL Database with automated backups",
+      "prompt": "Prove our Azure SQL backups actually restore.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-operations.md",
+        "applies": "sqlserver-backup-recovery"
+      },
+      "checks": [
+        "Uses point-in-time restore to a new database",
+        "Does not write BACKUP DATABASE TO DISK",
+        "Runs integrity and application checks on the copy"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-backup-recovery-neg-01",
+      "capability": "sqlserver-backup-recovery",
+      "polarity": "negative",
+      "context": "PostgreSQL 15 backed up with pgBackRest",
+      "prompt": "How do we prove our PostgreSQL backups actually restore?",
+      "expect": {
+        "not_applies": "sqlserver-backup-recovery",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-operations.md"
+      },
+      "checks": [
+        "Uses PostgreSQL tools",
+        "Does not mention RESTORE VERIFYONLY or DBCC CHECKDB"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-maintenance-01",
+      "capability": "sqlserver-maintenance",
+      "polarity": "positive",
+      "context": "SQL Server 2019 Standard; a maintenance plan rebuilds every index nightly; the transaction log keeps growing",
+      "prompt": "Our nightly index rebuild takes four hours and bloats the log. Should we change it?",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-operations.md",
+        "applies": "sqlserver-maintenance"
+      },
+      "checks": [
+        "Reads job history, fragmentation in LIMITED mode, and statistics state",
+        "Weighs statistics updates against rebuilds",
+        "Notes no online rebuild on Standard",
+        "Measures before and after and asks for approval"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-maintenance-express",
+      "capability": "sqlserver-maintenance",
+      "polarity": "positive",
+      "context": "SQL Server Express (no SQL Server Agent) for a branch office application",
+      "prompt": "Set up weekly integrity checks and statistics updates for our Express database.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-operations.md",
+        "applies": "sqlserver-maintenance"
+      },
+      "checks": [
+        "States Express has no SQL Server Agent and uses an external scheduler",
+        "Schedules DBCC CHECKDB and targeted statistics updates",
+        "Reports results with NOT_RUN where nothing was executed"
+      ]
+    },
+    {
+      "id": "tc-sqlserver-maintenance-neg-01",
+      "capability": "sqlserver-maintenance",
+      "polarity": "negative",
+      "context": "Azure Cosmos DB container",
+      "prompt": "Set up index maintenance for our Cosmos DB container.",
+      "expect": {
+        "not_applies": "sqlserver-maintenance",
+        "skill": "none"
+      },
+      "checks": [
+        "Does not apply SQL Server maintenance guidance"
       ]
     }
   ]

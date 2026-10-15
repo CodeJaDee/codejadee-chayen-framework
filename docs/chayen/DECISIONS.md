@@ -917,6 +917,39 @@ Decision statuses:
   and backend bodies exceed the 200-line target at 213/202 but stay under
   300 hard. Human review remains pending. No prior-step implementation fixes,
   production configuration, deployment, commit, publish, or later step action.
+### D-043 — Step 26 SQL Server guidance and data access recipes
+- **Status:** scope ACCEPTED (explicit user prompt "Execute STEP 26 ONLY",
+  2026-10-15); layout and fixture PROPOSED pending review.
+- **Scope:** the user's exact 12 SQL Server capabilities and data access
+  recipes for the EF Core SQL Server provider, Dapper, and ADO.NET. Steps 24
+  and 25 have no record in this repository; Step 26 was executed as
+  instructed without inferring or performing their content (R-45).
+- **Layout:** all 12 capabilities in `chayen-data`, which already owns SQL
+  Server work: the existing `sql-server.md` becomes the expanded base
+  (engine/provider detection, PostgreSQL-dialect guard, read-only production
+  rule) and five topic references hold two or three capabilities each. The
+  three data access recipes live in `sqlserver-data-access.md` as
+  technology content, not catalog capabilities, so the 12/12 inventory stays
+  exact; V-23.10 checks them (sections, ten required topics, steps, verify
+  rule, driver references, 9 recipe cases). One pointer sentence was added
+  to the backend's `aspnetcore-data-access.md` because skills cannot link
+  across directories (D-016). No new skill, description, or metadata change.
+- **Fixture and dependencies (BC-22):** `tests/technology/sqlserver` adds a
+  developer-only xUnit project referencing Microsoft.EntityFrameworkCore.SqlServer
+  10.0.8, Dapper 2.1.66, Microsoft.Data.SqlClient 6.1.1, xUnit 2.9.3, and
+  Microsoft.NET.Test.Sdk 17.14.1. They are needed to execute the engine and
+  ORM facts and to prove the recipes' API names compile; they are never
+  shipped and add nothing to the plugin. The fixture runs only against
+  LocalDB or a loopback server, in a database it creates and drops, inside
+  a dedicated LocalDB instance (`ChayenFacts`) that the runner creates.
+- **Verification:** V-23.1..10 PASS for 90 records; 39 capability and 9
+  recipe cases; 7 trigger prompts; 10 mutation controls (104/104
+  self-tests). `run-fact-checks.mjs` 30/30 PASS on SQL Server 2025 Express
+  LocalDB. Agent behaviour and trigger evaluations NOT_RUN.
+- **Consequences:** 90 technology records IMPLEMENTED, 0 VERIFIED.
+  `chayen-data/SKILL.md` is 183 lines (under the 200 target). The local
+  LocalDB instance `ChayenFacts` remains on the developer machine for
+  re-runs. No commit, release, production access, or later step.
 
 ## Architecture assumptions (checked in Step 02)
 

@@ -1,0 +1,158 @@
+{
+  "$comment": "Step 26 SQL Server data access recipe cases (D-043). Positive cases: route to expect.skill, load expect.loads, and apply the recipe section named in expect.applies_recipe. Negative cases: the recipe must not be applied and expect.not_loads must not be read; expect.skill is the better fit or none. Validated by tools/catalog/check-technology.mjs (V-23.10). Agent execution: NOT_RUN (G-12). Never shipped.",
+  "version": 1,
+  "cases": [
+    {
+      "id": "da-efcore-01",
+      "recipe": "EF Core SQL Server provider recipe",
+      "polarity": "positive",
+      "context": "ASP.NET Core 8 with the EF Core 8 SQL Server provider; the production database is at compatibility level 120",
+      "prompt": "ids.Contains(o.Id) fails with 'Incorrect syntax near $' on our older database. Fix the query.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-data-access.md",
+        "applies_recipe": "EF Core SQL Server provider recipe"
+      },
+      "checks": [
+        "Connects the failure to OPENJSON translation below compatibility level 130",
+        "Sets UseCompatibilityLevel to the real level or asks about raising it",
+        "Inspects the SQL with ToQueryString",
+        "Adds an integration test on SQL Server at the same level"
+      ]
+    },
+    {
+      "id": "da-efcore-02",
+      "recipe": "EF Core SQL Server provider recipe",
+      "polarity": "positive",
+      "context": "EF Core 9 with EnableRetryOnFailure on SQL Server; tests use the InMemory provider",
+      "prompt": "Our transfer method throws 'does not support user-initiated transactions'. Fix it and add a test.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-data-access.md",
+        "applies_recipe": "EF Core SQL Server provider recipe"
+      },
+      "checks": [
+        "Wraps the transaction in CreateExecutionStrategy().ExecuteAsync",
+        "Tests on SQL Server (LocalDB or a container), not InMemory",
+        "Uses AsNoTracking for read-only queries"
+      ]
+    },
+    {
+      "id": "da-efcore-neg-01",
+      "recipe": "EF Core SQL Server provider recipe",
+      "polarity": "negative",
+      "context": "EF Core 8 with the Npgsql provider (UseNpgsql) on PostgreSQL 16",
+      "prompt": "Optimize the SQL that this EF Core query generates.",
+      "expect": {
+        "not_applies_recipe": "EF Core SQL Server provider recipe",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-data-access.md"
+      },
+      "checks": [
+        "Applies PostgreSQL provider behavior",
+        "Does not mention UseCompatibilityLevel, OPENJSON, or SQL Server plans"
+      ]
+    },
+    {
+      "id": "da-dapper-01",
+      "recipe": "Dapper recipe",
+      "polarity": "positive",
+      "context": "Dapper 2.1 with Microsoft.Data.SqlClient on SQL Server 2019; Products.Code is an indexed varchar(20)",
+      "prompt": "Lookup by product code scans the whole table even though Code is indexed. Fix our Dapper query.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-data-access.md",
+        "applies_recipe": "Dapper recipe"
+      },
+      "checks": [
+        "Identifies the nvarchar parameter and CONVERT_IMPLICIT",
+        "Uses DbString with IsAnsi = true and Length = 20",
+        "Checks the plan for an index seek",
+        "Reports MEASURED logical reads before and after"
+      ]
+    },
+    {
+      "id": "da-dapper-02",
+      "recipe": "Dapper recipe",
+      "polarity": "positive",
+      "context": "Dapper repository on SQL Server passing 5,000 IDs with IN @ids",
+      "prompt": "Our Dapper query with a big ID list fails with too many parameters.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-data-access.md",
+        "applies_recipe": "Dapper recipe"
+      },
+      "checks": [
+        "Explains the 2,100-parameter limit and the per-element expansion",
+        "Uses a table-valued parameter (AsTableValuedParameter) with a user-defined table type created by a migration",
+        "Adds an integration test with a large list"
+      ]
+    },
+    {
+      "id": "da-dapper-neg-01",
+      "recipe": "Dapper recipe",
+      "polarity": "negative",
+      "context": "Dapper over Npgsql against PostgreSQL 15",
+      "prompt": "Speed up our Dapper query that filters with = ANY(@ids).",
+      "expect": {
+        "not_applies_recipe": "Dapper recipe",
+        "skill": "chayen-data",
+        "not_loads": "references/sqlserver-data-access.md"
+      },
+      "checks": [
+        "Keeps PostgreSQL array parameters",
+        "Does not suggest table-valued parameters or DbString"
+      ]
+    },
+    {
+      "id": "da-ado-01",
+      "recipe": "ADO.NET recipe",
+      "polarity": "positive",
+      "context": "Legacy .NET Framework 4.8 application with System.Data.SqlClient and AddWithValue throughout",
+      "prompt": "Fix the SQL injection in our customer search and keep using plain ADO.NET.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-data-access.md",
+        "applies_recipe": "ADO.NET recipe"
+      },
+      "checks": [
+        "Uses SqlParameter with SqlDbType and size",
+        "Avoids AddWithValue for varchar columns",
+        "Does not switch to Microsoft.Data.SqlClient as a side effect",
+        "Tests an injection-shaped input"
+      ]
+    },
+    {
+      "id": "da-ado-02",
+      "recipe": "ADO.NET recipe",
+      "polarity": "positive",
+      "context": "Microsoft.Data.SqlClient 5 import loop inserting 200,000 rows one statement at a time",
+      "prompt": "Our nightly import of 200k rows takes an hour. Make it faster.",
+      "expect": {
+        "skill": "chayen-data",
+        "loads": "references/sqlserver-data-access.md",
+        "applies_recipe": "ADO.NET recipe"
+      },
+      "checks": [
+        "Proposes SqlBulkCopy within a transaction with a batch size",
+        "Measures against the existing approach on the same data",
+        "Reports MEASURED or NOT_RUN"
+      ]
+    },
+    {
+      "id": "da-ado-neg-01",
+      "recipe": "ADO.NET recipe",
+      "polarity": "negative",
+      "context": "ADO.NET data layer with MySqlConnector against MySQL 8",
+      "prompt": "Parameterize the queries in our MySQL data layer.",
+      "expect": {
+        "not_applies_recipe": "ADO.NET recipe",
+        "skill": "none",
+        "not_loads": "references/sqlserver-data-access.md"
+      },
+      "checks": [
+        "Does not apply SQL Server driver guidance"
+      ]
+    }
+  ]
+}

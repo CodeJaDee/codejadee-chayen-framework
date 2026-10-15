@@ -73,7 +73,8 @@ If the request does not fit, stop following this skill and continue normally wit
 
 1. **Identify the engine** and read exactly one engine reference. In .NET
    projects whose schema is managed by EF Core migrations, also read the
-   EF Core migrations reference; never assume EF Core.
+   EF Core migrations reference; never assume EF Core. On SQL Server, also
+   read the one SQL Server topic reference that matches the request.
 2. **Classify the target environment.** If any command will run against a
    database that is not local and disposable, or the change is destructive,
    read the database safety checklist and apply its gates.
@@ -161,6 +162,12 @@ Load one engine reference (workflow step 1), the safety checklist when step 2 re
 | Reference | Load when |
 |---|---|
 | [references/sql-server.md](references/sql-server.md) | The engine is SQL Server or Azure SQL (`Microsoft.Data.SqlClient`, `UseSqlServer`, `mssql`, `pyodbc` with a SQL Server driver) |
+| [references/sqlserver-tsql.md](references/sqlserver-tsql.md) | SQL Server: writing or porting T-SQL, stored procedures, functions, triggers, or dynamic SQL |
+| [references/sqlserver-query-tuning.md](references/sqlserver-query-tuning.md) | SQL Server: execution plans, Query Store regressions, N+1 shapes, or index design and missing-index review |
+| [references/sqlserver-concurrency.md](references/sqlserver-concurrency.md) | SQL Server: blocking, deadlocks, lock escalation, transaction boundaries, isolation, or retries |
+| [references/sqlserver-schema-security.md](references/sqlserver-schema-security.md) | SQL Server: online schema changes, constraints, permissions, row-level security, auditing, or temporal history |
+| [references/sqlserver-operations.md](references/sqlserver-operations.md) | SQL Server: backup and restore proof, recovery models, statistics, index maintenance, or integrity checks |
+| [references/sqlserver-data-access.md](references/sqlserver-data-access.md) | SQL Server data access code through EF Core (`UseSqlServer`), Dapper, or ADO.NET (`Microsoft.Data.SqlClient`) |
 | [references/postgresql.md](references/postgresql.md) | The engine is PostgreSQL (`Npgsql`, `UseNpgsql`, `pg`, `postgres`, `psycopg`, `asyncpg`) |
 | [references/efcore-migrations.md](references/efcore-migrations.md) | Workflow step 1: a .NET project whose schema EF Core migrations manage (`Migrations/` with a model snapshot, `dotnet-ef` in the tool manifest) |
 | [references/database-safety.md](references/database-safety.md) | A command will run against a non-local database, or the change is destructive |

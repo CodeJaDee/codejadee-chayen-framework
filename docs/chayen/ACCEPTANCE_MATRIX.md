@@ -7,7 +7,7 @@ is defined in [BUILD_CONTRACT.md](BUILD_CONTRACT.md) §5.1.
 A row may be marked `VERIFIED` only when its verification evidence column
 cites an executed test and its recorded result (BC-10, BC-13).
 
-**Snapshot:** after Step 23 (2026-10-15).
+**Snapshot:** after Step 26 (2026-10-15).
 
 ## Summary
 
@@ -17,10 +17,17 @@ cites an executed test and its recorded result (BC-10, BC-13).
 | Core requirements (REQ) | 10 | 0 | 9 | 1 | 0 |
 | Exclusions (EX) | 7 | 0 | 0 | 7 | 0 |
 | Providers (PRV) | 3 | 0 | 3 | 0 | 0 |
-| Stack coverage (STK) | 14 | 1 | 5 | 8 | 0 |
+| Stack coverage (STK) | 14 | 1 | 4 | 9 | 0 |
 | Architecture components (ARC) | 14 | 1 | 6 | 7 | 0 |
 | Capability domains (CAP) | 20 | 0 | 0 | 20 | 0 |
-| **Total** | **85** | **2** | **23** | **60** | **0** |
+| **Total** | **85** | **2** | **22** | **61** | **0** |
+
+Step 26 adds the 12 SQL Server technology capabilities and three data access
+recipes, all IMPLEMENTED and V-23 validated, with 39 capability and 9 recipe
+specifications and seven trigger prompts. 27 engine/ORM facts and 3
+driver-reference checks PASS on a disposable LocalDB database; agent
+evaluations remain NOT_RUN. Steps 24 and 25 have no record (R-45). See
+TECHNOLOGY_COVERAGE §13 and PROGRESS Step 26.
 
 Step 06 executed native lifecycle tests (24/24 on 3 CLIs) and routing tests
 on Claude Code, Codex, and Copilot. Details are in
@@ -182,7 +189,7 @@ No row is `VERIFIED`, because these remain open:
 |---|---|---|---|---|---|---|---|
 | STK-01 | C# / ASP.NET Core Web API | Primary | 11, 05 | Pilot guidance (Step 05); .NET technology pack (Step 20, D-039): 22 technology capabilities in `catalog/technology-capabilities.yaml`, sections in 12 new and 2 changed technology references across 6 skills | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 66 records apply to `dotnet-aspnetcore` explicitly or through a stack group (15 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN. Step 20: V-23 PASS (22/22, 57 cases); .NET fact checks 31/31 PASS (`node tests/technology/dotnet/run-fact-checks.mjs`); behaviour and trigger evals NOT_RUN | IMPLEMENTED |
 | STK-02 | Angular / TypeScript | Primary | 21, 12, 05 | 14 Angular technology records; frontend base and five topics plus testing topic, mapped in `catalog/technology-capabilities.yaml`; `TECHNOLOGY_COVERAGE.md` §7 | Catalog, positive/negative cases, framework facts, behavior/trigger evals | `node tools/catalog/check-technology.mjs` PASS: 14/14 Angular mappings and sections, 17 positive/14 negative specifications. AF-01..14 NOT_RUN (no installed Angular application/browser fixture); agent behavior and trigger evals NOT_RUN. No Angular build or hydration claim | IMPLEMENTED |
-| STK-03 | Microsoft SQL Server | Primary | 13, 05 | Pilot guidance in skill-local references (Step 05) | Catalog coverage + trigger suite | V-06/V-08/V-12 PASS. Catalog (Step 07): 23 records apply to `sqlserver` explicitly or through a stack group (4 IN_PROGRESS), plus 107 stack-neutral records. Capability behaviour and trigger suite per capability: NOT_RUN | IN_PROGRESS |
+| STK-03 | Microsoft SQL Server | Primary | 26, 13, 05 | 12 technology sections in `chayen-data` (expanded `sql-server.md` base plus five topic references) and EF Core SQL Server, Dapper, and ADO.NET data access recipes; TECHNOLOGY_COVERAGE §13 | Catalog/specs, executed engine/ORM facts on a disposable database, behavior/trigger evaluations | `node tools/catalog/check-technology.mjs` PASS: 12/12 sections, 27 positive/12 negative specs, V-23.10 recipes and 9 recipe cases. `node tests/technology/sqlserver/run-fact-checks.mjs --report tests/technology/sqlserver/results/step26-fact-checks.md`: 30/30 PASS (DR-01..03 driver references, SF-01..27) on SQL Server 2025 Express LocalDB only. Other editions, Azure SQL, and agent evaluations NOT_RUN (R-46) | IMPLEMENTED |
 | STK-04 | JavaScript / TypeScript | Additional | 21, 14, 05 | 8 shared TS/JS technology records; implementation base and types/runtime/workspace topics mapped in `catalog/technology-capabilities.yaml`; `TECHNOLOGY_COVERAGE.md` §7 | Catalog, positive/negative cases, framework facts, behavior/trigger evals | `node tools/catalog/check-technology.mjs` PASS: 8/8 shared mappings and sections, 13 positive/8 negative specifications. JF-01..08 PASS via `node tests/technology/angular-typescript/run-fact-checks.mjs` with existing compiler/npm arguments (exact command in report and PROGRESS). Agent behavior/trigger evals NOT_RUN; other runtime versions NOT_RUN | IMPLEMENTED |
 | STK-05 | React | Additional | 22, 14, 05 | Eight technology sections in frontend topics and testing, mapped in `catalog/technology-capabilities.yaml`; `TECHNOLOGY_COVERAGE.md` §9 | Catalog/cases, configured framework tests, behavior/trigger evaluations | `node tools/catalog/check-technology.mjs` PASS: 8/8 mappings/sections, 11 positive/8 negative specs. RF-01..08 NOT_RUN without installed app/runner/browser fixture. Agent behavior/trigger evaluations NOT_RUN; no library/router migrations or new dependencies | IMPLEMENTED |
 | STK-06 | Next.js | Additional | 22, 14, 05 | Eight technology sections across frontend/backend/devops; version/router detection, server/client/secret boundaries, direct auth, cache and artifact guidance; `TECHNOLOGY_COVERAGE.md` §9 | Catalog/cases, direct server-boundary tests, production/browser/behavior/trigger checks | `node tools/catalog/check-technology.mjs` PASS: 8/8 mappings/sections, 13 positive/8 negative specs. `node tests/technology/react-nextjs/run-fact-checks.mjs --report tests/technology/react-nextjs/results/step22-fact-checks.md`: NF-03/04/06 synthetic JS/Web boundary checks PASS, remaining five Next checks NOT_RUN. Compiled Next/cache/auth-provider/browser/deployment and agent evaluations NOT_RUN | IMPLEMENTED |
