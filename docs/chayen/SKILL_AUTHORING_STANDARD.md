@@ -31,6 +31,14 @@ registry is implemented; D-051/D-052 change count and L0 rules only. See
 
 The words MUST, MUST NOT, and SHOULD are used in their usual sense.
 
+**Step 36 accepted registration amendment (D-053):** maximum 15 Entry Skills;
+CA-01 now uses engineering/editorial registration as described in
+[SKILL_REGISTRATION.md](SKILL_REGISTRATION.md). `catalog/editorial-skills.json`
+holds exactly two planned Humanizer identities/descriptions, with no shipped
+directories. Earlier pending registry/count notes above are superseded for
+this scope. Planned metadata passes V-07/V-07b/V-20; every shipped editorial
+Skill must still pass all portable/anatomy/reference/security/trigger gates.
+
 ---
 
 ## 1. Model
@@ -331,7 +339,7 @@ the same reason evals are staged rather than shipped (D-018):
 
 | ID | Rule | Checked by |
 |---|---|---|
-| CA-01 | Every shipped skill directory is a catalog entry skill with `mapping: existing`. | V-11.3, V-19 |
+| CA-01 | Every shipped skill belongs to exactly one engineering/editorial registration with `mapping: existing`. Editorial identities/descriptions match their registry and never own Engineering Capabilities. Planned editorial records have no shipped directory. Combined registered/shipped counts fit maximum 15. | V-11.3, V-19; shared registration rules |
 | CA-02 | Every catalog recipe marked `existing` is a `kind: recipe` reference file. | V-19 |
 | CA-03 | Catalog and recipe frontmatter agree (RC-01, RC-02). | V-19 |
 | CA-04 | After any catalog change, regenerate the coverage tables with `check-catalog.mjs --write-doc`. | V-11.11 |

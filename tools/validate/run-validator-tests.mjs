@@ -21,7 +21,7 @@ const argv = process.argv.slice(2);
 const only = argv.includes("--only") ? argv[argv.indexOf("--only") + 1] : null;
 const keep = argv.includes("--keep");
 const COPY = ["plugins", ".claude-plugin", ".github/plugin", ".agents/plugins", "catalog", "tests/skills", "docs/chayen/CAPABILITY_COVERAGE.md", "docs/chayen/TECHNOLOGY_COVERAGE.md", "docs/chayen/WORKFLOW_COVERAGE.md", "tests/technology/dotnet/run-fact-checks.mjs", "tests/technology/angular-typescript/run-fact-checks.mjs", "tests/technology/react-nextjs/run-fact-checks.mjs", "tests/technology/vue-nuxt-vite/run-fact-checks.mjs", "tests/technology/sqlserver/run-fact-checks.mjs", "tests/technology/sqlserver/fixture", "tests/technology/postgres-crossstack/run-fact-checks.mjs", "tests/technology/postgres-crossstack/fixture"];
-const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json", "tests/catalog/technology-mutations.json", "tests/catalog/workflow-mutations.json"];
+const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json", "tests/catalog/technology-mutations.json", "tests/catalog/workflow-mutations.json", "tests/catalog/editorial-mutations.json"];
 const VALIDATORS = {
   package: (dir) => [path.join(repo, "tools/validate/validate-package.mjs"), dir],
   catalog: (dir) => [path.join(repo, "tools/catalog/check-catalog.mjs"), "--root", dir],
@@ -98,7 +98,7 @@ for (const suite of SUITES) {
     try { for (const e of c.edits) apply(dir, e); }
     catch (err) { failed++; rows.push(`FAIL  ${c.id}: mutation not applied (${err.message})`); continue; }
     const r = run(c.expect.validator, dir);
-    const hit = r.out.split("\n").find((l) => l.startsWith(`ERROR ${c.expect.error}`));
+    const hit = r.out.split("\n").find((l) => l.startsWith(`ERROR ${c.expect.error}`) && (!c.expect.message || l.includes(c.expect.message)));
     const ok = r.status === 1 && Boolean(hit);
     if (!ok) failed++;
     rows.push(`${ok ? "PASS" : "FAIL"}  ${c.id}: expect ${c.expect.validator} ${c.expect.error} → exit ${r.status}${hit ? `; ${hit.slice(0, 140)}` : "; expected error not reported"}`);

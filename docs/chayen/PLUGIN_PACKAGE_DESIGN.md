@@ -293,7 +293,7 @@ each trigger needs its own decision record before it is used.
 | V-04 | Shared fields are identical across both manifests. `version` is semver. | M-04, M-05 |
 | V-05 | `SKILL.md` frontmatter follows SK-01..SK-03 and F-01..F-03. | F-01..F-03, SK-01..SK-03 |
 | V-06 | Line budgets (§5, SK-04). | F-04, C-07 |
-| V-07 | L0 metadata total ≤6,500 characters (D-052; formerly 5,500 D-037). ≤25 entry skills (D-051). Per-description target ≤420 (D-017; warning), hard limit 1024. | F-06, ARCH §8; SKILL_AUTHORING_STANDARD DS-05 |
+| V-07 | Actual/projected L0 ≤6,500 (D-052); ≤15 registered/shipped Skills (D-053). Planned editorial metadata participates in budget/distinctness checks. Per-description target ≤420, hard limit 1024. | F-06, ARCH §8; SKILL_AUTHORING_STANDARD DS-05; SKILL_REGISTRATION.md |
 | V-08 | Links: every link resolves inside the plugin root, ≤2 hops from `SKILL.md`, no cycles, and DR-01..DR-07 hold. | DR-01..DR-07 |
 | V-09 | Only `.md` and `.json` files in the plugin. No forbidden components (§2). | ADR-0005, EX-01..EX-07 |
 | V-10 | Forbidden wording: enforcement claims ("guarantees", "enforces", "prevents all", "secure" with no qualifier) in security content; provider-specific tokens (P-01); self-advertising (SK-06). | D-003, SK-05, SK-06 |

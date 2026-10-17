@@ -78,7 +78,7 @@
       "id": "cat-entry-skill-without-capability",
       "description": "An additional Entry Skill owns no capability, independently of the count ceiling (D-051)",
       "edits": [{ "file": "catalog/engineering-capabilities.yaml", "op": "replace", "find": "entry_skills:\n", "with": "entry_skills:\n  - name: chayen-extra\n    mapping: planned\n    scope: \"An extra skill used only to test capability ownership within the approved count ceiling.\"\n" }],
-      "expect": { "validator": "catalog", "error": "V-11.3 entry-skills" }
+      "expect": { "validator": "catalog", "error": "V-11.3 entry-skills", "message": "owns no capability" }
     },
     {
       "id": "cat-placeholder-text",

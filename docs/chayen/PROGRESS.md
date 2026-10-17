@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 35 — Multilingual Humanizer governance and architecture |
+| Last executed step | 36 — Humanizer Skill registration and validation foundation (resumed with D-053 approval) |
+| Step 36 status | DONE (pending owner review): registration/validation foundation approved by D-053; validate-all PASS (150/150 validator tests, 34/34 security tests), evaluation static/traceability PASS, 130 governance links/anchors PASS. 13 shipped engineering Skills and two planned editorial registrations; projected metadata 5,940 / 6,500. Maximum 15 per latest Step 36 request. Initial BLOCKED preflight preserved as history; no Humanizer body shipped. |
 | Latest owner follow-up | D-052 ACCEPTED (2026-10-17): L0 ceiling 6,500, implemented in V-07 and evaluation reporting. Current 5,485 / 6,500; 1,015 free. Count ceiling remains 25, target 15, actual 13. Editorial registry/policy proposals remain pending; Step 36 NOT_STARTED. Earlier D-051 budget statements below are historical. |
 | Owner follow-up | D-051 ACCEPTED (2026-10-17): increase Entry Skill ceiling to 25, implemented in the package and catalog count validators. Actual 13; target 15; L0 remains 5,500. The original Step 35 evidence below is a historical snapshot; follow-up evidence is logged separately at the end. Step 36 remains NOT_STARTED. |
 | Step 35 status | DONE for governance (pending Product Owner review): impact analysis, ADR-0009–ADR-0011 PROPOSED, MHR-001–MHR-012 PLANNED, Steps 35–41 planned. D-047 scope ACCEPTED; D-048–D-050 mechanisms PROPOSED. Read-only structural/documentation checks recorded in Step 35 below; no Skills, host integration, configuration, catalog, validator or manifest change. |
@@ -40,7 +41,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after STEP 35; await Product Owner review of ADR-0009–ADR-0011 / R-57. Step 36 is NOT_STARTED and requires a separate instruction. Prior release blockers R-53–R-56 and DF-03 remain open; Step 35 does not change the Step 34 release recommendation. |
+| Next step | STOP after Step 36 for owner review. D-053 resolves the registration approval blocker. Step 37 NOT_STARTED and requires a separate instruction. No host integration or release authorized; existing provider/quality gaps remain. |
 | Commits made by agent | None |
 
 ---
@@ -3957,3 +3958,211 @@ process.exit(rows.length === 2 && rows.every(r => r.pass) ? 0 : 1);
 ```
 
 No commit, push, tag, publication, release, provider install or Step 36 execution.
+
+## Step 36 — Humanizer Skill registration and validation foundation
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** BLOCKED at architectural-approval preflight; implementation not started.
+- **Baseline:** clean working tree on `main`, commit `c3a07b8`; original
+  Step 35 and the D-051/D-052 follow-ups were already present in HEAD.
+- **Scope:** this step's explicit request replaces the original proposed
+  host-research plan with registration/validation foundations. No Step 37.
+
+### Precondition findings
+
+Read BUILD_CONTRACT, the Step 36 plan, current/proposed decisions and ADR-0009,
+the Step 35 results, and current count/L0/V-19 source logic. D-051 approves the
+count ceiling and D-052 the 6,500-character L0 budget. Neither approves the
+editorial registration architecture. ADR-0009 remains PROPOSED and states:
+
+> Owner approval of the separate registry remains required
+
+Its proposed decision item 3 specifies a separate developer-side editorial
+registry, validated union/uniqueness and existing/planned mappings, preserving
+the 206 Engineering Capabilities and ownership checks. It explicitly changes
+CA-01's engineering-only assumption only after approval. V-19 still rejects
+every shipped Skill absent from the Engineering Catalog. Implementing this
+extension now would assume the architectural approval the user explicitly
+required us to verify before proceeding.
+
+The user's Step 36 precondition is decisive: "If required architectural
+approval is missing, stop and report BLOCKED. Do not assume approval."
+Accordingly no registry, validator, negative control, placeholder Skill or
+Humanizer content is created. The existing ADR-0009 registration model is a
+concrete reviewable proposal; only that relevant component needs approval to
+unblock this work, not unrelated host persistence or human-quality architecture.
+R-57 records the blocker. All MHR implementation statuses remain PLANNED.
+
+### Metadata and latest count instruction
+
+Read-only measurement returned 13 shipped Skills and L0 **5,485/6,500**,
+leaving 1,015. At the existing 420-character description target, two
+18-character names add 876: **5,485 + 876 = 6,361**, leaving 139. These are
+projected descriptions, not authored/validated Humanizer metadata or a host
+limit claim. Existing descriptions remain unchanged; no routing accuracy
+claim or billed provider regression run is made. L0 does not require a new
+increase for this estimate.
+
+The latest Step 36 request specifies **maximum 15**, superseding the earlier
+25 ceiling for this step's eventual implementation. That instruction is
+recorded without asking for duplicate count approval. Current validators still
+hold 25 because the missing registry approval blocks implementation as a whole.
+
+### Files modified (status documentation only)
+
+| Action | Path |
+|---|---|
+| Modified | `docs/chayen/PROGRESS.md` — BLOCKED status, inspection/measurement evidence and stop |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` — blocked preparation note; MHR/legacy statuses unchanged |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` — user-directed Step 36 scope and BLOCKED status |
+| Modified | `docs/chayen/ISSUES.md` — R-57 approval dependency and concrete approval scope |
+| Created / deleted | None |
+
+### Commands and actual outcomes
+
+| Command / method | Result |
+|---|---|
+| `git status --short` before edits | PASS: no output; clean tree. |
+| `git log -1 --format='%h %s'` | PASS: `c3a07b8 feat: Update L0 metadata budget to 6,500 characters and adjust related documentation`. |
+| `Get-Content` governing files / `rg -n` approval records and validator conditions | Inspection confirms ADR-0009 registration component PROPOSED, V-19 engineering-only, current count 25 and L0 6,500. This is source inspection, not executed validator evidence. |
+| Inline metadata measurement below via existing Node executable | PASS, exit 0: `shippedSkills=13, l0=5485, approvedBudget=6500, headroom=1015, projected15=6361, projectedHeadroom=139`. |
+| `node tools/validate/validate-package.mjs` | NOT_RUN: stopped at the explicit architecture-approval precondition; no implementation changed. |
+| `node tools/validate/run-validator-tests.mjs` | NOT_RUN: same precondition; no new mutation tests implemented. |
+| `node tools/validate/validate-all.mjs` | NOT_RUN: same precondition. Historical Step 35 PASS results are not reused as Step 36 runs. |
+| Seven requested new negative-control categories | NOT_RUN / not implemented due to approval blocker. |
+| `git diff --check` | PASS, exit 0; no whitespace errors. Only four governance documents changed; `git diff --name-only -- plugins catalog tools tests .agents .claude-plugin .github` returned no paths. |
+
+Exact read-only measurement (PowerShell here-string piped to
+`& 'C:\Program Files\nodejs\node.exe' -`):
+
+```javascript
+const fs = require('node:fs'), path = require('node:path');
+const root = 'plugins/codejadee-chayen-framework/skills';
+const names = fs.readdirSync(root).filter(n => fs.existsSync(path.join(root, n, 'SKILL.md')));
+const l0 = names.reduce((sum, n) => sum + n.length + /^description: (.*)$/m.exec(fs.readFileSync(path.join(root, n, 'SKILL.md'), 'utf8'))[1].trimEnd().length, 0);
+const projected = l0 + 2 * (18 + 420);
+console.log(JSON.stringify({ shippedSkills: names.length, l0, approvedBudget: 6500, headroom: 6500 - l0, projected15: projected, projectedHeadroom: 6500 - projected }));
+```
+
+STOP at Step 36 precondition and wait for explicit approval of ADR-0009's
+registration model. No runtime/dependency, user instruction, Skill description,
+Engineering Catalog, manifest, provider configuration, commit, push or release
+change. Step 37 remains NOT_STARTED.
+
+## Step 36 resumed — Editorial registration and validation foundation
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** DONE for Step 36, pending owner review; no behavioral VERIFIED promotion.
+- **Authorization:** after the initial approval preflight, the owner instructed
+  proceeding ("งง มีอะไรค้างหล่ะ ก็ทำซะซิ"). D-053 records acceptance of the
+  concrete separate-registry/CA-01/V-19 proposal. No repeated approval request.
+- **Baseline:** `main` at `c3a07b8` with four uncommitted status documents from
+  the initial preflight; their history is preserved and updated for resumption.
+- **Scope:** Step 36 only. Latest maximum 15 supersedes D-051's earlier 25;
+  D-052's L0 6,500 is retained. No Skills, runtime, host integration or Step 37.
+
+### Implemented design and limits
+
+`catalog/editorial-skills.json` registers exactly Thai and English Humanizer
+names/languages, canonical planned descriptions and `mapping: planned`. Neither
+directory exists in the package. The engineering catalog remains byte-for-byte
+unchanged, with 206 capabilities / 20 domains / 13 engineering Entry Skills.
+There are no fabricated capability IDs, editorial-owned CAP records or
+placeholder SKILL.md bodies. [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md)
+describes the schema, contracts and later planned-to-existing transition.
+
+`tools/catalog/skill-registration.mjs` supplies shared max-count/L0 constants
+and closed-schema identity/mapping/name-union/isolation checks to package,
+catalog, security and evaluation tooling. `planned` forbids a shipped
+directory; `existing` requires a real Skill and exact canonical metadata.
+Engineering and editorial names are disjoint. Engineering recipes, ownership,
+references, technology/workflow coverage and original inventory fingerprints
+retain their checks. Every future shipped editorial Skill must pass the same
+frontmatter, anatomy, safety, reference, trigger and body-size gates.
+
+V-07 now checks shipped and projected metadata separately, includes planned
+editorial descriptions in length/YAML/boundary/distinctness checks and caps
+registered/shipped count at 15. V-20's editorial vocabulary applies only to
+registered editorial names; engineering vocabulary and thresholds are unchanged.
+V-19 accepts the validated registry union without relaxing engineering recipe
+mapping checks, and forbids editorial capability ownership/recipes. V-11.3
+shares registration rules; V-25 checks confined registry reads, schema, secrets
+and absence of executable/configuration fields. All tooling remains developer-only.
+
+Actual shipped L0 remains **5,485 / 6,500**. Planned names/descriptions add
+**455**, yielding **5,940 / 6,500**, leaving **560**. This improves on the
+corrected conservative 6,363 estimate without changing a single engineering description
+or increasing the approved budget. Maximum metadata overlap remains 0.11.
+Compact metadata, not native invocation accuracy, was evaluated; no provider
+routing or multilingual behavior verification is claimed.
+
+Direct measurement also corrected the old planning assumption: each name is
+19 characters, not 18. Descriptions are 211/206 characters; metadata additions
+are 230/225, totaling 455. The conservative upper estimate is 6,363 (137 free),
+not the historical 6,361. This does not affect the 6,500 cap or actual V-07
+measurement; earlier logs retain their historical observed arithmetic.
+
+### Negative controls and regression protection
+
+Added 18 mutations in `tests/catalog/editorial-mutations.json`, covering all
+seven requested categories plus planned/existing parity, unsupported runtime
+fields, unsafe names, metadata drift, distinctness and registry absence. The
+runner's optional expected diagnostic fragment prevents unrelated failures
+from satisfying a case. An existing catalog-ownership mutation now pins its
+actual ownership diagnostic rather than also accepting a count error.
+
+Added two security cases for editorial runtime fields and synthetic secrets,
+and updated the positive metadata-only fixture to include valid editorial
+registration. Invalid Skill copies are confined to temporary test repositories
+and removed by reviewed cleanup. No fixture/Skill body is added to the package.
+
+### File ledger (Step 36, including the initial status update)
+
+| Action | Files |
+|---|---|
+| Created | `catalog/editorial-skills.json` |
+| Created | `tools/catalog/skill-registration.mjs` |
+| Created | `tests/catalog/editorial-mutations.json` |
+| Created | `docs/chayen/SKILL_REGISTRATION.md` |
+| Modified | `tools/catalog/check-catalog.mjs`, `tools/catalog/README.md` |
+| Modified | `tools/validate/validate-package.mjs`, `tools/validate/check-security.mjs`, `tools/validate/run-validator-tests.mjs`, `tools/validate/README.md` |
+| Modified | `tools/evals/run-evaluation-suite.mjs` |
+| Modified | `tests/catalog/catalog-mutations.json`, `tests/security/boundaries.test.mjs` |
+| Modified | `docs/chayen/ADRS/ADR-0004-skill-catalog-vs-entry-skills.md`, `docs/chayen/ADRS/ADR-0009-multilingual-editorial-skills.md`, `docs/chayen/ADRS/README.md` |
+| Modified | `docs/chayen/ARCHITECTURE.md`, `docs/chayen/PROJECT_CHARTER.md`, `docs/chayen/HUMANIZER_ARCHITECTURE_IMPACT.md` |
+| Modified | `docs/chayen/DECISIONS.md`, `docs/chayen/IMPLEMENTATION_PLAN.md`, `docs/chayen/ACCEPTANCE_MATRIX.md`, `docs/chayen/ISSUES.md`, `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/SKILL_AUTHORING_STANDARD.md`, `docs/chayen/SKILL_QUALITY_GATES.md`, `docs/chayen/PLUGIN_PACKAGE_DESIGN.md`, `docs/chayen/KNOWN_LIMITATIONS.md`, `docs/SKILLS_CATALOG.md` |
+| Deleted | None |
+
+### Actual verification after approval
+
+Reviewed validator entry points/imports, registry path guards, mutation copies
+and cleanup before execution. Commands use existing Node v24.22.0:
+`$taskNode = 'C:\Program Files\nodejs\node.exe'`. No package installation,
+provider invocation, billed evaluation, user configuration or runtime fact
+suite is part of these runs.
+
+| Command | Actual result |
+|---|---|
+| `& $taskNode tools/validate/validate-package.mjs` | PASS, exit 0: 13 shipped Skills, actual L0 5,485, projected registered L0 5,940 / 6,500; 15 descriptions checked; max overlap 0.11; 221 references / 117 recipes / 206 capabilities / 445 recipe cases. Five existing >200-line target warnings, all under hard 300; no errors. |
+| `& $taskNode tools/catalog/check-catalog.mjs` | PASS, exit 0: 206 unique capabilities / 20 domains, all IMPLEMENTED; 13 engineering Skills; original inventory fingerprint `2f13cad24ff431e3`. |
+| `& $taskNode tools/validate/check-security.mjs` | PASS, exit 0: 238 package files, 13 entries, 221 references, 69 developer assets, 0 errors. |
+| `& $taskNode tools/validate/run-validator-tests.mjs` (first run) | FAIL, 149/150: one new scratch mutation used an exact replacement appearing three times. No validator assertion failed; the mutation could not be applied. |
+| `& $taskNode tools/validate/run-validator-tests.mjs --only ed36-missing-engineering-recipe` (after fixing mutation) | PASS, exit 0: 5/5, four baseline validators plus corrected missing-engineering-recipe case. The mutation now targets the first recipe occurrence and detects the exact missing mapping. |
+| `& $taskNode --test tests/security/boundaries.test.mjs` | PASS, exit 0: 34/34, including the valid registry baseline and two new registry security cases. |
+| `& $taskNode tools/validate/validate-all.mjs` (final) | PASS, exit 0: all nine gate groups; 150/150 validator tests (four baselines + 146 mutations, including all 18 new editorial cases); 34/34 security tests; engineering/technology/workflow checks; 186 trigger cases / 441 generated files synchronized; user docs 18 files / 0 errors. |
+| `& $taskNode tools/evals/run-evaluation-suite.mjs` | PASS, exit 0: static/traceability levels, identity 15/15, engineering 206/206, technology 108/108, workflows 12/12, 11/11 routing example mappings. Actual L0 5,485 and projected registered L0 5,940 / 6,500 printed correctly. Its simulated proxy is not native routing evidence. No `--write` or provider invocation. |
+| `& $taskNode tools/validate/check-docs.mjs` | PASS, exit 0: 18 user/release documents, 0 errors. |
+| Original governance check's link/anchor section (before `const matrix =`), extracted from PROGRESS and piped to `& $taskNode -`; historical snapshot assertions omitted | PASS, exit 0: 16 changed governance documents, 130 relative links/anchors, 0 errors. |
+| Inline read-only shared-registration/metadata invariant check via `& $taskNode --input-type=module -` | PASS, exit 0: no registration errors, 206 Engineering Capabilities, 13 engineering registrations / shipped Skills, two planned editorial records, maximum 15 and L0 6,500; measured descriptions 211/206 chars, names 19 each, metadata additions 230/225. |
+| `git diff --name-only -- plugins catalog/engineering-capabilities.yaml catalog/technology-capabilities.yaml catalog/composite-workflows.json .agents .claude-plugin .github` | PASS preservation check: no output; shipped files/descriptions/manifests, all three existing catalogs and host marketplace metadata unchanged. |
+| `git diff --check` | PASS, exit 0; Git's two LF-to-CRLF notices are not whitespace errors. |
+
+Native provider routing, Humanizer bodies/behavior, multilingual human quality
+and host lifecycle are NOT_RUN; no MHR or legacy requirement is promoted to
+VERIFIED from this static foundation. Existing engineering descriptions,
+catalog and shipped files remain unchanged, so no routing effect is asserted.
+Future body/description changes need their own native routing evidence.
+
+STOP after Step 36. No commit, push, tag, release, provider install, user-level
+instruction change or Step 37 execution.

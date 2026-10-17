@@ -22,7 +22,7 @@ when that verification is still pending.
 | [ADR-0006](ADR-0006-provider-portability-strategy.md) | Provider portability strategy | ACCEPTED (Step 04: the user referred to "the approved packaging ADRs") | D-005, D-009, MA-04, MA-05 |
 | [ADR-0007](ADR-0007-security-boundaries.md) | Security boundaries | PROPOSED | D-003, REQ-09 |
 | [ADR-0008](ADR-0008-packaging-and-marketplace-strategy.md) | Packaging and marketplace strategy | ACCEPTED, as amended by D-013 (Step 04) | D-009, D-013, K-01..K-04 |
-| [ADR-0009](ADR-0009-multilingual-editorial-skills.md) | Multilingual Editorial Skills | PROPOSED (Step 35; product scope approved separately) | D-047, D-048, MHR-001–MHR-006, MHR-011 |
+| [ADR-0009](ADR-0009-multilingual-editorial-skills.md) | Multilingual Editorial Skills | PROPOSED for remaining behavior decisions; registration/limits ACCEPTED under D-051–D-053 | D-047, D-048, D-053, MHR-001–MHR-006, MHR-011 |
 | [ADR-0010](ADR-0010-persistent-multilingual-response-style-policy.md) | Persistent Multilingual Response Style Policy | PROPOSED (Step 35) | D-047, D-049, MHR-007–MHR-009 |
 | [ADR-0011](ADR-0011-multilingual-quality-and-safety.md) | Multilingual Quality and Safety | PROPOSED (Step 35) | D-047, D-050, MHR-010–MHR-012 |
 
@@ -34,6 +34,11 @@ Owner follow-up D-051 (2026-10-17) explicitly accepts and implements only an
 Entry Skill ceiling of 25, amending ADR-0004 and ADR-0009's count component.
 The subsequent D-052 follow-up accepts and implements L0 ≤6,500. The rest of
 ADR-0009, including the editorial registry proposal, remains PROPOSED.
+
+Step 36 D-053 accepts and implements ADR-0009's editorial registration and
+CA-01/V-19 components. Its latest maximum is 15, superseding D-051's 25;
+L0 remains 6,500. Remaining editorial behavior decisions and ADR-0010/0011
+remain PROPOSED. See [SKILL_REGISTRATION.md](../SKILL_REGISTRATION.md).
 
 Source IDs (S1–S24) refer to
 [PROVIDER_SPEC_RESEARCH.md §0](../PROVIDER_SPEC_RESEARCH.md#0-sources).

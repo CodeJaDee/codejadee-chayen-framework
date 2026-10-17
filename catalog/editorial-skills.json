@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "chayen-humanizer-th",
+      "language": "th",
+      "mapping": "planned",
+      "description": "Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation."
+    },
+    {
+      "name": "chayen-humanizer-en",
+      "language": "en",
+      "mapping": "planned",
+      "description": "Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code."
+    }
+  ]
+}

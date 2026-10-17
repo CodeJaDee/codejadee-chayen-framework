@@ -26,6 +26,16 @@ runners and paid provider calls were not part of its verification. The D-051
 follow-up runs count-boundary and validator regressions in isolated scratch
 copies; it still makes no provider calls or host configuration changes.
 
+**Step 36 amendment (D-053):** registration/CA-01/V-19 is now approved and
+implemented; maximum is 15. L0 remains 6,500, checked for both actual and
+projected metadata. Shared rules validate two planned editorial identities,
+closed metadata, disjoint registrations, mapping/file parity and Engineering
+Catalog isolation. V-07b/V-20 also check planned descriptions without changing
+engineering vocabulary/thresholds. Existing shipped Skill gates remain intact.
+The self-test runner includes 18 editorial mutations with optional exact
+diagnostic fragments; security tests add registry runtime-field/secret cases.
+See [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md) and actual PROGRESS evidence.
+
 ---
 
 ## 1. How to run
@@ -61,7 +71,7 @@ CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycl
 | Gate | What it protects | Checks | Mode | When it must pass |
 |---|---|---|---|---|
 | G-SEC | Reviewed metadata-only package profile, authority guards, confined package/marketplace/catalog paths, heuristic secret scan and dependency/link inventory | V-25; inspect scripts before running this gate; failure stops aggregate checks | Offline static; no enforcement or vulnerability-free guarantee | Every change |
-| G-SEC-T | Script traversal/junction handling, safe staging, eval metadata injection, parser keys, provider opt-in and negative package-profile controls | 32 tests in tests/security/boundaries.test.mjs | Offline Node tests; no provider calls | Security/tooling changes |
+| G-SEC-T | Script traversal/junction handling, safe staging, eval metadata injection, parser keys, provider opt-in, negative package-profile and editorial-registry controls | 34 tests in tests/security/boundaries.test.mjs | Offline Node tests; no provider calls | Security/tooling changes |
 | G-01 | Plugin manifests are valid, use only supported fields, and agree with each other | V-02 (Agent Plugins 1.0.0 closed schema), V-03 (Claude manifest fields), V-04 (identity parity, semver), X-01 `claude plugin validate --strict` | Automated | Every change |
 | G-02 | One valid marketplace file per provider | V-01a/b/c, V-01 consistency, X-01 | Automated | Every change |
 | G-03 | Catalog integrity: exactly 206 / 20, unique, verbatim inventory, mappings, status rules, docs in sync | V-11.0–V-11.11 | Automated | Every change |
@@ -76,7 +86,7 @@ CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycl
 | G-10 | Skills, recipes, and catalog agree; every recipe capability has eval cases; trigger cases are well-formed | V-19, V-22, V-16 | Automated | Every change |
 | G-11 | Trigger eval cases are generated and current. **Trigger evals are executed** when a description or routing changes. | `generate-claude-evals.mjs --check`; staged `claude plugin eval` (≥3 runs, no-plugin arm); `tests/routing/run-smoke.mjs` | Check: automated. Runs: billed, need approval. | Check: every change. Runs: before claiming a routing effect (DS-09). |
 | G-12 | Recipe behaviour evals pass on fixture repositories | `tests/skills/recipe-cases.json`, graded on transcripts | Billed, manual. **No runner or fixtures yet.** | Before any capability becomes VERIFIED |
-| G-13 | The validators themselves detect what they claim to | `run-validator-tests.mjs`: 2 baseline runs + 51 negative controls (19 catalog, 32 package; Step 09 added `sk-placeholder-in-prose`) | Automated | Whenever a validator or standard changes |
+| G-13 | The validators themselves detect what they claim to | `run-validator-tests.mjs`: four baseline validators + 146 negative controls, including 18 editorial cases (Step 36); optional diagnostic fragments prevent unrelated failures from satisfying a case | Automated | Whenever a validator or standard changes |
 | G-14 | Native install, discovery, disable, and uninstall still work on each CLI | `run-lifecycle.sh` (24 checks, isolated homes) | Automated, local CLIs | Packaging changes; before release |
 | G-15 | Human review (checklist §4) | Reviewer | Manual | Every skill or recipe change; before promotion |
 

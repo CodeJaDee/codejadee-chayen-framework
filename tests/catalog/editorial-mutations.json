@@ -1,0 +1,317 @@
+{
+  "$comment": "Step 36 negative controls; invalid Skill copies exist only in confined temporary test repositories. Planned metadata is not shipped content.",
+  "version": 1,
+  "cases": [
+    {
+      "id": "ed36-unregistered",
+      "description": "A shipped Thai Editorial Skill has no editorial registration",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        },
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "unregistered Editorial Skill"
+      }
+    },
+    {
+      "id": "ed36-duplicate-name",
+      "description": "Duplicate names in the editorial registry",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "duplicate skill name"
+      }
+    },
+    {
+      "id": "ed36-duplicate-shipped-name",
+      "description": "Editorial directory retains another shipped frontmatter name",
+      "edits": [
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-05 skills"
+      }
+    },
+    {
+      "id": "ed36-invalid-language",
+      "description": "Humanizer locale does not match its approved identity",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"fr\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "invalid Humanizer language metadata"
+      }
+    },
+    {
+      "id": "ed36-invalid-metadata",
+      "description": "Humanizer description exceeds the portable hard limit",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "invalid Humanizer description metadata"
+      }
+    },
+    {
+      "id": "ed36-missing-reference",
+      "description": "An editorial scratch copy contains a broken reference",
+      "edits": [
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+        },
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th/references/advanced-test-techniques.md",
+          "op": "delete"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-08 links"
+      }
+    },
+    {
+      "id": "ed36-exceeded-count",
+      "description": "Sixteen shipped directories exceed the latest Step 36 ceiling",
+      "edits": [
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+        },
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en"
+        },
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-extra"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-07 metadata-budget",
+        "message": "16 entry skills > 15"
+      }
+    },
+    {
+      "id": "ed36-exceeded-planned-budget",
+      "description": "Planned editorial metadata pushes the registered surface above L0 budget",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Thai prose xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Not for code or databases.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-07 metadata-budget",
+        "message": "L0 metadata"
+      }
+    },
+    {
+      "id": "ed36-engineering-isolation",
+      "description": "Editorial Skill cannot take ownership of an Engineering Capability",
+      "edits": [
+        {
+          "file": "catalog/engineering-capabilities.yaml",
+          "op": "regex",
+          "pattern": "(  - id: CAP-01-001\\n[\\s\\S]*?entry_skill: \\{name: )chayen-repository",
+          "with": "$1chayen-humanizer-th"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "Engineering Catalog isolation"
+      }
+    },
+    {
+      "id": "ed36-catalog-isolation",
+      "description": "Standalone engineering checker also rejects editorial capability ownership",
+      "edits": [
+        {
+          "file": "catalog/engineering-capabilities.yaml",
+          "op": "regex",
+          "pattern": "(  - id: CAP-01-001\\n[\\s\\S]*?entry_skill: \\{name: )chayen-repository",
+          "with": "$1chayen-humanizer-th"
+        }
+      ],
+      "expect": {
+        "validator": "catalog",
+        "error": "V-11.3 entry-skills",
+        "message": "Engineering Catalog isolation"
+      }
+    },
+    {
+      "id": "ed36-missing-existing",
+      "description": "Existing editorial registration must resolve to a real Skill file",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "existing registration requires SKILL.md"
+      }
+    },
+    {
+      "id": "ed36-premature-planned-directory",
+      "description": "Planned editorial registration cannot hide a shipped directory",
+      "edits": [
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "planned registration must not have a shipped directory"
+      }
+    },
+    {
+      "id": "ed36-runtime-field",
+      "description": "Registry cannot carry hooks or executable configuration",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\",\n      \"hooks\": {\n        \"start\": \"run\"\n      }\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "unsupported fields"
+      }
+    },
+    {
+      "id": "ed36-unsafe-name",
+      "description": "Unapproved traversal-like name cannot become a registry path",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"../outside\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "outside the approved two-name allow-list"
+      }
+    },
+    {
+      "id": "ed36-duplicate-description",
+      "description": "Planned descriptions must remain distinct",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-07b description-distinctness"
+      }
+    },
+    {
+      "id": "ed36-missing-registry",
+      "description": "Editorial registry is required even before Skills ship",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "delete"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "registration inputs missing"
+      }
+    },
+    {
+      "id": "ed36-metadata-drift",
+      "description": "A shipped editorial description must match its canonical registry",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+        },
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "shipped Humanizer metadata differs from registry"
+      }
+    },
+    {
+      "id": "ed36-missing-engineering-recipe",
+      "description": "Existing Engineering Catalog mapping checks remain active",
+      "edits": [
+        {
+          "file": "catalog/engineering-capabilities.yaml",
+          "op": "regex",
+          "pattern": "recipe: \\{path: skills/chayen-repository/references/repository-profile\\.md, mapping: existing\\}",
+          "with": "recipe: {path: skills/chayen-repository/references/missing-registration-test.md, mapping: existing}"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "catalog recipe skills/chayen-repository/references/missing-registration-test.md does not exist"
+      }
+    }
+  ]
+}

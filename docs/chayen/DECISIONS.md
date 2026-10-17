@@ -1161,6 +1161,39 @@ Decision statuses:
 - **Verification:** boundary 6,500/6,501 and offline regressions; actual
   commands/results recorded in the D-052 entry in [PROGRESS.md](PROGRESS.md).
 
+### D-053 — Step 36 editorial registration and validation foundation
+
+- **Status:** ACCEPTED (owner instructed "งง มีอะไรค้างหล่ะ ก็ทำซะซิ" after
+  the missing separate-registry/CA-01/V-19 approval was explicitly identified).
+  This approves proceeding with that concrete registration proposal; no
+  duplicate approval is requested for D-051/D-052's settled limits.
+- **Decision:** implement a separate developer-only JSON editorial registry,
+  exactly Thai/English Humanizer identities with planned/existing mappings
+  and canonical discovery metadata. V-19 validates the union of engineering
+  and editorial registrations while retaining engineering-only capability
+  ownership/recipe checks and all other shipped Skill gates.
+- **Current requirement:** the latest Step 36 instruction specifies maximum
+  **15**, replacing D-051's earlier 25. L0 remains 6,500 under D-052. Shared
+  developer-only constants prevent count/budget drift between validators and
+  reports. The package ends with 13 real Skills; both Humanizers are planned
+  records without directories or placeholder SKILL.md files.
+- **Isolation:** the 206-capability engineering catalog is unchanged. No dummy
+  IDs, editor-owned engineering capabilities, cross-registry name collisions,
+  executable registry fields, unsafe paths or validation exemptions.
+- **Metadata:** current 5,485 plus planned editorial 455 = projected 5,940,
+  leaving 560. Check actual/projected budgets, description breadth/distinctness
+  and canonical metadata match. Existing engineering descriptions unchanged.
+- **Arithmetic correction:** each Humanizer name is 19 characters, not the
+  earlier assumed 18. The conservative 420-character description estimate is
+  6,363 (137 free), not 6,361. Historical Step 35 measurements remain recorded
+  as observed; the measured Step 36 registry total 5,940 is authoritative.
+- **Evidence:** applicable offline validators, aggregate runner and new mutation
+  cases; exact outcomes in PROGRESS.md. Native/provider/human evaluation is
+  NOT_RUN. No runtime, host integration, release or Step 37 authorization.
+- **ADR impact:** accept ADR-0009's registration component and CA-01/V-19
+  amendments, plus the explicit new count requirement. ADR-0010 persistent
+  host policy and ADR-0011 quality thresholds remain PROPOSED.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

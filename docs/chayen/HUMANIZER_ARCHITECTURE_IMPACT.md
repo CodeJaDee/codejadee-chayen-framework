@@ -19,6 +19,15 @@ figures describe the original inspection, not the current budget.
 
 ## Inspected baseline
 
+**Step 36 resolution (D-053):** the owner explicitly instructed proceeding
+after the registry approval blocker was reported. Separate editorial registry
+and CA-01/V-19 amendments are now accepted/implemented. Current maximum is 15,
+replacing the earlier 25 under the latest step request. Actual L0 stays 5,485;
+projected metadata is 5,940 / 6,500. Remaining policy/human-quality decisions
+are outside this registration approval. See
+[SKILL_REGISTRATION.md](SKILL_REGISTRATION.md). Earlier inspection/approval
+statements below retain their historical Step 35 meaning.
+
 The starting working tree was clean on `main`, commit `1106226`. Both plugin
 manifests identify `codejadee-chayen-framework`, version `0.1.0-dev`; the three
 native marketplaces point to `plugins/codejadee-chayen-framework/`. The package
@@ -66,8 +75,10 @@ permissions. A user declining B retains the native-plugin-only baseline.
 
 V-07 measures the JavaScript string length of each name plus description,
 excluding host formatting. At the existing ≤420-character description target,
-two 18-character names add at most 876: 5,485 + 876 = 6,361. The D-052-approved 6,500
-ceiling leaves 139 characters at that estimate. This is arithmetic, not a
+two 19-character names add at most 878: 5,485 + 878 = 6,363. The D-052-approved 6,500
+ceiling leaves 137 characters at that estimate. Step 36 corrects the original
+18-character name assumption; its actual planned descriptions project 5,940.
+This is arithmetic, not a
 provider capacity claim; Thai token cost is not estimated with English
 characters-per-token assumptions. Alternatives are compressing descriptions
 within 5,500 with routing regression evidence, or revising the budget after

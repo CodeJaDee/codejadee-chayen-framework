@@ -16,6 +16,15 @@
 >
 > All are replaceable without structural change.
 >
+> **Step 36 registration amendment (D-053):** separate editorial registration
+> and CA-01/V-19 changes are accepted and implemented. Maximum is **15** under
+> the latest step request, superseding D-051's 25. Engineering Catalog stays
+> unchanged; two Humanizers are registered as planned with no directories.
+> Actual L0 5,485; projected with planned metadata 5,940 / 6,500. Shipped
+> bodies/references/safety/discovery contracts apply equally to both categories.
+> See [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md); earlier pending-registry
+> statements below describe historical Step 35 proposals. No host integration.
+>
 > **Step 35 L0 follow-up (D-052, 2026-10-17):** owner-authorized L0 ceiling
 > is now **6,500 characters**, implemented in V-07 and evaluation reporting.
 > Current metadata is unchanged at 5,485, leaving 1,015 characters; count
@@ -282,7 +291,7 @@ Entry skills are the **only** objects the provider's discovery sees.
 - **Shape:** task-intent skills, not one skill per capability and not one per
   technology (ADR-0004).
 - **Budget** (enforced by C-12, derivation in §8):
-  - at most **25** entry skills (D-051, user-approved; originally 14);
+  - at most **15** registered/shipped entry skills (D-053; previously 25 D-051);
   - each `description` targets ≤280 characters (hard limit 1024);
   - Chayen's total listing metadata is ≤6,500 characters (D-052; previously 5,500 under D-037).
 - **Naming:** `chayen-<intent>`. The prefix is short, which gives collision
@@ -647,7 +656,7 @@ flowchart TB
 | Attribute | Target | Derivation | Checked by |
 |---|---|---|---|
 | L0 metadata footprint | ≤6,500 characters total (D-052; formerly 5,500 D-037) | Owner-authorized internal budget for target 15; current 5,485 leaves 1,015 characters. Host capacity and token overhead require per-surface measurement; this is not a verified provider limit. | V-07; evaluation context report |
-| Entry skills | ≤25 (D-051) | Explicit owner-approved count ceiling, independent of L0. Current count 13; product target 15. | V-07, V-11.3 |
+| Entry skills | ≤15 (D-053) | Latest Step 36 requirement, independent of L0. 13 shipped engineering plus two planned editorial registrations. | V-07, V-11.3, V-19 |
 | `SKILL.md` body | ≤300 lines | Below the 500-line spec ceiling (S7, S24), leaving headroom | V-06 |
 | Link depth | ≤2 hops | ADR-0004 | V-08 |
 | Trigger precision and recall | Measured, not assumed. Targets are set after the first eval baseline. | R-02 | C-13 |

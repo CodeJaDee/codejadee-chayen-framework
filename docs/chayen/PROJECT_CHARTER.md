@@ -52,6 +52,11 @@ claimed supported. Original Step 35 changed governance only; the explicit
 D-051/D-052 follow-ups change count/L0 validation and reporting only.
 Current package count is 13.
 
+Step 36 approval D-053 implements the separate editorial registration model
+and CA-01/V-19 amendments. Its latest maximum 15 replaces the earlier 25;
+L0 stays 6,500. The two Humanizers are planned metadata records only; current
+shipping count remains 13. See [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md).
+
 ### 2.1 In scope
 
 - Skill content (instructions plus on-demand reference material) covering

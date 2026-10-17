@@ -27,6 +27,7 @@ another copy. They are used for negative-control runs: see
 |---|---|
 | `check-catalog.mjs` | Validator V-11, and the coverage-table generator |
 | `catalog-lib.mjs` | The shared restricted-YAML parser. `tools/validate/validate-package.mjs` also uses it (V-19). |
+| `skill-registration.mjs` | Step 36 shared engineering/editorial registration rules, maximum 15 and L0 6,500 constants. Reads the separate `catalog/editorial-skills.json`, enforces exact identities, closed metadata, disjoint names, planned/existing file parity and Engineering Catalog isolation. Also used by package/security validation and the evaluation report. |
 | `check-technology.mjs` | V-23: checks `catalog/technology-capabilities.yaml` against the Step 20 inventory, the technology reference sections (anatomy TC-01 to TC-06), `tests/skills/technology-cases.json`, the engineering catalog, and the .NET fact list; keeps `docs/chayen/TECHNOLOGY_COVERAGE.md` in sync. |
 | `audit-coverage.mjs` | The Step 19 coverage audit: ten static criteria per capability (catalog, mapping, procedure, entry skill, paths, positive and negative cases, inputs and outputs, safety and verification, no placeholders), plus duplicate, orphan, mapping, and description-term checks. See `docs/chayen/ENGINEERING_COVERAGE_AUDIT.md`. |
 | `check-workflows.mjs` | V-24: 12 composite checklists and seven template leaves, catalog/recipe and conditional technology mappings, staged anatomy, approval/evidence defaults, 47 evaluation specifications and coverage sync. No agent or workflow execution. |

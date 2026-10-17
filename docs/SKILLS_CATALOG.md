@@ -137,6 +137,7 @@ Open an issue as described in
 - Most requests become a **recipe inside an existing skill**, not a new
   skill.
 - The L0 metadata budget is 6,500 characters (D-052); current usage is 5,485,
-  leaving 1,015. The Entry Skill ceiling is 25 (D-051), while the current
-  product target is 15. New Skills still need routing and metadata checks;
+  leaving 1,015 for shipped metadata. Step 36 also registers two planned
+  editorial descriptions: projected total 5,940, leaving 560. The latest
+  Entry Skill ceiling and product target are 15 (D-053). New Skills still need routing and metadata checks;
   this internal budget does not establish host capacity or routing quality.

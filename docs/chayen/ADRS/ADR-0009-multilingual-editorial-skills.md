@@ -1,6 +1,6 @@
 # ADR-0009: Multilingual Editorial Skills
 
-- **Status:** PROPOSED — product scope approved; architecture awaits owner review.
+- **Status:** PROPOSED for remaining editorial behavior decisions; registration/CA-01/V-19 and limits ACCEPTED (D-051–D-053). Implementation/quality evidence is separate from approval.
 - **Date:** 2026-10-17
 - **Related:** D-047, D-048, MHR-001–MHR-006, MHR-011; ADR-0002, ADR-0004–ADR-0008.
 - **Number allocation:** 0009–0011 were unused in files/index and repository
@@ -16,6 +16,14 @@ this does not accept the editorial registry or other architecture proposals.
 
 ## Context
 
+**Step 36 approval (D-053):** the owner instructed proceeding after the
+registration approval gap was identified. Separate editorial registration and
+CA-01/V-19 amendments are now accepted and implemented as described in
+[SKILL_REGISTRATION.md](../SKILL_REGISTRATION.md). The latest Step 36 count
+requirement is maximum 15, replacing D-051's 25. L0 stays 6,500. Both Humanizers
+remain planned records without Skill directories; host policy and human-quality
+architecture are not accepted by this registration approval.
+
 The Product Owner approved Thai and English writing/editing Entry Skills in
 the existing repository, and a target increase from 13 to 15. The original
 Step 35 scope did not approve changing the then-current ≤14 ceiling;
@@ -30,17 +38,18 @@ or distort the preserved 206-capability inventory.
 1. Add `chayen-humanizer-th` and `chayen-humanizer-en` later as bounded,
    provider-neutral, native-discovered editorial Skills. No Skill is created
    in Step 35 and no separate repository is introduced.
-2. Use the owner-approved ≤25 Entry Skill ceiling (D-051), with a current
+2. Use the latest owner-required ≤15 Entry Skill ceiling (D-053; replacing D-051's 25), with a current
    product target of 15: 13 engineering and two editorial Skills. Retain the 206 Engineering Capabilities and all technology
    and workflow coverage, with no placeholder CAP records or reassignment.
-3. Propose a separate developer-side editorial registry. Validate the union
+3. Use the D-053-approved separate developer-side editorial registry. Validate the union
    of both registries for identity, uniqueness, approved total and existing
    versus planned mappings. Keep engineering ownership/coverage checks intact;
-   replace CA-01's engineering-only assumption only after approval. This is
+   replace CA-01's engineering-only assumption under that approval. This is
    not an exemption from anatomy, link, safety, trigger or size gates.
 4. Use the owner-authorized L0 ≤6,500 characters (D-052), measured with the existing name + description
-   method. With unchanged engineering descriptions and two 18-character names
-   plus ≤420-character descriptions, the estimate is ≤6,361. This is a
+   method. With unchanged engineering descriptions and two 19-character names
+   plus ≤420-character descriptions, the corrected upper estimate is ≤6,363.
+   Step 36's actual planned metadata projects 5,940. This is a
    planning estimate, not measured host/token capacity. Host instruction
    content has a separate overhead ledger (ADR-0010).
 5. Audit and rewrite only requested content; select by intended output
@@ -92,6 +101,8 @@ recorded tests; no paid evaluation is authorized by this ADR.
 
 Step 35 checks governance structure only; product verification is NOT_RUN.
 The count ceiling is approved by D-051 and the 6,500-character L0 cap by
-D-052. Owner approval of the separate registry remains required before its
-dependent implementation in later steps. No editorial Skill or registry is
-created by either limit amendment.
+D-052. D-053 subsequently accepts and implements the separate registry and
+registration validation while replacing the count with maximum 15. No editorial
+Skill body is created in Step 36; remaining behavior/host-policy work stays in
+later steps. Earlier pending-approval statements describe the original Step 35
+context and are superseded only for this registration scope.

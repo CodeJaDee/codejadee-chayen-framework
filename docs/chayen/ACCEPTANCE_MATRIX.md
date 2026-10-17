@@ -7,6 +7,39 @@ is defined in [BUILD_CONTRACT.md](BUILD_CONTRACT.md) §5.1.
 A row may be marked `VERIFIED` only when its verification evidence column
 cites an executed test and its recorded result (BC-10, BC-13).
 
+**Step 36 initial preflight (historical; resumed under D-053): BLOCKED** under the user's explicit approval
+precondition. ADR-0009's separate editorial registry and CA-01/V-19 amendments
+are still PROPOSED (R-57); D-051/D-052 approve only count and L0 components.
+No registration/validator implementation or new negative controls exist yet;
+all MHR rows remain PLANNED and MH-V methods NOT_RUN. Read-only metadata
+remeasurement: 13 shipped Skills, L0 5,485; projection for 15 is 6,361 within
+approved 6,500. The new Step 36 request specifies maximum 15, replacing the
+earlier 25 ceiling for its eventual implementation; no count change is applied
+while blocked. See PROGRESS.md Step 36 and ISSUES.md R-57. No legacy status
+or summary count changes.
+
+**Step 36 resumed implementation (D-053):** owner instructed proceeding after
+the registry approval gap was identified. The approved foundation now comprises
+`catalog/editorial-skills.json` (two planned identities/descriptions), shared
+developer registration rules, V-07/V-19/V-11.3/V-25 extensions, 18 editorial
+negative controls and two additional security cases. Current maximum is 15,
+L0 6,500, actual 13 Skills / 5,485 characters, projected 15-Skill metadata
+5,940 (560 free). [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md) maps the
+design and checks; actual commands/results are in PROGRESS.md's resumed Step 36
+entry. This is foundation evidence for MHR-001/MHR-011/MHR-012, not completed
+Humanizer Skills or host/behavior verification. Every MHR remains PLANNED;
+prior requirement statuses and summary counts stay unchanged.
+
+**Step 36 foundation verification:** DONE (pending review); package validation
+PASS with five existing size-target warnings, `validate-all.mjs` nine gate
+groups PASS, validator self-tests 150/150 (18 new editorial cases), security
+34/34, evaluation static/traceability PASS for 206 engineering / 108 technology /
+12 workflow records. Governance links/anchors 130/130; shipped/catalog
+preservation diff empty. First self-test run was 149/150 due to an ambiguous
+scratch replacement, corrected and revalidated. This is executed static
+foundation evidence; all MHR product acceptance/behavior requirements remain
+PLANNED with no VERIFIED promotion.
+
 **Snapshot:** Step 35 governance update (2026-10-17); prior evidence retains
 its recorded step/date and meaning. No Step 35 behavior verification claim.
 

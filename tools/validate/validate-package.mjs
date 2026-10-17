@@ -16,6 +16,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { inside, assertTreeNoLinks } from "./safe-paths.mjs";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
+import { loadEditorialRegistration, MAX_ENTRY_SKILLS, L0_BUDGET } from "../catalog/skill-registration.mjs";
 
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, "..", ".."));
 const PLUGIN_DIR_REL = "plugins/codejadee-chayen-framework";
@@ -294,6 +295,7 @@ function parseFrontmatter(text) {
 
 // ---------- 6b. Skill content checks (V-06, V-07, V-08, V-10, V-12, V-17, V-18, V-19, V-20, V-22) ----------
 const SKILLS_DIR = abs(`${PLUGIN_DIR_REL}/skills`);
+const editorialRegistration = loadEditorialRegistration(root);
 const skillDirs = fs.existsSync(SKILLS_DIR)
   ? fs.readdirSync(SKILLS_DIR, { withFileTypes: true }).filter((d) => d.isDirectory() && fs.existsSync(path.join(SKILLS_DIR, d.name, "SKILL.md"))).map((d) => d.name).sort()
   : [];
@@ -328,28 +330,35 @@ for (const s of skillDirs) {
   }) : [];
 }
 
-{ // V-07 metadata budget, description safety and distinctness
+// Planned editorial descriptions are checked now, without shipping Skill bodies.
+// Existing editorial descriptions must match their registry; no double counting.
+const discoveryMeta = { ...skillMeta };
+for (const [name, record] of editorialRegistration.skills) {
+  if (!discoveryMeta[name] && typeof record.description === "string") discoveryMeta[name] = { desc: record.description };
+}
+{ // V-07 actual/projected metadata budget, description safety and distinctness
   const c = "V-07 metadata-budget";
   let total = 0;
-  for (const [s, m] of Object.entries(skillMeta)) {
+  for (const [s, m] of Object.entries(discoveryMeta)) {
     total += s.length + m.desc.length;
     if (m.desc.length > 1024) error(c, `${s}: description ${m.desc.length} chars > 1024`);
     else if (m.desc.length > 420) warn(c, `${s}: description ${m.desc.length} chars > 420 target (D-017)`);
     if (/: |\s#|^['"\[{>|*&!%@`]/.test(m.desc)) error(c, `${s}: description contains YAML-unsafe characters (": ", " #", or a leading indicator); quote it or rephrase`);
     if (!/\bNot (for|a)\b/.test(m.desc)) error(c, `${s}: description lacks a "Not for ..." boundary clause (DS-03)`);
   }
-  if (skillDirs.length > 25) error(c, `${skillDirs.length} entry skills > 25`); // D-051: user-approved ceiling; L0 remains independent
-  const L0_CAP = 6500; // D-052: user-authorized Step 35 follow-up; formerly 5,500 under D-037
+  if (skillDirs.length > MAX_ENTRY_SKILLS) error(c, `${skillDirs.length} entry skills > ${MAX_ENTRY_SKILLS}`);
+  const L0_CAP = L0_BUDGET;
   if (total > L0_CAP) error(c, `L0 metadata ${total} chars > ${L0_CAP}`);
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} skills, L0 metadata ${total}/${L0_CAP} chars`);
+  const actual = Object.entries(skillMeta).reduce((n, [s, m]) => n + s.length + m.desc.length, 0);
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} shipped skills, actual L0 ${actual}/${L0_CAP}; projected registered metadata ${total}/${L0_CAP} chars`);
 
   const c2 = "V-07b description-distinctness";
   const stop = new Set("a an and or the of for to in on with by from as is are be use when not such this that it its into than via code covers including".split(" "));
   const wordSet = (t) => new Set(t.toLowerCase().replace(/[^a-z0-9#+.\s-]/g, " ").split(/\s+/).filter((w) => w.length > 2 && !stop.has(w)));
-  const names = Object.keys(skillMeta);
+  const names = Object.keys(discoveryMeta);
   let maxPair = ["", "", 0];
   for (let i = 0; i < names.length; i++) for (let j = i + 1; j < names.length; j++) {
-    const a = wordSet(skillMeta[names[i]].desc), b = wordSet(skillMeta[names[j]].desc);
+    const a = wordSet(discoveryMeta[names[i]].desc), b = wordSet(discoveryMeta[names[j]].desc);
     const inter = [...a].filter((w) => b.has(w)).length, jac = inter / (a.size + b.size - inter || 1);
     if (jac > maxPair[2]) maxPair = [names[i], names[j], jac];
     if (jac > 0.35) error(c2, `${names[i]} vs ${names[j]}: description word overlap ${jac.toFixed(2)} > 0.35`);
@@ -367,11 +376,13 @@ for (const s of skillDirs) {
     "vitest", "playwright", "cypress", "pytest", "docker", "kubernetes", "terraform", "java", "agents.md", "claude.md", "endpoint", "migration",
     "component", "form", "test", "task contract", "change summary", "diff", "dependenc", "repository", "codebase", "command", "layout", "api",
     "schema", "pipeline", "dockerfile", "secret", "cors", "csrf", "xss", "injection", "routing", "accessibility", "query", "refactor"];
-  for (const [s, m] of Object.entries(skillMeta)) {
+  const EDITORIAL_VOCAB = ["thai", "english", "prose", "article", "website", "copy", "draft", "newsletter", "wording"];
+  for (const [s, m] of Object.entries(discoveryMeta)) {
     const d = m.desc, lower = d.toLowerCase();
     const hit = CATCH_ALL.exec(d);
     if (hit) error(c, `${s}: catch-all wording "${hit[0]}" makes the description overly broad (DS-04)`);
-    const terms = VOCAB.filter((t) => new RegExp(`(^|[^a-z0-9])${t.replace(/[.#+]/g, (x) => `\\${x}`)}`).test(lower));
+    const vocabulary = editorialRegistration.skills.has(s) ? [...VOCAB, ...EDITORIAL_VOCAB] : VOCAB;
+    const terms = vocabulary.filter((t) => new RegExp(`(^|[^a-z0-9])${t.replace(/[.#+]/g, (x) => `\\${x}`)}`).test(lower));
     if (terms.length < 2) error(c, `${s}: names ${terms.length} concrete scope term(s); at least 2 stacks, tools, files, or artifacts are required (DS-02)`);
     const notIdx = d.search(/\bNot (for|a)\b/);
     if (notIdx >= 0) {
@@ -382,7 +393,7 @@ for (const s of skillDirs) {
     const items = scopePart.split(/,\s*|\s+or\s+/).length;
     if (items > 24) warn(c, `${s}: ${items} enumerated items before the boundary clause (> 24, DS-08); consider naming families`);
   }
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `all ${skillDirs.length} descriptions name concrete scope, avoid catch-all wording, and exclude at least 2 neighbours`);
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `all ${Object.keys(discoveryMeta).length} shipped/planned descriptions name concrete scope, avoid catch-all wording, and exclude at least 2 neighbours`);
 }
 
 { // V-17 entry skill anatomy (standard §4.1), V-06 line budgets
@@ -523,6 +534,7 @@ for (const s of skillDirs) {
 let catalog = null;
 {
   const c = "V-19 catalog-mapping";
+  for (const message of editorialRegistration.errors) error(c, message);
   const rel = "catalog/engineering-capabilities.yaml";
   if (!exists(rel)) error(c, `${rel} is missing`);
   else {
@@ -533,12 +545,18 @@ let catalog = null;
     const capById = new Map((catalog.capabilities ?? []).map((x) => [x.id, x]));
     const catSkills = new Map((catalog.entry_skills ?? []).map((x) => [x.name, x]));
     for (const s of skillDirs) {
-      if (!catSkills.has(s)) error(c, `${s}: shipped skill is not a catalog entry skill (CA-01)`);
+      const editorial = editorialRegistration.skills.get(s);
+      if (editorial) {
+        if (editorial.mapping !== "existing") error(c, `${s}: shipped Editorial Skill is not registered as existing`);
+        if (skillMeta[s].desc !== editorial.description) error(c, `${s}: shipped Humanizer metadata differs from registry`);
+      }
+      else if (!catSkills.has(s)) error(c, `${s}: shipped skill is not a registered engineering/editorial Entry Skill (CA-01)`);
       else if (catSkills.get(s).mapping !== "existing") error(c, `${s}: catalog marks the skill "${catSkills.get(s).mapping}", expected existing (CA-01)`);
     }
     const listed = new Map(); // recipe path -> Set(ids)
     for (const s of skillDirs) for (const r of refFiles[s]) {
       if (r.fields?.kind !== "recipe" || !Array.isArray(r.fields.capabilities)) continue;
+      if (editorialRegistration.skills.has(s)) error(c, `${s}: Editorial Skills cannot declare engineering capability recipes`);
       listed.set(r.rel, new Set(r.fields.capabilities));
       for (const id of r.fields.capabilities) {
         const cap = capById.get(id);
@@ -556,7 +574,7 @@ let catalog = null;
       if (ref.fields?.kind !== "recipe") error(c, `${cap.id}: catalog recipe ${p} is kind "${ref.fields?.kind}", expected recipe (CA-02)`);
       else if (!listed.get(p)?.has(cap.id) && cap.status !== "PLANNED") error(c, `${cap.id}: mapped to ${p} but not listed in its capabilities and not PLANNED (RC-02)`);
     }
-    if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} skills are catalog entry skills; ${listed.size} recipe file(s) agree with the catalog (${[...listed.values()].reduce((n, x) => n + x.size, 0)} capabilities)`);
+    if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} shipped skills registered; ${editorialRegistration.skills.size} editorial registrations; ${listed.size} recipe file(s) agree with the isolated Engineering Catalog (${[...listed.values()].reduce((n, x) => n + x.size, 0)} capabilities)`);
 
     const c22 = "V-22 recipe-cases";
     const crel = "tests/skills/recipe-cases.json";

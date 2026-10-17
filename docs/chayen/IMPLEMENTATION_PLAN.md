@@ -73,7 +73,7 @@ registry changes still require their own approval.
 | Step | Title | Planned outputs / exit evidence | Requirements | Status |
 |---|---|---|---|---|
 | 35 | Multilingual Humanizer governance and architecture | Impact analysis, ADR-0009–ADR-0011 PROPOSED, requirements/acceptance PLANNED, plan and evidence log | MHR-001–MHR-012 (design only) | DONE (pending Product Owner review) |
-| 36 | Host research and approved foundations | Official dated per-surface evidence, resolved architecture approvals, approved count/L0/registry and future developer-validator changes | MHR-007–MHR-012 | NOT_STARTED |
+| 36 | Humanizer Skill registration and validation foundation (user-directed) | Separate editorial registry, shared rules, V-07/V-19/V-11.3/V-25, 18 editorial mutations, two security cases; 13 shipped Skills retained | MHR-001, MHR-008, MHR-011–MHR-012 | DONE (pending review): nine gates PASS, 150/150 validator tests, 34/34 security tests |
 | 37 | Thai editorial Skill | `chayen-humanizer-th`, conditional references and Thai cases; approved structural gates | MHR-001–MHR-006, MHR-011–MHR-012 | NOT_STARTED |
 | 38 | English editorial Skill | `chayen-humanizer-en`, conditional references and English/bilingual cases; target 15 measured | MHR-001–MHR-006, MHR-011–MHR-012 | NOT_STARTED |
 | 39 | Opt-in host persistent response guidance | Canonical static policy, verified host integration documentation, reviewed opt-in/disable/rollback in authorized isolated scope | MHR-002, MHR-007–MHR-009, MHR-012 | NOT_STARTED |
@@ -487,16 +487,26 @@ PROPOSED ADRs and governance cross-links/logs. No Skills, host integration,
 instruction/configuration changes, validators, manifests, dependency or billed
 evaluation changes. STOP after Step 35 and wait for Product Owner review.
 
-### Step 36 — Host research and approved foundations (planned)
+### Step 36 — Humanizer Skill registration and validation foundation (user-directed)
 
-Requires a separate instruction after Step 35 review. Resolve ADR-0009–0011
-approval and evidence conditions without treating the approved product scope
-as mechanism approval. Research each host/surface's native instructions with
-official URLs/access dates and actual loading scope/precedence/limits; label
-gaps UNVERIFIED. Agree dataset/rubric/sample coverage. After the relevant ADR
-acceptance, implement coordinated developer-only registry/count/L0/anatomy
-vocabulary checks and negative controls, preserving all existing inventories.
-Do not infer runtime fallback or user-level configuration authority.
+**DONE, resumed with owner approval D-053 (2026-10-17).** The user's Step 36 prompt
+replaces this step's original proposed host-research scope. Prepare registration
+for 13 engineering and two planned editorial Skills, preserve the 206
+Engineering Capabilities, extend V-07/V-19 and related gates without bypasses,
+add the seven requested negative-control categories, and leave 13 actual
+Skills with no placeholder content. The latest request specifies maximum 15
+for this implementation, superseding the earlier 25 count requirement; L0
+6,500 is already approved (D-052), with actual registered 15-Skill metadata
+projecting 5,940. The corrected 420-character-target upper estimate is 6,363.
+
+The initial preflight stopped for missing registration approval. The owner
+then instructed proceeding; D-053 accepts this concrete registration model and
+CA-01/V-19 amendments. Implemented exactly two planned editorial identities,
+strict union/mapping/metadata/isolation rules, actual/projected L0 checks and
+the requested negative-control categories. No Engineering Catalog or existing
+description change. See SKILL_REGISTRATION.md and PROGRESS.md for actual
+validation. Persistent host policy and human-quality architecture remain
+later-step proposals; Step 37 is not authorized by this step.
 
 ### Step 37 — Thai Humanizer Skill (planned)
 

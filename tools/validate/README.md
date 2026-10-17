@@ -11,7 +11,7 @@ These tools are for **repository maintainers only**.
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
 node tools/validate/validate-package.mjs       # package, skills, references, catalog alignment (detail)
-node tools/validate/run-validator-tests.mjs    # self-tests: 4 baselines + 128 negative controls
+node tools/validate/run-validator-tests.mjs    # self-tests: 4 baselines + 146 negative controls (18 editorial)
 node tools/validate/check-security.mjs        # offline V-25 profile; no commands/network
 node --test tests/security/boundaries.test.mjs # offline adversarial script controls
 ```
@@ -31,6 +31,7 @@ The gates are in
 | `check-security.mjs` | V-25 metadata-only profile, authority guards, link/path confinement, heuristic secret patterns, source hashes, URL and fixture dependency inventory; `--write-report` writes only the fixed STEP 30 report |
 | `check-docs.mjs` | STEP 33 documentation gate (G-14): relative links and anchors (D-01, D-02), `<plugin>@<marketplace>` identifiers (D-03), skill names (D-04), and `-dev` versions (D-05) in README.md, SECURITY.md, CHANGELOG.md, docs/*.md and docs/distribution/*.md. External links are listed, not fetched. |
 | `safe-paths.mjs` | Rejects absolute/traversal paths and linked descendants for scratch mutation and staging |
+| `../catalog/skill-registration.mjs` | Shared max-count/L0 constants and strict engineering/editorial registration rules. See docs/chayen/SKILL_REGISTRATION.md. |
 
 ## What `validate-package.mjs` checks
 
@@ -46,14 +47,14 @@ The gates are in
 | V-09 | The plugin contains only `.md` and `.json` files, with no hooks, MCP servers, agents, commands, scripts, or symlinks. |
 | V-05 | `SKILL.md` files exist only under `skills/`. Their frontmatter is strictly parsed (valid YAML subset, no duplicate keys, YAML-safe values) and uses only portable fields. Names are valid, equal the directory, and are unique. |
 | V-06 | `SKILL.md` ≤300 lines (warning above 200). Reference files ≤300 lines. |
-| V-07 / V-07b | L0 budget ≤6,500 characters (D-052; formerly 5,500), ≤25 skills (D-051), description length and YAML safety, the "Not for" clause, and pairwise distinctness. Count and metadata remain independent limits. |
+| V-07 / V-07b | L0 ≤6,500 (D-052) for both shipped and projected metadata; ≤15 Skills (D-053). Canonical planned/editorial descriptions share length, YAML safety, boundary and distinctness checks. Constants are shared with catalog/evaluation tooling. |
 | V-08 | Links and heading anchors resolve, stay inside the skill directory, are ≤2 hops away, and every reference file is reachable from `SKILL.md`. |
 | V-10 | No provider-specific tool names or variables, enforcement claims, or self-references. |
 | V-12 | No placeholder text in prose (code spans and fenced blocks are exempt, so a recipe can name the markers it searches for). No required recipe section with fewer than 12 words (TODO-only recipes). |
 | V-16 | `tests/skills/trigger-cases.json` integrity |
 | V-17 | Entry skill anatomy: title, `**Scope:**` line, the ten sections in order, ≥4 positive and ≥3 negative triggers, the no-match gate sentence, and a `Reference \| Load when` table. |
 | V-18 | Every reference file declares `kind` (recipe, technology, checklist, or template), uses only allowed frontmatter fields, and has that kind's sections. A recipe has ≥3 numbered procedure steps and a valid `capabilities` list. |
-| V-19 | Shipped skills are catalog entry skills. Recipe `capabilities` agree with the catalog's recipe paths and statuses (RC-01, RC-02, CA-02). |
+| V-19 | Shipped Skills belong to exactly one engineering/editorial registration with existing mapping. Planned editorial entries have no directory; existing metadata matches the registry. Editorial names cannot own engineering mappings/recipes. Original recipe paths, statuses and IDs retain RC-01/RC-02/CA-02 checks. |
 | V-20 | Description breadth: no catch-all wording, ≥2 concrete scope terms, ≥2 exclusions, and a warning above 24 enumerated items. |
 | V-22 | `tests/skills/recipe-cases.json`: every capability in an existing recipe has ≥1 positive and ≥1 negative case. Prompts never mention Chayen. |
 | V-13 | Nothing at the repo root that providers would misread as a plugin. |

@@ -102,6 +102,7 @@ function profileFixture(t) {
     write(root, rel, { plugins: [{ source: `./${pkg}` }] });
   for (const name of ["engineering", "technology"])
     write(root, `catalog/${name}-capabilities.yaml`, `catalog:\n  plugin_root: ${pkg}\n`);
+  write(root, "catalog/editorial-skills.json", JSON.parse(fs.readFileSync(path.join(repo, "catalog/editorial-skills.json"), "utf8")));
   fs.mkdirSync(path.join(root, "tools")); fs.mkdirSync(path.join(root, "tests"));
   return { root, pkg, script: path.join(repo, "tools/validate/check-security.mjs") };
 }
@@ -109,7 +110,7 @@ test("offline profile accepts the metadata-only synthetic baseline", t => {
   const { root, script } = profileFixture(t), r = run(script, ["--root", root]);
   assert.equal(r.status, 0, output(r));
 });
-for (const mode of ["runtime-extension", "executable-asset", "authority-guard", "remote-marketplace", "secret-value", "malformed-json-secret"]) {
+for (const mode of ["runtime-extension", "executable-asset", "authority-guard", "remote-marketplace", "secret-value", "malformed-json-secret", "editorial-runtime-field", "editorial-secret-value"]) {
   test(`offline profile rejects ${mode}`, t => {
     const { root, pkg, script } = profileFixture(t);
     const token = "ghp_" + "A".repeat(36); // Synthetic sentinel, never a credential.
@@ -119,6 +120,12 @@ for (const mode of ["runtime-extension", "executable-asset", "authority-guard", 
     if (mode === "remote-marketplace") write(root, ".agents/plugins/marketplace.json", { plugins: [{ source: "https://example.invalid/plugin" }] });
     if (mode === "secret-value") write(root, `${pkg}/README.md`, token);
     if (mode === "malformed-json-secret") write(root, `${pkg}/plugin.json`, `{${token}`);
+    if (mode.startsWith("editorial-")) {
+      const registry = JSON.parse(fs.readFileSync(path.join(root, "catalog/editorial-skills.json"), "utf8"));
+      if (mode === "editorial-runtime-field") registry.skills[0].hooks = { start: "synthetic" };
+      else registry.skills[0].description = token;
+      write(root, "catalog/editorial-skills.json", registry);
+    }
     const r = run(script, ["--root", root]);
     assert.equal(r.status, 1, output(r));
     assert.doesNotMatch(output(r), new RegExp(token));

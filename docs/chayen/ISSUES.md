@@ -120,6 +120,27 @@ fits the proposed metadata estimate (6,361), subject to actual content checks.
 R-57 remains OPEN for editorial registry/policy/quality decisions and host
 evidence; routing/crowding risks are not closed by an internal limit increase.
 
+**R-57 Step 36 approval preflight (2026-10-17; historical blocker, resolved by D-053).** The explicit
+Step 36 precondition requires stopping when architectural approval is absent.
+ADR-0009 §Proposed decision item 3 and its acceptance boundary still require
+owner approval of the separate editorial registry and CA-01/V-19 amendments.
+D-051/D-052 resolve count/L0 only; neither accepts registration architecture.
+Step 36 is BLOCKED before implementation. Concrete approval scope is the
+existing proposal: separate developer-side editorial registry for the two
+Humanizers, validated union/uniqueness and existing/planned mappings, with
+engineering ownership/206-capability isolation and other gates preserved.
+The new Step 36 maximum 15 instruction supersedes the earlier count 25 for
+the eventual implementation; this is not a second approval question. ADR-0010
+host integration and ADR-0011 human-quality criteria are outside this step's
+registration approval dependency.
+
+**R-57 Step 36 resumption (D-053):** the owner instructed proceeding after
+the missing registration approval was explained. The editorial registry and
+CA-01/V-19 foundation are now approved/implemented, with maximum 15 under the
+latest Step 36 request and L0 6,500 retained. There is no remaining architecture
+approval blocker for this step. R-57 remains OPEN only for later editorial
+behavior, host policy/quality decisions and native-provider evidence.
+
 ## Defects
 
 | ID | Defect | Impact | Proposed fix | Status |
