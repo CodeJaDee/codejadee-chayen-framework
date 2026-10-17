@@ -6,9 +6,11 @@
 //
 // Usage:
 //   node tests/evaluation/run-provider-probes.mjs --allow-provider-calls --provider claude|copilot
-//        --out <fresh results dir outside the repo> [--only id1,id2] [--runs N]
+//        --out <fresh results dir outside the repo> [--only id1,id2] [--runs N] [--spec <file>]
 //   node tests/evaluation/run-provider-probes.mjs --rescore <existing results dir>
 //        (offline: re-parses recorded transcripts with the current rules; no provider call)
+// --spec selects another probe file under tests/evaluation/ (default provider-probes.json), for
+// example the Step 40 editorial set tests/evaluation/step40/discovery-probes.json.
 //
 // Every live probe is a billed model call that sends the prompt and fixture contents to the
 // provider. Copilot additionally requires an explicitly isolated COPILOT_HOME. Codex is not
@@ -24,9 +26,11 @@ import { inside, safeId, assertTreeNoLinks } from "../../tools/validate/safe-pat
 
 const arg = (name, def) => { const i = process.argv.indexOf(name); return i > -1 ? process.argv[i + 1] : def; };
 const repo = fs.realpathSync(path.join(import.meta.dirname, "../.."));
-const spec = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, "provider-probes.json"), "utf8"));
 const rescoreArg = arg("--rescore");
 const prior = rescoreArg ? JSON.parse(fs.readFileSync(path.join(path.resolve(rescoreArg), "summary.json"), "utf8")) : null;
+const specRel = prior?.spec ?? arg("--spec", "tests/evaluation/provider-probes.json");
+if (!/^tests\/evaluation\/[a-z0-9][a-z0-9/-]*\.json$/.test(specRel)) { console.error("--spec must be a repository-relative JSON file under tests/evaluation/"); process.exit(2); }
+const spec = JSON.parse(fs.readFileSync(inside(repo, specRel), "utf8"));
 const provider = prior?.provider ?? arg("--provider");
 const runs = prior?.runs ?? Number(arg("--runs", "1"));
 const only = arg("--only")?.split(",");
@@ -62,6 +66,8 @@ else {
   before = treeHash();
 }
 const pluginDir = inside(repo, "plugins/codejadee-chayen-framework");
+// Routing runs may be pooled only when every skill description is identical (see tests/evaluation/README.md).
+const metadataFingerprint = prior ? prior.metadataFingerprint : (() => { const h = crypto.createHash("sha256"), d = path.join(pluginDir, "skills"); for (const n of fs.readdirSync(d).sort()) { const f = path.join(d, n, "SKILL.md"); if (fs.existsSync(f)) h.update(`${n}\0${/^description:\s*(.*)$/m.exec(fs.readFileSync(f, "utf8"))?.[1] ?? ""}\0`); } return h.digest("hex").slice(0, 16); })();
 
 function resolveCommand(name) {
   if (process.platform !== "win32") return { cmd: name, pre: [] };
@@ -170,7 +176,7 @@ for (let run = 1; run <= runs; run++) for (const p of probes) {
 const version = prior?.providerVersion ?? spawnSync(cmd, [...pre, "--version"], { encoding: "utf8", input: "" }).stdout?.split(/\r?\n/)[0]?.trim();
 const unchanged = prior ? prior.fixtureUnchanged : before === treeHash();
 const summary = {
-  provider, providerVersion: version, ranAt: prior?.ranAt ?? new Date().toISOString(), rescoredAt: prior ? new Date().toISOString() : undefined, runs,
+  provider, providerVersion: version, spec: specRel, metadataFingerprint, ranAt: prior?.ranAt ?? new Date().toISOString(), rescoredAt: prior ? new Date().toISOString() : undefined, runs,
   pluginLoad: "--plugin-dir (no install)",
   permissions: provider === "claude" ? "-p mode; Read/Glob/Grep/Skill pre-approved; other tools left to native permission handling" : "--deny-tool shell, --deny-tool write",
   fixtureGit: prior ? prior.fixtureGit : gitSetup, fixtureUnchanged: unchanged, results,

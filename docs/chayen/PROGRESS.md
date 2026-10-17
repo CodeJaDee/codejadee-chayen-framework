@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 39 — Opt-in multilingual persistent response style policy (Steps 37 and 38 DONE, pending owner review; see their sections) |
+| Last executed step | 40 — Independent quality and provider compatibility evaluation (Steps 37–39 DONE, pending owner review; see their sections) |
+| Step 40 status | PARTIAL (pending owner review; D-057 PROPOSED): offline evidence only. validate-all 13/13 groups PASS (new G-17: 120-case dataset and 52 probes valid, 56/56 scorer controls); engineering skills, manifests, marketplaces and catalogs byte-identical to baseline `1106226`; provider matrix for six surfaces with no VERIFIED cell. Discovery, policy arms A/B/C, language quality, host lifecycle and human review NOT_RUN (not authorized / no reviewer; R-61). No commit; Step 41 not started. |
 | Step 39 status | DONE (pending owner review; D-056 PROPOSED, ADR-0010 A + B accepted by instruction, inferred): canonical policy and Copilot template outside the package, user guide, host research with a documented-versus-tested matrix, read-only setup helper; validate-all 12/12 groups PASS (179/179 self-tests incl. 14 response-style controls; G-16T 19/19 fixtures). Host loading, behavior, lifecycle and plugin-uninstall tests NOT_RUN (R-60). No user or repository instruction file changed. |
 | Step 36 status | DONE (pending owner review): registration/validation foundation approved by D-053; validate-all PASS (150/150 validator tests, 34/34 security tests), evaluation static/traceability PASS, 130 governance links/anchors PASS. 13 shipped engineering Skills and two planned editorial registrations; projected metadata 5,940 / 6,500. Maximum 15 per latest Step 36 request. Initial BLOCKED preflight preserved as history; no Humanizer body shipped. |
 | Latest owner follow-up | D-052 ACCEPTED (2026-10-17): L0 ceiling 6,500, implemented in V-07 and evaluation reporting. Current 5,485 / 6,500; 1,015 free. Count ceiling remains 25, target 15, actual 13. Editorial registry/policy proposals remain pending; Step 36 NOT_STARTED. Earlier D-051 budget statements below are historical. |
@@ -4560,3 +4561,105 @@ Node v26.8.1. No provider, model, network, install or real instruction file was 
 | Fluent review of the Thai and English rules | No reviewer in this step (R-58, R-59) |
 
 STOP after Step 39. No commit, push, release, real configuration change or Step 40 work.
+
+## Step 40 — Independent quality and provider compatibility evaluation
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** PARTIAL, pending owner review (D-057 PROPOSED). Offline evidence only.
+- **Authorization and preconditions:** the owner's explicit Step 40 instruction. Read
+  Steps 35–39, BUILD_CONTRACT, SKILL_QUALITY_GATES, ACCEPTANCE_MATRIX, HUMANIZER_REQUIREMENTS,
+  ADR-0010/0011, D-047–D-056, the evaluation harnesses and the provider compatibility records.
+  ADR-0011 (thresholds) is PROPOSED and requires approval before scoring; the instruction
+  supplies dataset composition and routing/policy targets but not the language bar, so the
+  rubric was prepared and nothing scored. Live runs were not authorized ("Do not run billed
+  provider evaluations or alter real user agent installations without separate approval"),
+  so every provider, host and human test is NOT_RUN with executable fixtures prepared.
+- **Baseline:** clean `main` at `0702b5b` (Steps 38–39 committed). Engineering baseline for
+  regression: `1106226` (Step 34, before any Humanizer work).
+
+### Work performed
+
+1. **Structural validation** of the 15-Skill package, manifests, marketplaces, metadata,
+   references, editorial registration, engineering catalogs, security profile and upstream
+   MIT attribution (offline comparison with the canonical MIT text).
+2. **Held-out dataset** `tests/evaluation/step40/quality-cases.json`: 120 cases (Thai 40,
+   English 40, mixed/technical 20, policy/conflict/no-match 20), synthetic inputs, written
+   after the skills; per-case arms, automated checks and human assertions.
+3. **Discovery probes** `tests/evaluation/step40/discovery-probes.json`: 52 probes (explicit
+   TH/EN 5+5, implicit TH/EN 10+10, documentation overlap 6, engineering 8, no-match 8),
+   3 runs each, in the existing probe schema.
+4. **Runners:** `run-provider-probes.mjs` gains `--spec` (confined to `tests/evaluation/`)
+   and records the spec and a skill-metadata fingerprint; new `run-arms.mjs` runs arms A
+   (no plugin), B (plugin) and C (plugin + canonical policy at the documented user-level
+   location in an isolated home, with a loading canary), Claude Code and Copilot CLIs;
+   `--plan` is offline.
+5. **Scorer** `tools/evals/score-step40.mjs`: dataset/probe validation (Q-01–Q-04), automated
+   fidelity checks, routing/policy/human metrics with denominators and verdicts, NOT_RUN when
+   inputs are absent; 56 synthetic controls; gate G-17 in `validate-all.mjs`.
+6. **Rubric** (PROPOSED) and **report** with provider matrix, metrics, engineering
+   regression, defects and blockers: [HUMANIZER_EVALUATION_RUBRIC.md](HUMANIZER_EVALUATION_RUBRIC.md),
+   [HUMANIZER_EVALUATION_REPORT.md](HUMANIZER_EVALUATION_REPORT.md).
+7. **Records:** D-057; R-61–R-63; DF-04–DF-07; MHR-010 PLANNED → IN_PROGRESS; Step 40
+   evidence on all MHR rows; plan overview rows 37–39 corrected (DF-05).
+
+### File ledger (Step 40 only)
+
+| Action | Path |
+|---|---|
+| Created | `tests/evaluation/step40/quality-cases.json`, `discovery-probes.json`, `scorer-controls.json`, `run-arms.mjs`, `README.md` |
+| Created | `tools/evals/score-step40.mjs` |
+| Created | `docs/chayen/HUMANIZER_EVALUATION_RUBRIC.md`, `docs/chayen/HUMANIZER_EVALUATION_REPORT.md` |
+| Modified | `tests/evaluation/run-provider-probes.mjs` (`--spec`, `spec` and `metadataFingerprint` in summaries; default behavior unchanged) |
+| Modified | `tools/validate/validate-all.mjs` (G-17), `tools/validate/README.md`, `tests/evaluation/README.md` |
+| Modified | `docs/chayen/SKILL_QUALITY_GATES.md` (G-17 row), `DECISIONS.md` (D-057), `ISSUES.md` (R-61–R-63, DF-04–DF-07), `ACCEPTANCE_MATRIX.md`, `IMPLEMENTATION_PLAN.md`, `ADRS/README.md` (ADR-0011 row), `PROGRESS.md` |
+| Unchanged | Plugin package (all 15 Skills), catalogs, manifests, marketplaces, response-style policy and templates, user documentation, every user-level or repository instruction file |
+| Deleted | None |
+
+Scratch-only (not in the repository): proxy comparison script and a `git archive` copy of
+`1106226`, MIT comparison script, scorer smoke inputs, MHR-row update script.
+
+### Actual verification
+
+Node v26.8.1 on PATH. No provider, model call, network fetch, install or configuration
+write. Host versions read with `--version` and extension listings only: Claude Code CLI
+2.1.220, `anthropic.claude-code` 2.1.301, Codex CLI 0.163.0, `openai.chatgpt` 26.1007.21434,
+Copilot CLI 1.0.89, VS Code 1.142.0 with built-in `copilot-chat` 0.70.0.
+
+| Command | Actual result |
+|---|---|
+| `node tools/validate/validate-all.mjs` (before Step 40 changes) | PASS, exit 0: 12/12 groups; 179/179 validator self-tests; 214 cases / 516 eval files in sync; 19 docs; 2 m 6 s |
+| `node tools/validate/validate-package.mjs` | PASS, exit 0: 15 Skills; L0 6,221 / 6,500; V-07b max 0.24; 237 references; V-16 214 cases; V-19 15 shipped + 2 editorial; 5 existing V-06 warnings |
+| `node tests/provider-compatibility/check-identity.mjs` | PASS, exit 0: 15/15 checks; 15 skills, 237 references, 256 files |
+| `node tools/catalog/check-catalog.mjs`; `check-technology.mjs`; `check-workflows.mjs` | PASS: 206 / 20, fingerprint `2f13cad24ff431e3`, 13 engineering Entry Skills; 108 technology; 12 workflows |
+| `node tools/validate/check-security.mjs` | PASS: 256 package files, 15 entries, 237 references, 0 errors (developer assets 74 before, 76 after the two new scripts) |
+| `node --test tests/security/boundaries.test.mjs`; `node --test tests/response-style/setup-fixtures.test.mjs` | PASS 34/34; PASS 19/19 |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | PASS, exit 0: identity 15/15, engineering 206/206, technology 108/108, workflows 12/12, routing examples 11/11, handoff 253 files / 0 dangling; proxy top-1 0.535, top-3 0.771, precision 0.51, no-match 0.488, ambiguous 17/27 |
+| `git diff --name-only 1106226 HEAD -- <each of the 13 engineering skill dirs>`; same over manifests, marketplaces and the three catalogs | PASS: no file changed |
+| Scratch proxy comparison over the 186 baseline trigger cases (`git archive 1106226` vs current tree) | SIMULATED: top-1 71→70 of 130, top-3 100→100, precision 71/138→70/138, no-match 15/34→15/34; 2 picks changed (`pos-frontend-i18n-angular` → Thai editorial; `amb-cache-catalogue` → English editorial) |
+| Scratch MIT comparison of `upstream-notice.md` | PASS: fenced licence block identical to the canonical MIT text; copyright, upstream URL and version present |
+| `node tools/evals/score-step40.mjs --check` | PASS: 120 cases (th 40, en 40, mixed 20, policy 20); 52 probes, all group minimums; 3 runs required |
+| `node tools/evals/score-step40.mjs --self-test` (first run) | FAIL 54/56: two scorer defects (Thai inside fenced JSON ignored by language detection; JSX tag pattern stopped at `=>`). Fixed (DF-04) |
+| `node tools/evals/score-step40.mjs --self-test` (final) | PASS 56/56 synthetic controls |
+| Scratch scorer smoke: echo outputs for 120 cases × arms, all-pass synthetic probe summary | Ran end to end; echoed inputs pass 80/80 Thai/English automated checks, showing the checks guard fidelity, not quality |
+| `node tools/evals/score-step40.mjs` (no inputs) | exit 0: NOT_RUN for discovery, quality/policy and human review |
+| `node --check` on `score-step40.mjs`, `run-arms.mjs`, `run-provider-probes.mjs` | PASS |
+| `node tests/evaluation/step40/run-arms.mjs --plan --provider claude`; `--plan --provider copilot --groups policy` | PASS, exit 0: 783 and 183 billed calls planned; nothing created or sent |
+| Refusal checks: `run-arms.mjs` without `--allow-provider-calls`; `--provider codex`; `run-provider-probes.mjs --spec …` without the flag; `--spec ../outside.json` | Each exit 2 with the intended message; no provider call |
+| `node tools/validate/validate-all.mjs` (after Step 40 changes, and again after the governance edits) | PASS, exit 0: 13/13 groups including G-17 (56/56) |
+| Relative link and anchor check (Step 35 checker's link section, scratch copy) over the 12 changed or new Markdown files | PASS: 105 links, 0 errors |
+| `node tools/validate/check-docs.mjs`; `git diff --check` | PASS: 19 documents, 0 errors; no whitespace errors |
+| `git diff --name-only -- plugins catalog response-style .claude-plugin .agents .github` | PASS: no output (package, catalogs, policy, manifests and marketplaces unchanged) |
+
+| Not run | Reason |
+|---|---|
+| Discovery probes (52 × 3 runs) on every surface | Billed; not authorized |
+| Quality arms A/B and policy arms A/B/C | Billed and need isolated signed-in host homes; not authorized |
+| Codex CLI, Codex IDE, Claude Code VS Code and VS Code Copilot Chat sessions | Need host installs or UI sessions in disposable profiles; not authorized (manual procedures in the Step 40 README) |
+| Host lifecycle (install, disable, uninstall, policy removal) | `run-lifecycle.sh` needs its explicit opt-in; not authorized |
+| Native engineering routing regression vs Step 32/34 | Billed; not authorized |
+| Human language review (Thai, English) | No independent fluent reviewers available; rubric unapproved |
+| Technology fact runners | No engineering content changed since Step 28 |
+| Upstream licence re-fetch | Network not needed; Step 38 compared it byte for byte |
+
+STOP after Step 40. No commit, push, tag, release, provider install, user configuration
+change or Step 41 work.

@@ -74,10 +74,10 @@ registry changes still require their own approval.
 |---|---|---|---|---|
 | 35 | Multilingual Humanizer governance and architecture | Impact analysis, ADR-0009–ADR-0011 PROPOSED, requirements/acceptance PLANNED, plan and evidence log | MHR-001–MHR-012 (design only) | DONE (pending Product Owner review) |
 | 36 | Humanizer Skill registration and validation foundation (user-directed) | Separate editorial registry, shared rules, V-07/V-19/V-11.3/V-25, 18 editorial mutations, two security cases; 13 shipped Skills retained | MHR-001, MHR-008, MHR-011–MHR-012 | DONE (pending review): nine gates PASS, 150/150 validator tests, 34/34 security tests |
-| 37 | Thai editorial Skill | `chayen-humanizer-th`, conditional references and Thai cases; approved structural gates | MHR-001–MHR-006, MHR-011–MHR-012 | NOT_STARTED |
-| 38 | English editorial Skill | `chayen-humanizer-en`, conditional references and English/bilingual cases; target 15 measured | MHR-001–MHR-006, MHR-011–MHR-012 | NOT_STARTED |
-| 39 | Opt-in host persistent response guidance | Canonical static policy, verified host integration documentation, reviewed opt-in/disable/rollback in authorized isolated scope | MHR-002, MHR-007–MHR-009, MHR-012 | NOT_STARTED |
-| 40 | Multilingual quality and engineering regression evaluation | Approved dataset/rubric, per-language human results, separately authorized provider/surface runs, policy on/off and no-plugin comparisons | MHR-001–MHR-012 | NOT_STARTED |
+| 37 | Thai editorial Skill | `chayen-humanizer-th`, conditional references and Thai cases; approved structural gates | MHR-001–MHR-006, MHR-011–MHR-012 | DONE (pending review; D-054) |
+| 38 | English editorial Skill | `chayen-humanizer-en`, conditional references and English/bilingual cases; target 15 measured | MHR-001–MHR-006, MHR-011–MHR-012 | DONE (pending review; D-055) |
+| 39 | Opt-in host persistent response guidance | Canonical static policy, verified host integration documentation, reviewed opt-in/disable/rollback in authorized isolated scope | MHR-002, MHR-007–MHR-009, MHR-012 | DONE (pending review; D-056) |
+| 40 | Multilingual quality and engineering regression evaluation | Approved dataset/rubric, per-language human results, separately authorized provider/surface runs, policy on/off and no-plugin comparisons | MHR-001–MHR-012 | PARTIAL: offline evidence, 120-case dataset, 52 probes, arm runner and scorer (G-17) ready; provider, lifecycle and human results NOT_RUN (D-057, R-61) |
 | 41 | Completeness and readiness review | Updated acceptance/evidence, compatibility limitations, user docs, rollback and go/no-go recommendation; no automatic release | MHR-001–MHR-012 | NOT_STARTED |
 
 ## Step details
@@ -563,6 +563,16 @@ rollback in isolated authorized fixtures. No hooks, MCP, executable installers
 or runtime dependencies. Do not claim strict install-only always-on support.
 
 ### Step 40 — Multilingual quality and regression evaluation (planned)
+
+**PARTIAL (2026-10-17), pending owner review (D-057).** Offline structural,
+security and engineering-regression checks PASS (13/13 gate groups). Prepared
+a PROPOSED rubric ([HUMANIZER_EVALUATION_RUBRIC.md](HUMANIZER_EVALUATION_RUBRIC.md)),
+a 120-case held-out dataset, 52 discovery probes, an arm runner (A/B/C with a
+loading canary) and an offline scorer with 56 synthetic controls (G-17).
+Provider runs, host lifecycle and fluent human review are NOT_RUN: not
+authorized or unavailable (R-61). Results, provider matrix and blockers:
+[HUMANIZER_EVALUATION_REPORT.md](HUMANIZER_EVALUATION_REPORT.md). The overview
+rows for Steps 37–39 were corrected from NOT_STARTED (DF-05).
 
 Requires an approved rubric/dataset and explicit authorization for any billed
 provider calls. Evaluate Thai/English human quality and factual/semantic/

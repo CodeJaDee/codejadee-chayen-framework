@@ -1309,6 +1309,37 @@ Decision statuses:
   fresh-session lifecycle, plugin uninstall and token measurement are NOT_RUN
   (R-60). Details: [RESPONSE_STYLE_DESIGN.md](RESPONSE_STYLE_DESIGN.md).
 
+### D-057 — Step 40 multilingual evaluation design, rubric and fixtures
+
+- **Status:** PROPOSED. The owner's Step 40 instruction fixes the dataset
+  composition (≥120: 40 Thai, 40 English, 20 mixed, 20 policy/conflict/no-match)
+  and the routing and policy targets (explicit 100%, implicit ≥85%, wrong
+  selection ≤5%, policy adherence ≥95%); these are recorded as given. The
+  language bar (≥4/5 on naturalness, clarity and tone for ≥90% of samples per
+  language) and zero critical failures remain ADR-0011's PROPOSED thresholds.
+  ADR-0011's status is unchanged. No score is recorded until the owner approves
+  the rubric ([HUMANIZER_EVALUATION_RUBRIC.md](HUMANIZER_EVALUATION_RUBRIC.md)).
+- **Dataset:** a held-out set written after the skills and not used to tune
+  them; the 154 Step 37–38 specifications remain the development set.
+  Synthetic inputs only. Because the same agent wrote both, an independent
+  reviewer should replace or add at least 20% before scoring (R-63).
+- **Arms:** A no plugin, B plugin only, C plugin plus the canonical policy at
+  the host's documented user-level location in an isolated config home. Arm C
+  counts only after a loading canary confirms the host read that location; B is
+  never reported as persistent-policy behavior.
+- **Scoring:** automated checks guard fidelity (protected spans, numbers,
+  structure, exact formats, actions, language, skill selection); naturalness,
+  clarity and tone come only from two independent blind fluent reviewers per
+  language with adjudication. Discovery runs pool only within one provider
+  version and one skill-metadata fingerprint.
+- **Tooling:** `tools/evals/score-step40.mjs` (offline, never writes) with 56
+  synthetic controls as gate G-17; `tests/evaluation/step40/run-arms.mjs` (billed
+  runs need `--allow-provider-calls`; `--plan` offline); `run-provider-probes.mjs`
+  gains `--spec` (confined to `tests/evaluation/`) and records the spec and a
+  metadata fingerprint. No dependency, package or skill change.
+- **Evidence:** static and simulated only. Every provider, host-lifecycle and
+  human result is NOT_RUN (R-61). Results: [HUMANIZER_EVALUATION_REPORT.md](HUMANIZER_EVALUATION_REPORT.md).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge
