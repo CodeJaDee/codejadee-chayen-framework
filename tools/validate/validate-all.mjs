@@ -22,6 +22,8 @@ const steps = [
   ["G-13 validator self-tests", "tools/validate/run-validator-tests.mjs", []],
   ["G-14 user and release documentation links and identifiers", "tools/validate/check-docs.mjs", []],
   ["G-15 editorial pattern inventory and case specifications (static)", "tools/validate/check-editorial-cases.mjs", []],
+  ["G-16 opt-in response style policy, template, budget and package isolation (static)", "tools/validate/check-response-style.mjs", []],
+  ["G-16T response style setup rules on disposable fixtures", "tests/response-style/setup-fixtures.test.mjs", []],
 ];
 let failed = 0;
 for (const [label, script, args] of steps) {

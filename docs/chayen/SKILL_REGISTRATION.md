@@ -12,6 +12,14 @@
   `planned`. 14 shipped Skills; actual L0 5,858, projected 6,083 / 6,500.
   Planned-state negative controls now target the English record. Historical
   Step 36 figures below are kept as recorded.
+- **Step 38 transition (D-055):** `chayen-humanizer-en` now ships and is
+  registered `existing`; its description grew from the planned 206 to 344
+  characters, identical in SKILL.md and the registry. Both editorial records are
+  `existing`; 15 Skills ship (13 engineering + 2 editorial), which is the
+  ceiling. Actual L0 6,221 / 6,500 with no planned record left. Planned-state
+  negative controls now mutate the temporary copy (marking the English record
+  planned, or deleting its directory) because neither editorial Skill is
+  planned any more.
 
 ## Registration model
 

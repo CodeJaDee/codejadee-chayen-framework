@@ -7,7 +7,7 @@ Chayen is a **plugin of engineering skills** for coding agents. It runs in:
 - GitHub Copilot (CLI and VS Code).
 
 You install it with each provider's own plugin manager, then work with
-**ordinary prompts**. When a request matches one of Chayen's 14 skills, the
+**ordinary prompts**. When a request matches one of Chayen's 15 skills, the
 agent loads that skill's guidance for the job. When nothing matches, the agent
 behaves exactly as it would without Chayen.
 
@@ -23,10 +23,10 @@ behaves exactly as it would without Chayen.
 
 ## What Chayen is
 
-- **14 entry skills.** They cover repository analysis, requirements,
+- **15 entry skills.** They cover repository analysis, requirements,
   architecture, implementation, backend, frontend, data, testing, security,
-  performance, DevOps, documentation, AI engineering, and Thai writing and
-  editing. See
+  performance, DevOps, documentation, AI engineering, and Thai and English
+  writing and editing. See
   [docs/SKILLS_CATALOG.md](docs/SKILLS_CATALOG.md).
 - **Capability recipes and technology guidance**, loaded only when relevant:
   - 206 engineering capabilities;
@@ -78,6 +78,7 @@ The full walkthrough is in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
 | Install, update, disable, uninstall | [Claude Code](docs/INSTALL_CLAUDE_CODE.md), [Codex](docs/INSTALL_CODEX.md), [Copilot](docs/INSTALL_COPILOT.md) |
 | How skills are chosen, and what happens when none applies | [docs/AUTOMATIC_SKILL_DISCOVERY.md](docs/AUTOMATIC_SKILL_DISCOVERY.md) |
 | Skills | [docs/SKILLS_CATALOG.md](docs/SKILLS_CATALOG.md) |
+| Optional Thai/English reply style for everyday answers (opt-in, not installed by the plugin) | [docs/RESPONSE_STYLE.md](docs/RESPONSE_STYLE.md) |
 | Technologies and how they are detected | [docs/SUPPORTED_TECHNOLOGIES.md](docs/SUPPORTED_TECHNOLOGIES.md) |
 | Workflows and templates | [docs/DEVELOPMENT_WORKFLOWS.md](docs/DEVELOPMENT_WORKFLOWS.md) |
 | Provider and surface support | [docs/COMPATIBILITY_MATRIX.md](docs/COMPATIBILITY_MATRIX.md) |
@@ -96,6 +97,7 @@ The full walkthrough is in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
 | `.claude-plugin/marketplace.json` | Claude Code marketplace | Read by the provider when you add the marketplace |
 | `.agents/plugins/marketplace.json` | Codex marketplace | Read by the provider |
 | `.github/plugin/marketplace.json` | Copilot marketplace | Read by the provider |
+| `response-style/` | Opt-in response style policy you can copy into your own agent instruction file | No: copied only by you, after review |
 | `catalog/`, `tools/`, `tests/`, `docs/` | Catalogs, developer validation, evaluations, documentation | No |
 
 ## Reporting problems

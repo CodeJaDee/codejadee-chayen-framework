@@ -1,6 +1,6 @@
 # Skills catalog
 
-Chayen ships **14 entry skills**: 13 engineering skills and one Thai editorial skill. Each is one directory,
+Chayen ships **15 entry skills**: 13 engineering skills and two editorial skills (Thai and English). Each is one directory,
 `plugins/codejadee-chayen-framework/skills/<name>/`, containing `SKILL.md`
 and on-demand `references/`.
 
@@ -27,7 +27,8 @@ to load a skill.
 | `chayen-documentation` | 11 | — | 8 |
 | `chayen-ai-engineering` | 19 | — | 13 |
 | `chayen-humanizer-th` (editorial) | — | — | 7 |
-| **Total** | **206** (20 domains) | **108** | **228** |
+| `chayen-humanizer-en` (editorial) | — | — | 9 |
+| **Total** | **206** (20 domains) | **108** | **237** |
 
 Capability counts come from `catalog/engineering-capabilities.yaml` and
 `catalog/technology-capabilities.yaml`. Every capability is
@@ -141,6 +142,20 @@ Example prompt: *"เกลาย่อหน้านี้ให้อ่า�
 Thai writing quality and routing are not yet evaluated; see
 [SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md).
 
+### chayen-humanizer-en
+
+*Editorial skill (English). Owns no engineering capabilities; registered in `catalog/editorial-skills.json`.*
+
+> Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.
+
+Example prompt: *"Rewrite this landing page headline and subhead so they sound less like marketing boilerplate. Keep the pricing and feature names."*
+
+English writing quality and routing are not yet evaluated; see
+[SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md). Its writing
+patterns are adapted from the MIT-licensed
+[humanizer](https://github.com/blader/humanizer) skill by Siqi Chen; the
+attribution and licence notice ship with the skill.
+
 ## Requesting a new skill or capability
 
 Open an issue as described in
@@ -148,8 +163,8 @@ Open an issue as described in
 
 - Most requests become a **recipe inside an existing skill**, not a new
   skill.
-- The L0 metadata budget is 6,500 characters (D-052); current usage is 5,858
-  with the Thai editorial skill, leaving 642. The planned English editorial
-  description brings the projected total to 6,083, leaving 417. The latest
-  Entry Skill ceiling and product target are 15 (D-053). New Skills still need routing and metadata checks;
+- The L0 metadata budget is 6,500 characters (D-052); current usage is 6,221
+  with both editorial skills, leaving 279. The Entry Skill ceiling and product
+  target are 15 (D-053) and all 15 now ship, so a further skill needs a new
+  decision. New Skills still need routing and metadata checks;
   this internal budget does not establish host capacity or routing quality.

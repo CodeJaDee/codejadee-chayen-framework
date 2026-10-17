@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 36 — Humanizer Skill registration and validation foundation (resumed with D-053 approval) |
+| Last executed step | 39 — Opt-in multilingual persistent response style policy (Steps 37 and 38 DONE, pending owner review; see their sections) |
+| Step 39 status | DONE (pending owner review; D-056 PROPOSED, ADR-0010 A + B accepted by instruction, inferred): canonical policy and Copilot template outside the package, user guide, host research with a documented-versus-tested matrix, read-only setup helper; validate-all 12/12 groups PASS (179/179 self-tests incl. 14 response-style controls; G-16T 19/19 fixtures). Host loading, behavior, lifecycle and plugin-uninstall tests NOT_RUN (R-60). No user or repository instruction file changed. |
 | Step 36 status | DONE (pending owner review): registration/validation foundation approved by D-053; validate-all PASS (150/150 validator tests, 34/34 security tests), evaluation static/traceability PASS, 130 governance links/anchors PASS. 13 shipped engineering Skills and two planned editorial registrations; projected metadata 5,940 / 6,500. Maximum 15 per latest Step 36 request. Initial BLOCKED preflight preserved as history; no Humanizer body shipped. |
 | Latest owner follow-up | D-052 ACCEPTED (2026-10-17): L0 ceiling 6,500, implemented in V-07 and evaluation reporting. Current 5,485 / 6,500; 1,015 free. Count ceiling remains 25, target 15, actual 13. Editorial registry/policy proposals remain pending; Step 36 NOT_STARTED. Earlier D-051 budget statements below are historical. |
 | Owner follow-up | D-051 ACCEPTED (2026-10-17): increase Entry Skill ceiling to 25, implemented in the package and catalog count validators. Actual 13; target 15; L0 remains 5,500. The original Step 35 evidence below is a historical snapshot; follow-up evidence is logged separately at the end. Step 36 remains NOT_STARTED. |
@@ -41,7 +42,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after Step 36 for owner review. D-053 resolves the registration approval blocker. Step 37 NOT_STARTED and requires a separate instruction. No host integration or release authorized; existing provider/quality gaps remain. |
+| Next step | STOP after Step 39 for owner review: confirm D-055 and D-056 (ADR-0010 acceptance is inferred). Step 40 NOT_STARTED and needs a separate instruction, an approved rubric and authorization for any billed provider or host runs. No release authorized. |
 | Commits made by agent | None |
 
 ---
@@ -4334,3 +4335,228 @@ gender-neutral voice policy, and native routing of Thai prompts.
 
 STOP after Step 37. No English skill, persistent policy, global instruction
 change, commit, push, release or Step 38 work.
+
+## Step 38 — English Humanizer Skill
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** DONE, pending owner review (D-055 PROPOSED). Static evidence only.
+- **Authorization:** the owner's explicit Step 38 instruction. D-053 (registry, maximum 15)
+  and D-052 (L0 6,500) are accepted. D-054 had no explicit approval message; the owner
+  committed Step 37 (`f65a432`) and issued Step 38, which is recorded as acceptance by
+  proceeding (D-054 status updated, same precedent as D-053) and flagged in D-055 for the
+  owner to confirm or correct. ADR-0010 and ADR-0011 govern Steps 39–40 and do not block
+  this step. Not BLOCKED.
+- **Baseline:** clean `main` at `f65a432`; nothing uncommitted before this step.
+
+### Research
+
+Read `blader/humanizer` `SKILL.md` (version 3.1.0, 397 lines, 26 patterns), `README.md`,
+`CHANGELOG.md` and `LICENSE` in full (MIT, Copyright (c) 2025 Siqi Chen), downloaded to a
+scratch directory and treated as data. Pattern taxonomy and watch lists are adapted;
+the upstream skill file is not reproduced and every example is original, written for
+documentation, product copy, UI and developer replies, with each "After" using only
+facts already in its "Before". Because the taxonomy and lists are adapted, the MIT notice
+is shipped conservatively inside the skill (`references/upstream-notice.md`) with an
+attribution mapping from the 26 upstream patterns; the licence block was verified
+byte for byte against upstream's `LICENSE`. English conventions were checked against
+Google's and Microsoft's published style guides and hyphenation guidance (read
+2026-10-17) and labelled as preferences, not rules. Full detail:
+[HUMANIZER_EN_DESIGN.md](HUMANIZER_EN_DESIGN.md).
+
+### Implementation
+
+`plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/`: SKILL.md (164 lines,
+English router with all V-17 sections and the V-25.3 guard sentences) and nine references
+(61–125 lines each): three pattern checklists (EN-01–EN-26), English conventions,
+protected content, website copy, content creation, an output template and the upstream
+notice. Modes: audit, rewrite, create and website edit, plus a "no changes recommended"
+outcome for text that already reads well. No recipes, capabilities, scripts, hooks or
+dependencies. All 26 upstream patterns are covered (three pairs merged); three patterns
+are new (unsupported claims, filler, register).
+
+The registry record moved `planned` to `existing`. The planned 206-character description
+did not cover creation, blogs, READMEs, developer replies or microcopy, so a 344-character
+description was written and copied byte for byte into the registry. Candidates were scored
+with the simulated lexical proxy before content was written: naming "Thai text" in the
+boundary clause pulled Thai prompts toward the English skill (two wrong-language flips);
+"non-English output", symmetric with the Thai skill's "non-Thai output", reduced that.
+
+**Metadata budget (measured):** names 19 + 19; descriptions 354 (Thai) and 344 (English).
+Actual L0 **6,221 / 6,500**, **279 free**, no planned record left. The Step 36 projection
+was 5,940; the real English description added 138 over the 206-character plan. No budget
+change. **Exactly 15 Entry Skills** (independent count: 15 directories with SKILL.md,
+13 engineering plus 2 editorial registrations all `existing`, registered names equal the
+shipped set, frontmatter names equal directories). The ceiling is reached.
+
+### Tests
+
+| Layer | Change |
+|---|---|
+| Trigger cases | 15 new (8 positive, 3 negative, 3 ambiguous, 1 unsupported); skill declared; eight Thai cases now forbid the English skill; two cases that expected no skill (`neg-app-store-copy`, `neg-thai-request-english-email`) became ambiguous and were renamed `amb-app-store-copy`, `amb-thai-request-english-email` because marketing copy now has an editorial owner and V-16 reserves "negative" for pure none; Claude evals regenerated |
+| Behavior specifications | `tests/editorial/humanizer-en-cases.json`: 102 cases (positive 27, false-positive 26, natural-unchanged 6, semantic-preservation 7, technical-terms 6, us-uk 5, website 7, audit-only 3, creation 3, security 5, negative 7), every positive tagged with a text type |
+| Static gate | `check-editorial-cases.mjs` (G-15) generalized to both skills: pattern inventory, schema, per-pattern positive and false-positive coverage, English text-type coverage, and independence (E-04: neither skill names the other) |
+| Validator negative controls | 13 Step 36/37 controls retargeted (planned-state controls now mutate the temporary copy; registry-writing controls rebuilt from the real registry as single faults); 3 new registration controls (English recipe ownership, metadata drift, unregistered); 7 new G-15 controls through a new `editorial` validator type in the runner |
+| Security fixture | Unchanged; it already writes a guarded SKILL.md for every `existing` editorial record |
+
+### File ledger (Step 38 only)
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/SKILL.md` and `references/` (`patterns-staging-and-rhythm.md`, `patterns-inflation-and-claims.md`, `patterns-format-and-reader.md`, `english-conventions.md`, `protected-content.md`, `website-content.md`, `content-creation.md`, `output-formats.md`, `upstream-notice.md`) |
+| Created | `tests/editorial/humanizer-en-cases.json`, `docs/chayen/HUMANIZER_EN_DESIGN.md` |
+| Created | 17 generated case directories under `tests/evals/claude/` (15 new cases plus the 2 renamed) and 7 new `graders/forbidden-skills.md` files in existing Thai case directories |
+| Modified | `catalog/editorial-skills.json`, `tests/skills/trigger-cases.json`, 20 generated files under `tests/evals/claude/` (line-ending-only rewrites restored) |
+| Modified | `tests/catalog/editorial-mutations.json`, `tools/validate/check-editorial-cases.mjs`, `tools/validate/run-validator-tests.mjs`, `tools/validate/README.md` |
+| Modified | `README.md`, `CHANGELOG.md`, `docs/SKILLS_CATALOG.md`, `plugins/codejadee-chayen-framework/README.md`, `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md`, `DECISIONS.md` (D-054 status, D-055), `ISSUES.md` (R-59), `IMPLEMENTATION_PLAN.md`, `SKILL_REGISTRATION.md`, `PROGRESS.md` |
+| Deleted | 4 generated files for the 2 renamed cases (`neg-app-store-copy/`, `neg-thai-request-english-email/`) |
+| Unchanged | The 13 engineering skills, the Thai skill, the three engineering/technology/workflow catalogs, manifests and marketplaces (diff empty) |
+
+### Actual verification
+
+Reviewed before running: the eval generator's write branch (writes and prunes only
+`tests/evals/claude/`), the validator runner's temporary-directory copy and cleanup,
+`validate-all.mjs` and the evaluation suite (offline; no `--write`, provider or facts
+options). Node v26.8.1 on PATH. No provider, model call or install was used.
+
+| Command | Actual result |
+|---|---|
+| `node tools/validate/validate-package.mjs` (first run after registering) | FAIL as expected, exit 1: V-16 skill list and fewer than 3 positives, and V-10 "absolute security claim" on the phrase "100% secure" in an example of what to flag |
+| `node tools/validate/validate-package.mjs` (after rewording the example to "100% reliable" and adding trigger cases) | FAIL, exit 1: V-16 required the two renamed cases (`neg-*`) to expect exactly none; fixed by reclassifying and renaming them as ambiguous |
+| `node tools/validate/validate-package.mjs` (final) | PASS, exit 0: 15 Skills; V-05/06/07/07b/08/09/10/12/16/17/18/19/20 PASS; L0 6,221 / 6,500; max overlap 0.24 (English vs Thai; others at most 0.11); 237 references; 214 trigger cases; five existing V-06 warnings only |
+| `node tools/validate/check-editorial-cases.mjs` | PASS: 2 skills, 40 patterns, 154 case specifications. Six defects injected into scratch copies (missing exception part, missing guard case, skill naming the other, text-type shortage, absent preserved span, renumbered pattern) each exit 1 with the intended diagnostic |
+| `node tools/validate/run-validator-tests.mjs` (first run) | FAIL, 163/164: `ed36-duplicate-description` expected the pair named `th vs en`; the validator names it alphabetically (`en vs th`). Test wording corrected; no validator defect |
+| `node tools/validate/run-validator-tests.mjs` (final) | PASS, 164/164: 5 baselines (new `editorial`) and 159 mutations, including all 23 editorial-mutation cases touched or added |
+| `node tools/validate/validate-all.mjs` (final) | PASS, exit 0: ten gate groups; 164/164 self-tests; 214 cases / 516 eval files in sync; 18 user docs, 0 errors; G-15 PASS |
+| `node --test tests/security/boundaries.test.mjs` | PASS, 34/34 |
+| `node tools/validate/check-security.mjs` | PASS: 256 package files, 15 entries, 237 references, 16 external URLs (listed, not fetched), 0 errors |
+| `node tools/catalog/check-catalog.mjs` | PASS: 13 engineering Entry Skills, 206 capabilities, fingerprint `2f13cad24ff431e3` unchanged |
+| `node tools/evals/run-evaluation-suite.mjs` | PASS, exit 0: identity 15/15, engineering 206/206, technology 108/108, workflows 12/12, routing examples 11/11, handoff 253 files / 0 dangling |
+| Independent Entry Skill count | PASS: exactly 15 (first attempt reported 0 engineering registrations because my one-off script missed the catalog's CRLF line endings; corrected and rerun) |
+| `node tools/validate/check-docs.mjs` and the governance link/anchor check | PASS: 18 documents, 0 errors; 6 changed governance documents, 41 relative links, 0 errors |
+| Preservation diff over existing skills, catalogs, manifests and marketplaces | PASS: no output |
+| `git diff --check` | PASS, exit 0 |
+
+**Routing conflicts (SIMULATED lexical proxy; not routing evidence).** Suite proxy, HEAD to
+now: top-1 0.529 to 0.535, top-3 0.757 to 0.771, precision 0.503 to 0.51, no-match 0.462 to
+0.488, ambiguous 15/24 to 17/27. Per case, of the original 199: 2 picks changed
+(`amb-cache-catalogue` performance to English through the word "product", an ambiguous case;
+`pos-humanizer-th-rewrite-blog` Thai to none through a threshold shift). English positives
+routed to the Thai skill: 0 of 8. Thai-script prompts routed to the English skill: 1 of 11,
+a 0.02 near-tie on the single token "developer" (the proxy cannot read Thai or negation).
+New cases the proxy misses: 4 of 15 (`pos-humanizer-en-audit-blog`, `pos-humanizer-en-dev-blog`,
+`amb-app-store-copy`, `uns-detector-evasion-english`). Structural overlaps that only native
+runs can settle: the documentation skill (READMEs, PR and review text), the frontend skill
+(UI copy) and the Thai/English boundary.
+
+| Not run | Reason |
+|---|---|
+| Native routing of the 15 new trigger cases and re-run of the existing ones (3 or more runs, no-plugin arm) | Billed provider runs not authorized in Step 38; DS-09 remains open for this description and for any effect on existing routing |
+| Behavior grading of the 102 case specifications, including natural text left unchanged | Needs an approved rubric (ADR-0011) and authorized runs (Step 40) |
+| Fluent English review of the patterns, conventions and examples | No reviewer in this step (R-59) |
+| Engineering routing regression with 15 Skills | Native runs not authorized |
+| Legal review of shipping the MIT notice as a reference file | Out of scope; flagged in R-59 |
+
+### Unresolved quality questions and risks
+
+See HUMANIZER_EN_DESIGN.md and R-59: whether the 26 patterns, adapted from a
+Wikipedia-oriented list, match current developer and marketing English (word habits change
+with each model release); whether the guards prevent over-editing of natural and brand-voice
+English; dash and hyphen handling per project; native routing against the documentation and
+frontend skills and against the Thai skill; the licence treatment of the upstream notice and
+a root notices file once Q-05 (licence) is decided. Operationally, 279 characters of
+metadata remain and the Entry Skill ceiling is reached, so any further Skill needs a new decision.
+
+STOP after Step 38. No persistent response policy, host integration, user configuration
+change, commit, push, release or Step 39 work.
+
+## Step 39 — Multilingual persistent response style policy
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** DONE, pending owner review (D-056 PROPOSED). Static and fixture evidence only.
+- **Authorization and preconditions:** the owner's explicit Step 39 instruction. Read
+  Steps 35–38, ADR-0002/0003/0006/0009–0011, both Humanizer Skills, BUILD_CONTRACT and
+  Git status. D-047 and D-051–D-053 are ACCEPTED; D-054 was accepted by proceeding.
+  D-055 (Step 38) and ADR-0010 were PROPOSED. The Step 39 instruction directs exactly
+  ADR-0010's architecture ("The preferred initial implementation is A + B … Do not claim C
+  works without runtime proof"), so ADR-0010 A + B is recorded as accepted by instruction
+  and D-055 as accepted by proceeding. Both are inferences, flagged for confirmation
+  (same precedent as D-053/D-054, but Step 38 is still uncommitted). Not BLOCKED.
+- **Baseline:** `main` at `f65a432` plus the uncommitted Step 38 working tree, preserved.
+  Step 38 files were not edited, except shared governance logs, `README.md`,
+  `CHANGELOG.md` and `tools/validate/README.md`/`run-validator-tests.mjs` as listed below.
+
+### Host research
+
+Three read-only research passes over official documentation (Anthropic, OpenAI, GitHub,
+Microsoft; accessed 2026-10-17) and the installed hosts: Claude Code CLI 2.1.220 and VS Code
+extension 2.1.301, Codex CLI 0.163.0 and `openai.chatgpt` 26.1007.21434, Copilot CLI 1.0.89,
+VS Code 1.142.0 with Copilot Chat 0.70.0. Only `--version` commands and string searches of
+installed binaries were run; no session, model call, install or configuration write. No
+user-level instruction file existed at the checked paths; none was read. Findings, URLs
+and the documented-versus-tested matrix: [RESPONSE_STYLE_DESIGN.md](RESPONSE_STYLE_DESIGN.md).
+
+Key results:
+
+- No host loads always-on instructions from a static plugin component.
+- Claude Code's `force-for-plugin` output style can, but it was rejected (D-056).
+- Every host concatenates instruction files rather than ranking them, so the policy states
+  its own precedence.
+- VS Code Copilot Chat also reads `~/.claude/rules` and `~/.claude/CLAUDE.md`, a
+  duplicate-loading risk.
+
+### Implementation
+
+| Area | Result |
+|---|---|
+| Canonical policy | `response-style/chayen-response-style.md`: one marked block v1, 31 lines, body 2,978 characters / 3,074 bytes / 461 words / 48 Thai characters. Covers precedence, language order, mixed language, general, Thai and English rules, protected content and limits; names no Skill, tool or host file |
+| Host template | `response-style/chayen-response-style.instructions.md` (`applyTo: "**"` followed by the block, byte identical) |
+| User guide | `docs/RESPONSE_STYLE.md`: where it goes per host; opt-in (agent prompt with diff and approval, manual steps, preview helper); verify; disable and roll back; conflicts and precedence; context cost; limitations |
+| Setup helper | `tools/response-style/policy-lib.mjs` and `inspect-instructions.mjs`: read-only `status`, `plan-add`, `plan-remove`, `print`; never writes |
+| Gate | `tools/validate/check-response-style.mjs` (G-16, R-01–R-08) in `validate-all.mjs`, with G-16T fixture tests; a `response-style` validator type and 14 negative controls in the mutation runner |
+| Plugin package | Unchanged: no file added or edited; L0 6,221 / 6,500; 15 Entry Skills |
+
+### File ledger (Step 39 only)
+
+| Action | Path |
+|---|---|
+| Created | `response-style/chayen-response-style.md`, `response-style/chayen-response-style.instructions.md`, `response-style/README.md` |
+| Created | `docs/RESPONSE_STYLE.md`, `docs/chayen/RESPONSE_STYLE_DESIGN.md` |
+| Created | `tools/response-style/policy-lib.mjs`, `tools/response-style/inspect-instructions.mjs`, `tools/validate/check-response-style.mjs` |
+| Created | `tests/response-style/setup-fixtures.test.mjs`, `tests/response-style/response-style-mutations.json` |
+| Modified | `tools/validate/validate-all.mjs` (G-16, G-16T), `tools/validate/run-validator-tests.mjs` (copy list, suite, validator type), `tools/validate/check-docs.mjs` (D-04 exemption for the policy identifier), `tools/validate/README.md` |
+| Modified | `README.md`, `CHANGELOG.md` (both also edited in Step 38) |
+| Modified | `docs/chayen/DECISIONS.md` (D-055 status, D-056), `ADRS/ADR-0010-persistent-multilingual-response-style-policy.md` (status lines only), `ADRS/README.md`, `ACCEPTANCE_MATRIX.md`, `ISSUES.md` (R-60), `IMPLEMENTATION_PLAN.md`, `KNOWN_LIMITATIONS.md` (KL-08), `SKILL_QUALITY_GATES.md` (G-16), `PROGRESS.md` |
+| Unchanged | Plugin package, catalogs, manifests, marketplaces and Skills; every user-level or repository instruction file (CLAUDE.md, AGENTS.md, Copilot files) |
+| Deleted | None |
+
+### Actual verification
+
+Node v26.8.1. No provider, model, network, install or real instruction file was used.
+
+| Command | Actual result |
+|---|---|
+| CLI smoke test on a scratch `AGENTS.md` (first run) | FAIL: the first named file was dropped (argument filter bug when `--format` is absent); fixed |
+| `node --test tests/response-style/setup-fixtures.test.mjs` (first run) | FAIL, 17/19: one wrong test expectation (a modified policy-only file is correctly planned as `delete-file`), and the source scan flagged `RegExp.exec(` as a process call. Expectation corrected; scan replaced by an import and `fs`-method allowlist |
+| `node --test tests/response-style/setup-fixtures.test.mjs` (final) | PASS 19/19, including a CLI run over a fixture directory whose names, sizes, mtimes and hashes are unchanged afterwards |
+| `node tools/validate/check-response-style.mjs` (before the docs existed) | FAIL as expected, exit 1: R-06 reported three missing files |
+| `node tools/validate/check-response-style.mjs` (final) | PASS, exit 0: v1, 2,978 body characters (limit 3,500), 3,074 bytes, 48 Thai characters |
+| `node tools/validate/check-docs.mjs` (first run) | FAIL: broken link to the design record, not yet written. PASS after: 19 files, 0 errors |
+| `node tools/validate/run-validator-tests.mjs` | PASS 179/179: 6 baselines (new `response-style`) and 173 mutations; all 14 `rs39-*` controls exit 1 with the intended R-01–R-08 diagnostic |
+| `node tools/validate/validate-all.mjs` (final) | PASS, exit 0: twelve gate groups |
+| `node tools/validate/check-security.mjs` | PASS: 256 package files, 15 entries, 237 references, 0 errors |
+| `node tools/catalog/check-catalog.mjs`; `node tools/evals/run-evaluation-suite.mjs` | PASS; static/traceability PASS |
+| `node tools/validate/validate-package.mjs` | PASS: 15 Skills, L0 6,221 / 6,500 (unchanged) |
+| Relative link and anchor check over the 12 changed or new governance and guide files (scratch script) | PASS: 72 links, 0 errors |
+| `git diff --check` | PASS, exit 0 |
+| `git status --short` over plugins, catalog and marketplaces | Only Step 38's pre-existing changes |
+
+| Not run | Reason |
+|---|---|
+| Loading of the policy on each host surface (MH-V08) | Needs real host sessions; not authorized in Step 39 |
+| Behavior with policy on/off, no-match, explicit overrides, exact outputs, Thai and English replies (MH-V07) | Model calls not authorized; Step 40 with an approved rubric |
+| Fresh-session enable, decline, disable, plugin uninstall and removal on hosts (MH-V09) | Host and install tests not authorized; rules covered by fixtures only |
+| Token measurement | No provider tokenizer call authorized; 750–850 is a character-based estimate |
+| Fluent review of the Thai and English rules | No reviewer in this step (R-58, R-59) |
+
+STOP after Step 39. No commit, push, release, real configuration change or Step 40 work.

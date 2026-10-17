@@ -89,6 +89,7 @@ CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycl
 | G-13 | The validators themselves detect what they claim to | `run-validator-tests.mjs`: four baseline validators + 146 negative controls, including 18 editorial cases (Step 36); optional diagnostic fragments prevent unrelated failures from satisfying a case | Automated | Whenever a validator or standard changes |
 | G-14 | Native install, discovery, disable, and uninstall still work on each CLI | `run-lifecycle.sh` (24 checks, isolated homes) | Automated, local CLIs | Packaging changes; before release |
 | G-15 | Human review (checklist §4) | Reviewer | Manual | Every skill or recipe change; before promotion |
+| G-16 | Opt-in response style policy (Step 39, D-056): one marked canonical block, Copilot template byte-identical, body ≤3,500 characters, required precedence/language/protected-content clauses, no Skill routing or enforcement claims, no hardcoded home paths, nothing shipped or activated by the plugin package; setup rules on disposable fixtures (G-16T) | `check-response-style.mjs` (R-01–R-08), `tests/response-style/setup-fixtures.test.mjs`, 14 negative controls in `tests/response-style/response-style-mutations.json` | Automated (static and fixtures only; host loading NOT_RUN) | Every policy, template or package change |
 
 **Promotion rules (D-022):**
 

@@ -22,6 +22,7 @@ executed evidence exists. It does not mean the feature is known to fail.
 | KL-05 | **No executable components:** no hooks, MCP, scripts, or commands. Features that need runtime enforcement are out of scope. | ADR-0005; V-09; V-25 |
 | KL-06 | **No path for the Codex IDE extension.** OpenAI documents that it doesn't support plugins. | S13 (re-read 2026-10-15); Q-02 open |
 | KL-07 | **No Claude Code cloud sessions.** Locally installed plugins are not loaded there. | S5 |
+| KL-08 | **The response style policy is opt-in and outside the plugin (Step 39).** Installing the plugin does not activate it; the user copies it into a host instruction file. Host loading and behavior are not tested, and some subagents and Copilot inline suggestions do not receive it. | docs/RESPONSE_STYLE.md; D-056; R-60 |
 
 ## 2. Coverage limitations
 

@@ -23,7 +23,7 @@ when that verification is still pending.
 | [ADR-0007](ADR-0007-security-boundaries.md) | Security boundaries | PROPOSED | D-003, REQ-09 |
 | [ADR-0008](ADR-0008-packaging-and-marketplace-strategy.md) | Packaging and marketplace strategy | ACCEPTED, as amended by D-013 (Step 04) | D-009, D-013, K-01..K-04 |
 | [ADR-0009](ADR-0009-multilingual-editorial-skills.md) | Multilingual Editorial Skills | PROPOSED for remaining behavior decisions; registration/limits ACCEPTED under D-051–D-053 | D-047, D-048, D-053, MHR-001–MHR-006, MHR-011 |
-| [ADR-0010](ADR-0010-persistent-multilingual-response-style-policy.md) | Persistent Multilingual Response Style Policy | PROPOSED (Step 35) | D-047, D-049, MHR-007–MHR-009 |
+| [ADR-0010](ADR-0010-persistent-multilingual-response-style-policy.md) | Persistent Multilingual Response Style Policy | A + B ACCEPTED by the Step 39 instruction (inferred, D-056; confirm); C not claimed | D-047, D-049, D-056, MHR-007–MHR-009 |
 | [ADR-0011](ADR-0011-multilingual-quality-and-safety.md) | Multilingual Quality and Safety | PROPOSED (Step 35) | D-047, D-050, MHR-010–MHR-012 |
 
 Step 35 checked that 0009–0011 were unused before allocation. These proposals

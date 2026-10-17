@@ -1196,8 +1196,11 @@ Decision statuses:
 
 ### D-054 — Step 37 Thai editorial skill design
 
-- **Status:** PROPOSED (implemented in Step 37 under the owner's explicit
-  Step 37 instruction; design choices below await owner review).
+- **Status:** ACCEPTED by proceeding (2026-10-17): the owner committed Step 37
+  as `f65a432` and then issued the Step 38 instruction. No separate approval
+  message was given, so this is an inference recorded in D-055 for the owner to
+  confirm or correct. Originally implemented in Step 37 under the owner's
+  explicit instruction; design choices remain open to review.
 - **Decision:** ship `chayen-humanizer-th` as the 14th Entry Skill with an
   English router SKILL.md, Thai examples and seven skill-local references
   (six checklists, one template); no recipes, capabilities, scripts or hooks.
@@ -1217,6 +1220,94 @@ Decision statuses:
   method only; no text copied. See [HUMANIZER_TH_DESIGN.md](HUMANIZER_TH_DESIGN.md).
 - **Evidence:** static only. Native routing, behavior and fluent human review
   are NOT_RUN (R-58). No persistent policy, English skill or Step 38 work.
+
+### D-055 — Step 38 English editorial skill design
+
+- **Status:** ACCEPTED by proceeding (inferred, 2026-10-17): the owner issued the
+  Step 39 instruction after the Step 38 report. Unlike D-054, Step 38 is not yet
+  committed (its files remain uncommitted in the working tree), so this inference is
+  weaker; please confirm or correct. Originally implemented in Step 38 under the
+  owner's explicit Step 38 instruction.
+- **Approval basis:** D-053 (registry, maximum 15) and D-052 (L0 6,500) are
+  accepted. D-054 had no explicit approval message; the owner committed Step 37
+  and instructed Step 38, which is treated as acceptance by proceeding, the same
+  precedent as D-053. Please confirm or correct. ADR-0010 and ADR-0011 do not
+  gate this step.
+- **Decision:** ship `chayen-humanizer-en` as the 15th and last permitted Entry
+  Skill: an English router SKILL.md (164 lines) and nine skill-local references
+  (eight checklists, one template); no recipes, capabilities, scripts, hooks or
+  dependencies. 26 English patterns (EN-01–EN-26), each with signals, rationale,
+  false-positive exception, before/after and preservation notes.
+- **Registry:** the English record moves from `planned` to `existing`; its
+  description grows from the planned 206 to 344 characters and is identical in
+  SKILL.md and the registry (V-19). Actual L0 **6,221 / 6,500** (279 free). No
+  budget change. The ceiling of 15 is reached; a further Skill needs a decision.
+- **Upstream:** the pattern taxonomy and watch lists are adapted from
+  `blader/humanizer` 3.1.0 (MIT, (c) 2025 Siqi Chen). Treated conservatively as
+  a substantial portion: the licence text (verified identical to upstream's) and
+  an attribution mapping ship in `references/upstream-notice.md`. The upstream
+  SKILL.md is not reproduced; all examples are original. No root notices file
+  yet because the repository licence is undecided (Q-05).
+- **Departures from upstream:** dashes follow the document instead of being
+  banned; hyphenation follows the style guide; natural text is left alone; fiction
+  is out of scope; US/UK spelling and identifiers are protected; three new
+  patterns (unsupported claims, filler, register).
+- **Description:** "non-English output" in the boundary clause mirrors the Thai
+  skill's "non-Thai output" and avoids the wrong-language collision that naming
+  Thai caused in the lexical proxy.
+- **Tests:** 15 trigger cases and 10 edited ones (eight Thai cases now forbid the
+  English skill; two cases that expected no skill became ambiguous and were
+  renamed `amb-app-store-copy` and `amb-thai-request-english-email` because
+  marketing copy now has an editorial owner); 102 behavior case specifications;
+  G-15 generalized to both skills with an independence check (E-04); Step 36/37
+  planned-state controls retargeted; 3 new registration and 7 new G-15 controls.
+- **Independence:** neither editorial skill names or loads the other.
+- **Evidence:** static only. Native routing, behavior, wrong-language behavior
+  with real models and fluent human review are NOT_RUN (R-59). No persistent
+  policy, host integration or Step 39 work.
+
+### D-056 — Step 39 opt-in persistent response style policy
+
+- **Status:** PROPOSED for the design choices below. ADR-0010's architecture
+  (A native discovery + B opt-in host instructions; C not claimed) is treated
+  as ACCEPTED because the owner's Step 39 instruction directs exactly that
+  ("The preferred initial implementation is A + B, using user-approved host
+  setup. Do not claim C works without runtime proof."). No separate approval
+  message for ADR-0010 exists; please confirm or correct. ADR-0002, ADR-0003,
+  ADR-0006 and REQ-04 texts are not edited; their scoped amendments are those
+  listed in ADR-0010 and take effect only if this acceptance is confirmed.
+- **Decision:** one provider-neutral canonical policy,
+  `response-style/chayen-response-style.md`, a single marked block
+  (`<!-- BEGIN/END chayen-response-style v1 -->`) outside the plugin package,
+  plus one derived Copilot template (`applyTo: "**"` + the block, byte
+  identical). Body 2,978 characters, 31 lines; G-16 caps the body at 3,500
+  characters and 40 lines. The policy names no Skill, tool or host file.
+- **Host placement (documented, not tested):** Claude Code
+  `~/.claude/rules/chayen-response-style.md` (dedicated file); Codex
+  `~/.codex/AGENTS.md` block (`AGENTS.override.md` shadows it); Copilot CLI
+  `~/.copilot/copilot-instructions.md` block; VS Code Copilot Chat
+  `~/.copilot/instructions/chayen-response-style.instructions.md`. Repository
+  files only with the repository owner's agreement. Cross-host reading
+  (VS Code reads `~/.claude/rules`) is documented as a duplicate risk.
+- **Setup:** explicit consent to the exact file and diff (agent prompt, manual
+  steps or a read-only preview helper). Nothing in the repository writes user
+  or repository instruction files. The helper
+  `tools/response-style/inspect-instructions.mjs` reads named files and prints
+  states and diffs only; it imports no process or network module.
+- **Rejected:** Claude Code `force-for-plugin` output style (activates on plugin
+  enable, overrides the user's output style, drops built-in coding
+  instructions unless configured, Claude-only, contradicts opt-in); plugin
+  `CLAUDE.md`/`rules/` (not loaded or undocumented); Codex
+  `model_instructions_file` (replaces built-in instructions) and
+  `developer_instructions` (TOML config edit, no owned block); hooks, MCP,
+  installers and background services (out of scope, ADR-0005/0007).
+- **Tooling:** developer-only gate G-16 (`tools/validate/check-response-style.mjs`,
+  R-01–R-08), fixture tests G-16T, 14 negative controls via a new
+  `response-style` validator type in `run-validator-tests.mjs`, and a narrow
+  D-04 exemption in `check-docs.mjs` for the policy identifier. No dependency.
+- **Evidence:** static and disposable fixtures only. Host loading, behavior,
+  fresh-session lifecycle, plugin uninstall and token measurement are NOT_RUN
+  (R-60). Details: [RESPONSE_STYLE_DESIGN.md](RESPONSE_STYLE_DESIGN.md).
 
 ## Architecture assumptions (checked in Step 02)
 

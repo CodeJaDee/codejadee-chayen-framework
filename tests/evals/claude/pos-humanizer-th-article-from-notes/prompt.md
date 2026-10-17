@@ -6,7 +6,7 @@ runs: 3
 max_turns: 8
 timeout_seconds: 180
 allowed_tools: [Read, Glob, Grep, Skill]
-expected_outcome: "invokes chayen-humanizer-th"
+expected_outcome: "invokes chayen-humanizer-th; never chayen-humanizer-en"
 ---
 
 Write a short Thai article for beginner developers explaining why we moved our docs to MDX, using only the notes below.

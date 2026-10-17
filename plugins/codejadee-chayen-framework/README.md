@@ -11,7 +11,7 @@ installs it through its own native plugin mechanism.
 
 ## Current state: 0.1.0-dev
 
-This is a **pilot build** with 14 entry skills. The list is in
+This is a **pilot build** with 15 entry skills. The list is in
 [skills/README.md](skills/README.md).
 
 - Skills activate automatically when a request matches their description.

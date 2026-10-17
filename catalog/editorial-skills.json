@@ -10,8 +10,8 @@
     {
       "name": "chayen-humanizer-en",
       "language": "en",
-      "mapping": "planned",
-      "description": "Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code."
+      "mapping": "existing",
+      "description": "Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes."
     }
   ]
 }

@@ -11,7 +11,7 @@ These tools are for **repository maintainers only**.
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
 node tools/validate/validate-package.mjs       # package, skills, references, catalog alignment (detail)
-node tools/validate/run-validator-tests.mjs    # self-tests: 4 baselines + 146 negative controls (18 editorial)
+node tools/validate/run-validator-tests.mjs    # self-tests: 6 baselines + 173 negative controls (includes editorial and 14 response-style)
 node tools/validate/check-security.mjs        # offline V-25 profile; no commands/network
 node --test tests/security/boundaries.test.mjs # offline adversarial script controls
 ```
@@ -27,8 +27,10 @@ The gates are in
 |---|---|
 | `validate-package.mjs` | The checks below |
 | `run-validator-tests.mjs` | Applies the mutation cases in `tests/catalog/` and `tests/skills/` to temporary repository copies, and asserts that each one fails with the expected check (G-13) |
-| `validate-all.mjs` | Runs security preflight and offline boundary tests, package, engineering catalog, technology, composite workflow/template and eval synchronization checks, then validator self-tests, the documentation check and the editorial case check (ten gate groups). Failed security preflight stops later gates. |
-| `check-editorial-cases.mjs` | STEP 37 editorial gate (G-15): the Thai pattern inventory is exactly TH-01–TH-14 with Signals, Why, Not a tell when, Before, After and Preserve (E-01); `tests/editorial/humanizer-th-cases.json` schema and preserved-span fixture integrity (E-02); per-category minimums and a positive plus a false-positive case for every pattern (E-03). Static only; behavior NOT_RUN. |
+| `validate-all.mjs` | Runs security preflight and offline boundary tests, package, engineering catalog, technology, composite workflow/template and eval synchronization checks, then validator self-tests, the documentation check, the editorial case check, and the response style gate and its fixture tests (twelve gate groups). Failed security preflight stops later gates. |
+| `check-editorial-cases.mjs` | Editorial gate (G-15, Steps 37-38), run for both editorial skills: the pattern inventory is exactly TH-01–TH-14 and EN-01–EN-26 with Signals, Why, Not a tell when, Before, After and Preserve (E-01); `tests/editorial/humanizer-{th,en}-cases.json` schema and preserved-span fixture integrity (E-02); per-category minimums, a positive plus a false-positive case for every pattern, and English text-type coverage (E-03); neither skill names the other (E-04). Static only; behavior NOT_RUN. |
+| `check-response-style.mjs` | Response style gate (G-16, Step 39): canonical block structure (R-01), body ≤3,500 characters and ≤40 lines (R-02), required clauses and protected-content items (R-03), Copilot template byte-identical (R-04), no Skill routing, provider tool names, host file names or guarantee claims in the policy (R-05), no hardcoded user home paths (R-06), the plugin package ships no instruction files, rules, output styles or policy text (R-07), the user guide keeps its lifecycle sections and install-only statement (R-08). Static only; host loading NOT_RUN. |
+| `../response-style/inspect-instructions.mjs` | Read-only setup helper for users and maintainers: `status`, `plan-add`, `plan-remove`, `print`. Never writes; tested by `tests/response-style/setup-fixtures.test.mjs` on disposable fixtures. |
 | `check-security.mjs` | V-25 metadata-only profile, authority guards, link/path confinement, heuristic secret patterns, source hashes, URL and fixture dependency inventory; `--write-report` writes only the fixed STEP 30 report |
 | `check-docs.mjs` | STEP 33 documentation gate (G-14): relative links and anchors (D-01, D-02), `<plugin>@<marketplace>` identifiers (D-03), skill names (D-04), and `-dev` versions (D-05) in README.md, SECURITY.md, CHANGELOG.md, docs/*.md and docs/distribution/*.md. External links are listed, not fetched. |
 | `safe-paths.mjs` | Rejects absolute/traversal paths and linked descendants for scratch mutation and staging |

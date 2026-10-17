@@ -1,6 +1,10 @@
 # ADR-0010: Persistent Multilingual Response Style Policy
 
-- **Status:** PROPOSED — preferred initial architecture, not an accepted exception.
+- **Status:** ACCEPTED for the A + B architecture by the owner's Step 39 instruction
+  (inferred, D-056; awaiting confirmation). C remains not claimed. Originally
+  PROPOSED in Step 35.
+- **Step 39 implementation:** [RESPONSE_STYLE_DESIGN.md](../RESPONSE_STYLE_DESIGN.md);
+  host loading and behavior NOT_RUN (R-60). The original text below is unchanged.
 - **Date:** 2026-10-17
 - **Related:** D-047, D-049, MHR-002, MHR-007–MHR-009, MHR-011–MHR-012;
   REQ-04, D-007, ADR-0002, ADR-0003, ADR-0005–ADR-0007.

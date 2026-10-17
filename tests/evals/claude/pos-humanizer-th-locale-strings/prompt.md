@@ -6,7 +6,7 @@ runs: 3
 max_turns: 8
 timeout_seconds: 180
 allowed_tools: [Read, Glob, Grep, Skill]
-expected_outcome: "invokes chayen-humanizer-th"
+expected_outcome: "invokes chayen-humanizer-th; never chayen-humanizer-en"
 ---
 
 ปรับข้อความภาษาไทยใน locales/th.json ให้สั้นและเป็นกันเองขึ้น โดยห้ามแตะ key และ placeholder อย่าง {count}

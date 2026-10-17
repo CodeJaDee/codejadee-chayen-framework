@@ -1,20 +1,15 @@
 {
-  "$comment": "Step 36 negative controls; invalid Skill copies exist only in confined temporary test repositories. Planned metadata is not shipped content. Step 37: chayen-humanizer-th is existing; planned-state controls use chayen-humanizer-en.",
+  "$comment": "Step 36 negative controls, retargeted in Step 38 now that both editorial Skills ship: planned-state controls mutate the English record in the temporary copy, and registry-writing controls are rebuilt from the real registry so each stays a single fault. Invalid Skill copies exist only in confined temporary test repositories. Planned metadata is not shipped content.",
   "version": 1,
   "cases": [
     {
       "id": "ed36-unregistered",
-      "description": "A shipped Thai Editorial Skill has no editorial registration",
+      "description": "The Thai Editorial Skill ships but its registration is missing",
       "edits": [
         {
           "file": "catalog/editorial-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
-        },
-        {
-          "op": "copydir",
-          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
-          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -30,7 +25,7 @@
         {
           "file": "catalog/editorial-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -61,7 +56,7 @@
         {
           "file": "catalog/editorial-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"fr\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"fr\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -77,7 +72,7 @@
         {
           "file": "catalog/editorial-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -107,22 +102,12 @@
     },
     {
       "id": "ed36-exceeded-count",
-      "description": "Sixteen shipped directories exceed the latest Step 36 ceiling",
+      "description": "A sixteenth shipped directory exceeds the ceiling of 15 (13 engineering + 2 editorial + 1)",
       "edits": [
         {
           "op": "copydir",
           "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
-          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
-        },
-        {
-          "op": "copydir",
-          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
-          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en"
-        },
-        {
-          "op": "copydir",
-          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
-          "to": "plugins/codejadee-chayen-framework/skills/chayen-extra"
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-sixteenth"
         }
       ],
       "expect": {
@@ -133,12 +118,14 @@
     },
     {
       "id": "ed36-exceeded-planned-budget",
-      "description": "Planned English editorial metadata pushes the registered surface above L0 budget",
+      "description": "Editorial metadata pushes the shipped surface above the L0 budget (6,221 + 451 > 6,500)",
       "edits": [
         {
-          "file": "catalog/editorial-skills.json",
-          "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or rewrite Thai prose for articles, developer blogs, landing pages, READMEs, product copy, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms while preserving facts and markup. Not for English-only drafts, verifying engineering doc accuracy, or application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"English prose xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Not for code or databases.\"\n    }\n  ]\n}\n"
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/SKILL.md",
+          "op": "regex",
+          "pattern": "^description: ",
+          "flags": "m",
+          "with": "description: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx "
         }
       ],
       "expect": {
@@ -183,12 +170,11 @@
     },
     {
       "id": "ed36-missing-existing",
-      "description": "Existing editorial registration must resolve to a real Skill file (English record, no directory)",
+      "description": "An existing editorial registration whose Skill directory is missing is rejected",
       "edits": [
         {
-          "file": "catalog/editorial-skills.json",
-          "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or rewrite Thai prose for articles, developer blogs, landing pages, READMEs, product copy, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms while preserving facts and markup. Not for English-only drafts, verifying engineering doc accuracy, or application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en",
+          "op": "delete"
         }
       ],
       "expect": {
@@ -199,12 +185,12 @@
     },
     {
       "id": "ed36-premature-planned-directory",
-      "description": "Planned editorial registration cannot hide a shipped directory",
+      "description": "A planned editorial registration cannot hide a shipped directory",
       "edits": [
         {
-          "op": "copydir",
-          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
-          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en"
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -220,7 +206,7 @@
         {
           "file": "catalog/editorial-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\",\n      \"hooks\": {\n        \"start\": \"run\"\n      }\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\",\n      \"hooks\": {\n        \"start\": \"synthetic\"\n      }\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -236,7 +222,7 @@
         {
           "file": "catalog/editorial-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"../outside\",\n      \"language\": \"th\",\n      \"mapping\": \"planned\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"../outside\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -247,18 +233,20 @@
     },
     {
       "id": "ed36-duplicate-description",
-      "description": "Planned English description must remain distinct from the shipped Thai description",
+      "description": "The shipped English description must remain distinct from the shipped Thai description",
       "edits": [
         {
-          "file": "catalog/editorial-skills.json",
-          "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or rewrite Thai prose for articles, developer blogs, landing pages, READMEs, product copy, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms while preserving facts and markup. Not for English-only drafts, verifying engineering doc accuracy, or application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Write, audit, or rewrite Thai prose for articles, developer blogs, landing pages, READMEs, product copy, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms while preserving facts and markup. Not for English-only drafts, verifying engineering doc accuracy, or application code.\"\n    }\n  ]\n}\n"
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/SKILL.md",
+          "op": "regex",
+          "pattern": "^description: .*$",
+          "flags": "m",
+          "with": "description: Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code."
         }
       ],
       "expect": {
         "validator": "package",
         "error": "V-07b description-distinctness",
-        "message": "chayen-humanizer-th vs chayen-humanizer-en"
+        "message": "chayen-humanizer-en vs chayen-humanizer-th"
       }
     },
     {
@@ -283,12 +271,7 @@
         {
           "file": "catalog/editorial-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Edit English drafts, newsletters, and landing-page wording for clarity, rhythm, concision, audience, and tone without changing meaning or protected terms. Not for Thai-language articles or application code.\"\n    }\n  ]\n}\n"
-        },
-        {
-          "op": "copydir",
-          "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
-          "to": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-th"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
@@ -316,13 +299,16 @@
     },
     {
       "id": "ed36-trigger-planned-skill",
-      "description": "Trigger cases cannot name a planned Editorial Skill before it ships (V-16)",
+      "description": "Trigger cases cannot name an editorial Skill that is planned and not shipped (V-16)",
       "edits": [
         {
-          "file": "tests/skills/trigger-cases.json",
-          "op": "replace",
-          "find": "run its tests.\", \"expect\": { \"any_of\": [\"chayen-repository\"] }, \"forbid\": [\"chayen-security\"] }",
-          "with": "run its tests.\", \"expect\": { \"any_of\": [\"chayen-repository\"] }, \"forbid\": [\"chayen-humanizer-en\"] }"
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\"\n    },\n    {\n      \"name\": \"chayen-humanizer-en\",\n      \"language\": \"en\",\n      \"mapping\": \"planned\",\n      \"description\": \"Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.\"\n    }\n  ]\n}\n"
+        },
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en",
+          "op": "delete"
         }
       ],
       "expect": {
@@ -362,6 +348,177 @@
         "validator": "package",
         "error": "V-19 catalog-mapping",
         "message": "Editorial Skills cannot declare engineering capability recipes"
+      }
+    },
+    {
+      "id": "ed38-en-recipe-ownership",
+      "description": "The shipped English Editorial Skill cannot carry an engineering capability recipe (Step 38)",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/references/stray-recipe.md",
+          "op": "write",
+          "content": "---\nkind: recipe\ncapabilities: [CAP-01-001]\n---\n# Stray recipe\n\n## Inputs\nSynthetic fixture text used only to test editorial isolation from engineering recipes.\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "chayen-humanizer-en: Editorial Skills cannot declare engineering capability recipes"
+      }
+    },
+    {
+      "id": "ed38-en-metadata-drift",
+      "description": "The shipped English description must match its canonical registry record",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/SKILL.md",
+          "op": "regex",
+          "pattern": "^description: Write, audit, or tighten",
+          "flags": "m",
+          "with": "description: Write, audit, or sharpen"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "chayen-humanizer-en: shipped Humanizer metadata differs from registry"
+      }
+    },
+    {
+      "id": "ed38-en-unregistered",
+      "description": "The English Editorial Skill ships but its registration is missing",
+      "edits": [
+        {
+          "file": "catalog/editorial-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-humanizer-th\",\n      \"language\": \"th\",\n      \"mapping\": \"existing\",\n      \"description\": \"Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "chayen-humanizer-en: unregistered Editorial Skill"
+      }
+    },
+    {
+      "id": "ed38-checker-pattern-part-missing",
+      "description": "An English pattern without its false-positive exception is rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/references/patterns-inflation-and-claims.md",
+          "op": "regex",
+          "pattern": "(## EN-12[\\s\\S]*?)- \\*\\*Not a tell when:\\*\\*",
+          "with": "$1- **Exception:**"
+        }
+      ],
+      "expect": {
+        "validator": "editorial",
+        "error": "E-01 [EN]",
+        "message": "EN-12: missing \"- **Not a tell when:**\""
+      }
+    },
+    {
+      "id": "ed38-checker-inventory-gap",
+      "description": "A renumbered English pattern breaks the exact EN-01..EN-26 inventory",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/references/patterns-inflation-and-claims.md",
+          "op": "regex",
+          "pattern": "## EN-17 ",
+          "with": "## EN-70 "
+        }
+      ],
+      "expect": {
+        "validator": "editorial",
+        "error": "E-01 [EN]",
+        "message": "is not exactly EN-01..EN-26"
+      }
+    },
+    {
+      "id": "ed38-checker-guard-removed",
+      "description": "Removing the false-positive case for EN-26 leaves that pattern unguarded",
+      "edits": [
+        {
+          "file": "tests/editorial/humanizer-en-cases.json",
+          "op": "regex",
+          "pattern": "^    \\{\"id\":\"en-fp-26\",.*\\},\\n",
+          "flags": "m",
+          "with": ""
+        }
+      ],
+      "expect": {
+        "validator": "editorial",
+        "error": "E-03 [EN]",
+        "message": "EN-26: no false-positive case guards it"
+      }
+    },
+    {
+      "id": "ed38-checker-preserved-span-absent",
+      "description": "A preserved span that is not in the fixture input is rejected",
+      "edits": [
+        {
+          "file": "tests/editorial/humanizer-en-cases.json",
+          "op": "regex",
+          "pattern": "(\"id\":\"en-pos-04\".*?\"preserve\":\\[)",
+          "with": "$1\"absent span\","
+        }
+      ],
+      "expect": {
+        "validator": "editorial",
+        "error": "E-02 [EN]",
+        "message": "preserved span \"absent span\" does not occur in the input"
+      }
+    },
+    {
+      "id": "ed38-checker-text-type-coverage",
+      "description": "Dropping the ui-microcopy positives leaves that text type uncovered",
+      "edits": [
+        {
+          "file": "tests/editorial/humanizer-en-cases.json",
+          "op": "regex",
+          "pattern": "(\"category\":\"positive\",\"textType\":)\"ui-microcopy\"",
+          "flags": "g",
+          "with": "$1\"readme\""
+        }
+      ],
+      "expect": {
+        "validator": "editorial",
+        "error": "E-03 [EN]",
+        "message": "text type ui-microcopy"
+      }
+    },
+    {
+      "id": "ed38-checker-skill-independence",
+      "description": "The English skill naming the Thai skill breaks editorial independence",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/references/content-creation.md",
+          "op": "append",
+          "content": "\nSee also chayen-humanizer-th for Thai text.\n"
+        }
+      ],
+      "expect": {
+        "validator": "editorial",
+        "error": "E-04 [EN]",
+        "message": "names chayen-humanizer-th"
+      }
+    },
+    {
+      "id": "ed38-checker-th-guard-removed",
+      "description": "Removing the Thai gitmoji-style guard leaves TH-14 unguarded",
+      "edits": [
+        {
+          "file": "tests/editorial/humanizer-th-cases.json",
+          "op": "regex",
+          "pattern": "^    \\{ \"id\": \"th-fp-gitmoji-changelog\".*\\},\\n",
+          "flags": "m",
+          "with": ""
+        }
+      ],
+      "expect": {
+        "validator": "editorial",
+        "error": "E-03 [TH]",
+        "message": "TH-14: no false-positive case guards it"
       }
     }
   ]

@@ -74,6 +74,7 @@ for (const file of docs) {
   }
   for (const m of text.matchAll(/\bchayen-[a-z]+(?:-[a-z]+)*\b/g)) {
     if (m[0].endsWith("-framework") || m[0] === "chayen-framework") continue;
+    if (m[0] === "chayen-response-style") continue; // opt-in policy identifier (Step 39), not a Skill
     if (!skills.has(m[0]) && !/^chayen-(name|x)$/.test(m[0])) err("D-04", file, `unknown skill name ${m[0]}`);
   }
   if (!proposalFiles.has(rel(file))) for (const m of text.matchAll(/\b(\d+\.\d+\.\d+-dev)\b/g)) {

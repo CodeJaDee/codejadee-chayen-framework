@@ -525,6 +525,15 @@ evidence separately; no persistent host integration implied.
 
 ### Step 38 — English Humanizer Skill (planned)
 
+**DONE (2026-10-17), pending owner review (D-055).** Implemented
+`chayen-humanizer-en` (SKILL.md plus nine references, 26 English patterns
+adapted from `blader/humanizer` with the MIT notice shipped), moved its registry
+record to `existing`, added 15 trigger cases (10 existing cases edited), 102
+behavior case specifications, and generalized gate G-15 to both skills. 15
+shipped Entry Skills, actual L0 6,221 / 6,500. Static validation PASS; native
+routing, behavior and fluent human review NOT_RUN (R-59). See
+[HUMANIZER_EN_DESIGN.md](HUMANIZER_EN_DESIGN.md) and PROGRESS.md.
+
 After approved foundations and explicit step authorization, implement the
 English Skill and references, English/bilingual cases and boundary checks
 against Thai/documentation/frontend owners. Validate the actual 15-Skill
@@ -532,6 +541,18 @@ surface, approved L0, independent editorial registry and all legacy mappings.
 No behavior verification claim from structural tests alone.
 
 ### Step 39 — Opt-in persistent response guidance (planned)
+
+**DONE (2026-10-17), pending owner review (D-056).** ADR-0010 A + B taken as
+accepted from the Step 39 instruction (inferred; confirm). Canonical policy
+`response-style/chayen-response-style.md` (v1, 2,978-character body) and a
+Copilot template outside the package; user guide docs/RESPONSE_STYLE.md;
+host research and documented-versus-tested matrix in
+[RESPONSE_STYLE_DESIGN.md](RESPONSE_STYLE_DESIGN.md); read-only setup helper;
+gate G-16, fixture tests G-16T and 14 negative controls PASS. Host surfaces
+are covered by official documentation and installed-binary evidence, not by
+runtime loading; host loading, behavior, fresh-session lifecycle and plugin
+uninstall tests are NOT_RUN (R-60). No user or repository instruction file
+was changed.
 
 Requires ADR-0010 acceptance, host research and separate implementation scope.
 Prepare a provider-neutral policy and host-specific instructions only for

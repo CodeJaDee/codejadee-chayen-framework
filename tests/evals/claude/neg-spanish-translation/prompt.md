@@ -1,5 +1,5 @@
 ---
-name: neg-thai-request-english-email
+name: neg-spanish-translation
 description: "[negative] generated from tests/skills/trigger-cases.json — do not edit by hand"
 tags: [negative]
 runs: 3
@@ -9,4 +9,4 @@ allowed_tools: [Read, Glob, Grep, Skill]
 expected_outcome: "invokes no chayen-* skill (native behavior)"
 ---
 
-ช่วยเขียนอีเมลภาษาอังกฤษถึงลูกค้าเพื่อขอเลื่อนประชุมเป็นวันศุกร์
+Translate this paragraph into Spanish: 'The meeting has moved to Thursday at ten.'
