@@ -27,12 +27,12 @@ This is the single entry point to every evaluation asset.
 | `step40/` | 1, 3, 4 | STEP 40 multilingual evaluation: 120-case quality/policy dataset, 52 editorial discovery probes, the arm runner (A no plugin, B plugin, C plugin + opt-in policy) and scorer controls. See [step40/README.md](step40/README.md). No live run recorded. |
 | `fixture/` | 3 | A small multi-stack monorepo: ASP.NET Core 8 + EF Core SQL Server, Angular 18, Next.js 14, Python 3.12/pytest, PostgreSQL 16 SQL, Rust/Axum. It contains intentional defects that the probes target. **Never build or restore it in place.** IDE C# tooling may restore it automatically; `bin/` and `obj/` are git-ignored and are not copied by the runner. |
 | `results/` | all | Path-free recorded results |
-| `../skills/trigger-cases.json` | 3 (via generators) | 186 provider-neutral routing cases. Generates `../evals/claude/` (441 files) for `claude plugin eval`. |
+| `../skills/trigger-cases.json` | 3 (via generators) | 214 provider-neutral routing cases (186 at Step 32; 28 editorial cases added in Steps 37–38). Generates `../evals/claude/` (516 files) for `claude plugin eval`. |
 | `../skills/recipe-cases.json` | spec | 445 capability cases: at least 1 positive and 1 negative for each of the 206 capabilities |
 | `../skills/technology-cases.json` and the two data-access case files | spec | 295 + 20 technology cases: at least 1 positive and 1 negative for each of the 108 technology capabilities |
 | `../skills/workflow-cases.json` | spec | 47 workflow and template cases (12 workflows) |
 | `../technology/*/run-fact-checks.mjs` | 1 (facts) | Framework and database facts (159 checks) |
-| `../security/boundaries.test.mjs` | 1 | 32 offline security regressions |
+| `../security/boundaries.test.mjs` | 1 | 34 offline security regressions (32 at Step 32) |
 | `../provider-compatibility/` | 1, 3, 4 | Identity check, lifecycle script, and VS Code procedures (STEP 31 runbook) |
 | `../routing/` | 3 | Copilot and Codex routing smoke runner, plus Step 06 results |
 

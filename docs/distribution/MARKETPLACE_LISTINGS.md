@@ -18,11 +18,12 @@ the publisher name needs confirmation)
 
 **Long description:**
 
-> Chayen adds 13 engineering skills to your coding agent. Work with normal
-> prompts: when a request matches a skill (backend, frontend, data, testing,
-> security, performance, DevOps, architecture, requirements, documentation,
-> repository analysis, implementation, or AI engineering), the agent loads
-> that skill's guidance. That guidance detects your stack and versions,
+> Chayen adds 15 skills to your coding agent: 13 engineering skills and two
+> Thai and English writing skills. Work with normal prompts: when a request
+> matches a skill (backend, frontend, data, testing, security, performance,
+> DevOps, architecture, requirements, documentation, repository analysis,
+> implementation, AI engineering, or Thai or English writing and editing), the
+> agent loads that skill's guidance. That guidance detects your stack and versions,
 > keeps your conventions, and reports verification honestly. When nothing
 > matches, your agent behaves exactly as before.
 >
@@ -38,12 +39,14 @@ the publisher name needs confirmation)
 **Required disclosure** (include it in every listing):
 
 > Pre-release. Skills are selected by the model and are not guaranteed to
-> load. Guidance is implemented but not behaviour-verified. See
-> SECURITY_AND_LIMITATIONS.
+> load. Guidance is implemented but not behaviour-verified; the writing skills'
+> quality has not been evaluated. The optional response style policy is not
+> installed with the plugin. The English writing skill adapts MIT-licensed
+> material from humanizer by Siqi Chen. See SECURITY_AND_LIMITATIONS.
 
 **Keywords:** software-engineering, dotnet, aspnetcore, angular, react,
 nextjs, vue, nuxt, sql-server, postgresql, typescript, testing, security,
-devops
+devops, writing, thai, english
 
 ## Claude Code
 

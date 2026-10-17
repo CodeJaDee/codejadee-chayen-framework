@@ -1,9 +1,9 @@
-# Known Limitations (STEP 34)
+# Known Limitations (STEP 34; updated STEP 41)
 
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
-| Build | `0.1.0-dev`: 13 entry skills, 221 references, 238 package files |
+| Build | `0.1.0-dev`: 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
 | Companions | [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md), [RELEASE_READINESS.md](RELEASE_READINESS.md) |
 | User-facing summary | [docs/SECURITY_AND_LIMITATIONS.md](../SECURITY_AND_LIMITATIONS.md) |
 
@@ -17,11 +17,12 @@ executed evidence exists. It does not mean the feature is known to fail.
 |---|---|---|
 | KL-01 | **Guidance is advisory.** Markdown cannot enforce permissions, policy, or approvals. Enforcement comes from the provider, the OS, and CI. | SECURITY_MODEL.md; BC-23; V-10 |
 | KL-02 | **Skill selection is probabilistic.** The model decides from descriptions, and no provider guarantees invocation. | Provider docs S7, S12, S17, S19; probe results (§3) |
-| KL-03 | **Metadata remains bounded:** L0 6,500 (D-052); shipped 5,485, projected with two planned editorial descriptions 5,940. Latest count ceiling 15 (D-053) replaces 25. Registry checks do not prove native routing or host capacity. Step 34's 5,485/5,500 measurement remains historical. | V-07; D-052; D-053; SKILL_REGISTRATION.md |
-| KL-04 | **One plugin, 13 entry skills.** Capabilities are recipes inside those skills, not separate skills, so they are not individually discoverable by name. | ADR-0004 (PROPOSED), D-023 |
+| KL-03 | **Metadata remains bounded:** L0 6,500 (D-052); shipped 6,221 with all 15 skills, 279 free. The count ceiling of 15 (D-053) is reached, so any further skill needs a new decision. Registry checks do not prove native routing or host capacity. Step 34's 5,485/5,500 measurement remains historical. | V-07; D-052; D-053; SKILL_REGISTRATION.md |
+| KL-04 | **One plugin, 15 entry skills (13 engineering, 2 writing).** Capabilities are recipes inside those skills, not separate skills, so they are not individually discoverable by name. | ADR-0004 (PROPOSED), D-023 |
 | KL-05 | **No executable components:** no hooks, MCP, scripts, or commands. Features that need runtime enforcement are out of scope. | ADR-0005; V-09; V-25 |
 | KL-06 | **No path for the Codex IDE extension.** OpenAI documents that it doesn't support plugins. | S13 (re-read 2026-10-15); Q-02 open |
 | KL-07 | **No Claude Code cloud sessions.** Locally installed plugins are not loaded there. | S5 |
+| KL-09 | **Writing skills are editorial only and unevaluated (Steps 37–38, 40).** They own no engineering capability, never claim human authorship or detector evasion, and decline fiction (English) and non-target languages. Quality, false-positive edits and meaning preservation are not yet rated by fluent reviewers. | WRITING_AND_EDITING.md; D-054, D-055; R-58, R-59, R-61 |
 | KL-08 | **The response style policy is opt-in and outside the plugin (Step 39).** Installing the plugin does not activate it; the user copies it into a host instruction file. Host loading and behavior are not tested, and some subagents and Copilot inline suggestions do not receive it. | docs/RESPONSE_STYLE.md; D-056; R-60 |
 
 ## 2. Coverage limitations
@@ -50,6 +51,7 @@ fixture.
 | KL-24 | **Under-triggering in empty workspaces.** Competing personal, project, or built-in skills can win. | POC_REPORT §4; Step 32 empty-workspace check |
 | KL-25 | **Copilot over-activation** on Unity and SwiftUI prompts, on the earlier 6-skill build. Not re-measured. | POC_REPORT §4.3 |
 | KL-26 | **Repository instruction files were not cited** in the destructive probe: 0/2. | EG-20 |
+| KL-28 | **Writing-skill selection is unmeasured, and the 15-skill build has no routing evidence.** All KL-20..KL-27 measurements predate the writing skills. The simulated proxy moves one engineering i18n prompt to the Thai writing skill. A 52-probe set is ready but not run. | HUMANIZER_EVALUATION_REPORT §2.4, §5; R-61, R-62 |
 | KL-27 | **Path resolution against the plugin location.** It dropped from 3/7 to 0/7 after the D-046 guard; not significant. Untested for marketplace (cache) installs. | EG-19 |
 
 ## 4. Provider and surface limitations
@@ -73,6 +75,7 @@ fixture.
 | KL-41 | Secret and content scans are heuristic. No dependency-advisory, live-link, or provenance check was run. | V-25 limitations; R-52 |
 | KL-42 | Developer tooling can execute fixture builds, start temporary databases, and call billed models when opted in. A kept LocalDB instance `ChayenFacts` remains on the maintainer machine after SQL Server fact runs. | SECURITY_MODEL §Maintainer execution; F-sqlserver log |
 | KL-43 | A malicious maintainer or a compromised validator can bypass repository-local checks. | THREAT_MODEL; R-52 |
+| KL-44 | Injection inside text being rewritten (HTML comments, README notes, CMS exports) and forged approvals in edited files are covered by skill rules and evaluation cases only; **behaviour not tested**. | Step 40 cases th-37/38, en-37/38, pol-13/14; R-61 |
 
 ## 6. Release and governance limitations
 
@@ -82,3 +85,5 @@ fixture.
 | KL-51 | No acceptance row is VERIFIED except the seven exclusions, which were verified by this audit. Every GOV row awaits user review. 3 ADRs and about 22 decisions remain PROPOSED. | FINAL_AUDIT_REPORT §5–§6 |
 | KL-52 | No CI pipeline runs the validators automatically. | REQ-10 evidence: "CI not set up" |
 | KL-53 | DF-02: `claude plugin validate` on the `skills/` directory fails with some CLI versions. The plugin and marketplace targets pass. | ISSUES DF-02 |
+| KL-54 | **Third-party notice obligation.** `chayen-humanizer-en` adapts MIT-licensed material (humanizer, Siqi Chen). Its notice ships inside the skill and must stay with every copy, whichever licence Chayen adopts. No root notices file exists yet. | upstream-notice.md (byte-identical to upstream `LICENSE`, 2026-10-17); LICENSE_PROPOSAL item 3 |
+| KL-55 | **Installed test-machine versions differ from the analysed ones** (Claude Code 2.1.220 vs 2.1.270; Copilot CLI 1.0.89 vs 1.0.97, below the 1.0.91 needed for enable/disable). Earlier static host findings are not re-verified on them. | COMPATIBILITY_MATRIX; HUMANIZER_EVALUATION_REPORT §1 |

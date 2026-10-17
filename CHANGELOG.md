@@ -11,6 +11,8 @@ All notable changes to codejadee-chayen-framework are recorded here.
 **Release candidate content, pending project-owner approval.** The version
 in the manifests is still `0.1.0-dev`. Changing it is a release step (see
 [docs/distribution/RELEASE_CHECKLIST.md](docs/distribution/RELEASE_CHECKLIST.md)).
+Proposed, not applied: `0.1.0-rc.1` for a release candidate or pilot, then
+`0.1.0` for the release ([docs/distribution/RELEASE_METADATA.md](docs/distribution/RELEASE_METADATA.md)).
 
 ### Added
 
@@ -24,7 +26,8 @@ in the manifests is still `0.1.0-dev`. Changing it is a release step (see
   implementation, backend, frontend, data, testing, security, performance,
   DevOps, documentation, AI engineering, and Thai and English writing and
   editing (`chayen-humanizer-th` and `chayen-humanizer-en`; audit, rewrite,
-  content creation and website copy; quality not yet evaluated). The English
+  content creation and website copy; quality not yet evaluated; guide in
+  [docs/WRITING_AND_EDITING.md](docs/WRITING_AND_EDITING.md)). The English
   writing patterns are adapted from the MIT-licensed humanizer skill by Siqi
   Chen, with attribution and licence notice shipped in the skill.
 - **Opt-in response style policy** (`response-style/`): a short Thai and
@@ -35,7 +38,7 @@ in the manifests is still `0.1.0-dev`. Changing it is a release step (see
   [docs/RESPONSE_STYLE.md](docs/RESPONSE_STYLE.md); loading on real hosts is
   not yet tested.
 - **206 engineering capabilities in 20 domains**, as recipes and checklists
-  loaded on demand (221 references in total).
+  loaded on demand (237 references in total across all 15 skills).
 - **11 technology packs with 108 capabilities:** C#/ASP.NET Core, Angular,
   TypeScript/JavaScript, React, Next.js, Vue, Nuxt, Vite, SQL Server,
   PostgreSQL, and cross-stack integration. They include data-access recipes
@@ -57,12 +60,15 @@ in the manifests is still `0.1.0-dev`. Changing it is a release step (see
   - catalog and technology checkers;
   - framework fact runners;
   - the evaluation suite and provider probe runner;
-  - provider lifecycle and identity checks.
+  - provider lifecycle and identity checks;
+  - a multilingual evaluation set (120 quality cases, 52 routing probes,
+    runs with and without the plugin and the response style policy) and an
+    offline scorer. Not yet run against any provider.
 
 ### Known limitations
 
-- Nothing is behaviour-verified. Current-build provider evidence covers
-  Claude Code CLI only:
+- Nothing is behaviour-verified. Provider evidence covers Claude Code CLI
+  only, for the 13 engineering skills before the writing skills were added:
   - automatic routing loaded the right skill in 12 of 22 relevant runs
     (55%; explicit invocation 6 of 6);
   - 12 of 12 no-match runs stayed native;
@@ -71,7 +77,11 @@ in the manifests is still `0.1.0-dev`. Changing it is a release step (see
   installs passed on all three CLIs.
 - VS Code surfaces are untested. The Codex IDE extension does not support
   plugins.
-- No licence has been chosen yet.
+- The Thai and English writing skills and the opt-in response style policy
+  have not been tested on any host, and no fluent reviewer has rated their
+  output. Installing the plugin never activates the policy.
+- No licence has been chosen yet. The humanizer MIT notice ships with the
+  English writing skill and must be kept whichever licence is chosen.
 
 See [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md) and
 [docs/COMPATIBILITY_MATRIX.md](docs/COMPATIBILITY_MATRIX.md).

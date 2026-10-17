@@ -45,6 +45,20 @@ These rows come from real Claude Code runs on a test repository (2026-10-15).
 Activation is decided by the model and is not guaranteed; see
 [AUTOMATIC_SKILL_DISCOVERY.md](AUTOMATIC_SKILL_DISCOVERY.md).
 
+Writing and editing requests are meant for the two writing skills. These are
+the intended matches; **they have not been measured yet**:
+
+| You ask | Intended skill |
+|---|---|
+| "เกลาย่อหน้านี้ให้อ่านลื่นเป็นภาษาไทยธรรมชาติ แต่ห้ามเปลี่ยนตัวเลข" | `chayen-humanizer-th` (rewrite) |
+| "ช่วยตรวจบทความนี้หน่อย ยังไม่ต้องแก้ แค่บอกว่าตรงไหนอ่านแล้วแข็ง" | `chayen-humanizer-th` (audit, no edits) |
+| "Rewrite this landing page headline so it sounds less like boilerplate. Keep the price." | `chayen-humanizer-en` (rewrite) |
+| "Make the strings in locales/en.json friendlier. Keep every key and placeholder." | `chayen-humanizer-en` (website edit) |
+| "Update the README so the setup commands match the repository." | `chayen-documentation`, not a writing skill |
+
+Modes, preservation rules and file-editing safety are in
+[WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
+
 ## 4. Name a skill when you want it for sure
 
 | Provider | Syntax |
@@ -52,6 +66,9 @@ Activation is decided by the model and is not guaranteed; see
 | Claude Code | `/codejadee-chayen-framework:chayen-security <request>` |
 | Codex CLI | `$chayen-security <request>` |
 | Copilot CLI | `/chayen-security <request>` |
+
+The writing skills work the same way, for example
+`/codejadee-chayen-framework:chayen-humanizer-th <request>` in Claude Code.
 
 The full list of skills is in [SKILLS_CATALOG.md](SKILLS_CATALOG.md).
 
@@ -74,13 +91,22 @@ Measured caveat: in testing, agents did not always ask for verification
 evidence such as test runs or query plans. Ask for it explicitly when it
 matters. See [SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md).
 
-## 6. Turn it off or remove it
+## 6. Optional: natural Thai and English in every reply
+
+The plugin changes how the agent works on matching tasks, not how it words
+ordinary answers. If you want every everyday reply worded naturally in Thai
+or English, you can add a short opt-in policy to your own agent instruction
+file. Installing the plugin does **not** do this for you, and loading on real
+hosts has not been tested yet. See [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
+
+## 7. Turn it off or remove it
 
 Each install guide covers **disable, enable, update, and uninstall**.
 Disabling stops all Chayen skills from loading. Your project files are never
-changed by installing or removing the plugin.
+changed by installing or removing the plugin. An opt-in response style policy,
+if you added one, stays until you remove it yourself.
 
-## 7. Get help
+## 8. Get help
 
 - **Bugs and new skill requests:** [CONTRIBUTING.md](CONTRIBUTING.md#reporting-bugs)
 - **Security issues:** [SECURITY.md](../SECURITY.md)

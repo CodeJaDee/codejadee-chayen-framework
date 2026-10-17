@@ -78,7 +78,7 @@ registry changes still require their own approval.
 | 38 | English editorial Skill | `chayen-humanizer-en`, conditional references and English/bilingual cases; target 15 measured | MHR-001–MHR-006, MHR-011–MHR-012 | DONE (pending review; D-055) |
 | 39 | Opt-in host persistent response guidance | Canonical static policy, verified host integration documentation, reviewed opt-in/disable/rollback in authorized isolated scope | MHR-002, MHR-007–MHR-009, MHR-012 | DONE (pending review; D-056) |
 | 40 | Multilingual quality and engineering regression evaluation | Approved dataset/rubric, per-language human results, separately authorized provider/surface runs, policy on/off and no-plugin comparisons | MHR-001–MHR-012 | PARTIAL: offline evidence, 120-case dataset, 52 probes, arm runner and scorer (G-17) ready; provider, lifecycle and human results NOT_RUN (D-057, R-61) |
-| 41 | Completeness and readiness review | Updated acceptance/evidence, compatibility limitations, user docs, rollback and go/no-go recommendation; no automatic release | MHR-001–MHR-012 | NOT_STARTED |
+| 41 | Completeness and readiness review | Updated acceptance/evidence, compatibility limitations, user docs, rollback and go/no-go recommendation; no automatic release | MHR-001–MHR-012 | DONE (pending owner review): docs for 15 skills, writing guide, A/B/C policy separation, licence check, version proposal D-058 (not applied), readiness report NO-GO public / CONDITIONAL GO pilot |
 
 ## Step details
 
@@ -583,6 +583,16 @@ Record host/model versions and overhead; retain NOT_RUN gaps and legacy risks.
 Static/proxy/provider/human evidence cannot be pooled or substituted.
 
 ### Step 41 — Completeness and readiness review (planned)
+
+**DONE (2026-10-17), pending owner review.** Documentation and release
+readiness for the Multilingual Humanizer candidate: user, install and release
+documents updated for 15 skills; new [writing guide](../WRITING_AND_EDITING.md);
+A/B/C policy setups separated in [RESPONSE_STYLE.md](../RESPONSE_STYLE.md);
+upstream MIT licence fetched and matched byte for byte; version `0.1.0-rc.1`
+proposed (D-058) and not applied; DF-06 and DF-07 resolved. Offline gates
+PASS. Recommendation in [RELEASE_READINESS.md](RELEASE_READINESS.md): NO-GO
+public, CONDITIONAL GO internal pilot. No provider call, configuration change,
+commit or release.
 
 Audit MHR evidence, ADR acceptance, all 206 Engineering Capabilities and
 approved Technology/Workflow Coverage, host compatibility, instructions

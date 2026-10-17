@@ -21,7 +21,7 @@ const steps = [
   ["G-11 trigger eval cases in sync", "tools/evals/generate-claude-evals.mjs", ["--check"]],
   ["G-13 validator self-tests", "tools/validate/run-validator-tests.mjs", []],
   ["G-14 user and release documentation links and identifiers", "tools/validate/check-docs.mjs", []],
-  ["G-15 editorial pattern inventory and case specifications (static)", "tools/validate/check-editorial-cases.mjs", []],
+  ["G-15E editorial pattern inventory and case specifications (static)", "tools/validate/check-editorial-cases.mjs", []],
   ["G-16 opt-in response style policy, template, budget and package isolation (static)", "tools/validate/check-response-style.mjs", []],
   ["G-16T response style setup rules on disposable fixtures", "tests/response-style/setup-fixtures.test.mjs", []],
   ["G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored)", "tools/evals/score-step40.mjs", ["--self-test"]],

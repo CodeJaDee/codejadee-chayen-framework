@@ -1,5 +1,11 @@
 # Release checklist: `0.1.0`
 
+**Step 41 update (2026-10-17):** the release candidate now has 15 skills
+(13 engineering, 2 writing). A release-candidate version `0.1.0-rc.1` is
+proposed in [RELEASE_METADATA.md](RELEASE_METADATA.md) and not applied. The
+current readiness assessment is
+[docs/chayen/RELEASE_READINESS.md](../chayen/RELEASE_READINESS.md).
+
 **Status: NOT READY.** Blocking items are marked ⛔. Each item says who acts.
 
 Release actions are taken only by the project owner, with explicit
@@ -28,6 +34,12 @@ approval for each one (BC-30, BC-31):
 - [ ] **Codex IDE extension position decided** (ISSUES Q-02): document it
   as unsupported (the current docs do this), or something else. *Owner.*
 - [ ] **Java scope for v1 confirmed out of scope** (Q-08). *Owner.*
+- [ ] **Multilingual decisions confirmed** (D-055 English skill, D-056 and
+  ADR-0010 response style policy, D-057 evaluation rubric and ADR-0011
+  language threshold, D-058 version). *Owner.*
+- [ ] **Third-party notice kept:** `chayen-humanizer-en/references/upstream-notice.md`
+  still carries the humanizer MIT licence text and attribution, whichever
+  licence is chosen; decide whether a root notices file is also wanted. *Owner.*
 
 ## B. Version and metadata
 
@@ -58,13 +70,13 @@ These follow `tests/provider-compatibility/README.md` (runbook R-1..R-10).
 They need an authorized environment and test identities.
 
 - [ ] ⛔ **Claude Code CLI**, from the release commit:
-  - marketplace add, install, `plugin details` shows Skills (13);
+  - marketplace add, install, `plugin details` shows Skills (15);
   - disable, enable;
   - update from the previous version to `0.1.0`;
   - uninstall.
 - [ ] ⛔ **Codex CLI:** add, list, a new session sees the skills; disable
   via `config.toml`; remove. Record the update path.
-- [ ] ⛔ **Copilot CLI** (runtime 1.0.91 or later): install ("Installed 13
+- [ ] ⛔ **Copilot CLI** (runtime 1.0.91 or later): install ("Installed 15
   skills"), `skill list`, disable, enable, update, uninstall.
 - [ ] **Claude Code VS Code extension:** manual procedure
   (`tests/provider-compatibility/claude-code-vscode.md`).
@@ -77,6 +89,14 @@ They need an authorized environment and test identities.
   `tests/evaluation/run-provider-probes.mjs`, ≥2 runs. Compare against the
   2026-10-15 baseline (automatic 12/22, explicit 6/6, no-match 12/12;
   43 pooled runs).
+
+- [ ] ⛔ **Multilingual evaluation** (`tests/evaluation/step40/`, R-61): the
+  52 routing probes ×3 runs, quality and policy runs with and without the
+  plugin and the policy, scored with the approved rubric, plus two fluent
+  reviewers per language. Include the engineering probes to check that the
+  writing skills do not take engineering prompts (R-62).
+- [ ] **Response style policy loading** on each host where it is offered
+  (`docs/RESPONSE_STYLE.md` verify step), in a disposable profile.
 
 ## E. Documentation
 
@@ -99,6 +119,6 @@ They need an authorized environment and test identities.
 
 ## G. After release
 
-- [ ] Install the published version on each surface and confirm Skills (13).
+- [ ] Install the published version on each surface and confirm Skills (15).
 - [ ] Watch issues for routing and install reports, and update
   `docs/COMPATIBILITY_MATRIX.md`.

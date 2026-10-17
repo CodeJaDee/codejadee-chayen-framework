@@ -50,7 +50,25 @@ there (an open decision, ISSUES Q-02).
 
   ```text
   $chayen-security Review this controller for injection risks.
+  $chayen-humanizer-en Tighten this README paragraph without changing any commands.
   ```
+
+  The writing skills are described in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
+
+## Optional: response style policy
+
+Installing the plugin gives you the skills only (setup A in
+[RESPONSE_STYLE.md](RESPONSE_STYLE.md)). If you also want everyday replies
+worded naturally in Thai or English, add the opt-in policy yourself:
+append the marked block to `~/.codex/AGENTS.md` (or `$CODEX_HOME/AGENTS.md`),
+which is shared with your other instructions; a repository `AGENTS.md` needs the
+repository owner's agreement.
+If a non-empty `AGENTS.override.md` exists, Codex reads it instead. OpenAI
+documents the same configuration layers for the IDE extension, which cannot
+load the plugin itself.
+It is not installed, enabled or removed by the plugin, and its loading has
+not been tested on this host yet. Setup, the loading check, conflicts and
+removal are in [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
 
 ## Disable, enable, update, uninstall
 
@@ -60,11 +78,12 @@ there (an open decision, ISSUES Q-02).
 | Update | Codex 0.160.1 has **no per-plugin update command**. `codex plugin marketplace upgrade codejadee` refreshes Git marketplaces. If the installed version does not change, run `codex plugin remove codejadee-chayen-framework@codejadee` and then `codex plugin add codejadee-chayen-framework@codejadee`. This update path is **not yet verified**. |
 | Uninstall | `codex plugin remove codejadee-chayen-framework@codejadee`, then optionally `codex plugin marketplace remove codejadee`. An empty cache directory may remain. |
 
-## Verification status (2026-10-15)
+## Verification status (2026-10-15; reviewed 2026-10-17)
 
 | Check | Codex CLI | Codex IDE extension |
 |---|---|---|
 | Marketplace file and manifest selected by the installed Codex code | Confirmed by inspecting 0.160.1 | Unsupported |
-| Install, list, disable, uninstall | Passed for an earlier 6-skill build (0.160.1, 2026-10-14). **Not yet run for the current 13-skill build.** | Unsupported |
+| Install, list, disable, uninstall | Passed for an earlier 6-skill build (0.160.1, 2026-10-14). **Not yet run for the 13-skill or the current 15-skill build.** | Unsupported |
+| Writing skills, opt-in response style policy | Not tested | Skills unsupported; policy not tested |
 | Routing and explicit `$chayen-security` | Passed for the earlier build (7/7 smoke prompts). Current build: **not tested.** | Unsupported |
 | Install from the GitHub marketplace | Not tested | Unsupported |

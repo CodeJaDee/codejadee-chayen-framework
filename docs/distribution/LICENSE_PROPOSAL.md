@@ -41,8 +41,15 @@ snippets.
    owner's organisation permits licensing such content, and whether any
    notice is wanted.
 3. **Third-party material.** Skills reference public standards and
-   documentation (OWASP and vendor docs) by name and URL. No third-party
-   text is known to be copied wholesale; confirm before release.
+   documentation (OWASP and vendor docs) by name and URL. One skill adapts
+   third-party material: `chayen-humanizer-en` adapts the pattern taxonomy
+   and method of [humanizer](https://github.com/blader/humanizer) by Siqi
+   Chen (MIT, Copyright (c) 2025 Siqi Chen). Its licence notice ships in
+   `chayen-humanizer-en/references/upstream-notice.md`; on 2026-10-17 its
+   licence block was compared byte for byte with upstream's `LICENSE` and
+   matched. MIT permits reuse under any of options A–D **provided the notice
+   stays with the adapted material**. The Thai skill uses the general method
+   only. Decide whether a root third-party notices file is also wanted.
 4. **Contribution terms**, whether inbound equals outbound or a CLA.
 
 ## After the decision (release step, not done now)

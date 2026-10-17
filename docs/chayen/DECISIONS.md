@@ -1339,6 +1339,29 @@ Decision statuses:
   metadata fingerprint. No dependency, package or skill change.
 - **Evidence:** static and simulated only. Every provider, host-lifecycle and
   human result is NOT_RUN (R-61). Results: [HUMANIZER_EVALUATION_REPORT.md](HUMANIZER_EVALUATION_REPORT.md).
+- **Step 41 note:** the owner committed Step 40 as `e921df1` and issued
+  Step 41. That is recorded as acceptance by proceeding of the Step 40 fixtures
+  and tooling (inferred, same precedent as D-053–D-055). It is **not** taken as
+  approval of the language threshold or the rubric: ADR-0011 item 3 requires an
+  explicit owner approval before any score is recorded, so both stay PROPOSED.
+
+### D-058 — Step 41 release-candidate version proposal
+
+- **Status:** PROPOSED; **not applied**. The Step 41 instruction says to make
+  only approved version changes, and no version was approved.
+- **Context:** all four version fields (both manifests, the Copilot
+  marketplace entry and its `metadata.version`) say `0.1.0-dev`, unchanged
+  since the 6-skill build while the package grew to 15 skills. Claude Code pins
+  installs to `version`, so stale installs persist (R-54). The Claude Code and
+  Codex marketplace files carry no version.
+- **Proposal:** `0.1.0-rc.1` for an approved pilot or release candidate
+  (SemVer orders it after `0.1.0-dev` and before `0.1.0`), then `0.1.0` for the
+  first release after the release gates pass. Apply identically in the four
+  fields, update SECURITY.md's supported-versions table, and re-run V-04,
+  IC-05/IC-06 and D-05.
+- **Alternatives:** keep `0.1.0-dev` (stale installs continue); jump to
+  `0.2.0` (implies a prior `0.1.0` release that never happened).
+- **Details:** [docs/distribution/RELEASE_METADATA.md](../distribution/RELEASE_METADATA.md#step-41-version-proposal-d-058-proposed-not-applied).
 
 ## Architecture assumptions (checked in Step 02)
 

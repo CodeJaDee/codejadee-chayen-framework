@@ -34,7 +34,7 @@ claude plugin install codejadee-chayen-framework@codejadee
 
 # 3. Check it
 claude plugin list                                   # codejadee-chayen-framework, enabled
-claude plugin details codejadee-chayen-framework     # Skills (13), no hooks, MCP servers, agents or LSP servers
+claude plugin details codejadee-chayen-framework     # Skills (15), no hooks, MCP servers, agents or LSP servers
 ```
 
 Inside a session, `/plugin` opens the same marketplace and plugin browser.
@@ -57,7 +57,24 @@ An install made in the CLI also appears in the extension, and the reverse.
 
   ```text
   /codejadee-chayen-framework:chayen-security Review this controller for injection risks.
+  /codejadee-chayen-framework:chayen-humanizer-th เกลาย่อหน้านี้ให้อ่านเป็นธรรมชาติ ห้ามเปลี่ยนตัวเลข
+  /codejadee-chayen-framework:chayen-humanizer-en Audit this blog intro for stock phrasing. Don't rewrite it.
   ```
+
+  The writing skills are described in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
+
+## Optional: response style policy
+
+Installing the plugin gives you the skills only (setup A in
+[RESPONSE_STYLE.md](RESPONSE_STYLE.md)). If you also want everyday replies
+worded naturally in Thai or English, add the opt-in policy yourself:
+the dedicated file `~/.claude/rules/chayen-response-style.md` (user scope), or
+`.claude/rules/` in a repository with the repository owner's agreement.
+The VS Code extension reads the same files; VS Code Copilot Chat also reads
+`~/.claude/rules/`, so do not add a second copy for it.
+It is not installed, enabled or removed by the plugin, and its loading has
+not been tested on this host yet. Setup, the loading check, conflicts and
+removal are in [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
 
 ## Disable, enable, update, uninstall
 
@@ -84,13 +101,15 @@ In VS Code, use **Manage plugins** for the same actions.
   new version is published (tracked as R-54). If it does, uninstall and
   install again.
 
-## Verification status (2026-10-15)
+## Verification status (2026-10-15; reviewed 2026-10-17)
 
 | Check | CLI | VS Code extension |
 |---|---|---|
 | `claude plugin validate --strict` on the plugin and the marketplace | Passed (2.1.270) | Passed with the extension's bundled binary (2.1.299) |
-| Install, list, disable, enable, uninstall | Passed for an earlier 6-skill build (2026-10-14, local marketplace). **Not yet run for the current 13-skill build.** | Not tested |
-| All 13 skills discovered, routing, explicit invocation | Passed when loaded with `--plugin-dir` (2.1.270; see [COMPATIBILITY_MATRIX.md](COMPATIBILITY_MATRIX.md)) | Not tested |
+| Install, list, disable, enable, uninstall | Passed for an earlier 6-skill build (2026-10-14, local marketplace). **Not yet run for the 13-skill or the current 15-skill build.** | Not tested |
+| All 13 engineering skills discovered, routing, explicit invocation | Passed for the 13-skill build when loaded with `--plugin-dir` (2.1.270, 2026-10-15; see [COMPATIBILITY_MATRIX.md](COMPATIBILITY_MATRIX.md)) | Not tested |
+| The two writing skills, and the 15-skill build as a whole | Not tested | Not tested |
+| Opt-in response style policy loaded from `~/.claude/rules/` | Not tested | Not tested |
 | Install from the GitHub marketplace | Not tested | Not tested |
 
 Cloud sessions on claude.ai do not load locally installed plugins.

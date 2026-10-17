@@ -4,7 +4,8 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 40 — Independent quality and provider compatibility evaluation (Steps 37–39 DONE, pending owner review; see their sections) |
+| Last executed step | 41 — Documentation and release readiness (Steps 37–40 recorded below; Step 40 committed as `e921df1`) |
+| Step 41 status | DONE (pending Product Owner approval): user, install and release documents updated for 15 skills; new writing guide; A/B/C policy setups separated; upstream MIT licence fetched and byte-identical to the shipped notice; version `0.1.0-rc.1` proposed (D-058) and not applied; DF-06/DF-07 resolved; offline gates PASS. Recommendation NO-GO public / CONDITIONAL GO internal pilot. No provider call, user configuration change, commit or release. |
 | Step 40 status | PARTIAL (pending owner review; D-057 PROPOSED): offline evidence only. validate-all 13/13 groups PASS (new G-17: 120-case dataset and 52 probes valid, 56/56 scorer controls); engineering skills, manifests, marketplaces and catalogs byte-identical to baseline `1106226`; provider matrix for six surfaces with no VERIFIED cell. Discovery, policy arms A/B/C, language quality, host lifecycle and human review NOT_RUN (not authorized / no reviewer; R-61). No commit; Step 41 not started. |
 | Step 39 status | DONE (pending owner review; D-056 PROPOSED, ADR-0010 A + B accepted by instruction, inferred): canonical policy and Copilot template outside the package, user guide, host research with a documented-versus-tested matrix, read-only setup helper; validate-all 12/12 groups PASS (179/179 self-tests incl. 14 response-style controls; G-16T 19/19 fixtures). Host loading, behavior, lifecycle and plugin-uninstall tests NOT_RUN (R-60). No user or repository instruction file changed. |
 | Step 36 status | DONE (pending owner review): registration/validation foundation approved by D-053; validate-all PASS (150/150 validator tests, 34/34 security tests), evaluation static/traceability PASS, 130 governance links/anchors PASS. 13 shipped engineering Skills and two planned editorial registrations; projected metadata 5,940 / 6,500. Maximum 15 per latest Step 36 request. Initial BLOCKED preflight preserved as history; no Humanizer body shipped. |
@@ -4663,3 +4664,99 @@ Copilot CLI 1.0.89, VS Code 1.142.0 with built-in `copilot-chat` 0.70.0.
 
 STOP after Step 40. No commit, push, tag, release, provider install, user configuration
 change or Step 41 work.
+
+## Step 41 — Documentation and release readiness
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** DONE, pending Product Owner approval. Documentation, licence review,
+  version proposal and readiness recommendation only.
+- **Preconditions:** read Steps 35–40, BUILD_CONTRACT, ACCEPTANCE_MATRIX, PROGRESS,
+  DECISIONS, LICENSE_PROPOSAL, the manifests and marketplaces and all user/release
+  documents. Clean tree at `e921df1` (the owner's commit of Step 40); nothing unrelated
+  to preserve. The commit is recorded as acceptance by proceeding of the Step 40
+  fixtures and tooling (inferred), but not as approval of the rubric or the ADR-0011
+  language threshold, which require explicit approval (D-057 note). No version change
+  was approved, so none was made.
+
+### Work performed
+
+1. **User documentation** for all 15 skills: README (status banner, example, writing
+   guide link, third-party credit), plugin README (writing skills untested, policy not in
+   the package, notice location), SKILLS_CATALOG (modes and guide links),
+   AUTOMATIC_SKILL_DISCOVERY (15 skills / ~6,200 characters, writing-skill neighbours,
+   measured results labelled as the 13-skill build), GETTING_STARTED (writing examples
+   marked unmeasured, optional policy step), COMPATIBILITY_MATRIX (2026-10-17 installed
+   versions, writing-skill and policy rows, 13-skill-build labels), the three install
+   guides (Skills (15), writing-skill invocation, per-host optional policy section,
+   verification rows), SECURITY_AND_LIMITATIONS (256 files, writing-skill boundaries,
+   new limits) and CHANGELOG.
+2. **Writing guide** `docs/WRITING_AND_EDITING.md`: both skills, audit / rewrite / create /
+   website modes, automatic versus explicit invocation per provider, Thai and English
+   examples, language choice, preservation, file-editing safety, the documentation-skill
+   boundary and attribution. No existing user document covered this usage.
+3. **Response style policy** (`docs/RESPONSE_STYLE.md`): new "Three setups, kept separate"
+   section (A plugin only, B plugin + opt-in policy, C install-only always-on: not
+   available, not claimed) and a stricter temporary loading check. Setup, scope,
+   conflicts, disable/rollback and limitations sections were already present.
+4. **Licensing:** fetched upstream `blader/humanizer` `LICENSE` and README read-only into
+   an isolated scratch folder (HEAD commit 2026-10-16). The shipped notice's licence block
+   is byte-identical (1,066-byte upstream file). Notice and attribution preserved; the
+   Chayen licence stays pending (Q-05). LICENSE_PROPOSAL item 3 updated.
+5. **Versioning:** all four version fields are `0.1.0-dev` and in parity. Proposed
+   `0.1.0-rc.1` for an approved pilot or RC, then `0.1.0` (D-058, RELEASE_METADATA);
+   **not applied**.
+6. **Release documents:** RELEASE_READINESS (Step 41 report on top, Step 34 assessment
+   preserved below), KNOWN_LIMITATIONS (KL-03/KL-04 refreshed; KL-09, KL-28, KL-44,
+   KL-54, KL-55 added), RELEASE_CHECKLIST, RELEASE_METADATA, MARKETPLACE_LISTINGS.
+7. **Record fixes from Step 40:** DF-06 (HUMANIZER_REQUIREMENTS status pointer) and DF-07
+   (`validate-all` label G-15 → G-15E, G-15E row in SKILL_QUALITY_GATES, G-13 and
+   evaluation README counts) resolved.
+8. **Governance:** D-057 Step 41 note, D-058; DF-06/DF-07 RESOLVED, R-54 note; plan row
+   and section for Step 41; Step 41 note and evidence on all MHR rows (no status change).
+
+### File ledger (Step 41 only)
+
+| Action | Path |
+|---|---|
+| Created | `docs/WRITING_AND_EDITING.md` |
+| Modified | `README.md`, `CHANGELOG.md`, `plugins/codejadee-chayen-framework/README.md` |
+| Modified | `docs/SKILLS_CATALOG.md`, `docs/AUTOMATIC_SKILL_DISCOVERY.md`, `docs/GETTING_STARTED.md`, `docs/COMPATIBILITY_MATRIX.md`, `docs/INSTALL_CLAUDE_CODE.md`, `docs/INSTALL_CODEX.md`, `docs/INSTALL_COPILOT.md`, `docs/SECURITY_AND_LIMITATIONS.md`, `docs/RESPONSE_STYLE.md` |
+| Modified | `docs/distribution/RELEASE_CHECKLIST.md`, `RELEASE_METADATA.md`, `MARKETPLACE_LISTINGS.md`, `LICENSE_PROPOSAL.md` |
+| Modified | `docs/chayen/RELEASE_READINESS.md`, `KNOWN_LIMITATIONS.md`, `HUMANIZER_REQUIREMENTS.md` (status pointer), `SKILL_QUALITY_GATES.md`, `DECISIONS.md`, `ISSUES.md`, `IMPLEMENTATION_PLAN.md`, `ACCEPTANCE_MATRIX.md`, `PROGRESS.md` |
+| Modified | `tools/validate/validate-all.mjs` (label only), `tools/validate/README.md`, `tests/evaluation/README.md` |
+| Unchanged | All 15 skills and references, manifests (versions), marketplaces, catalogs, response-style policy and template, tooling logic, every user-level or repository instruction file |
+| Deleted | None |
+
+Scratch only: upstream `LICENSE` and README copies, edit scripts.
+
+### Actual verification
+
+Node v26.8.1. No model or provider call, no install, no configuration write. The only
+network access was two read-only HTTPS downloads from `raw.githubusercontent.com`
+(upstream `LICENSE`, `README.md`) and one GitHub API read of the latest upstream commit.
+Scripts were already inspected in Step 40; the only script change is the G-15E label.
+
+| Command | Actual result |
+|---|---|
+| `git status --short`, `git log -3` before edits | Clean tree at `e921df1` |
+| `curl -fsSL` upstream `LICENSE` and `README.md` into an isolated scratch folder; byte comparison with the fenced block in `upstream-notice.md` | PASS: identical (upstream 1,066 bytes, `Copyright (c) 2025 Siqi Chen`); upstream README licence section: "MIT" |
+| Manifest/marketplace version read | `0.1.0-dev` in all four fields; parity true |
+| `node tests/provider-compatibility/check-identity.mjs` | PASS 15/15; 15 skills, 237 references, 256 files |
+| `catalog/editorial-skills.json` read | Both editorial records `existing` |
+| `node tools/evals/score-step40.mjs --check` | PASS: 120 cases, 52 probes |
+| `node tools/validate/check-security.mjs` | PASS: 256 package files, 15 entries, 237 references, 0 errors |
+| `node tools/validate/check-docs.mjs` (during and after edits) | PASS: 20 documents (new writing guide included), 0 errors |
+| `node tools/validate/check-response-style.mjs` | PASS (R-08 lifecycle sections intact) |
+| `node tools/validate/validate-all.mjs` | PASS, exit 0: 13/13 groups (179/179 self-tests; G-15E, G-16, G-16T, G-17 56/56) |
+| Relative link/anchor check over the changed or new Markdown files (Step 35 checker's link section) | PASS: 28 files, 232 links, 0 errors (final run, after this entry was written) |
+| Mixed line-ending scan of modified files; `git diff --check` | No mixed endings; no whitespace errors |
+
+| Not run | Reason |
+|---|---|
+| Provider discovery, quality, policy and lifecycle runs | Not authorized (instruction: no unauthorized provider calls) |
+| Human language review | No reviewers; rubric unapproved |
+| Version bump and its parity re-check | Not approved (D-058 proposal only) |
+| `claude plugin validate --strict` | Not needed for documentation changes; DF-02 affects the installed 2.1.220 on one target |
+
+STOP after Step 41. No commit, push, tag, publication, release, provider call or user
+configuration change. Waiting for Product Owner approval; no further step is started.

@@ -2,7 +2,10 @@
 
 - **Date:** 2026-10-17; **Step:** 35
 - **Product scope:** ACCEPTED from the Product Owner's Step 35 request (D-047).
-- **Implementation status:** all MHR requirements are PLANNED.
+- **Implementation status:** all MHR requirements were PLANNED when this file
+  was written (Step 35). **Current status is kept only in
+  [ACCEPTANCE_MATRIX.md](ACCEPTANCE_MATRIX.md)**; the per-requirement
+  "Status: PLANNED" lines below are the Step 35 snapshot (DF-06, Step 41).
 - **Architecture:** ADR-0009–ADR-0011 PROPOSED; see
   [architecture impact](HUMANIZER_ARCHITECTURE_IMPACT.md).
 - **Traceability:** [ACCEPTANCE_MATRIX.md](ACCEPTANCE_MATRIX.md); planned

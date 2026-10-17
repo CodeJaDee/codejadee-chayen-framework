@@ -7,7 +7,7 @@ no router, hook, or background process of its own.
 
 1. **At session start**, the provider lists each installed skill's `name`
    and `description` in the model's context. This metadata is small: about
-   5,500 characters for all 13 skills.
+   6,200 characters for all 15 skills.
 2. **When your request matches** a description, the model loads that skill's
    `SKILL.md`. The match is decided by the model, not by keywords.
 3. **The skill then loads only what applies.** Its routing tables point to a
@@ -44,6 +44,27 @@ cover and hands off by name: for example, "the chayen-data skill" for
 schema work. If it finds the target is outside its scope, it stops applying
 its guidance.
 
+## Writing skills and their neighbours
+
+The two writing skills, `chayen-humanizer-th` and `chayen-humanizer-en`,
+are selected the same way. Their descriptions bound them by **output
+language** and by **kind of work**:
+
+| Request | Intended skill |
+|---|---|
+| Edit, audit or write prose whose output is Thai | `chayen-humanizer-th` |
+| Edit, audit or write prose whose output is English (including from a Thai request) | `chayen-humanizer-en` |
+| Check README commands or API facts against the repository | `chayen-documentation` |
+| Change UI behaviour (validation, state, routes) | `chayen-frontend` or another engineering skill |
+| Translate into another language, answer a grammar question, write fiction | None: normal answer |
+| Make text pass an AI detector | None; the goal is declined |
+
+Requests that mix two kinds of work, such as "fix the README commands and
+tighten the wording", can load either skill. **How often agents pick the right
+writing skill has not been measured yet**; a 52-probe evaluation set exists
+but has not been run. Usage and examples:
+[WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
+
 ## How technologies are detected
 
 Detection happens **inside a loaded skill**, from your repository's own
@@ -76,7 +97,7 @@ When you want a specific skill, name it:
 
 | Provider and surface | Syntax | Verified |
 |---|---|---|
-| Claude Code CLI | `/codejadee-chayen-framework:chayen-<name> <request>` | Yes (2026-10-15, current build, through `--plugin-dir`) |
+| Claude Code CLI | `/codejadee-chayen-framework:chayen-<name> <request>` | Yes for engineering skills (2026-10-15, 13-skill build, through `--plugin-dir`); writing skills not tested |
 | Claude Code VS Code | Same, from the `/` menu | Not tested |
 | Codex CLI | `$chayen-<name> <request>` | Earlier 6-skill build only |
 | Copilot CLI | `/chayen-<name> <request>` | Earlier 6-skill build only |
@@ -85,7 +106,9 @@ When you want a specific skill, name it:
 ## Measured behaviour
 
 Real Claude Code runs (2.1.270, 13 probes, 3–5 runs each, 43 runs in total, 2026-10-15) gave
-these results:
+these results. They were made **before the two writing skills were added**, so
+they describe the 13 engineering skills only; adding two descriptions can change
+selection, and the runs have not been repeated with 15 skills:
 
 | Measure | Result |
 |---|---|
@@ -126,8 +149,10 @@ Other providers have only results for an earlier build. Full data:
 
 | Load | Approximate size (characters ÷ 4) |
 |---|---|
-| Always present: names and descriptions of all 13 skills | ~1,400 tokens |
+| Always present: names and descriptions of all 15 skills | ~1,550 tokens |
 | When a skill loads: its `SKILL.md` | ~2,300–4,200 tokens |
 | Plus the largest reference it might load | Up to ~7,300 tokens in total |
 
-These are estimates, not provider token counts.
+These are estimates, not provider token counts. The opt-in
+[response style policy](RESPONSE_STYLE.md), if you add it, costs about
+750–850 more tokens on every request.

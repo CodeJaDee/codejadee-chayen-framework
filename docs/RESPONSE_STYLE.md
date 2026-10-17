@@ -16,6 +16,17 @@ background services to do it. Status: the setup and removal rules are tested
 on disposable fixtures. Whether each host loads and follows the policy has not
 been tested yet (see [Limitations](#limitations)).
 
+## Three setups, kept separate
+
+| Setup | What you do | What you get | Status |
+|---|---|---|---|
+| **A. Plugin only** | Install the plugin | The 15 skills, used when a request matches (including the Thai and English writing skills when you ask for writing work). Ordinary replies are worded exactly as your agent normally words them. | Plugin packaging checked statically; behaviour of this build measured on Claude Code CLI only, for the 13 engineering skills ([COMPATIBILITY_MATRIX.md](COMPATIBILITY_MATRIX.md)) |
+| **B. Plugin + opt-in policy** | Install the plugin **and** add the policy block to one of your own instruction files ([Opt in](#opt-in)) | A, plus advisory Thai/English wording guidance on every ordinary reply, without naming a skill | Locations documented by each provider; setup and removal rules tested on disposable fixtures. **Loading and behaviour on real hosts not tested.** |
+| **C. Install-only always-on** | Install the plugin and nothing else, expecting the policy to apply automatically | — | **Not available and not claimed.** No host we checked lets a static plugin add always-on instructions, and this project does not use hooks or installers to do it. |
+
+If you only install the plugin, you are in setup A. Setup B exists only after
+you add the block yourself, and it stays until you remove it.
+
 ## What the policy does
 
 The canonical text is
@@ -128,6 +139,12 @@ any change.
 | Codex | `/status` in a new session, or ask "Which instruction files are active?" |
 | Copilot CLI | `/instructions` or `/env` in a new session, or `copilot instruction list` |
 | VS Code Copilot Chat | The file appears under References in a chat response, or in the Agent Customizations view |
+
+A listed file shows that the host read it, not that the model follows it.
+For a stricter loading check, temporarily add a line such as `When asked for
+the loading-check token, reply with: RS-CHECK-1234` below the block, open a new
+session, ask for the loading-check token, then remove the line. The repository's
+evaluation runner uses the same method (`tests/evaluation/step40/run-arms.mjs`).
 
 Then try a few prompts and check the replies yourself:
 

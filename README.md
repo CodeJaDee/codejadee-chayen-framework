@@ -17,7 +17,9 @@ behaves exactly as it would without Chayen.
 >   requires repository access.
 > - No licence has been chosen yet. See
 >   [docs/distribution/LICENSE_PROPOSAL.md](docs/distribution/LICENSE_PROPOSAL.md).
-> - Verification is partial. See
+> - Verification is partial. Real-host results exist only for the 13
+>   engineering skills on Claude Code CLI; the two writing skills and the
+>   opt-in response style policy have not been tested on any host yet. See
 >   [docs/COMPATIBILITY_MATRIX.md](docs/COMPATIBILITY_MATRIX.md) and
 >   [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md).
 
@@ -62,6 +64,7 @@ behaves exactly as it would without Chayen.
 
    ```text
    GET /api/orders/{id} returns 500 when the order has no customer. Find the cause and fix it.
+   เกลาย่อหน้านี้ให้อ่านเป็นภาษาไทยธรรมชาติ แต่ห้ามเปลี่ยนตัวเลขกับชื่อฟีเจอร์
    ```
 
 3. **Optionally name a skill explicitly**, for example
@@ -78,6 +81,7 @@ The full walkthrough is in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
 | Install, update, disable, uninstall | [Claude Code](docs/INSTALL_CLAUDE_CODE.md), [Codex](docs/INSTALL_CODEX.md), [Copilot](docs/INSTALL_COPILOT.md) |
 | How skills are chosen, and what happens when none applies | [docs/AUTOMATIC_SKILL_DISCOVERY.md](docs/AUTOMATIC_SKILL_DISCOVERY.md) |
 | Skills | [docs/SKILLS_CATALOG.md](docs/SKILLS_CATALOG.md) |
+| Thai and English writing and editing (audit, rewrite, create, website copy) | [docs/WRITING_AND_EDITING.md](docs/WRITING_AND_EDITING.md) |
 | Optional Thai/English reply style for everyday answers (opt-in, not installed by the plugin) | [docs/RESPONSE_STYLE.md](docs/RESPONSE_STYLE.md) |
 | Technologies and how they are detected | [docs/SUPPORTED_TECHNOLOGIES.md](docs/SUPPORTED_TECHNOLOGIES.md) |
 | Workflows and templates | [docs/DEVELOPMENT_WORKFLOWS.md](docs/DEVELOPMENT_WORKFLOWS.md) |
@@ -116,4 +120,5 @@ The full walkthrough is in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
 | Concept and project direction | Project Owner |
 | Engineering | Contributors as recorded in Git history. At 2026-10-15, all commits are authored by the GitHub account `0xPratyaDev7x` (also recorded as "Pratya S."). |
 | AI-assisted development | Much of the skill content, documentation, validators, and evaluations was drafted with an AI coding assistant (Anthropic Claude, through Claude Code), step by step under the project owner's direction. The project owner makes the commits, and the governance log tracks each step's review status. AI output can be wrong; see [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md). |
+| Third-party material | The English writing skill adapts patterns from the MIT-licensed [humanizer](https://github.com/blader/humanizer) skill by Siqi Chen; the licence notice ships in `chayen-humanizer-en/references/upstream-notice.md`. |
 | Licence | **Pending project-owner confirmation.** See [docs/distribution/LICENSE_PROPOSAL.md](docs/distribution/LICENSE_PROPOSAL.md). Until a licence is published, no licence is granted. |

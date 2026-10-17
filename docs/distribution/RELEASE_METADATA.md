@@ -27,14 +27,35 @@ release step that needs project-owner approval (BC-30, R-54).
 
 Results are in `docs/chayen/PROGRESS.md` (Step 33).
 
+## Step 41 version proposal (D-058, PROPOSED, not applied)
+
+The manifests have carried `0.1.0-dev` since the 6-skill build, while the
+content grew to 15 skills. Claude Code pins an install to `version`, so
+existing installs may never receive the writing skills until it changes
+(R-54).
+
+| Option | Version | When | Effect |
+|---|---|---|---|
+| **Recommended for a pilot or release candidate** | `0.1.0-rc.1` | Owner approves a pilot or RC build | A new version string makes pinned installs update; SemVer orders it after `0.1.0-dev` and before `0.1.0`. Later candidates: `0.1.0-rc.2`, and so on |
+| For the first release | `0.1.0` | After the release gates pass | As already planned below |
+| Not recommended | Keep the current version | — | Stale installs continue (R-54) |
+
+Apply the chosen value in exactly four places, identically:
+`plugins/codejadee-chayen-framework/plugin.json`,
+`plugins/codejadee-chayen-framework/.claude-plugin/plugin.json`, and in
+`.github/plugin/marketplace.json` both the plugin entry `version` and
+`metadata.version`. The Claude Code and Codex marketplace files carry no
+version. Then update the supported-versions table in `SECURITY.md` and run the
+checks below (V-04, IC-05, IC-06 and D-05 check parity).
+
 ## Proposed changes for `0.1.0` (apply only when approved)
 
 | Field | Proposed value | Applies to | Reason |
 |---|---|---|---|
 | `version` | `0.1.0` | Both manifests, the Copilot marketplace entry, and `metadata.version` | First release. A version change is also what lets Claude Code installs update (R-54). |
 | `license` | SPDX id chosen by the owner | Both manifests | Q-05 |
-| `description` | "Engineering skills for coding agents: repository analysis, requirements, architecture, implementation, backend, frontend, data, testing, security, performance, DevOps, docs and AI engineering, with C#/ASP.NET Core, Angular, React, Next.js, Vue, Nuxt, SQL Server and PostgreSQL guidance." (286 characters) | Both manifests and all three marketplace entries | The current text names fewer stacks than the 13 skills and 11 packs cover. Optional. |
-| `keywords` | Add `postgresql`, `react`, `nextjs`, `vue`, `nuxt`, `python` | Both manifests | Discoverability. Optional. |
+| `description` | "Engineering and writing skills for coding agents: repository analysis, requirements, architecture, implementation, backend, frontend, data, testing, security, performance, DevOps, docs, AI engineering and Thai/English editing, with C#/ASP.NET Core, Angular, React, Next.js, Vue, Nuxt, SQL Server and PostgreSQL guidance." | Both manifests and all three marketplace entries | The current text names fewer stacks than the 15 skills and 11 packs cover, and omits the writing skills. Optional. |
+| `keywords` | Add `postgresql`, `react`, `nextjs`, `vue`, `nuxt`, `python`, `writing`, `thai` | Both manifests | Discoverability. Optional. |
 | `homepage` | A **public** URL, once one exists | Both manifests | A private repository URL is unusable for public listings |
 | `author` | The confirmed legal or publisher name | Both manifests and the marketplace owner fields | Must not be invented |
 

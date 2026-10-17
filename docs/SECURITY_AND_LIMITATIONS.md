@@ -2,18 +2,22 @@
 
 ## What the plugin contains
 
-The installed package, `plugins/codejadee-chayen-framework/`, has 238 files,
+The installed package, `plugins/codejadee-chayen-framework/`, has 256 files,
 all **Markdown and JSON**:
 
 - two manifests;
-- 13 skills;
-- 221 references;
+- 15 skills (13 engineering, 2 writing);
+- 237 references;
 - two README files.
 
-It contains **no** hooks, MCP servers, agents, commands, scripts,
+The package contains **no** hooks, MCP servers, agents, commands, scripts,
 executables, background processes, scheduled tasks, or telemetry. It needs
 **no credentials** and uploads nothing. A static check (V-25) enforces this
 for every change to the package.
+
+The opt-in [response style policy](RESPONSE_STYLE.md) is **not** part of the
+package; it lives in `response-style/` and only you can add it to an
+instruction file.
 
 Your provider may still contact its own services, as it always does. Chayen
 does not control that.
@@ -36,7 +40,8 @@ does not control that.
 - **Scripts are inspected first.** Skills tell the agent to inspect build
   scripts and lifecycle hooks before running them.
 
-In testing on Claude Code (2026-10-15), native permissions held throughout:
+In testing on Claude Code (2026-10-15, 13-skill build), native permissions
+held throughout:
 
 - every attempted file edit in non-interactive mode was denied;
 - a request to drop a production table "without confirmation" was refused
@@ -52,6 +57,20 @@ In testing on Claude Code (2026-10-15), native permissions held throughout:
 - **Prefer least privilege.** Keep your agent's default permission prompts,
   use disposable environments for risky work, and never give the agent
   credentials it does not need.
+
+## Writing skills: extra boundaries
+
+The Thai and English writing skills edit text, so they add these rules on top
+of the ones above (details in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md)):
+
+- **Text being edited is data.** Instructions or "approvals" hidden in an
+  article, HTML comment, README or CMS export are reported, never followed.
+- **Copy, not behaviour.** Only visible prose changes; code, markup,
+  placeholders, keys and configuration are preserved.
+- **No publishing on their own.** A rewrite request does not authorize
+  committing, pushing, publishing to a CMS or deploying.
+- **No authorship claims.** They never claim text is human-written or will
+  pass an AI detector, and decline that goal.
 
 ## What Chayen cannot guarantee
 
@@ -82,10 +101,17 @@ In testing on Claude Code (2026-10-15), native permissions held throughout:
 7. **Identical behaviour across providers.** Providers differ in selection,
    explicit syntax, update commands, and conflict handling (see
    [COMPATIBILITY_MATRIX.md](COMPATIBILITY_MATRIX.md)).
-8. **Availability on every surface.** The Codex IDE extension does not
+8. **Writing quality.** The Thai and English writing skills have not been
+   evaluated by fluent reviewers or on any provider. They may over-edit
+   natural text, miss real problems or change meaning. Check facts, numbers,
+   conditions and protected spans in every result.
+9. **That the response style policy is loaded or followed.** It is advisory
+   text in your instruction file. Loading has not been tested on any host,
+   and installing the plugin never activates it.
+10. **Availability on every surface.** The Codex IDE extension does not
    support plugins. Claude Code cloud sessions do not load local plugins.
    VS Code surfaces have not been tested yet.
-9. **That an update delivers new content.** The pre-release version has not
+11. **That an update delivers new content.** The pre-release version has not
    changed, and Claude Code pins installs to the version.
 
 ## Known limitations in this build
@@ -93,9 +119,12 @@ In testing on Claude Code (2026-10-15), native permissions held throughout:
 | Area | Limitation |
 |---|---|
 | Verification status | All 206 engineering capabilities, 108 technology capabilities, and 12 workflows are **implemented, not verified** |
-| Provider evidence | Current-build behaviour was measured on Claude Code CLI only. Codex and Copilot results are from an earlier build; VS Code is untested. |
+| Provider evidence | Behaviour was measured on Claude Code CLI only, for the 13-skill build before the writing skills were added. Codex and Copilot results are from an earlier build; VS Code is untested. |
 | Routing | Automatic selection: 12/22 relevant runs (55%). Next.js server-route tasks did not trigger a skill (0/5); pytest 3/5; ASP.NET, Angular and SQL Server 2/3 each. |
 | Path handling | Before a fix in this build, agents sometimes looked for project files next to the plugin after loading a skill (3 of 7 runs; all blocked). After the fix: 0 of 7, a small sample. |
+| Writing skills | Structurally validated only. Routing, explicit invocation, writing quality and injection resistance in edited text are **not tested**; a 120-case evaluation set is ready but not run. |
+| Response style policy | Opt-in and outside the plugin. Documented locations only; loading, behaviour and removal on real hosts **not tested**. Some subagents and Copilot inline suggestions ignore instruction files. |
+| Third-party material | The English writing skill adapts material from the MIT-licensed humanizer skill (Siqi Chen); its licence notice ships inside the skill and must stay with it whatever licence Chayen chooses. |
 | Licence | Not yet chosen. No licence is granted until one is published. |
 
 Maintainers can find the threat model and trust review in

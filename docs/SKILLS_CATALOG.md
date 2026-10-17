@@ -139,7 +139,10 @@ deployment, Vite toolchain.*
 
 Example prompt: *"เกลาย่อหน้านี้ให้อ่านลื่นเป็นภาษาไทยธรรมชาติ แต่ห้ามเปลี่ยนตัวเลขกับชื่อฟีเจอร์"*
 
-Thai writing quality and routing are not yet evaluated; see
+Modes: audit (no edits), rewrite, new content and website or localization copy.
+Usage, explicit invocation and preservation rules:
+[WRITING_AND_EDITING.md](WRITING_AND_EDITING.md). Thai writing quality and
+routing are not yet evaluated; see
 [SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md).
 
 ### chayen-humanizer-en
@@ -150,7 +153,10 @@ Thai writing quality and routing are not yet evaluated; see
 
 Example prompt: *"Rewrite this landing page headline and subhead so they sound less like marketing boilerplate. Keep the pricing and feature names."*
 
-English writing quality and routing are not yet evaluated; see
+Modes: audit (no edits), rewrite, new content and website or localization copy,
+plus a "no changes recommended" result for text that already reads well. Usage:
+[WRITING_AND_EDITING.md](WRITING_AND_EDITING.md). English writing quality and
+routing are not yet evaluated; see
 [SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md). Its writing
 patterns are adapted from the MIT-licensed
 [humanizer](https://github.com/blader/humanizer) skill by Siqi Chen; the

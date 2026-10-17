@@ -25,7 +25,7 @@ Use Copilot CLI runtime **1.0.91 or later**: `plugin enable` and
 
 ```bash
 copilot plugin marketplace add CodeJaDee/codejadee-chayen-framework    # or a local clone path
-copilot plugin install codejadee-chayen-framework@codejadee              # "Installed 13 skills" expected
+copilot plugin install codejadee-chayen-framework@codejadee              # "Installed 15 skills" expected
 copilot plugin list
 copilot skill list                                                      # the chayen-* skills
 ```
@@ -34,7 +34,10 @@ copilot skill list                                                      # the ch
 
 ```text
 /chayen-security Review this controller for injection risks.
+/chayen-humanizer-th ปรับข้อความใน locales/th.json ให้สั้นลง ห้ามแตะ key และ placeholder
 ```
+
+The writing skills are described in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
 
 **Disable, update, uninstall:**
 
@@ -86,11 +89,28 @@ Whether VS Code invokes *plugin-bundled* skills automatically is not stated
 by Microsoft and has not been tested here. Explicit invocation from the chat
 `/` menu is expected but **not verified**.
 
-## Verification status (2026-10-15)
+## Optional: response style policy
+
+Installing the plugin gives you the skills only (setup A in
+[RESPONSE_STYLE.md](RESPONSE_STYLE.md)). If you also want everyday replies
+worded naturally in Thai or English, add the opt-in policy yourself:
+Copilot CLI: append the marked block to `~/.copilot/copilot-instructions.md`
+(or `$COPILOT_HOME/…`). VS Code Copilot Chat: copy the `.instructions.md`
+template to `~/.copilot/instructions/`. Repository files
+(`.github/copilot-instructions.md`) need the repository owner's agreement.
+VS Code Copilot Chat also reads `~/.claude/rules/` and `~/.claude/CLAUDE.md`;
+if you already added the Claude Code rule, do not add a second copy. Copilot
+inline suggestions ignore custom instructions.
+It is not installed, enabled or removed by the plugin, and its loading has
+not been tested on this host yet. Setup, the loading check, conflicts and
+removal are in [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
+
+## Verification status (2026-10-15; reviewed 2026-10-17)
 
 | Check | Copilot CLI | VS Code + Copilot Chat |
 |---|---|---|
 | Marketplace file and manifest selected by the installed code | Confirmed by inspecting runtime 1.0.97 | Confirmed by inspecting VS Code 1.141.1 |
-| Install, list, disable, enable, update, uninstall | Passed for an earlier 6-skill build (1.0.91–1.0.97, 2026-10-14). **Not yet run for the current 13-skill build.** | Not tested |
+| Install, list, disable, enable, update, uninstall | Passed for an earlier 6-skill build (1.0.91–1.0.97, 2026-10-14). **Not yet run for the 13-skill or the current 15-skill build.** | Not tested |
+| Writing skills, opt-in response style policy | Not tested | Not tested |
 | Routing and explicit `/chayen-security` | Earlier build: 5/7 smoke prompts. It over-activated on Unity and SwiftUI prompts, without wrong guidance in the answers. Current build: **not tested.** | Not tested |
 | Install from the GitHub marketplace | Not tested | Not tested |

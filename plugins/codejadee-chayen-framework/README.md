@@ -16,9 +16,18 @@ This is a **pilot build** with 15 entry skills. The list is in
 
 - Skills activate automatically when a request matches their description.
 - Requests that match no skill are handled by the agent normally.
-- Trigger reliability is only partly measured (Claude Code, 2026-10-15). See
-  `docs/COMPATIBILITY_MATRIX.md` and `docs/SECURITY_AND_LIMITATIONS.md` in the
-  repository.
+- Trigger reliability is only partly measured (Claude Code, 2026-10-15, for
+  the 13 engineering skills). The two writing skills, `chayen-humanizer-th`
+  and `chayen-humanizer-en`, are not yet tested on any host. See
+  `docs/COMPATIBILITY_MATRIX.md`, `docs/WRITING_AND_EDITING.md` and
+  `docs/SECURITY_AND_LIMITATIONS.md` in the repository.
+- The opt-in response style policy is **not** in this package. Installing,
+  disabling or uninstalling the plugin never adds or removes it; see
+  `docs/RESPONSE_STYLE.md` in the repository.
+- `chayen-humanizer-en` adapts material from the MIT-licensed humanizer skill
+  by Siqi Chen. Its licence notice is
+  [skills/chayen-humanizer-en/references/upstream-notice.md](skills/chayen-humanizer-en/references/upstream-notice.md)
+  and must be kept with any copy of that skill.
 
 ## Technology coverage
 
