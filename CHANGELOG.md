@@ -14,6 +14,15 @@ in the manifests is still `0.1.0-dev`. Changing it is a release step (see
 Proposed, not applied: `0.1.0-rc.1` for a release candidate or pilot, then
 `0.1.0` for the release ([docs/distribution/RELEASE_METADATA.md](docs/distribution/RELEASE_METADATA.md)).
 
+### Changed
+
+- **Plugin renamed to `chayen`** (was `codejadee-chayen-framework`), so
+  Claude Code shows skills as `/chayen:<skill>` instead of
+  `/codejadee-chayen-framework:<skill>`. Install with `chayen@codejadee`.
+  The repository name, marketplace name and plugin folder are unchanged.
+  Existing installs must be uninstalled and installed again under the new
+  name (see the install guides).
+
 ### Added
 
 - **Native plugin packaging** for Claude Code, OpenAI Codex, and GitHub

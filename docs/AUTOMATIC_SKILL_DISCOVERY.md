@@ -20,7 +20,7 @@ neighbouring skills.
 
 | Provider | Selection (documented by the provider) |
 |---|---|
-| Claude Code | Loads a skill "when relevant" from its description. Plugin skills are namespaced `codejadee-chayen-framework:<skill>`. |
+| Claude Code | Loads a skill "when relevant" from its description. Plugin skills are namespaced by the plugin name: `chayen:<skill>` (before 2026-10-17: `codejadee-chayen-framework:<skill>`). |
 | Codex | "Codex can select a skill when your task matches its description." Implicit invocation is on by default. |
 | Copilot CLI | "Copilot will decide when to use your skills based on your prompt and the skill's description." |
 | VS Code Copilot Chat | Matches name and description, then loads the body. It "does not guarantee that it invokes a skill for every relevant prompt." Microsoft does not state whether this applies to plugin-bundled skills. |
@@ -97,7 +97,7 @@ When you want a specific skill, name it:
 
 | Provider and surface | Syntax | Verified |
 |---|---|---|
-| Claude Code CLI | `/codejadee-chayen-framework:chayen-<name> <request>` | Yes for engineering skills (2026-10-15, 13-skill build, through `--plugin-dir`); writing skills not tested |
+| Claude Code CLI | `/chayen:chayen-<name> <request>` | Yes for engineering skills (2026-10-15, 13-skill build, through `--plugin-dir`); writing skills not tested |
 | Claude Code VS Code | Same, from the `/` menu | Not tested |
 | Codex CLI | `$chayen-<name> <request>` | Earlier 6-skill build only |
 | Copilot CLI | `/chayen-<name> <request>` | Earlier 6-skill build only |

@@ -161,7 +161,7 @@
     {
       "id": "sk-manifest-invalid-json",
       "description": "Invalid plugin manifest (not JSON)",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/plugin.json", "op": "write", "content": "{ \"name\": \"codejadee-chayen-framework\", " }],
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/plugin.json", "op": "write", "content": "{ \"name\": \"chayen\", " }],
       "expect": { "validator": "package", "error": "V-02 agent-plugins-manifest" }
     },
     {
@@ -176,13 +176,13 @@
     {
       "id": "sk-manifest-unsupported-field",
       "description": "Unsupported field in the Agent Plugins manifest (closed schema)",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/plugin.json", "op": "replace", "find": "  \"name\": \"codejadee-chayen-framework\",\n", "with": "  \"name\": \"codejadee-chayen-framework\",\n  \"category\": \"tools\",\n" }],
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/plugin.json", "op": "replace", "find": "  \"name\": \"chayen\",\n", "with": "  \"name\": \"chayen\",\n  \"category\": \"tools\",\n" }],
       "expect": { "validator": "package", "error": "V-02 agent-plugins-manifest" }
     },
     {
       "id": "sk-claude-manifest-unsupported-field",
       "description": "Unsupported field in the Claude Code manifest",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/.claude-plugin/plugin.json", "op": "replace", "find": "  \"name\": \"codejadee-chayen-framework\",\n", "with": "  \"name\": \"codejadee-chayen-framework\",\n  \"category\": \"tools\",\n" }],
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/.claude-plugin/plugin.json", "op": "replace", "find": "  \"name\": \"chayen\",\n", "with": "  \"name\": \"chayen\",\n  \"category\": \"tools\",\n" }],
       "expect": { "validator": "package", "error": "V-03 claude-manifest" }
     },
     {

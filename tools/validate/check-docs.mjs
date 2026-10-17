@@ -68,6 +68,7 @@ for (const file of docs) {
   }
   for (const m of text.matchAll(/\b([a-z0-9][a-z0-9-]*)@([a-z0-9][a-z0-9-]*)\b/g)) {
     if (/\.(com|org|net|io)$/.test(m[2]) || m[0].includes("example")) continue;
+    if (m[0] === "codejadee-chayen-framework@codejadee") continue; // pre-D-059 identifier, allowed in migration notes only
     if (m[1].startsWith("codejadee") || m[2].startsWith("codejadee")) {
       if (m[1] !== manifest.name || !marketplaces.includes(m[2])) err("D-03", file, `identifier ${m[0]} does not match ${manifest.name}@${marketplaces[0]}`);
     }

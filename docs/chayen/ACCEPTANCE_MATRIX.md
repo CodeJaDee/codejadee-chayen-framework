@@ -40,6 +40,11 @@ scratch replacement, corrected and revalidated. This is executed static
 foundation evidence; all MHR product acceptance/behavior requirements remain
 PLANNED with no VERIFIED promotion.
 
+**Owner follow-up D-059 (2026-10-17):** plugin identifier renamed to `chayen` in both
+manifests and all three marketplace entries (repository name and plugin directory
+unchanged). Static identity, package and documentation checks re-run; no requirement
+status changes and nothing is VERIFIED by the rename.
+
 **Step 41 documentation and release readiness: DONE (pending owner review).**
 User, install and release documents describe all 15 skills; a writing guide
 ([WRITING_AND_EDITING.md](../WRITING_AND_EDITING.md)) and the A/B/C policy

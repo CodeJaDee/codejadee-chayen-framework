@@ -70,6 +70,7 @@ pointing at the same plugin directory:
   observed in Step 04)
 
 The plugin identifier is `codejadee-chayen-framework` (D-014).
+**Amended by D-059 (2026-10-17):** the plugin identifier is now `chayen`; the repository name and the directory `plugins/codejadee-chayen-framework/` are unchanged.
 
 ## Verification
 

@@ -29,7 +29,7 @@ fi
 cp -r "$REPO"/.claude-plugin "$REPO"/.agents "$REPO"/.github "$REPO"/plugins "$WORK/mp/" || exit 2
 winpath() { if command -v cygpath >/dev/null; then cygpath -w "$1"; else echo "$1"; fi; }
 MP="$(winpath "$WORK/mp")"
-ID="codejadee-chayen-framework@codejadee"
+ID="chayen@codejadee"
 # Expected skill count, taken from the canonical skills source (not hard-coded).
 N="$(find "$REPO/plugins/codejadee-chayen-framework/skills" -mindepth 2 -maxdepth 2 -name SKILL.md | wc -l | tr -d " ")"
 PASS=0; FAIL=0; SKIP=0
@@ -50,8 +50,8 @@ if command -v claude >/dev/null; then
   claude plugin marketplace add "$MP" >/dev/null 2>&1; check "claude: marketplace add" $?
   claude plugin install "$ID" >/dev/null 2>&1; check "claude: install" $?
   claude plugin list 2>/dev/null | grep -A3 "$ID" | grep -q "enabled"; check "claude: listed as enabled" $?
-  claude plugin details codejadee-chayen-framework 2>/dev/null | grep -q "Skills ($N)"; check "claude: $N skills discoverable" $?
-  claude plugin details codejadee-chayen-framework 2>/dev/null | grep -qE "Hooks \(0\)" && claude plugin details codejadee-chayen-framework 2>/dev/null | grep -qE "MCP servers \(0\)"; check "claude: no hooks / MCP servers (no runtime)" $?
+  claude plugin details chayen 2>/dev/null | grep -q "Skills ($N)"; check "claude: $N skills discoverable" $?
+  claude plugin details chayen 2>/dev/null | grep -qE "Hooks \(0\)" && claude plugin details chayen 2>/dev/null | grep -qE "MCP servers \(0\)"; check "claude: no hooks / MCP servers (no runtime)" $?
   claude plugin disable "$ID" >/dev/null 2>&1 && claude plugin list 2>/dev/null | grep -A3 "$ID" | grep -q "disabled"; check "claude: disable" $?
   claude plugin enable "$ID" >/dev/null 2>&1; check "claude: enable" $?
   claude plugin uninstall "$ID" >/dev/null 2>&1 && ! claude plugin list 2>/dev/null | grep -q "$ID"; check "claude: uninstall" $?
@@ -64,7 +64,7 @@ if command -v codex >/dev/null; then
   echo "== $(codex --version 2>/dev/null | grep -v 'PATH aliases')"
   codex plugin marketplace add "$MP" >/dev/null 2>&1; check "codex: marketplace add" $?
   codex plugin add "$ID" >/dev/null 2>&1; check "codex: install (plugin add)" $?
-  codex plugin list --marketplace codejadee 2>/dev/null | grep "codejadee-chayen-framework" | grep -q "installed, enabled"; check "codex: listed as installed, enabled" $?
+  codex plugin list --marketplace codejadee 2>/dev/null | grep "chayen" | grep -q "installed, enabled"; check "codex: listed as installed, enabled" $?
   [ "$(find "$WORK/home-codex/plugins/cache" -name SKILL.md 2>/dev/null | grep -c chayen-)" = "$N" ]; check "codex: $N skills in plugin cache" $?
   codex plugin remove "$ID" >/dev/null 2>&1; check "codex: uninstall (plugin remove)" $?
   codex plugin marketplace remove codejadee >/dev/null 2>&1; check "codex: marketplace remove" $?
@@ -79,7 +79,7 @@ if command -v copilot >/dev/null; then
   [ "$(copilot skill list </dev/null 2>/dev/null | grep -cE '^\s+chayen-')" = "$N" ]; check "copilot: $N skills discoverable" $?
   copilot plugin disable "$ID" </dev/null >/dev/null 2>&1 && [ "$(copilot skill list </dev/null 2>/dev/null | grep -cE '^\s+chayen-')" = 0 ]; check "copilot: disable hides skills" $?
   copilot plugin enable "$ID" </dev/null >/dev/null 2>&1; check "copilot: enable" $?
-  copilot plugin uninstall codejadee-chayen-framework </dev/null >/dev/null 2>&1; check "copilot: uninstall" $?
+  copilot plugin uninstall chayen </dev/null >/dev/null 2>&1; check "copilot: uninstall" $?
   copilot plugin marketplace remove codejadee </dev/null >/dev/null 2>&1; check "copilot: marketplace remove" $?
   unset COPILOT_HOME
 else echo "SKIP  copilot not on PATH"; SKIP=$((SKIP+1)); fi

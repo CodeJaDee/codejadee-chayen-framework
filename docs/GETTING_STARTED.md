@@ -21,7 +21,7 @@ Follow one guide:
 - [OpenAI Codex](INSTALL_CODEX.md)
 - [GitHub Copilot](INSTALL_COPILOT.md)
 
-All three use the same identifier: `codejadee-chayen-framework@codejadee`.
+All three use the same identifier: `chayen@codejadee`.
 
 While the repository is private, adding the GitHub marketplace needs access
 to `CodeJaDee/codejadee-chayen-framework`. A local clone you are allowed to
@@ -63,12 +63,12 @@ Modes, preservation rules and file-editing safety are in
 
 | Provider | Syntax |
 |---|---|
-| Claude Code | `/codejadee-chayen-framework:chayen-security <request>` |
+| Claude Code | `/chayen:chayen-security <request>` |
 | Codex CLI | `$chayen-security <request>` |
 | Copilot CLI | `/chayen-security <request>` |
 
 The writing skills work the same way, for example
-`/codejadee-chayen-framework:chayen-humanizer-th <request>` in Claude Code.
+`/chayen:chayen-humanizer-th <request>` in Claude Code.
 
 The full list of skills is in [SKILLS_CATALOG.md](SKILLS_CATALOG.md).
 

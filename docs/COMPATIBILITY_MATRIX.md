@@ -75,7 +75,7 @@ the installed ones.
 
 | Topic | Claude Code | Codex | Copilot |
 |---|---|---|---|
-| Explicit syntax | `/codejadee-chayen-framework:<skill>` | `$<skill>` | `/<skill>` |
+| Explicit syntax | `/chayen:<skill>` | `$<skill>` | `/<skill>` |
 | Disable | `claude plugin disable` | `/plugins` Space toggle or `config.toml` | `copilot plugin disable` (runtime 1.0.91 or later) |
 | Update | `claude plugin update`; auto-update off for third-party marketplaces | Marketplace `upgrade` (Git), then reinstall if needed | `copilot plugin update` |
 | Same-name skill conflicts | Namespaced, so both can exist | Both may appear | **Your skill wins; the plugin skill is dropped silently** |

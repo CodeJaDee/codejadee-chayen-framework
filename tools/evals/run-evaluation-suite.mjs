@@ -100,7 +100,7 @@ const dangling = new Set(), providerSyntax = [];
 for (const f of mdFiles) {
   const t = fs.readFileSync(f, "utf8");
   for (const m of t.matchAll(/\bchayen-[a-z-]*[a-z]\b/g)) if (!skillDirs.includes(m[0])) dangling.add(`${path.relative(root, f).replace(/\\/g, "/")}: ${m[0]}`);
-  if (/\/codejadee-chayen-framework:|\$chayen-|\bSkill tool\b/.test(t)) providerSyntax.push(path.relative(root, f).replace(/\\/g, "/"));
+  if (/\/(?:codejadee-chayen-framework|chayen):|\$chayen-|\bSkill tool\b/.test(t)) providerSyntax.push(path.relative(root, f).replace(/\\/g, "/"));
 }
 report.handoff = { markdownFiles: mdFiles.length, danglingSkillNames: [...dangling], providerSpecificInvocationSyntax: providerSyntax, result: !dangling.size && !providerSyntax.length ? "PASS" : "FAIL" };
 if (report.handoff.result === "FAIL") fail("S-HANDOFF", `${dangling.size} dangling names, ${providerSyntax.length} files with provider-specific invocation syntax`);

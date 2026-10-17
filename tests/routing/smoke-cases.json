@@ -14,7 +14,7 @@
       "promptByProvider": {
         "copilot": "/chayen-security Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";",
         "codex": "$chayen-security Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";",
-        "claude": "/codejadee-chayen-framework:chayen-security Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";"
+        "claude": "/chayen:chayen-security Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";"
       },
       "expect": { "any_of": ["chayen-security"] }
     },

@@ -8,7 +8,7 @@ release step that needs project-owner approval (BC-30, R-54).
 
 | Field | `plugin.json` (Agent Plugins) | `.claude-plugin/plugin.json` | Copilot marketplace entry | Notes |
 |---|---|---|---|---|
-| `name` | `codejadee-chayen-framework` | same | same | Matches all three marketplace entries (IC-01..IC-03) |
+| `name` | `chayen` | same | same | Matches all three marketplace entries (IC-01..IC-03) |
 | `version` | `0.1.0-dev` | same | same, also in `metadata.version` | Parity checked (IC-05, IC-06) |
 | `description` | "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks." | same | same | 108 characters |
 | `author` | `{ name: "CodeJaDee", url: "https://github.com/CodeJaDee" }` | same | `owner.name: "CodeJaDee"` | **Publisher identity not verified** (see below) |

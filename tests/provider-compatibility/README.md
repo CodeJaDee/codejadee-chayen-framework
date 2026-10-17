@@ -136,29 +136,29 @@ Use the same fixture for every provider:
 ```bash
 export CLAUDE_CONFIG_DIR=<scratch>/home-claude      # then run `claude` once and /login with a test identity
 claude plugin marketplace add <scratch>/mp            # a copy of .claude-plugin, .agents, .github, plugins
-claude plugin install codejadee-chayen-framework@codejadee
+claude plugin install chayen@codejadee
 claude plugin list                                     # 0.1.0-dev, enabled, exactly one entry
-claude plugin details codejadee-chayen-framework       # Skills (13), Agents/Hooks/MCP/LSP (0)
+claude plugin details chayen       # Skills (13), Agents/Hooks/MCP/LSP (0)
 cd <fixture>
 claude -p "<P-AUTO>" --output-format stream-json --verbose --no-session-persistence --max-turns 8
-claude -p "/codejadee-chayen-framework:chayen-security <P-EXPL text>" --output-format stream-json --verbose --no-session-persistence
+claude -p "/chayen:chayen-security <P-EXPL text>" --output-format stream-json --verbose --no-session-persistence
 claude -p "<P-NONE>" --output-format stream-json --verbose --no-session-persistence
-claude -p "/codejadee-chayen-framework:chayen-data <P-REF text>" --output-format stream-json --verbose --no-session-persistence --max-turns 8
+claude -p "/chayen:chayen-data <P-REF text>" --output-format stream-json --verbose --no-session-persistence --max-turns 8
 ```
 
 - **Evidence.**
-  - A `tool_use` named `Skill` with `codejadee-chayen-framework:<skill>`.
+  - A `tool_use` named `Skill` with `chayen:<skill>`.
   - For P-REF, a `Read` `tool_use` whose path ends in
     `chayen-data/references/<file>.md`.
 - **C-10 lifecycle.**
 
   ```bash
-  claude plugin disable codejadee-chayen-framework@codejadee   # list shows disabled; re-run P-AUTO: no chayen skill
-  claude plugin enable  codejadee-chayen-framework@codejadee
+  claude plugin disable chayen@codejadee   # list shows disabled; re-run P-AUTO: no chayen skill
+  claude plugin enable  chayen@codejadee
   # Update: bump "version" to e.g. 0.1.1-step31 in BOTH manifests of the <scratch>/mp copy (and .github entry)
   claude plugin marketplace update codejadee
-  claude plugin update codejadee-chayen-framework@codejadee    # list shows 0.1.1-step31 after restart
-  claude plugin uninstall codejadee-chayen-framework@codejadee # not listed; /-menu has no chayen entries
+  claude plugin update chayen@codejadee    # list shows 0.1.1-step31 after restart
+  claude plugin uninstall chayen@codejadee # not listed; /-menu has no chayen entries
   claude plugin marketplace remove codejadee
   ```
 
@@ -181,7 +181,7 @@ in step 3, and add P-NONE-2 and P-REF.
 export CODEX_HOME=<scratch>/home-codex               # then `codex login` with a test identity (never copy auth.json)
 codex plugin marketplace add <scratch>/mp
 codex plugin list --marketplace codejadee             # listed from .agents/plugins/marketplace.json
-codex plugin add codejadee-chayen-framework@codejadee
+codex plugin add chayen@codejadee
 codex plugin list --marketplace codejadee             # "installed, enabled", exactly one entry
 find "$CODEX_HOME/plugins/cache" -name SKILL.md | grep -c chayen-   # 13
 cd <fixture>
@@ -196,7 +196,7 @@ codex exec --json --skip-git-repo-check --ephemeral -s read-only "\$chayen-data 
 - The interactive `/plugins` browser should also show the plugin. Space
   toggles it.
 - **C-10 lifecycle.**
-  - **Disable.** Add `[plugins."codejadee-chayen-framework@codejadee"]` with
+  - **Disable.** Add `[plugins."chayen@codejadee"]` with
     `enabled = false` to `$CODEX_HOME/config.toml`, then re-run P-AUTO. A
     `-c` override did **not** disable the plugin in Step 06.
   - **Update.** 0.160.1 has no per-plugin `update`, and
@@ -208,7 +208,7 @@ codex exec --json --skip-git-repo-check --ephemeral -s read-only "\$chayen-data 
       followed by `codex plugin add`, and record the observed behaviour.
     - Remote marketplace (R-9): `codex plugin marketplace upgrade codejadee`,
       then the same check.
-  - **Uninstall.** Run `codex plugin remove codejadee-chayen-framework@codejadee`
+  - **Uninstall.** Run `codex plugin remove chayen@codejadee`
     and `codex plugin marketplace remove codejadee`. Note any empty cache
     directory that is left behind.
 
@@ -226,7 +226,7 @@ that as plugin support.
 export COPILOT_HOME=<scratch>/home-copilot          # auth comes from the OS credential store; use a test account
 copilot --version                                    # runtime must be >= 1.0.91 for enable/disable
 copilot plugin marketplace add <scratch>/mp          # reads .github/plugin/marketplace.json first
-copilot plugin install codejadee-chayen-framework@codejadee   # "Installed 13 skills"
+copilot plugin install chayen@codejadee   # "Installed 13 skills"
 copilot plugin list                                  # exactly one entry, 0.1.0-dev
 copilot skill list                                   # 13 chayen-* rows
 cd <fixture>
@@ -242,11 +242,11 @@ copilot -p "/chayen-data <P-REF text>" --output-format json
 - **C-10 lifecycle.**
 
   ```bash
-  copilot plugin disable codejadee-chayen-framework@codejadee   # skill list shows 0 chayen-*; P-AUTO loads none
-  copilot plugin enable codejadee-chayen-framework@codejadee
+  copilot plugin disable chayen@codejadee   # skill list shows 0 chayen-*; P-AUTO loads none
+  copilot plugin enable chayen@codejadee
   # bump version in the mp copy, then:
-  copilot plugin update codejadee-chayen-framework              # list shows the new version
-  copilot plugin uninstall codejadee-chayen-framework           # record whether it removes or only disables (Step 06: disabled only)
+  copilot plugin update chayen              # list shows the new version
+  copilot plugin uninstall chayen           # record whether it removes or only disables (Step 06: disabled only)
   copilot plugin marketplace remove codejadee
   ```
 
@@ -263,7 +263,7 @@ Facts confirmed from the VS Code 1.141.1 code:
 - The root `plugin.json` is read with Agent Plugins semantics.
 
 Also try the chat commands `/plugin disable|enable|update|uninstall
-codejadee-chayen-framework`, as documented in S18. A plugin installed
+chayen`, as documented in S18. A plugin installed
 directly from Git can only be uninstalled.
 
 ### R-9. Remote marketplace (after an approved push only)

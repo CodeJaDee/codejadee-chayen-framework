@@ -5,8 +5,8 @@ Chayen installs through Codex's native plugin marketplace.
 | Item | Value |
 |---|---|
 | Marketplace name | `codejadee` (display name "CodeJaDee") |
-| Plugin | `codejadee-chayen-framework` |
-| Install identifier | `codejadee-chayen-framework@codejadee` |
+| Plugin | `chayen` |
+| Install identifier | `chayen@codejadee` |
 | Marketplace file | `.agents/plugins/marketplace.json` |
 | Plugin manifest | `plugins/codejadee-chayen-framework/plugin.json` (Agent Plugins 1.0) |
 | Surfaces | Codex CLI. Codex in the ChatGPT desktop app supports plugins too, but was not tested. **The Codex IDE extension (VS Code) does not support plugins.** |
@@ -25,12 +25,30 @@ codex plugin marketplace add CodeJaDee/codejadee-chayen-framework
 codex plugin marketplace add /path/to/codejadee-chayen-framework
 
 # 2. Install
-codex plugin add codejadee-chayen-framework@codejadee
+codex plugin add chayen@codejadee
 #    or, interactively: run `codex`, type /plugins, choose the plugin, install
 
 # 3. Check it, then start a NEW session so the skills are loaded
 codex plugin list --marketplace codejadee      # "installed, enabled"
 ```
+
+## Renamed from codejadee-chayen-framework
+
+Until 2026-10-17 the plugin was named `codejadee-chayen-framework`. It is now
+`chayen` (D-059), so installs made under the old name must be replaced. The
+repository, the marketplace name `codejadee` and the plugin folder
+(`plugins/codejadee-chayen-framework/`) are unchanged. These commands follow
+the documented CLI syntax but have **not yet been run** for this rename.
+
+```bash
+codex plugin remove codejadee-chayen-framework@codejadee
+codex plugin marketplace upgrade codejadee
+codex plugin add chayen@codejadee
+```
+
+If you disabled the plugin in `config.toml`, the section key is now
+`[plugins."chayen@codejadee"]`. Explicit invocation (`$chayen-<skill>`) is
+unchanged, because Codex does not prefix skills with the plugin name.
 
 ## VS Code (Codex IDE extension)
 
@@ -74,9 +92,9 @@ removal are in [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
 
 | Action | How |
 |---|---|
-| Disable or enable | In `/plugins`, press **Space** on the plugin. Or add `enabled = false` under `[plugins."codejadee-chayen-framework@codejadee"]` in `config.toml` (in `CODEX_HOME`, normally `~/.codex/`). A one-off `-c` override did **not** disable the plugin in testing. |
-| Update | Codex 0.160.1 has **no per-plugin update command**. `codex plugin marketplace upgrade codejadee` refreshes Git marketplaces. If the installed version does not change, run `codex plugin remove codejadee-chayen-framework@codejadee` and then `codex plugin add codejadee-chayen-framework@codejadee`. This update path is **not yet verified**. |
-| Uninstall | `codex plugin remove codejadee-chayen-framework@codejadee`, then optionally `codex plugin marketplace remove codejadee`. An empty cache directory may remain. |
+| Disable or enable | In `/plugins`, press **Space** on the plugin. Or add `enabled = false` under `[plugins."chayen@codejadee"]` in `config.toml` (in `CODEX_HOME`, normally `~/.codex/`). A one-off `-c` override did **not** disable the plugin in testing. |
+| Update | Codex 0.160.1 has **no per-plugin update command**. `codex plugin marketplace upgrade codejadee` refreshes Git marketplaces. If the installed version does not change, run `codex plugin remove chayen@codejadee` and then `codex plugin add chayen@codejadee`. This update path is **not yet verified**. |
+| Uninstall | `codex plugin remove chayen@codejadee`, then optionally `codex plugin marketplace remove codejadee`. An empty cache directory may remain. |
 
 ## Verification status (2026-10-15; reviewed 2026-10-17)
 

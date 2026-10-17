@@ -48,7 +48,7 @@ skills it has **not been measured yet**.
 
 | Provider | Thai | English |
 |---|---|---|
-| Claude Code | `/codejadee-chayen-framework:chayen-humanizer-th <request>` | `/codejadee-chayen-framework:chayen-humanizer-en <request>` |
+| Claude Code | `/chayen:chayen-humanizer-th <request>` | `/chayen:chayen-humanizer-en <request>` |
 | Codex CLI | `$chayen-humanizer-th <request>` | `$chayen-humanizer-en <request>` |
 | Copilot CLI | `/chayen-humanizer-th <request>` | `/chayen-humanizer-en <request>` |
 

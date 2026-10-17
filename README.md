@@ -68,7 +68,7 @@ behaves exactly as it would without Chayen.
    ```
 
 3. **Optionally name a skill explicitly**, for example
-   `/codejadee-chayen-framework:chayen-security` in Claude Code. See
+   `/chayen:chayen-security` in Claude Code. See
    [docs/AUTOMATIC_SKILL_DISCOVERY.md](docs/AUTOMATIC_SKILL_DISCOVERY.md).
 
 The full walkthrough is in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).

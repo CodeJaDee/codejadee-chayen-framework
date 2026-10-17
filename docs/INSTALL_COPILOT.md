@@ -6,8 +6,8 @@ separate surfaces, and each is described on its own below.
 | Item | Value |
 |---|---|
 | Marketplace name | `codejadee` |
-| Plugin | `codejadee-chayen-framework` |
-| Install identifier | `codejadee-chayen-framework@codejadee` |
+| Plugin | `chayen` |
+| Install identifier | `chayen@codejadee` |
 | Marketplace file | `.github/plugin/marketplace.json`. Copilot reads it before `.claude-plugin/marketplace.json`, which describes the same plugin. |
 | Plugin manifest | `plugins/codejadee-chayen-framework/plugin.json` (Agent Plugins 1.0). This takes precedence over `.claude-plugin/plugin.json`. |
 | Surfaces | Copilot CLI; VS Code with GitHub Copilot Chat |
@@ -25,7 +25,7 @@ Use Copilot CLI runtime **1.0.91 or later**: `plugin enable` and
 
 ```bash
 copilot plugin marketplace add CodeJaDee/codejadee-chayen-framework    # or a local clone path
-copilot plugin install codejadee-chayen-framework@codejadee              # "Installed 15 skills" expected
+copilot plugin install chayen@codejadee              # "Installed 15 skills" expected
 copilot plugin list
 copilot skill list                                                      # the chayen-* skills
 ```
@@ -42,10 +42,10 @@ The writing skills are described in [WRITING_AND_EDITING.md](WRITING_AND_EDITING
 **Disable, update, uninstall:**
 
 ```bash
-copilot plugin disable codejadee-chayen-framework@codejadee
-copilot plugin enable  codejadee-chayen-framework@codejadee
-copilot plugin update  codejadee-chayen-framework            # or: copilot plugin update --all
-copilot plugin uninstall codejadee-chayen-framework
+copilot plugin disable chayen@codejadee
+copilot plugin enable  chayen@codejadee
+copilot plugin update  chayen            # or: copilot plugin update --all
+copilot plugin uninstall chayen
 copilot plugin marketplace remove codejadee
 ```
 
@@ -56,6 +56,24 @@ disabled it. Run `copilot plugin list` afterwards to confirm.
 Chayen skill (for example `chayen-backend`), Copilot uses yours and silently
 drops the plugin's. Chayen's `chayen-` prefix avoids this unless you reuse
 that name.
+
+## Renamed from codejadee-chayen-framework
+
+Until 2026-10-17 the plugin was named `codejadee-chayen-framework`. It is now
+`chayen` (D-059), so installs made under the old name must be replaced. The
+repository, the marketplace name `codejadee` and the plugin folder
+(`plugins/codejadee-chayen-framework/`) are unchanged. These commands follow
+the documented CLI syntax but have **not yet been run** for this rename.
+
+```bash
+copilot plugin uninstall codejadee-chayen-framework
+copilot plugin install chayen@codejadee
+copilot plugin list                   # only chayen should remain; a local-folder uninstall may only disable the old one
+```
+
+In VS Code, uninstall the old entry from **Agent Plugins – Installed** and
+install `chayen`. Explicit invocation (`/chayen-<skill>`) is unchanged,
+because Copilot does not prefix skills with the plugin name.
 
 ## VS Code (GitHub Copilot Chat)
 
@@ -71,7 +89,7 @@ defaults to `true` in VS Code 1.141.1, but an organisation policy
 
    For a local clone, use a `file:///` URL. VS Code reads
    `.github/plugin/marketplace.json` from the repository.
-2. **Install** `codejadee-chayen-framework`, either from the Extensions view
+2. **Install** `chayen`, either from the Extensions view
    (search `@agentPlugins`) or with **Chat: Install Plugin From Source**.
 3. **Check** that the `chayen-*` skills appear in the **Configure Skills**
    menu.
@@ -81,7 +99,7 @@ defaults to `true` in VS Code 1.141.1, but an organisation policy
    - **Update** with **Extensions: Check for Extension Updates**, or wait
      for the automatic 24-hour check when `extensions.autoUpdate` is on.
    - In chat, `/plugin enable|disable|update|uninstall
-     codejadee-chayen-framework` also works.
+     chayen` also works.
    - A plugin installed directly from Git can only be uninstalled, not
      disabled.
 

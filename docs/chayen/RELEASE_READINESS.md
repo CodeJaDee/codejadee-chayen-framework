@@ -4,6 +4,7 @@
 |---|---|
 | Current assessment | **Step 41**, 2026-10-17: Multilingual Humanizer release candidate |
 | Candidate | Current tree on `main` after `e921df1` plus Step 41 documentation (uncommitted). 15 Entry Skills. Manifests still `0.1.0-dev`; `0.1.0-rc.1` proposed (D-058), not applied. |
+| Plugin identifier | `chayen` since 2026-10-17 (D-059; was `codejadee-chayen-framework`); install `chayen@codejadee`; repository name unchanged |
 | Recommendation | **NO-GO** for public release. **CONDITIONAL GO** for a limited internal pilot, with the writing skills and the response style policy labelled experimental (§8). |
 | Decision owner | Project owner. **No release action was taken**: nothing committed, pushed, tagged, published or submitted. |
 | Evidence | [HUMANIZER_EVALUATION_REPORT.md](HUMANIZER_EVALUATION_REPORT.md) · [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) · [ACCEPTANCE_MATRIX.md](ACCEPTANCE_MATRIX.md) · [PROGRESS.md](PROGRESS.md) Step 41 · [../distribution/RELEASE_CHECKLIST.md](../distribution/RELEASE_CHECKLIST.md) |

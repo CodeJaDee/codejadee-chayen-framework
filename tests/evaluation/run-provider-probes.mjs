@@ -66,6 +66,8 @@ else {
   before = treeHash();
 }
 const pluginDir = inside(repo, "plugins/codejadee-chayen-framework");
+// Claude Code namespaces skills by the manifest name (D-059: `chayen`), not by the directory name.
+const pluginName = JSON.parse(fs.readFileSync(path.join(pluginDir, "plugin.json"), "utf8")).name;
 // Routing runs may be pooled only when every skill description is identical (see tests/evaluation/README.md).
 const metadataFingerprint = prior ? prior.metadataFingerprint : (() => { const h = crypto.createHash("sha256"), d = path.join(pluginDir, "skills"); for (const n of fs.readdirSync(d).sort()) { const f = path.join(d, n, "SKILL.md"); if (fs.existsSync(f)) h.update(`${n}\0${/^description:\s*(.*)$/m.exec(fs.readFileSync(f, "utf8"))?.[1] ?? ""}\0`); } return h.digest("hex").slice(0, 16); })();
 
@@ -83,7 +85,7 @@ const { cmd, pre } = resolveCommand(provider);
 
 function argsFor(p) {
   if (provider === "claude") {
-    const prompt = p.mode === "explicit" ? `/codejadee-chayen-framework:${p.skill} ${p.prompt}` : p.prompt;
+    const prompt = p.mode === "explicit" ? `/${pluginName}:${p.skill} ${p.prompt}` : p.prompt;
     return ["-p", prompt, "--plugin-dir", pluginDir, "--setting-sources", "project", "--allowedTools", "Read,Glob,Grep,Skill",
       "--output-format", "stream-json", "--verbose", "--no-session-persistence", "--max-turns", "10"];
   }

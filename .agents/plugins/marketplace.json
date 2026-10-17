@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "codejadee-chayen-framework",
+      "name": "chayen",
       "source": {
         "source": "local",
         "path": "./plugins/codejadee-chayen-framework"

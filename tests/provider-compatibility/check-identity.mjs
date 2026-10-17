@@ -12,10 +12,12 @@ const out = { checks: [] };
 const check = (id, ok, detail) => out.checks.push({ id, result: ok ? "PASS" : "FAIL", detail });
 
 const mps = { claude: ".claude-plugin/marketplace.json", codex: ".agents/plugins/marketplace.json", copilot: ".github/plugin/marketplace.json" };
+// The plugin identifier comes from the manifest (D-059: `chayen`); the directory keeps the repository name.
+const pluginName = j("plugins/codejadee-chayen-framework/plugin.json").name;
 const pluginDirs = new Set(), entryNames = [];
 for (const [prov, f] of Object.entries(mps)) {
   const m = j(f);
-  const entries = m.plugins.filter((p) => p.name === "codejadee-chayen-framework");
+  const entries = m.plugins.filter((p) => p.name === pluginName);
   check(`IC-01 ${prov} marketplace has exactly one entry`, entries.length === 1 && m.plugins.length === 1, `${f}: name=${m.name}, entries=${m.plugins.length}`);
   const src = typeof entries[0].source === "string" ? entries[0].source : entries[0].source.path;
   pluginDirs.add(path.resolve(repo, src));

@@ -5,6 +5,7 @@
 | Field | Value |
 |---|---|
 | Last executed step | 41 — Documentation and release readiness (Steps 37–40 recorded below; Step 40 committed as `e921df1`) |
+| Owner follow-up D-059 | DONE (2026-10-17): plugin identifier renamed `codejadee-chayen-framework` → `chayen` (owner: rename the plugin, not the repository). Claude Code skills now `/chayen:<skill>`, install `chayen@codejadee`; repository, URLs, marketplace name, plugin directory, skill names and version unchanged. validate-all 13/13, identity 15/15, `claude plugin validate --strict` plugin + marketplace PASS. Host install and migration NOT_RUN. |
 | Step 41 status | DONE (pending Product Owner approval): user, install and release documents updated for 15 skills; new writing guide; A/B/C policy setups separated; upstream MIT licence fetched and byte-identical to the shipped notice; version `0.1.0-rc.1` proposed (D-058) and not applied; DF-06/DF-07 resolved; offline gates PASS. Recommendation NO-GO public / CONDITIONAL GO internal pilot. No provider call, user configuration change, commit or release. |
 | Step 40 status | PARTIAL (pending owner review; D-057 PROPOSED): offline evidence only. validate-all 13/13 groups PASS (new G-17: 120-case dataset and 52 probes valid, 56/56 scorer controls); engineering skills, manifests, marketplaces and catalogs byte-identical to baseline `1106226`; provider matrix for six surfaces with no VERIFIED cell. Discovery, policy arms A/B/C, language quality, host lifecycle and human review NOT_RUN (not authorized / no reviewer; R-61). No commit; Step 41 not started. |
 | Step 39 status | DONE (pending owner review; D-056 PROPOSED, ADR-0010 A + B accepted by instruction, inferred): canonical policy and Copilot template outside the package, user guide, host research with a documented-versus-tested matrix, read-only setup helper; validate-all 12/12 groups PASS (179/179 self-tests incl. 14 response-style controls; G-16T 19/19 fixtures). Host loading, behavior, lifecycle and plugin-uninstall tests NOT_RUN (R-60). No user or repository instruction file changed. |
@@ -4760,3 +4761,44 @@ Scripts were already inspected in Step 40; the only script change is the G-15E l
 
 STOP after Step 41. No commit, push, tag, publication, release, provider call or user
 configuration change. Waiting for Product Owner approval; no further step is started.
+
+## Owner follow-up — plugin identifier renamed to `chayen` (D-059)
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Authorization:** owner instruction after installing the plugin: "เปลี่ยนชื่อ Plugin ได้เลย แต่ห้ามแก้ชื่อ Repo" (rename the plugin; do not rename the repository), following the request to shorten `/codejadee-chayen-framework:<skill>` to `/chayen…`.
+- **Status:** DONE. Not a numbered step; Step 41 remains the last executed step.
+- **Research:** Claude Code docs (read 2026-10-17 through the claude-code-guide agent): the namespace is the manifest `name`; `displayName` does not affect it; no alias mechanism; bare plugin-skill invocation is undocumented.
+
+| Changed | Unchanged |
+|---|---|
+| `name` → `chayen` in both manifests and all three marketplace entries; install identifier `chayen@codejadee`; Claude Code invocation `/chayen:<skill>` | Repository name, `homepage`/`repository` URLs, marketplace name `codejadee`, directory `plugins/codejadee-chayen-framework/`, the 15 skill names, version `0.1.0-dev`, catalogs, skill content |
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Modified | `plugins/codejadee-chayen-framework/plugin.json`, `.claude-plugin/plugin.json`, `README.md` (title and rename note) |
+| Modified | `.claude-plugin/marketplace.json`, `.agents/plugins/marketplace.json`, `.github/plugin/marketplace.json` |
+| Modified | `README.md`, `CHANGELOG.md` (Changed entry), `docs/INSTALL_CLAUDE_CODE.md`, `INSTALL_CODEX.md`, `INSTALL_COPILOT.md` (identifiers and a "Renamed from" migration section each), `GETTING_STARTED.md`, `AUTOMATIC_SKILL_DISCOVERY.md`, `COMPATIBILITY_MATRIX.md`, `WRITING_AND_EDITING.md`, `docs/distribution/MARKETPLACE_LISTINGS.md`, `RELEASE_METADATA.md` |
+| Modified | `tests/provider-compatibility/README.md`, `claude-code-vscode.md`, `copilot-vscode.md`, `run-lifecycle.sh`, `check-identity.mjs` (name read from the manifest); `tests/evaluation/run-provider-probes.mjs` (explicit prefix read from the manifest); `tests/routing/smoke-cases.json`; `tests/skills/validator-mutations.json` (3 cases); `tools/evals/run-evaluation-suite.mjs` (provider-syntax scan covers both prefixes); `tools/validate/check-docs.mjs` (old identifier allowed only as migration text) |
+| Modified | `docs/chayen/DECISIONS.md` (D-014 amendment note, D-059), `ISSUES.md` (Q-03), `ADRS/ADR-0008-packaging-and-marketplace-strategy.md`, `ARCHITECTURE.md`, `PLUGIN_PACKAGE_DESIGN.md` (amendment notes), `RELEASE_READINESS.md`, `ACCEPTANCE_MATRIX.md`, `PROGRESS.md` |
+| Not changed | Historical step records and recorded results keep the old name |
+
+### Actual verification
+
+| Command | Result |
+|---|---|
+| Review of every added line of the rename diff | Only plugin-identifier uses changed; repository name, URLs and paths kept |
+| `node tests/provider-compatibility/check-identity.mjs` | PASS 15/15 |
+| `claude plugin validate --strict plugins/codejadee-chayen-framework`; `claude plugin validate --strict .` (Claude Code 2.1.220; file validation, no model call) | Both "Validation passed" |
+| `node tools/validate/check-docs.mjs` | PASS: 20 documents, 0 errors |
+| `node --check tests/evaluation/run-provider-probes.mjs`; `bash -n tests/provider-compatibility/run-lifecycle.sh`; probe runner without `--allow-provider-calls` | PASS; PASS; exit 2 (refused, no call) |
+| `node tools/validate/validate-all.mjs` | PASS, exit 0: 13/13 groups, 179/179 validator self-tests |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | PASS: identity, 206/108/12 traceability, handoff 253 files / provider syntax 0 |
+
+| Not run | Reason |
+|---|---|
+| Uninstall of the old identifier and install of `chayen@codejadee` on any host | Changes the owner's real configuration; left to the owner (commands in the install guides) |
+| A `renames` migration map | Support in Claude Code 2.1.220 and in V-01a is unverified; pre-release with one known install |
+
+No commit, push, tag or release.

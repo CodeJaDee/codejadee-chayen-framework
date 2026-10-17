@@ -94,6 +94,7 @@
 >
 > **Step 04 amendments:**
 > - The plugin is implemented as `codejadee-chayen-framework` (D-014).
+>   **Amended by D-059 (2026-10-17):** the plugin identifier is now `chayen`; the repository name and the directory `plugins/codejadee-chayen-framework/` are unchanged.
 > - Each provider has its own native marketplace file (D-013). In C-02, the
 >   `.agents/plugins/marketplace.json` row is no longer conditional, and
 >   `.github/plugin/marketplace.json` has been added for Copilot.

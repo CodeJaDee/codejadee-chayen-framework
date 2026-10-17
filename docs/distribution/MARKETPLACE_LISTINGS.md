@@ -9,7 +9,7 @@
 
 ## Shared listing text
 
-**Name:** codejadee-chayen-framework (display name: *Chayen by CodeJaDee*;
+**Name:** chayen (display name: *Chayen by CodeJaDee*;
 the publisher name needs confirmation)
 
 **Short description (≤120 characters):**
@@ -53,7 +53,7 @@ devops, writing, thai, english
 | Item | Value |
 |---|---|
 | Distribution | Repository marketplace: `.claude-plugin/marketplace.json` (name `codejadee`) |
-| Install | `claude plugin marketplace add <owner/repo or path>`, then `claude plugin install codejadee-chayen-framework@codejadee` |
+| Install | `claude plugin marketplace add <owner/repo or path>`, then `claude plugin install chayen@codejadee` |
 | Entry `description` | Current manifest description, or the proposed one in [RELEASE_METADATA.md](RELEASE_METADATA.md) |
 | Validation | `claude plugin validate --strict` on the plugin and the marketplace (both PASS) |
 | Directory submission | Not planned without approval. Requirements must be checked against Anthropic's documentation at submission time. |
@@ -64,7 +64,7 @@ devops, writing, thai, english
 | Item | Value |
 |---|---|
 | Distribution | Repository marketplace: `.agents/plugins/marketplace.json` (`interface.displayName` "CodeJaDee", `policy.installation` AVAILABLE, `policy.authentication` ON_INSTALL, category Productivity) |
-| Install | `codex plugin marketplace add <owner/repo or path>`, then `codex plugin add codejadee-chayen-framework@codejadee` or `/plugins` |
+| Install | `codex plugin marketplace add <owner/repo or path>`, then `codex plugin add chayen@codejadee` or `/plugins` |
 | Manifest | Agent Plugins `plugin.json`. No `extensions.com.openai` block, because none is needed for skills. |
 | Surfaces to state | Codex CLI and ChatGPT desktop app. **Not** the Codex IDE extension. |
 | Directory or workspace publication | Not planned without approval. Fields required by OpenAI's directory must be checked at submission time; do not pre-fill them with invented values. |
@@ -75,7 +75,7 @@ devops, writing, thai, english
 | Item | Value |
 |---|---|
 | Distribution | Repository marketplace: `.github/plugin/marketplace.json` (name `codejadee`, entry version must match the manifests) |
-| Install (CLI) | `copilot plugin marketplace add <owner/repo or path>`, then `copilot plugin install codejadee-chayen-framework@codejadee` (runtime 1.0.91 or later for enable/disable) |
+| Install (CLI) | `copilot plugin marketplace add <owner/repo or path>`, then `copilot plugin install chayen@codejadee` (runtime 1.0.91 or later for enable/disable) |
 | Install (VS Code) | `"chat.plugins.marketplaces": ["<owner/repo>"]`, then Extensions `@agentPlugins` or **Chat: Install Plugin From Source** |
 | Default-marketplace listing (`awesome-copilot`, `copilot-plugins`) | Not planned without approval. It would need a public repository. |
 | Blockers | Licence, public URL, publisher identity. VS Code behaviour is untested. |

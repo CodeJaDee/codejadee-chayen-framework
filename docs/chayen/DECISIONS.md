@@ -143,6 +143,7 @@ Decision statuses:
 ### D-014 — Plugin identity
 - **Status:** ACCEPTED for the plugin identifier, which the user specified.
   The marketplace name is PROPOSED.
+- **Amended by D-059 (2026-10-17):** the plugin identifier is now `chayen`; the repository name and the directory `plugins/codejadee-chayen-framework/` are unchanged.
 - **Decision:**
   - Plugin `name` is `codejadee-chayen-framework` in both manifests and all
     three marketplace entries.
@@ -1362,6 +1363,30 @@ Decision statuses:
 - **Alternatives:** keep `0.1.0-dev` (stale installs continue); jump to
   `0.2.0` (implies a prior `0.1.0` release that never happened).
 - **Details:** [docs/distribution/RELEASE_METADATA.md](../distribution/RELEASE_METADATA.md#step-41-version-proposal-d-058-proposed-not-applied).
+
+### D-059 — Plugin identifier renamed to `chayen`
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-17: "เปลี่ยนชื่อ Plugin ได้เลย แต่ห้ามแก้ชื่อ Repo"). Amends D-014.
+- **Context:** Claude Code namespaces plugin skills by the manifest `name`, so every
+  skill appeared as `/codejadee-chayen-framework:<skill>`. The documented way to
+  shorten the prefix is the manifest `name`; `displayName` does not affect
+  namespacing, and no alias mechanism is documented (Claude Code docs, read 2026-10-17).
+- **Decision:** plugin `name` is `chayen` in both manifests and all three marketplace
+  entries, so Claude Code shows `/chayen:<skill>`; install identifier `chayen@codejadee`.
+  Unchanged: the repository name `codejadee-chayen-framework`, `homepage` and
+  `repository` URLs, the marketplace name `codejadee`, the directory
+  `plugins/codejadee-chayen-framework/`, the 15 skill names (their `chayen-` prefix
+  still prevents silent same-name collisions in Copilot) and the version `0.1.0-dev`
+  (D-058 still PROPOSED). Codex (`$chayen-<skill>`) and Copilot (`/chayen-<skill>`)
+  invocation is unaffected.
+- **Migration:** no `renames` map was added (its support in the installed Claude Code
+  2.1.220 and in V-01a is unverified); users uninstall the old identifier and install
+  `chayen@codejadee`, as the install guides describe. Pre-release, private repository.
+- **Tooling:** `check-identity.mjs` and `run-provider-probes.mjs` read the name from the
+  manifest; the evaluation suite's provider-syntax scan covers both prefixes; three
+  validator mutations use the new name; `check-docs.mjs` allows the old identifier only
+  as migration text. Historical step records keep the old name.
+- **Not verified:** install, invocation and migration under the new name on any host.
 
 ## Architecture assumptions (checked in Step 02)
 

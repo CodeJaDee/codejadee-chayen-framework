@@ -18,6 +18,7 @@ Working names (Q-03 pending): plugin `codejadee-chayen`, marketplace
 > **Step 04 amendments.** As implemented, the plugin identifier and its
 > directory are `codejadee-chayen-framework` (D-014). Read every
 > `codejadee-chayen` below as that name.
+> **Amended by D-059 (2026-10-17):** the plugin identifier is now `chayen`; the repository name and the directory `plugins/codejadee-chayen-framework/` are unchanged.
 >
 > The repository also ships `.github/plugin/marketplace.json` (Copilot) and
 > `.agents/plugins/marketplace.json` (Codex) next to

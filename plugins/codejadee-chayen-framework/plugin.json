@@ -1,6 +1,6 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "codejadee-chayen-framework",
+  "name": "chayen",
   "version": "0.1.0-dev",
   "description": "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.",
   "author": {

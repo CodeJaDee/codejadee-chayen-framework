@@ -7,7 +7,7 @@
   },
   "plugins": [
     {
-      "name": "codejadee-chayen-framework",
+      "name": "chayen",
       "source": "./plugins/codejadee-chayen-framework",
       "description": "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks."
     }

@@ -6,8 +6,8 @@ script is involved.
 | Item | Value |
 |---|---|
 | Marketplace name | `codejadee` |
-| Plugin | `codejadee-chayen-framework` |
-| Install identifier | `codejadee-chayen-framework@codejadee` |
+| Plugin | `chayen` |
+| Install identifier | `chayen@codejadee` |
 | Marketplace file | `.claude-plugin/marketplace.json` |
 | Plugin manifest | `plugins/codejadee-chayen-framework/.claude-plugin/plugin.json` |
 | Surfaces | Terminal CLI and the VS Code extension. They share the same settings files. |
@@ -30,11 +30,11 @@ claude plugin marketplace add CodeJaDee/codejadee-chayen-framework
 claude plugin marketplace add /path/to/codejadee-chayen-framework
 
 # 2. Install the plugin (user scope by default; --scope project|local also exist)
-claude plugin install codejadee-chayen-framework@codejadee
+claude plugin install chayen@codejadee
 
 # 3. Check it
-claude plugin list                                   # codejadee-chayen-framework, enabled
-claude plugin details codejadee-chayen-framework     # Skills (15), no hooks, MCP servers, agents or LSP servers
+claude plugin list                                   # chayen, enabled
+claude plugin details chayen     # Skills (15), no hooks, MCP servers, agents or LSP servers
 ```
 
 Inside a session, `/plugin` opens the same marketplace and plugin browser.
@@ -44,9 +44,26 @@ Inside a session, `/plugin` opens the same marketplace and plugin browser.
 1. Open the Claude Code panel and type `/plugins`. Choose **Manage plugins**.
 2. On **Marketplaces**, add `CodeJaDee/codejadee-chayen-framework` (needs
    repository access) or the path of a local clone.
-3. On **Plugins**, find `codejadee-chayen-framework` and install it.
+3. On **Plugins**, find `chayen` and install it.
 
 An install made in the CLI also appears in the extension, and the reverse.
+
+## Renamed from codejadee-chayen-framework
+
+Until 2026-10-17 the plugin was named `codejadee-chayen-framework`. It is now
+`chayen` (D-059), so installs made under the old name must be replaced. The
+repository, the marketplace name `codejadee` and the plugin folder
+(`plugins/codejadee-chayen-framework/`) are unchanged. These commands follow
+the documented CLI syntax but have **not yet been run** for this rename.
+
+```bash
+claude plugin uninstall codejadee-chayen-framework@codejadee
+claude plugin marketplace update codejadee
+claude plugin install chayen@codejadee                # skills now appear as /chayen:<skill>
+```
+
+Restart Claude Code (or the VS Code window) afterwards. In VS Code you can do
+the same from **Manage plugins**.
 
 ## Use
 
@@ -56,9 +73,9 @@ An install made in the CLI also appears in the extension, and the reverse.
 - **Explicit invocation.** Type `/` to list the skills, or name one directly:
 
   ```text
-  /codejadee-chayen-framework:chayen-security Review this controller for injection risks.
-  /codejadee-chayen-framework:chayen-humanizer-th เกลาย่อหน้านี้ให้อ่านเป็นธรรมชาติ ห้ามเปลี่ยนตัวเลข
-  /codejadee-chayen-framework:chayen-humanizer-en Audit this blog intro for stock phrasing. Don't rewrite it.
+  /chayen:chayen-security Review this controller for injection risks.
+  /chayen:chayen-humanizer-th เกลาย่อหน้านี้ให้อ่านเป็นธรรมชาติ ห้ามเปลี่ยนตัวเลข
+  /chayen:chayen-humanizer-en Audit this blog intro for stock phrasing. Don't rewrite it.
   ```
 
   The writing skills are described in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
@@ -79,13 +96,13 @@ removal are in [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
 ## Disable, enable, update, uninstall
 
 ```bash
-claude plugin disable codejadee-chayen-framework@codejadee   # skills stop loading; plugin stays installed
-claude plugin enable  codejadee-chayen-framework@codejadee
+claude plugin disable chayen@codejadee   # skills stop loading; plugin stays installed
+claude plugin enable  chayen@codejadee
 
 claude plugin marketplace update codejadee                    # refresh the marketplace
-claude plugin update codejadee-chayen-framework@codejadee     # then restart Claude Code
+claude plugin update chayen@codejadee     # then restart Claude Code
 
-claude plugin uninstall codejadee-chayen-framework@codejadee
+claude plugin uninstall chayen@codejadee
 claude plugin marketplace remove codejadee                    # optional; also removes plugins from it
 ```
 
