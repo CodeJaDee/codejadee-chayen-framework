@@ -4,7 +4,9 @@
 
 | Field | Value |
 |---|---|
-| Last executed step | 34 — Final independent completeness audit |
+| Last executed step | 35 — Multilingual Humanizer governance and architecture |
+| Owner follow-up | D-051 ACCEPTED (2026-10-17): increase Entry Skill ceiling to 25, implemented in the package and catalog count validators. Actual 13; target 15; L0 remains 5,500. The original Step 35 evidence below is a historical snapshot; follow-up evidence is logged separately at the end. Step 36 remains NOT_STARTED. |
+| Step 35 status | DONE for governance (pending Product Owner review): impact analysis, ADR-0009–ADR-0011 PROPOSED, MHR-001–MHR-012 PLANNED, Steps 35–41 planned. D-047 scope ACCEPTED; D-048–D-050 mechanisms PROPOSED. Read-only structural/documentation checks recorded in Step 35 below; no Skills, host integration, configuration, catalog, validator or manifest change. |
 | Step 34 status | DONE: audit complete. Recommendation NO-GO public / CONDITIONAL-GO internal pilot. All 26 automated runs exit 0 (facts 107/0/52); independent audit clean; Step 32 records reproduced 30/30; Run C 9/13; pooled automatic routing 12/22, no-match 12/12. EX-01..EX-07 VERIFIED; charter criteria 1–2 NOT MET, 3 PARTIAL, 4 MET. Awaiting owner. |
 | Step 33 status | DONE (pending review): user docs (README, SECURITY, CHANGELOG, 11 docs/ guides), release metadata, marketplace listing drafts, licence proposal and release checklist in docs/distribution/; G-14 docs gate PASS (18 files, 5/5 negative controls); 9 gate groups PASS. Not released: licence, publisher identity, public URL and security contact pending owner (R-56); version unchanged (R-54). |
 | Step 32 status | DONE for the executable scope (pending review): suite over 15 categories and 4 evidence levels; static/traceability PASS (206/206, 108/108, 12/12, 11/11 routing examples); facts 107/0/52; Claude Code probes 31 billed runs, positive routing 14/20, no-match 8/8, precision 14/14, references 8/16, verification evidence 3/10. Copilot/Codex/VS Code/plugin-eval NOT_RUN. Path guard added to 13 skills (D-046). No VERIFIED promotion (R-55). |
@@ -37,7 +39,7 @@
 | Step 01 status | DONE (pending user review) |
 | Step 02 status | DONE (pending user review; D-009 PROPOSED) |
 | Step 03 status | DONE (pending user review; ADR-0003/0004/0006/0007/0008 PROPOSED) |
-| Next step | STOP after STEP 34; awaiting project-owner approval. See RELEASE_READINESS.md §3 (path to GO) and §4 (pilot conditions). Blockers: R-56, R-53, R-54, untested Codex/Copilot/VS Code, routing 55% (R-55); DF-03 for owner. |
+| Next step | STOP after STEP 35; await Product Owner review of ADR-0009–ADR-0011 / R-57. Step 36 is NOT_STARTED and requires a separate instruction. Prior release blockers R-53–R-56 and DF-03 remain open; Step 35 does not change the Step 34 release recommendation. |
 | Commits made by agent | None |
 
 ---
@@ -3575,3 +3577,274 @@ install, Copilot, Codex, VS Code and `claude plugin eval` were NOT_RUN
 
 Audit logs, raw transcripts and fact JSON stay in session scratch. STOP
 after STEP 34; awaiting project-owner approval.
+
+## Step 35 — Multilingual Humanizer governance and architecture
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** DONE for Step 35 governance; pending Product Owner review.
+- **Baseline:** clean `main`, commit `1106226`; no unrelated uncommitted work.
+- **Scope:** only governance/documentation. Product implementation is PLANNED.
+
+### Architecture impact and decisions
+
+Approved scope (D-047) adds Thai/English editorial Skills and a target of 15,
+ordinary-response multilingual guidance, existing-provider compatibility and
+preservation of all engineering/technology/workflow coverage. Architecture
+mechanisms remain PROPOSED in D-048–D-050 and ADR-0009–ADR-0011. Numbers
+0009–0011 were unused before creation; no previous ADR status was changed.
+
+Key conflicts: ≤14 Entry Skills; L0 5,485/5,500 with only 15 characters free;
+engineering-only catalog ownership; ADR-0002/0003/D-007 zero always-on and
+REQ-04 no-match behavior; ADR-0006 metadata-only portability. Proposed remedies
+are ≤15 and L0 ≤6,500, a separate editorial registry, and explicitly scoped
+opt-in style-only/host-documentation exceptions. None is applied to tooling,
+package or existing constraints in this step. The 6,500 budget is an estimate
+pending approval/measurement, not a host capacity claim.
+
+Native Plugin + Opt-in Host Persistent Instructions is the preferred initial
+proposal. A (native Skill discovery), B (opt-in host guidance) and C (strict
+install-only guaranteed always-on) are explicitly separate. C is UNVERIFIED
+and not claimed supported. Guidance remains advisory; native permissions and
+higher-priority rules retain authority. Host integration and all new behavior
+remain unverified. R-57 records review dependencies; R-53–R-56 and Step 34's
+release recommendation remain unchanged.
+
+MHR-001–MHR-012 cover the two Skills, intended output language, audit/rewrite,
+website copy, terminology, semantic/factual fidelity, persistent guidance,
+host compatibility, opt-in/disable/rollback, human quality, engineering
+regressions and security/permissions. Every MHR is PLANNED and every MH-V
+behavior method is NOT_RUN. Acceptance summary totals were recomputed from
+rows (98 total, 13 PLANNED, 19 IN_PROGRESS, 59 IMPLEMENTED, 7 VERIFIED), including
+already-existing GOV-18 and Step 34's seven VERIFIED exclusions. No legacy
+requirement row/status or historical step body was rewritten.
+
+### File ledger (Step 35 only)
+
+| Action | Path |
+|---|---|
+| Created | `docs/chayen/HUMANIZER_ARCHITECTURE_IMPACT.md` |
+| Created | `docs/chayen/HUMANIZER_REQUIREMENTS.md` |
+| Created | `docs/chayen/ADRS/ADR-0009-multilingual-editorial-skills.md` |
+| Created | `docs/chayen/ADRS/ADR-0010-persistent-multilingual-response-style-policy.md` |
+| Created | `docs/chayen/ADRS/ADR-0011-multilingual-quality-and-safety.md` |
+| Modified | `docs/chayen/ADRS/README.md` |
+| Modified | `docs/chayen/PROJECT_CHARTER.md` |
+| Modified | `docs/chayen/ARCHITECTURE.md` |
+| Modified | `docs/chayen/DECISIONS.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md` |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` |
+| Modified | `docs/chayen/ISSUES.md` |
+| Modified | `docs/chayen/SKILL_AUTHORING_STANDARD.md` |
+| Modified | `docs/chayen/SKILL_QUALITY_GATES.md` |
+| Modified | `docs/chayen/PROGRESS.md` |
+| Deleted | None |
+
+### Read-only verification — actual commands and results
+
+Inspected validator entry points, imports, write switches and aggregate-runner
+side effects first. `check-docs.mjs` covers user/release documentation only,
+not `docs/chayen/`; the inline governance check below covers changed governance
+documents separately. No `--write-doc`, `--write-report`, eval generation,
+staging or mutation runner was used. Node is absent from PATH: initial
+`node --version` failed with CommandNotFoundException. The existing executable
+`C:\Program Files\nodejs\node.exe` was located without installation; direct
+`--version` returned v24.22.0. This environment correction changed no config.
+
+In the commands below, `$taskNode = 'C:\Program Files\nodejs\node.exe'`.
+
+| Command | Actual result |
+|---|---|
+| `& $taskNode tools/validate/check-security.mjs` | PASS, exit 0: V-25, 238 package files, 13 entries, 221 references, 68 developer assets, 32 fixture dependency references, 0 errors. Static only. |
+| `& $taskNode tools/validate/validate-package.mjs` | PASS, exit 0: 13 Skills, L0 5,485/5,500, 221 references, 117 recipes / 206 capabilities, 445 recipe cases. 0 errors; five existing >200-line target warnings (backend 219, data 205, devops 209, frontend 223, implementation 217), all below 300 hard limit. |
+| `& $taskNode tools/catalog/check-catalog.mjs` | PASS, exit 0: 206 unique capabilities / 20 domains, all IMPLEMENTED, 13 existing Skills, inventory fingerprint `2f13cad24ff431e3` unchanged. |
+| `& $taskNode tools/catalog/check-technology.mjs` | PASS, exit 0: 108 records, 295 case specifications, coverage tables synchronized. No runtime facts executed. |
+| `& $taskNode tools/catalog/check-workflows.mjs` | PASS, exit 0: 12 workflows, seven formats, 47 case specifications, coverage synchronized. Static only. |
+| `& $taskNode tools/evals/generate-claude-evals.mjs --check` | PASS, exit 0: 186 cases / 441 files synchronized; no provider call. |
+| `& $taskNode tools/validate/check-docs.mjs` | PASS, exit 0: 18 user/release documents, 0 errors; external links not fetched. |
+| Inline governance check below, piped to `& $taskNode -` | PASS, exit 0: 15 changed governance files, 116 relative links/anchors, 12 MHR rows, 105 legacy table lines preserved, 0 errors. New ADRs remain PROPOSED; Steps 35–41 present; prior step history and implementation surfaces preserved; no Humanizer directories created. |
+| `git diff --check` | PASS, exit 0; no whitespace errors. |
+
+### Reproducible governance check
+
+The following is a read-only documentation check, not shipped tooling. Run the
+exact block with this PowerShell command (Node path defined above):
+
+```powershell
+$taskCheck = [regex]::Match((Get-Content docs/chayen/PROGRESS.md -Raw -Encoding utf8), '(?s)<!-- STEP35-CHECK -->\r?\n```javascript\r?\n(.*?)\r?\n```').Groups[1].Value
+$taskCheck | & $taskNode -
+```
+
+<!-- STEP35-CHECK -->
+```javascript
+const fs = require('node:fs'), path = require('node:path');
+const { execFileSync } = require('node:child_process');
+const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
+const files = [...new Set((git('diff', '--name-only', '--', 'docs/chayen') + '\n' + git('ls-files', '--others', '--exclude-standard', '--', 'docs/chayen')).split(/\r?\n/).filter(Boolean))];
+const read = f => fs.readFileSync(f, 'utf8');
+const errors = []; let links = 0;
+function anchors(file) {
+  const seen = new Map(), result = new Set();
+  for (const m of read(file).replace(/```[\s\S]*?```/g, '').matchAll(/^#{1,6}\s+(.+?)\s*#*\s*$/gm)) {
+    const base = m[1].replace(/`/g, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').toLowerCase().trim().replace(/[^\p{L}\p{N}\s_-]/gu, '').replace(/\s/g, '-');
+    const n = seen.get(base) ?? 0; seen.set(base, n + 1); result.add(n ? `${base}-${n}` : base);
+  }
+  return result;
+}
+for (const file of files) for (const m of read(file).replace(/```[\s\S]*?```/g, '').matchAll(/\[[^\]]*\]\(([^)\s]+)\)/g)) {
+  if (/^(https?:|mailto:)/.test(m[1])) continue;
+  const [rel, anchor] = m[1].split('#'), dest = rel ? path.resolve(path.dirname(file), decodeURI(rel)) : path.resolve(file);
+  if (!fs.existsSync(dest) || (anchor && dest.endsWith('.md') && !anchors(dest).has(anchor.toLowerCase()))) errors.push(`${file}: ${m[1]}`);
+  links++;
+}
+const matrix = read('docs/chayen/ACCEPTANCE_MATRIX.md');
+const rows = matrix.split(/\r?\n/).filter(l => /^\| MHR-\d{3} \|/.test(l));
+if (rows.length !== 12 || rows.some((r, i) => !r.startsWith(`| MHR-${String(i + 1).padStart(3, '0')} |`) || !r.endsWith('| NOT_RUN | PLANNED |'))) errors.push('MHR identity/status');
+for (const n of ['0009', '0010', '0011']) {
+  const names = fs.readdirSync('docs/chayen/ADRS').filter(f => f.startsWith(`ADR-${n}-`));
+  if (names.length !== 1 || !read(`docs/chayen/ADRS/${names[0]}`).includes('**Status:** PROPOSED')) errors.push(`ADR ${n}`);
+}
+const plan = read('docs/chayen/IMPLEMENTATION_PLAN.md');
+for (let n = 35; n <= 41; n++) if (!plan.includes(`| ${n} |`) || !plan.includes(`### Step ${n} `)) errors.push(`Step ${n} missing`);
+const legacy = git('show', 'HEAD:docs/chayen/ACCEPTANCE_MATRIX.md').split(/\r?\n/).filter(l => /^\| (GOV|REQ|EX|PRV|STK|ARC|CAP)-/.test(l));
+if (legacy.some(l => !matrix.includes(l))) errors.push('legacy requirement changed');
+const old = git('show', 'HEAD:docs/chayen/PROGRESS.md').replace(/\r\n/g, '\n');
+if (!read('docs/chayen/PROGRESS.md').replace(/\r\n/g, '\n').includes(old.slice(old.indexOf('## Step 01')).trimEnd())) errors.push('step history changed');
+const changed = git('diff', '--name-only').split(/\r?\n/).filter(Boolean);
+if (changed.some(f => !f.startsWith('docs/chayen/')) || files.length !== 15) errors.push('change scope');
+for (const name of ['chayen-humanizer-th', 'chayen-humanizer-en']) if (fs.existsSync(`plugins/codejadee-chayen-framework/skills/${name}`)) errors.push('Skill created early');
+console.log(JSON.stringify({ files: files.length, relativeLinks: links, MHRRows: rows.length, legacyTableLinesPreserved: legacy.length, errors }));
+process.exit(errors.length ? 1 : 0);
+```
+
+### Unexecuted checks and stop
+
+| Check | Result / reason |
+|---|---|
+| `validate-all.mjs`, validator self-tests and security mutation tests | NOT_RUN: aggregate includes scratch mutation/write operations; Step 35 selected read-only checks instead. No validator source changed. |
+| Native host install/lifecycle, persistent instructions loading/rollback | NOT_RUN: no integration or user-level configuration changes in this step. |
+| Billed provider evaluations, multilingual human quality and behavior tests | NOT_RUN: not authorized in Step 35; Skills/policy are not implemented. |
+| Technology runtime facts and engineering model regressions | NOT_RUN: implementation surfaces unchanged; static inventory/sync checks only. |
+
+No commit, push, tag, publication, release, provider install or Step 36 work.
+STOP after Step 35 and wait for Product Owner review of the three proposals.
+
+## Step 35 owner follow-up — Entry Skill ceiling 25 (D-051)
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Authorization:** explicit user request to expand the ceiling to 25.
+- **Scope:** narrow count amendment within Step 35; Step 36 is not started.
+- **Status:** DONE; count amendment implemented and verified locally. Other
+  architecture proposals and Step 36 remain pending.
+
+The existing 13 Skills fit the old ≤14 ceiling, but the approved product
+target of 15 did not. Updated V-07 (`validate-package.mjs`) and V-11.3
+(`check-catalog.mjs`) to reject counts above 25. D-051 accepts that count
+amendment only; ADR-0004 records it and ADR-0009 retains PROPOSED status for
+the remaining architecture. Target stays 15, actual count stays 13; no extra
+Skills, registry, runtime, integration, provider calls or user configuration.
+
+The L0 limit remains 5,500, used 5,485. The proposed 6,500 budget is still
+pending; raising the count does not provide usable metadata headroom or
+resolve the editorial registry requirement. R-57 remains open for those
+separate dependencies and policy/quality decisions.
+
+### Follow-up file ledger (additional edits to the existing working tree)
+
+| Action | Files |
+|---|---|
+| Modified | `tools/validate/validate-package.mjs`, `tools/catalog/check-catalog.mjs`, `tools/validate/README.md` |
+| Modified | `tests/catalog/catalog-mutations.json`: rename/reword the old count-labelled case to reflect its actual capability-ownership check, without weakening the expected V-11.3 diagnostic. |
+| Modified | `docs/chayen/ADRS/ADR-0004-skill-catalog-vs-entry-skills.md`, `docs/chayen/ADRS/ADR-0009-multilingual-editorial-skills.md`, `docs/chayen/ADRS/README.md` |
+| Modified | `docs/chayen/ARCHITECTURE.md`, `docs/chayen/PROJECT_CHARTER.md`, `docs/chayen/DECISIONS.md`, `docs/chayen/HUMANIZER_ARCHITECTURE_IMPACT.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md`, `docs/chayen/ACCEPTANCE_MATRIX.md` (current count labels only; legacy status/evidence preserved), `docs/chayen/ISSUES.md` |
+| Modified | `docs/chayen/SKILL_AUTHORING_STANDARD.md`, `docs/chayen/SKILL_QUALITY_GATES.md`, `docs/chayen/PROGRESS.md` |
+| Created / deleted | None in this follow-up; the five untracked Step 35 documents already existed before this request. |
+
+The original Step 35 inline governance checker asserts that step's exact
+15-document-only change set and original requirement labels; it is retained
+as historical evidence, not presented as a passing check on this expanded
+follow-up working tree. The following boundary probe is developer-only
+verification text, not a runtime or shipped file.
+
+### Follow-up actual verification
+
+Commands use `$taskNode = 'C:\Program Files\nodejs\node.exe'` (v24.22.0).
+Existing validator/mutation sources and confined scratch cleanup were reviewed
+before execution. The explicit follow-up authorizes these count-related local
+checks, distinct from the original read-only Step 35 run.
+
+| Command | Observed result |
+|---|---|
+| `& $taskNode tools/validate/check-security.mjs` | PASS, exit 0: 238 package files, 13 entries, 221 references, 0 errors. |
+| `& $taskNode tools/validate/validate-package.mjs` | PASS, exit 0: 13 Skills, L0 5,485/5,500, 0 errors, same five line-target warnings. |
+| `& $taskNode tools/catalog/check-catalog.mjs` | PASS, exit 0: 206 capabilities / 20 domains, 13 Skills, inventory fingerprint unchanged. |
+| `& $taskNode tools/validate/run-validator-tests.mjs` | PASS, exit 0: 132/132, four baselines and 128 mutations. Run before renaming/rewording the misleading catalog fixture. |
+| `& $taskNode tools/validate/run-validator-tests.mjs --only cat-entry-skill-without-capability` | PASS after fixture clarification, exit 0: 5/5 (four baselines plus the modified case); extra Skill rejected for owning no capability. |
+| D-051 boundary probe below, extracted and piped to `& $taskNode -` | Final PASS, exit 0: 6/6 assertions. Both validators omit count-overflow at 25 and report it at 26; L0 overflow remains independently detected in both fixtures. |
+| `& $taskNode tools/validate/check-docs.mjs` | PASS, exit 0: 18 user/release docs, 0 errors. |
+| Inline link/anchor section of the original governance checker (before `const matrix =`), piped to `& $taskNode -`; historical snapshot assertions excluded | PASS, exit 0: 16 changed governance documents, 117 relative links/anchors, 0 errors. |
+| `git diff --check` | PASS, exit 0. |
+
+The first boundary probe run was FAIL (5/6), because its synthetic catalog
+scope text was unquoted and the restricted-YAML parser rejected it before
+count validation. Corrected the fixture quotation and added an explicit
+assertion that parsing reached the expected count before accepting probe
+results. The corrected 6/6 run is the final evidence; no validator count bug
+was hidden. The existing mutation's old name implied a count test although
+its actual diagnostic was `chayen-extra owns no capability`; it now names the
+ownership rule accurately. Count boundary evidence comes from the probe.
+
+### Count boundary probe
+
+Run with `$taskNode = 'C:\Program Files\nodejs\node.exe'`:
+
+```powershell
+$taskProbe = [regex]::Match((Get-Content docs/chayen/PROGRESS.md -Raw -Encoding utf8), '(?s)<!-- D051-BOUNDARY -->\r?\n```javascript\r?\n(.*?)\r?\n```').Groups[1].Value
+$taskProbe | & $taskNode -
+```
+
+<!-- D051-BOUNDARY -->
+```javascript
+const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
+const { spawnSync } = require('node:child_process');
+const repo = process.cwd(), temp = fs.realpathSync(os.tmpdir());
+const scratch = fs.mkdtempSync(path.join(temp, 'chayen-d051-'));
+const rows = [];
+try {
+  for (const rel of ['plugins', 'catalog', '.claude-plugin', '.agents/plugins', '.github/plugin', 'tests/skills', 'docs/chayen/CAPABILITY_COVERAGE.md']) {
+    const src = path.join(repo, rel), dest = path.join(scratch, rel);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.cpSync(src, dest, { recursive: true, filter: p => { if (fs.lstatSync(p).isSymbolicLink()) throw Error('linked fixture'); return true; } });
+  }
+  const catalogFile = path.join(scratch, 'catalog/engineering-capabilities.yaml');
+  const original = fs.readFileSync(catalogFile, 'utf8').replace(/\r\n/g, '\n');
+  const extra = [];
+  for (let n = 14; n <= 26; n++) {
+    const name = `chayen-count-${n}`, dir = path.join(scratch, 'plugins/codejadee-chayen-framework/skills', name);
+    fs.mkdirSync(dir);
+    fs.writeFileSync(path.join(dir, 'SKILL.md'), `---\nname: ${name}\ndescription: Edit prose. Not for code or databases.\n---\n# Count fixture\n`);
+    extra.push(`  - name: ${name}\n    mapping: existing\n    scope: "Synthetic fixture for count boundary verification only."\n`);
+    if (n < 25) continue;
+    fs.writeFileSync(catalogFile, original.replace('\ndomains:\n', '\n' + extra.join('') + '\ndomains:\n'));
+    const run = args => { const r = spawnSync(process.execPath, args, { cwd: repo, encoding: 'utf8', timeout: 30000 }); if (r.error || r.status !== 1) throw Error('expected invalid fixture exit 1'); return r.stdout + r.stderr; };
+    const pkg = run([path.join(repo, 'tools/validate/validate-package.mjs'), scratch]);
+    const cat = run([path.join(repo, 'tools/catalog/check-catalog.mjs'), '--root', scratch]);
+    if (!cat.includes(`Entry skills: ${n} `) || cat.includes('ERROR V-11.1 parse')) throw Error('catalog fixture did not reach count validation');
+    rows.push({ count: n, check: 'package-count', pass: /ERROR V-07 metadata-budget: \d+ entry skills > /.test(pkg) === (n > 25) });
+    rows.push({ count: n, check: 'catalog-count', pass: /ERROR V-11.3 entry-skills: \d+ entry skills exceed/.test(cat) === (n > 25) });
+    rows.push({ count: n, check: 'L0-still-enforced', pass: /ERROR V-07 metadata-budget: L0 metadata .* > 5500/.test(pkg) });
+  }
+} finally {
+  if (path.dirname(fs.realpathSync(scratch)) !== temp || !path.basename(scratch).startsWith('chayen-d051-')) throw Error('unsafe cleanup target');
+  fs.rmSync(scratch, { recursive: true, force: true });
+}
+console.log(JSON.stringify(rows));
+console.log(`${rows.filter(r => r.pass).length}/${rows.length} boundary assertions passed`);
+process.exit(rows.length === 6 && rows.every(r => r.pass) ? 0 : 1);
+```
+
+These synthetic fixtures intentionally fail anatomy/ownership and L0 rules.
+The probe checks count diagnostics at 25/26 and continued independent L0
+enforcement only; it does not certify a valid 25-Skill product or host routing.
+
+No commit, push, tag, publication, release or Step 36 execution.

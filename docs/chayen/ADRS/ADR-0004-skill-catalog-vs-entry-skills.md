@@ -4,6 +4,14 @@
 - **Date:** 2026-10-14
 - **Related:** D-006, REQ-05, REQ-06, C-03, C-04, C-05, C-07, R-03, R-11
 
+**Accepted count amendment (2026-10-17, D-051):** the Product Owner explicitly
+authorized increasing the Entry Skill ceiling to **25**. This amendment is
+ACCEPTED and implemented in V-07 and V-11.3. The rest of this ADR retains its
+existing status; the L0 cap remains 5,500 characters (D-037). The current
+product target is still 15 (13 engineering plus two planned editorial Skills),
+not an instruction to create 25. No registry or persistent-policy proposal is
+accepted by the count amendment.
+
 ## Context
 
 Chayen must cover 206 capabilities in 20 domains (REQ-05). Every
@@ -25,7 +33,7 @@ also degrades matching for the user's other skills.
    - The **Engineering Capability Catalog** (C-03) is a developer-side JSON
      source of truth that lists all 206 capabilities. It is not shipped.
    - **Entry skills** (C-04) are the only discoverable objects. There are at
-     most **14**, and they are organised by **task intent** (feature
+     most **25** (D-051; originally 14), and they are organised by **task intent** (feature
      delivery, bug fix, review, database, …), not by capability and not by
      technology.
 2. **Capability detail lives in knowledge files.** Each capability maps to
@@ -38,7 +46,7 @@ also degrades matching for the user's other skills.
    - It keeps `SKILL.md` small while indexing 206 capabilities.
 4. **The budget is enforced by a validator:**
    - L0 ≤4,000 characters (raised to 4,400 by D-034 in Step 14 to 4,700 by D-035 in Step 15, to 5,200 by D-036 in Step 16, and to 5,500 by D-037 in Step 17, with user approval);
-   - ≤14 skills;
+   - ≤25 skills (D-051; originally 14);
    - `SKILL.md` ≤300 lines;
    - ≤2 hops (V-06, V-07, V-08).
 
@@ -62,7 +70,7 @@ also degrades matching for the user's other skills.
 
 If the Step 10 baseline shows that task-intent descriptions under-trigger for
 stack-specific prompts (AS-01), switch the affected skills to stack-scoped
-entry skills within the same ≤14 budget, through a new ADR. The same applies
+entry skills within the ≤25 count ceiling (D-051), through a new ADR. The same applies
 if two hops prove unreliable (AS-04): flatten the primary stacks' topic links
 into `SKILL.md`.
 

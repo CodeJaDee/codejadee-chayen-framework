@@ -59,6 +59,26 @@ change the shape of the steps after them. Any re-plan is recorded in
 > entry skills (D-023), so the per-stack rows 11–19 will need re-planning
 > around those skills.
 
+## Multilingual extension overview — Steps 35–41
+
+This adds the Product Owner's Step 35 scope without replacing historical
+plans or execution records. Only Step 35 is authorized now (D-047).
+Future step organization is proposed and may be refined by the owner.
+The target is 15 Entry Skills; the package currently contains 13.
+Owner follow-up D-051 separately accepts and implements a **25-Skill maximum**
+in the two count validators. This is capacity, not a new target or Step 36
+execution. L0 and editorial registry changes still require their own approval.
+
+| Step | Title | Planned outputs / exit evidence | Requirements | Status |
+|---|---|---|---|---|
+| 35 | Multilingual Humanizer governance and architecture | Impact analysis, ADR-0009–ADR-0011 PROPOSED, requirements/acceptance PLANNED, plan and evidence log | MHR-001–MHR-012 (design only) | DONE (pending Product Owner review) |
+| 36 | Host research and approved foundations | Official dated per-surface evidence, resolved architecture approvals, approved count/L0/registry and future developer-validator changes | MHR-007–MHR-012 | NOT_STARTED |
+| 37 | Thai editorial Skill | `chayen-humanizer-th`, conditional references and Thai cases; approved structural gates | MHR-001–MHR-006, MHR-011–MHR-012 | NOT_STARTED |
+| 38 | English editorial Skill | `chayen-humanizer-en`, conditional references and English/bilingual cases; target 15 measured | MHR-001–MHR-006, MHR-011–MHR-012 | NOT_STARTED |
+| 39 | Opt-in host persistent response guidance | Canonical static policy, verified host integration documentation, reviewed opt-in/disable/rollback in authorized isolated scope | MHR-002, MHR-007–MHR-009, MHR-012 | NOT_STARTED |
+| 40 | Multilingual quality and engineering regression evaluation | Approved dataset/rubric, per-language human results, separately authorized provider/surface runs, policy on/off and no-plugin comparisons | MHR-001–MHR-012 | NOT_STARTED |
+| 41 | Completeness and readiness review | Updated acceptance/evidence, compatibility limitations, user docs, rollback and go/no-go recommendation; no automatic release | MHR-001–MHR-012 | NOT_STARTED |
+
 ## Step details
 
 ### Step 01 — Governance baseline
@@ -158,7 +178,7 @@ verification on each surface.
   - exactly one entry skill
   - knowledge paths
   - a verification approach
-- Finalise the entry-skill set (≤14, ADR-0004).
+- Finalise the entry-skill set (≤25 under owner amendment D-051; originally ≤14, ADR-0004).
 - Write `AUTHORING_GUIDE.md`: description-writing rules, file anatomies, and
   wording rules (P-01, SK-01..SK-06).
 - The user must approve the catalog before content authoring begins. Approval
@@ -450,3 +470,74 @@ KNOWN_LIMITATIONS.md.
 - DF-03 recorded (D-009 status inconsistency, stale plan overview).
 
 Nothing published, pushed, or tagged. STOP after STEP 34.
+
+### Step 35 — Multilingual Humanizer governance and architecture (user-directed)
+
+**DONE for governance, pending Product Owner review.** Record approved product
+scope separately from proposed mechanisms; inspect existing governance,
+ADR-0002–0007, manifests, skills, working tree and validator sources. Analyze
+native discovery, no-match, zero always-on content, count/L0, catalog ownership,
+runtime, portability and advisory boundaries. Create ADR-0009–ADR-0011 only
+after checking number availability. Define MHR-001–MHR-012 as PLANNED and
+extend this plan through Step 41. Record read-only checks with actual outcomes.
+
+Outputs: HUMANIZER_ARCHITECTURE_IMPACT.md, HUMANIZER_REQUIREMENTS.md, the three
+PROPOSED ADRs and governance cross-links/logs. No Skills, host integration,
+instruction/configuration changes, validators, manifests, dependency or billed
+evaluation changes. STOP after Step 35 and wait for Product Owner review.
+
+### Step 36 — Host research and approved foundations (planned)
+
+Requires a separate instruction after Step 35 review. Resolve ADR-0009–0011
+approval and evidence conditions without treating the approved product scope
+as mechanism approval. Research each host/surface's native instructions with
+official URLs/access dates and actual loading scope/precedence/limits; label
+gaps UNVERIFIED. Agree dataset/rubric/sample coverage. After the relevant ADR
+acceptance, implement coordinated developer-only registry/count/L0/anatomy
+vocabulary checks and negative controls, preserving all existing inventories.
+Do not infer runtime fallback or user-level configuration authority.
+
+### Step 37 — Thai Humanizer Skill (planned)
+
+After approved foundations and explicit step authorization, implement only the
+Thai writing/editing Skill and skill-local references, with language selection,
+audit/rewrite, website copy, fidelity, glossary and injection cases. Preserve
+all engineering Skills and approved budgets. Report structural versus behavior
+evidence separately; no persistent host integration implied.
+
+### Step 38 — English Humanizer Skill (planned)
+
+After approved foundations and explicit step authorization, implement the
+English Skill and references, English/bilingual cases and boundary checks
+against Thai/documentation/frontend owners. Validate the actual 15-Skill
+surface, approved L0, independent editorial registry and all legacy mappings.
+No behavior verification claim from structural tests alone.
+
+### Step 39 — Opt-in persistent response guidance (planned)
+
+Requires ADR-0010 acceptance, host research and separate implementation scope.
+Prepare a provider-neutral policy and host-specific instructions only for
+verified surfaces. Enable only with explicit user authorization of the exact
+scope/content; preserve existing content and record the reviewed diff/owned
+additions. Test opt-out, independent removal, plugin disable/uninstall and
+rollback in isolated authorized fixtures. No hooks, MCP, executable installers
+or runtime dependencies. Do not claim strict install-only always-on support.
+
+### Step 40 — Multilingual quality and regression evaluation (planned)
+
+Requires an approved rubric/dataset and explicit authorization for any billed
+provider calls. Evaluate Thai/English human quality and factual/semantic/
+terminology fidelity separately; cover mixed language, web syntax, adversarial
+content and permissions. Compare native editorial/engineering routing,
+references and no-match with policy enabled/disabled and no-plugin baselines.
+Record host/model versions and overhead; retain NOT_RUN gaps and legacy risks.
+Static/proxy/provider/human evidence cannot be pooled or substituted.
+
+### Step 41 — Completeness and readiness review (planned)
+
+Audit MHR evidence, ADR acceptance, all 206 Engineering Capabilities and
+approved Technology/Workflow Coverage, host compatibility, instructions
+lifecycle, docs, rollback and known limitations. Update acceptance only from
+executed evidence; produce a go/no-go recommendation for owner review.
+No commit, push, tag, publication, release or later action is authorized by
+this plan or by passing tests. Execute no future step automatically.

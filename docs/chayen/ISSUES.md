@@ -102,6 +102,17 @@ Status values: `OPEN` · `RESOLVED` · `ACCEPTED_RISK` · `WONT_FIX`
 |---|---|---|---|---|
 | R-56 | Distribution prerequisites only the project owner can supply are missing: <br>• licence (Q-05); <br>• confirmed publisher or legal name (manifests say `CodeJaDee`, unverified); <br>• a public repository or homepage (GitHub reports `CodeJaDee/codejadee-chayen-framework` as PRIVATE); <br>• a security contact or private vulnerability reporting (API "Not Found" on 2026-10-15); <br>• a support channel. <br>Version is still `0.1.0-dev` (R-54). | No public listing or public install is possible. Users without repository access cannot add the GitHub marketplace. SECURITY.md has no confirmed private channel. | docs/distribution/RELEASE_CHECKLIST.md section A and RELEASE_METADATA.md list each item. The docs state these as pending and invent none of them. Owner decisions are required before any publication. | OPEN |
 
+### STEP 35 multilingual architecture review
+
+| ID | Risk | Impact | Mitigation / next evidence | Status |
+|---|---|---|---|---|
+| R-57 | Approved target 15 exceeds the current ≤14 ceiling; L0 5,485/5,500 has only 15 characters free; engineering-only registry rules cannot admit editorial Skills without owning CAP records. Opt-in persistent policy also conflicts with ADR-0002/0003, D-007/REQ-04 and ADR-0006 metadata-only portability. Host persistence/rollback and multilingual quality are unverified. | Silent constraint changes could regress discovery, distort the 206 inventory, alter no-match output, leave instructions active after plugin uninstall or overclaim always-on/quality support. Existing R-53–R-56 remain open. | Review PROPOSED ADR-0009 (≤15, proposed L0 ≤6,500, separate editorial registry), ADR-0010 (explicit opt-in style-only exceptions, per-surface research, independent removal) and ADR-0011 (fidelity, human rubric, negative/regression cases). All MHRs PLANNED; MH-V01–MH-V12 NOT_RUN. Strict install-only guaranteed always-on remains UNVERIFIED. No runtime fallback, configuration edit or later step authorized. | OPEN |
+
+**R-57 owner update (D-051, 2026-10-17):** the count component is resolved:
+maximum 25 is ACCEPTED and implemented in V-07/V-11.3. Actual count remains
+13 and target 15. R-57 remains OPEN for the separate L0, editorial registry,
+persistent-policy and quality decisions; no waiver of those gates is implied.
+
 ## Defects
 
 | ID | Defect | Impact | Proposed fix | Status |

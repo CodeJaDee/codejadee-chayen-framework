@@ -362,7 +362,7 @@ const stackTokens = new Set(["any", ...packs, ...Object.keys(stackGroups)]);
 const skills = new Map();
 if (!isArr(cat.entry_skills)) err("V-11.3 entry-skills", "entry_skills must be a list");
 else {
-  if (cat.entry_skills.length > 14) err("V-11.3 entry-skills", `${cat.entry_skills.length} entry skills exceed the ADR-0004 cap of 14`);
+  if (cat.entry_skills.length > 25) err("V-11.3 entry-skills", `${cat.entry_skills.length} entry skills exceed the ADR-0004 cap of 25 (D-051)`);
   for (const s of cat.entry_skills) {
     if (!isObj(s) || !isStr(s.name) || !/^chayen-[a-z0-9-]+$/.test(s.name)) { err("V-11.3 entry-skills", `bad entry skill record ${JSON.stringify(s)}`); continue; }
     if (skills.has(s.name)) err("V-11.3 entry-skills", `duplicate entry skill ${s.name}`);

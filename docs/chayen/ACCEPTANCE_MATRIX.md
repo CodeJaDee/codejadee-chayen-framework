@@ -7,7 +7,21 @@ is defined in [BUILD_CONTRACT.md](BUILD_CONTRACT.md) §5.1.
 A row may be marked `VERIFIED` only when its verification evidence column
 cites an executed test and its recorded result (BC-10, BC-13).
 
-**Snapshot:** after Step 30 (2026-10-15).
+**Snapshot:** Step 35 governance update (2026-10-17); prior evidence retains
+its recorded step/date and meaning. No Step 35 behavior verification claim.
+
+**STEP 35:** approved multilingual product scope is D-047; architectural
+mechanisms in ADR-0009–ADR-0011 remain PROPOSED. All MHR-001–MHR-012 rows are
+PLANNED. See [HUMANIZER_REQUIREMENTS.md](HUMANIZER_REQUIREMENTS.md) for criteria
+and [HUMANIZER_ARCHITECTURE_IMPACT.md](HUMANIZER_ARCHITECTURE_IMPACT.md) for
+conflicts and native discovery / opt-in persistent guidance / unverified
+install-only always-on distinctions. Existing requirement rows/statuses are
+preserved. The proposed opt-in exception does not silently amend REQ-04.
+
+**Owner count amendment D-051 (2026-10-17):** maximum Entry Skills is now
+25, ACCEPTED and implemented in V-07/V-11.3; ARC-04 and count traceability
+labels reflect this. Current count 13, product target 15. L0 remains 5,500
+and every MHR remains PLANNED; no Skill/host behavior was verified here.
 
 **STEP 30 security traceability:** [SECURITY_MODEL.md](SECURITY_MODEL.md),
 [THREAT_MODEL.md](THREAT_MODEL.md) and [PLUGIN_TRUST_REVIEW.md](PLUGIN_TRUST_REVIEW.md)
@@ -49,14 +63,20 @@ retain their original step-specific meaning; they are not current rerun claims.
 
 | Category | Rows | PLANNED | IN_PROGRESS | IMPLEMENTED | VERIFIED |
 |---|---|---|---|---|---|
-| Governance (GOV) | 17 | 0 | 0 | 17 | 0 |
+| Governance (GOV) | 18 | 0 | 0 | 18 | 0 |
 | Core requirements (REQ) | 10 | 0 | 9 | 1 | 0 |
-| Exclusions (EX) | 7 | 0 | 0 | 7 | 0 |
+| Exclusions (EX) | 7 | 0 | 0 | 0 | 7 |
 | Providers (PRV) | 3 | 0 | 3 | 0 | 0 |
 | Stack coverage (STK) | 14 | 1 | 3 | 10 | 0 |
 | Architecture components (ARC) | 14 | 0 | 4 | 10 | 0 |
 | Capability domains (CAP) | 20 | 0 | 0 | 20 | 0 |
-| **Total** | **85** | **1** | **19** | **65** | **0** |
+| Multilingual Humanizer (MHR) | 12 | 12 | 0 | 0 | 0 |
+| **Total** | **98** | **13** | **19** | **59** | **7** |
+
+Step 35 recomputes this summary from existing rows plus the 12 new PLANNED
+MHR rows. GOV-18 already existed; EX-01–EX-07 were VERIFIED in Step 34.
+This corrects stale aggregate counts without changing any legacy row/status.
+Historical narrative below retains its original step-specific counts.
 
 Step 27 adds 10 PostgreSQL and 8 cross-stack technology capabilities plus
 PostgreSQL data access recipes, all IMPLEMENTED and V-23 validated, with 64
@@ -169,6 +189,27 @@ No row is `VERIFIED`, because these remain open:
 - routing has only single-run evidence, with known under-triggering on
   Claude Code and over-activation on Copilot;
 - no statistical baseline exists.
+
+## Multilingual Humanizer requirements (Step 35)
+
+The evidence paths below specify governance/design only, not implementation.
+All MH-V methods are planned; Step 35 structural checks are logged separately
+in PROGRESS.md. No Humanizer Skill or host integration exists yet.
+
+| ID | Requirement | Planned step(s) | Design / implementation evidence | Verification method | Verification evidence | Status |
+|---|---|---|---|---|---|---|
+| MHR-001 | Thai and English editorial Entry Skills; target 15 in existing plugin | 36–38, 40–41 | HUMANIZER_REQUIREMENTS.md; ADR-0009 PROPOSED; implementation absent | MH-V01: approved count/L0/registry, portable anatomy, native positive/negative discovery | NOT_RUN | PLANNED |
+| MHR-002 | Automatic intended-output language selection including explicit target and bilingual text | 37–40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0010 PROPOSED; implementation absent | MH-V02: cross-language/locale/ambiguity/unsupported cases | NOT_RUN | PLANNED |
+| MHR-003 | Content audit and scoped rewriting | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V03: audit leaves source intact, rewrite addresses located issues faithfully | NOT_RUN | PLANNED |
+| MHR-004 | Website copy editing with markup/permission preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V04: fixture diffs, syntax/placeholders, audit-only and unauthorized publish negatives | NOT_RUN | PLANNED |
+| MHR-005 | Technical terminology, glossary and protected-span preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V05: protected-span comparisons and bilingual glossary review | NOT_RUN | PLANNED |
+| MHR-006 | Semantic and factual preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent | MH-V06: compare facts/qualifiers/quantities/citations and justified corrections | NOT_RUN | PLANNED |
+| MHR-007 | Opt-in persistent response guidance without explicit Skill invocation | 36, 39–40 | HUMANIZER_REQUIREMENTS.md; ADR-0010 PROPOSED; implementation absent | MH-V07: policy on/off, no-match, no forced Skill load, measured overhead; C unverified | NOT_RUN | PLANNED |
+| MHR-008 | Claude Code, OpenAI Codex and GitHub Copilot compatibility per surface | 36, 39–41 | HUMANIZER_REQUIREMENTS.md; ADR-0010 PROPOSED; implementation absent | MH-V08: official dated sources plus isolated native loading/behavior matrix | NOT_RUN | PLANNED |
+| MHR-009 | Explicit opt-in, decline, disable, independent removal and rollback | 36, 39–41 | HUMANIZER_REQUIREMENTS.md; ADR-0010 PROPOSED; implementation absent | MH-V09: fresh-session lifecycle and preservation of unrelated instructions | NOT_RUN | PLANNED |
+| MHR-010 | Thai/English quality rubric and independent human evaluation | 36, 40–41 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent | MH-V10: approved rubric/dataset/sample coverage, separate per-language human/provider evidence | NOT_RUN | PLANNED |
+| MHR-011 | Preserve engineering, technology and workflow coverage and routing | 36–41 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V11: catalog identity, diff, repeated policy on/off/no-plugin regressions | NOT_RUN | PLANNED |
+| MHR-012 | Security, permissions, untrusted data and advisory boundaries | 36–41 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent | MH-V12: static zero-runtime profile plus injection/secrets/authorization negatives | NOT_RUN | PLANNED |
 
 ## Governance
 

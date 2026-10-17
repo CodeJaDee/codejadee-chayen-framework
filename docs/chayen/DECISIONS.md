@@ -1065,6 +1065,82 @@ Decision statuses:
 - **No VERIFIED promotion**, no dependency, commit, release, install or later
   step.
 
+### D-047 — STEP 35 approved multilingual product scope and step boundary
+
+- **Status:** ACCEPTED (explicit Product Owner Step 35 request, 2026-10-17).
+- **Scope:** add Thai `chayen-humanizer-th` and English `chayen-humanizer-en`
+  editorial Entry Skills in the existing repository/plugin, target 13 → 15,
+  plus a Multilingual Response Style Policy for ordinary replies without
+  explicit Humanizer invocation. Preserve Claude Code/Codex/Copilot compatibility,
+  206 Engineering Capabilities, all Technology/Workflow Coverage, native-plugin-first
+  and zero runtime. No separate Humanizer repository.
+- **Execution:** Step 35 governance only: impact analysis, ADR proposals,
+  MHR-001–MHR-012 PLANNED and Steps 35–41 plan. No Skills, host integration,
+  user configuration, hooks/MCP/installers/dependencies, billed evaluations,
+  commit/push/tag/publication/release or Step 36 execution.
+- **Authority boundary:** scope approval does not accept D-048–D-050 or
+  ADR-0009–ADR-0011. Preferred Native Plugin + Opt-in Host Persistent
+  Instructions is proposed. Strict install-only guaranteed always-on is
+  UNVERIFIED, not claimed supported. Existing decisions remain in force.
+
+### D-048 — Proposed editorial entry set, budgets and registry boundary
+
+- **Status:** PROPOSED; full record:
+  [ADR-0009](ADRS/ADR-0009-multilingual-editorial-skills.md).
+- **Proposal:** ≤15 Entry Skills and L0 ≤6,500, separate validated editorial
+  registry, unchanged engineering ownership and 206-capability inventory.
+  Current ≤14 / 5,500 limits and validators stay unchanged in Step 35.
+- **Affected:** ADR-0004, CA-01, V-07, V-11.3, V-19/V-20; approval and later
+  tooling work must precede Skill implementation. No catch-all or dummy CAP.
+- **Owner follow-up D-051:** the original proposed ≤15 ceiling is replaced
+  by an ACCEPTED and implemented ≤25 ceiling. The L0 increase and editorial
+  registry remain PROPOSED; no other mechanism is accepted by this follow-up.
+
+### D-049 — Proposed opt-in persistent style policy exceptions
+
+- **Status:** PROPOSED; full record:
+  [ADR-0010](ADRS/ADR-0010-persistent-multilingual-response-style-policy.md).
+- **Proposal:** distinguish native Skill discovery (A), user-enabled host
+  instructions (B) and unverified install-only guaranteed always-on (C).
+  Propose style-only opt-in exceptions to ADR-0002/0003, REQ-04/D-007 and
+  ADR-0006's metadata-only provider differences. Preserve plugin-only fallback.
+- **Boundary:** separately measured context cost, scope/precedence research,
+  explicit opt-in, existing-content preservation and independent rollback;
+  no automatic configuration write or runtime. Host/surface behavior UNVERIFIED.
+
+### D-050 — Proposed multilingual quality, safety and regression criteria
+
+- **Status:** PROPOSED; full record:
+  [ADR-0011](ADRS/ADR-0011-multilingual-quality-and-safety.md).
+- **Proposal:** language-specific human rubric, fidelity/protected-span checks,
+  injection/permission cases and engineering regression comparisons; separate
+  static/proxy/provider/human evidence. Proposed thresholds need owner approval
+  with sample sizes before scoring. Preserve D-003/BC-23 advisory boundaries.
+- **Verification:** MH-V01–MH-V12 are future methods, NOT_RUN. Step 35 static
+  checks do not implement MHRs or promote existing requirements to VERIFIED.
+
+### D-051 — Owner-approved Entry Skill ceiling of 25
+
+- **Status:** ACCEPTED (explicit user follow-up, 2026-10-17: expand the Skill
+  ceiling to 25 if the current ceiling is a problem).
+- **Context:** current count 13 fits ≤14, but approved Humanizer target 15
+  would exceed it. D-048/ADR-0009 originally proposed ≤15, still unapproved.
+- **Decision:** raise the maximum Entry Skill count to **25** in both V-07
+  (`validate-package.mjs`) and V-11.3 (`check-catalog.mjs`). This explicitly
+  amends ADR-0004's count component and replaces ADR-0009's proposed ≤15 cap.
+  Product target remains 15; actual installed Skill count remains 13.
+- **Separate limits:** L0 remains ≤5,500 characters, currently 5,485. The
+  proposed 6,500 L0 budget, editorial registry, host persistent policy and
+  quality architecture remain PROPOSED. Every added Skill must still satisfy
+  approved metadata, mapping, anatomy, routing and security gates. A 25-Skill
+  ceiling is not evidence of host capacity or routing quality for 25 Skills.
+- **Authorized scope:** narrow Step 35 follow-up for count validators,
+  architecture/governance alignment and appropriate local checks. It does
+  not start Step 36 or authorize Skill creation, host integration, billed
+  evaluations, release actions or broader architecture exceptions.
+- **Verification:** actual commands and outcomes are in the Step 35 owner
+  follow-up entry in [PROGRESS.md](PROGRESS.md).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

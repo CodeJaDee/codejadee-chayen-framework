@@ -12,6 +12,19 @@ promoted in the catalog, or released. The automated gates run from the
 development repository only. None of them is shipped, and none is a user
 CLI.
 
+**Step 35 proposal notice:** multilingual evaluation is specified in
+[ADR-0011](ADRS/ADR-0011-multilingual-quality-and-safety.md) and
+[HUMANIZER_REQUIREMENTS.md](HUMANIZER_REQUIREMENTS.md) (MH-V01–MH-V12).
+These are future gates/criteria, all behavior and human review NOT_RUN;
+thresholds remain PROPOSED. Other gates and promotion rules are unchanged.
+Count ceiling ≤25 is ACCEPTED and implemented by owner follow-up D-051;
+L0/catalog amendments still need ADR-0009 acceptance, and host-policy tests
+need ADR-0010 acceptance plus later step authorization. Original Step 35 executed only
+read-only structural/documentation commands; aggregate/mutation/lifecycle
+runners and paid provider calls were not part of its verification. The D-051
+follow-up runs count-boundary and validator regressions in isolated scratch
+copies; it still makes no provider calls or host configuration changes.
+
 ---
 
 ## 1. How to run

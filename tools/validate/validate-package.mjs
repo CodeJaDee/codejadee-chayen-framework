@@ -338,7 +338,7 @@ for (const s of skillDirs) {
     if (/: |\s#|^['"\[{>|*&!%@`]/.test(m.desc)) error(c, `${s}: description contains YAML-unsafe characters (": ", " #", or a leading indicator); quote it or rephrase`);
     if (!/\bNot (for|a)\b/.test(m.desc)) error(c, `${s}: description lacks a "Not for ..." boundary clause (DS-03)`);
   }
-  if (skillDirs.length > 14) error(c, `${skillDirs.length} entry skills > 14`);
+  if (skillDirs.length > 25) error(c, `${skillDirs.length} entry skills > 25`); // D-051: user-approved ceiling; L0 remains independent
   const L0_CAP = 5500; // 4,000 originally; 4,400 by D-034 (Step 14), 4,700 by D-035 (Step 15), 5,200 by D-036 (Step 16), 5,500 by D-037 (Step 17); all user-approved
   if (total > L0_CAP) error(c, `L0 metadata ${total} chars > ${L0_CAP}`);
   if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} skills, L0 metadata ${total}/${L0_CAP} chars`);

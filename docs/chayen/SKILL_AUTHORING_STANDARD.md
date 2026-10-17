@@ -13,6 +13,16 @@
 This standard says how Chayen entry skills, capability recipes, and the other
 reference files are written. Each rule has an ID and says how it is checked:
 
+**Step 35 proposal notice:** target 15 Entry Skills is approved product scope.
+The owner follow-up D-051 approves a maximum of **25**, implemented in count
+validators. Existing L0 and CA-01 engineering-catalog rules remain in force
+until their amendments in [ADR-0009](ADRS/ADR-0009-multilingual-editorial-skills.md)
+are accepted. Editorial Skills need a separately validated registry without
+changing the 206-capability inventory. Anatomy, portability, bounded discovery,
+skill-local references and safety rules still apply. No editorial Skill or
+registry is implemented; only the count rule is changed in the D-051 follow-up. See
+[HUMANIZER_ARCHITECTURE_IMPACT.md](HUMANIZER_ARCHITECTURE_IMPACT.md).
+
 - **V-nn** is an automated check by the developer-only validators
   (`tools/validate/`, `tools/catalog/`).
 - **Review** is a manual check from the review checklist in

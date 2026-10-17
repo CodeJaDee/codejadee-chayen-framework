@@ -7,7 +7,7 @@
 | Status | **PROPOSED**: awaiting user review |
 | Builds on | [PROVIDER_SPEC_RESEARCH.md](PROVIDER_SPEC_RESEARCH.md) (sources S1–S24), [PLUGIN_FORMAT_DECISION.md](PLUGIN_FORMAT_DECISION.md) (D-009, PROPOSED) |
 | Package detail | [PLUGIN_PACKAGE_DESIGN.md](PLUGIN_PACKAGE_DESIGN.md) |
-| Decisions | [ADRS/](ADRS/README.md) (ADR-0001 … ADR-0008) |
+| Decisions | [ADRS/](ADRS/README.md) (ADR-0001 … ADR-0011; 0009–0011 PROPOSED in Step 35) |
 
 > **Working names (provisional until ISSUES Q-03 is answered):**
 > - plugin `codejadee-chayen`
@@ -15,6 +15,29 @@
 > - entry-skill prefix `chayen-`
 >
 > All are replaceable without structural change.
+>
+> **Step 35 owner follow-up (D-051, 2026-10-17):** the maximum Entry Skill
+> count is now **25**, explicitly ACCEPTED and implemented in both count
+> validators. Actual count remains 13; product target remains 15. L0 remains
+> ≤5,500 characters; its proposed increase and editorial registry/persistent
+> policy architecture still await approval. This narrow follow-up supersedes
+> the count-only pending-approval statements in the original Step 35 note.
+>
+> **Step 35 governance extension (D-047–D-050, 2026-10-17):**
+> Product scope adds two editorial Entry Skills (target 15, current 13) and
+> ordinary-response multilingual style guidance. The architecture proposals
+> are [ADR-0009](ADRS/ADR-0009-multilingual-editorial-skills.md),
+> [ADR-0010](ADRS/ADR-0010-persistent-multilingual-response-style-policy.md) and
+> [ADR-0011](ADRS/ADR-0011-multilingual-quality-and-safety.md), all PROPOSED.
+> [HUMANIZER_ARCHITECTURE_IMPACT.md](HUMANIZER_ARCHITECTURE_IMPACT.md) analyzes
+> native discovery, no-match/zero always-on conflicts, count/L0 limits,
+> engineering registry ownership, zero runtime, portability and advisory
+> boundaries. Native Plugin + Opt-in Host Persistent Instructions is preferred;
+> strict install-only guaranteed always-on is UNVERIFIED, not claimed supported.
+> Existing constraints below remain the baseline pending explicit acceptance
+> of their proposed amendments. No Skills, integration, validators, manifests
+> or user configuration are changed in Step 35. All MHR requirements remain
+> PLANNED in [HUMANIZER_REQUIREMENTS.md](HUMANIZER_REQUIREMENTS.md).
 >
 > **Step 29 amendments (D-045):**
 > - C-08 is implemented as 12 composite `kind: checklist` references in
@@ -252,7 +275,7 @@ Entry skills are the **only** objects the provider's discovery sees.
 - **Shape:** task-intent skills, not one skill per capability and not one per
   technology (ADR-0004).
 - **Budget** (enforced by C-12, derivation in §8):
-  - at most **14** entry skills;
+  - at most **25** entry skills (D-051, user-approved; originally 14);
   - each `description` targets ≤280 characters (hard limit 1024);
   - Chayen's total listing metadata is ≤5,500 characters (4,000 until D-034, 4,400 until D-035, 4,700 until D-036, 5,200 until D-037).
 - **Naming:** `chayen-<intent>`. The prefix is short, which gives collision
@@ -617,7 +640,7 @@ flowchart TB
 | Attribute | Target | Derivation | Checked by |
 |---|---|---|---|
 | L0 metadata footprint | ≤5,500 characters total (raised from 4,000 by D-034 to D-037, user-approved in Steps 14 to 17) | About 69 % of Codex's 8,000-character fallback (S12), leaving room for the user's other skills. Claude Code's 1% budget is assumed to be ≥8,000 characters at common context sizes (**assumption AS-03**). | V-07 |
-| Entry skills | ≤14 | 4,000 characters ÷ (≈280 description + ≈20 name) | V-07 |
+| Entry skills | ≤25 (D-051) | Explicit owner-approved count ceiling, independent of L0. Current count 13; product target 15. | V-07, V-11.3 |
 | `SKILL.md` body | ≤300 lines | Below the 500-line spec ceiling (S7, S24), leaving headroom | V-06 |
 | Link depth | ≤2 hops | ADR-0004 | V-08 |
 | Trigger precision and recall | Measured, not assumed. Targets are set after the first eval baseline. | R-02 | C-13 |
