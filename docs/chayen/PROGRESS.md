@@ -5,6 +5,7 @@
 | Field | Value |
 |---|---|
 | Last executed step | 35 — Multilingual Humanizer governance and architecture |
+| Latest owner follow-up | D-052 ACCEPTED (2026-10-17): L0 ceiling 6,500, implemented in V-07 and evaluation reporting. Current 5,485 / 6,500; 1,015 free. Count ceiling remains 25, target 15, actual 13. Editorial registry/policy proposals remain pending; Step 36 NOT_STARTED. Earlier D-051 budget statements below are historical. |
 | Owner follow-up | D-051 ACCEPTED (2026-10-17): increase Entry Skill ceiling to 25, implemented in the package and catalog count validators. Actual 13; target 15; L0 remains 5,500. The original Step 35 evidence below is a historical snapshot; follow-up evidence is logged separately at the end. Step 36 remains NOT_STARTED. |
 | Step 35 status | DONE for governance (pending Product Owner review): impact analysis, ADR-0009–ADR-0011 PROPOSED, MHR-001–MHR-012 PLANNED, Steps 35–41 planned. D-047 scope ACCEPTED; D-048–D-050 mechanisms PROPOSED. Read-only structural/documentation checks recorded in Step 35 below; no Skills, host integration, configuration, catalog, validator or manifest change. |
 | Step 34 status | DONE: audit complete. Recommendation NO-GO public / CONDITIONAL-GO internal pilot. All 26 automated runs exit 0 (facts 107/0/52); independent audit clean; Step 32 records reproduced 30/30; Run C 9/13; pooled automatic routing 12/22, no-match 12/12. EX-01..EX-07 VERIFIED; charter criteria 1–2 NOT MET, 3 PARTIAL, 4 MET. Awaiting owner. |
@@ -3848,3 +3849,111 @@ The probe checks count diagnostics at 25/26 and continued independent L0
 enforcement only; it does not certify a valid 25-Skill product or host routing.
 
 No commit, push, tag, publication, release or Step 36 execution.
+
+## Step 35 owner follow-up — L0 metadata budget 6,500 (D-052)
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Authorization:** user asked to resolve the outstanding metadata constraint
+  after D-051; applied the previously proposed 6,500-character budget.
+- **Scope:** V-07/evaluation-report budget and related governance alignment;
+  no Skill creation, editorial registry, host integration or Step 36 work.
+- **Status:** DONE; budget implemented and boundary/offline regressions PASS.
+
+L0 is now capped at 6,500 rather than 5,500. Existing names/descriptions are
+unchanged: 5,485 used, **1,015 free**. The two planned editorial names plus
+two descriptions at the 420-character target would bring the estimate to
+6,361, leaving 139. This is arithmetic against an internal budget, not actual
+provider loading or a claim that 25 Skills fit a host context budget.
+Count ceiling remains 25, actual count 13, product target 15; engineering,
+technology and workflow inventories remain unchanged. ADR-0009's count and
+L0 components are accepted through D-051/D-052; the editorial registry and
+other architecture proposals remain PROPOSED. R-57 stays OPEN for them.
+
+Updated both V-07 and `run-evaluation-suite.mjs`'s independent report cap to
+avoid reporting the stale 5,500 limit. Current docs reflect the accepted
+budget; historical decision/test measurements are preserved. Original Step 35
+and D-051 inline probes are historical snapshots with old fixed assumptions;
+their recorded results are not claimed as current reruns under D-052.
+
+### D-052 file ledger (edits to the existing working tree)
+
+| Action | Files |
+|---|---|
+| Modified | `tools/validate/validate-package.mjs`, `tools/evals/run-evaluation-suite.mjs`, `tools/validate/README.md` |
+| Modified | `docs/chayen/ADRS/ADR-0004-skill-catalog-vs-entry-skills.md`, `docs/chayen/ADRS/ADR-0009-multilingual-editorial-skills.md`, `docs/chayen/ADRS/README.md` |
+| Modified | `docs/chayen/ARCHITECTURE.md`, `docs/chayen/HUMANIZER_ARCHITECTURE_IMPACT.md`, `docs/chayen/PROJECT_CHARTER.md` |
+| Modified | `docs/chayen/SKILL_AUTHORING_STANDARD.md`, `docs/chayen/SKILL_QUALITY_GATES.md`, `docs/chayen/PLUGIN_PACKAGE_DESIGN.md` |
+| Modified | `docs/chayen/IMPLEMENTATION_PLAN.md`, `docs/chayen/ACCEPTANCE_MATRIX.md`, `docs/chayen/DECISIONS.md`, `docs/chayen/ISSUES.md`, `docs/chayen/PROGRESS.md` |
+| Modified | `docs/chayen/KNOWN_LIMITATIONS.md` (current KL-03), `docs/SKILLS_CATALOG.md` |
+| Created / deleted | None in this follow-up. Earlier uncommitted/untracked work preserved. |
+
+### D-052 actual verification
+
+Node v24.22.0 via `$taskNode = 'C:\Program Files\nodejs\node.exe'`.
+Reviewed evaluation runner and its static child checks before execution;
+without `--write`, `--facts` or provider options, it invokes offline validators,
+confined temporary regressions and a clearly labelled simulated lexical proxy.
+It never invokes a provider/model or installs dependencies.
+
+| Command | Actual result |
+|---|---|
+| `& $taskNode tools/evals/run-evaluation-suite.mjs` | PASS, exit 0: S-ALL (all nine automated gate groups), identity 15/15, engineering 206/206, technology 108/108, workflows 12/12, routing-example traceability 11/11, handoff 0 dangling names/0 provider syntax. Report now prints `5485/6500 chars`. SIM output is lexical proxy only, not native behavior evidence. |
+| D-052 boundary probe below, extracted and piped to `& $taskNode -` | PASS, probe exit 0: 2/2; package validator exit 0 at 6,500 and exit 1 with the exact V-07 overflow diagnostic at 6,501. |
+| `& $taskNode tools/validate/check-docs.mjs` | PASS, exit 0: 18 user/release documents, 0 errors. |
+| Inline link/anchor section of the original governance checker (before `const matrix =`), piped to `& $taskNode -` | PASS, exit 0: 15 changed governance documents, 121 relative links/anchors, 0 errors against the current Git baseline. |
+| `git diff --check` | PASS, exit 0; Git printed LF-to-CRLF conversion notices for two governance files, not whitespace errors. |
+
+The first scratch probe attempt failed before validation because directory
+enumeration included `skills/README.md` as if it were a Skill directory.
+Corrected enumeration to require a directory containing SKILL.md. This was
+a verification-fixture error, not a validator PASS or product failure.
+Native/billed provider, new Skill behavior, human quality and host lifecycle
+checks remain NOT_RUN. No existing requirement status is promoted.
+
+### Reproducible D-052 boundary probe
+
+```powershell
+$taskBudgetProbe = [regex]::Match((Get-Content docs/chayen/PROGRESS.md -Raw -Encoding utf8), '(?s)<!-- D052-BOUNDARY -->\r?\n```javascript\r?\n(.*?)\r?\n```').Groups[1].Value
+$taskBudgetProbe | & $taskNode -
+```
+
+<!-- D052-BOUNDARY -->
+```javascript
+const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
+const { spawnSync } = require('node:child_process');
+const repo = process.cwd(), temp = fs.realpathSync(os.tmpdir());
+const scratch = fs.mkdtempSync(path.join(temp, 'chayen-d052-')), rows = [];
+try {
+  for (const rel of ['plugins', 'catalog', '.claude-plugin', '.agents/plugins', '.github/plugin', 'tests/skills', 'docs/chayen/CAPABILITY_COVERAGE.md']) {
+    const dest = path.join(scratch, rel); fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.cpSync(path.join(repo, rel), dest, { recursive: true, filter: p => { if (fs.lstatSync(p).isSymbolicLink()) throw Error('linked fixture'); return true; } });
+  }
+  const root = path.join(scratch, 'plugins/codejadee-chayen-framework/skills');
+  const skills = fs.readdirSync(root, { withFileTypes: true }).filter(d => d.isDirectory() && fs.existsSync(path.join(root, d.name, 'SKILL.md'))).map(d => {
+    const name = d.name, file = path.join(root, name, 'SKILL.md'), text = fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
+    return { name, file, text, desc: /^description: (.*)$/m.exec(text)[1] };
+  });
+  const baseline = skills.reduce((n, s) => n + s.name.length + s.desc.length, 0);
+  if (baseline !== 5485) throw Error('unexpected baseline');
+  for (const target of [6500, 6501]) {
+    let left = target - baseline;
+    for (const s of skills) {
+      const add = Math.min(left, 1024 - s.desc.length); left -= add;
+      fs.writeFileSync(s.file, s.text.replace(/^description: .*$/m, 'description: ' + s.desc + 'x'.repeat(add)));
+    }
+    if (left) throw Error('insufficient padding capacity');
+    const r = spawnSync(process.execPath, [path.join(repo, 'tools/validate/validate-package.mjs'), scratch], { cwd: repo, encoding: 'utf8', timeout: 30000 });
+    const out = r.stdout + r.stderr;
+    const pass = target === 6500 ? r.status === 0 && out.includes('L0 metadata 6500/6500 chars') : r.status === 1 && out.includes('ERROR V-07 metadata-budget: L0 metadata 6501 chars > 6500');
+    rows.push({ target, exit: r.status, pass }); if (!pass) console.log(out);
+  }
+} finally {
+  if (path.dirname(fs.realpathSync(scratch)) !== temp || !path.basename(scratch).startsWith('chayen-d052-')) throw Error('unsafe cleanup');
+  fs.rmSync(scratch, { recursive: true, force: true });
+}
+console.log(JSON.stringify(rows));
+console.log(`${rows.filter(r => r.pass).length}/2 L0 boundary checks passed`);
+process.exit(rows.length === 2 && rows.every(r => r.pass) ? 0 : 1);
+```
+
+No commit, push, tag, publication, release, provider install or Step 36 execution.

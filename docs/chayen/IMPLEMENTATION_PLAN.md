@@ -67,7 +67,8 @@ Future step organization is proposed and may be refined by the owner.
 The target is 15 Entry Skills; the package currently contains 13.
 Owner follow-up D-051 separately accepts and implements a **25-Skill maximum**
 in the two count validators. This is capacity, not a new target or Step 36
-execution. L0 and editorial registry changes still require their own approval.
+execution. D-052 subsequently accepts and implements L0 ≤6,500; editorial
+registry changes still require their own approval.
 
 | Step | Title | Planned outputs / exit evidence | Requirements | Status |
 |---|---|---|---|---|

@@ -23,6 +23,11 @@ preserved. The proposed opt-in exception does not silently amend REQ-04.
 labels reflect this. Current count 13, product target 15. L0 remains 5,500
 and every MHR remains PLANNED; no Skill/host behavior was verified here.
 
+**Subsequent L0 amendment D-052:** the owner authorized resolving the metadata
+constraint; L0 ≤6,500 is ACCEPTED and implemented in V-07 and evaluation
+reporting. Current usage remains 5,485 (1,015 free); count ceiling remains 25.
+No requirement or MHR implementation/verification status changes.
+
 **STEP 30 security traceability:** [SECURITY_MODEL.md](SECURITY_MODEL.md),
 [THREAT_MODEL.md](THREAT_MODEL.md) and [PLUGIN_TRUST_REVIEW.md](PLUGIN_TRUST_REVIEW.md)
 review the entire packaged surface, all ten requested threats, developer

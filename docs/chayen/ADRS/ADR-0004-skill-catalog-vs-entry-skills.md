@@ -7,7 +7,8 @@
 **Accepted count amendment (2026-10-17, D-051):** the Product Owner explicitly
 authorized increasing the Entry Skill ceiling to **25**. This amendment is
 ACCEPTED and implemented in V-07 and V-11.3. The rest of this ADR retains its
-existing status; the L0 cap remains 5,500 characters (D-037). The current
+existing status. The subsequent D-052 follow-up accepts L0 ≤6,500 characters
+(formerly 5,500 under D-037), implemented in V-07 and evaluation reporting. The current
 product target is still 15 (13 engineering plus two planned editorial Skills),
 not an instruction to create 25. No registry or persistent-policy proposal is
 accepted by the count amendment.
@@ -45,7 +46,7 @@ also degrades matching for the user's other skills.
      recommendation (S24).
    - It keeps `SKILL.md` small while indexing 206 capabilities.
 4. **The budget is enforced by a validator:**
-   - L0 ≤4,000 characters (raised to 4,400 by D-034 in Step 14 to 4,700 by D-035 in Step 15, to 5,200 by D-036 in Step 16, and to 5,500 by D-037 in Step 17, with user approval);
+   - L0 ≤6,500 characters (D-052, user-authorized follow-up; previously 4,000, then 4,400 D-034, 4,700 D-035, 5,200 D-036, 5,500 D-037);
    - ≤25 skills (D-051; originally 14);
    - `SKILL.md` ≤300 lines;
    - ≤2 hops (V-06, V-07, V-08).

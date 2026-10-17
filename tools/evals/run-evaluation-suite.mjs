@@ -116,7 +116,7 @@ const skills = skillDirs.map((d) => {
 const est = (chars) => Math.round(chars / 4);
 report.metrics.contextOverhead = {
   estimator: "tokens ~= characters / 4 (estimate, not a provider tokenizer)",
-  alwaysOnL0: { chars: skills.reduce((a, s) => a + s.l0Chars, 0), estTokens: est(skills.reduce((a, s) => a + s.l0Chars, 0)), cap: 5500 },
+  alwaysOnL0: { chars: skills.reduce((a, s) => a + s.l0Chars, 0), estTokens: est(skills.reduce((a, s) => a + s.l0Chars, 0)), cap: 6500 }, // D-052; same cap as V-07
   perActivation: skills.map((s) => ({ skill: s.skill, bodyLines: s.bodyLines, bodyEstTokens: est(s.bodyChars), references: s.references, worstCaseBodyPlusLargestRefEstTokens: est(s.bodyChars + s.refMaxChars) })),
 };
 

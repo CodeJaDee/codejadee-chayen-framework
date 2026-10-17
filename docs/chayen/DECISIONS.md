@@ -1141,6 +1141,26 @@ Decision statuses:
 - **Verification:** actual commands and outcomes are in the Step 35 owner
   follow-up entry in [PROGRESS.md](PROGRESS.md).
 
+### D-052 — Owner-authorized L0 metadata ceiling of 6,500 characters
+
+- **Status:** ACCEPTED (user follow-up, 2026-10-17: "จัดการให้เลย", responding
+  to the outstanding 5,485/5,500 metadata constraint after D-051).
+- **Decision:** implement the previously proposed ≤6,500-character L0 budget
+  in V-07 and evaluation-suite reporting. Amend ADR-0004/0009's L0 component
+  and current authoring/package/user documentation. Keep original historical
+  test results and earlier decision context intact.
+- **Rationale:** existing 5,485 plus two 18-character editorial names and
+  two descriptions at the 420-character target totals at most 6,361, leaving
+  139 within 6,500. Current unchanged usage leaves 1,015. This is an internal
+  planning budget, not verified host/token capacity or a guarantee for 25 Skills.
+- **Boundaries:** count ceiling remains 25; actual count 13, product target 15.
+  Preserve description lengths, distinctness, progressive loading, engineering
+  coverage and zero runtime. The editorial registry and persistent-policy/
+  quality architecture remain PROPOSED. No Skill creation, host integration,
+  user configuration, billed provider evaluation, release or Step 36 work.
+- **Verification:** boundary 6,500/6,501 and offline regressions; actual
+  commands/results recorded in the D-052 entry in [PROGRESS.md](PROGRESS.md).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

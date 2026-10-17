@@ -18,7 +18,8 @@ CLI.
 These are future gates/criteria, all behavior and human review NOT_RUN;
 thresholds remain PROPOSED. Other gates and promotion rules are unchanged.
 Count ceiling ≤25 is ACCEPTED and implemented by owner follow-up D-051;
-L0/catalog amendments still need ADR-0009 acceptance, and host-policy tests
+D-052 separately accepts and implements L0 ≤6,500; the editorial catalog
+amendment still needs ADR-0009 acceptance, and host-policy tests
 need ADR-0010 acceptance plus later step authorization. Original Step 35 executed only
 read-only structural/documentation commands; aggregate/mutation/lifecycle
 runners and paid provider calls were not part of its verification. The D-051

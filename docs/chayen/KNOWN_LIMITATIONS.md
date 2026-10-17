@@ -17,7 +17,7 @@ executed evidence exists. It does not mean the feature is known to fail.
 |---|---|---|
 | KL-01 | **Guidance is advisory.** Markdown cannot enforce permissions, policy, or approvals. Enforcement comes from the provider, the OS, and CI. | SECURITY_MODEL.md; BC-23; V-10 |
 | KL-02 | **Skill selection is probabilistic.** The model decides from descriptions, and no provider guarantees invocation. | Provider docs S7, S12, S17, S19; probe results (§3) |
-| KL-03 | **Always-on metadata budget is nearly full:** 5,485 of 5,500 characters. Adding an entry skill or lengthening a description needs a decision. | V-07; D-037 |
+| KL-03 | **Metadata remains bounded:** Step 35 follow-up D-052 raises L0 to 6,500; unchanged usage 5,485 leaves 1,015 characters. Count ceiling is 25 (D-051); target 15. Additional Skills still need mapping/routing review; host capacity is not verified by this internal budget. Step 34's 5,485/5,500 measurement remains historical. | V-07; D-051; D-052 |
 | KL-04 | **One plugin, 13 entry skills.** Capabilities are recipes inside those skills, not separate skills, so they are not individually discoverable by name. | ADR-0004 (PROPOSED), D-023 |
 | KL-05 | **No executable components:** no hooks, MCP, scripts, or commands. Features that need runtime enforcement are out of scope. | ADR-0005; V-09; V-25 |
 | KL-06 | **No path for the Codex IDE extension.** OpenAI documents that it doesn't support plugins. | S13 (re-read 2026-10-15); Q-02 open |

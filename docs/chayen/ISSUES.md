@@ -113,6 +113,13 @@ maximum 25 is ACCEPTED and implemented in V-07/V-11.3. Actual count remains
 13 and target 15. R-57 remains OPEN for the separate L0, editorial registry,
 persistent-policy and quality decisions; no waiver of those gates is implied.
 
+**R-57 / R-27 metadata update (D-052, 2026-10-17):** the immediate L0 headroom
+constraint is resolved by the accepted 6,500-character internal budget:
+5,485 used, 1,015 free. Combined with D-051's count ceiling of 25, target 15
+fits the proposed metadata estimate (6,361), subject to actual content checks.
+R-57 remains OPEN for editorial registry/policy/quality decisions and host
+evidence; routing/crowding risks are not closed by an internal limit increase.
+
 ## Defects
 
 | ID | Defect | Impact | Proposed fix | Status |

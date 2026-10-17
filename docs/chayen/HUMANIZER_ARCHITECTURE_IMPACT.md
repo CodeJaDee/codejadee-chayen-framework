@@ -11,6 +11,12 @@ below; actual count stays 13 and product target stays 15. The original
 Step 35 evidence is historical. L0 remains 5,500 and other proposals remain
 pending; count capacity alone does not resolve metadata or registry constraints.
 
+**Subsequent L0 follow-up (D-052):** the owner authorized resolving the remaining
+metadata blocker. L0 ≤6,500 is now ACCEPTED and implemented; current 5,485
+leaves 1,015 characters. The count is capped at 25 and target remains 15.
+Editorial registry/policy/quality proposals remain pending. Earlier baseline
+figures describe the original inspection, not the current budget.
+
 ## Inspected baseline
 
 The starting working tree was clean on `main`, commit `1106226`. Both plugin
@@ -49,7 +55,7 @@ permissions. A user declining B retains the native-plugin-only baseline.
 | REQ-04 / ADR-0003 no-match fallback | B intentionally changes prose style on no-match responses. Claiming identical native output in that mode would be false. | Keep REQ-04 unchanged for plugin-only/disabled mode; propose an explicit opt-in style-only exception, preserving native task behavior. Test no-match independently in both modes. |
 | D-007 / ADR-0003 zero always-on content | Persistent host instructions add content beyond L0 and survive independently of plugin discovery. | Separate optional user-owned host instructions from the static plugin; record this as a proposed exception, not compliance by relocation. Record measured policy size separately from L0. |
 | ADR-0004 / V-07 Entry Skill ceiling | Original ≤14 conflicted with target 15. | RESOLVED for count by D-051: owner approved ≤25, implemented in V-07/V-11.3. Actual count 13, target 15. L0 and registry still gate future additions. |
-| D-037 L0 ≤5,500 | Only 15 characters remain; two skill names alone exceed this headroom. | Propose ≤6,500 in ADR-0009, subject to owner approval and per-surface measurement. Existing cap and descriptions remain unchanged now. |
+| L0 metadata budget | Original D-037 budget 5,500 left only 15 characters. | RESOLVED for internal budget by D-052: L0 ≤6,500, current usage 5,485, headroom 1,015. Descriptions unchanged; actual host behavior still requires measurement. |
 | CA-01 / V-19 / V-11.3 every Entry Skill is in engineering catalog and owns a capability | Editorial skills cannot satisfy this without expanding or reassigning the approved 206 inventory. | Propose a separate developer-side editorial registry and validation of the union of engineering/editorial names, disjoint ownership and total count. Never dummy CAP records or a generic exemption. |
 | ADR-0005 zero runtime / no installer | A and separately user-enabled static instructions can preserve zero runtime. | No hooks, scripts, executable installers, MCP/LSP servers, dependencies or new runtime; B is not installed in Step 35. |
 | ADR-0006 provider content only differs in metadata | Host-native instruction integration would add provider-specific guidance beyond metadata. | ADR-0010 proposes a narrow exception for documented host integration outside shared Skill content. One provider-neutral policy source; no per-provider Skill forks. |
@@ -60,7 +66,7 @@ permissions. A user declining B retains the native-plugin-only baseline.
 
 V-07 measures the JavaScript string length of each name plus description,
 excluding host formatting. At the existing ≤420-character description target,
-two 18-character names add at most 876: 5,485 + 876 = 6,361. A proposed 6,500
+two 18-character names add at most 876: 5,485 + 876 = 6,361. The D-052-approved 6,500
 ceiling leaves 139 characters at that estimate. This is arithmetic, not a
 provider capacity claim; Thai token cost is not estimated with English
 characters-per-token assumptions. Alternatives are compressing descriptions
@@ -104,7 +110,7 @@ and runs local regression/boundary checks, including scratch-only mutations;
 its evidence is recorded separately in PROGRESS.md. It does not start Step 36.
 
 Owner approval of the count is recorded in D-051 (≤25). Remaining review must
-resolve ADR-0009's budget/registry model, ADR-0010's
+resolve ADR-0009's registry model (L0 now approved by D-052), ADR-0010's
 no-match/always-on/portability exceptions and host evidence criteria, and
 ADR-0011's quality thresholds. Approved product scope alone does not approve
 these mechanisms. STOP after Step 35; Step 36 needs a separate instruction.

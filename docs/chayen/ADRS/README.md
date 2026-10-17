@@ -32,7 +32,8 @@ status. Product scope approval does not accept their architectural exceptions.
 
 Owner follow-up D-051 (2026-10-17) explicitly accepts and implements only an
 Entry Skill ceiling of 25, amending ADR-0004 and ADR-0009's count component.
-The rest of ADR-0009, including the L0/registry proposals, remains PROPOSED.
+The subsequent D-052 follow-up accepts and implements L0 ≤6,500. The rest of
+ADR-0009, including the editorial registry proposal, remains PROPOSED.
 
 Source IDs (S1–S24) refer to
 [PROVIDER_SPEC_RESEARCH.md §0](../PROVIDER_SPEC_RESEARCH.md#0-sources).

@@ -9,16 +9,18 @@
 **Owner follow-up (D-051, 2026-10-17):** the Entry Skill ceiling is now
 **25, ACCEPTED and implemented**, superseding this record's original proposed
 ≤15 ceiling and ADR-0004's old ≤14 limit. The product target remains 15;
-the L0 increase, separate registry and other architecture choices below remain
-PROPOSED. Only the count component has been approved.
+the separate registry and other architecture choices below remain PROPOSED.
+The subsequent owner follow-up **D-052 accepts and implements L0 ≤6,500**
+in V-07 and evaluation reporting. Count and L0 components are now approved;
+this does not accept the editorial registry or other architecture proposals.
 
 ## Context
 
 The Product Owner approved Thai and English writing/editing Entry Skills in
 the existing repository, and a target increase from 13 to 15. The original
 Step 35 scope did not approve changing the then-current ≤14 ceiling;
-D-051 subsequently approves ≤25. The 5,500-character L0 budget and
-engineering-only registry model remain unchanged. Current L0 is 5,485; V-11.3 and V-19 require
+D-051 subsequently approves ≤25 and D-052 approves L0 ≤6,500. The
+engineering-only registry model remains unchanged. Current L0 is 5,485; V-11.3 and V-19 require
 every Skill to appear in the Engineering Catalog and own a capability.
 Adding editorial skills without revisiting these rules would fail validation
 or distort the preserved 206-capability inventory.
@@ -36,7 +38,7 @@ or distort the preserved 206-capability inventory.
    versus planned mappings. Keep engineering ownership/coverage checks intact;
    replace CA-01's engineering-only assumption only after approval. This is
    not an exemption from anatomy, link, safety, trigger or size gates.
-4. Propose L0 ≤6,500 characters, measured with the existing name + description
+4. Use the owner-authorized L0 ≤6,500 characters (D-052), measured with the existing name + description
    method. With unchanged engineering descriptions and two 18-character names
    plus ≤420-character descriptions, the estimate is ≤6,361. This is a
    planning estimate, not measured host/token capacity. Host instruction
@@ -69,14 +71,14 @@ is not evidence of successful routing, metadata fit or completed quality work.
 
 ## Compatibility impact and affected ADRs
 
-ADR-0004's count ceiling has been amended to ≤25 by D-051. Its L0 budget
-and CA-01/V-11.3/V-19 engineering ownership assumptions would be amended only
-upon their separate acceptance. ADR-0002's native discovery,
+ADR-0004's count ceiling has been amended to ≤25 by D-051 and L0 to ≤6,500
+by D-052. CA-01/V-11.3/V-19 engineering ownership assumptions would be amended
+only upon their separate acceptance. ADR-0002's native discovery,
 ADR-0005's static package, ADR-0006's shared Skill source, ADR-0007's advisory
 boundaries and ADR-0008's single package are preserved for editorial Skills.
 Persistent host guidance is solely the separate ADR-0010 proposal. Existing
 ADRs retain their current statuses except for the explicitly accepted count
-amendment in ADR-0004; no broader supersession is implied.
+and L0 amendments in ADR-0004; no broader supersession is implied.
 
 ## Verification strategy and acceptance boundary
 
@@ -89,6 +91,7 @@ Native per-surface compatibility remains UNVERIFIED for this extension until
 recorded tests; no paid evaluation is authorized by this ADR.
 
 Step 35 checks governance structure only; product verification is NOT_RUN.
-The ceiling is approved by D-051. Owner approval of the proposed 6,500 budget
-and separate registry remains required before their dependent implementation
-in later steps. Raising the count alone does not resolve these dependencies.
+The count ceiling is approved by D-051 and the 6,500-character L0 cap by
+D-052. Owner approval of the separate registry remains required before its
+dependent implementation in later steps. No editorial Skill or registry is
+created by either limit amendment.

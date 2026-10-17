@@ -42,13 +42,15 @@ preferred initial architecture is **Native Plugin + Opt-in Host Persistent
 Instructions**, preserving zero runtime and provider compatibility as
 requirements. The owner subsequently approved an Entry Skill ceiling of
 **25** (D-051), implemented in the two count validators; product target stays 15.
-REQ-04/no-match, zero always-on content, the 5,500-character L0 cap and
-portability constraints are not silently replaced;
+The subsequent D-052 follow-up authorizes L0 ≤6,500 characters, implemented
+in the validator and evaluation report. REQ-04/no-match, zero always-on content
+and portability constraints are not silently replaced;
 their conflicts and proposed amendments are in
 [HUMANIZER_ARCHITECTURE_IMPACT.md](HUMANIZER_ARCHITECTURE_IMPACT.md).
 Strict install-only guaranteed always-on behavior is UNVERIFIED and is not
 claimed supported. Original Step 35 changed governance only; the explicit
-D-051 follow-up changes count validation only. Current package count is 13.
+D-051/D-052 follow-ups change count/L0 validation and reporting only.
+Current package count is 13.
 
 ### 2.1 In scope
 

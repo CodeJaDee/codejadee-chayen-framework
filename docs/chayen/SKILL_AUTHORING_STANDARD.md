@@ -15,12 +15,13 @@ reference files are written. Each rule has an ID and says how it is checked:
 
 **Step 35 proposal notice:** target 15 Entry Skills is approved product scope.
 The owner follow-up D-051 approves a maximum of **25**, implemented in count
-validators. Existing L0 and CA-01 engineering-catalog rules remain in force
-until their amendments in [ADR-0009](ADRS/ADR-0009-multilingual-editorial-skills.md)
-are accepted. Editorial Skills need a separately validated registry without
+validators. D-052 separately accepts and implements **L0 ≤6,500 characters**.
+CA-01 engineering-catalog rules remain in force until their amendments in
+[ADR-0009](ADRS/ADR-0009-multilingual-editorial-skills.md) are accepted.
+Editorial Skills need a separately validated registry without
 changing the 206-capability inventory. Anatomy, portability, bounded discovery,
 skill-local references and safety rules still apply. No editorial Skill or
-registry is implemented; only the count rule is changed in the D-051 follow-up. See
+registry is implemented; D-051/D-052 change count and L0 rules only. See
 [HUMANIZER_ARCHITECTURE_IMPACT.md](HUMANIZER_ARCHITECTURE_IMPACT.md).
 
 - **V-nn** is an automated check by the developer-only validators
@@ -47,7 +48,7 @@ plugins/codejadee-chayen-framework/skills/
 
 | Level | What loads | When | Budget |
 |---|---|---|---|
-| L0 | `name` + `description` of every entry skill | Always, by the provider | ≤5,500 characters for all Chayen skills together (4,000 originally; raised by D-034 to D-037) |
+| L0 | `name` + `description` of every entry skill | Always, by the provider | ≤6,500 characters for all Chayen skills together (D-052; previously 5,500 under D-037) |
 | L1 | `SKILL.md` body | When the provider matches the description | ≤300 lines (hard). Target ≤200 lines. |
 | L2 | One or more `references/*.md` | When the SKILL.md routing table says so | ≤300 lines each |
 
@@ -93,7 +94,7 @@ decides triggering (REQ-02) and silence (REQ-04).
 | DS-02 | Name the concrete scope: stacks, tools, file types, or artifacts, from the validator vocabulary. Use at least 2 such terms. | V-20 |
 | DS-03 | End with a boundary clause starting "Not for" or "Not a", naming at least 2 exclusions. Exclusions name the neighbouring skills' work and the unsupported stacks that would otherwise attract the skill. | V-07, V-20 |
 | DS-04 | No catch-all wording: "any task", "anything", "everything", "all kinds of", "general purpose", "etc.", "and more", "and so on", "any language", "any framework". | V-20 |
-| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard. The total L0 of all entry skills is ≤5,500 characters (4,000 until D-034, 4,400 until D-035, 4,700 until D-036, 5,200 until D-037). | V-07 |
+| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard. Total L0 is ≤6,500 characters (D-052; previously 5,500 under D-037). | V-07 |
 | DS-06 | Distinct from every other entry skill: word overlap ≤0.25 target, and >0.35 is an error. | V-07b |
 | DS-07 | YAML-safe: no `": "`, no `" #"`, and no leading indicator character. | V-07 |
 | DS-08 | At most 24 enumerated items (warning). Longer lists usually mean the skill is too broad, or should name stack families instead. | V-20 |
