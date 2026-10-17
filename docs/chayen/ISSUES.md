@@ -141,6 +141,12 @@ latest Step 36 request and L0 6,500 retained. There is no remaining architecture
 approval blocker for this step. R-57 remains OPEN only for later editorial
 behavior, host policy/quality decisions and native-provider evidence.
 
+### STEP 37 Thai editorial skill
+
+| ID | Risk | Impact | Mitigation / next evidence | Status |
+|---|---|---|---|---|
+| R-58 | `chayen-humanizer-th` quality is unverified: the 14 patterns, false-positive guards and Royal Institute rule statements are author-written and not reviewed by a fluent Thai editor; full rule texts were not retrieved; native routing of Thai prompts, reference loading and behavior on the 52 case specifications are NOT_RUN. The simulated lexical proxy cannot score Thai prompts. | Over-editing of formal or brand Thai, missed real patterns, incorrect rule claims, wrong-skill selection between documentation/frontend and Thai editing, or silence on Thai prompts. | Fluent reviewer pass on references and HUMANIZER_TH_DESIGN.md questions 1–5; ADR-0011 rubric approval; authorized native multi-run routing (≥3 runs, no-plugin arm) and graded behavior runs in Step 40. No MHR promotion beyond IN_PROGRESS until then. | OPEN |
+
 ## Defects
 
 | ID | Defect | Impact | Proposed fix | Status |

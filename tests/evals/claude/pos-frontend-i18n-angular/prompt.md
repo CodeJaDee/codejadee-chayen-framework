@@ -6,7 +6,7 @@ runs: 3
 max_turns: 8
 timeout_seconds: 180
 allowed_tools: [Read, Glob, Grep, Skill]
-expected_outcome: "invokes chayen-frontend; never chayen-backend"
+expected_outcome: "invokes chayen-frontend; never chayen-backend, chayen-humanizer-th"
 ---
 
 Add Thai and English language support to our Angular app, including date and currency formats.

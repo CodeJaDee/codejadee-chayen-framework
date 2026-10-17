@@ -4166,3 +4166,171 @@ Future body/description changes need their own native routing evidence.
 
 STOP after Step 36. No commit, push, tag, release, provider install, user-level
 instruction change or Step 37 execution.
+
+## Step 36 re-issued — audit and re-verification of committed foundation
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** DONE for Step 36, pending owner review. No re-implementation.
+- **Baseline:** clean `main` at `56eb7cb`, which already contains the Step 36
+  registry, shared rules, validator extensions and 18 editorial mutations.
+- **Approval check:** D-053 ACCEPTED covers the registry/CA-01/V-19 model;
+  D-052 covers L0 6,500. No unapproved limit was changed.
+
+The re-issued request was audited item by item against the committed work.
+Registration, engineering isolation (206 capabilities unchanged), planned
+support, V-07/V-07b/V-19/V-11.3 extensions, projected metadata (5,940 /
+6,500, 560 free), compact descriptions (211/206 characters) and the requested
+negative-control categories were already present. No budget increase is needed.
+
+Two untested paths were found and covered with test-only mutations:
+
+| Case | Gap closed | Pinned diagnostic |
+|---|---|---|
+| `ed36-trigger-planned-skill` | V-16 was intentionally unchanged (only shipped Skills are known), but no control proved a trigger case cannot name a planned Editorial Skill. | `V-16 trigger-cases: pos-repository-overview: unknown skill chayen-humanizer-th` |
+| `ed36-registered-count` | Only the shipped-directory cap (16 > 15) was tested; the shared registered-count cap (engineering + editorial registrations) had no control. | `V-19 catalog-mapping: registered Entry Skill count exceeds 15` |
+
+No validator source, registry, catalog, Skill, manifest or description changed.
+
+**Open for owner review:** the maximum 15 in D-053 came from the earlier Step 36
+request and replaced D-051's 25. The re-issued request states a 15-Skill target
+but no maximum. The cap is kept at 15 (not changing a limit without approval);
+the owner should confirm 15 or restore 25. R-57 also remains OPEN for ADR-0010
+(persistent policy) and ADR-0011 (quality thresholds).
+
+### Re-verification file ledger
+
+| Action | Path |
+|---|---|
+| Modified | `tests/catalog/editorial-mutations.json` — two cases appended |
+| Modified | `docs/chayen/SKILL_REGISTRATION.md` — negative-control list |
+| Modified | `docs/chayen/PROGRESS.md` — this section |
+| Created / deleted | None |
+
+### Re-verification actual results
+
+Scripts reviewed before execution (runner temp-dir confinement and cleanup
+guard; `validate-all.mjs` invokes the eval generator only with `--check`).
+Node on PATH is now v26.8.1 (earlier entries used v24.22.0 by absolute path).
+
+| Command | Actual result |
+|---|---|
+| `node tools/validate/validate-package.mjs` (before edits) | PASS, exit 0: 13 shipped Skills, actual L0 5,485 / 6,500, projected registered 5,940 / 6,500; V-07b max overlap 0.11; V-16 186 cases; V-19 13 shipped + 2 editorial registrations, 117 recipes / 206 capabilities. Same five V-06 line-target warnings, 0 errors. |
+| `node tools/validate/run-validator-tests.mjs` (before edits) | PASS, exit 0: 150/150, including all 18 existing `ed36-*` cases. |
+| `node tools/validate/run-validator-tests.mjs --only <id>` for each new case | PASS, exit 0: 5/5 each, with the pinned diagnostics above. |
+| `node tools/validate/validate-all.mjs` (after edits) | PASS, exit 0: all nine gate groups; 152/152 validator self-tests; 186 cases / 441 eval files in sync; 18 user docs, 0 errors. |
+| `node --test tests/security/boundaries.test.mjs` | PASS, exit 0: 34/34. |
+| `git diff --check` | PASS, exit 0. |
+
+Native provider routing, Humanizer behavior, multilingual quality, host
+lifecycle and billed evaluations remain NOT_RUN. No requirement is promoted.
+
+STOP after Step 36. No commit, push, tag, release, persistent instruction or
+Step 37 execution.
+
+## Step 37 — Thai Humanizer Skill
+
+- **Date:** 2026-10-17 (Asia/Bangkok).
+- **Status:** DONE, pending owner review (D-054 PROPOSED). Static evidence only.
+- **Authorization:** the owner's explicit Step 37 instruction. Preconditions
+  checked: D-053 registry/V-19 foundation ACCEPTED, D-052 L0 6,500; ADR-0010
+  (persistent policy) and ADR-0011 (quality thresholds) govern Steps 39–40 and
+  do not block this step. Not BLOCKED.
+- **Baseline:** `main` at `56eb7cb` plus the uncommitted Step 36 re-verification
+  edits (three files), preserved.
+
+### Research
+
+Studied `blader/humanizer` README, SKILL.md v3.1.0, CHANGELOG and MIT LICENSE
+((c) 2025 Siqi Chen). Adopted methods only: strength ranking with "weak alone"
+patterns, per-pattern false-positive guards, mark/draft/check/final passes,
+no invented facts, prose-only file edits, source text as data, no detector
+evasion. No text or example copied; English watch lists not translated.
+Thai rules were separated from editorial preferences using Royal Institute
+punctuation/spacing rules (2551), the 2532 English transcription rules and
+a Chulalongkorn thesis on avoiding the ถูก passive. Full rule texts were not
+retrieved; rule statements are flagged for fluent review (R-58). Sources and
+attribution: [HUMANIZER_TH_DESIGN.md](HUMANIZER_TH_DESIGN.md).
+
+### Implementation
+
+`plugins/codejadee-chayen-framework/skills/chayen-humanizer-th/`: SKILL.md
+(154 lines, English router with Thai examples, all V-17 sections and the
+V-25.3 guard sentences) and seven references (56–82 lines each): two pattern
+checklists (TH-01–TH-14), Thai conventions, protected content, website copy,
+content creation and an output template. Modes: audit, rewrite, create and
+website edit. No recipes, capabilities, scripts, hooks or dependencies.
+
+The registry record moved `planned` → `existing`. The 211-character planned
+description did not cover creation, blogs, READMEs or microcopy, so a new
+description was written. The first draft (335 characters) moved 5 of the 186
+original trigger cases to this skill in the simulated lexical proxy
+(generic "rewrite", "while preserving", "product"). The final 354-character
+description leaves 1 (an Angular Thai/English i18n prompt), and that case now
+also forbids the Thai skill for native runs. Actual L0 **5,858 / 6,500**;
+projected with the planned English record **6,083** (417 free).
+
+### Tests
+
+| Layer | Change |
+|---|---|
+| Trigger cases | 13 new (6 positive, 4 negative, 2 ambiguous, 1 unsupported); skill declared; `pos-frontend-i18n-angular` forbid extended; Claude evals regenerated (13 new case directories, 12 updated grader/prompt files; 45 line-ending-only rewrites restored) |
+| Behavior specifications | `tests/editorial/humanizer-th-cases.json`: 52 cases (positive 14, false-positive 14, semantic-preservation 5, mixed-language 4, website 5, audit-only 2, security 4, negative 4) |
+| Static gate | `tools/validate/check-editorial-cases.mjs` (G-15) in `validate-all.mjs` |
+| Negative controls | Five planned-state Step 36 mutations retargeted to the still-planned English record; new `ed37-th-recipe-ownership` |
+| Security fixture | Synthetic baseline writes a guarded SKILL.md for each `existing` editorial record |
+
+### File ledger (Step 37 only)
+
+| Action | Path |
+|---|---|
+| Created | `plugins/codejadee-chayen-framework/skills/chayen-humanizer-th/SKILL.md` and `references/` (`patterns-language.md`, `patterns-content.md`, `thai-conventions.md`, `protected-content.md`, `website-content.md`, `content-creation.md`, `output-formats.md`) |
+| Created | `tests/editorial/humanizer-th-cases.json`, `tools/validate/check-editorial-cases.mjs`, `docs/chayen/HUMANIZER_TH_DESIGN.md` |
+| Created | 13 directories `tests/evals/claude/{pos-humanizer-th-*, neg-thai-*, amb-thai-*, uns-thai-ai-detector-evasion}/` (generated) |
+| Modified | `catalog/editorial-skills.json`, `tests/skills/trigger-cases.json`, 12 generated files under `tests/evals/claude/` |
+| Modified | `tests/catalog/editorial-mutations.json`, `tests/security/boundaries.test.mjs`, `tools/validate/validate-all.mjs`, `tools/validate/README.md` |
+| Modified | `README.md`, `CHANGELOG.md`, `docs/SKILLS_CATALOG.md`, `plugins/codejadee-chayen-framework/README.md`, `plugins/codejadee-chayen-framework/skills/README.md` |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md`, `DECISIONS.md` (D-054), `ISSUES.md` (R-58), `IMPLEMENTATION_PLAN.md`, `SKILL_REGISTRATION.md`, `PROGRESS.md` |
+| Unchanged | All 13 engineering skills, the three engineering/technology/workflow catalogs, manifests and marketplaces (diff empty) |
+| Deleted | None |
+
+### Actual verification
+
+Reviewed before running: the eval generator's write branch (writes and prunes
+only `tests/evals/claude/`), the validator runner's temp-dir copy and cleanup,
+`validate-all.mjs` and the evaluation suite (offline; no `--write`, provider
+or facts options). Node v26.8.1 on PATH.
+
+| Command | Actual result |
+|---|---|
+| `node tools/validate/validate-package.mjs` (first run after authoring) | FAIL as expected, exit 1: two V-16 errors (skill not declared, fewer than 3 positives); fixed by adding trigger cases |
+| `node tools/validate/validate-package.mjs` (final) | PASS, exit 0: 14 Skills; V-05/06/07/07b/08/09/10/12/16/17/18/19/20 PASS; L0 5,858 actual / 6,083 projected; 228 references; 199 trigger cases; five existing V-06 warnings only |
+| `node tools/validate/run-validator-tests.mjs` (first run after registry change) | FAIL, 147/152: five Step 36 mutations assumed the Thai record was planned; validators behaved correctly |
+| `node tools/validate/run-validator-tests.mjs` (after retargeting) | PASS, 152/152; `--only ed37-th-recipe-ownership` 5/5 |
+| `node tools/validate/check-editorial-cases.mjs` | PASS: 14 patterns with all six parts; 52 case specifications. Three injected defects in scratch copies (missing Preserve part, absent preserved span, missing TH-14 guard) each FAIL, exit 1, with the intended diagnostic |
+| `node --test tests/security/boundaries.test.mjs` (first) | FAIL, 33/34: synthetic baseline copied the registry with an `existing` record but no SKILL.md; fixed in the fixture |
+| `node --test tests/security/boundaries.test.mjs` (final) | PASS, 34/34 |
+| `node tools/validate/validate-all.mjs` (final) | PASS, exit 0: ten gate groups; 153/153 self-tests; 199 cases / 468 eval files in sync; 18 user docs, 0 errors; G-15 PASS |
+| `node tools/evals/run-evaluation-suite.mjs` (final) | PASS, exit 0: identity 15/15, engineering 206/206, technology 108/108, workflows 12/12, routing examples 11/11, handoff 243 files / 0 dangling |
+| Lexical proxy, HEAD worktree vs final | top1 0.546 → 0.529, top3 0.769 → 0.757, precision 0.514 → 0.503, no-match 0.441 → 0.462, ambiguous 14/22 → 15/24. Thai-only prompts produce no Latin tokens, so the proxy cannot score them; 1 of 186 original cases changes pick (above). SIMULATED, not routing evidence |
+| `node tools/catalog/check-catalog.mjs` | PASS: 13 engineering Entry Skills, fingerprint `2f13cad24ff431e3` unchanged |
+| `node tools/validate/check-security.mjs` | PASS: 246 package files, 14 entries, 228 references, 0 errors |
+| Governance link/anchor section of the Step 35 checker | PASS: 7 changed governance documents, 63 relative links, 0 errors |
+| Preservation diff over existing skills, catalogs, manifests and marketplaces | PASS: no output |
+| `git diff --check` | PASS, exit 0 |
+
+| Not run | Reason |
+|---|---|
+| Native routing of the 13 Thai trigger cases (≥3 runs, no-plugin arm) | Billed provider runs not authorized in Step 37 (DS-09 remains open for this description) |
+| Behavior grading of the 52 case specifications | Needs an approved rubric (ADR-0011) and authorized runs (Step 40) |
+| Fluent Thai human review of patterns and rule statements | No reviewer in this step (R-58) |
+| Engineering routing regression with 14 Skills | Native runs not authorized |
+
+### Unresolved quality questions
+
+See HUMANIZER_TH_DESIGN.md §Unresolved quality questions: pattern frequency
+in real content, over-editing of formal Thai, default terminology policy,
+fidelity of rule statements to the full Royal Institute texts, particle and
+gender-neutral voice policy, and native routing of Thai prompts.
+
+STOP after Step 37. No English skill, persistent policy, global instruction
+change, commit, push, release or Step 38 work.

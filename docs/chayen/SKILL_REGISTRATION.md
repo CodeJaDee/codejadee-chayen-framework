@@ -6,6 +6,12 @@
   D-051's 25); L0 ≤6,500 (D-052). Shared constants live in the developer-only
   `tools/catalog/skill-registration.mjs`.
 - **Shipment at Step 36:** 13 engineering Skills, no editorial Skill bodies.
+- **Step 37 transition (D-054):** `chayen-humanizer-th` now ships and is
+  registered `existing`, with its description widened (211 → 354 characters)
+  identically in SKILL.md and the registry. `chayen-humanizer-en` stays
+  `planned`. 14 shipped Skills; actual L0 5,858, projected 6,083 / 6,500.
+  Planned-state negative controls now target the English record. Historical
+  Step 36 figures below are kept as recorded.
 
 ## Registration model
 
@@ -71,8 +77,10 @@ self-test runner. It covers unregistered editorial names, duplicate registry
 and shipped names, invalid language/description metadata, missing references,
 16 shipped Skills, excessive projected metadata, broken engineering ownership
 and recipe mappings, missing existing files, premature planned directories,
-runtime fields, unsafe names, duplicate descriptions, missing registry and
-shipped/registry metadata drift. Invalid Skill copies exist only in temporary
+runtime fields, unsafe names, duplicate descriptions, missing registry,
+shipped/registry metadata drift, trigger cases naming a planned (unshipped)
+Editorial Skill (V-16) and a combined registered count above 15 while only 13
+directories ship. Invalid Skill copies exist only in temporary
 test repositories; none are shipped or left in the workspace.
 
 The runner supports an optional expected message fragment, so a registry

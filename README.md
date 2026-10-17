@@ -7,7 +7,7 @@ Chayen is a **plugin of engineering skills** for coding agents. It runs in:
 - GitHub Copilot (CLI and VS Code).
 
 You install it with each provider's own plugin manager, then work with
-**ordinary prompts**. When a request matches one of Chayen's 13 skills, the
+**ordinary prompts**. When a request matches one of Chayen's 14 skills, the
 agent loads that skill's guidance for the job. When nothing matches, the agent
 behaves exactly as it would without Chayen.
 
@@ -23,9 +23,10 @@ behaves exactly as it would without Chayen.
 
 ## What Chayen is
 
-- **13 entry skills.** They cover repository analysis, requirements,
+- **14 entry skills.** They cover repository analysis, requirements,
   architecture, implementation, backend, frontend, data, testing, security,
-  performance, DevOps, documentation, and AI engineering. See
+  performance, DevOps, documentation, AI engineering, and Thai writing and
+  editing. See
   [docs/SKILLS_CATALOG.md](docs/SKILLS_CATALOG.md).
 - **Capability recipes and technology guidance**, loaded only when relevant:
   - 206 engineering capabilities;

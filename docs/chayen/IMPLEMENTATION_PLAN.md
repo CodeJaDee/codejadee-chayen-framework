@@ -510,6 +510,13 @@ later-step proposals; Step 37 is not authorized by this step.
 
 ### Step 37 — Thai Humanizer Skill (planned)
 
+**DONE (2026-10-17), pending owner review (D-054).** Implemented
+`chayen-humanizer-th` (SKILL.md plus seven references, 14 Thai patterns),
+moved its registry record to `existing`, added 13 trigger cases, 52 behavior
+case specifications and static gate G-15. Static validation PASS; native
+routing, behavior and fluent human review NOT_RUN (R-58). See
+[HUMANIZER_TH_DESIGN.md](HUMANIZER_TH_DESIGN.md) and PROGRESS.md.
+
 After approved foundations and explicit step authorization, implement only the
 Thai writing/editing Skill and skill-local references, with language selection,
 audit/rewrite, website copy, fidelity, glossary and injection cases. Preserve

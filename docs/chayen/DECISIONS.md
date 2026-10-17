@@ -1194,6 +1194,30 @@ Decision statuses:
   amendments, plus the explicit new count requirement. ADR-0010 persistent
   host policy and ADR-0011 quality thresholds remain PROPOSED.
 
+### D-054 — Step 37 Thai editorial skill design
+
+- **Status:** PROPOSED (implemented in Step 37 under the owner's explicit
+  Step 37 instruction; design choices below await owner review).
+- **Decision:** ship `chayen-humanizer-th` as the 14th Entry Skill with an
+  English router SKILL.md, Thai examples and seven skill-local references
+  (six checklists, one template); no recipes, capabilities, scripts or hooks.
+  14 Thai patterns (TH-01–TH-14), each with signals, rationale, false-positive
+  guard, before/after and preservation notes.
+- **Registry:** the Thai record moves from `planned` to `existing`; its
+  description is widened from 211 to 354 characters to cover content
+  creation, developer blogs, READMEs and UI microcopy, identical in SKILL.md
+  and the registry (V-19). L0 actual 5,858, projected 6,083 / 6,500.
+- **Boundaries:** English output, translation into other languages,
+  engineering doc accuracy (documentation skill) and application code
+  (engineering skills) are excluded. No mention of the unshipped English skill.
+- **Tests:** 13 trigger cases; 52 behavior case specifications; developer-only
+  static gate G-15 (`check-editorial-cases.mjs`); Step 36 planned-state
+  mutations retargeted to the English record.
+- **Attribution:** `blader/humanizer` (MIT, (c) 2025 Siqi Chen) informed the
+  method only; no text copied. See [HUMANIZER_TH_DESIGN.md](HUMANIZER_TH_DESIGN.md).
+- **Evidence:** static only. Native routing, behavior and fluent human review
+  are NOT_RUN (R-58). No persistent policy, English skill or Step 38 work.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

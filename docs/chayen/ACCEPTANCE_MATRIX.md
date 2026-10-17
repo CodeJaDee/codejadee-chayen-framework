@@ -40,6 +40,14 @@ scratch replacement, corrected and revalidated. This is executed static
 foundation evidence; all MHR product acceptance/behavior requirements remain
 PLANNED with no VERIFIED promotion.
 
+**Step 37 Thai editorial skill (D-054, PROPOSED):** `chayen-humanizer-th`
+ships as the 14th Entry Skill with 7 skill-local references and 14 Thai
+patterns. Static evidence only: package/catalog/security/docs/G-15 checks
+PASS, validator self-tests 153/153, 13 trigger cases and 52 behavior case
+specifications structurally valid. Eight MHR rows move to IN_PROGRESS; none is
+IMPLEMENTED or VERIFIED because the English half and all native/behavior/human
+evaluation remain (R-58). See [HUMANIZER_TH_DESIGN.md](HUMANIZER_TH_DESIGN.md).
+
 **Snapshot:** Step 35 governance update (2026-10-17); prior evidence retains
 its recorded step/date and meaning. No Step 35 behavior verification claim.
 
@@ -108,8 +116,12 @@ retain their original step-specific meaning; they are not current rerun claims.
 | Stack coverage (STK) | 14 | 1 | 3 | 10 | 0 |
 | Architecture components (ARC) | 14 | 0 | 4 | 10 | 0 |
 | Capability domains (CAP) | 20 | 0 | 0 | 20 | 0 |
-| Multilingual Humanizer (MHR) | 12 | 12 | 0 | 0 | 0 |
-| **Total** | **98** | **13** | **19** | **59** | **7** |
+| Multilingual Humanizer (MHR) | 12 | 4 | 8 | 0 | 0 |
+| **Total** | **98** | **5** | **27** | **59** | **7** |
+
+Step 37 moves MHR-001–MHR-006, MHR-011 and MHR-012 from PLANNED to
+IN_PROGRESS (Thai half implemented; English half and all behavior pending).
+MHR-007–MHR-010 stay PLANNED. No legacy row changes.
 
 Step 35 recomputes this summary from existing rows plus the 12 new PLANNED
 MHR rows. GOV-18 already existed; EX-01–EX-07 were VERIFIED in Step 34.
@@ -236,18 +248,18 @@ in PROGRESS.md. No Humanizer Skill or host integration exists yet.
 
 | ID | Requirement | Planned step(s) | Design / implementation evidence | Verification method | Verification evidence | Status |
 |---|---|---|---|---|---|---|
-| MHR-001 | Thai and English editorial Entry Skills; target 15 in existing plugin | 36–38, 40–41 | HUMANIZER_REQUIREMENTS.md; ADR-0009 PROPOSED; implementation absent | MH-V01: approved count/L0/registry, portable anatomy, native positive/negative discovery | NOT_RUN | PLANNED |
-| MHR-002 | Automatic intended-output language selection including explicit target and bilingual text | 37–40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0010 PROPOSED; implementation absent | MH-V02: cross-language/locale/ambiguity/unsupported cases | NOT_RUN | PLANNED |
-| MHR-003 | Content audit and scoped rewriting | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V03: audit leaves source intact, rewrite addresses located issues faithfully | NOT_RUN | PLANNED |
-| MHR-004 | Website copy editing with markup/permission preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V04: fixture diffs, syntax/placeholders, audit-only and unauthorized publish negatives | NOT_RUN | PLANNED |
-| MHR-005 | Technical terminology, glossary and protected-span preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V05: protected-span comparisons and bilingual glossary review | NOT_RUN | PLANNED |
-| MHR-006 | Semantic and factual preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent | MH-V06: compare facts/qualifiers/quantities/citations and justified corrections | NOT_RUN | PLANNED |
+| MHR-001 | Thai and English editorial Entry Skills; target 15 in existing plugin | 36–38, 40–41 | HUMANIZER_REQUIREMENTS.md; ADR-0009 PROPOSED; implementation absent; Step 37: `chayen-humanizer-th` shipped (SKILL.md + 7 references), registry `existing`; English Skill pending Step 38 | MH-V01: approved count/L0/registry, portable anatomy, native positive/negative discovery | Static: V-05/V-07/V-07b/V-17/V-19/V-20 PASS, 14 Skills, L0 5,858 actual / 6,083 projected of 6,500; 13 Thai trigger cases synced. Native discovery NOT_RUN | IN_PROGRESS |
+| MHR-002 | Automatic intended-output language selection including explicit target and bilingual text | 37–40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0010 PROPOSED; implementation absent; Step 37: Thai language-selection order in `thai-conventions.md`; English output excluded in SKILL.md | MH-V02: cross-language/locale/ambiguity/unsupported cases | Static case specs (negative English-output, Japanese translation, mixed-language) structure PASS; behavior NOT_RUN | IN_PROGRESS |
+| MHR-003 | Content audit and scoped rewriting | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent; Step 37: audit/rewrite workflow, 14 TH patterns with false-positive guards, audit output format | MH-V03: audit leaves source intact, rewrite addresses located issues faithfully | Static: G-15 pattern inventory and 28 positive/false-positive + 2 audit-only case specs PASS; behavior NOT_RUN | IN_PROGRESS |
+| MHR-004 | Website copy editing with markup/permission preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent; Step 37: `website-content.md` (preview/apply, copy types) and `protected-content.md` file-type rules (Thai) | MH-V04: fixture diffs, syntax/placeholders, audit-only and unauthorized publish negatives | Static: 5 website case specs (JSX, locale JSON, ICU, Trans tags, SEO) structure PASS; fixture diffs and behavior NOT_RUN | IN_PROGRESS |
+| MHR-005 | Technical terminology, glossary and protected-span preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent; Step 37: protected spans, placeholder rules and TH-06 terminology guidance (Thai) | MH-V05: protected-span comparisons and bilingual glossary review | Static: preserved-span fixture integrity PASS (E-02); protected-span comparison on outputs NOT_RUN | IN_PROGRESS |
+| MHR-006 | Semantic and factual preservation | 37–38, 40 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent; Step 37: meaning-carrier list, comparison check, no-new-facts rules, TH-10 flag-only handling (Thai) | MH-V06: compare facts/qualifiers/quantities/citations and justified corrections | Static: 5 semantic-preservation case specs PASS; source/output review NOT_RUN | IN_PROGRESS |
 | MHR-007 | Opt-in persistent response guidance without explicit Skill invocation | 36, 39–40 | HUMANIZER_REQUIREMENTS.md; ADR-0010 PROPOSED; implementation absent | MH-V07: policy on/off, no-match, no forced Skill load, measured overhead; C unverified | NOT_RUN | PLANNED |
 | MHR-008 | Claude Code, OpenAI Codex and GitHub Copilot compatibility per surface | 36, 39–41 | HUMANIZER_REQUIREMENTS.md; ADR-0010 PROPOSED; implementation absent | MH-V08: official dated sources plus isolated native loading/behavior matrix | NOT_RUN | PLANNED |
 | MHR-009 | Explicit opt-in, decline, disable, independent removal and rollback | 36, 39–41 | HUMANIZER_REQUIREMENTS.md; ADR-0010 PROPOSED; implementation absent | MH-V09: fresh-session lifecycle and preservation of unrelated instructions | NOT_RUN | PLANNED |
 | MHR-010 | Thai/English quality rubric and independent human evaluation | 36, 40–41 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent | MH-V10: approved rubric/dataset/sample coverage, separate per-language human/provider evidence | NOT_RUN | PLANNED |
-| MHR-011 | Preserve engineering, technology and workflow coverage and routing | 36–41 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent | MH-V11: catalog identity, diff, repeated policy on/off/no-plugin regressions | NOT_RUN | PLANNED |
-| MHR-012 | Security, permissions, untrusted data and advisory boundaries | 36–41 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent | MH-V12: static zero-runtime profile plus injection/secrets/authorization negatives | NOT_RUN | PLANNED |
+| MHR-011 | Preserve engineering, technology and workflow coverage and routing | 36–41 | HUMANIZER_REQUIREMENTS.md; ADR-0009/0011 PROPOSED; implementation absent; Step 37: engineering catalog, descriptions and recipes unchanged; Thai Skill isolated from capability ownership | MH-V11: catalog identity, diff, repeated policy on/off/no-plugin regressions | Static: validator self-tests 153/153, engineering 206 / technology 108 / workflows 12 unchanged; native engineering routing regression NOT_RUN | IN_PROGRESS |
+| MHR-012 | Security, permissions, untrusted data and advisory boundaries | 36–41 | HUMANIZER_REQUIREMENTS.md; ADR-0011 PROPOSED; implementation absent; Step 37: untrusted-content, forged-approval, secrets and copy-not-behavior boundaries in Thai Skill; zero runtime | MH-V12: static zero-runtime profile plus injection/secrets/authorization negatives | Static: V-25 security profile PASS; 4 security case specs PASS (structure); behavior NOT_RUN | IN_PROGRESS |
 
 ## Governance
 

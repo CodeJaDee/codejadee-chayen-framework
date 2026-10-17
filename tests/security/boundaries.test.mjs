@@ -97,12 +97,16 @@ function profileFixture(t) {
   const root = scratch(t), pkg = "plugins/codejadee-chayen-framework";
   write(root, `${pkg}/plugin.json`, { extensions: {} });
   write(root, `${pkg}/.claude-plugin/plugin.json`, { name: "synthetic" });
-  write(root, `${pkg}/skills/sample/SKILL.md`, "System and developer instructions and provider permissions take priority\nInspect repository scripts, build targets and lifecycle hooks before execution\nA recommendation is not permission\nNo credentials or external upload of source/prompts is required\n");
+  const guarded = "System and developer instructions and provider permissions take priority\nInspect repository scripts, build targets and lifecycle hooks before execution\nA recommendation is not permission\nNo credentials or external upload of source/prompts is required\n";
+  write(root, `${pkg}/skills/sample/SKILL.md`, guarded);
   for (const rel of [".claude-plugin/marketplace.json", ".github/plugin/marketplace.json", ".agents/plugins/marketplace.json"])
     write(root, rel, { plugins: [{ source: `./${pkg}` }] });
   for (const name of ["engineering", "technology"])
     write(root, `catalog/${name}-capabilities.yaml`, `catalog:\n  plugin_root: ${pkg}\n`);
-  write(root, "catalog/editorial-skills.json", JSON.parse(fs.readFileSync(path.join(repo, "catalog/editorial-skills.json"), "utf8")));
+  const registry = JSON.parse(fs.readFileSync(path.join(repo, "catalog/editorial-skills.json"), "utf8"));
+  write(root, "catalog/editorial-skills.json", registry);
+  // Step 37: shipped (existing) editorial records need a SKILL.md in the synthetic package too.
+  for (const s of registry.skills.filter(s => s.mapping === "existing")) write(root, `${pkg}/skills/${s.name}/SKILL.md`, guarded);
   fs.mkdirSync(path.join(root, "tools")); fs.mkdirSync(path.join(root, "tests"));
   return { root, pkg, script: path.join(repo, "tools/validate/check-security.mjs") };
 }

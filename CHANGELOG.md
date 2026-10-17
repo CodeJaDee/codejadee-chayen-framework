@@ -20,9 +20,11 @@ in the manifests is still `0.1.0-dev`. Changing it is a release step (see
     manifest over a single `skills/` source;
   - one native marketplace file per provider, all with marketplace name
     `codejadee`.
-- **13 entry skills:** repository, requirements, architecture,
+- **14 entry skills:** repository, requirements, architecture,
   implementation, backend, frontend, data, testing, security, performance,
-  DevOps, documentation, and AI engineering.
+  DevOps, documentation, AI engineering, and Thai writing and editing
+  (`chayen-humanizer-th`; audit, rewrite, content creation and website copy,
+  quality not yet evaluated).
 - **206 engineering capabilities in 20 domains**, as recipes and checklists
   loaded on demand (221 references in total).
 - **11 technology packs with 108 capabilities:** C#/ASP.NET Core, Angular,

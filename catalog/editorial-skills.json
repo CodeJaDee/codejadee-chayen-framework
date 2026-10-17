@@ -4,8 +4,8 @@
     {
       "name": "chayen-humanizer-th",
       "language": "th",
-      "mapping": "planned",
-      "description": "Polish Thai prose for articles and website copy, auditing stiff phrasing, register, repetition, and bilingual technical terminology while preserving facts. Not for English-only drafts or software implementation."
+      "mapping": "existing",
+      "description": "Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code."
     },
     {
       "name": "chayen-humanizer-en",
