@@ -7,6 +7,8 @@
 //   D-04 every chayen-* skill name is a real skill directory
 //   D-05 version strings X.Y.Z-dev / X.Y.Z near "version" match the manifests' version or a
 //        documented proposal (docs/distribution/*, CHANGELOG.md)
+//   D-06 current build facts match canonical package counts, identity and L0;
+//        historical evidence is explicitly delimited rather than rewritten.
 // External http(s) links are listed, not fetched.
 // Zero dependencies (Node.js >= 20.11, for import.meta.dirname).
 //
@@ -103,7 +105,7 @@ for (const file of docs) {
       if (outsideMigration.includes(m[0])) err("D-03", file, "former plugin identity is allowed only in marked migration instructions");
       continue;
     }
-    if (m[1].startsWith("codejadee") || m[2].startsWith("codejadee")) {
+    if (m[1] === manifest.name || m[1].startsWith("codejadee") || m[2].startsWith("codejadee")) {
       if (m[1] !== manifest.name || !marketplaces.includes(m[2])) err("D-03", file, `identifier ${m[0]} does not match ${manifest.name}@${marketplaces[0]}`);
     }
   }

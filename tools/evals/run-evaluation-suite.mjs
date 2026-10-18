@@ -6,7 +6,7 @@
 // It never calls a provider or model. Zero dependencies. Never shipped with the plugin.
 //
 // Usage:
-//   node tools/evals/run-evaluation-suite.mjs [--write]
+//   node tools/evals/run-evaluation-suite.mjs [--write] [--fail-fast]
 //        [--probes <summary.json> ...] [--facts <dir with run-fact-checks JSON>]
 // --write stores tests/evaluation/results/step32-evaluation.json (path-free).
 

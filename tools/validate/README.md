@@ -6,7 +6,9 @@ These tools are for **repository maintainers only**.
 - Plugin users never run them.
 - They are not a Chayen CLI: no `package.json`, no `bin` entry, nothing to
   install.
-- They have no runtime dependencies. They need Node.js 20.11 or later (the scripts use `import.meta.dirname`). Executed on Node 24.15.0; 20.11 is the documented minimum, not a tested version.
+- They have no runtime dependencies. Phase 3 tested Node.js 20.11.0 and
+  24.22.0 on Windows. Use 24.22.0 for development; 20.11.0 is a legacy
+  compatibility floor, not a recommended maintainer runtime.
 
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
@@ -75,7 +77,8 @@ installation, restore, provider model call or lifecycle install is part of
 secrets, malware or vulnerable dependencies. See `docs/chayen/SECURITY_MODEL.md`,
 `THREAT_MODEL.md` and `PLUGIN_TRUST_REVIEW.md` for the reviewed boundaries.
 STEP 32 corrected the maintainer runtime declaration to Node.js 20.11 or later
-(R-50); only Node 24.15.0 has been executed.
+(R-50). That Step 32 limitation is historical: Phase 3 now executes the
+full offline suites on 20.11.0 and 24.22.0. Remote CI is still NOT_RUN.
 
 Default eval generation changes committed fixture files. `--check` reads only;
 `--stage <existing-scratch-parent>` creates a fresh child and refuses existing
@@ -112,3 +115,24 @@ hash refresh. Missing or altered notice/link fails validation.
 `tests/editorial/numeric-preservation.test.mjs`, and isolated lifecycle fakes
 in `tests/provider-compatibility/lifecycle.test.mjs`. These are offline
 maintainer tests and do not constitute native provider evidence.
+
+## Phase 3 CI and documentation
+
+`validate-all.mjs --fail-fast` stops on the first failed group and prints
+the failing diagnostics. The default still collects non-security failures.
+`run-evaluation-suite.mjs --fail-fast` propagates that behavior to its
+aggregate subprocess and stops on a failed static check.
+
+`check-docs.mjs` also derives current build facts from the canonical package:
+plugin/marketplace identity, manifest version, Skills, file/reference counts,
+and L0 usage/budget. The README fact table must agree. Historical evidence
+uses balanced historical markers; old install identifiers are allowed only
+in marked migration instructions. `tests/ci/documentation.test.mjs` checks
+negative mutations and the historical exception in a disposable fixture.
+
+`tests/ci/negative-controls.test.mjs` reuses the manifest/reference mutation
+specifications and demonstrates a missing upstream MIT notice, without
+breaking the branch. It is an independent CI preflight check. Workflow syntax
+uses the pinned/checksummed actionlint helper outside the offline aggregate.
+See [CI/CD design](../../docs/production/CI_CD_DESIGN.md) for toolchain,
+credentials, network boundaries and local versus remote evidence.

@@ -9,7 +9,7 @@ import { inside, assertTreeNoLinks } from "../../tools/validate/safe-paths.mjs";
 
 const repo = path.resolve(import.meta.dirname, "../..");
 const parent = fs.realpathSync(os.tmpdir()), dir = fs.mkdtempSync(path.join(parent, "chayen-doc-tests-"));
-for (const rel of ["README.md", "SECURITY.md", "CHANGELOG.md", "plugins", "catalog", "docs", ".claude-plugin", ".agents", ".github", "tools", "tests/provider-compatibility", "tests/evaluation/README.md", "tests/evaluation/step40/README.md", "tests/ci"]) {
+for (const rel of ["README.md", "SECURITY.md", "CHANGELOG.md", "plugins", "catalog", "docs", "response-style", ".claude-plugin", ".agents", ".github", "tools", "tests/provider-compatibility", "tests/evaluation/README.md", "tests/evaluation/step40/README.md", "tests/ci"]) {
   const source = inside(repo, rel); assertTreeNoLinks(source); fs.cpSync(source, inside(dir, rel), { recursive: true });
 }
 test.after(() => { assert.equal(path.dirname(fs.realpathSync(dir)), parent); assert.ok(path.basename(dir).startsWith("chayen-doc-tests-")); fs.rmSync(dir, { recursive: true, force: true }); });
@@ -37,6 +37,7 @@ for (const [name, addition, expected] of [
   ["broken doc link", "\n[Missing](missing.md)\n", "D-01"],
   ["current prose stale count", "\nThis build has 13 Skills.\n", "D-06"],
   ["former install identity outside migration", "\nInstall codejadee-chayen-framework@codejadee.\n", "D-03"],
+  ["wrong marketplace in an install command", "\nInstall chayen@other.\n", "D-03"],
   ["unbalanced historical markers", "\n<!-- historical:start -->\n13 Skills\n", "D-06"],
 ]) test(`reject ${name}`, () => {
   const file = inside(dir, "README.md"), source = fs.readFileSync(file, "utf8");

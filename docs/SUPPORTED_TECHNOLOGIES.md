@@ -27,6 +27,10 @@ Detection is described in
 | PostgreSQL | PostgreSQL | 10 | data | Combined with cross-stack: 40 pass, 0 fail, 2 not run (PostgreSQL 18.6) |
 | Cross-stack | API contracts, typed clients, authentication, errors, date and time, CORS/CSRF, end to end, database portability | 8 | backend, implementation, testing, data | See PostgreSQL row |
 
+The framework-fact figures above are historical recorded runs, not fresh
+Phase 3 candidate verification. Runtime qualification remains pending;
+see [Compatibility](COMPATIBILITY_MATRIX.md).
+
 **What "framework facts" means.** These runners check that the technical
 claims in the guidance hold on real SDKs and database engines: 107 pass,
 0 fail, 52 not run in total. They do **not** test agent behaviour, and no

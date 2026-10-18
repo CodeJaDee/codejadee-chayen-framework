@@ -5,6 +5,12 @@ clean at start). Phase 1 contract and Phase 2 product hardening are preserved.
 This phase implements validation and documentation only; it does not start
 candidate freeze, runtime evaluation or publication.
 
+During this task HEAD advanced externally to
+`8730bb2442ffe28e951294b4995efe7d4af88503`. The agent issued no commit/push
+command and preserved that commit. The changed-file inventory below is
+relative to the initial Phase 2 base, including committed and working-tree
+Phase 3 changes. No remote run is inferred from the presence of that commit.
+
 ## Workflow and toolchain
 
 [validate.yml](../../.github/workflows/validate.yml) runs for every `push`
@@ -86,7 +92,46 @@ The workflow is never demonstrated by intentionally breaking the branch.
 ## Local evidence and remote status
 
 <!-- PHASE3_RESULTS -->
-Final local results are being recorded.
+Local environment: Windows/PowerShell. These are the exact CI commands on
+the pinned runtimes, executed locally; Ubuntu/GitHub-hosted execution is
+not implied. All results refer to the Phase 3 files relative to the base
+above, including the follow-up working-tree fixes after the external commit.
+
+| Command/check | Node 20.11.0 | Node 24.22.0 |
+|---|---|---|
+| `node tools/validate/validate-all.mjs --fail-fast` | PASS 18/18 groups | PASS 18/18 groups |
+| Existing validator mutations within aggregate | PASS 179/179 | PASS 179/179 |
+| Step 40 scorer controls within aggregate | PASS 56/56 | PASS 56/56 |
+| `node tests/provider-compatibility/check-identity.mjs` | PASS 15/15 | PASS 15/15 |
+| `node --test tests/ci/negative-controls.test.mjs` | PASS 4/4 | PASS 4/4 |
+| `node --test tests/ci/documentation.test.mjs` | PASS 15/15 | PASS 15/15 |
+| `node tools/evals/run-evaluation-suite.mjs --fail-fast` | PASS 4 static + 5 coverage/handoff checks | PASS 4 static + 5 coverage/handoff checks |
+
+`node tools/ci/check-workflow.mjs`: PASS, one workflow, actionlint 1.7.12,
+Windows archive hash verified before execution. The Linux archive's pinned
+hash is recorded from the official release; its execution remains remote
+NOT_RUN. Preflight package/security/docs/MIT checks and `git diff --check`
+also pass. There are five existing 200-line soft-target warnings; every
+Skill remains within the mandatory 300-line ceiling.
+
+All three required negative controls return the expected validator exit 1:
+`sk-manifest-invalid-json` -> `V-02 agent-plugins-manifest`,
+`sk-broken-reference-path` -> `V-08 links`, and missing notice -> `H-LICENSE`.
+The clean baseline returns zero. Real source hashes stay unchanged; the
+expected child failures are not suppressed mandatory failures.
+
+Final mandatory failure count: **0** on both runtimes. New Phase 3 tests:
+19/19 per runtime (15 documentation + 4 CI controls). Traceability remains
+206/206 engineering, 108/108 technology, 12/12 workflows, 11/11 routing-example
+mappings and no dangling/provider-specific handoffs. None of those static
+numbers is a runtime automatic-routing score.
+
+Node 20.11.0 was downloaded as the official portable Windows archive and
+checked against its official SHASUMS256 entry before use:
+`893115cd92ad27bf178802f15247115e93c0ef0c753b93dca96439240d64feb5`.
+The temporary runtime is removed after validation; system Node/PATH and
+real provider configuration are unchanged. Both runtimes execute the same
+repository validators without installing npm or provider dependencies.
 <!-- /PHASE3_RESULTS -->
 
 **Remote GitHub Actions: NOT_RUN.** No run URL/ID is available or claimed.
@@ -112,5 +157,41 @@ implementation. The scoped release contract still governs later publication.
 - [actionlint 1.7.12](https://github.com/rhysd/actionlint/releases/tag/v1.7.12): official binary/checksum provenance.
 
 <!-- PHASE3_FILES -->
-Final changed-file inventory is being recorded.
+## Changed files relative to Phase 2
+
+31 files; A = added, M = modified. The external commit is preserved.
+
+```text
+A .github/workflows/validate.yml
+M README.md
+M SECURITY.md
+M docs/AUTOMATIC_SKILL_DISCOVERY.md
+M docs/COMPATIBILITY_MATRIX.md
+M docs/CONTRIBUTING.md
+M docs/GETTING_STARTED.md
+M docs/INSTALL_CLAUDE_CODE.md
+M docs/INSTALL_CODEX.md
+M docs/INSTALL_COPILOT.md
+M docs/RESPONSE_STYLE.md
+M docs/SECURITY_AND_LIMITATIONS.md
+M docs/SKILLS_CATALOG.md
+M docs/SUPPORTED_TECHNOLOGIES.md
+M docs/distribution/LICENSE_PROPOSAL.md
+M docs/distribution/MARKETPLACE_LISTINGS.md
+M docs/distribution/RELEASE_CHECKLIST.md
+M docs/distribution/RELEASE_METADATA.md
+A docs/production/CI_CD_DESIGN.md
+A docs/production/MANUAL_RELEASE_SIGNOFF.md
+M docs/production/RELEASE_GATE_MATRIX.md
+M plugins/codejadee-chayen-framework/README.md
+A tests/ci/documentation.test.mjs
+A tests/ci/negative-controls.test.mjs
+M tools/catalog/README.md
+A tools/ci/check-workflow.mjs
+A tools/ci/toolchain.json
+M tools/evals/run-evaluation-suite.mjs
+M tools/validate/README.md
+M tools/validate/check-docs.mjs
+M tools/validate/validate-all.mjs
+```
 <!-- /PHASE3_FILES -->

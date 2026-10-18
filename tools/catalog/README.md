@@ -4,7 +4,10 @@ This tool is for **repository maintainers only**.
 
 - It is not part of the plugin package (`plugins/`).
 - Plugin users never run it.
-- It has no dependencies. It needs Node.js 20.11 or later (the scripts use `import.meta.dirname`). Executed on Node 24.15.0; 20.11 is the documented minimum, not a tested version.
+- It has no dependencies. Phase 3 executes catalog validation on Node.js
+  20.11.0 and 24.22.0 on Windows. Use 24.22.0 for development; 20.11.0 is the
+  legacy compatibility floor. Remote GitHub Actions remains NOT_RUN; see
+  [CI/CD design](../../docs/production/CI_CD_DESIGN.md).
 
 ```bash
 node tools/catalog/check-catalog.mjs              # check; exit 1 on any error

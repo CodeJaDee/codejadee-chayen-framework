@@ -5,7 +5,7 @@
 // package.json or bin entry, and plugin users never run it.
 // Zero dependencies (Node.js >= 20.11, for import.meta.dirname).
 //
-// Usage: node tools/validate/validate-all.mjs
+// Usage: node tools/validate/validate-all.mjs [--fail-fast]
 
 import path from "node:path";
 import { spawnSync } from "node:child_process";

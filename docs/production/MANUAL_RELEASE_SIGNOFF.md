@@ -72,7 +72,9 @@ installation on the three CLIs and record actual results.
 
 ## Phase 3 disposition
 
-Local implementation/review only. No commit, push, tag, publication,
-visibility change, branch rule, provider installation or message to an
-external party is authorized or performed. Stop after Phase 3; candidate
-freeze and runtime evaluation are later tasks.
+Local implementation/review only. This form authorizes no commit, push,
+tag, publication, visibility change, branch rule, provider installation or
+message to an external party. The agent issued none of those commands.
+The external commit observed during work is recorded in CI_CD_DESIGN.md and
+preserved. Stop after Phase 3; candidate freeze and runtime evaluation are
+later tasks.

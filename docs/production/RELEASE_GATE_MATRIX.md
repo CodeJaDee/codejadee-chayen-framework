@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Release | Chayen v0.1.0: public production release for verified CLI providers |
-| Date | 2026-10-18 (Plan v4, Phase 2: product hardening) |
-| Status as of | Phase 2 working tree over `9f3e331300fb8a4f192cafd8b50198e7f50368ee`; no commit, provider installation or publication. Current offline evidence: [PRODUCT_HARDENING_REPORT.md](PRODUCT_HARDENING_REPORT.md). Baseline E-01..E-31 remains historical |
+| Date | 2026-10-18 (Plan v4, Phase 3: CI/CD and documentation alignment) |
+| Status as of | Phase 3 changes relative to `91a61dfd59a62f51c3c906ca7deb10d3ad531945`; HEAD advanced externally to `8730bb2442ffe28e951294b4995efe7d4af88503` during work. The agent did not commit/push. Current evidence: [CI_CD_DESIGN.md](CI_CD_DESIGN.md); remote Actions NOT_RUN. Baseline E-01..E-31 and the Phase 2 report remain historical |
 | Scope and contract | [RELEASE_SCOPE_DECISION.md](RELEASE_SCOPE_DECISION.md) (owner decisions, K-01..K-20, routing contract §4) |
 | Accepted risks | [ACCEPTED_RISKS.md](ACCEPTED_RISKS.md) (AR-01..AR-04) |
 | Baseline (preserved) | [PRODUCTION_READINESS_MATRIX.md](PRODUCTION_READINESS_MATRIX.md) (PG-01..PG-43) · [PRODUCTION_GAP_ANALYSIS.md](PRODUCTION_GAP_ANALYSIS.md) · [PHASE_01_EVIDENCE.md](PHASE_01_EVIDENCE.md) |
@@ -105,14 +105,14 @@ and the date.
 |---|---|---|---|---|---|---|---|
 | G-01 | Architecture | **PASS** (static) | Yes | — | Yes | K-01 | Maintainer |
 | G-02 | Product Scope Correctness | **PASS** (static) | Yes | — | Yes | K-02, K-03, K-04 | Maintainer |
-| G-03 | Validators and Regression Tests | **FAIL** | Yes | — | Yes | K-05, K-06, K-07 | Maintainer |
-| G-04 | CI/CD | **FAIL** | Yes | — | Yes | K-08 | Maintainer |
+| G-03 | Validators and Regression Tests | **PASS** (local) | Yes | — | Yes | K-05, K-06, K-07 | Maintainer |
+| G-04 | CI/CD | **NOT_RUN** (remote) | Yes | — | Yes | K-08 | Maintainer |
 | G-05 | Version Integrity | **FAIL** | Yes | — | Yes | K-09 | Maintainer; Owner (OD-02) |
 | G-06 | Claude Code Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-10 | Evaluation Operator |
 | G-07 | Codex Lifecycle | **FAIL** | — | — | Yes | K-06, K-11 | Evaluation Operator; Maintainer |
 | G-08 | Copilot Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-12 | Evaluation Operator |
 | G-09 | Automatic Routing ≥ 85% per CLI | **FAIL** | — | — | Yes | K-03, K-13 | Evaluation Operator; Owner (OD-05) |
-| G-10 | Explicit Invocation and No-match | **FAIL** | — | — | Yes | K-07, K-14 | Evaluation Operator; Maintainer |
+| G-10 | Explicit Invocation and No-match | **BLOCKED** | — | — | Yes | K-07, K-14 | Evaluation Operator; Maintainer |
 | G-11 | Humanizer Quality | **BLOCKED** (content fixed) | Content parts | — | Yes | K-04, K-05, K-15 | Owner (OD-06, OD-07); Reviewers; Operator |
 | G-12 | Engineering Capability Sampling | **BLOCKED** | — | — | Yes | K-16 | Owner (OD-08); Operator |
 | G-13 | Technology Fact Checks | **NOT_RUN** | — | — | Yes | K-17 | Maintainer |
@@ -123,15 +123,15 @@ and the date.
 
 | Status | Count | Gates |
 |---|---|---|
-| PASS | 2 | G-01, G-02 |
-| FAIL | 7 | G-03, G-04, G-05, G-07, G-09, G-10, G-15 |
-| NOT_RUN | 1 | G-13 |
-| BLOCKED | 7 | G-06, G-08, G-11, G-12, G-14, G-16, G-17 |
+| PASS | 3 | G-01, G-02, G-03 |
+| FAIL | 4 | G-05, G-07, G-09, G-15 |
+| NOT_RUN | 2 | G-04, G-13 |
+| BLOCKED | 8 | G-06, G-08, G-10, G-11, G-12, G-14, G-16, G-17 |
 | NOT_APPLICABLE | 0 | — |
 | **Total** | **17** | |
 
 **Release readiness:** **NOT READY.** All three milestones are blocked: M1
-by G-03..G-05 and outstanding G-15 content, M2 by G-16, and M3 by 15 of the 17 gates.
+by remote G-04, G-05 and outstanding G-15 content, M2 by the later G-16 decision, and M3 by 14 of the 17 gates. Accepted deferrals are not additional Phase 3 blockers.
 
 **Roles.** These are roles, not named people:
 
@@ -176,21 +176,21 @@ by G-03..G-05 and outstanding G-15 content, M2 by G-16, and M3 by 15 of the 17 g
 | Requirement | All existing offline suites pass, and the guards required by the KEEP items exist, each with a negative control: (1) the upstream MIT notice exists, is identical by full-document SHA-256 after canonical CRLF-to-LF normalization and is linked from `chayen-humanizer-en/SKILL.md` (P1-013); (2) the Step 40 scorer detects dropped Thai digits and Buddhist Era conversion (P1-014); (3) a static check that the lifecycle script covers every required step for each CLI and checks uninstall by absence (P1-018); (4) runbook skill counts agree with the package (P1-019); (5) docs-consistency rules for skill count, package file count, L0 figures, plugin identifier and version (P1-020) |
 | Verification method | `validate-all.mjs`; `run-validator-tests.mjs`; `boundaries.test.mjs`; `setup-fixtures.test.mjs`; `score-step40.mjs --self-test` and `--check`; `check-identity.mjs`; `run-evaluation-suite.mjs` (no `--write`); `generate-claude-evals.mjs --check` |
 | Required evidence | Exit codes and pass counts on the candidate commit. The new negative controls are listed by ID and fail as expected when mutated |
-| Dependencies | K-05, K-06, K-07 (Phase 4) |
+| Dependencies | K-05/K-06 (Phase 2), K-07 (Phase 3) |
 | Responsible party | Maintainer |
-| Current status | **FAIL** overall. Phase 2 resolves guards (1)-(4), with negative controls: immutable upstream notice/link, Thai numeric/calendar preservation, lifecycle update/uninstall/isolation and current runbook inventory. Offline suites pass on the Phase 2 working tree (hardening report). Guard (5), broader release-document consistency P1-020, is outside this phase and remains open. Tooling PASS does not move runtime gates. |
+| Current status | **PASS** (local, Phase 3 working tree). All five guard groups exist: Phase 2 upstream/numeral/lifecycle/runbook checks plus D-06 current documentation build-fact consistency. Documentation mutations cover count, file/reference total, L0, identity, version and historical scoping. Mandatory local results on both pinned Node versions are in CI_CD_DESIGN.md. Frozen-candidate checks must repeat later; this does not establish runtime or remote CI PASS. |
 | Release-blocking behaviour | Blocks M1 and M3. A failing suite on the candidate stops the freeze |
 
 ### G-04: CI/CD
 
 | Field | Definition |
 |---|---|
-| Requirement | A CI workflow outside the plugin package runs the G-03 offline commands, and `claude plugin validate --strict` when the CLI is available, on every push and pull request to `main`. It runs on the declared Node minimum (20.11) and the current LTS, with `permissions: contents: read`, no secrets, and no provider or billed calls. A deliberately broken branch fails. CI is green on the candidate commit and on the release commit. **Not required:** making CI a required status check (AR-03) |
-| Verification method | CI run logs; a negative-control branch run; a review of the workflow file |
-| Required evidence | A green run on the candidate commit, a red run on the negative control, and a green run on the release commit, each with run identifier and revision. V-09 and V-25 still pass, so the package is unchanged |
-| Dependencies | K-08 (Phase 3); G-03 content; owner approval for adding the workflow |
-| Responsible party | Maintainer; Owner (approval) |
-| Current status | **FAIL.** No CI configuration of any kind (P1-016). Node 20.11 never tested (P1-033) |
+| Requirement | A CI workflow outside the plugin package runs the G-03 offline commands on every push and pull request (including `main`). Provider-native strict validation is a separately authorized host check when available; ordinary CI neither installs nor invokes provider CLIs. It runs on the declared Node minimum (20.11) and the current LTS, with `permissions: contents: read`, no provider credentials, and no provider or billed calls. Isolated broken-manifest, broken-reference and missing-notice controls demonstrate nonzero failure without breaking the branch. CI is green on the candidate commit and on the release commit. **Not required:** making CI a required status check (AR-03) |
+| Verification method | Actual CI run logs; isolated negative-control results; actionlint and workflow review |
+| Required evidence | Green candidate and release runs with actual run identifiers and revisions; isolated negative controls with command, expected diagnostic and nonzero validator exit. V-09/V-25 must pass; Phase 3 changes only the packaged README and adds no runtime components |
+| Dependencies | K-08 (Phase 3); G-03 content; workflow implementation authorized by the Phase 3 request; separate commit/push approval |
+| Responsible party | Maintainer; Owner (commit/push/release approval) |
+| Current status | **NOT_RUN** remotely. Phase 3 adds push/PR validation, read-only permissions, full-SHA actions, fail-fast preflight, Node 20.11.0/24.22.0 matrix, offline aggregates, mutation/scorer tests and static evaluations. actionlint and isolated negative controls pass locally; no remote run URL/ID has been observed. P1-016 implementation is complete and local minimum-version verification addresses P1-033; remote candidate/release evidence remains open. AR-03 settings stay deferred. |
 | Release-blocking behaviour | Blocks M1 and M3 |
 
 ### G-05: Version Integrity
@@ -200,9 +200,9 @@ by G-03..G-05 and outstanding G-15 content, M2 by G-16, and M3 by 15 of the 17 g
 | Requirement | The four version fields agree: both manifests, the Copilot marketplace entry and its `metadata.version`. They read `0.1.0-rc.1` at M1 and `0.1.0` at M3, never `-dev` in a release. There is one tag format (OD-02), and ADR-0008 and the release checklist agree on it. `CHANGELOG.md` has the matching section. The `SECURITY.md` supported-versions table lists the version. When authorized, the tag points at the commit whose version equals the tag |
 | Verification method | `check-identity.mjs` (IC-05, IC-06); `validate-package.mjs` (V-04); `check-docs.mjs` (D-05); `git show <tag>:<manifest>` comparison |
 | Required evidence | Identity 15/15 PASS on the candidate and the release commits; a diff of the four fields; tag-to-commit verification |
-| Dependencies | OD-02; K-09 (Phase 6); G-02 content final |
+| Dependencies | Accepted tag strategy; K-09 (later candidate freeze); G-02 content final |
 | Responsible party | Maintainer; Owner (OD-02, commit and tag authorization) |
-| Current status | **FAIL.** All four fields read `0.1.0-dev`. No tags. ADR-0008 (`vX.Y.Z`) and RELEASE_CHECKLIST §F (`chayen--v{version}`) disagree (P1-002). Version values are now decided (OWN-06, OWN-07) |
+| Current status | **FAIL** until later candidate freeze. Current four fields remain `0.1.0-dev`. Phase 3 aligns current release documentation with accepted ADR-0008 tag format `vX.Y.Z`; the conflicting provider-generated tag suggestion was removed. No version, tag or publication was performed by the agent. |
 | Release-blocking behaviour | Blocks M1 (candidate fields) and M3 |
 
 ### G-06: Claude Code Lifecycle
@@ -262,7 +262,7 @@ by G-03..G-05 and outstanding G-15 content, M2 by G-16, and M3 by 15 of the 17 g
 | Required evidence | The per-CLI summaries from G-09, explicit and no-match sections; corrected docs |
 | Dependencies | As G-09; K-07 (docs), K-14; OD-05, OD-11 |
 | Responsible party | Evaluation Operator; Maintainer (docs) |
-| Current status | **FAIL.** `docs/AUTOMATIC_SKILL_DISCOVERY.md` credits `/chayen:` with a result measured under the pre-rename namespace (P1-009, P1-036). Measurement BLOCKED: no explicit result exists under `chayen`, and no-match was measured only on Claude Code with the 13-skill build |
+| Current status | **BLOCKED** on candidate and authorized native measurements. Phase 3 fixes P1-009/P1-036 documentation: old namespace/build results are explicitly historical and no longer credited to `/chayen:`. Current explicit invocation and no-match remain NOT_RUN per CLI; no runtime PASS is claimed. |
 | Release-blocking behaviour | Blocks M3 |
 
 ### G-11: Humanizer Quality
@@ -346,7 +346,7 @@ by G-03..G-05 and outstanding G-15 content, M2 by G-16, and M3 by 15 of the 17 g
 | Required evidence | A release record listing the candidate and release SHAs, the fingerprints, every gate's evidence reference, the delta diff, the smoke results, the tag verification and the approval references |
 | Dependencies | Every other gate; OD-02, OD-11, OD-12 |
 | Responsible party | Release Governance Lead; Owner (authorization) |
-| Current status | **BLOCKED.** No candidate exists. The other gates are open. Release-critical docs are stale (P1-020, P1-028, P1-036) |
+| Current status | **BLOCKED.** No frozen candidate exists and scoped release gates remain open. Phase 3 aligns current user/release docs and adds manual sign-off for accepted unprotected-main risk. Remote CI, candidate/version/licensing and authorized runtime/publication evidence remain later work; unrelated ADR/hygiene and deferred host tests are not added as blockers. |
 | Release-blocking behaviour | The final gate: blocks M3 and the tag act. A PASS here does not itself authorize publication |
 
 ## 4. Traceability from the baseline gates
