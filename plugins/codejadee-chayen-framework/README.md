@@ -13,11 +13,10 @@ installs it through its own native plugin mechanism.
 | `.claude-plugin/plugin.json` | Claude Code |
 | `skills/` | Every provider. This is the single canonical skill source. |
 
-## Current state: 0.1.0-rc.1
+## Current state: 1.0.0
 
-This is an **unpublished release candidate** with 15 entry skills. The public release
-target is v0.1.0, MIT, publisher CodeJaDee; project licence application is
-pending. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
+This is the **1.0.0 release** (2026-10-18) with 15 entry skills: MIT
+licence (`LICENSE.md`), publisher CodeJaDee. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
 VS Code and Response Style Policy host behavior are unverified/deferred.
 The list is in
 [skills/README.md](skills/README.md).

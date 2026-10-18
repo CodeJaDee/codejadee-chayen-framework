@@ -1434,6 +1434,29 @@ Decision statuses:
     gates G-01..G-17 (not the skill-quality gates with the same labels);
   - [ACCEPTED_RISKS.md](../production/ACCEPTED_RISKS.md).
 
+### D-061 — Release `1.0.0` now
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-18: release Chayen as
+  stable `1.0.0`, make the repository public, and do not wait for provider
+  verification). Amends D-060's version values and its routing condition for this
+  release; supersedes D-058.
+- **Decision:**
+  - `version` is `1.0.0` in both manifests, the Copilot marketplace entry and its
+    `metadata.version`; Git tag `v1.0.0` (ADR-0008 form). No GitHub Release, as
+    the owner removed GitHub Releases from the process (`4bda4db`).
+  - Licence MIT is applied: root `LICENSE`, `plugins/codejadee-chayen-framework/LICENSE.md`
+    (the V-25 package gate admits only Markdown and the two manifests) and
+    `"license": "MIT"` in both manifests. Copyright holder: CodeJaDee.
+  - The repository was made public on 2026-10-18, after a pattern scan of the full
+    Git history for credentials found none.
+- **Accepted by the owner at release:** the Phase 6
+  [final readiness](../production/FINAL_RELEASE_READINESS.md) NO-GO items stay
+  open, including no automatic routing measurement on any CLI, blocked Copilot CLI
+  lifecycle and Claude disabled-loading. Compatibility claims stay as recorded;
+  nothing is promoted to verified by this decision.
+- **Unchanged from D-060:** Security and Support remain LATER; no contact or
+  channel is added.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

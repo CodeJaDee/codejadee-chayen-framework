@@ -1,6 +1,6 @@
 # Compatibility matrix
 
-**Current build:** `0.1.0-rc.1`, 15 Skills (13 engineering, 2 writing).
+**Current build:** `1.0.0`, 15 Skills (13 engineering, 2 writing). The results below were recorded on the `0.1.0-rc.1` candidate, which has the same Skills content; the `1.0.0` version has not been installed on a host yet.
 **Reviewed:** 2026-10-18, Phase 4. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 

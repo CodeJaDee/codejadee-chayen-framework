@@ -1,6 +1,6 @@
 {
   "name": "chayen",
-  "version": "0.1.0-rc.1",
+  "version": "1.0.0",
   "description": "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.",
   "author": {
     "name": "CodeJaDee",
@@ -8,6 +8,7 @@
   },
   "homepage": "https://github.com/CodeJaDee/codejadee-chayen-framework",
   "repository": "https://github.com/CodeJaDee/codejadee-chayen-framework",
+  "license": "MIT",
   "keywords": [
     "software-engineering",
     "dotnet",

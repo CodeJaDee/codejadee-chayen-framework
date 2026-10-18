@@ -4,16 +4,18 @@ All notable changes to codejadee-chayen-framework are recorded here.
 
 - The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-- **No version has been released yet.**
+## [Unreleased]
 
-## [Unreleased]: `0.1.0-rc.1`
+Nothing yet.
 
-Candidate version applied under approved scope decision OWN-07 on 2026-10-18.
-The four manifest/marketplace version fields agree. This working-tree candidate
-has not been committed, tagged or published. Qualification and remaining
-release gates are recorded in
-[the native lifecycle report](docs/production/NATIVE_LIFECYCLE_REPORT.md).
-Stable target remains `0.1.0`.
+## [1.0.0] - 2026-10-18
+
+First release (owner decision D-061), from the public repository under the
+[MIT licence](LICENSE), publisher CodeJaDee. It contains the `0.1.0-rc.1`
+candidate content listed below, with the version set to `1.0.0` instead of the
+earlier `0.1.0` target. Qualification gates that were still open at release are
+in [final release readiness](docs/production/FINAL_RELEASE_READINESS.md);
+host results are in the [native lifecycle report](docs/production/NATIVE_LIFECYCLE_REPORT.md).
 
 ### Changed
 
@@ -26,6 +28,8 @@ Stable target remains `0.1.0`.
 
 ### Added
 
+- MIT `LICENSE`, also shipped in the plugin folder as `LICENSE.md`, and
+  `"license": "MIT"` in both manifests.
 - **Native plugin packaging** for Claude Code, OpenAI Codex, and GitHub
   Copilot:
   - one plugin with an Agent Plugins 1.0 manifest and a Claude Code

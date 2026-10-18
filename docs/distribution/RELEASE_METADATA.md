@@ -3,9 +3,10 @@
 > **Owner update (2026-10-18):** GitHub Actions and GitHub Releases are not used. Stable status is declared only for the approved `0.1.0` manifest/source after manual checks. Git tags remain optional. Historical text below about remote CI or required tags is superseded.
 
 
-Reviewed 2026-10-18, Phase 4. Approved target: **Chayen v0.1.0, PUBLIC,
-MIT, publisher CodeJaDee**. These decisions do not mean the release has
-been published or the project licence applied.
+> **Owner decision D-061 (2026-10-18):** released as **`1.0.0`** instead of
+> the `0.1.0` target, from the public repository, MIT, publisher CodeJaDee,
+> Git tag `v1.0.0`. No GitHub Release is created. The table below is current;
+> the strategy text after it is the earlier `0.1.0` plan.
 
 ## Current build
 
@@ -13,13 +14,13 @@ been published or the project licence applied.
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `0.1.0-rc.1` in both manifests and both Copilot version fields; applied in Phase 4 under OWN-07 |
+| Version | `1.0.0` in both manifests and both Copilot version fields (D-061) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
 | Entry Skills | 15: 13 engineering, 2 writing |
-| Project licence | MIT chosen; root LICENSE and manifest licence not applied yet |
+| Project licence | MIT; root `LICENSE`, plugin `LICENSE.md` and both manifests' `license` |
 | Upstream licence | Existing Humanizer MIT notice/attribution retained and guarded |
-| Public source | Target is `CodeJaDee/codejadee-chayen-framework`; public availability unverified here |
+| Public source | `https://github.com/CodeJaDee/codejadee-chayen-framework`, public since 2026-10-18 |
 | Production host target | Claude Code CLI, Codex CLI, GitHub Copilot CLI |
 | Security/Support | LATER; no contact or channel selected |
 

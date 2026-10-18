@@ -18,7 +18,7 @@ function fixture(t) {
 test("candidate records exact source and all marketplace version declarations", () => {
   const c = candidate(repo); assert.match(c.baseCommit, /^[a-f0-9]{40}$/); assert.equal(c.plugin, "chayen");
   assert.equal(c.version, c.claudeVersion); assert.equal(c.skills.length, 15); assert.equal(c.skillMetadataFingerprint, "339b3125d1347648");
-  assert.equal(c.package.files.length, 256); assert.equal(c.marketplaces.length, 3);
+  assert.equal(c.package.files.length, 257); assert.equal(c.marketplaces.length, 3);
   assert.equal(c.marketplaces[2].pluginVersion, c.version); assert.equal(c.marketplaces[2].metadataVersion, c.version);
   assert.equal(c.marketplaces[0].pluginVersion, null); assert.equal(c.marketplaces[1].pluginVersion, null);
 });
@@ -32,7 +32,7 @@ test("correct content outside isolated profile cannot prove installation", t => 
 });
 test("synthetic update is a newer RC and changes full package bytes only in scratch", t => {
   const f = fixture(t), before = candidate(repo), version = changeUpdateContent(f.market).version;
-  assert.equal(version, "0.1.0-rc.2"); assert.notEqual(fingerprint(path.join(f.market, PACKAGE)).sha256, before.package.sha256);
+  assert.equal(version, "1.0.1-rc.1"); assert.notEqual(fingerprint(path.join(f.market, PACKAGE)).sha256, before.package.sha256);
   assert.deepEqual(candidate(repo), before);
 });
 test("qualification refuses missing opt-in before starting any executable", t => {

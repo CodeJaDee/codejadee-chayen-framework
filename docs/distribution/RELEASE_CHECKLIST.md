@@ -3,7 +3,11 @@
 > **Owner update (2026-10-18):** GitHub Actions and GitHub Releases removed from the release process. Use offline manual validation plus provider checks and versioned source instead. Git tags are optional.
 
 
-Reviewed 2026-10-18, Phase 4. **NOT READY for release.** This is an operator
+> **Owner decision D-061 (2026-10-18):** released as `1.0.0` with the open
+> gates below accepted by the owner. Done: version in four fields, MIT
+> licence files and manifest field, public repository, tag `v1.0.0`.
+
+Reviewed 2026-10-18, Phase 4. **NOT READY for release** (superseded by D-061). This is an operator
 checklist, not permission to execute release actions. The
 [Release Gate Matrix](../production/RELEASE_GATE_MATRIX.md) governs readiness.
 Version strategy and the approved public/MIT/CodeJaDee target are in
@@ -21,7 +25,7 @@ Version strategy and the approved public/MIT/CodeJaDee target are in
 ## B. Candidate content (Phase 4)
 
 - [x] Apply approved `0.1.0-rc.1` in all four version fields (OWN-07).
-- [ ] Add project MIT licence/manifest licence; retain upstream Humanizer notice.
+- [x] Add project MIT licence/manifest licence; retain upstream Humanizer notice (D-061).
 - [x] Align CHANGELOG, supported versions and working-tree candidate fingerprint.
 - [ ] Review the exact commit and static package diff.
 

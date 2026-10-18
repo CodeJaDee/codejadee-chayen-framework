@@ -1,10 +1,10 @@
-# Project licence decision and pending application
+# Project licence
 
-The Phase 1 owner decision chose **MIT** for the public Chayen v0.1.0 release
-under **CodeJaDee**. The choice is approved, not an open licence comparison.
-This development checkout has no root LICENSE or manifest licence yet;
-application belongs to the later candidate freeze with confirmed rights.
-No project licence grant is claimed before those files are published.
+**Applied 2026-10-18 (D-061):** Chayen v1.0.0 is licensed under **MIT**,
+copyright CodeJaDee. The text is in the root [LICENSE](../../LICENSE) and in
+`plugins/codejadee-chayen-framework/LICENSE.md`, so installed copies carry it
+(the V-25 package gate admits only Markdown and the two manifests). Both
+manifests set `"license": "MIT"`.
 
 The English writing Skill already includes the upstream Humanizer MIT
 notice and attribution. Keep them intact when adding the project MIT
@@ -14,5 +14,4 @@ negative controls detect removal/alteration even when a project LICENSE exists.
 See [Release metadata](RELEASE_METADATA.md),
 [Release scope decision](../production/RELEASE_SCOPE_DECISION.md), and
 [Manual sign-off](../production/MANUAL_RELEASE_SIGNOFF.md).
-This documentation update does not publish a licence, change manifests,
-confirm copyright ownership or authorize any release action.
+

@@ -1,5 +1,7 @@
 # Final Release Readiness: Chayen v0.1.0 (Phase 6)
 
+> **Superseded for the release by D-061 (2026-10-18):** the owner released Chayen as **`1.0.0`** (MIT, public, tag `v1.0.0`) and accepted the open gates in this document. This record is kept as written.
+
 | Field | Value |
 |---|---|
 | Date | 2026-10-18 (Plan v4, Phase 6: final production release qualification) |

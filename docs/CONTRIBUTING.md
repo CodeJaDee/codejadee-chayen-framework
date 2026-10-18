@@ -2,9 +2,9 @@
 
 Thank you for helping improve Chayen.
 
-- Public release target: **Chayen v0.1.0, MIT, CodeJaDee**. This development
-  checkout has no applied project licence yet; the owner chose MIT in Phase 1.
-  [Licence status](distribution/LICENSE_PROPOSAL.md) records the remaining work.
+- Released: **Chayen v1.0.0, MIT, CodeJaDee** (D-061). Contributions are
+  accepted under the [MIT licence](../LICENSE); see
+  [Licence status](distribution/LICENSE_PROPOSAL.md).
 - Repository access is needed until publication is confirmed.
 - Security/Support is **LATER**; no reporting/support channel is selected.
 
@@ -16,7 +16,7 @@ Support channel. No issue tracker or address is approved here. Include:
 | Field | Example |
 |---|---|
 | Provider and surface, with version | Claude Code CLI 2.1.270 / Copilot CLI 1.0.97 / VS Code 1.141.1 + Copilot Chat |
-| Chayen version | `0.1.0-rc.1`, from `claude plugin list`, `codex plugin list`, or `copilot plugin list` |
+| Chayen version | For example `1.0.0`, from `claude plugin list`, `codex plugin list`, or `copilot plugin list` |
 | What you asked | The prompt, without secrets or proprietary code |
 | What happened | Which skill loaded, if any; the relevant part of the answer |
 | What you expected | The skill you expected, or "no skill" |

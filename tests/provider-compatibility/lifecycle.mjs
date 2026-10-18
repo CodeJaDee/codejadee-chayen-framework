@@ -104,9 +104,10 @@ export function installedBuild(profile, expected) {
 }
 export function changeUpdateContent(marketplace) {
   const before = expectedBuild(marketplace);
-  // A changed RC must sort after the source, rather than downgrading rc.1 to lifecycle.1.
-  const rc = /^(\d+\.\d+\.\d+)-rc\.(\d+)$/.exec(before.version);
-  const version = rc ? `${rc[1]}-rc.${Number(rc[2]) + 1}` : `${before.version.split("-")[0]}-rc.999`;
+  // A changed version must sort after the source: rc.1 -> rc.2, a stable X.Y.Z -> X.Y.(Z+1)-rc.1
+  // (X.Y.Z-rc.N would sort before X.Y.Z), and other pre-releases such as -dev -> -rc.999.
+  const rc = /^(\d+\.\d+\.\d+)-rc\.(\d+)$/.exec(before.version), stable = /^(\d+)\.(\d+)\.(\d+)$/.exec(before.version);
+  const version = rc ? `${rc[1]}-rc.${Number(rc[2]) + 1}` : stable ? `${stable[1]}.${stable[2]}.${Number(stable[3]) + 1}-rc.1` : `${before.version.split("-")[0]}-rc.999`;
   for (const f of [`${packagePath}/plugin.json`, `${packagePath}/.claude-plugin/plugin.json`, ".github/plugin/marketplace.json"]) {
     const file = path.join(marketplace, f), value = JSON.parse(read(file));
     if (value.plugins) { value.metadata.version = version; value.plugins[0].version = version; }

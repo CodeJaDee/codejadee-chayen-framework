@@ -62,7 +62,7 @@ claude plugin marketplace remove codejadee
 ```
 
 Manage the matching user/project/local scope. Verify changed installed
-content and active version after update; unchanged `0.1.0-rc.1` can retain
+content and active version after update; an unchanged version can retain
 old cached content. Inspect/reinstall when needed. Verify uninstall by
 absence: disabled is still installed. Restart after changes. Do not delete
 the whole provider configuration directory to remove Chayen.

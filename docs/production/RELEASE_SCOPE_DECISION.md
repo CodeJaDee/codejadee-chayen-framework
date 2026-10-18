@@ -1,5 +1,7 @@
 # Release Scope Decision: Chayen v0.1.0
 
+> **Superseded for the release by D-061 (2026-10-18):** the owner released Chayen as **`1.0.0`** (MIT, public, tag `v1.0.0`) and accepted the open gates in this document. This record is kept as written.
+
 > **Owner decision (2026-10-18):** GitHub Actions workflows and GitHub Releases are not part of Chayen distribution. Maintainers run offline validators and native CLI checks manually against an identified source revision. Stable status is based on approved `0.1.0` manifest versions and verified behavior, **not** a GitHub Release. Git tags are optional. Older Phase 3 CI references below are historical. Security/Support remains **LATER**, and automatic Skill Routing >=85% per CLI remains mandatory.
 
 

@@ -57,7 +57,7 @@ check("IC-10 name equals directory (VS Code/Agent Skills rule)", skills.every((s
 check("IC-11 skill names unique and collision-prefixed", new Set(skills.map((s) => s.name)).size === skills.length && skills.every((s) => /^chayen-[a-z0-9-]+$/.test(s.name) && s.name.length <= 64), `${skills.length} unique chayen-* names`);
 check("IC-12 description <= 1024 chars (Copilot/VS Code/Agent Skills)", skills.every((s) => s.descChars > 0 && s.descChars <= 1024), `max ${Math.max(...skills.map((s) => s.descChars))}`);
 const top = fs.readdirSync(path.join(repo, pd)).sort();
-check("IC-13 plugin top level carries only manifests, README and skills", top.every((x) => ["plugin.json", ".claude-plugin", "README.md", "skills"].includes(x)), top.join(", "));
+check("IC-13 plugin top level carries only manifests, README, LICENSE.md and skills", top.every((x) => ["plugin.json", ".claude-plugin", "README.md", "LICENSE.md", "skills"].includes(x)), top.join(", "));
 out.skills = skills;
 out.totals = { skills: skills.length, references: skills.reduce((a, s) => a + s.refs, 0), files: fs.readdirSync(path.join(repo, pd), { recursive: true }).filter((x) => fs.statSync(path.join(repo, pd, x)).isFile()).length };
 console.log(JSON.stringify(out, null, 2));
