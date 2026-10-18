@@ -14,6 +14,8 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { L0_BUDGET } from "../catalog/skill-registration.mjs";
+import { assertTreeNoLinks } from "./safe-paths.mjs";
 
 const i = process.argv.indexOf("--root");
 const root = path.resolve(i > -1 ? process.argv[i + 1] : path.join(import.meta.dirname, "..", ".."));
@@ -26,12 +28,25 @@ for (const dir of ["docs", "docs/distribution"]) {
   const d = path.join(root, dir);
   if (fs.existsSync(d)) for (const f of fs.readdirSync(d)) if (f.endsWith(".md")) docs.push(path.join(d, f));
 }
+for (const file of ["plugins/codejadee-chayen-framework/README.md", "docs/production/CI_CD_DESIGN.md", "docs/production/MANUAL_RELEASE_SIGNOFF.md", "docs/production/RELEASE_GATE_MATRIX.md"]) {
+  if (fs.existsSync(path.join(root, file))) docs.push(path.join(root, file));
+}
 
 const pluginDir = path.join(root, "plugins/codejadee-chayen-framework");
 const manifest = JSON.parse(fs.readFileSync(path.join(pluginDir, "plugin.json"), "utf8"));
 const marketplaces = [".claude-plugin/marketplace.json", ".agents/plugins/marketplace.json", ".github/plugin/marketplace.json"]
   .map((p) => JSON.parse(fs.readFileSync(path.join(root, p), "utf8")).name);
 const skills = new Set(fs.readdirSync(path.join(pluginDir, "skills")).filter((d) => fs.existsSync(path.join(pluginDir, "skills", d, "SKILL.md"))));
+assertTreeNoLinks(pluginDir);
+const packageFiles = fs.readdirSync(pluginDir, { recursive: true }).filter(f => fs.statSync(path.join(pluginDir, f)).isFile()).length;
+const references = fs.readdirSync(path.join(pluginDir, "skills"), { recursive: true }).filter(f => /(?:^|[\\/])references[\\/].*\.md$/.test(f)).length;
+const l0 = [...skills].reduce((n, skill) => n + skill.length + (/^description:\s*(.+)$/m.exec(fs.readFileSync(path.join(pluginDir, "skills", skill, "SKILL.md"), "utf8"))?.[1].trim().length ?? 0), 0);
+const facts = { "Plugin name": `\`${manifest.name}\``, "Marketplace name": `\`${marketplaces[0]}\``, "Current version": `\`${manifest.version}\``, "Entry Skills": String(skills.size), "Package files": String(packageFiles), "Skill references": String(references), "L0 metadata": `${l0.toLocaleString("en-US")} / ${L0_BUDGET.toLocaleString("en-US")} characters` };
+const readme = path.join(root, "README.md");
+if (fs.existsSync(readme)) {
+  const body = fs.readFileSync(readme, "utf8");
+  for (const [label, value] of Object.entries(facts)) if (!body.includes(`| ${label} | ${value} |`)) err("D-06", readme, `current build fact must be ${label} = ${value}`);
+}
 
 // GitHub heading slugs: lowercase, drop punctuation except - and _, spaces -> -, de-duplicate with -n.
 const slugCache = new Map();
@@ -55,6 +70,21 @@ function slugs(file) {
 const proposalFiles = new Set(["CHANGELOG.md", "docs/distribution/RELEASE_METADATA.md", "docs/distribution/RELEASE_CHECKLIST.md", "docs/distribution/MARKETPLACE_LISTINGS.md"]);
 for (const file of docs) {
   const text = fs.readFileSync(file, "utf8");
+  // Historical evidence is explicitly delimited; current claims remain checked.
+  const historyStarts = (text.match(/<!-- historical:start -->/g) ?? []).length;
+  const historyEnds = (text.match(/<!-- historical:end -->/g) ?? []).length;
+  if (historyStarts !== historyEnds) err("D-06", file, "unbalanced historical evidence markers");
+  const current = text.replace(/<!-- historical:start -->[\s\S]*?<!-- historical:end -->/g, "");
+  const currentUserDoc = !rel(file).startsWith("docs/production/") && rel(file) !== "CHANGELOG.md";
+  if (currentUserDoc) {
+    for (const m of current.matchAll(/\b(\d+) (?:entry )?skills\b|Skills \((\d+)\)|Installed (\d+) skills/gi)) if (Number(m[1] ?? m[2] ?? m[3]) !== skills.size) err("D-06", file, `current skill count differs from ${skills.size}: ${m[0]}`);
+    for (const m of current.matchAll(/\b(\d+) (?:package )?files\b/gi)) if (Number(m[1]) > 100 && Number(m[1]) !== packageFiles) err("D-06", file, `package file count differs from ${packageFiles}`);
+    for (const m of current.matchAll(/\b(\d+) (?:skill )?references\b/gi)) if (Number(m[1]) > 100 && Number(m[1]) !== references) err("D-06", file, `reference count differs from ${references}`);
+    for (const line of current.split(/\r?\n/)) if (/L0|metadata.*(?:usage|footprint)/i.test(line)) {
+      const pair = /([\d,]+)\s*\/\s*([\d,]+)\s*(?:characters|chars)/.exec(line);
+      if (pair && (Number(pair[1].replaceAll(",", "")) !== l0 || Number(pair[2].replaceAll(",", "")) !== L0_BUDGET)) err("D-06", file, "metadata usage or budget differs from canonical Skills");
+    }
+  }
   const prose = text.replace(/```[\s\S]*?```/g, (b) => b.replace(/\]\(/g, "] ("));
   for (const m of prose.matchAll(/\[[^\]]*\]\(([^)\s]+)\)/g)) {
     const target = m[1];
@@ -68,7 +98,11 @@ for (const file of docs) {
   }
   for (const m of text.matchAll(/\b([a-z0-9][a-z0-9-]*)@([a-z0-9][a-z0-9-]*)\b/g)) {
     if (/\.(com|org|net|io)$/.test(m[2]) || m[0].includes("example")) continue;
-    if (m[0] === "codejadee-chayen-framework@codejadee") continue; // pre-D-059 identifier, allowed in migration notes only
+    if (m[0] === "codejadee-chayen-framework@codejadee") {
+      const outsideMigration = text.replace(/<!-- migration:start -->[\s\S]*?<!-- migration:end -->/g, "");
+      if (outsideMigration.includes(m[0])) err("D-03", file, "former plugin identity is allowed only in marked migration instructions");
+      continue;
+    }
     if (m[1].startsWith("codejadee") || m[2].startsWith("codejadee")) {
       if (m[1] !== manifest.name || !marketplaces.includes(m[2])) err("D-03", file, `identifier ${m[0]} does not match ${manifest.name}@${marketplaces[0]}`);
     }

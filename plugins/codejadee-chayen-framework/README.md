@@ -9,20 +9,25 @@ installs it through its own native plugin mechanism.
 
 | File | Read by |
 |---|---|
-| `plugin.json` | Agent Plugins 1.0 clients: OpenAI Codex, GitHub Copilot CLI, VS Code Copilot |
+| `plugin.json` | Codex CLI and GitHub Copilot CLI; other surfaces are not release-qualified |
 | `.claude-plugin/plugin.json` | Claude Code |
 | `skills/` | Every provider. This is the single canonical skill source. |
 
 ## Current state: 0.1.0-dev
 
-This is a **pilot build** with 15 entry skills. The list is in
+This is a **development build** with 15 entry skills. The public release
+target is v0.1.0, MIT, publisher CodeJaDee; project licence application is
+pending. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
+VS Code and Response Style Policy host behavior are unverified/deferred.
+The list is in
 [skills/README.md](skills/README.md).
 
 - Skills activate automatically when a request matches their description.
 - Requests that match no skill are handled by the agent normally.
-- Trigger reliability is only partly measured (Claude Code, 2026-10-15, for
-  the 13 engineering skills). The two writing skills, `chayen-humanizer-th`
-  and `chayen-humanizer-en`, are not yet tested on any host. See
+- Current native lifecycle and routing are NOT_RUN. Earlier Claude Code
+  measurements apply only to an older build/identity; Phase 2 description
+  changes invalidated that evidence. Automatic routing must reach >=85%
+  independently per CLI in Phase 5. See
   `docs/COMPATIBILITY_MATRIX.md`, `docs/WRITING_AND_EDITING.md` and
   `docs/SECURITY_AND_LIMITATIONS.md` in the repository.
 - The opt-in response style policy is **not** in this package. Installing,

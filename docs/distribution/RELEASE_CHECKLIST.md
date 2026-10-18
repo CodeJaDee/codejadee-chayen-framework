@@ -1,139 +1,71 @@
-# Release checklist: `0.1.0`
+# Release checklist: Chayen v0.1.0
 
-**Step 41 update (2026-10-17):** the release candidate now has 15 skills
-(13 engineering, 2 writing). A release-candidate version `0.1.0-rc.1` is
-proposed in [RELEASE_METADATA.md](RELEASE_METADATA.md) and not applied. The
-current readiness assessment is
-[docs/chayen/RELEASE_READINESS.md](../chayen/RELEASE_READINESS.md).
+Reviewed 2026-10-18, Phase 3. **NOT READY for release.** This is an operator
+checklist, not permission to execute release actions. The
+[Release Gate Matrix](../production/RELEASE_GATE_MATRIX.md) governs readiness.
+Version strategy and the approved public/MIT/CodeJaDee target are in
+[Release metadata](RELEASE_METADATA.md).
 
-**2026-10-18 (Plan v4 Phase 1):** the binding release gates for v0.1.0 are
-now release gates G-01..G-17. These are not the skill-quality gates that
-`validate-all` prints under the same labels. They are defined in
-[RELEASE_GATE_MATRIX.md](../production/RELEASE_GATE_MATRIX.md). Scope and
-owner decisions are in
-[RELEASE_SCOPE_DECISION.md](../production/RELEASE_SCOPE_DECISION.md), and
-deferred items in [ACCEPTED_RISKS.md](../production/ACCEPTED_RISKS.md). This
-checklist remains the operator's step list. Where the two disagree, the gate
-matrix governs.
+## A. Confirm the release contract
 
-**Status: NOT READY.** Blocking items are marked ⛔. Each item says who acts.
+- [x] Target: public MIT Chayen v0.1.0, publisher CodeJaDee.
+- [x] Production hosts: Claude Code CLI, Codex CLI, Copilot CLI.
+- [x] 15 Skills, 206 engineering and 108 technology capabilities, 12 workflows.
+- [x] Standalone Nitro/Elysia excluded; no new runtime components.
+- [ ] Later owner decisions: rights-holder line and Security/Support.
+  Security/Support is LATER; no contact is selected by this checklist.
 
-Release actions are taken only by the project owner, with explicit
-approval for each one (BC-30, BC-31):
+## B. Candidate content (later phase)
 
-- version bump;
-- tag;
-- push;
-- publication;
-- marketplace submission.
+- [ ] Apply `0.1.0-rc.1` in all four version fields after authorization.
+- [ ] Add project MIT licence/manifest licence; retain upstream Humanizer notice.
+- [ ] Align CHANGELOG, supported versions and candidate fingerprint.
+- [ ] Review the exact commit and static package diff.
 
-## A. Owner decisions (blocking)
+## C. Offline validation and CI
 
-- [x] **Licence chosen:** MIT (D-060, 2026-10-18).
-- [ ] ⛔ `LICENSE` added with the owner-confirmed copyright-holder line, and
-  `license` set to `MIT` in both manifests (release gate G-15). *Owner, then
-  Maintainer.*
-- [x] **Publisher identity confirmed:** `CodeJaDee` (D-060). The
-  copyright-holder line for `LICENSE` is a separate input (release gate G-15).
-- [x] **Distribution model decided:** public (D-060). Making the repository
-  public is a separate act that needs explicit approval, after release gate G-16.
-- [ ] ⛔ **Security contact published** in `SECURITY.md`. *Owner.* The
-  decision is deferred (D-060). No channel has been chosen, and none may
-  be assumed (release gate G-16).
-- [ ] ⛔ **Support channel stated.** *Owner.* Deferred with the security
-  decision (release gate G-16).
-- [ ] **Codex IDE extension position decided** (ISSUES Q-02): document it
-  as unsupported (the current docs do this), or something else. *Owner.*
-- [ ] **Java scope for v1 confirmed out of scope** (Q-08). *Owner.*
-- [ ] **Multilingual decisions confirmed** (D-055 English skill, D-056 and
-  ADR-0010 response style policy, D-057 evaluation rubric and ADR-0011
-  language threshold, D-058 version). *Owner.*
-- [ ] **Third-party notice kept:** `chayen-humanizer-en/references/upstream-notice.md`
-  still carries the humanizer MIT licence text and attribution, whichever
-  licence is chosen; decide whether a root notices file is also wanted. *Owner.*
+- [ ] `node tools/validate/validate-all.mjs --fail-fast` passes.
+- [ ] `node tests/provider-compatibility/check-identity.mjs` passes.
+- [ ] `node tools/evals/run-evaluation-suite.mjs --fail-fast` passes.
+- [ ] Isolated manifest/reference/MIT negative controls detect failures.
+- [ ] Workflow syntax is valid and both pinned Node matrix entries pass.
+- [ ] Record actual candidate/release GitHub Actions run URLs and SHAs.
+  Local PASS is not remote PASS; Phase 3 remote execution is NOT_RUN.
 
-## B. Version and metadata
+Native `claude plugin validate --strict` is a separate authorized check when
+that CLI is available. Ordinary CI uses the repository's offline validators
+and does not install provider binaries or require provider credentials.
 
-- [ ] ⛔ Set `version` to `0.1.0` in `plugins/codejadee-chayen-framework/plugin.json`,
-  `plugins/codejadee-chayen-framework/.claude-plugin/plugin.json`, and
-  `.github/plugin/marketplace.json` (the entry and `metadata.version`).
-  Without this, Claude Code installs do not update (R-54). *Maintainer,
-  after approval.*
-- [ ] Decide on the optional description and keyword updates in
-  [RELEASE_METADATA.md](RELEASE_METADATA.md).
-- [ ] Move `CHANGELOG.md` `[Unreleased]` to `[0.1.0] - <date>`.
-- [ ] Re-run the checks below and record the results.
+## D. Native qualification (Phase 5, separately authorized)
 
-## C. Automated checks (offline; must PASS)
+- [ ] Every required lifecycle operation passes on all three CLIs in isolated
+  disposable profiles; changed-content updates and uninstall absence are proved.
+- [ ] Automatic routing >=85% **per CLI**, using native selection events.
+- [ ] Current `chayen` explicit invocation and no-match pass independently.
+- [ ] Humanizer quality/human review, engineering samples, technology facts
+  and adversarial provider checks satisfy their scoped gates.
+- [ ] Public remote installation is verified when publication is authorized.
 
-```bash
-node tools/validate/validate-all.mjs                   # all gates, including documentation links
-node tests/provider-compatibility/check-identity.mjs   # 15/15
-node tools/evals/run-evaluation-suite.mjs              # traceability and static levels
-claude plugin validate --strict plugins/codejadee-chayen-framework
-claude plugin validate --strict .
-git status --short                                     # only intended changes
-```
+Historical six-/thirteen-Skill results do not qualify the current build.
+Do not pool CLI rates or count lexical SIM as automatic routing evidence.
 
-## D. Provider verification of the release build (blocking, R-53)
+## E. Deferred work and documentation
 
-These follow `tests/provider-compatibility/README.md` (runbook R-1..R-10).
-They need an authorized environment and test identities.
-
-- [ ] ⛔ **Claude Code CLI**, from the release commit:
-  - marketplace add, install, `plugin details` shows Skills (15);
-  - disable, enable;
-  - update from the previous version to `0.1.0`;
-  - uninstall.
-- [ ] ⛔ **Codex CLI:** add, list, a new session sees the skills; disable
-  via `config.toml`; remove. Record the update path.
-- [ ] ⛔ **Copilot CLI** (runtime 1.0.91 or later): install ("Installed 15
-  skills"), `skill list`, disable, enable, update, uninstall.
-- [ ] **Claude Code VS Code extension:** manual procedure
-  (`tests/provider-compatibility/claude-code-vscode.md`).
-- [ ] **VS Code Copilot Chat:** manual procedure
-  (`tests/provider-compatibility/copilot-vscode.md`).
-- [ ] **Remote install** from the GitHub marketplace on each CLI, after the
-  push.
-- [ ] **Routing probes** on Claude Code, plus Copilot if an isolated test
-  sign-in is available:
-  `tests/evaluation/run-provider-probes.mjs`, ≥2 runs. Compare against the
-  2026-10-15 baseline (automatic 12/22, explicit 6/6, no-match 12/12;
-  43 pooled runs).
-
-- [ ] ⛔ **Multilingual evaluation** (`tests/evaluation/step40/`, R-61): the
-  52 routing probes ×3 runs, quality and policy runs with and without the
-  plugin and the policy, scored with the approved rubric, plus two fluent
-  reviewers per language. Include the engineering probes to check that the
-  writing skills do not take engineering prompts (R-62).
-- [ ] **Response style policy loading** on each host where it is offered
-  (`docs/RESPONSE_STYLE.md` verify step), in a disposable profile.
-
-## E. Documentation
-
-- [ ] `node tools/validate/check-docs.mjs` PASS: links, anchors, identifiers,
-  skill names.
-- [ ] The Verified, Not tested, and Unsupported labels in
-  `docs/COMPATIBILITY_MATRIX.md` and the install guides are updated from
-  the section D results only.
-- [ ] README status banner updated: version, licence, repository visibility.
+Response Style Policy host tests, VS Code runtime tests, Branch Protection,
+Required Reviews and unrelated ADR/repository hygiene work are accepted
+deferrals, **not required checklist items** for this phase/release scope.
+Keep their limitations visible. Security/Support is a later owner decision;
+do not invent a reporting route or treat it as Phase 3 implementation work.
+The release contract retains its separate publication prerequisite.
 
 ## F. Release (owner only, after explicit approval)
 
-- [ ] Commit, then tag. **The tag format is not final** (gate G-05, OD-02):
-  - [ADR-0008](../chayen/ADRS/ADR-0008-packaging-and-marketplace-strategy.md)
-    specifies `vX.Y.Z`;
-  - `claude plugin tag` would create `{name}--v{version}`.
+- [ ] Complete [manual sign-off](../production/MANUAL_RELEASE_SIGNOFF.md).
+- [ ] Record separate approval for each commit, push, tag, visibility change,
+  release and directory submission.
+- [ ] Use `vX.Y.Z` tags consistent with ADR-0008; verify tag/version/commit match.
+- [ ] Repeat applicable offline and delta checks on the stable release commit.
+- [ ] Publish only after scoped release gates and required owner inputs close.
 
-  Use the one format the owner confirms.
-- [ ] Push.
-- [ ] Create a GitHub release with the changelog section.
-- [ ] Marketplace or directory submissions, if any
-  ([MARKETPLACE_LISTINGS.md](MARKETPLACE_LISTINGS.md)): one approval per
-  directory.
-
-## G. After release
-
-- [ ] Install the published version on each surface and confirm Skills (15).
-- [ ] Watch issues for routing and install reports, and update
-  `docs/COMPATIBILITY_MATRIX.md`.
+Unprotected `main` remains an accepted risk; no repository setting is changed
+by this checklist. No Phase 3 workflow commits, pushes, tags or publishes.

@@ -1,125 +1,118 @@
-# codejadee-chayen-framework (Chayen)
+# Chayen
 
-Chayen is a **plugin of engineering skills** for coding agents. It runs in:
+Chayen is a native plugin of engineering and Thai/English writing Skills for
+coding agents. Publisher: **CodeJaDee**. Public release target: **v0.1.0, MIT**.
+This checkout is a development build; no stable release or public availability
+is claimed. The project MIT file and manifest licence await candidate freeze.
+The upstream Humanizer MIT notice remains independently required.
 
-- Claude Code;
-- OpenAI Codex;
-- GitHub Copilot (CLI and VS Code).
+## Current build
 
-You install it with each provider's own plugin manager, then work with
-**ordinary prompts**. When a request matches one of Chayen's 15 skills, the
-agent loads that skill's guidance for the job. When nothing matches, the agent
-behaves exactly as it would without Chayen.
+| Fact | Value |
+|---|---|
+| Plugin name | `chayen` |
+| Marketplace name | `codejadee` |
+| Current version | `0.1.0-dev` |
+| Entry Skills | 15 |
+| Package files | 256 |
+| Skill references | 237 |
+| L0 metadata | 6,217 / 6,500 characters |
 
-> **Status: `0.1.0-dev`, pre-release. Not published.**
->
-> - The GitHub repository is currently **private**, so installing from it
->   requires repository access.
-> - The owner has chosen the MIT licence, but no `LICENSE` file has been
->   published yet, so no licence is granted until it is. See
->   [docs/distribution/LICENSE_PROPOSAL.md](docs/distribution/LICENSE_PROPOSAL.md).
-> - Verification is partial. Real-host results exist only for the 13
->   engineering skills on Claude Code CLI; the two writing skills and the
->   opt-in response style policy have not been tested on any host yet. See
->   [docs/COMPATIBILITY_MATRIX.md](docs/COMPATIBILITY_MATRIX.md) and
->   [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md).
+There are 13 engineering and 2 writing entry points, 206 engineering
+capabilities, 108 technology capabilities, 12 workflows and 7 templates.
+One shared Skills source serves all providers. The installed package is
+static Markdown/JSON: no executable, hook, MCP server, service or telemetry.
 
-## What Chayen is
+## Supported release hosts
 
-- **15 entry skills.** They cover repository analysis, requirements,
-  architecture, implementation, backend, frontend, data, testing, security,
-  performance, DevOps, documentation, AI engineering, and Thai and English
-  writing and editing. See
-  [docs/SKILLS_CATALOG.md](docs/SKILLS_CATALOG.md).
-- **Capability recipes and technology guidance**, loaded only when relevant:
-  - 206 engineering capabilities;
-  - 108 technology capabilities for C#/ASP.NET Core, Angular, TypeScript and
-    JavaScript, React, Next.js, Vue, Nuxt, Vite, SQL Server, PostgreSQL, and
-    cross-stack integration.
+The production target covers **Claude Code CLI, Codex CLI and GitHub Copilot
+CLI** (Copilot >=1.0.91). Current-build qualification is pending: native
+lifecycle, explicit invocation, no-match and **automatic routing >=85% on
+each CLI independently** must be measured in Phase 5.
 
-  See [docs/SUPPORTED_TECHNOLOGIES.md](docs/SUPPORTED_TECHNOLOGIES.md).
-- **12 multi-stage workflows and 7 reusable templates.** These include task
-  contracts, verification reports, and ADRs. See
-  [docs/DEVELOPMENT_WORKFLOWS.md](docs/DEVELOPMENT_WORKFLOWS.md).
-- **Static content only.** The installed package is Markdown and JSON: no
-  hooks, MCP servers, scripts, background processes, or telemetry.
-
-## What Chayen is not
-
-- **Not an agent, CLI, installer, web app, or VS Code extension.** It adds
-  instructions to the agent you already use.
-- **Not an enforcement mechanism.** Its guidance is advisory. Permissions,
-  sandboxing, and policy are enforced by your provider, your OS, and your CI.
-- **Not a guarantee.** The model decides whether a skill is used and how
-  well it follows it. See
-  [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md).
+VS Code surfaces are **unverified and outside the v0.1.0 support claim**.
+Response Style Policy host tests, VS Code runtime tests, Branch Protection,
+Required Reviews and unrelated ADR/repository hygiene work are deferred.
+Those deferred items do not block Phase 3 completion. Offline CI is not
+evidence of runtime routing or Skill compliance.
 
 ## Quick start
 
-1. **Install through your provider's plugin manager:**
-   [Claude Code](docs/INSTALL_CLAUDE_CODE.md) ·
-   [OpenAI Codex](docs/INSTALL_CODEX.md) ·
-   [GitHub Copilot](docs/INSTALL_COPILOT.md).
-2. **Work as usual.** Open your project and ask for what you need. You never
-   need to mention Chayen:
+Review the source and install with your native plugin manager:
+[Claude Code CLI](docs/INSTALL_CLAUDE_CODE.md),
+[Codex CLI](docs/INSTALL_CODEX.md), or [Copilot CLI](docs/INSTALL_COPILOT.md).
+All use `chayen@codejadee`. Git-backed installation needs repository access
+until public availability is confirmed; each guide also covers a local clone.
+No Chayen installer or package-manager dependency installation is needed.
 
-   ```text
-   GET /api/orders/{id} returns 500 when the order has no customer. Find the cause and fix it.
-   เกลาย่อหน้านี้ให้อ่านเป็นภาษาไทยธรรมชาติ แต่ห้ามเปลี่ยนตัวเลขกับชื่อฟีเจอร์
-   ```
+Work in your application directory and ask normally:
 
-3. **Optionally name a skill explicitly**, for example
-   `/chayen:chayen-security` in Claude Code. See
-   [docs/AUTOMATIC_SKILL_DISCOVERY.md](docs/AUTOMATIC_SKILL_DISCOVERY.md).
+```text
+GET /api/orders/{id} returns 500 when the order has no customer. Fix it.
+Polish the Thai values in locales/th.json; preserve keys, numerals and calendar eras.
+```
 
-The full walkthrough is in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
+These are intended routing examples. The provider model decides what to
+load. Skills are advisory and remain subject to native permissions.
+[Automatic Skill Discovery](docs/AUTOMATIC_SKILL_DISCOVERY.md) explains
+explicit invocation and the distinction between current and historical evidence.
+
+## What is covered
+
+C#/ASP.NET Core, Angular, TypeScript/JavaScript, React, Next.js, Vue, Nuxt,
+Vite, SQL Server, PostgreSQL and cross-stack integration have technology
+references. Python has general backend/testing guidance. **Standalone Nitro
+and Elysia are out of scope**; no pack is supplied for them.
+[Supported technologies](docs/SUPPORTED_TECHNOLOGIES.md) lists boundaries.
+
+Humanizer TH edits Thai copy, including values in localization files;
+i18n configuration, locale routing and key wiring remain engineering work.
+The [Response Style Policy](docs/RESPONSE_STYLE.md) is separate and opt-in.
+Plugin install/disable/uninstall do not manage it. Its setup/removal fixtures
+are tested; loading and behavior on hosts remain unverified and deferred.
 
 ## Documentation
 
 | Topic | Document |
 |---|---|
-| First steps | [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) |
-| Install, update, disable, uninstall | [Claude Code](docs/INSTALL_CLAUDE_CODE.md), [Codex](docs/INSTALL_CODEX.md), [Copilot](docs/INSTALL_COPILOT.md) |
-| How skills are chosen, and what happens when none applies | [docs/AUTOMATIC_SKILL_DISCOVERY.md](docs/AUTOMATIC_SKILL_DISCOVERY.md) |
-| Skills | [docs/SKILLS_CATALOG.md](docs/SKILLS_CATALOG.md) |
-| Thai and English writing and editing (audit, rewrite, create, website copy) | [docs/WRITING_AND_EDITING.md](docs/WRITING_AND_EDITING.md) |
-| Optional Thai/English reply style for everyday answers (opt-in, not installed by the plugin) | [docs/RESPONSE_STYLE.md](docs/RESPONSE_STYLE.md) |
-| Technologies and how they are detected | [docs/SUPPORTED_TECHNOLOGIES.md](docs/SUPPORTED_TECHNOLOGIES.md) |
-| Workflows and templates | [docs/DEVELOPMENT_WORKFLOWS.md](docs/DEVELOPMENT_WORKFLOWS.md) |
-| Provider and surface support | [docs/COMPATIBILITY_MATRIX.md](docs/COMPATIBILITY_MATRIX.md) |
-| Security model and what Chayen cannot guarantee | [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md) |
-| Reporting vulnerabilities | [SECURITY.md](SECURITY.md) |
-| Bugs, skill requests, contributing | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) |
-| Release history | [CHANGELOG.md](CHANGELOG.md) |
-| Release preparation (maintainers) | [docs/distribution/RELEASE_CHECKLIST.md](docs/distribution/RELEASE_CHECKLIST.md) |
-| Engineering governance (maintainers) | [docs/chayen/](docs/chayen/PROGRESS.md) |
+| First task | [Getting started](docs/GETTING_STARTED.md) |
+| Install, migration, update and removal | [Claude](docs/INSTALL_CLAUDE_CODE.md), [Codex](docs/INSTALL_CODEX.md), [Copilot](docs/INSTALL_COPILOT.md) |
+| Skills and writing | [Catalog](docs/SKILLS_CATALOG.md), [Writing](docs/WRITING_AND_EDITING.md) |
+| Workflows | [Development workflows](docs/DEVELOPMENT_WORKFLOWS.md) |
+| Host evidence | [Compatibility matrix](docs/COMPATIBILITY_MATRIX.md) |
+| Limitations | [Security and limitations](docs/SECURITY_AND_LIMITATIONS.md) |
+| Development | [Contributing](docs/CONTRIBUTING.md) |
+| CI design and evidence | [CI/CD design](docs/production/CI_CD_DESIGN.md) |
+| Release authorization | [Manual release sign-off](docs/production/MANUAL_RELEASE_SIGNOFF.md) |
+| Release status | [Release Gate Matrix](docs/production/RELEASE_GATE_MATRIX.md) |
+| History | [Changelog](CHANGELOG.md) |
 
 ## Repository layout
 
-| Path | Contents | Shipped to users? |
-|---|---|---|
-| `plugins/codejadee-chayen-framework/` | The plugin: two manifests and `skills/` | **Yes**: the only installed directory |
-| `.claude-plugin/marketplace.json` | Claude Code marketplace | Read by the provider when you add the marketplace |
-| `.agents/plugins/marketplace.json` | Codex marketplace | Read by the provider |
-| `.github/plugin/marketplace.json` | Copilot marketplace | Read by the provider |
-| `response-style/` | Opt-in response style policy you can copy into your own agent instruction file | No: copied only by you, after review |
-| `catalog/`, `tools/`, `tests/`, `docs/` | Catalogs, developer validation, evaluations, documentation | No |
+`plugins/codejadee-chayen-framework/` is the only installed directory. The
+repository and directory retain the long name; the plugin is `chayen`.
+`.claude-plugin/marketplace.json`, `.agents/plugins/marketplace.json` and
+`.github/plugin/marketplace.json` point at that same source.
+`catalog/`, `tools/`, `tests/`, `docs/`, `.github/workflows/` and
+`response-style/` are maintainer/opt-in material, not runtime components.
 
-## Reporting problems
+## Reporting problems and release process
 
-- **Bugs and skill requests:** GitHub Issues in this repository. You need
-  repository access while it is private. See
-  [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md#reporting-bugs).
-- **Security vulnerabilities:** see [SECURITY.md](SECURITY.md). Please do
-  not file public issues for them.
+**Security/Support is LATER. No reporting or support channel has been
+approved or published.** Do not post vulnerabilities publicly or infer a
+contact from a repository URL. See [SECURITY.md](SECURITY.md). Prepare
+redacted reproduction details using [Contributing](docs/CONTRIBUTING.md).
+
+Unprotected `main` is an **accepted release-process risk**. CI is not made a
+required status check here. Manual release sign-off is required before a
+version change is committed, pushed, tagged or published; a green check
+does not authorize those actions. Version strategy:
+`0.1.0-dev` -> `0.1.0-rc.1` -> `0.1.0`, with `vX.Y.Z` Git tags.
 
 ## Credits
 
-| Role | Credit |
-|---|---|
-| Project | codejadee-chayen-framework |
-| Concept and project direction | Project Owner |
-| Engineering | Contributors as recorded in Git history. At 2026-10-15, all commits are authored by the GitHub account `0xPratyaDev7x` (also recorded as "Pratya S."). |
-| AI-assisted development | Much of the skill content, documentation, validators, and evaluations was drafted with an AI coding assistant (Anthropic Claude, through Claude Code), step by step under the project owner's direction. The project owner makes the commits, and the governance log tracks each step's review status. AI output can be wrong; see [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md). |
-| Third-party material | The English writing skill adapts patterns from the MIT-licensed [humanizer](https://github.com/blader/humanizer) skill by Siqi Chen; the licence notice ships in `chayen-humanizer-en/references/upstream-notice.md`. |
-| Licence | **MIT, chosen by the owner, not yet published.** The `LICENSE` file is added for the release candidate. Until it is published, no licence is granted. See [docs/distribution/LICENSE_PROPOSAL.md](docs/distribution/LICENSE_PROPOSAL.md). |
+Publisher: **CodeJaDee**. Contributors and AI-assisted development are
+recorded in Git history and governance records. The English writing Skill
+adapts [humanizer](https://github.com/blader/humanizer) by Siqi Chen;
+its original MIT attribution/notice remains in the distributed Skill.
+Project MIT adoption does not replace that notice.

@@ -32,6 +32,7 @@ const staticChecks = [
   { id: "S-AUDIT206", cmd: ["tools/catalog/audit-coverage.mjs"], cats: [3], match: /206\/206|PASS/ },
   { id: "S-EVALSYNC", cmd: ["tools/evals/generate-claude-evals.mjs", "--check"], cats: [5, 6, 7], match: /up to date/ },
 ];
+if (process.argv.includes("--fail-fast")) staticChecks[0].cmd.push("--fail-fast");
 report.levels.static = [];
 for (const c of staticChecks) {
   const r = spawnSync(process.execPath, c.cmd.map((x, i) => (i === 0 ? rel(x) : x)), { cwd: root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
@@ -40,7 +41,14 @@ for (const c of staticChecks) {
   if (c.json) { try { const j = JSON.parse(r.stdout); detail = `${j.checks.filter((x) => x.result === "PASS").length}/${j.checks.length} PASS`; } catch { pass = false; detail = "unparseable"; } }
   else detail = out.trim().split(/\r?\n/).filter(Boolean).slice(-1)[0]?.slice(0, 200);
   report.levels.static.push({ id: c.id, command: `node ${c.cmd.join(" ")}`, categories: c.cats, exit: r.status, result: pass ? "PASS" : "FAIL", detail });
-  if (!pass) fail(c.id, detail);
+  if (!pass) {
+    fail(c.id, detail);
+    console.error(out.trim());
+    if (process.argv.includes("--fail-fast")) {
+      console.error(`FAIL ${c.id}: stopping static evaluation; remaining checks NOT_RUN`);
+      process.exit(1);
+    }
+  }
 }
 
 // ---------- Traceability ----------

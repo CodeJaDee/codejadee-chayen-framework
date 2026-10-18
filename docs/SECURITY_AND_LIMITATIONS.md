@@ -74,6 +74,12 @@ of the ones above (details in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md)):
 
 ## What Chayen cannot guarantee
 
+The runtime observations below are historical and do not qualify the
+current build after Phase 2 metadata changes. Current native lifecycle,
+explicit invocation and automatic routing are NOT_RUN; >=85% per CLI is
+still required in Phase 5. VS Code and Response Style Policy host tests
+are deferred. See [the current matrix](COMPATIBILITY_MATRIX.md).
+
 1. **That a skill is used.** Selection is decided by the model from the
    skill descriptions.
    - Measured on Claude Code: automatic selection loaded the right skill
@@ -134,3 +140,8 @@ Maintainers can find the threat model and trust review in
 [docs/chayen/EVALUATION_GAPS.md](chayen/EVALUATION_GAPS.md).
 
 To report a vulnerability, see [SECURITY.md](../SECURITY.md).
+
+Security/Support remains LATER with no approved channel. Unprotected `main`
+is an accepted release-process risk; Branch Protection and Required Reviews
+are deferred. A [manual sign-off](production/MANUAL_RELEASE_SIGNOFF.md) is
+required for releases even when local checks or remote CI pass.

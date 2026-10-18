@@ -1,107 +1,91 @@
 # Install in OpenAI Codex
 
-Chayen installs through Codex's native plugin marketplace.
+Production target: **Codex CLI**. VS Code runtime qualification is
+unverified/deferred; desktop/cloud surfaces are outside this release target.
 
 | Item | Value |
 |---|---|
-| Marketplace name | `codejadee` (display name "CodeJaDee") |
-| Plugin | `chayen` |
+| Marketplace name | `codejadee` |
+| Plugin name | `chayen` |
 | Install identifier | `chayen@codejadee` |
 | Marketplace file | `.agents/plugins/marketplace.json` |
-| Plugin manifest | `plugins/codejadee-chayen-framework/plugin.json` (Agent Plugins 1.0) |
-| Surfaces | Codex CLI. Codex in the ChatGPT desktop app supports plugins too, but was not tested. **The Codex IDE extension (VS Code) does not support plugins.** |
-
-> **Before you start**
->
-> - The repository is **private** during pre-release. Adding it needs Git
->   access; otherwise use a local clone you are allowed to use.
-> - Review the source and pin a revision you trust.
+| Plugin manifest | `plugins/codejadee-chayen-framework/plugin.json` |
 
 ## Install (CLI)
 
+Review/pin a trusted source; until public availability is confirmed, Git
+access is required. Inspect `codex plugin --help` and
+`codex plugin marketplace --help` before version-specific commands.
+
 ```bash
-# 1. Add the marketplace: GitHub (needs access) or a local clone
 codex plugin marketplace add CodeJaDee/codejadee-chayen-framework
-codex plugin marketplace add /path/to/codejadee-chayen-framework
-
-# 2. Install
-codex plugin add chayen@codejadee
-#    or, interactively: run `codex`, type /plugins, choose the plugin, install
-
-# 3. Check it, then start a NEW session so the skills are loaded
-codex plugin list --marketplace codejadee      # "installed, enabled"
+codex plugin marketplace list
 ```
+
+Alternatively add an authorized clone using
+`codex plugin marketplace add /path/to/codejadee-chayen-framework`.
+Official marketplace setup documents `--ref` for reviewed Git refs.
+Start Codex and use `/plugins` to inspect native installation controls.
+CLI versions exposing `plugin add` can use:
+
+```bash
+codex plugin add chayen@codejadee
+codex plugin list --marketplace codejadee
+```
+
+The add/list forms were observed on historical CLIs; confirm availability
+with installed help. Missing installation controls mean NOT_RUN; do not
+replace the native plugin with copied Skills. Verify identity, version,
+enabled state and all 15 Skills, then start a new session.
 
 ## Renamed from codejadee-chayen-framework
 
-Until 2026-10-17 the plugin was named `codejadee-chayen-framework`. It is now
-`chayen` (D-059), so installs made under the old name must be replaced. The
-repository, the marketplace name `codejadee` and the plugin folder
-(`plugins/codejadee-chayen-framework/`) are unchanged. These commands follow
-the documented CLI syntax but have **not yet been run** for this rename.
+Repository, marketplace and package directory names are unchanged. Where
+these commands exist, remove the former identity and refresh:
 
+<!-- migration:start -->
 ```bash
 codex plugin remove codejadee-chayen-framework@codejadee
 codex plugin marketplace upgrade codejadee
 codex plugin add chayen@codejadee
+codex plugin list --marketplace codejadee
 ```
+<!-- migration:end -->
 
-If you disabled the plugin in `config.toml`, the section key is now
-`[plugins."chayen@codejadee"]`. Explicit invocation (`$chayen-<skill>`) is
-unchanged, because Codex does not prefix skills with the plugin name.
-
-## VS Code (Codex IDE extension)
-
-OpenAI documents that "the IDE extension doesn't support plugins" (re-checked
-2026-10-15). There is **no supported way** to install Chayen as a plugin
-there.
-
-The extension can load standalone skills from `.agents/skills`. That is not
-a plugin install, and Chayen does not document or support copying skills
-there (an open decision, ISSUES Q-02).
-
-## Use
-
-- **Normal prompts.** Codex selects a skill when your task matches its
-  description. See [AUTOMATIC_SKILL_DISCOVERY.md](AUTOMATIC_SKILL_DISCOVERY.md).
-- **Explicit invocation** uses the `$` prefix:
-
-  ```text
-  $chayen-security Review this controller for injection risks.
-  $chayen-humanizer-en Tighten this README paragraph without changing any commands.
-  ```
-
-  The writing skills are described in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
-
-## Optional: response style policy
-
-Installing the plugin gives you the skills only (setup A in
-[RESPONSE_STYLE.md](RESPONSE_STYLE.md)). If you also want everyday replies
-worded naturally in Thai or English, add the opt-in policy yourself:
-append the marked block to `~/.codex/AGENTS.md` (or `$CODEX_HOME/AGENTS.md`),
-which is shared with your other instructions; a repository `AGENTS.md` needs the
-repository owner's agreement.
-If a non-empty `AGENTS.override.md` exists, Codex reads it instead. OpenAI
-documents the same configuration layers for the IDE extension, which cannot
-load the plugin itself.
-It is not installed, enabled or removed by the plugin, and its loading has
-not been tested on this host yet. Setup, the loading check, conflicts and
-removal are in [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
+Otherwise use native `/plugins` controls. Confirm absence of the old entry.
+Migration is NOT_RUN. Intended explicit syntax remains
+`$chayen-security <request>`, pending current-build verification.
 
 ## Disable, enable, update, uninstall
 
-| Action | How |
-|---|---|
-| Disable or enable | In `/plugins`, press **Space** on the plugin. Or add `enabled = false` under `[plugins."chayen@codejadee"]` in `config.toml` (in `CODEX_HOME`, normally `~/.codex/`). A one-off `-c` override did **not** disable the plugin in testing. |
-| Update | Codex 0.160.1 has **no per-plugin update command**. `codex plugin marketplace upgrade codejadee` refreshes Git marketplaces. If the installed version does not change, run `codex plugin remove chayen@codejadee` and then `codex plugin add chayen@codejadee`. This update path is **not yet verified**. |
-| Uninstall | `codex plugin remove chayen@codejadee`, then optionally `codex plugin marketplace remove codejadee`. An empty cache directory may remain. |
+Use native plugin controls to toggle enabled state. Do not assume CLI
+`disable`, `enable` or per-plugin `update` subcommands exist. Refresh Git
+marketplaces with `codex plugin marketplace upgrade codejadee`.
+If installed content does not change, use reviewed native remove/add
+controls and verify installed content and active version afterwards.
 
-## Verification status (2026-10-15; reviewed 2026-10-17)
+Where `plugin remove` is exposed:
 
-| Check | Codex CLI | Codex IDE extension |
-|---|---|---|
-| Marketplace file and manifest selected by the installed Codex code | Confirmed by inspecting 0.160.1 | Unsupported |
-| Install, list, disable, uninstall | Passed for an earlier 6-skill build (0.160.1, 2026-10-14). **Not yet run for the 13-skill or the current 15-skill build.** | Unsupported |
-| Writing skills, opt-in response style policy | Not tested | Skills unsupported; policy not tested |
-| Routing and explicit `$chayen-security` | Passed for the earlier build (7/7 smoke prompts). Current build: **not tested.** | Unsupported |
-| Install from the GitHub marketplace | Not tested | Unsupported |
+```bash
+codex plugin remove chayen@codejadee
+codex plugin list --marketplace codejadee
+codex plugin marketplace remove codejadee
+```
+
+A catalog can still show an available plugin; it must no longer be
+**installed**. Disabled is still installed. Cached bytes alone prove neither
+installation nor removal. Do not delete your entire Codex home.
+
+## Optional: response style policy
+
+[Response Style Policy](RESPONSE_STYLE.md) is opt-in, independent from
+plugin installation/removal, and unverified on hosts.
+
+## Verification status
+
+Current lifecycle, migration, routing and explicit invocation are NOT_RUN;
+see [Compatibility](COMPATIBILITY_MATRIX.md). Security/Support remains LATER;
+no channel is selected. The [official OpenAI plugin guide](https://developers.openai.com/plugins/build/plugins)
+was reviewed on 2026-10-18 for marketplace setup/refresh/removal. It does not
+establish every historical CLI installation command on every version;
+installed help and native release qualification are still needed.

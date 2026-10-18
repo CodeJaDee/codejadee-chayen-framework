@@ -1,0 +1,16 @@
+{
+  "nodeVersions": ["20.11.0", "24.22.0"],
+  "checkout": "fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+  "setupNode": "249970729cb0ef3589644e2896645e5dc5ba9c38",
+  "actionlint": {
+    "version": "1.7.12",
+    "linux-x64": {
+      "archive": "actionlint_1.7.12_linux_amd64.tar.gz",
+      "sha256": "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8"
+    },
+    "win32-x64": {
+      "archive": "actionlint_1.7.12_windows_amd64.zip",
+      "sha256": "6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9"
+    }
+  }
+}

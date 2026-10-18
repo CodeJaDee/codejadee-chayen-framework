@@ -164,13 +164,13 @@ attribution and licence notice ship with the skill.
 
 ## Requesting a new skill or capability
 
-Open an issue as described in
+Prepare a request as described in
 [CONTRIBUTING.md](CONTRIBUTING.md#requesting-a-skill-or-capability).
 
 - Most requests become a **recipe inside an existing skill**, not a new
   skill.
-- The L0 metadata budget is 6,500 characters (D-052); current usage is 6,221
-  with both editorial skills, leaving 279. The Entry Skill ceiling and product
+- L0 metadata usage is 6,217 / 6,500 characters (D-052), leaving 283.
+  The Entry Skill ceiling and product
   target are 15 (D-053) and all 15 now ship, so a further skill needs a new
   decision. New Skills still need routing and metadata checks;
   this internal budget does not establish host capacity or routing quality.

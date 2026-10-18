@@ -2,16 +2,16 @@
 
 Thank you for helping improve Chayen.
 
-- The repository is **private** during pre-release. Contributing needs
-  access granted by the project owner.
-- **No licence has been published yet** (see
-  [release/LICENSE_PROPOSAL.md](distribution/LICENSE_PROPOSAL.md)). The terms for
-  contributions will be set when the owner chooses a licence.
+- Public release target: **Chayen v0.1.0, MIT, CodeJaDee**. This development
+  checkout has no applied project licence yet; the owner chose MIT in Phase 1.
+  [Licence status](distribution/LICENSE_PROPOSAL.md) records the remaining work.
+- Repository access is needed until publication is confirmed.
+- Security/Support is **LATER**; no reporting/support channel is selected.
 
 ## Reporting bugs
 
-Use **GitHub Issues** in `CodeJaDee/codejadee-chayen-framework`. Please
-include:
+Prepare a redacted reproduction and retain it until the owner designates a
+Support channel. No issue tracker or address is approved here. Include:
 
 | Field | Example |
 |---|---|
@@ -36,7 +36,8 @@ Do **not** report security vulnerabilities as issues. See
 
 ## Requesting a skill or capability
 
-Open an issue titled `Skill request: …` that answers these questions:
+Prepare a capability request answering these questions; submission awaits
+the owner's Support decision:
 
 1. **The task.** What engineering task should be covered? Give one or two
    example prompts.
@@ -48,8 +49,7 @@ Open an issue titled `Skill request: …` that answers these questions:
 Most requests are added as a **recipe or technology reference inside an
 existing skill**:
 
-- the always-on description budget is nearly full (5,485 of 5,500
-  characters);
+- L0 metadata usage is 6,217 / 6,500 characters, and all 15 entry points ship;
 - each new entry skill competes with the others for selection.
 
 A new entry skill needs a recorded decision and owner approval.
@@ -78,7 +78,11 @@ The authoring rules are in
 and the quality gates in
 [chayen/SKILL_QUALITY_GATES.md](chayen/SKILL_QUALITY_GATES.md).
 
-### Developer checks (Node.js 20.11 or later; executed on 24.15.0)
+### Developer checks
+
+Use Node.js 24.22.0 for current development. Node.js 20.11.0 is the pinned
+legacy compatibility floor, tested separately; it is not a recommended
+maintainer runtime. See [CI/CD design](production/CI_CD_DESIGN.md).
 
 These are offline and need no dependencies:
 
@@ -87,7 +91,8 @@ node tools/validate/validate-all.mjs                    # every automated gate
 node tools/validate/check-docs.mjs                      # documentation links and identifiers
 node tests/provider-compatibility/check-identity.mjs    # plugin identity and precedence
 node tools/evals/run-evaluation-suite.mjs               # evaluation traceability, simulated proxy
-claude plugin validate --strict plugins/codejadee-chayen-framework
+node --test tests/ci/negative-controls.test.mjs          # isolated failure demonstrations
+node tools/ci/check-workflow.mjs                        # pinned linter download; no providers
 ```
 
 **When you change a skill:**
@@ -96,7 +101,9 @@ claude plugin validate --strict plugins/codejadee-chayen-framework
 - regenerate the Claude eval cases with
   `node tools/evals/generate-claude-evals.mjs`.
 
-Provider runs (`tests/evaluation/run-provider-probes.mjs`,
+Native provider validation is a separate authorized check when the CLI is
+available; it is not a dependency of ordinary CI. Provider runs
+(`tests/evaluation/run-provider-probes.mjs`,
 `tests/provider-compatibility/run-lifecycle.sh`) are **billed and/or change
 provider state**. They need explicit authorization; see
 [tests/evaluation/README.md](../tests/evaluation/README.md).
@@ -111,6 +118,11 @@ that way. Please:
 - mention the assistance in your pull request description.
 
 ### Pull requests
+
+Unprotected `main` is an accepted release-process risk. Branch Protection
+and Required Reviews are deferred, not required Phase 3 settings. The
+[manual release sign-off](production/MANUAL_RELEASE_SIGNOFF.md) is required
+before any release action; CI success never grants publication permission.
 
 - Keep each pull request to one concern, and list the commands you ran with
   their results.

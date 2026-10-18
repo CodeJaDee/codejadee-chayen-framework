@@ -1,134 +1,84 @@
 # Install in GitHub Copilot
 
-Chayen installs as a Copilot **agent plugin**. The CLI and VS Code are
-separate surfaces, and each is described on its own below.
+Production target: **GitHub Copilot CLI >=1.0.91**. VS Code Copilot Chat is
+unverified and runtime testing is deferred.
 
 | Item | Value |
 |---|---|
 | Marketplace name | `codejadee` |
-| Plugin | `chayen` |
+| Plugin name | `chayen` |
 | Install identifier | `chayen@codejadee` |
-| Marketplace file | `.github/plugin/marketplace.json`. Copilot reads it before `.claude-plugin/marketplace.json`, which describes the same plugin. |
-| Plugin manifest | `plugins/codejadee-chayen-framework/plugin.json` (Agent Plugins 1.0). This takes precedence over `.claude-plugin/plugin.json`. |
-| Surfaces | Copilot CLI; VS Code with GitHub Copilot Chat |
-
-> **Before you start**
->
-> - The repository is **private** during pre-release. Adding it needs Git
->   access; otherwise use a local clone you are allowed to use.
-> - Review the source and pin a revision you trust.
+| Marketplace file | `.github/plugin/marketplace.json` |
+| Plugin manifest | `plugins/codejadee-chayen-framework/plugin.json` |
 
 ## Copilot CLI
 
-Use Copilot CLI runtime **1.0.91 or later**: `plugin enable` and
-`plugin disable` are missing in 1.0.68.
+Review/pin a trusted source. Git access is required until public availability
+is confirmed. Inspect `copilot plugin --help`; commands vary by runtime.
+For reproducible maintainer runs use `COPILOT_AUTO_UPDATE=false` in a
+disposable environment and record the resulting version. Ordinary CI does
+not install or run any provider CLI.
 
 ```bash
-copilot plugin marketplace add CodeJaDee/codejadee-chayen-framework    # or a local clone path
-copilot plugin install chayen@codejadee              # "Installed 15 skills" expected
+copilot plugin marketplace add CodeJaDee/codejadee-chayen-framework
+copilot plugin install chayen@codejadee
 copilot plugin list
-copilot skill list                                                      # the chayen-* skills
+copilot skill list
 ```
 
-**Explicit invocation:**
-
-```text
-/chayen-security Review this controller for injection risks.
-/chayen-humanizer-th ปรับข้อความใน locales/th.json ให้สั้นลง ห้ามแตะ key และ placeholder
-```
-
-The writing skills are described in [WRITING_AND_EDITING.md](WRITING_AND_EDITING.md).
-
-**Disable, update, uninstall:**
-
-```bash
-copilot plugin disable chayen@codejadee
-copilot plugin enable  chayen@codejadee
-copilot plugin update  chayen            # or: copilot plugin update --all
-copilot plugin uninstall chayen
-copilot plugin marketplace remove codejadee
-```
-
-In testing, uninstalling a plugin from a *local-folder* marketplace only
-disabled it. Run `copilot plugin list` afterwards to confirm.
-
-**Name collisions.** If a personal or project skill has the same name as a
-Chayen skill (for example `chayen-backend`), Copilot uses yours and silently
-drops the plugin's. Chayen's `chayen-` prefix avoids this unless you reuse
-that name.
+Alternatively add an authorized local clone path. Verify identity, version,
+enabled state and all 15 Skills; start a new session. Intended explicit
+syntax is `/chayen-security <request>`, pending current-build verification.
+Same-name personal Skills can shadow plugin Skills; inspect native discovery.
 
 ## Renamed from codejadee-chayen-framework
 
-Until 2026-10-17 the plugin was named `codejadee-chayen-framework`. It is now
-`chayen` (D-059), so installs made under the old name must be replaced. The
-repository, the marketplace name `codejadee` and the plugin folder
-(`plugins/codejadee-chayen-framework/`) are unchanged. These commands follow
-the documented CLI syntax but have **not yet been run** for this rename.
+Repository, marketplace and package directory names are unchanged.
+Remove the former identity before installing `chayen`:
 
+<!-- migration:start -->
 ```bash
 copilot plugin uninstall codejadee-chayen-framework
 copilot plugin install chayen@codejadee
-copilot plugin list                   # only chayen should remain; a local-folder uninstall may only disable the old one
+copilot plugin list
+```
+<!-- migration:end -->
+
+Migration is unverified. Confirm the old identity is absent; a disabled old
+entry is still installed. Preserve unrelated personal/project Skills.
+
+## Disable, update, uninstall
+
+```bash
+copilot plugin disable chayen@codejadee
+copilot plugin enable chayen@codejadee
+copilot plugin update chayen
+copilot plugin list
+copilot plugin uninstall chayen
+copilot plugin list
+copilot plugin marketplace remove codejadee
 ```
 
-In VS Code, uninstall the old entry from **Agent Plugins – Installed** and
-install `chayen`. Explicit invocation (`/chayen-<skill>`) is unchanged,
-because Copilot does not prefix skills with the plugin name.
+Use only commands exposed by installed help. Verify changed installed
+content and active version after update. Directory-sourced plugins may
+read live content; restart and inspect the actual source rather than assume
+a cache copy. Historical local uninstall only disabled the plugin; that is
+**not** successful removal. Verify absence from installed list and native
+Skill discovery. Do not delete the whole Copilot configuration directory.
 
 ## VS Code (GitHub Copilot Chat)
 
-Agent plugins are controlled by the setting `chat.plugins.enabled`. It
-defaults to `true` in VS Code 1.141.1, but an organisation policy
-(`ChatPluginsEnabled`) can turn it off.
-
-1. **Add the marketplace** in your settings:
-
-   ```json
-   "chat.plugins.marketplaces": ["CodeJaDee/codejadee-chayen-framework"]
-   ```
-
-   For a local clone, use a `file:///` URL. VS Code reads
-   `.github/plugin/marketplace.json` from the repository.
-2. **Install** `chayen`, either from the Extensions view
-   (search `@agentPlugins`) or with **Chat: Install Plugin From Source**.
-3. **Check** that the `chayen-*` skills appear in the **Configure Skills**
-   menu.
-4. **Manage the plugin:**
-   - **Disable, enable or uninstall** from the **Agent Plugins – Installed**
-     view (right-click).
-   - **Update** with **Extensions: Check for Extension Updates**, or wait
-     for the automatic 24-hour check when `extensions.autoUpdate` is on.
-   - In chat, `/plugin enable|disable|update|uninstall
-     chayen` also works.
-   - A plugin installed directly from Git can only be uninstalled, not
-     disabled.
-
-Whether VS Code invokes *plugin-bundled* skills automatically is not stated
-by Microsoft and has not been tested here. Explicit invocation from the chat
-`/` menu is expected but **not verified**.
+Unverified and excluded from the v0.1.0 support claim. CLI results do not
+qualify it. No VS Code runtime test is required in Phase 3.
 
 ## Optional: response style policy
 
-Installing the plugin gives you the skills only (setup A in
-[RESPONSE_STYLE.md](RESPONSE_STYLE.md)). If you also want everyday replies
-worded naturally in Thai or English, add the opt-in policy yourself:
-Copilot CLI: append the marked block to `~/.copilot/copilot-instructions.md`
-(or `$COPILOT_HOME/…`). VS Code Copilot Chat: copy the `.instructions.md`
-template to `~/.copilot/instructions/`. Repository files
-(`.github/copilot-instructions.md`) need the repository owner's agreement.
-VS Code Copilot Chat also reads `~/.claude/rules/` and `~/.claude/CLAUDE.md`;
-if you already added the Claude Code rule, do not add a second copy. Copilot
-inline suggestions ignore custom instructions.
-It is not installed, enabled or removed by the plugin, and its loading has
-not been tested on this host yet. Setup, the loading check, conflicts and
-removal are in [RESPONSE_STYLE.md](RESPONSE_STYLE.md).
+The [policy](RESPONSE_STYLE.md) is separate, not automatically installed or
+removed, and unverified on hosts. Security/Support is LATER; no channel is selected.
 
-## Verification status (2026-10-15; reviewed 2026-10-17)
+## Verification status
 
-| Check | Copilot CLI | VS Code + Copilot Chat |
-|---|---|---|
-| Marketplace file and manifest selected by the installed code | Confirmed by inspecting runtime 1.0.97 | Confirmed by inspecting VS Code 1.141.1 |
-| Install, list, disable, enable, update, uninstall | Passed for an earlier 6-skill build (1.0.91–1.0.97, 2026-10-14). **Not yet run for the 13-skill or the current 15-skill build.** | Not tested |
-| Writing skills, opt-in response style policy | Not tested | Not tested |
-| Routing and explicit `/chayen-security` | Earlier build: 5/7 smoke prompts. It over-activated on Unity and SwiftUI prompts, without wrong guidance in the answers. Current build: **not tested.** | Not tested |
-| Install from the GitHub marketplace | Not tested | Not tested |
+Current lifecycle, migration, routing and explicit invocation are NOT_RUN;
+see [Compatibility](COMPATIBILITY_MATRIX.md). Syntax was reviewed against
+the [official CLI plugin reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference)
+on 2026-10-18. Documentation review is not a native execution result.

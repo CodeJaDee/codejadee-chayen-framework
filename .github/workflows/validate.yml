@@ -1,0 +1,70 @@
+name: Chayen offline validation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preflight:
+    name: Package, identity, documentation and workflow preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out source without persisted credentials
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24.22.0'
+          package-manager-cache: false
+      - name: Record runtime
+        run: node --version
+      - name: Security and static package boundary
+        run: node tools/validate/check-security.mjs
+      - name: Package, manifests, metadata and references
+        run: node tools/validate/validate-package.mjs
+      - name: Provider marketplace identity parity
+        run: node tests/provider-compatibility/check-identity.mjs
+      - name: Scope and upstream MIT notice
+        run: node tools/validate/check-hardening.mjs
+      - name: Current documentation integrity
+        run: node tools/validate/check-docs.mjs
+      - name: Manifest, reference and MIT failure controls in scratch
+        run: node --test tests/ci/negative-controls.test.mjs
+      - name: Workflow syntax with checksum-verified actionlint
+        run: node tools/ci/check-workflow.mjs
+
+  offline:
+    name: Offline validation / Node ${{ matrix.node }}
+    needs: preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: true
+      matrix:
+        node: ['20.11.0', '24.22.0']
+    steps:
+      - name: Check out source without persisted credentials
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Set up pinned validation runtime
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - name: Record runtime
+        run: node --version
+      - name: All offline validators, scorer and mutation regressions
+        run: node tools/validate/validate-all.mjs --fail-fast
+      - name: Static evaluation coverage and handoff consistency
+        run: node tools/evals/run-evaluation-suite.mjs --fail-fast

@@ -13,19 +13,15 @@ one is published.
 
 **Do not open a public issue for a vulnerability.**
 
-> **Project-owner action required before publication.** No dedicated private
-> reporting channel has been confirmed yet:
->
-> - GitHub private vulnerability reporting is not confirmed as enabled: the
->   GitHub API returned "Not Found" for that setting on 2026-10-15;
-> - no security contact address has been published.
->
-> The owner must choose and publish one before the repository or plugin is
-> made public. See the
-> [release checklist](docs/distribution/RELEASE_CHECKLIST.md).
+**Security/Support is LATER. No reporting or support channel has been
+approved or published.** No email, GitHub reporting feature, issue tracker
+or other contact is designated by this policy. Retain redacted details until
+the owner provides an approved private route; do not post them publicly.
 
-Until then, repository members should report privately to the project owner
-through GitHub, and not in a public issue or discussion. Please include:
+This pending decision is not a Phase 3 implementation task. Publication
+still requires the owner's later decision and explicit sign-off under
+[the release contract](docs/production/RELEASE_SCOPE_DECISION.md).
+Prepare the following without sending it to an invented contact:
 
 - the affected file or skill and the version;
 - the provider and surface;

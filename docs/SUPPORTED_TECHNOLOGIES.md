@@ -45,7 +45,6 @@ capability is marked verified.
 | Technology | Status |
 |---|---|
 | Python services (FastAPI, Django, Flask) and pytest | Backend, testing, performance, security, and AI-engineering guidance. No separate cataloged pack. |
-| Nitro, Elysia | Out of scope; no framework routing or technology pack |
 | GitHub Actions, Azure Pipelines, GitLab CI, Docker, Terraform, Bicep, Kubernetes, Helm | DevOps recipes; no separate technology pack |
 | Load-testing tools (k6, JMeter, Locust, NBomber) | Performance recipes |
 
@@ -56,7 +55,7 @@ skill does not apply its guidance and the agent works normally.
 
 | Area | Excluded | Stated in |
 |---|---|---|
-| Backends | Java (including Spring Boot), Go, Rust, PHP, Ruby | `chayen-backend` scope. Java for v1 is an open question (ISSUES Q-08). |
+| Backends | Standalone Nitro, Elysia, Java (including Spring Boot), Go, Rust, PHP, Ruby | `chayen-backend` scope; no standalone Nitro/Elysia pack or routing support. |
 | Code changes | Other stacks, for example Unity, Java, native mobile | `chayen-implementation` scope |
 | UI | SwiftUI, UIKit, Jetpack Compose, Android views, Flutter, React Native, .NET MAUI, WPF, WinForms, WinUI, Unity | `chayen-frontend` scope |
 | Databases | MySQL, Oracle, SQLite as a production store, NoSQL stores, analytics warehouses, database provisioning | `chayen-data` scope |

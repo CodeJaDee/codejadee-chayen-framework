@@ -1,91 +1,43 @@
 # Marketplace listings (drafts)
 
-**Status: DRAFT. Nothing here has been submitted.**
-
-- Submitting to any external directory needs explicit approval (BC-31,
-  K-04).
-- Chayen's own marketplaces are the three files in this repository. Users
-  add them directly, so they need no submission.
+**DRAFT. Nothing submitted.** Approved target: public MIT Chayen v0.1.0,
+publisher **CodeJaDee**. Project licence application, public availability and
+release qualification remain pending. Security/Support is LATER, with no
+approved channel; do not populate contact fields with guesses.
 
 ## Shared listing text
 
-**Name:** chayen (display name: *Chayen by CodeJaDee*;
-the publisher name needs confirmation)
+**Name:** `chayen`, display name Chayen by CodeJaDee.
 
-**Short description (≤120 characters):**
+Chayen supplies 15 Skills: 13 engineering and 2 Thai/English writing entry
+points, with 206 engineering capabilities, 108 technology capabilities,
+12 workflows and 7 templates. Its shared package is static Markdown/JSON;
+there are no hooks, executables, MCP servers or telemetry.
 
-> Engineering skills your coding agent loads automatically: from repository analysis to tests, security and releases.
+Production host target: Claude Code CLI, Codex CLI and GitHub Copilot CLI.
+Supported technology scope is in [Supported technologies](../SUPPORTED_TECHNOLOGIES.md).
+Standalone Nitro/Elysia are excluded. VS Code is unverified; Response Style
+Policy is opt-in, outside the package and unverified on hosts.
 
-**Long description:**
+Disclose that model selection is advisory, current routing/quality/lifecycle
+are NOT_RUN, and historical results do not qualify this build. Automatic
+routing must reach >=85% per CLI before release. Keep the original Humanizer
+MIT notice and attribution. See [Compatibility](../COMPATIBILITY_MATRIX.md).
 
-> Chayen adds 15 skills to your coding agent: 13 engineering skills and two
-> Thai and English writing skills. Work with normal prompts: when a request
-> matches a skill (backend, frontend, data, testing, security, performance,
-> DevOps, architecture, requirements, documentation, repository analysis,
-> implementation, AI engineering, or Thai or English writing and editing), the
-> agent loads that skill's guidance. That guidance detects your stack and versions,
-> keeps your conventions, and reports verification honestly. When nothing
-> matches, your agent behaves exactly as before.
->
-> It includes technology guidance for C#/ASP.NET Core, Angular,
-> TypeScript/JavaScript, React, Next.js, Vue, Nuxt, Vite, SQL Server,
-> PostgreSQL, and cross-stack integration. It also has 12 workflows, such as
-> feature delivery, bug repair, migrations, security review, incidents, and
-> release readiness, and 7 reusable templates.
->
-> Static Markdown and JSON only: no hooks, servers, scripts, or telemetry.
-> Advisory guidance; your agent's permissions remain in control.
+## Native marketplace sources
 
-**Required disclosure** (include it in every listing):
+| CLI | Catalog | Native install identity |
+|---|---|---|
+| Claude Code | `.claude-plugin/marketplace.json` | `chayen@codejadee` |
+| Codex | `.agents/plugins/marketplace.json` | `chayen@codejadee` |
+| GitHub Copilot | `.github/plugin/marketplace.json` | `chayen@codejadee` |
 
-> Pre-release. Skills are selected by the model and are not guaranteed to
-> load. Guidance is implemented but not behaviour-verified; the writing skills'
-> quality has not been evaluated. The optional response style policy is not
-> installed with the plugin. The English writing skill adapts MIT-licensed
-> material from humanizer by Siqi Chen. See SECURITY_AND_LIMITATIONS.
+Each points at `plugins/codejadee-chayen-framework/`. Current provider
+instructions, including help checks, migration and uninstall verification:
+[Claude](../INSTALL_CLAUDE_CODE.md), [Codex](../INSTALL_CODEX.md),
+[Copilot](../INSTALL_COPILOT.md). Local/static parity does not prove remote
+public installation. Do not advertise desktop/cloud/IDE surfaces as qualified.
 
-**Keywords:** software-engineering, dotnet, aspnetcore, angular, react,
-nextjs, vue, nuxt, sql-server, postgresql, typescript, testing, security,
-devops, writing, thai, english
-
-## Claude Code
-
-| Item | Value |
-|---|---|
-| Distribution | Repository marketplace: `.claude-plugin/marketplace.json` (name `codejadee`) |
-| Install | `claude plugin marketplace add <owner/repo or path>`, then `claude plugin install chayen@codejadee` |
-| Entry `description` | Current manifest description, or the proposed one in [RELEASE_METADATA.md](RELEASE_METADATA.md) |
-| Validation | `claude plugin validate --strict` on the plugin and the marketplace (both PASS) |
-| Directory submission | Not planned without approval. Requirements must be checked against Anthropic's documentation at submission time. |
-| Blockers | Licence, public URL, publisher identity |
-
-## OpenAI Codex
-
-| Item | Value |
-|---|---|
-| Distribution | Repository marketplace: `.agents/plugins/marketplace.json` (`interface.displayName` "CodeJaDee", `policy.installation` AVAILABLE, `policy.authentication` ON_INSTALL, category Productivity) |
-| Install | `codex plugin marketplace add <owner/repo or path>`, then `codex plugin add chayen@codejadee` or `/plugins` |
-| Manifest | Agent Plugins `plugin.json`. No `extensions.com.openai` block, because none is needed for skills. |
-| Surfaces to state | Codex CLI and ChatGPT desktop app. **Not** the Codex IDE extension. |
-| Directory or workspace publication | Not planned without approval. Fields required by OpenAI's directory must be checked at submission time; do not pre-fill them with invented values. |
-| Blockers | Licence, public URL, publisher identity |
-
-## GitHub Copilot
-
-| Item | Value |
-|---|---|
-| Distribution | Repository marketplace: `.github/plugin/marketplace.json` (name `codejadee`, entry version must match the manifests) |
-| Install (CLI) | `copilot plugin marketplace add <owner/repo or path>`, then `copilot plugin install chayen@codejadee` (runtime 1.0.91 or later for enable/disable) |
-| Install (VS Code) | `"chat.plugins.marketplaces": ["<owner/repo>"]`, then Extensions `@agentPlugins` or **Chat: Install Plugin From Source** |
-| Default-marketplace listing (`awesome-copilot`, `copilot-plugins`) | Not planned without approval. It would need a public repository. |
-| Blockers | Licence, public URL, publisher identity. VS Code behaviour is untested. |
-
-## Before any listing goes live
-
-Complete [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md). In particular:
-
-- the licence;
-- a public repository;
-- the security contact;
-- the version bump;
-- the install re-verification (R-53).
+External directory submissions are separate owner-authorized actions. Check
+the directory's current official requirements at submission time. Do not
+infer that a listing, CI PASS or local package implies submission approval.
