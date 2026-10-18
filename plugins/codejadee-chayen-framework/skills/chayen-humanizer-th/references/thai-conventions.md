@@ -50,7 +50,7 @@ already does, and keep one convention consistently within a document.
 |---|---|---|
 | Spacing around English words and numbers | A space on each side of Latin-script words and numerals: "ใช้ React 19 กับ Vite" | Existing pages written without spaces |
 | Technical terms | Keep identifiers, commands and widely used developer terms in English; use Thai where the audience uses Thai | A glossary or terminology list |
-| Numerals | Arabic numerals in technical and commercial text; Thai numerals in some official documents | Government or ceremonial style guides |
+| Numerals and calendar years | Preserve source Thai or Arabic digits, numeric identifiers, Gregorian years and Buddhist Era years and labels; convert only on explicit request | A style guide may guide new copy, but does not authorize converting existing numbers or calendar eras |
 | Passive with ถูก | Prefer active voice or ได้รับ for neutral events | Reference docs that consistently use the passive |
 | Particles in written copy | Documentation usually omits ครับ and ค่ะ; blogs and social posts may use them consistently | The brand's chosen voice and gender-neutral policy |
 | Punctuation in technical docs | Commas and full stops borrowed from English are common in developer documentation | The repository's existing Thai docs |

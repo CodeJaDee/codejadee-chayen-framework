@@ -63,7 +63,7 @@ changes.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | Authorization policies and fallback policy, Data Protection keys, anti-forgery for cookie authentication, request size limits (Kestrel `MaxRequestBodySize`). |
-| Node servers (Nitro, Nuxt, Next.js, Elysia) | Server routes and Server Actions are public entry points. Body limits, schema validation, and SSRF in server-side fetches. |
+| Node servers (Nuxt, Next.js) | Server routes and Server Actions are public entry points. Body limits, schema validation, and SSRF in server-side fetches. |
 | Python (FastAPI, Django, Flask) | Dependency-based authentication per router, Django middleware (CSRF, security), upload handlers and temp files. |
 | Frontend (Angular, React, Vue) | The browser is untrusted: guards are user experience only. Token storage, XSS sinks, third-party scripts. |
 | Data stores (SQL Server, PostgreSQL) | Least-privilege accounts, row-level tenant isolation, backups as a disclosure path. |

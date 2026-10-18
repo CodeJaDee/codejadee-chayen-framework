@@ -79,7 +79,7 @@ Read only the section for the stack under review.
 - `import.meta.env.VITE_*` values are embedded in the client bundle. Treat
   them as public.
 
-## Node servers (Nitro, Elysia, Express-style)
+## Node servers (existing Node middleware)
 
 - Validate params, query, body, and headers with a schema at the boundary.
 - Use `child_process.execFile`/`spawn` with argument arrays, never

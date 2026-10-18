@@ -60,7 +60,7 @@ until its owner approves it.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | SignalR with a Redis backplane or Azure SignalR Service, hub authorization with `[Authorize]` and group checks, `MaximumReceiveMessageSize`, stateful reconnect in recent versions. |
-| Node and TypeScript | `ws` or Socket.IO with its Redis adapter, Server-Sent Events from Nitro or Next.js route handlers (serverless platforms may cap connection duration). |
+| Node and TypeScript | `ws` or Socket.IO with its Redis adapter, Server-Sent Events from Nuxt or Next.js route handlers (serverless platforms may cap connection duration). |
 | Python | Django Channels with a Redis channel layer, or Starlette and FastAPI WebSockets behind a broker for fan-out. |
 | Angular, React, Vue | The SignalR or Socket.IO client with automatic reconnect, or `EventSource` with `Last-Event-ID`; UI states for reconnecting and stale data. |
 | Infrastructure | Load balancer and proxy idle timeouts, WebSocket support in the hosting plan, and connection limits per instance. |

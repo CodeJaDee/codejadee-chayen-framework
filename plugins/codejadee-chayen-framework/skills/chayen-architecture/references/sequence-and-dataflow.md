@@ -63,7 +63,7 @@ configuration, so the diagram shows the system as built.
 |---|---|
 | ASP.NET Core | Route to controller or minimal API handler, then MediatR or services, then `DbContext`, `HttpClient`, and the message publishers. Middleware order in `Program.cs` affects the flow. |
 | Angular / React / Vue / Next.js / Nuxt | Component event, then service, hook, or composable, then the HTTP call. In SSR frameworks, server components and loaders run on the server, so show which side each step runs on. |
-| Node (Nitro, Elysia) / Python (FastAPI, Django, Flask) | Route, then dependencies or middleware, then services, then the ORM or HTTP clients. Background tasks run after the response. |
+| Node.js / Python (FastAPI, Django, Flask) | Route, then dependencies or middleware, then services, then the ORM or HTTP clients. Background tasks run after the response. |
 | SQL Server / PostgreSQL | Triggers and cascades are hidden steps. Include them when the schema defines them. |
 | Messaging (any broker) | The publish step and the consume step are separate in time. Show the broker as a participant. |
 

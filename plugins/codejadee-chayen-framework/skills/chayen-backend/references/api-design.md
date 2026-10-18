@@ -94,7 +94,7 @@ checks against the operations clients actually send.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | `Asp.Versioning.Http` or `Asp.Versioning.Mvc` (`ApiVersion`, `MapToApiVersion`, `ReportApiVersions`). OpenAPI via `Microsoft.AspNetCore.OpenApi` or Swashbuckle, with one document per version. Minimal APIs use `MapGroup("/v{version:apiVersion}")`. |
-| Node (Nitro, Elysia, Next.js, Nuxt server) | The file-based routing of Nitro, Nuxt, and Next.js puts versions in the folder structure (`server/api/v1/`). Elysia uses `group('/v1')` and generates OpenAPI from schemas through its swagger plugin. |
+| Node (Next.js, Nuxt server) | Preserve Nuxt or Next.js file-based routing and the existing versioned route layout and OpenAPI source. |
 | Python (FastAPI, Django, Flask) | FastAPI `APIRouter(prefix="/v1")` with an OpenAPI per app or mount. DRF `URLPathVersioning` or `NamespaceVersioning`. Flask blueprints per version. |
 | GraphQL (any stack) | Schema evolution is additive with `@deprecated`, not URL versioning. Hot Chocolate (.NET), Apollo Server or GraphQL Yoga (Node), Strawberry or Graphene (Python); schema diff with GraphQL Inspector or the registry's checks if used. |
 | SQL Server / PostgreSQL | API shapes must not mirror tables. Versioned APIs may need a mapping layer over one schema. |

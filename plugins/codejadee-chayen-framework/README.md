@@ -60,7 +60,7 @@ configuration, and existing patterns before selecting a topic and recipe.
 | Npgsql | PostgreSQL pack: [EF Core Npgsql and direct driver recipes](skills/chayen-data/references/postgres-data-access.md) |
 | Cross-stack integration | [API contracts](skills/chayen-backend/references/crossstack-api-contracts.md), [typed clients and time](skills/chayen-implementation/references/crossstack-types-and-time.md), [portability](skills/chayen-data/references/database-portability.md) |
 
-Nitro, Elysia, and Python have existing general backend guidance, not separate
+Nitro and Elysia are out of scope. Python has general backend guidance, not separate
 cataloged technology packs. Java/Spring Boot implementation is outside the
 backend and implementation skills' scope. A JDBC detection example in a data
 reference does not establish a Java pack. Steps 24–25 remain unrecorded.

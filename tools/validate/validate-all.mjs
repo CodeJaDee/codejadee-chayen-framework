@@ -14,6 +14,10 @@ const repo = path.resolve(import.meta.dirname, "..", "..");
 const steps = [
   ["G-SEC offline security profile (V-25)", "tools/validate/check-security.mjs", []],
   ["G-SEC-T offline security boundary regressions", "tests/security/boundaries.test.mjs", []],
+  ["Phase 2 scope, upstream notice and lifecycle invariants", "tools/validate/check-hardening.mjs", []],
+  ["Phase 2 hardening validator regressions", "tests/production/hardening.test.mjs", []],
+  ["Phase 2 Thai numerals and calendar scorer regressions", "tests/editorial/numeric-preservation.test.mjs", []],
+  ["Phase 2 isolated lifecycle regressions (offline fakes)", "tests/provider-compatibility/lifecycle.test.mjs", []],
   ["G-01 G-02 G-04..G-10 package, skills, references, catalog alignment", "tools/validate/validate-package.mjs", []],
   ["G-03 catalog integrity (V-11)", "tools/catalog/check-catalog.mjs", []],
   ["G-03b technology catalog (V-23)", "tools/catalog/check-technology.mjs", []],

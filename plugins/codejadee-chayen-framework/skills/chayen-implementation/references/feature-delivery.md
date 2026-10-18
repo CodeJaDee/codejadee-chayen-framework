@@ -66,7 +66,7 @@ correct diff, with nothing unrelated touched.
 | .NET | `dotnet build` and `dotnet test` on the solution or project that CI uses. `dotnet format --verify-no-changes` only if CI runs it. Respect `Directory.Build.props` analyzers and `TreatWarningsAsErrors`. |
 | Angular | `ng build`, `ng test --watch=false`, and `ng lint`, or the `package.json` scripts that wrap them. Respect the strict mode set in `tsconfig`. |
 | React / Next.js / Vue / Nuxt / Vite | Run the `package.json` scripts with the package manager the lock file shows (`npm`, `pnpm`, `yarn`, `bun`). Typecheck with `tsc --noEmit`, `vue-tsc --noEmit`, or `nuxi typecheck` where configured. |
-| Nitro / Elysia | The project scripts. `bun test` for Bun projects. |
+| Node.js | The configured project build and test scripts. |
 | Python | `pytest` with the project's configuration, plus `ruff`, `mypy`, or `pyright` only where configured. Use the project's environment manager (`uv run`, `poetry run`). |
 | SQL Server / PostgreSQL | Generate migrations with the project's tool (EF Core, Alembic, Prisma, Flyway). Applying one to a shared database needs approval. |
 

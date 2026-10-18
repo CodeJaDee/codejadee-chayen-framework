@@ -61,7 +61,7 @@ to the contract changes.
 | .NET | NSwag (`nswag run`, or the MSBuild integration), Kiota (`kiota generate`), or `Microsoft.Extensions.ApiDescription.Client` (`OpenApiReference` items). Server-side OpenAPI generation (Swashbuckle, `Microsoft.AspNetCore.OpenApi`) produces the contract that clients consume. |
 | Angular | Generated services from `openapi-generator` (typescript-angular) or `ng-openapi-gen`. Register the providers as the existing code does. |
 | React / Next.js / Vue / Nuxt | orval or `openapi-typescript` with `openapi-fetch`. GraphQL Code Generator with the typed document nodes the project uses (Apollo, urql, TanStack Query). |
-| Node (Nitro, Elysia) | Elysia can emit OpenAPI from its schemas. Zod-to-OpenAPI or TypeBox schemas may be the source of truth, in which case the contract is generated from the code. |
+| Node.js | Use the existing OpenAPI source or schema generator; preserve whether contracts are maintained or generated. |
 | Python | `datamodel-code-generator` for pydantic models. FastAPI generates OpenAPI from code, so clients are generated downstream from `/openapi.json`. |
 
 ## Verification

@@ -65,7 +65,7 @@ Questions for the user (batched): <only outcome-changing items>
 |---|---|
 | .NET | `appsettings.{Environment}.json`, user secrets (`UserSecretsId` in the `.csproj`), and `launchSettings.json` show environments and secret sources. Their absence is an unknown, not a default. |
 | Angular / React / Vue / Next.js / Nuxt / Vite | The `environment.*.ts` files, `.env*` files, and the API base URL configuration show the backend targets. Build-time environment variables differ from runtime configuration. |
-| JavaScript / TypeScript / Nitro / Elysia | `process.env` and `Bun.env` reads list the required configuration. Compare them with `.env.example`. |
+| JavaScript / TypeScript / Node.js | `process.env` reads list the required configuration. Compare them with `.env.example`. |
 | Python | `os.environ` and settings modules (Django `settings*.py`, pydantic `BaseSettings`) list the required configuration. |
 | SQL Server / PostgreSQL | The schema owner and the migration authority (application migrations or a DBA-managed process) are often undocumented. Record that as an unknown. |
 

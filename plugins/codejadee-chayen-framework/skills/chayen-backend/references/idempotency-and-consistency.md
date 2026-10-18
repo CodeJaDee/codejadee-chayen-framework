@@ -95,7 +95,7 @@ entries, exact decimal amounts, and reconciliation with providers.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | Middleware or an endpoint filter reading `Idempotency-Key`, backed by an EF Core table with a unique index. Concurrency tokens with `[Timestamp]` or `rowversion`. Output caching is **not** idempotency. |
-| Nitro / Nuxt / Next.js / Elysia | A per-route middleware or wrapper storing keys in the main database (or Redis with `SET NX` and an expiry, noting its durability). Serverless instances share nothing in memory, so never use in-process maps. |
+| Nuxt / Next.js | A per-route middleware or wrapper storing keys in the main database (or Redis with `SET NX` and an expiry, noting its durability). Serverless instances share nothing in memory, so never use in-process maps. |
 | Python (FastAPI, Django, Flask) | A dependency or decorator storing keys with a unique constraint. Django `get_or_create` inside `transaction.atomic`, plus a unique constraint. Celery tasks with `acks_late` need idempotent bodies. |
 | SQL Server / PostgreSQL | Unique constraints are the real guard. Use `INSERT ... ON CONFLICT DO NOTHING` (PostgreSQL) or `MERGE`, or catch duplicate-key errors 2627 and 2601 (SQL Server), for single-winner semantics. |
 | Payment providers | Pass the idempotency key through to the provider API where supported (for example Stripe's `Idempotency-Key`). |

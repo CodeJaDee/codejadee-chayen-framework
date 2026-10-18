@@ -79,14 +79,11 @@ Read only the sections for ecosystems you actually find.
 - **Default commands:** `npm run build`, `npx vue-tsc --noEmit` (Vue + TS),
   `npx nuxi typecheck` (Nuxt), `npm test`.
 
-## Nitro, Elysia (server-side TypeScript)
+## Unsupported server frameworks
 
-- **Nitro.** `nitro.config.ts`, or `nitropack`/`nitro` in `package.json`.
-  Handlers live in `server/routes/` and `server/api/`.
-- **Elysia.** `elysia` in `package.json`, usually with Bun (`bun.lock`), and
-  `new Elysia()` in source.
-- **Default commands:** the project's scripts. For Bun: `bun test`,
-  `bun run build`.
+Standalone Nitro and Elysia are out of scope. Detect them only to avoid
+applying supported-stack recipes; continue with general Node.js reasoning
+when requested, without claiming a technology pack or framework routing support.
 
 ## Python
 

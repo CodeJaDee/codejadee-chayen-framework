@@ -81,7 +81,7 @@ shipping count remains 13. See [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md).
 | Tier | Technologies |
 |---|---|
 | Primary | C# / ASP.NET Core Web API · Angular / TypeScript · Microsoft SQL Server |
-| Additional | JavaScript / TypeScript · React · Next.js · Vue · Nuxt · Vite · Nitro · Elysia · Python · PostgreSQL |
+| Additional | JavaScript / TypeScript · React · Next.js · Vue · Nuxt · Vite · Python · PostgreSQL |
 | Optional extension | Java |
 
 ### 2.3 Out of scope (hard exclusions)

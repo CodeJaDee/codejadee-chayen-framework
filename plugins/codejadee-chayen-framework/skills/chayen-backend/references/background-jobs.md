@@ -68,9 +68,8 @@ be observable.
 | Stack | Consideration |
 |---|---|
 | .NET | `BackgroundService` with `IServiceScopeFactory` (create a scope per run, because `DbContext` is scoped) and `PeriodicTimer`. Hangfire (`DisableConcurrentExecution`, automatic retries) and Quartz.NET (`DisallowConcurrentExecution`, clustered job store), if used. Azure Functions timer triggers. |
-| Nitro / Nuxt | Nitro scheduled tasks (`scheduledTasks` in the configuration, `defineTask`), or the hosting platform's cron. Serverless platforms cap the duration, so split long work. |
+| Nuxt | The existing scheduler or hosting platform's cron. Serverless platforms cap the duration, so split long work. |
 | Next.js | No built-in scheduler. Use the platform cron calling a protected route, or a separate worker with BullMQ. Protect the trigger route. |
-| Elysia / Bun | The `@elysiajs/cron` plugin, or a separate worker process. Use a single-instance assumption only if it is documented. |
 | Python | Celery and Celery beat (one beat instance only), APScheduler, RQ, Django management commands run by cron, or Django-Q, as the project uses. Use `acks_late` and idempotency for safe retries. |
 | SQL Server / PostgreSQL | Lease or lock rows: `sp_getapplock` (SQL Server) or `pg_try_advisory_lock` (PostgreSQL) for single-runner jobs. Batch updates to avoid long locks. |
 

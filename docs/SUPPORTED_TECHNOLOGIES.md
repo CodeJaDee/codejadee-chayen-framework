@@ -45,7 +45,7 @@ capability is marked verified.
 | Technology | Status |
 |---|---|
 | Python services (FastAPI, Django, Flask) and pytest | Backend, testing, performance, security, and AI-engineering guidance. No separate cataloged pack. |
-| Nitro, Elysia | General backend guidance only |
+| Nitro, Elysia | Out of scope; no framework routing or technology pack |
 | GitHub Actions, Azure Pipelines, GitLab CI, Docker, Terraform, Bicep, Kubernetes, Helm | DevOps recipes; no separate technology pack |
 | Load-testing tools (k6, JMeter, Locust, NBomber) | Performance recipes |
 

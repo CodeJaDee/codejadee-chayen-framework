@@ -952,7 +952,7 @@
       "id": "rc-05-006-pos",
       "capability": "CAP-05-006",
       "polarity": "positive",
-      "prompt": "Two requests sometimes create duplicate orders in our Nitro API. Is this a race condition?",
+      "prompt": "Two requests sometimes create duplicate orders in our Next.js API. Is this a race condition?",
       "expect": { "skill": "chayen-implementation", "loads": "references/concurrency-safety.md" },
       "checks": [
         "The interleaving is written down",
@@ -1150,10 +1150,10 @@
       "id": "rc-06-003-pos",
       "capability": "CAP-06-003",
       "polarity": "positive",
-      "prompt": "Our Elysia endpoint accepts invalid emails. Add proper request validation.",
+      "prompt": "Our Next.js endpoint accepts invalid emails. Add proper request validation.",
       "expect": { "skill": "chayen-backend", "loads": "references/api-endpoints.md" },
       "checks": [
-        "Validation uses the project's schema library (TypeBox)",
+        "Validation uses the project's existing schema library",
         "Invalid input returns the house validation shape",
         "Response conformance is checked or reported NOT_RUN"
       ]
@@ -1262,7 +1262,7 @@
       "prompt": "Add a nightly job that archives old orders in our Nuxt app.",
       "expect": { "skill": "chayen-backend", "loads": "references/background-jobs.md" },
       "checks": [
-        "The existing job mechanism is reused (Nitro tasks or platform cron)",
+        "The existing job mechanism is reused (configured worker or platform cron)",
         "A re-run is idempotent",
         "Overlap control or a single-instance assumption is stated"
       ]
@@ -2241,7 +2241,7 @@
       "id": "rc-10-005-neg",
       "capability": "CAP-10-005",
       "polarity": "negative",
-      "prompt": "Validate incoming payloads in our Elysia API.",
+      "prompt": "Validate incoming payloads in our Next.js API.",
       "expect": { "skill": "chayen-backend", "not_loads": "references/api-and-contract-tests.md" },
       "checks": [
         "Runtime payload validation is backend work"

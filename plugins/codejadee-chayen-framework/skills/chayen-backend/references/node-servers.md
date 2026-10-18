@@ -1,45 +1,31 @@
 ---
 kind: technology
 ---
-# Node and Bun servers: Nitro, Nuxt server routes, Next.js route handlers, Elysia
+# Node servers: Nuxt server routes and Next.js route handlers
 
-**Applies to:** server-side TypeScript and JavaScript in these frameworks.
+**Applies to:** server-side TypeScript and JavaScript in Next.js and Nuxt.
+Standalone Nitro and Elysia are out of scope; no technology pack is provided.
 
 - Check the installed major versions in `package.json` and the lock file.
-- APIs change between majors (h3/Nitro, Next.js, Elysia). Follow the
+- APIs change between majors (Nuxt and Next.js). Follow the
   documentation for the installed version.
 
 ## Check the repository first
 
 | Area | What to look for |
 |---|---|
-| Framework | `nitro`/`nitropack`, `nuxt` (`server/` directory), `next` (`app/**/route.ts` or `pages/api/`), `elysia` |
-| Validation | zod, valibot, TypeBox (`t` in Elysia), Standard Schema adapters. Use the one already present. |
-| Error shape | `createError` (h3), `NextResponse.json({ ... }, { status })`, Elysia `error()` / `status()` / `.onError` |
+| Framework | `nuxt` (`server/` directory), `next` (`app/**/route.ts` or `pages/api/`) |
+| Validation | zod, valibot, TypeBox, Standard Schema adapters. Use the one already present. |
+| Error shape | `createError` (h3), `NextResponse.json({ ... }, { status })` |
 | Data access | Prisma, Drizzle, Kysely, `pg`, `postgres`, `mssql`. See data-access.md. |
 | Runtime | Node (version in `.nvmrc` / `engines`) or Bun (`bun.lock`) |
 
-## Nitro and Nuxt server routes
+## Nuxt server routes
 
-- **Locate the owning framework and configured source directory first.**
-  Nuxt 3/4 commonly uses `server/api/` or `server/routes/`; standalone
-  Nitro 2 scans `api/` and `routes/` under its configured `srcDir`.
-  Nitro 3 changes scanning and imports: confirm its installed release and
-  `serverDir`/`scanDirs` configuration rather than assuming Nuxt defaults.
-  Never rename `nitropack` to `nitro` or migrate h3 as a side effect.
-- **On compatible h3 versions, use the utilities the project already uses:**
-  - `defineEventHandler`;
-  - `getQuery` / `getRouterParam`;
-  - `readBody`, or the validated variants (`readValidatedBody`,
-    `getValidatedQuery`) with the project's schema library;
-  - `createError({ statusCode, statusMessage })`.
-- **Runtime config:** preserve the installed framework's config access and
-  imports. Nuxt's private/`public` split is not a standalone Nitro guarantee;
-  inspect what the application actually serializes to clients.
-- Nuxt version and installed Nitro/h3 determine context and handlers; legacy
-  Nuxt 2 serverMiddleware and private/public config retain their conventions.
-  Use `nuxt-server.md` for Nuxt-specific work. Private values must also stay
-  out of returned DTOs, SSR data payloads, client imports, and public state.
+Use [nuxt-server.md](nuxt-server.md) for Nuxt-specific work. Preserve the
+installed Nuxt version, source roots, handler and config conventions. Keep
+private config out of returned DTOs, SSR payloads, client imports and state.
+Do not migrate server dependencies as part of an endpoint change.
 
 ## Next.js route handlers and server code
 
@@ -57,15 +43,6 @@ kind: technology
 - For Next.js, load `nextjs-server.md` plus the relevant mutations or
   data/auth topic. Preserve App/Pages Router architecture and check the
   resolved version, cache model, request APIs, and current runtime.
-
-## Elysia (Bun)
-
-- **Routes:** `new Elysia().get('/users/:id', handler, { params: t.Object({ id: t.Numeric() }) })`.
-  Schemas validate the input and type the handler.
-- **Grouping:** `group` / prefixing and plugins, following the project's
-  structure.
-- **Errors:** centralize them through `.onError`, or the project's error
-  plugin. Return consistent status codes.
 
 ## General rules
 

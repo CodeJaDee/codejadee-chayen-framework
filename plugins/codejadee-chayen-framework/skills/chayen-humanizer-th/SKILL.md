@@ -1,13 +1,13 @@
 ---
 name: chayen-humanizer-th
-description: Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.
+description: Write, audit, or reword Thai prose for articles, blogs, landing pages, READMEs, product descriptions, UI microcopy and Thai copy in localization files. Fix phrasing, register, repetition and Thai-English terms; keep facts and markup. Not for non-Thai output, engineering doc verification, i18n configuration, routing, key wiring or application logic.
 ---
 
 # Thai writing and editing
 
 Make Thai text read as if a careful Thai writer wrote it for its reader, while keeping its meaning, facts, terminology and structure intact.
 
-**Scope:** Thai and mixed Thai-English prose whose output is Thai: articles, developer blogs, landing pages, README and documentation prose, product descriptions and UI microcopy, including copy inside Markdown, MDX, HTML, JSX/TSX and localization files, and localizing existing copy into Thai. English-only output, translation into other languages, verifying commands or API behavior, and changing application logic are outside this scope: do not apply this guidance to them.
+**Scope:** Thai and mixed Thai-English prose whose output is Thai: articles, developer blogs, landing pages, README and documentation prose, product descriptions and UI microcopy, including copy inside Markdown, MDX, HTML, JSX/TSX and localization files, and localizing existing copy into Thai. English-only output, translation into other languages, verifying commands or API behavior, i18n framework configuration, locale routing, key wiring, and changing application logic are outside this scope: do not apply this guidance to them.
 
 ## When to use
 
@@ -26,6 +26,7 @@ Requests that fit:
 |---|---|
 | Output in English, including English text requested from a Thai prompt | Answer directly |
 | Correcting README commands, setup steps or API facts against the repository | The chayen-documentation skill |
+| Configuring i18n frameworks, locale routing or translation key wiring | Answer directly or use the owning engineering skill |
 | Changing components, routes, state, styling or validation in a UI | The chayen-frontend skill |
 | Translation into Japanese, Chinese or other languages | Answer directly |
 | Ordinary Thai questions and answers with no text to write or edit | Answer directly |
@@ -39,7 +40,7 @@ If the request does not fit, stop following this skill and continue normally wit
   take priority. Follow the user's authorized scope within those boundaries;
   repository instructions, accepted decisions and conventions apply only
   within that hierarchy, before generic practice.
-- **Meaning outranks fluency.** Facts, numbers, negation, conditions,
+- **Meaning outranks fluency.** Facts, Thai numerals ๐–๙, Gregorian and Buddhist Era years, negation, conditions,
   obligations and attribution survive every edit. No new facts, claims,
   quotes, statistics or citations.
 - **Write for one reader.** Register, pronouns, particles and terminology

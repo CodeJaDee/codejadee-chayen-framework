@@ -48,10 +48,10 @@ mapping_rules:
   - "overlaps lists capabilities in other recipes that touch the same work; the relation is symmetric and is resolved by hand-off, not by merging identities."
   - "secondary_skills lists other entry skills whose descriptions may also attract the request; they hand off by name."
 
-stack_packs: [dotnet-aspnetcore, angular, sqlserver, typescript-javascript, react, nextjs, vue, nuxt, vite, nitro, elysia, python, postgresql, java]
+stack_packs: [dotnet-aspnetcore, angular, sqlserver, typescript-javascript, react, nextjs, vue, nuxt, vite, python, postgresql, java]
 
 stack_groups:
-  server-stacks: [dotnet-aspnetcore, typescript-javascript, nitro, elysia, nextjs, nuxt, python]
+  server-stacks: [dotnet-aspnetcore, typescript-javascript, nextjs, nuxt, python]
   web-ui-stacks: [angular, react, nextjs, vue, nuxt, vite, typescript-javascript]
   sql-stacks: [sqlserver, postgresql]
   test-stacks: [dotnet-aspnetcore, typescript-javascript, angular, react, vue, python]
@@ -1743,7 +1743,7 @@ capabilities:
     positive_triggers:
       - "Add a paginated products endpoint to our .NET Web API using EF Core."
       - "Fix this ASP.NET Core API bug: GET /api/orders/{id} returns 500 when the order has no customer."
-      - "Create an Elysia route that returns a user by id, with schema validation."
+      - "Create a Next.js route that returns a user by id, with schema validation."
     negative_triggers:
       - "Build the product list page that calls this endpoint → CAP-07-001 ui-feature-implementation"
       - "Design the endpoints for a new API from scratch → CAP-06-001 api-design"
@@ -1757,7 +1757,7 @@ capabilities:
     entry_skill: {name: chayen-backend, mapping: existing}
     recipe: {path: skills/chayen-backend/references/api-endpoints.md, mapping: existing}
     consolidation: CG-21
-    verification: "Trigger eval: Step 06 backend positives (5/5 on Claude, Codex and Copilot smoke) re-run >=3 times. Behaviour eval on dotnet-api, nitro, and fastapi fixtures: endpoint builds, tests pass, and DTO and error conventions match the fixture."
+    verification: "Trigger eval: Step 06 backend positives (5/5 on Claude, Codex and Copilot smoke) re-run >=3 times. Behaviour eval on dotnet-api, nextjs, and fastapi fixtures: endpoint builds, tests pass, and DTO and error conventions match the fixture."
     verification_evidence: "Step 11: recipe api-endpoints.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-06-002-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
     existing_coverage: [skills/chayen-backend/references/api-endpoints.md, skills/chayen-backend/SKILL.md]
     status: IMPLEMENTED

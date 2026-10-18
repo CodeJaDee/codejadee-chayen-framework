@@ -41,7 +41,7 @@ Read only the needed recipe through that owner's References table.
 
 ## Technology selection
 
-Select the actual backend and version from the owning service: ASP.NET, Next/Nuxt routes, or existing general Nitro/Elysia/Python guidance as detected. Preserve API style, provider and client generator; do not claim a Java pack.
+Select the actual backend and version from the owning service: ASP.NET, Next/Nuxt routes, or existing general Python guidance as detected. Preserve API style, provider and client generator; do not claim a Java pack.
 
 At each affected owner, detect the installed versions, configured commands and
 existing conventions; load only its matching technology base plus relevant topic.

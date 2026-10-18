@@ -1,5 +1,5 @@
 ---
-name: pos-backend-elysia-route
+name: pos-backend-next-schema
 description: "[positive] generated from tests/skills/trigger-cases.json — do not edit by hand"
 tags: [positive, chayen-backend]
 runs: 3
@@ -9,4 +9,4 @@ allowed_tools: [Read, Glob, Grep, Skill]
 expected_outcome: "invokes chayen-backend; never chayen-frontend"
 ---
 
-Create an Elysia route that returns a user by id with schema validation of the id parameter.
+Create a Next.js route that returns a user by id with schema validation of the id parameter.

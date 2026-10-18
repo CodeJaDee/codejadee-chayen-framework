@@ -14,7 +14,7 @@ provider, and need the owner's separate authorization.
 | File | Purpose |
 |---|---|
 | `quality-cases.json` | 120 held-out cases: 40 Thai, 40 English, 20 mixed-language/technical, 20 persistent policy / conflicting instructions / no-match. Synthetic inputs only. |
-| `discovery-probes.json` | 52 routing probes (explicit TH/EN, implicit TH/EN, documentation overlap, unrelated engineering, no-match) in the `provider-probes.json` schema; 3 runs each required |
+| `discovery-probes.json` | 55 routing probes (explicit TH/EN, implicit TH/EN, documentation overlap, unrelated engineering, no-match) in the `provider-probes.json` schema; 3 runs each required |
 | `run-arms.mjs` | Runs the quality and policy cases in arms A (no plugin), B (plugin) and C (plugin + opt-in policy in an isolated config home), Claude Code CLI and Copilot CLI. `--plan` is offline. |
 | `scorer-controls.json` | Synthetic controls for the scorer. Not model output, not evidence. |
 | `../../../tools/evals/score-step40.mjs` | Validates the dataset (`--check`), runs its controls (`--self-test`, gate G-17) and scores recorded outputs, probe summaries and reviews |
@@ -65,3 +65,18 @@ test profile, never the user's real configuration.
 Graders enter manual results in the same JSON shapes the scorer reads
 (`arm-outputs.json` records and probe `results`), with `provider` naming the
 surface.
+
+## Phase 2 scorer regressions
+
+`node --test tests/editorial/numeric-preservation.test.mjs` verifies Thai
+numerals, Gregorian/Buddhist Era values and labels, leading zeros, numeric
+identifiers, signs and unrequested conversions. `keepNumbers` protects these
+spans in rewrite/website cases; audit does not need to reproduce the source.
+Only reviewed `expect.numberConversions: [{"from": "source span", "to":
+"requested target span"}]` authorizes a conversion in a fixture. Add mappings
+only when the request explicitly asks for that conversion; preserve all
+unrelated numbers. Never derive permission from submitted copy or output.
+These checks supplement human semantic review; they cannot establish that
+a number remains attached to the same fact in arbitrary rewritten prose.
+The 55 discovery probes include standalone Nitro/Elysia no-match and i18n
+framework wiring owned by engineering. Runtime results remain NOT_RUN.

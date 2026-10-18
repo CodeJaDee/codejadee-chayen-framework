@@ -66,7 +66,7 @@ it.
 
 | Stack | Consideration |
 |---|---|
-| ASP.NET Core / Node (Nitro, Elysia) / Python APIs | Latency targets name the endpoint and the percentile. Throughput targets name the instance size. Cold start matters for serverless hosting. |
+| ASP.NET Core / Node.js / Python APIs | Latency targets name the endpoint and the percentile. Throughput targets name the instance size. Cold start matters for serverless hosting. |
 | Angular / React / Next.js / Vue / Nuxt / Vite | Web targets use Core Web Vitals (LCP, INP, CLS) and bundle budgets (`angular.json` budgets, bundle analysis). Accessibility targets use WCAG 2.2 AA. |
 | SQL Server / PostgreSQL | Data targets cover the recovery point and time (RPO and RTO), retention periods, and the query latency of key reports at the expected data volume. |
 | Security and privacy (all stacks) | Express targets as controls with verification, for example "dependency scan in CI with no critical advisories older than 7 days". Regulatory claims stay as stated by their owner, and are marked for qualified review. |

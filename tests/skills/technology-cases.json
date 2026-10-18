@@ -2251,7 +2251,7 @@
       "id": "tc-nuxt-server-api-01",
       "capability": "nuxt-server-api",
       "polarity": "positive",
-      "context": "Nuxt 3 existing Nitro h3 handlers auth/schema helpers and Node preset",
+      "context": "Nuxt 3 existing server handlers auth/schema helpers and Node preset",
       "prompt": "Add a protected orders endpoint with validation and direct wrong-tenant tests.",
       "expect": {
         "skill": "chayen-backend",
@@ -2259,7 +2259,7 @@
         "applies": "nuxt-server-api"
       },
       "checks": [
-        "Detects actual Nitro/h3 and closest handler style",
+        "Detects actual Nuxt server dependencies and closest handler style",
         "Checks identity/resource authorization on direct server entry",
         "Tests denial no writes malformed input and safe DTOs"
       ]
@@ -2379,7 +2379,7 @@
       "id": "tc-nuxt-rendering-deployment-01",
       "capability": "nuxt-rendering-deployment",
       "polarity": "positive",
-      "context": "Nuxt 4 Nitro Node output with routeRules and existing build/start/browser tests",
+      "context": "Nuxt 4 Node output with routeRules and existing build/start/browser tests",
       "prompt": "Validate our SSR artifact and browser-only widget boundary locally; do not deploy.",
       "expect": {
         "skill": "chayen-devops",
@@ -2590,7 +2590,7 @@
       "id": "tc-nuxt-routing-legacy",
       "capability": "nuxt-routing",
       "polarity": "positive",
-      "context": "Nuxt 2 pages root layouts and existing middleware without Nitro",
+      "context": "Nuxt 2 pages root layouts and existing middleware without server runtime migration",
       "prompt": "Add a page to our Nuxt 2 application without migrating it.",
       "expect": {
         "skill": "chayen-frontend",
@@ -2599,7 +2599,7 @@
       },
       "checks": [
         "Keeps Nuxt 2 file/middleware/layout conventions",
-        "Does not move to app directory or add Nitro",
+        "Does not move to app directory or migrate the server runtime",
         "Tests direct entry client navigation and errors with existing scripts"
       ]
     },

@@ -63,9 +63,8 @@ validation library. Check that responses conform to the declared contract.
 | Stack | Validation and conformance |
 |---|---|
 | ASP.NET Core | FluentValidation, or DataAnnotations with `[ApiController]` automatic 400s. `TypedResults` with `Results<...>` keeps the OpenAPI accurate. Integration tests use `WebApplicationFactory`. Build-time OpenAPI generation can be diffed. |
-| Nitro / Nuxt server | `readValidatedBody` and `getValidatedQuery` with Zod or Valibot. Return the errors with `createError({ statusCode: 400, data })`. |
+| Nuxt server | `readValidatedBody` and `getValidatedQuery` with Zod or Valibot. Return the errors with `createError({ statusCode: 400, data })`. |
 | Next.js route handlers | Zod `safeParse` on `await req.json()`, then `NextResponse.json(..., { status })`. Server Actions validate too, because they are public endpoints. |
-| Elysia | `t.Object` (TypeBox) schemas on `body`, `query`, and `params`, which also feed the OpenAPI. Use the `onError` hook for the error shape. |
 | FastAPI | Pydantic models validate requests and responses (`response_model`), so conformance is partly built in. Shape the 422 errors only if the house style differs. |
 | Django REST framework / Flask | DRF serializers with `is_valid(raise_exception=True)`. Flask uses marshmallow or pydantic, as already used by the project. |
 | SQL Server / PostgreSQL | Data access follows the data access reference: EF Core, Dapper, SQLAlchemy, Prisma, or Drizzle, as the project uses. |

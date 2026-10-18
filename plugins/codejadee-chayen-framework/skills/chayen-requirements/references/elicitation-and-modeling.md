@@ -94,7 +94,7 @@ All output goes into the requirements record (template).
 |---|---|
 | .NET | Domain services, `switch` and `if` on enums, FluentValidation validators, DataAnnotations, EF Core model configuration (`HasCheckConstraint`, required or maximum length) |
 | TypeScript / JavaScript / Angular / React / Vue | Zod, Yup, or Valibot schemas; Angular validators; form rules duplicated client-side (report a duplicated rule once, with both sources) |
-| Nitro / Elysia / Next.js / Nuxt server code | Route-level schema validation (TypeBox, Zod) and guard functions |
+| Next.js / Nuxt server code | Route-level schema validation (TypeBox, Zod) and guard functions |
 | Python | Pydantic validators, Django model `clean()` and constraints, service functions |
 | SQL Server / PostgreSQL | `CHECK` constraints, triggers, stored procedures, views with filtering logic, computed columns |
 | Configuration | Thresholds and feature flags in `appsettings*.json`, `.env`, or flag services. The rule is then "configurable", and its current value is environment-specific (state which environment was read). |

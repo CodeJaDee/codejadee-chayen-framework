@@ -1,5 +1,9 @@
 # STEP 28 — Technology coverage audit
 
+> Phase 2 scope correction (2026-10-18): Nitro and Elysia are out of scope.
+> Earlier pilot references below are historical evidence, not current support
+> claims. Dedicated guidance was withdrawn; no technology pack was added.
+
 Date: 2026-10-15 (Asia/Bangkok). **Step status: PARTIAL.**
 
 The content audit covers all 11 implemented packs, all 108 technology
@@ -31,7 +35,7 @@ No capability is promoted to VERIFIED. STOP after STEP 28.
   PASS evidence. Current Node is 24.15.0; historical Node 26 results do not
   establish compatibility in this run.
 
-Nitro, Elysia, and Python have general backend guidance but no dedicated
+Nitro and Elysia are out of scope. Python has general backend guidance but no dedicated
 cataloged pack. Java/Spring Boot implementation is explicitly excluded by
 [backend SKILL.md:10](../../plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md#L10)
 and [implementation SKILL.md:10](../../plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md#L10).

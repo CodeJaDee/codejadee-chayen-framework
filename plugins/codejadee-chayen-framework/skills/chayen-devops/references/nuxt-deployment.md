@@ -5,7 +5,7 @@ kind: technology
 
 ## Check the repository first
 
-Inspect Nuxt/Vue/Nitro and runtime versions, builder/preset, package manager,
+Inspect Nuxt/Vue and server dependencies and runtime versions, builder/preset, package manager,
 CI scripts, nuxt.config ssr/routeRules, source roots, output target, and existing
 browser/server tests. Do not infer Vite or Node hosting from Nuxt alone.
 
@@ -15,7 +15,7 @@ browser/server tests. Do not infer Vite or Node hosting from Nuxt alone.
 
 **Not when:** A plain Vue component or isolated Nuxt page edit is sufficient; use frontend guidance and its ordinary checks instead.
 
-**Version notes:** Nuxt 2 versus Nuxt 3/4 output, Nitro presets, routeRules, runtime config, and static generation differ. Node/serverless/Edge support depends on installed runtime and adapter; generation cannot supply an absent privileged server endpoint.
+**Version notes:** Nuxt 2 versus Nuxt 3/4 output, deployment presets, routeRules, runtime config, and static generation differ. Node/serverless/Edge support depends on installed runtime and adapter; generation cannot supply an absent privileged server endpoint.
 
 **Steps:**
 
@@ -28,7 +28,7 @@ browser/server tests. Do not infer Vite or Node hosting from Nuxt alone.
 
 ### Recipe example
 
-For an existing Nitro Node output, retain the current build/preset, start its
+For an existing Nuxt Node output, retain the current build/preset, start its
 generated server locally, and request a nested page plus protected API. For
 static generation, verify dynamic endpoints are already hosted elsewhere and
 that output contains no private settings; do not silently drop server features.

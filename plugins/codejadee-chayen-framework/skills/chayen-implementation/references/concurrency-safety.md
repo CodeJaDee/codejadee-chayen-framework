@@ -76,7 +76,7 @@ stress check.
 | Stack | Consideration |
 |---|---|
 | .NET | Singleton services holding per-request state. `Dictionary` written concurrently (use `ConcurrentDictionary`, or redesign). `.Result` and `.Wait()` deadlocks. `async void`. EF Core `DbContext` is not thread-safe. Concurrency tokens use `[Timestamp]` or `rowversion`. |
-| Node (Nitro, Elysia, Next.js, Nuxt server) | A single thread does not mean no races: interleaving happens at every `await`. Module-level state is shared across requests. Use database constraints for multi-instance safety. |
+| Node (Next.js, Nuxt server) | A single thread does not mean no races: interleaving happens at every `await`. Module-level state is shared across requests. Use database constraints for multi-instance safety. |
 | Angular / React / Vue | Out-of-order responses (use `switchMap` or cancel stale requests with `AbortController`). Double submits (disable while pending, plus server idempotency). |
 | Python | The GIL does not make check-then-act atomic. `asyncio` interleaves at `await`. Django `select_for_update` and `F()` expressions make updates atomic. Celery tasks run concurrently across workers. |
 | SQL Server / PostgreSQL | Unique constraints and `UPDATE ... WHERE` conditions are the strongest guards. `SERIALIZABLE` or `SELECT ... FOR UPDATE` (`UPDLOCK` on SQL Server) when needed. Watch deadlock ordering. |

@@ -1,285 +1,125 @@
-# Provider compatibility tests (developer-only)
+# Provider lifecycle runbook (developer-only)
 
-These tests check that the plugin behaves natively on each provider surface.
+Current Entry Skills: **15**. Plugin identity: `chayen@codejadee`.
+One canonical static Markdown/JSON package serves Claude Code CLI, Codex CLI
+and Copilot CLI. These tools are outside the shipped package.
 
-- They are not shipped with the plugin.
-- They are never needed by plugin users.
-
-The current compatibility verdict is in
-[docs/chayen/FINAL_PROVIDER_COMPATIBILITY.md](../../docs/chayen/FINAL_PROVIDER_COMPATIBILITY.md)
-(STEP 31). This file is the **runbook** that produces the evidence the
-release gate needs.
+Phase 2 validates tooling offline. **No native lifecycle is authorized by
+this runbook.** Native evidence and automatic routing of the changed build
+remain NOT_RUN until the separately authorized Phase 5 evaluation.
+The >=85% automatic routing threshold applies independently to each CLI.
 
 | File | Purpose |
 |---|---|
-| `check-identity.mjs` | **Offline, read-only.** Plugin identity, manifest and marketplace precedence, and skill discovery across all three marketplaces and both manifests (IC-01..IC-13). Exit 1 on any FAIL. |
-| `run-lifecycle.sh` | **Optional, no model calls.** Native CLI lifecycle with config-home overrides: marketplace add, install, discover, disable/enable, uninstall/remove. May cause provider traffic or cache changes. Checks a disposable fixture for changes. |
-| `claude-code-vscode.md` | Manual procedure: Claude Code VS Code extension |
-| `copilot-vscode.md` | Manual procedure: GitHub Copilot Chat in VS Code (agent plugins) |
-| `codex-vscode.md` | Codex IDE extension. Plugins are unsupported by the provider. Records what to re-check. |
-| `results/2026-10-14-step06.md` | Recorded results of Step 06 (6-skill package), for all ten test areas on six surfaces |
+| `check-identity.mjs` | Offline manifest/marketplace parity and canonical Skill discovery |
+| `run-lifecycle.sh` | Existing shell entry point for guarded native lifecycle |
+| `lifecycle.mjs` | Isolated child environments, command discovery, update and uninstall assertions |
+| `lifecycle.test.mjs` | Offline synthetic native-command responses; no provider executable runs |
+| `results/2026-10-14-step06.md` | Historical six-Skill evidence under the old identity; invalid for this build |
 
-Routing behaviour (which skill a prompt activates) is in `tests/routing/`.
+## Before any native execution
 
-## Running the automated lifecycle check
-
-```bash
-CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycle.sh /tmp/chayen-lifecycle-fresh
-```
-
-- **Review/authorization first.** Inspect the script, the native binaries, and
-  the copied package. The opt-in flag records caller intent, not approval
-  evidence.
-  - Use a fresh directory outside the repository, with an existing scratch
-    parent.
-  - Existing directories and linked package sources are refused.
-  - It no longer deletes a supplied work directory.
-  - STEP 30 performed syntax checking only.
-  - In STEP 31 the agent session's permission classifier denied setting the
-    opt-in, so the script was not run.
-- **Isolation request.** It supplies `CLAUDE_CONFIG_DIR`, `CODEX_HOME`, and
-  `COPILOT_HOME`.
-  - These overrides are not an OS sandbox.
-  - They are not proof that a provider leaves other caches, account stores,
-    or settings unchanged.
-  - Use a disposable environment with minimal permissions. Do not supply or
-    copy personal secrets.
-- **Traffic.** Native CLIs may contact provider services or update caches,
-  so this is not an offline gate.
-  - No credential is required to use the static plugin.
-  - Mark tests NOT_RUN if approved test access is unavailable.
-- **Local marketplace.** It installs from a **local copy** of the repository.
-  It does not test a remote GitHub marketplace, which needs the repository to
-  be pushed.
-- **Copilot runtime version.** Copilot runs the newest runtime in its package
-  cache unless `COPILOT_AUTO_UPDATE=false`. With that setting, the bundled
-  runtime is used instead (1.0.68 on the test machine, where plugin
-  `enable`/`disable` were missing).
-
-## Result vocabulary
-
-| Label | Meaning |
-|---|---|
-| AUTOMATED VERIFIED | Executed by a script or CLI, with the command and observed output recorded |
-| MANUALLY VERIFIED | Executed or inspected by a person, or by the agent reading a transcript (stated as such) |
-| STATIC PASS | Verified offline against repository files and the provider's installed code. Not a runtime claim. |
-| NOT TESTED | Not executed. A procedure is provided. |
-| UNSUPPORTED | The provider documents that the capability does not exist on that surface |
-
----
-
-## STEP 31 full validation runbook
-
-Run this under an **authorized** process: a person, or an agent session
-whose permissions allow provider calls. Every model prompt is a billed call
-that sends text to the provider.
-
-### R-0. Preconditions and recording
-
-1. Use a disposable machine or account profile. Do not copy personal
-   credentials into isolated homes. Sign in interactively inside each
-   isolated home with a test identity.
-2. Record the following for every run:
-   - date
-   - OS
-   - `claude --version`, `codex --version`, `copilot --version`
-   - `code --version`
-   - `code --list-extensions --show-versions` (rows `anthropic.claude-code`
-     and `openai.chatgpt`)
-   - the built-in Copilot version (`<VS Code>/resources/app/extensions/copilot/package.json`)
-   - the model in use
-3. Expected skill count: `13`. Re-derive it, and do not trust this number
-   if skills change:
+1. Obtain explicit authorization for native provider execution. Inspect the
+   scripts, binaries and package first. Opt-in flags record intent and do
+   not grant authorization. No model call is made by this runner.
+2. Use a disposable machine, container, VM or OS test account with no access
+   to personal configuration or credentials. Config-home overrides alone
+   are not an OS sandbox and cannot confine a malicious native executable.
+3. Choose a fresh scratch directory outside this repository and every real
+   provider profile, with an existing parent. Existing targets and linked
+   installation sources are refused. The runner never deletes the target.
+4. Use reviewed native executables on PATH. On Windows, use executables
+   rather than `.cmd` wrappers: the runner does not enable shell execution.
+5. Derive the count from the candidate, and record the source revision,
+   package fingerprint, provider version, OS, identity and result for each
+   operation. Currently the invariant is 15 Skills:
 
    ```bash
    find plugins/codejadee-chayen-framework/skills -mindepth 2 -maxdepth 2 -name SKILL.md | wc -l
    ```
 
-4. Fingerprint the real configs before and after (they must be unchanged):
+6. Copilot CLI must meet the release minimum (>=1.0.91). Record the actual
+   version with automatic updates disabled. If an installed binary lacks
+   a required command, it cannot earn a lifecycle PASS from this script.
 
-   ```bash
-   sha256sum ~/.claude/settings.json ~/.claude/plugins/known_marketplaces.json \
-     ~/.claude/plugins/installed_plugins.json ~/.codex/config.toml ~/.copilot/config.json
-   ```
-
-5. Save results as `results/<date>-step31-<surface>.md`. Raw transcripts
-   stay in scratch, because they contain local paths and may contain
-   sensitive data.
-
-### R-1. Offline gates (no provider traffic)
+## Offline checks (safe for Phase 2)
 
 ```bash
-node tools/validate/validate-all.mjs                       # all gate groups PASS
-node tests/provider-compatibility/check-identity.mjs       # 15/15 PASS, totals 13 skills / 221 references
-claude plugin validate --strict plugins/codejadee-chayen-framework
-claude plugin validate --strict .
+node tools/validate/validate-all.mjs
+node tests/provider-compatibility/check-identity.mjs
+node --test tests/provider-compatibility/lifecycle.test.mjs
+node tools/validate/check-hardening.mjs
 ```
 
-### R-2. Shared probes
+Identity check totals and reference counts come from its JSON output; do
+not copy historical totals. Offline PASS establishes tooling behavior only.
 
-Use the same fixture for every provider:
+## Native lifecycle (later, separately authorized)
 
-- an empty git repository outside this repo, with one file
-  `src/OrdersController.cs`;
-- run each probe in a **new session**.
-
-| Probe | Prompt | Pass criterion |
-|---|---|---|
-| P-AUTO | `Fix this ASP.NET Core API bug: GET /api/orders/{id} returns 500 when the order has no customer.` | `chayen-backend` loaded without being named |
-| P-EXPL | Provider form of `chayen-security` (see each section) + `Review: var sql = "SELECT * FROM Users WHERE Name = '" + name + "'";` | Skill loaded; reply uses the "Security review — scope:" format |
-| P-NONE | `Explain today's weather in Bangkok.` | **No** `chayen-*` skill loaded; normal provider answer |
-| P-NONE-2 | `Build a SwiftUI settings screen for my iOS app with a dark mode toggle.` | Ideally no `chayen-*` skill. If one loads, record it (known Copilot risk). |
-| P-REF | Provider form of `chayen-data` + `We use SQL Server through Microsoft.Data.SqlClient. Two order-update transactions deadlock; how should I diagnose it?` | Skill loaded **and** at least one file under `skills/chayen-data/references/` (expected `sql-server.md` and/or `sqlserver-concurrency.md`) is read in the transcript |
-
-### R-3. Claude Code CLI
+Only inside the disposable environment, after review and authorization:
 
 ```bash
-export CLAUDE_CONFIG_DIR=<scratch>/home-claude      # then run `claude` once and /login with a test identity
-claude plugin marketplace add <scratch>/mp            # a copy of .claude-plugin, .agents, .github, plugins
-claude plugin install chayen@codejadee
-claude plugin list                                     # 0.1.0-dev, enabled, exactly one entry
-claude plugin details chayen       # Skills (13), Agents/Hooks/MCP/LSP (0)
-cd <fixture>
-claude -p "<P-AUTO>" --output-format stream-json --verbose --no-session-persistence --max-turns 8
-claude -p "/chayen:chayen-security <P-EXPL text>" --output-format stream-json --verbose --no-session-persistence
-claude -p "<P-NONE>" --output-format stream-json --verbose --no-session-persistence
-claude -p "/chayen:chayen-data <P-REF text>" --output-format stream-json --verbose --no-session-persistence --max-turns 8
+CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 CHAYEN_DISPOSABLE_ENVIRONMENT=1 \
+  bash tests/provider-compatibility/run-lifecycle.sh /tmp/chayen-lifecycle-fresh
 ```
 
-- **Evidence.**
-  - A `tool_use` named `Skill` with `chayen:<skill>`.
-  - For P-REF, a `Read` `tool_use` whose path ends in
-    `chayen-data/references/<file>.md`.
-- **C-10 lifecycle.**
+The Node implementation also accepts the same fresh directory when Bash
+is unavailable. Both guards are required before any native executable runs.
+It creates separate marketplace copies, application fixtures and empty
+provider profiles. Each child gets isolated HOME, USERPROFILE, XDG, AppData,
+temporary directories and provider-specific configuration homes. Inherited
+provider paths, auth tokens and shell startup variables are not forwarded.
+It sets `COPILOT_AUTO_UPDATE=false`, `DISABLE_AUTOUPDATER=1` and disables
+Claude's nonessential traffic. Never copy real auth files into scratch.
+If authentication is required, stop and use separately approved test access.
 
-  ```bash
-  claude plugin disable chayen@codejadee   # list shows disabled; re-run P-AUTO: no chayen skill
-  claude plugin enable  chayen@codejadee
-  # Update: bump "version" to e.g. 0.1.1-step31 in BOTH manifests of the <scratch>/mp copy (and .github entry)
-  claude plugin marketplace update codejadee
-  claude plugin update chayen@codejadee    # list shows 0.1.1-step31 after restart
-  claude plugin uninstall chayen@codejadee # not listed; /-menu has no chayen entries
-  claude plugin marketplace remove codejadee
-  ```
+The runner hashes real configuration files before and after, including
+configured non-default homes, and records only hashes/results. The fixture
+must remain byte-identical with no added files. Any drift is FAIL. The
+scratch tree and `results.json` are retained for review; review outputs for
+local paths before sharing them.
 
-  Also run update **without** a version bump, and record whether content
-  changes propagate (R-54).
+## Required operations and evidence
 
-### R-4. Claude Code VS Code extension
+| Operation | Required observation |
+|---|---|
+| Register marketplace | Native add command exits zero |
+| Install | Native command exits zero AND list confirms installed; success text cannot mask a nonzero exit |
+| Discover | Actual isolated cached manifest identifies `chayen`, version matches, all 15 Skills exist, and backend content hash matches the reviewed source |
+| Disable | Native list confirms this plugin is installed and disabled |
+| Enable | Native list confirms this plugin is installed and enabled |
+| Update | In the scratch marketplace only, change all four version fields and backend content; refresh marketplace and update; verify the changed version and content hash in the isolated cache |
+| Uninstall | Native command exits zero AND native list proves absence; disabled or ambiguous state fails |
+| Remove marketplace | Native remove exits zero AND marketplace list has no `codejadee` entry |
 
-Follow [claude-code-vscode.md](claude-code-vscode.md). Expect **13** skills
-in step 3, and add P-NONE-2 and P-REF.
+Every native command is checked against that installed binary's `--help`.
+Claude and Copilot use install/uninstall where available; Codex uses
+add/remove where available. The runner does **not** assume that Codex has
+CLI disable, enable or update commands. A missing command yields NOT_RUN;
+complete that operation in the reviewed native plugin UI on the same
+disposable profile and save explicit before/after evidence. Do not edit
+personal configuration to simulate a native lifecycle operation.
 
-- The extension shares settings with the CLI.
-- Still run **every** step in the extension UI.
-- Do not mark a VS Code cell from a CLI result.
-- Record the extension version, for example 2.1.299.
+The update test uses a version bump and a content marker. A changed version
+alone, success message alone, or changed source file alone is insufficient.
+Old cached versions may remain; the new installed content must be present.
+Same-version cache refresh is a separate diagnostic and is not proven by
+this test. Likewise, local marketplace success does not prove remote public
+installation. A Copilot uninstall that only disables is FAIL.
 
-### R-5. Codex CLI
+Exit 0 means every required operation passed; exit 1 means a failure; exit
+2 means missing prerequisites, unavailable commands or NOT_RUN operations.
+Missing CLIs never count as PASS. Review all operation rows, not just exit.
 
-```bash
-export CODEX_HOME=<scratch>/home-codex               # then `codex login` with a test identity (never copy auth.json)
-codex plugin marketplace add <scratch>/mp
-codex plugin list --marketplace codejadee             # listed from .agents/plugins/marketplace.json
-codex plugin add chayen@codejadee
-codex plugin list --marketplace codejadee             # "installed, enabled", exactly one entry
-find "$CODEX_HOME/plugins/cache" -name SKILL.md | grep -c chayen-   # 13
-cd <fixture>
-codex exec --json --skip-git-repo-check --ephemeral -s read-only "<P-AUTO>"
-codex exec --json --skip-git-repo-check --ephemeral -s read-only "\$chayen-security <P-EXPL text>"
-codex exec --json --skip-git-repo-check --ephemeral -s read-only "<P-NONE>"
-codex exec --json --skip-git-repo-check --ephemeral -s read-only "\$chayen-data <P-REF text>"
-```
+## Evaluation and deferred surfaces
 
-- **Evidence.** Event text naming `skills/chayen-<x>/SKILL.md`. For P-REF, a
-  read of `chayen-data/references/*.md`.
-- The interactive `/plugins` browser should also show the plugin. Space
-  toggles it.
-- **C-10 lifecycle.**
-  - **Disable.** Add `[plugins."chayen@codejadee"]` with
-    `enabled = false` to `$CODEX_HOME/config.toml`, then re-run P-AUTO. A
-    `-c` override did **not** disable the plugin in Step 06.
-  - **Update.** 0.160.1 has no per-plugin `update`, and
-    `codex plugin marketplace upgrade` refreshes **Git** marketplace
-    snapshots only.
-    - Local marketplace: bump the version in the `mp` copy, then record
-      whether `codex plugin list --marketplace codejadee` and the cache
-      show the new version. If they do not, run `codex plugin remove`
-      followed by `codex plugin add`, and record the observed behaviour.
-    - Remote marketplace (R-9): `codex plugin marketplace upgrade codejadee`,
-      then the same check.
-  - **Uninstall.** Run `codex plugin remove chayen@codejadee`
-    and `codex plugin marketplace remove codejadee`. Note any empty cache
-    directory that is left behind.
+Automatic routing, explicit invocation and no-match measurement use
+[the evaluation fixtures](../evaluation/README.md) in Phase 5. Changing Skill
+descriptions invalidates historical routing evidence. Synthetic scorer and
+lifecycle tests are not provider measurements.
 
-### R-6. Codex IDE extension
-
-UNSUPPORTED (S13, re-read 2026-10-15). Use [codex-vscode.md](codex-vscode.md)
-on each release. One check is optional and recorded only as an observation:
-after R-5 installs into a `CODEX_HOME` that the extension also uses, see
-whether `chayen-*` skills appear in an extension session. Do not report
-that as plugin support.
-
-### R-7. Copilot CLI
-
-```bash
-export COPILOT_HOME=<scratch>/home-copilot          # auth comes from the OS credential store; use a test account
-copilot --version                                    # runtime must be >= 1.0.91 for enable/disable
-copilot plugin marketplace add <scratch>/mp          # reads .github/plugin/marketplace.json first
-copilot plugin install chayen@codejadee   # "Installed 13 skills"
-copilot plugin list                                  # exactly one entry, 0.1.0-dev
-copilot skill list                                   # 13 chayen-* rows
-cd <fixture>
-copilot -p "<P-AUTO>" --output-format json
-copilot -p "/chayen-security <P-EXPL text>" --output-format json
-copilot -p "<P-NONE>" --output-format json
-copilot -p "/chayen-data <P-REF text>" --output-format json
-```
-
-- **Evidence.**
-  - `tool.execution_start` with `toolName: "skill"` and `arguments.skill`.
-  - For P-REF, a file-view tool event on `chayen-data/references/*.md`.
-- **C-10 lifecycle.**
-
-  ```bash
-  copilot plugin disable chayen@codejadee   # skill list shows 0 chayen-*; P-AUTO loads none
-  copilot plugin enable chayen@codejadee
-  # bump version in the mp copy, then:
-  copilot plugin update chayen              # list shows the new version
-  copilot plugin uninstall chayen           # record whether it removes or only disables (Step 06: disabled only)
-  copilot plugin marketplace remove codejadee
-  ```
-
-### R-8. VS Code + GitHub Copilot Chat
-
-Follow [copilot-vscode.md](copilot-vscode.md). Expect **13** skills in
-Configure Skills, and add P-NONE-2 and P-REF.
-
-Facts confirmed from the VS Code 1.141.1 code:
-
-- `chat.plugins.enabled` defaults to `true`. The org policy
-  `ChatPluginsEnabled` can force it off. Record it if it is managed.
-- The repository marketplace resolves to `.github/plugin/marketplace.json`.
-- The root `plugin.json` is read with Agent Plugins semantics.
-
-Also try the chat commands `/plugin disable|enable|update|uninstall
-chayen`, as documented in S18. A plugin installed
-directly from Git can only be uninstalled.
-
-### R-9. Remote marketplace (after an approved push only)
-
-Repeat R-3, R-5, and R-7 with `CodeJaDee/codejadee-chayen-framework` in
-place of `<scratch>/mp`. In VS Code, use
-`"chat.plugins.marketplaces": ["CodeJaDee/codejadee-chayen-framework"]`.
-
-### R-10. Closing the release gate
-
-Update the §5 cells in FINAL_PROVIDER_COMPATIBILITY.md from the recorded
-results only:
-
-- AUTOMATED VERIFIED for CLI commands with captured output;
-- MANUALLY VERIFIED for VS Code steps a person executed.
-
-Any failure goes to `docs/chayen/ISSUES.md`. The gate stays OPEN until
-items 3–10 are recorded for every in-scope surface on the version that
-will be distributed.
+The [Claude VS Code procedure](claude-code-vscode.md),
+[Copilot VS Code procedure](copilot-vscode.md) and
+[Codex IDE limitation](codex-vscode.md) are historical/deferred references.
+VS Code runtime testing and persistent Response Style Policy runtime tests
+are outside this phase and the scoped release contract.

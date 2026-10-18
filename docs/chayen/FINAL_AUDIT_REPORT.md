@@ -1,5 +1,9 @@
 # Final Independent Completeness Audit (STEP 34)
 
+> Phase 2 scope correction (2026-10-18): Nitro and Elysia are out of scope.
+> Earlier pilot references below are historical evidence, not current support
+> claims. Dedicated guidance was withdrawn; no technology pack was added.
+
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
@@ -156,7 +160,7 @@ was 0. Logs are kept in session scratch.
 | JavaScript | TS/JS pack | T09; F | Part of 3/0/19 | **STATIC** |
 | React / Next.js | React (8), Next.js (8) | T09; F | 3/0/13. Next.js route probe 0/5. | **STATIC**; routing weak |
 | Vue / Nuxt / Vite | 7 / 7 / 4 | T09; F | 2/0/16 | **STATIC** |
-| Nitro / Elysia | General backend guidance (`node-servers.md`); no pack | I1 (mentions in 41 and 36 files) | No catalog pack, no facts; Steps 24–25 unrecorded | **PARTIAL** (STK-10/11 IN_PROGRESS) |
+| Nitro / Elysia | Out of scope; historical pilot guidance removed in Phase 2 | I1 (mentions in 41 and 36 files) | No catalog pack, no facts; Steps 24–25 unrecorded | **PARTIAL** (STK-10/11 IN_PROGRESS) |
 | Python | General guidance (`python-web-apis.md`, `python-testing.md`); no pack | P1 pytest probe 3/5 | No pack, no facts | **PARTIAL** (STK-12 IN_PROGRESS) |
 | PostgreSQL | PostgreSQL pack (10) plus recipes | T09; F | 40/0/2 (shared with cross-stack) on PostgreSQL 18.6. PostgreSQL probe 3/3. | **STATIC** + facts VERIFIED on one version |
 | Java extension | None (5 files mention Java, all as out of scope) | — | Optional per charter §2.2; Q-08 open | **NOT IMPLEMENTED** (STK-14 PLANNED) |
@@ -302,7 +306,7 @@ No other status was changed.
    graded).
 6. Behaviour verification of any of the 206 capabilities, 108 technology
    capabilities, or 12 workflows. All specification cases are unexecuted.
-7. Nitro, Elysia, and Python technology packs (general guidance only);
+7. Nitro and Elysia (out of scope), and Python technology packs (general guidance only);
    Steps 24–25 unrecorded.
 8. Java extension: NOT IMPLEMENTED (optional).
 9. 52 framework fact checks NOT_RUN.

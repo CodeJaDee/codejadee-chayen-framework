@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Release | Chayen v0.1.0: public production release for verified CLI providers |
-| Date | 2026-10-18 (Plan v4, Phase 1: release contract and scope alignment) |
-| Status as of | Revision `a33c4e28f38258cd086034027ac92b3082d184c8`. Since the audited revision `1734ea5`, only the three baseline audit documents changed; the plugin package, catalogs, tests and tools are unchanged, so the baseline static evidence (E-01..E-31) still applies |
+| Date | 2026-10-18 (Plan v4, Phase 2: product hardening) |
+| Status as of | Phase 2 working tree over `9f3e331300fb8a4f192cafd8b50198e7f50368ee`; no commit, provider installation or publication. Current offline evidence: [PRODUCT_HARDENING_REPORT.md](PRODUCT_HARDENING_REPORT.md). Baseline E-01..E-31 remains historical |
 | Scope and contract | [RELEASE_SCOPE_DECISION.md](RELEASE_SCOPE_DECISION.md) (owner decisions, K-01..K-20, routing contract §4) |
 | Accepted risks | [ACCEPTED_RISKS.md](ACCEPTED_RISKS.md) (AR-01..AR-04) |
 | Baseline (preserved) | [PRODUCTION_READINESS_MATRIX.md](PRODUCTION_READINESS_MATRIX.md) (PG-01..PG-43) · [PRODUCTION_GAP_ANALYSIS.md](PRODUCTION_GAP_ANALYSIS.md) · [PHASE_01_EVIDENCE.md](PHASE_01_EVIDENCE.md) |
@@ -104,7 +104,7 @@ and the date.
 | Gate | Name | Status | Blocks M1 | Blocks M2 | Blocks M3 | KEEP items | Responsible |
 |---|---|---|---|---|---|---|---|
 | G-01 | Architecture | **PASS** (static) | Yes | — | Yes | K-01 | Maintainer |
-| G-02 | Product Scope Correctness | **FAIL** | Yes | — | Yes | K-02, K-03, K-04 | Maintainer; Owner (OD-04) |
+| G-02 | Product Scope Correctness | **PASS** (static) | Yes | — | Yes | K-02, K-03, K-04 | Maintainer |
 | G-03 | Validators and Regression Tests | **FAIL** | Yes | — | Yes | K-05, K-06, K-07 | Maintainer |
 | G-04 | CI/CD | **FAIL** | Yes | — | Yes | K-08 | Maintainer |
 | G-05 | Version Integrity | **FAIL** | Yes | — | Yes | K-09 | Maintainer; Owner (OD-02) |
@@ -113,7 +113,7 @@ and the date.
 | G-08 | Copilot Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-12 | Evaluation Operator |
 | G-09 | Automatic Routing ≥ 85% per CLI | **FAIL** | — | — | Yes | K-03, K-13 | Evaluation Operator; Owner (OD-05) |
 | G-10 | Explicit Invocation and No-match | **FAIL** | — | — | Yes | K-07, K-14 | Evaluation Operator; Maintainer |
-| G-11 | Humanizer Quality | **FAIL** | Content parts | — | Yes | K-04, K-05, K-15 | Owner (OD-06, OD-07); Reviewers; Operator |
+| G-11 | Humanizer Quality | **BLOCKED** (content fixed) | Content parts | — | Yes | K-04, K-05, K-15 | Owner (OD-06, OD-07); Reviewers; Operator |
 | G-12 | Engineering Capability Sampling | **BLOCKED** | — | — | Yes | K-16 | Owner (OD-08); Operator |
 | G-13 | Technology Fact Checks | **NOT_RUN** | — | — | Yes | K-17 | Maintainer |
 | G-14 | Agent Security | **BLOCKED** | Static part | — | Yes | K-01, K-18 | Operator; Owner (OD-11) |
@@ -123,15 +123,15 @@ and the date.
 
 | Status | Count | Gates |
 |---|---|---|
-| PASS | 1 | G-01 |
-| FAIL | 9 | G-02, G-03, G-04, G-05, G-07, G-09, G-10, G-11, G-15 |
+| PASS | 2 | G-01, G-02 |
+| FAIL | 7 | G-03, G-04, G-05, G-07, G-09, G-10, G-15 |
 | NOT_RUN | 1 | G-13 |
-| BLOCKED | 6 | G-06, G-08, G-12, G-14, G-16, G-17 |
+| BLOCKED | 7 | G-06, G-08, G-11, G-12, G-14, G-16, G-17 |
 | NOT_APPLICABLE | 0 | — |
 | **Total** | **17** | |
 
 **Release readiness:** **NOT READY.** All three milestones are blocked: M1
-by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
+by G-03..G-05 and outstanding G-15 content, M2 by G-16, and M3 by 15 of the 17 gates.
 
 **Roles.** These are roles, not named people:
 
@@ -154,31 +154,31 @@ by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
 | Required evidence | An evidence-log entry for each command: exit code, counts, revision. Re-run on the frozen candidate under G-17 |
 | Dependencies | None to establish. OD-11 for the D-009 ratification. Re-checked at G-17 |
 | Responsible party | Maintainer (runs); Release Governance Lead (review); Owner (OD-11) |
-| Current status | **PASS** (static). Baseline E-02 (V-25: 256 files, 0 errors), E-03 (34/34), E-04 (V-09), E-17 (15/15), E-21, E-22. The package is unchanged since `1734ea5`. **Open part:** D-009/DF-03 ratification is a documentation item under K-07. It does not change the architecture result, but must close before G-17 |
+| Current status | **PASS** (static). Phase 2 package/security/identity checks retain the native plugin architecture, shared source and static Markdown/JSON package. See the hardening report for current commands. D-009/DF-03 ratification remains outside Phase 2. |
 | Release-blocking behaviour | Blocks M1 and M3. Any later FAIL, such as an executable file, a hook or a second skills source, stops the release until fixed. A static PASS is never a runtime guarantee |
 
 ### G-02: Product Scope Correctness
 
 | Field | Definition |
 |---|---|
-| Requirement | The inventory is intact: 15 Entry Skills (≤ 15, D-053), 206 Engineering Capabilities in 20 domains, 108 Technology Capabilities in 11 packs, 12 Composite Workflows with 7 templates. L0 metadata is ≤ 6,500 characters. Every `SKILL.md` is ≤ 300 lines. **Nitro and Elysia are not presented as supported** in any `SKILL.md` description, scope line or example, in any reference, catalog stack list or positive test case, or in the user docs, following the option chosen in OD-04. `chayen-humanizer-th`'s description is consistent with its scope and cases (P1-012) |
+| Requirement | The inventory is intact: 15 Entry Skills (≤ 15, D-053), 206 Engineering Capabilities in 20 domains, 108 Technology Capabilities in 11 packs, 12 Composite Workflows with 7 templates. L0 metadata is ≤ 6,500 characters. Every `SKILL.md` is ≤ 300 lines. **Nitro and Elysia are not presented as supported** in any `SKILL.md` description, scope line or example, in any reference, catalog stack list or positive test case, or in the user docs, following the explicit Phase 2 instruction (remove supported mentions and add scope exclusions). `chayen-humanizer-th`'s description is consistent with its scope and cases (P1-012) |
 | Verification method | `check-catalog.mjs`, `check-technology.mjs`, `check-workflows.mjs`, `validate-package.mjs` (V-05, V-06, V-07, V-17); `rg -i "nitro\|elysia" plugins catalog tests/skills docs README.md`, with each remaining hit justified against OD-04; a review of the Thai description against its scope and the trigger cases |
 | Required evidence | Counts and L0 figure on the candidate commit; grep output with justifications; validator output |
 | Dependencies | OD-04 (implementation option); K-03, K-04 (Phase 5); G-03 guards in place first. Changing descriptions resets G-09 and G-10 |
-| Responsible party | Maintainer; Owner (OD-04) |
-| Current status | **FAIL.** Nitro and Elysia appear in `chayen-backend` L0 metadata, examples, about 35 reference rows, catalog `stack_packs`/`server-stacks` and test cases (P1-007). The Thai description excludes work its scope includes (P1-012). Inventory parts PASS (E-05, E-06, E-07; L0 6,221/6,500) |
+| Responsible party | Maintainer |
+| Current status | **PASS** (static, Phase 2). P1-007/P1-012 corrected: standalone Nitro/Elysia guidance and positive routing removed; supported Nuxt and general Node guidance retained; Thai locale-copy scope and metadata aligned. Inventory remains 15/206/108/12; 7 templates; L0 6,217/6,500; every Skill <=300 lines. `check-hardening.mjs` and negative mutations cover regressions. This is not runtime routing evidence. |
 | Release-blocking behaviour | Blocks M1, because content must be final before the candidate fingerprint is frozen, and M3 |
 
 ### G-03: Validators and Regression Tests
 
 | Field | Definition |
 |---|---|
-| Requirement | All existing offline suites pass, and the guards required by the KEEP items exist, each with a negative control: (1) the upstream MIT notice exists, is byte-identical by hash and is linked from `chayen-humanizer-en/SKILL.md` (P1-013); (2) the Step 40 scorer detects dropped Thai digits and Buddhist Era conversion (P1-014); (3) a static check that the lifecycle script covers every required step for each CLI and checks uninstall by absence (P1-018); (4) runbook skill counts agree with the package (P1-019); (5) docs-consistency rules for skill count, package file count, L0 figures, plugin identifier and version (P1-020) |
+| Requirement | All existing offline suites pass, and the guards required by the KEEP items exist, each with a negative control: (1) the upstream MIT notice exists, is identical by full-document SHA-256 after canonical CRLF-to-LF normalization and is linked from `chayen-humanizer-en/SKILL.md` (P1-013); (2) the Step 40 scorer detects dropped Thai digits and Buddhist Era conversion (P1-014); (3) a static check that the lifecycle script covers every required step for each CLI and checks uninstall by absence (P1-018); (4) runbook skill counts agree with the package (P1-019); (5) docs-consistency rules for skill count, package file count, L0 figures, plugin identifier and version (P1-020) |
 | Verification method | `validate-all.mjs`; `run-validator-tests.mjs`; `boundaries.test.mjs`; `setup-fixtures.test.mjs`; `score-step40.mjs --self-test` and `--check`; `check-identity.mjs`; `run-evaluation-suite.mjs` (no `--write`); `generate-claude-evals.mjs --check` |
 | Required evidence | Exit codes and pass counts on the candidate commit. The new negative controls are listed by ID and fail as expected when mutated |
 | Dependencies | K-05, K-06, K-07 (Phase 4) |
 | Responsible party | Maintainer |
-| Current status | **FAIL.** Existing suites pass (E-01 13/13, E-09 179/179, E-03 34/34, E-13 19/19, E-14 56/56, E-17 15/15, E-19). None of the five required guards exists |
+| Current status | **FAIL** overall. Phase 2 resolves guards (1)-(4), with negative controls: immutable upstream notice/link, Thai numeric/calendar preservation, lifecycle update/uninstall/isolation and current runbook inventory. Offline suites pass on the Phase 2 working tree (hardening report). Guard (5), broader release-document consistency P1-020, is outside this phase and remains open. Tooling PASS does not move runtime gates. |
 | Release-blocking behaviour | Blocks M1 and M3. A failing suite on the candidate stops the freeze |
 
 ### G-04: CI/CD
@@ -214,7 +214,7 @@ by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
 | Required evidence | A dated result file under `tests/provider-compatibility/results/` naming the revision, package fingerprint, CLI version, skill count and identifier, with each step's outcome |
 | Dependencies | M1 (G-01..G-05); K-06; OD-10 (authorization, isolated profile) |
 | Responsible party | Evaluation Operator; Release Governance Lead (review) |
-| Current status | **BLOCKED.** No candidate; no authorization. The last run was 2026-10-14, on a 6-skill build under the old identifier (P1-001) |
+| Current status | **BLOCKED.** Phase 2 lifecycle tooling now validates isolated profiles, command support, changed update content and actual uninstall. No native run was performed; no frozen candidate or execution authorization. Historical six-Skill evidence is invalid for this build. |
 | Release-blocking behaviour | Blocks M3. An uninstall that only disables the plugin is FAIL, never PASS |
 
 ### G-07: Codex Lifecycle
@@ -226,7 +226,7 @@ by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
 | Required evidence | A dated result file as in G-06, plus the official-source citation for the marketplace fields |
 | Dependencies | M1; K-06, K-11; OD-10 |
 | Responsible party | Evaluation Operator; Maintainer (marketplace fields) |
-| Current status | **FAIL.** The marketplace fields were copied from an example and are unconfirmed (P1-026). The lifecycle is BLOCKED; the last run was Codex 0.160.1 on 6 skills, and 0.163.0 is now installed |
+| Current status | **FAIL.** Marketplace-field confirmation P1-026 remains open. Phase 2 lifecycle tooling uses command discovery; unavailable Codex disable/enable/update operations become NOT_RUN and require reviewed native UI evidence. No native lifecycle run was performed. |
 | Release-blocking behaviour | Blocks M3 |
 
 ### G-08: Copilot Lifecycle
@@ -238,7 +238,7 @@ by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
 | Required evidence | A dated result file as in G-06 |
 | Dependencies | M1; K-06, K-12; OD-10, including installing Copilot CLI |
 | Responsible party | Evaluation Operator |
-| Current status | **BLOCKED.** Copilot CLI is not installed on the audit machine. The 2026-10-14 run recorded that an update did not change the version and an uninstall only disabled the plugin (KL-33) |
+| Current status | **BLOCKED.** Phase 2 adds Copilot auto-update suppression, minimum-version preflight, changed-content update checks and uninstall-by-absence; disabled is still installed. No native run; historical KL-33 is not presumed resolved on a provider. |
 | Release-blocking behaviour | Blocks M3. An uninstall that only disables is FAIL (see §1.2 for the amendment route) |
 
 ### G-09: Automatic Routing ≥ 85% per CLI
@@ -250,7 +250,7 @@ by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
 | Required evidence | A `summary.json` per CLI for the frozen fingerprint, with ≥ 3 runs per probe, a no-plugin baseline arm, per-type rates, Wilson intervals and a per-Skill breakdown |
 | Dependencies | M1 (final descriptions after K-03 and K-04); G-06..G-08 install working; K-13; OD-05, OD-10 |
 | Responsible party | Evaluation Operator; Owner (OD-05, OD-10); Release Governance Lead (review) |
-| Current status | **FAIL** on preconditions: `chayen-ai-engineering`, `chayen-repository` and `chayen-requirements` have no positive probe, and the probe runner supports neither Codex nor installed-plugin mode, nor records the package fingerprint. The measurement itself is BLOCKED: fingerprint `86cf548cda5b08d5` was never measured (P1-008), and writing-skill capture is unmeasured (P1-015). The historical 12/22 (55%) result is not evidence |
+| Current status | **FAIL** on existing evaluation preconditions P1-008/P1-015. Phase 2 descriptions changed, invalidating all historical routing evidence. Nitro/Elysia no-match and i18n engineering probes now agree with scope. Automatic routing >=85% must be measured independently per CLI in Phase 5 on the new frozen build; no routing PASS is claimed. |
 | Release-blocking behaviour | Blocks M3. A CLI below 85% blocks the release; it cannot stay listed as supported and be excused. Any description change resets the gate |
 
 ### G-10: Explicit Invocation and No-match
@@ -274,7 +274,7 @@ by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
 | Required evidence | Arm outputs per CLI, scorer reports, signed reviewer score files, the case-provenance record, MHR rows promoted only from this evidence |
 | Dependencies | OD-06, OD-07, OD-10; K-04, K-05, K-15; M1 |
 | Responsible party | Owner (OD-06, OD-07); Reviewers; Evaluation Operator; Maintainer (content) |
-| Current status | **FAIL.** Content defects P1-012 and P1-014. The evaluation is BLOCKED: rubric PROPOSED (P1-011), no reviewers, no provider or human run (P1-010; E-16 NOT_RUN) |
+| Current status | **BLOCKED.** Phase 2 content/scorer defects P1-012/P1-014 are fixed with numeric and calendar regression tests. Provider/human quality evaluation is NOT_RUN; rubric approval, independent fluent reviewers, candidate and authorized evaluation remain prerequisites (P1-010/P1-011/P1-032). |
 | Release-blocking behaviour | The content parts block M1; the evaluation blocks M3 |
 
 ### G-12: Engineering Capability Sampling
@@ -322,7 +322,7 @@ by G-02..G-05, M2 by G-16, and M3 by 16 of the 17 gates.
 | Required evidence | The `LICENSE` file and manifest diffs; validator output; the owner's attestation record; HTTP status of the public URL; remote-install result files |
 | Dependencies | OD-03, OD-12 (visibility); G-16 for M2; K-19; G-06..G-08 procedures for the remote install |
 | Responsible party | Owner (OD-03, visibility); Maintainer (files); Evaluation Operator (remote install) |
-| Current status | **FAIL.** No `LICENSE`, no manifest `license` (P1-003), repository private (E-31), no install line (P1-030). Rights confirmation BLOCKED on OD-03. Decisions made: MIT, CodeJaDee, Public |
+| Current status | **FAIL.** Phase 2 guards the unchanged upstream Humanizer MIT notice, full attribution and Skill reference, including removal/alteration controls and a future project-MIT coexistence test. Project LICENSE/manifest licence, public source, install line and rights confirmation remain open; no publication was performed. |
 | Release-blocking behaviour | `LICENSE` and manifest `license` block M1. Licence and rights block M2. The whole gate blocks M3 |
 
 ### G-16: Security and Support Decision

@@ -49,7 +49,7 @@ maintained OpenAPI document and the code, never memory.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | `Microsoft.AspNetCore.OpenApi` or Swashbuckle, XML documentation comments (`GenerateDocumentationFile`), `[ProducesResponseType]` for status codes, and the document generated at build or runtime. |
-| Node servers (Nitro, Nuxt, Next.js, Elysia) | Elysia's OpenAPI plugin from schemas, Nitro OpenAPI support where enabled, zod-to-OpenAPI generators, or a maintained spec file. |
+| Node servers (Nuxt, Next.js) | zod-to-OpenAPI generators, or a maintained spec file. |
 | Python (FastAPI, Django, Flask) | FastAPI's generated `/openapi.json` with `response_model` and `responses`, drf-spectacular for Django REST Framework, apispec for Flask. |
 | Docs publishing | Swagger UI, Redoc, or Scalar from the same document; partner docs generated from it. |
 

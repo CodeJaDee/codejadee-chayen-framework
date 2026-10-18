@@ -68,7 +68,7 @@ is. It does not refactor or add features.
 | Angular | Change detection (`OnPush`), unsubscribed observables, and zone-less timers. Reproduce with TestBed or component harness tests. |
 | React / Next.js | Stale closures, effect dependency arrays, and server versus client rendering mismatches (hydration). Reproduce with Testing Library. |
 | Vue / Nuxt | Reactivity loss from destructuring props or stores, and SSR-only defects. Reproduce with Vue Test Utils or `@nuxt/test-utils`. |
-| Node (Nitro, Elysia) | Unhandled rejections and request-scoped state stored in module globals. |
+| Node.js | Unhandled rejections and request-scoped state stored in module globals. |
 | Python | Mutable default arguments, naive versus timezone-aware datetimes, and ORM lazy loading in async code. |
 | SQL Server / PostgreSQL | Collation and case sensitivity, `NULL` comparison semantics, implicit conversions, and isolation-level effects. |
 

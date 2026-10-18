@@ -95,7 +95,7 @@ test plan.
 | Stack | Consideration |
 |---|---|
 | .NET | `Microsoft.Extensions.Http.Resilience` (Polly v8 pipelines) via `AddStandardResilienceHandler`, or explicit pipelines on `HttpClient`. EF Core `EnableRetryOnFailure` for transient SQL errors, which conflicts with user-initiated transactions unless an execution strategy is used. |
-| Node (Nitro, Elysia, Next.js, Nuxt server) | `AbortController` or `AbortSignal.timeout` on `fetch`. Retry and backoff libraries (`p-retry`). Breakers (`opossum`). Unhandled rejections can crash the process. |
+| Node (Next.js, Nuxt server) | `AbortController` or `AbortSignal.timeout` on `fetch`. Retry and backoff libraries (`p-retry`). Breakers (`opossum`). Unhandled rejections can crash the process. |
 | Python | `httpx` timeouts (no default timeout in `requests`), `tenacity` for retries, and an async semaphore for concurrency limits |
 | Angular / React / Vue | Client retries are for idempotent reads only. Show degraded states in the UI. Never retry payments client-side. |
 | SQL Server / PostgreSQL | Connection pool exhaustion is the common cascading failure. Set command timeouts. Use failover groups and read replicas with stated consistency. |

@@ -98,9 +98,8 @@ signature, reject replays, acknowledge fast, and process idempotently.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | `IHttpClientFactory` typed clients (`AddHttpClient<TClient>`), Refit if already used, `Microsoft.Extensions.Http.Resilience` (`AddStandardResilienceHandler`). Fakes with a custom `HttpMessageHandler` or WireMock.Net. |
-| Nitro / Nuxt server | `$fetch` or `ofetch` with `timeout`, `retry`, and `retryStatusCodes`. Keys come from `runtimeConfig`. Fakes with msw or `nock`. |
+| Nuxt server | `$fetch` or `ofetch` with `timeout`, `retry`, and `retryStatusCodes`. Keys come from `runtimeConfig`. Fakes with msw or `nock`. |
 | Next.js / Node | `fetch` with `AbortSignal.timeout(ms)`. Next.js caching semantics on `fetch` (set `cache` explicitly). Use axios only if the project already does. Fakes with msw. |
-| Elysia / Bun | `fetch` with `AbortSignal.timeout`. Mock with `bun test` mocks, or msw. |
 | Python | `httpx` (`AsyncClient` with explicit `Timeout`), or `requests` with an explicit `timeout=` (there is no default). Retries with `tenacity`. Fakes with `respx` or `responses`. |
 | SQL Server / PostgreSQL | Never call external services inside a database transaction. Persist the intent, then call, or use an outbox. |
 

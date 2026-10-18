@@ -5,7 +5,7 @@ kind: technology
 
 ## Check the repository first
 
-Read `vue-nuxt.md`. Inspect resolved Nuxt/Vue/Nitro versions, actual srcDir,
+Read `vue-nuxt.md`. Inspect resolved Nuxt/Vue and server dependencies versions, actual srcDir,
 app/root layout, pages configuration, imports/layers, data wrappers, and tests.
 
 ## Framework routes (nuxt-routing)

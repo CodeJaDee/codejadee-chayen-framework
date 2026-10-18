@@ -79,7 +79,7 @@ breaking change fails a build before it reaches a consumer.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | In-process API tests with `WebApplicationFactory` and a test authentication handler. PactNet for consumer and provider tests. OpenAPI from Swashbuckle or `Microsoft.AspNetCore.OpenApi` for schema checks. |
-| Node servers (Nitro, Nuxt, Next.js, Elysia) | supertest, Playwright `request`, or `app.handle(new Request(...))` for Elysia. Pact JS (`@pact-foundation/pact`). |
+| Node servers (Nuxt, Next.js) | supertest or Playwright `request`, following the configured test harness. Pact JS (`@pact-foundation/pact`). |
 | Python (FastAPI, Django, Flask) | `TestClient` or httpx, Django `APIClient`, Flask `test_client`. Pact Python, or schema validation with `schemathesis` if the project uses it. |
 | Frontend consumers (Angular, React, Vue) | Consumer Pact tests at the API client layer, not through the UI. |
 | Schema diffs | An OpenAPI diff tool in CI (for example `oasdiff` breaking-change mode) if approved. Keep the published document generated from code. |

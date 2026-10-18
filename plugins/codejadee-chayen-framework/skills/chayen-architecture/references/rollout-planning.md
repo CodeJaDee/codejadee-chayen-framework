@@ -78,7 +78,7 @@ Approvals: <to start; per irreversible step>
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | Feature flags through `Microsoft.FeatureManagement` (filters for percentage or targeting). Azure App Service deployment slots support swap and swap-back. Health checks gate slot warm-up. |
-| Node (Nitro, Elysia, Next.js, Nuxt) | Edge or platform traffic splitting (for example Vercel or Netlify rollouts) where used. Flag SDKs (OpenFeature providers). Server and client bundles must tolerate mixed versions during the rollout. |
+| Node (Next.js, Nuxt) | Edge or platform traffic splitting (for example Vercel or Netlify rollouts) where used. Flag SDKs (OpenFeature providers). Server and client bundles must tolerate mixed versions during the rollout. |
 | Angular / React / Vue SPAs | Cached old bundles keep running after a deploy. API changes must stay backward-compatible until clients refresh. Version the assets. |
 | Python | Flags with the team's library, or OpenFeature. Gunicorn and Uvicorn rolling restarts behind the load balancer. |
 | SQL Server / PostgreSQL | Expand and contract migrations. The old app version must work against the new schema during the ramp. Never drop columns in the same release that stops using them. |

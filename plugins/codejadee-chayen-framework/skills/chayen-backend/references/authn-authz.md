@@ -79,9 +79,8 @@ is applied.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | `AddAuthentication().AddJwtBearer` or Microsoft Identity Web. `AddAuthorization` with `FallbackPolicy` and named policies. `IAuthorizationService.AuthorizeAsync(user, resource, requirement)` for resource checks. `UseAuthentication` must come before `UseAuthorization`. Test with a test auth handler in `WebApplicationFactory`. |
-| Nitro / Nuxt server | Session or JWT verification in server middleware or a `defineEventHandler` wrapper (for example `nuxt-auth-utils` or `jose`). Authorization checks in each handler. Client route guards are not security. |
+| Nuxt server | Session or JWT verification in server middleware or a `defineEventHandler` wrapper (for example `nuxt-auth-utils` or `jose`). Authorization checks in each handler. Client route guards are not security. |
 | Next.js | Auth.js or the provider's SDK. Check the session in route handlers and server actions. Middleware alone is not sufficient authorization. |
-| Elysia | Elysia JWT or bearer plugins with `derive` or `beforeHandle` guards. Scope the guards to route groups. |
 | FastAPI / Django / Flask | FastAPI `Depends` with security schemes, and `Security` scopes. DRF authentication and permission classes, with object-level `has_object_permission`. Flask-Login or the provider's library, as used by the project. |
 | SQL Server / PostgreSQL | Row-level security can back up application checks. It does not replace them. |
 

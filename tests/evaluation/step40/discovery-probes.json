@@ -159,6 +159,9 @@
       "expect": { "none_or": ["chayen-humanizer-en"] } },
     { "id": "s40-dp-nm-08", "group": "no-match", "mode": "auto",
       "prompt": "Write the opening paragraph of a mystery novel set in a lighthouse.",
-      "expect": { "none": true } }
+      "expect": { "none": true } },
+    {"id": "s40-dp-nm-09", "group": "no-match", "mode": "auto", "prompt": "Build a standalone Nitro route with framework-specific server configuration.", "expect": {"none": true}},
+    {"id": "s40-dp-nm-10", "group": "no-match", "mode": "auto", "prompt": "Build an Elysia API with its framework-specific validation hooks.", "expect": {"none": true}},
+    {"id": "s40-dp-eng-09", "group": "engineering", "mode": "auto", "prompt": "Configure locale routing and translation key wiring in our Next.js app; do not edit copy.", "expect": {"any_of": ["chayen-frontend"]}}
   ]
 }

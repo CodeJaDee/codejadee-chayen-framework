@@ -79,7 +79,7 @@ see another's data.
 | .NET / EF Core | Global query filters (`HasQueryFilter`), applied to every tenant-owned entity. `IgnoreQueryFilters()` uses are bypass points. A tenant-aware `DbContext` factory serves database-per-tenant. |
 | SQL Server | Row-level security (security predicates and `SESSION_CONTEXT`) as defence in depth. Elastic pools for database-per-tenant. |
 | PostgreSQL | Row-level security policies with `current_setting('app.tenant_id')`. Schema-per-tenant uses `search_path`, which pooled connections can leak, so reset it per request. |
-| Node (Nitro, Elysia, Next.js, Nuxt) / Python | Resolve the tenant in middleware, and pass it explicitly. Avoid module-level globals for tenant state. Use async-local storage carefully. Django: tenant-aware managers or a schema-based package. |
+| Node (Next.js, Nuxt) / Python | Resolve the tenant in middleware, and pass it explicitly. Avoid module-level globals for tenant state. Use async-local storage carefully. Django: tenant-aware managers or a schema-based package. |
 | Angular / React / Vue | The tenant comes from the token, not from client-side state that a user can edit. Client-side checks are not isolation. |
 
 ## Verification

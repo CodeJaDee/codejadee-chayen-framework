@@ -72,7 +72,7 @@ time.*
 *Domains: backend (10), specialized systems (4). Technology: ASP.NET Core,
 Next.js and Nuxt server code, cross-stack API contracts.*
 
-> Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Nitro, Elysia, Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for UI components, mobile apps, or infrastructure-only tasks.
+> Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for Nitro, Elysia, UI components, mobile apps, or infrastructure-only tasks.
 
 Example prompt: *"GET /api/orders/{id} returns 500 when the order has no
 customer. Fix it."*
@@ -135,7 +135,7 @@ deployment, Vite toolchain.*
 
 *Editorial skill (Thai). Owns no engineering capabilities; registered in `catalog/editorial-skills.json`.*
 
-> Write, audit, or reword Thai prose for articles, developer blogs, landing pages, READMEs, e-commerce item descriptions, and UI microcopy, fixing translated-sounding phrasing, register, repetition, and Thai-English technical terms, keeping facts and markup intact. Not for non-Thai output, verifying engineering doc accuracy, or i18n and application code.
+> Write, audit, or reword Thai prose for articles, blogs, landing pages, READMEs, product descriptions, UI microcopy and Thai copy in localization files. Fix phrasing, register, repetition and Thai-English terms; keep facts and markup. Not for non-Thai output, engineering doc verification, i18n configuration, routing, key wiring or application logic.
 
 Example prompt: *"เกลาย่อหน้านี้ให้อ่านลื่นเป็นภาษาไทยธรรมชาติ แต่ห้ามเปลี่ยนตัวเลขกับชื่อฟีเจอร์"*
 

@@ -72,7 +72,7 @@ has one enforcing place, and each component has allowed dependencies.
 | Stack | Consideration |
 |---|---|
 | .NET | Boundaries map to projects, or to folders with `internal` types. Aggregates map to entities with private setters and methods enforcing invariants. Per-module `DbContext` and schema enforce data ownership. |
-| TypeScript / Node (Nitro, Elysia, Next.js, Nuxt server) | Boundaries map to packages in a workspace, or to folders with index-only exports. Enforce them with dependency-cruiser or ESLint restricted paths. |
+| TypeScript / Node (Next.js, Nuxt server) | Boundaries map to packages in a workspace, or to folders with index-only exports. Enforce them with dependency-cruiser or ESLint restricted paths. |
 | Angular / React / Vue | UI boundaries mirror domain boundaries as feature libraries or folders. Shared UI goes in a separate library. Avoid cross-feature imports. |
 | Python | Packages per boundary. Enforce the rules with import-linter. In Django, use apps per boundary, and avoid cross-app model writes. |
 | SQL Server / PostgreSQL | A schema per boundary makes ownership visible. Cross-boundary foreign keys couple deployables, so flag them. |

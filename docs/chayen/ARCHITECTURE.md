@@ -349,7 +349,7 @@ Entry skills are the **only** objects the provider's discovery sees.
   | Tier | Pack IDs |
   |---|---|
   | Primary | `dotnet-aspnetcore`, `angular`, `sqlserver` |
-  | Additional | `typescript-javascript`, `react`, `nextjs`, `vue`, `nuxt`, `vite`, `nitro`, `elysia`, `python`, `postgresql` |
+  | Additional | `typescript-javascript`, `react`, `nextjs`, `vue`, `nuxt`, `vite`, `python`, `postgresql` |
   | Optional | `java` (pending Q-08) |
 
 - **Pack `INDEX.md` contents:**

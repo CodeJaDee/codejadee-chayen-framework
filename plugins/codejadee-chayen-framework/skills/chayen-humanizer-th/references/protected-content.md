@@ -10,6 +10,12 @@ Change a protected span only when the user explicitly asks for that change.
 
 - **Facts:** numbers, units, prices, percentages, dates, times, versions,
   names of people, organizations, products and places.
+- **Numerals and calendars:** preserve Thai digits ๐–๙ and Arabic digits 0–9,
+  their values, leading zeros, numeric identifiers, and Gregorian (ค.ศ./CE)
+  and Buddhist Era (พ.ศ./BE) years and labels. Do not normalize numeral style
+  or add/subtract 543 years during a copy edit. Convert only the specific
+  spans the user explicitly requests, verify equivalent meaning, and keep
+  unrelated numbers and identifiers unchanged.
 - **Meaning carriers:** negation (ไม่, ห้าม, ยังไม่), conditions (ถ้า, เมื่อ, เว้นแต่),
   obligation and possibility (ต้อง, ควร, อาจ), uncertainty, attribution
   ("ตามรายงานของ...") and the scope of a claim (บางส่วน, ทั้งหมด, ส่วนใหญ่).
@@ -68,6 +74,9 @@ Compare the source and the result before reporting:
 
 1. Count numbers, URLs, placeholders, tags, code spans and glossary terms in
    each; the counts match unless the user asked for a change.
+   Compare numeric values and identifiers as well as counts; check Thai
+   digits, Gregorian/Buddhist Era years and era labels individually. Equal
+   counts do not establish equal meaning.
 2. Re-read every negation, condition and obligation; the meaning is the same.
 3. No claim, example, quote, statistic or citation appears that the source did
    not contain.

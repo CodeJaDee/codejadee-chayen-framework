@@ -82,7 +82,7 @@ lineage, retention, residency, and access for each dataset or table.
 | SQL Server | Batched `DELETE TOP (n)` loops, partition switching for large time-based tables, temporal table history retention (`HISTORY_RETENTION_PERIOD`), and backup expiry in the backup tooling. |
 | PostgreSQL | Batched deletes by key range, `DROP` or `DETACH PARTITION` for partitioned tables, `pg_partman` if installed, and `VACUUM` after large deletes. |
 | .NET servers | A hosted service, Hangfire, or Quartz job, as the project uses, with a dry-run setting in configuration. |
-| Node and Python servers | The existing scheduler (Nitro tasks, BullMQ, Celery beat, management commands) with the same dry-run default. |
+| Node and Python servers | The existing scheduler (platform cron, BullMQ, Celery beat, management commands) with the same dry-run default. |
 | Object storage | Lifecycle rules for archives (for example Blob or S3 lifecycle policies), set by the platform owner. |
 
 ## Verification

@@ -31,7 +31,7 @@ executed evidence exists. It does not mean the feature is known to fail.
 |---|---|---|
 | KL-10 | **Nothing is VERIFIED.** All 206 engineering capabilities, 108 technology capabilities, and 12 workflows are IMPLEMENTED; none has behaviour evidence at capability level. | Catalog status counts (independent audit); R-55 |
 | KL-11 | **Java is not implemented** (STK-14 PLANNED). It is an optional extension pending a decision. | Q-08; charter §2.2 |
-| KL-12 | **Nitro, Elysia, and Python have general guidance only.** There are references `node-servers.md`, `python-web-apis.md`, and `python-testing.md`, but no cataloged technology pack and no fact checks. Steps 24–25 are unrecorded. | STK-10..STK-12 IN_PROGRESS; R-45 |
+| KL-12 | **Nitro and Elysia are out of scope. Python has general guidance only.** Python retains `python-web-apis.md` and `python-testing.md` with no cataloged technology pack. Historical standalone framework guidance was withdrawn in Phase 2. | STK-10/11 NOT_APPLICABLE; STK-12 IN_PROGRESS; R-45 |
 | KL-13 | **52 of 159 framework fact checks are NOT_RUN.** Angular 19, React/Next.js 13, Vue/Nuxt/Vite 16, .NET 8 SDK 2, and Node tools/browser 2 need toolchains that are not installed. | Fact runs 2026-10-15: 107 PASS / 0 FAIL / 52 NOT_RUN; R-41, R-43, R-49 |
 | KL-14 | **Fact checks ran on single versions:** SQL Server 2025 Express LocalDB, PostgreSQL 18.6 (C locale), .NET 10, Node 24.15.0. | R-46, R-47 |
 | KL-15 | **Recipe (445 cases), technology (315), and workflow (47) cases are specifications only.** No agent runner executes them. | EVALUATION_GAPS EG-06..EG-08 |

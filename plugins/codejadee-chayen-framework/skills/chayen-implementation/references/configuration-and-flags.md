@@ -64,7 +64,7 @@ removal plan.
 | ASP.NET Core | `IOptions<T>` with `ValidateDataAnnotations()` and `ValidateOnStart()`. `appsettings.{Environment}.json` and environment variables (`Section__Key`). User secrets for local development. Flags through `Microsoft.FeatureManagement` if used, or OpenFeature. |
 | Angular | `environment*.ts` and file replacements are fixed at build time. For runtime configuration, use a JSON file loaded with `APP_INITIALIZER` (or `provideAppInitializer`). Never put secrets in client builds. |
 | React / Vite / Next.js / Vue / Nuxt | `VITE_` and `NEXT_PUBLIC_` variables are public and baked in at build time. Nuxt `runtimeConfig` versus `public` matters. Flags come through the project's SDK (OpenFeature or a vendor SDK). |
-| Nitro / Elysia / Node | Nitro `runtimeConfig` with `NITRO_` environment overrides. Validate the environment at startup (Zod, TypeBox). |
+| Node.js | Preserve existing configuration loading and validate the environment at startup with the project schema library. |
 | Python | pydantic `BaseSettings` or Django settings modules split per environment. Validate at import or startup. |
 
 ## Verification

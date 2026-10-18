@@ -59,7 +59,15 @@ export function detectLanguage(text) {
   if (ratio >= 0.15 && ratio <= 0.85 && thai >= 20 && latin >= 20 && /(?:^|\n)#+ /.test(text)) return "bilingual";
   return ratio >= 0.45 ? "th" : ratio <= 0.25 ? "en" : "mixed";
 }
-const numberTokens = (t) => [...String(t).replace(/\b(?:TH|EN)-\d{2}\b/g, " ").replace(/^\s*\d+[.)]\s/gm, " ").replace(/\|\s*\d+\s*\|/g, "| |").matchAll(/\d+(?:[.,:]\d+)*/g)].map((m) => m[0].replace(/,(?=\d{3}\b)/g, ""));
+const numberTokens = (t) => [...String(t).replace(/\b(?:TH|EN)-\d{2}\b/g, " ").replace(/^\s*\d{1,2}[.)]\s/gm, " ").matchAll(/(?<![A-Za-z0-9๐-๙_])[-+−]?[0-9๐-๙]+(?:[.,:][0-9๐-๙]+)*/g)].map((m) => m[0].replace(/,(?=[0-9๐-๙]{3}(?![0-9๐-๙]))/g, ""));
+const eraTokens = (t) => [...String(t).matchAll(/(?:พ\.?\s*ศ\.?|ค\.?\s*ศ\.?|B\.?\s*E\.?|C\.?\s*E\.?|A\.?\s*D\.?)\s*[0-9๐-๙]{4}|[0-9๐-๙]{4}\s*(?:B\.?\s*E\.?|C\.?\s*E\.?|A\.?\s*D\.?)/gi)].map(m => m[0].replace(/[.\s]/g, "").toUpperCase());
+const numericIdentifiers = (t) => [...String(t).matchAll(/[A-Za-z_][A-Za-z_0-9๐-๙]*(?:[-./][A-Za-z_0-9๐-๙]+)*/g)].map(m => m[0]).filter(s => /[0-9๐-๙]/.test(s));
+// Only reviewed fixture expectations authorize conversion. Never infer permission from
+// submitted prose or from model output. A mapping transforms just its specified span.
+function convertedSource(source, conversions = []) {
+  for (const { from, to } of conversions) source = source.split(from).join(to);
+  return source;
+}
 // JSX attribute values may contain ">" (arrow functions), so braces and quotes are matched whole.
 const tags = (t) => [...String(t).matchAll(/<(?:\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}|"[^"]*"|'[^']*'|[^>{"'\n])+>/g)].map((m) => m[0]);
 const placeholders = (t) => [...String(t).matchAll(/\{\{\s*[A-Za-z_][\w.]*\s*\}\}|\{[A-Za-z_][\w.]*\}|\{[A-Za-z_]\w*,\s*(?:plural|select|selectordinal),|%[sd]|(?<=[\s{])#(?=[\s}])/g)].map((m) => m[0]);
@@ -125,11 +133,16 @@ export function scoreOutput(c, rec) {
   }
   for (const span of e.preserve ?? []) add("preserve", out.includes(span), { critical: true, detail: span.slice(0, 60) });
   if (e.keepNumbers && c.mode !== "audit") {
-    const missing = multisetMissing(numberTokens(source), numberTokens(out));
+    const expected = convertedSource(source, e.numberConversions);
+    const missing = multisetMissing(numberTokens(expected), numberTokens(out));
     add("keepNumbers", missing.length === 0, { critical: true, detail: missing.join(" ") });
+    const eras = multisetMissing(eraTokens(expected), eraTokens(out));
+    add("keepCalendarEras", !eras.length, { critical: true, detail: eras.join(" ") });
+    const ids = multisetMissing(numericIdentifiers(expected), numericIdentifiers(out));
+    add("keepNumericIdentifiers", !ids.length, { critical: true, detail: ids.join(" ") });
   }
   if (["rewrite", "create", "website"].includes(c.mode) && source) {
-    const known = new Set(numberTokens(`${c.request}\n${source}`));
+    const known = new Set(numberTokens(`${c.request}\n${source}\n${convertedSource(source, e.numberConversions)}`));
     const added = [...new Set(numberTokens(out))].filter((n) => !known.has(n));
     add("newNumbers", added.length ? null : true, { hard: false, detail: added.join(" ") });
   }
@@ -201,6 +214,7 @@ export function checkDataset(spec, probes, skillNames) {
     if (!skillOk(e.skill)) errors.push(`${at}: expect.skill must be any_of/none/none_or with shipped skill names`);
     if (!LANGS.has(e.outputLanguage)) errors.push(`${at}: unknown outputLanguage ${e.outputLanguage}`);
     const source = c.input ?? Object.values(c.files ?? {}).join("\n");
+    if (e.numberConversions !== undefined && (!e.keepNumbers || !Array.isArray(e.numberConversions) || !e.numberConversions.length || e.numberConversions.some(x => typeof x?.from !== "string" || !x.from || typeof x?.to !== "string" || !x.to || x.from === x.to || !source.includes(x.from)))) errors.push(`${at}: numberConversions needs keepNumbers and explicit nonempty source/target spans present in the input`);
     for (const s of e.preserve ?? []) if (!source.includes(s)) errors.push(`${at}: preserved span ${JSON.stringify(s.slice(0, 40))} does not occur in the input`);
     for (const k of e.structure ?? []) {
       if (!STRUCTURE.has(k)) errors.push(`${at}: unknown structure check ${k}`);

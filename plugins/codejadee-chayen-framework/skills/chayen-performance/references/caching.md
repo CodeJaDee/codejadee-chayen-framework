@@ -66,7 +66,7 @@ explicit freshness requirement.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | `IMemoryCache` (set `SizeLimit` and entry sizes), `IDistributedCache`, `HybridCache` (two levels with stampede protection, in recent .NET versions), output caching with tags (`EvictByTagAsync`), and response caching headers. |
-| Node servers (Nitro, Nuxt, Next.js, Elysia) | Nitro `defineCachedFunction` and route rules with `swr`, Next.js data cache and `revalidateTag`, `lru-cache`, and `ioredis` or `redis` clients. |
+| Node servers (Nuxt, Next.js) | Nuxt cache rules where configured, Next.js data cache and `revalidateTag`, `lru-cache`, and `ioredis` or `redis` clients. |
 | Python (FastAPI, Django, Flask) | Django cache framework (`cache.get_or_set`, per-view caching with `vary_on_headers`), `cachetools`, Redis clients, Flask-Caching. |
 | Frontends (Angular, React, Vue) | Client-side query caches (TanStack Query `staleTime`, SWR) are client state; HTTP `Cache-Control` and CDN rules belong to the server. |
 | Databases | Caching does not fix a missing index. Check the query first with the data skill. |

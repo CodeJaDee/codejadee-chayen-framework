@@ -95,3 +95,20 @@ The authoritative provider checks are:
 - `skills-ref validate <skill-dir>` (Agent Skills reference validator, in a
   throwaway virtual environment)
 - install tests per provider (`tests/provider-compatibility/run-lifecycle.sh`)
+
+## Phase 2 product hardening guards
+
+`check-hardening.mjs` checks scope exclusions, Humanizer TH registration,
+locale-copy versus framework-wiring cases, lifecycle guards and the current
+runbook inventory. The upstream Humanizer notice is checked by its original
+full-document SHA-256 after CRLF-to-LF normalization, including attribution,
+MIT grant and warranty text, and by the English Skill reference to it.
+A future project MIT licence never replaces this upstream notice. A notice
+change requires a deliberate reviewed provenance update, not an automatic
+hash refresh. Missing or altered notice/link fails validation.
+
+`validate-all.mjs` includes negative mutations in
+`tests/production/hardening.test.mjs`, numeric scorer regressions in
+`tests/editorial/numeric-preservation.test.mjs`, and isolated lifecycle fakes
+in `tests/provider-compatibility/lifecycle.test.mjs`. These are offline
+maintainer tests and do not constitute native provider evidence.

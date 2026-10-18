@@ -81,7 +81,7 @@ poison-message handling.
 | Stack | Consideration |
 |---|---|
 | .NET | MassTransit (with its transactional outbox, retry, and redelivery), NServiceBus, Wolverine, `Azure.Messaging.ServiceBus` (sessions for ordering, a built-in dead-letter queue), `RabbitMQ.Client`, `Confluent.Kafka`. Use whatever the project already uses. MassTransit's test harness for tests. |
-| Node (Nitro, Elysia, Next.js, Nuxt server) | BullMQ (Redis), `amqplib`, `kafkajs`, the Azure Service Bus SDK. Serverless route handlers are poor long-running consumers, so run consumers as workers. |
+| Node (Next.js, Nuxt server) | BullMQ (Redis), `amqplib`, `kafkajs`, the Azure Service Bus SDK. Serverless route handlers are poor long-running consumers, so run consumers as workers. |
 | Python | Celery (task acknowledgement after completion, visibility timeout), `aio-pika`, `confluent-kafka`, `azure-servicebus`. Django: a `transaction.on_commit` hook as a minimal outbox alternative, noting its loss risk on crash. |
 | SQL Server / PostgreSQL | An outbox table in the same database. Use a unique constraint on the message ID for inbox deduplication. PostgreSQL `LISTEN`/`NOTIFY` is not a durable queue. |
 

@@ -90,7 +90,7 @@ packs:
     title: "nuxt engineering guidance"
     technologies: [nuxt]
     expected_capabilities: 7
-    detection: "Resolved Nuxt/Vue/Nitro, configured source roots/builder, SSR/data context and private/public config"
+    detection: "Resolved Nuxt/Vue and server dependencies, configured source roots/builder, SSR/data context and private/public config"
     fact_checks: tests/technology/vue-nuxt-vite/run-fact-checks.mjs
     status: IMPLEMENTED
 
@@ -1682,9 +1682,9 @@ capabilities:
     technology: nuxt
     purpose: "Implement protected server entrypoints using resolved framework versions, existing project and tooling conventions, safe SSR/privacy boundaries, and observable verification evidence."
     applies_when: "A Nuxt server feature needs an HTTP endpoint, validation, authorization, or server integration change."
-    not_when: "A standalone Nitro/Elysia server or frontend-only page owns the task; use its existing backend or frontend guidance instead."
+    not_when: "A standalone Nitro/Elysia server or frontend-only page owns the task; standalone servers are out of scope; use frontend guidance only for the frontend task."
     inputs:
-      - "Nuxt 3 existing Nitro h3 handlers auth/schema helpers and Node preset"
+      - "Nuxt 3 existing server handlers auth/schema helpers and Node preset"
       - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
     outputs:
       - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"
@@ -1772,7 +1772,7 @@ capabilities:
     applies_when: "Nuxt rendering mode, SSR/client boundaries, route rules, or production artifacts need validation or repair."
     not_when: "A plain Vue component or isolated Nuxt page edit is sufficient; use frontend guidance and its ordinary checks instead."
     inputs:
-      - "Nuxt 4 Nitro Node output with routeRules and existing build/start/browser tests"
+      - "Nuxt 4 Node output with routeRules and existing build/start/browser tests"
       - "Affected source and public contracts, selected builder/config owner, package-manager evidence, configured build and test commands"
     outputs:
       - "Scoped guide or implementation preserving version, source layout, libraries and execution boundaries"

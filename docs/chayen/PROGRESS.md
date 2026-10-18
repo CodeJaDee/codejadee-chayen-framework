@@ -1,5 +1,9 @@
 # Progress Log
 
+> Phase 2 scope correction (2026-10-18): Nitro and Elysia are out of scope.
+> Earlier pilot references below are historical evidence, not current support
+> claims. Dedicated guidance was withdrawn; no technology pack was added.
+
 ## Current state
 
 | Field | Value |

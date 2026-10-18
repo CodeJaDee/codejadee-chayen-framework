@@ -5,7 +5,7 @@ kind: technology
 
 **Applies to:** Vue applications, including retained Vue 2 features, and Nuxt.
 
-- Read resolved Vue/compiler, Nuxt/Nitro, router/store, and selected builder
+- Read resolved Vue/compiler, Nuxt server, router/store, and selected builder
   versions first. Manifest ranges alone are not installed API evidence.
 - Vue 2 projects use different APIs. Follow the existing code, and do not
   migrate unasked.
@@ -26,7 +26,7 @@ Load this base plus one relevant topic: `vue-composition.md`,
 | Compatibility signal | Decision |
 |---|---|
 | Vue 2/2.7/3, compiler/macros | Preserve Options/setup style; check Composition support, defineModel 3.4+, and props-destructure behavior 3.5+ |
-| Nuxt 2 versus 3/4 | Retain asyncData/fetch and legacy config where used; newer context, Nitro, layout and data APIs require installed support |
+| Nuxt 2 versus 3/4 | Retain asyncData/fetch and legacy config where used; newer context, server, layout and data APIs require installed support |
 | Nuxt 4 source layout | Inspect actual app/root/srcDir and compatibility settings, not a forced folder migration |
 | Nuxt auto-import settings/layers | Inspect discovery and context; plain Vue has explicit imports |
 | Vite evidence absent | Keep the existing builder; do not add Vite or Vitest automatically |

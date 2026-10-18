@@ -67,7 +67,7 @@ Make error handling consistent with the project's existing conventions:
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | `IExceptionHandler` or `UseExceptionHandler` with `ProblemDetails` (`AddProblemDetails`). `TypedResults.Problem` and `ValidationProblem`. `OperationCanceledException` from `RequestAborted` is not a server error. Use `throw;`, not `throw ex;`. |
-| Node (Nitro, Elysia, Next.js, Nuxt server) | Nitro and Nuxt `createError` with `statusCode`; Elysia `onError` and `error()`; Next.js route handlers returning `NextResponse.json` with a status. Always handle rejected promises. |
+| Node (Next.js, Nuxt server) | Nuxt error helpers supported by its installed dependencies; Next.js route handlers returning `NextResponse.json` with a status. Always handle rejected promises. |
 | Python (FastAPI, Django, Flask) | FastAPI `HTTPException` and exception handlers; DRF exception handler; Flask `errorhandler`. Use `raise ... from e` to keep the cause. |
 | Angular / React / Vue | Global HTTP interceptors, error boundaries, and `app.config.errorHandler`. These are UI concerns, and the frontend skill owns them. |
 | SQL Server / PostgreSQL | Map unique and foreign key violations to conflict or validation errors, by error number (SQL Server 2627 and 2601) or SQLSTATE (PostgreSQL 23505 and 23503). |

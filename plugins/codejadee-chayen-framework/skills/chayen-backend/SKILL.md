@@ -1,13 +1,13 @@
 ---
 name: chayen-backend
-description: Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Nitro, Elysia, Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for UI components, mobile apps, or infrastructure-only tasks.
+description: Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for Nitro, Elysia, UI components, mobile apps, or infrastructure-only tasks.
 ---
 
 # Backend, API, and integration engineering
 
 Implement or repair server-side behaviour that matches the project's existing stack, API style, data access, and error conventions.
 
-**Scope:** server-side application code in ASP.NET Core (C#), Node servers (Nitro, Elysia, Next.js or Nuxt server routes), and Python web APIs (FastAPI, Django, Flask): API contracts, endpoints, validation, authentication and authorization, background jobs, messaging, external integrations, and idempotency. Backends in other stacks (Java, Go, Rust, PHP, Ruby), UI code, and infrastructure-only work are outside this scope: do not apply this guidance to them.
+**Scope:** server-side application code in ASP.NET Core (C#), Node servers (Next.js or Nuxt server routes), and Python web APIs (FastAPI, Django, Flask): API contracts, endpoints, validation, authentication and authorization, background jobs, messaging, external integrations, and idempotency. Backends in other stacks (Nitro, Elysia, Java, Go, Rust, PHP, Ruby), UI code, and infrastructure-only work are outside this scope: do not apply this guidance to them.
 
 ## When to use
 
@@ -15,7 +15,7 @@ Requests that fit:
 - "Fix this ASP.NET Core API bug: GET /api/orders/{id} returns 500 when the order has no customer."
 - "Add a paginated products endpoint to our .NET Web API using EF Core."
 - "Our FastAPI endpoint accepts invalid emails. Add proper request validation."
-- "Create an Elysia route that returns a user by id, with schema validation."
+- "Create a Next.js route that returns a user by id, with schema validation."
 - "Design the REST endpoints for managing subscriptions, and how we version them."
 - "Publish an OrderPlaced event when an order is created and consume it in shipping."
 - "Add a nightly job that archives old orders."
@@ -99,7 +99,7 @@ No matching workflow => continue normal native behavior.
    For Next.js, use nextjs-server as the base instead of node-servers, then
    only the relevant mutations or data/auth topic from References.
    For Nuxt server endpoints or runtime configuration, use the Nuxt server
-   reference and preserve the detected Nuxt/Nitro or legacy server conventions.
+   reference and preserve the detected Nuxt server or legacy server conventions.
 2. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |
@@ -198,7 +198,7 @@ Load one technology reference for the detected stack (workflow step 1), and one 
 | [references/aspnetcore-auth.md](references/aspnetcore-auth.md) | ASP.NET Core, and the task touches authentication or authorization |
 | [references/aspnetcore-data-access.md](references/aspnetcore-data-access.md) | ASP.NET Core, and the task reads or writes data through EF Core, Dapper, or ADO.NET |
 | [references/aspnetcore-background-services.md](references/aspnetcore-background-services.md) | ASP.NET Core or a .NET worker, and the task touches hosted services, queues, or scheduled work |
-| [references/node-servers.md](references/node-servers.md) | Nitro, Elysia, Next.js route handlers, or Nuxt `server/` is detected |
+| [references/node-servers.md](references/node-servers.md) | Next.js route handlers or Nuxt `server/` is detected |
 | [references/nextjs-server.md](references/nextjs-server.md) | Next.js server work needs version, router, runtime, identity, cache, or secret-boundary detection |
 | [references/nextjs-mutations.md](references/nextjs-mutations.md) | Next.js Server Functions or App Router HTTP handlers need validation, authorization, or mutation behavior |
 | [references/nextjs-data-auth.md](references/nextjs-data-auth.md) | Next.js data caching, invalidation, authentication, session, or resource authorization is involved |

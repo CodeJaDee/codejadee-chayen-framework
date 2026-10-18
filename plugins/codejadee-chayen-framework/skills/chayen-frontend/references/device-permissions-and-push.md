@@ -119,7 +119,7 @@ privacy-safe payloads, and tap handling. Read
 | Capacitor (Angular, React, Vue) | `@capacitor/push-notifications` returns an APNs token on iOS unless the project integrates Firebase for FCM tokens, so the server must send through the matching service. iOS needs the Push Notifications capability and an APNs key. Android needs `google-services.json`, which is configuration rather than a secret, but follows the project's handling. Permission plugins: `@capacitor/camera`, `@capacitor/geolocation`, `@capacitor/local-notifications`. |
 | PWA | Web Push needs a service worker, VAPID keys, and HTTPS. On iOS and iPadOS 16.4 and later it works only for Home Screen web apps, and the permission request must come from a user gesture. `navigator.permissions` support varies by browser and permission name. |
 | ASP.NET Core server | Use the provider SDK the project has (FirebaseAdmin, a WebPush package, an APNs client) behind an injected interface, with tokens in the existing data store. |
-| Node servers (Nitro, Nuxt, Next.js, Elysia) | `firebase-admin` or `web-push`. Send from a worker or queue, not inside a request with a short serverless timeout. |
+| Node servers (Nuxt, Next.js) | `firebase-admin` or `web-push`. Send from a worker or queue, not inside a request with a short serverless timeout. |
 | Python servers (FastAPI, Django, Flask) | `firebase-admin` or `pywebpush`, called from the project's task queue (Celery, RQ). |
 | Electron and Tauri | Desktop notifications are local (`Notification` in the renderer, or the Tauri notification plugin). Remote push to desktop needs a vendor service or an open connection, which is an architecture decision. |
 

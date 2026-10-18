@@ -54,7 +54,7 @@ report errors per row or file without failing the whole batch.
 | Stack | Consideration |
 |---|---|
 | ASP.NET Core | `[RequestSizeLimit]` and Kestrel `MaxRequestBodySize`, `MultipartReader` for streaming, `IFormFile` only for small files, a hosted service or queue for processing, CsvHelper streaming reads. |
-| Node (Nitro, Nuxt, Next.js, Elysia) | Streaming multipart parsers (busboy) or direct-to-storage presigned uploads, size limits in the framework config, `csv-parse` streams. Serverless body limits differ by platform. |
+| Node (Nuxt, Next.js) | Streaming multipart parsers (busboy) or direct-to-storage presigned uploads, size limits in the framework config, `csv-parse` streams. Serverless body limits differ by platform. |
 | Python (FastAPI, Django, Flask) | `UploadFile` with spooled temp files, Django `DATA_UPLOAD_MAX_MEMORY_SIZE` and `FILE_UPLOAD_MAX_MEMORY_SIZE`, `csv` module streaming, Celery for processing. |
 | Storage | Presigned or SAS uploads directly to object storage for large files, with event-triggered processing. |
 | Security | Path traversal and content-type spoofing are reviewed with the security skill's secure review. |
