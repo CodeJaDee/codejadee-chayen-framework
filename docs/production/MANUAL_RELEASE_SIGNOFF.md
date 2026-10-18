@@ -1,5 +1,8 @@
 # Manual release sign-off
 
+> **Owner update:** No GitHub Actions or GitHub Releases. Sign-off uses manually recorded offline validators plus native CLI evidence on an exact source revision. Tags are optional. Remaining old Actions references are historical unless explicitly revised.
+
+
 Phase 3 procedure, 2026-10-18. **NOT SIGNED. No release action authorized.**
 Target: public MIT Chayen v0.1.0, publisher CodeJaDee, with Claude Code CLI,
 Codex CLI and GitHub Copilot CLI as the scoped production hosts.
@@ -10,7 +13,7 @@ Unprotected `main` and absent required reviews/status checks are an
 **accepted release-process risk** (AR-03). Work can land without enforced CI
 or review. A maintainer must therefore examine the exact release commit,
 evidence and diff, and the owner must explicitly authorize release acts.
-CI success is evidence, not approval. Branch Protection and Required Reviews
+Manual offline validation is evidence, not approval. Branch Protection and Required Reviews
 are deferred; enabling them is not a condition for Phase 3 completion.
 
 ## Record for a later release decision
@@ -22,7 +25,7 @@ are deferred; enabling them is not a condition for Phase 3 completion.
 | Package and metadata fingerprints | Working-tree snapshot in [Phase 4 report](NATIVE_LIFECYCLE_REPORT.md); metadata `339b3125d1347648`; committed freeze pending |
 | Maintainer/reviewer and review date | Pending |
 | Owner decision and timestamp | Pending |
-| Real Actions run URL, SHA and each job conclusion | NOT_RUN in Phase 3 |
+| Manual offline validator commands, source SHA, exit codes and results | Pending for final stable source |
 | Per-CLI lifecycle/routing/explicit/no-match evidence | Phase 4 lifecycle partially verified; see report. Routing/explicit/no-match NOT_RUN; Phase 5 |
 | Human quality/technology/security evidence | Pending scoped release gates |
 | Rights-holder/project MIT licence confirmation | Pending later candidate freeze |
@@ -39,8 +42,8 @@ are deferred; enabling them is not a condition for Phase 3 completion.
    agree. Apply MIT only in the authorized candidate phase, retain upstream
    Humanizer notice/attribution, and confirm legal rights separately.
 3. Run the offline commands in [CI/CD design](CI_CD_DESIGN.md). Confirm both
-   pinned Node versions and isolated negative controls. Inspect actual remote
-   job logs on this exact SHA; record NOT_RUN when no run exists.
+   pinned Node versions and isolated negative controls. Record actual local validator
+   output on this exact source SHA; no GitHub Actions run is required.
 4. Inspect independent native lifecycle and automatic routing evidence for
    **each CLI**. Automatic routing must be >=85% per CLI on the candidate;
    lexical SIM, explicit requests and old builds do not count. Verify update
@@ -56,13 +59,12 @@ are deferred; enabling them is not a condition for Phase 3 completion.
 ## Authorization and execution
 
 Obtain a separate explicit owner instruction for committing, pushing,
-creating a tag, changing visibility, creating a release and each directory
-submission. Record the approved revision, version, target and act. None is
+changing repository visibility and each directory submission. Git tags are
+optional; GitHub Releases are out of scope. Record the approved revision, version, target and act. None is
 implied by an approved scope, signed review, green workflow or local PASS.
 
-Use accepted `vX.Y.Z` Git tags: `v0.1.0-rc.1` and `v0.1.0`. Confirm the tag
-points at the reviewed commit whose manifest version matches it. This
-procedure creates no tag and does not use provider-generated tag names.
+If optional Git tags are created, use `vX.Y.Z` and verify they point at the
+reviewed commit whose manifest version matches. No GitHub Release is needed.
 
 Before acting, compare the current commit with the authorized SHA. Stop on
 drift or failed checks; evaluate the new candidate instead. Content changes

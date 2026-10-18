@@ -35,8 +35,9 @@ routing >=85% on each CLI independently** must be measured in Phase 5.
 VS Code surfaces are **unverified and outside the v0.1.0 support claim**.
 Response Style Policy host tests, VS Code runtime tests, Branch Protection,
 Required Reviews and unrelated ADR/repository hygiene work are deferred.
-Those deferred items do not block Phase 4 implementation. Offline CI is not
-evidence of runtime routing or Skill compliance.
+Those deferred items do not block CLI qualification. The owner has removed
+GitHub Actions and GitHub Releases from the project process. Maintainers run
+offline validators manually; passing them is not proof of runtime routing.
 
 ## Quick start
 
@@ -84,7 +85,7 @@ are tested; loading and behavior on hosts remain unverified and deferred.
 | Host evidence | [Compatibility matrix](docs/COMPATIBILITY_MATRIX.md) |
 | Limitations | [Security and limitations](docs/SECURITY_AND_LIMITATIONS.md) |
 | Development | [Contributing](docs/CONTRIBUTING.md) |
-| CI design and evidence | [CI/CD design](docs/production/CI_CD_DESIGN.md) |
+| Offline validation (historical CI notes) | [Developer validators](tools/validate/README.md) · [Phase 3 history](docs/production/CI_CD_DESIGN.md) |
 | Release authorization | [Manual release sign-off](docs/production/MANUAL_RELEASE_SIGNOFF.md) |
 | Release status | [Release Gate Matrix](docs/production/RELEASE_GATE_MATRIX.md) |
 | History | [Changelog](CHANGELOG.md) |
@@ -95,8 +96,8 @@ are tested; loading and behavior on hosts remain unverified and deferred.
 repository and directory retain the long name; the plugin is `chayen`.
 `.claude-plugin/marketplace.json`, `.agents/plugins/marketplace.json` and
 `.github/plugin/marketplace.json` point at that same source.
-`catalog/`, `tools/`, `tests/`, `docs/`, `.github/workflows/` and
-`response-style/` are maintainer/opt-in material, not runtime components.
+`catalog/`, `tools/`, `tests/`, `docs/` and `response-style/` are
+maintainer/opt-in material, not runtime components.
 
 ## Reporting problems and release process
 
@@ -105,11 +106,12 @@ approved or published.** Do not post vulnerabilities publicly or infer a
 contact from a repository URL. See [SECURITY.md](SECURITY.md). Prepare
 redacted reproduction details using [Contributing](docs/CONTRIBUTING.md).
 
-Unprotected `main` is an **accepted release-process risk**. CI is not made a
-required status check here. Manual release sign-off is required before a
-version change is committed, pushed, tagged or published; a green check
-does not authorize those actions. Version strategy:
-Current candidate `0.1.0-rc.1` -> stable `0.1.0`, with `vX.Y.Z` Git tags.
+Unprotected `main` is an **accepted release-process risk**. There are no
+GitHub Actions or GitHub Releases in the Chayen release workflow. Run local
+validation and native CLI tests for the exact source revision, then obtain
+owner sign-off before publishing source/version changes. Version strategy:
+current candidate `0.1.0-rc.1` -> stable `0.1.0` in all plugin manifests.
+Git tags are optional reference pins, not a GitHub Release prerequisite.
 
 ## Credits
 

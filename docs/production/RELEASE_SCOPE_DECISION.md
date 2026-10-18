@@ -1,5 +1,8 @@
 # Release Scope Decision: Chayen v0.1.0
 
+> **Owner decision (2026-10-18):** GitHub Actions workflows and GitHub Releases are not part of Chayen distribution. Maintainers run offline validators and native CLI checks manually against an identified source revision. Stable status is based on approved `0.1.0` manifest versions and verified behavior, **not** a GitHub Release. Git tags are optional. Older Phase 3 CI references below are historical. Security/Support remains **LATER**, and automatic Skill Routing >=85% per CLI remains mandatory.
+
+
 | Field | Value |
 |---|---|
 | Release | **Chayen v0.1.0: public production release for verified CLI providers** |
@@ -147,7 +150,7 @@ Phase numbers in the tables refer to the sequence proposed in
 | K-05 | Regression guards: a validator for the upstream MIT notice, and Thai-digit and era detection in the Step 40 scorer, each with negative controls | P1-013, P1-014 (tooling); PG-32 | 4 | G-03, G-11, G-15 |
 | K-06 | Lifecycle tooling and runbook corrected for 15 skills and every lifecycle step on the three CLIs, with uninstall checked by absence and Copilot auto-update disabled | P1-018, P1-019; PG-15 | 4 | G-03, G-06, G-07, G-08 |
 | K-07 | Release-critical documentation and decision consistency: stale counts, versions, identifiers and verification claims corrected; docs-consistency rules added; provider limitations re-dated; release-related decisions ratified (§3.4) | P1-020, P1-028, P1-036, P1-009 (docs), P1-025, P1-021 (release-related part); PG-16, PG-38 (part), PG-43 | 2, 4, 8 | G-03, G-10, G-17 |
-| K-08 | CI that runs every offline gate on each push and pull request, on the declared minimum Node version and the current LTS, with least-privilege permissions and no provider calls | P1-016, P1-033; PG-36 | 3 | G-04 |
+| K-08 | Manual offline validators and negative controls executed against the identified candidate/stable source revision; no GitHub Actions or GitHub Releases | P1-016, P1-033; PG-36 | 3 | G-04 |
 | K-09 | Version integrity: `0.1.0-rc.1` then `0.1.0` in all four fields, one tag format, CHANGELOG section, SECURITY.md supported versions | P1-002; PG-09, PG-39 | 2 (tag), 6 | G-05, G-17 |
 | K-10 | Claude Code CLI native lifecycle of the frozen candidate | P1-001; PG-06, PG-10 | 7 | G-06 |
 | K-11 | Codex CLI native lifecycle, with the marketplace `authentication` and `category` fields confirmed against an official source and root-manifest resolution confirmed | P1-001, P1-026, P1-027; PG-07, PG-11 | 4, 7 | G-07 |

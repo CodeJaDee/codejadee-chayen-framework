@@ -1,5 +1,8 @@
 # Release Gate Matrix: Chayen v0.1.0
 
+> **Owner decision (2026-10-18):** GitHub Actions workflows and GitHub Releases are not part of Chayen distribution. Maintainers run offline validators and native CLI checks manually against an identified source revision. Stable status is based on approved `0.1.0` manifest versions and verified behavior, **not** a GitHub Release. Git tags are optional. Older Phase 3 CI references below are historical. Security/Support remains **LATER**, and automatic Skill Routing >=85% per CLI remains mandatory.
+
+
 | Field | Value |
 |---|---|
 | Release | Chayen v0.1.0: public production release for verified CLI providers |
@@ -106,7 +109,7 @@ and the date.
 | G-01 | Architecture | **PASS** (static) | Yes | — | Yes | K-01 | Maintainer |
 | G-02 | Product Scope Correctness | **PASS** (static) | Yes | — | Yes | K-02, K-03, K-04 | Maintainer |
 | G-03 | Validators and Regression Tests | **PASS** (local) | Yes | — | Yes | K-05, K-06, K-07 | Maintainer |
-| G-04 | CI/CD | **NOT_RUN** (remote) | Yes | — | Yes | K-08 | Maintainer |
+| G-04 | Manual Offline Validation | **NOT_RUN** (final source) | Yes | — | Yes | K-08 | Maintainer |
 | G-05 | Version Integrity | **BLOCKED** (committed freeze) | Yes | — | Yes | K-09 | Maintainer; Owner (OD-02) |
 | G-06 | Claude Code Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-10 | Evaluation Operator |
 | G-07 | Codex Lifecycle | **BLOCKED** (committed freeze) | — | — | Yes | K-06, K-11 | Evaluation Operator; Maintainer |
@@ -131,7 +134,7 @@ and the date.
 | **Total** | **17** | |
 
 **Release readiness:** **NOT READY.** All three milestones are blocked: M1
-by remote G-04, committed G-05 and outstanding G-15 content, M2 by the later G-16 decision, and M3 by 14 of the 17 gates. These are release milestone prerequisites, not reasons to stop isolated Phase 4 lifecycle work. Security/Support is LATER; accepted deferrals add no Phase 4 blockers.
+by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the later G-16 decision, and M3 by 14 of the 17 gates. These are release milestone prerequisites, not reasons to stop isolated Phase 4 lifecycle work. Security/Support is LATER; accepted deferrals add no Phase 4 blockers.
 
 **Roles.** These are roles, not named people:
 
@@ -181,17 +184,17 @@ by remote G-04, committed G-05 and outstanding G-15 content, M2 by the later G-1
 | Current status | **PASS** (local, Phase 4 working-tree RC). All 19 aggregate groups pass on Node 20.11.0 and 24.22.0, including 179 validator cases, upstream/numeral guards, 40 offline lifecycle controls, current-doc mutations and nine RC fingerprint/isolation/inventory controls. Independent manifest/reference/MIT negative controls pass. Native Claude strict plugin/marketplace validation and actionlint pass. Exact snapshot/results are in NATIVE_LIFECYCLE_REPORT.md; frozen-commit checks must repeat later. This does not establish routing or remote CI PASS. |
 | Release-blocking behaviour | Blocks M1 and M3. A failing suite on the candidate stops the freeze |
 
-### G-04: CI/CD
+### G-04: Manual Offline Validation
 
 | Field | Definition |
 |---|---|
-| Requirement | A CI workflow outside the plugin package runs the G-03 offline commands on every push and pull request (including `main`). Provider-native strict validation is a separately authorized host check when available; ordinary CI neither installs nor invokes provider CLIs. It runs on the declared Node minimum (20.11) and the current LTS, with `permissions: contents: read`, no provider credentials, and no provider or billed calls. Isolated broken-manifest, broken-reference and missing-notice controls demonstrate nonzero failure without breaking the branch. CI is green on the candidate commit and on the release commit. **Not required:** making CI a required status check (AR-03) |
-| Verification method | Actual CI run logs; isolated negative-control results; actionlint and workflow review |
-| Required evidence | Green candidate and release runs with actual run identifiers and revisions; isolated negative controls with command, expected diagnostic and nonzero validator exit. V-09/V-25 must pass; Phase 3 changes only the packaged README and adds no runtime components |
-| Dependencies | K-08 (Phase 3); G-03 content; workflow implementation authorized by the Phase 3 request; separate commit/push approval |
-| Responsible party | Maintainer; Owner (commit/push/release approval) |
-| Current status | **NOT_RUN** remotely. Phase 3 adds push/PR validation, read-only permissions, full-SHA actions, fail-fast preflight, Node 20.11.0/24.22.0 matrix, offline aggregates, mutation/scorer tests and static evaluations. actionlint and isolated negative controls pass locally; no remote run URL/ID has been observed. P1-016 implementation is complete and local minimum-version verification addresses P1-033; remote candidate/release evidence remains open. AR-03 settings stay deferred. |
-| Release-blocking behaviour | Blocks M1 and M3 |
+| Requirement | On the exact stable-version source revision, run all approved offline validators, negative/mutation controls and package/identity checks locally. **GitHub Actions workflows are not used or required.** Record the result and source SHA; passing local checks alone never proves provider runtime behavior. |
+| Verification method | `node tools/validate/validate-all.mjs --fail-fast`; `node tests/provider-compatibility/check-identity.mjs`; `node tools/evals/run-evaluation-suite.mjs --fail-fast`; affected negative controls |
+| Required evidence | Source SHA, commands, toolchain versions, exit codes, results and reviewer sign-off |
+| Dependencies | G-03; final candidate/stable source revision |
+| Responsible party | Maintainer and release approver |
+| Current status | **NOT_RUN on the final stable-version source.** Earlier RC working-tree offline checks passed; the former GitHub Actions pipeline is discontinued by Owner decision. |
+| Release-blocking behaviour | Blocks stable declaration if manual final-source checks fail or are not executed. GitHub Actions and GitHub Releases are not Release Gates. |
 
 ### G-05: Version Integrity
 
@@ -337,17 +340,17 @@ by remote G-04, committed G-05 and outstanding G-15 content, M2 by the later G-1
 | Current status | **BLOCKED.** The decision is deferred ("later"). `SECURITY.md` correctly states that no private channel is confirmed (P1-004, P1-006) |
 | Release-blocking behaviour | **Blocks M2** (public visibility) and any public tag or release, candidate or stable. Blocks M3. Does not block M1 or private provider testing |
 
-### G-17: Release Integrity
+### G-17: Source and Version Integrity (No GitHub Release)
 
 | Field | Definition |
 |---|---|
-| Requirement | **(1) One candidate:** all runtime evidence for G-06..G-14 names one frozen commit and its package fingerprint. **(2) Delta rule:** the `0.1.0` release commit differs from the evaluated candidate only in the four version fields, `CHANGELOG.md`, the `SECURITY.md` version table and documentation outside the package. The metadata fingerprint is identical, and so is the package fingerprint apart from the version fields. Any other difference requires a new candidate. **(3) Release smoke:** on each CLI, install `0.1.0`, see Skills (15), update from `0.1.0-rc.1`, uninstall. **(4) Integrity:** the working tree is clean; G-01 and G-03 re-run and pass, and CI is green, on the release commit; the tag follows OD-02, points at the release commit, and local and remote agree. **(5) Disclosure:** the release notes and user docs carry every AR limitation statement and the provider limitations with dated versions; compatibility labels come only from the evidence. **(6) Decisions:** the release-related decisions in scope §3.4 are ACCEPTED. **(7) Authorization:** each release act has its own recorded owner approval (OD-12) |
-| Verification method | Commit diff between candidate and release; fingerprint comparison; `git status`; `validate-all.mjs`; `check-identity.mjs`; CI log; `git ls-remote --tags`; a documentation review against ACCEPTED_RISKS; the approval records |
-| Required evidence | A release record listing the candidate and release SHAs, the fingerprints, every gate's evidence reference, the delta diff, the smoke results, the tag verification and the approval references |
-| Dependencies | Every other gate; OD-02, OD-11, OD-12 |
-| Responsible party | Release Governance Lead; Owner (authorization) |
-| Current status | **BLOCKED.** Phase 4 records an exact RC.1 working-tree package and metadata fingerprint with native evidence, but no committed M1 freeze exists. Claude disabled loading and all Copilot lifecycle work remain open. Remote CI is NOT_RUN; Phase 5 is not started. Manual release sign-off remains required for accepted unprotected-main risk. No commit/push/tag/publication/settings change is authorized or performed by this phase. Deferred host tests and unrelated hygiene are not added as blockers. |
-| Release-blocking behaviour | The final gate: blocks M3 and the tag act. A PASS here does not itself authorize publication |
+| Requirement | All runtime evidence for G-06..G-14 names an identifiable tested source revision and package fingerprint. Version `0.1.0` in every manifest corresponds to the approved stable source. Review deltas from the qualified RC; content changes require affected tests to repeat. On the stable source, G-01, G-03 and G-04 pass; the three CLIs satisfy native lifecycle/routing/security gates. Documentation discloses accepted risks. Release-related decisions and publication authorization are recorded. **No GitHub Actions or GitHub Release publication is required.** Git tags are optional (if created, they must match the manifest revision). |
+| Verification method | Review the source diff, version parity and package hash; manually run offline validators; inspect per-provider evidence and documented owner approval |
+| Required evidence | Stable source revision, matching versions/fingerprints, manual validation results, provider smoke results, final scope/risks disclosure, owner sign-off |
+| Dependencies | All other scoped release gates including G-16, unless G-16 is separately revised by the owner |
+| Responsible party | Maintainer, Release Governance Lead and Owner |
+| Current status | **BLOCKED.** A stable-version source and complete three-CLI runtime evidence are not yet established. The old GitHub Actions and GitHub Releases requirements have been removed, but other release blockers remain. |
+| Release-blocking behaviour | Blocks stable designation if release integrity or authorization is incomplete, not for missing GitHub Actions or Releases. |
 
 ## 4. Traceability from the baseline gates
 

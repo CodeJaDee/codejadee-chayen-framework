@@ -1,5 +1,8 @@
 # Release metadata
 
+> **Owner update (2026-10-18):** GitHub Actions and GitHub Releases are not used. Stable status is declared only for the approved `0.1.0` manifest/source after manual checks. Git tags remain optional. Historical text below about remote CI or required tags is superseded.
+
+
 Reviewed 2026-10-18, Phase 4. Approved target: **Chayen v0.1.0, PUBLIC,
 MIT, publisher CodeJaDee**. These decisions do not mean the release has
 been published or the project licence applied.
@@ -50,5 +53,5 @@ separate real-provider evidence after authorized publication.
 
 Unprotected `main` is an accepted process risk. Use
 [manual release sign-off](../production/MANUAL_RELEASE_SIGNOFF.md) before
-commit/push/tag/publication. Remote CI is NOT_RUN until actual run logs are
-observed. Security/Support stays pending; no channel is invented here.
+commit/push/tag/publication. GitHub Actions have been discontinued. Record local offline checks on the
+exact stable source revision instead. Security/Support stays pending; no channel is invented here.

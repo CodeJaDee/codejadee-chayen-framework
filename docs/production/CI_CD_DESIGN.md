@@ -1,5 +1,8 @@
 # Phase 3: CI/CD design and local evidence
 
+> **Historical record only.** The Owner discontinued GitHub Actions and GitHub Releases on 2026-10-18. The workflow described below has been removed; offline validators remain usable manually. These earlier implementation notes are retained for audit history.
+
+
 Phase 4 addendum (2026-10-18): the current aggregate adds offline RC
 fingerprint/isolation negative controls, for 19 groups. Native lifecycle
 scripts remain excluded from CI. Historical Phase 3 results below describe
@@ -19,7 +22,7 @@ Phase 3 changes. No remote run is inferred from the presence of that commit.
 
 ## Workflow and toolchain
 
-[validate.yml](../../.github/workflows/validate.yml) runs for every `push`
+`validate.yml` (historical workflow; removed) runs for every `push`
 and `pull_request`, without branch/path exclusions. It requests only
 `contents: read`; checkout does not persist credentials. No secrets, provider
 binaries, native installs, model calls, releases or repository settings are

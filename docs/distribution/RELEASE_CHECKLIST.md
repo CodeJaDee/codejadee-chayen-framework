@@ -1,5 +1,8 @@
 # Release checklist: Chayen v0.1.0
 
+> **Owner update (2026-10-18):** GitHub Actions and GitHub Releases removed from the release process. Use offline manual validation plus provider checks and versioned source instead. Git tags are optional.
+
+
 Reviewed 2026-10-18, Phase 4. **NOT READY for release.** This is an operator
 checklist, not permission to execute release actions. The
 [Release Gate Matrix](../production/RELEASE_GATE_MATRIX.md) governs readiness.
@@ -22,19 +25,16 @@ Version strategy and the approved public/MIT/CodeJaDee target are in
 - [x] Align CHANGELOG, supported versions and working-tree candidate fingerprint.
 - [ ] Review the exact commit and static package diff.
 
-## C. Offline validation and CI
+## C. Manual offline validation (no GitHub Actions)
 
-- [x] `node tools/validate/validate-all.mjs --fail-fast` passes locally on both pinned Node versions.
-- [x] `node tests/provider-compatibility/check-identity.mjs` passes locally.
-- [x] `node tools/evals/run-evaluation-suite.mjs --fail-fast` passes locally on both pinned Node versions.
-- [x] Isolated manifest/reference/MIT negative controls detect failures locally.
-- [x] Workflow syntax is valid; both pinned Node local validation aggregates pass.
-- [ ] Record actual candidate/release GitHub Actions run URLs and SHAs.
-  Local PASS is not remote PASS; Phase 3 remote execution is NOT_RUN.
+- [ ] On the exact stable-version source commit, run `node tools/validate/validate-all.mjs --fail-fast`.
+- [ ] Run `node tests/provider-compatibility/check-identity.mjs`.
+- [ ] Run `node tools/evals/run-evaluation-suite.mjs --fail-fast`.
+- [ ] Run the applicable negative/mutation controls and `claude plugin validate --strict`, if available.
+- [ ] Record command output, exit codes, tool versions, source SHA and reviewer sign-off.
 
-Native `claude plugin validate --strict` is a separate authorized check when
-that CLI is available. Ordinary CI uses the repository's offline validators
-and does not install provider binaries or require provider credentials.
+Historical local RC checks passed in earlier phases but must be repeated on the final stable source.
+GitHub Actions and remote CI runs are deliberately **not required**.
 
 ## D. Native qualification (Phase 4 lifecycle; Phase 5 evaluation)
 
@@ -64,9 +64,9 @@ The release contract retains its separate publication prerequisite.
 ## F. Release (owner only, after explicit approval)
 
 - [ ] Complete [manual sign-off](../production/MANUAL_RELEASE_SIGNOFF.md).
-- [ ] Record separate approval for each commit, push, tag, visibility change,
-  release and directory submission.
-- [ ] Use `vX.Y.Z` tags consistent with ADR-0008; verify tag/version/commit match.
+- [ ] Record separate approval for source pushes, public visibility and directory submission.
+- [ ] Git tags are optional. If used, verify their version and commit match.
+- [ ] Do not create a GitHub Release; it is not part of Chayen distribution.
 - [ ] Repeat applicable offline and delta checks on the stable release commit.
 - [ ] Publish only after scoped release gates and required owner inputs close.
 
