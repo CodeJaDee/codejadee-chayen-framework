@@ -20,6 +20,7 @@ const steps = [
   ["Phase 2 Thai numerals and calendar scorer regressions", "tests/editorial/numeric-preservation.test.mjs", []],
   ["Phase 2 isolated lifecycle regressions (offline fakes)", "tests/provider-compatibility/lifecycle.test.mjs", []],
   ["RC fingerprint and isolation negative controls (offline)", "tests/provider-compatibility/qualify-rc.test.mjs", []],
+  ["Phase 5 evaluation fixtures, classifiers and no-send guards (offline; no provider calls)", "tests/evaluation/phase5/phase5.test.mjs", []],
   ["G-01 G-02 G-04..G-10 package, skills, references, catalog alignment", "tools/validate/validate-package.mjs", []],
   ["G-03 catalog integrity (V-11)", "tools/catalog/check-catalog.mjs", []],
   ["G-03b technology catalog (V-23)", "tools/catalog/check-technology.mjs", []],

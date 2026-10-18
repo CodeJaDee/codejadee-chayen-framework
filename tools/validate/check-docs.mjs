@@ -30,7 +30,10 @@ for (const dir of ["docs", "docs/distribution"]) {
   const d = path.join(root, dir);
   if (fs.existsSync(d)) for (const f of fs.readdirSync(d)) if (f.endsWith(".md")) docs.push(path.join(d, f));
 }
-for (const file of ["plugins/codejadee-chayen-framework/README.md", "docs/production/CI_CD_DESIGN.md", "docs/production/MANUAL_RELEASE_SIGNOFF.md", "docs/production/RELEASE_GATE_MATRIX.md", "docs/production/NATIVE_LIFECYCLE_REPORT.md"]) {
+for (const file of ["plugins/codejadee-chayen-framework/README.md", "docs/production/CI_CD_DESIGN.md", "docs/production/MANUAL_RELEASE_SIGNOFF.md", "docs/production/RELEASE_GATE_MATRIX.md", "docs/production/NATIVE_LIFECYCLE_REPORT.md",
+  "docs/production/ROUTING_EVALUATION.md", "docs/production/HUMANIZER_QUALITY_REPORT.md", "docs/production/CAPABILITY_SAMPLE_RESULTS.md", "docs/production/SECURITY_TEST_REPORT.md",
+  "docs/production/FINAL_RELEASE_READINESS.md", "docs/production/FINAL_RELEASE_CHECKLIST.md", "docs/production/RELEASE_NOTES_v0.1.0_DRAFT.md",
+  "docs/production/INSTALL_MIGRATION_ROLLBACK.md", "docs/production/OWNER_APPROVAL_CHECKLIST.md"]) {
   if (fs.existsSync(path.join(root, file))) docs.push(path.join(root, file));
 }
 

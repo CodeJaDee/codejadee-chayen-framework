@@ -6,8 +6,8 @@
 | Field | Value |
 |---|---|
 | Release | Chayen v0.1.0: public production release for verified CLI providers |
-| Date | 2026-10-18 (Plan v4, Phase 4: RC and native CLI lifecycle) |
-| Status as of | Working-tree RC based on `9ef22cc9b6abf348d145f0df8ead160207526540`; approved RC.1 fields applied. Exact package and native evidence: [NATIVE_LIFECYCLE_REPORT.md](NATIVE_LIFECYCLE_REPORT.md). No committed M1 freeze, push or tag; remote Actions NOT_RUN. Phase 1..3 evidence remains historical |
+| Date | 2026-10-18 (Plan v4, Phase 6: final release qualification. **Final decision: NO-GO**, see [FINAL_RELEASE_READINESS](FINAL_RELEASE_READINESS.md)) |
+| Status as of | Current tip `4bda4db8fb6b50b78388f8400a576ccc07fe7c53` (`main` = `origin/main`, no tag). It records the owner decision removing GitHub Actions and GitHub Releases and changes no package file. RC.1 content was first committed at `38570b3`. Package fingerprint `efc4c6e6…` (committed LF bytes) / `9e5705fe…` (Windows CRLF checkout, the Phase 4 native-tested snapshot); line-ending-normalized content identical; Skill metadata `339b3125d1347648`. Not a formal M1 freeze (G-01, G-04 final source, G-15 outstanding). Phase 5: **0 billed provider calls** (OD-10 not granted). Phase 6: **NO-GO** ([FINAL_RELEASE_READINESS](FINAL_RELEASE_READINESS.md)). Reports: [ROUTING_EVALUATION](ROUTING_EVALUATION.md) · [HUMANIZER_QUALITY_REPORT](HUMANIZER_QUALITY_REPORT.md) · [CAPABILITY_SAMPLE_RESULTS](CAPABILITY_SAMPLE_RESULTS.md) · [SECURITY_TEST_REPORT](SECURITY_TEST_REPORT.md) · [NATIVE_LIFECYCLE_REPORT](NATIVE_LIFECYCLE_REPORT.md) |
 | Scope and contract | [RELEASE_SCOPE_DECISION.md](RELEASE_SCOPE_DECISION.md) (owner decisions, K-01..K-20, routing contract §4) |
 | Accepted risks | [ACCEPTED_RISKS.md](ACCEPTED_RISKS.md) (AR-01..AR-04) |
 | Baseline (preserved) | [PRODUCTION_READINESS_MATRIX.md](PRODUCTION_READINESS_MATRIX.md) (PG-01..PG-43) · [PRODUCTION_GAP_ANALYSIS.md](PRODUCTION_GAP_ANALYSIS.md) · [PHASE_01_EVIDENCE.md](PHASE_01_EVIDENCE.md) |
@@ -106,35 +106,41 @@ and the date.
 
 | Gate | Name | Status | Blocks M1 | Blocks M2 | Blocks M3 | KEEP items | Responsible |
 |---|---|---|---|---|---|---|---|
-| G-01 | Architecture | **PASS** (static) | Yes | — | Yes | K-01 | Maintainer |
+| G-01 | Architecture | **BLOCKED** (technical parts PASS; D-009/DF-03 ratification open) | Yes | — | Yes | K-01 | Maintainer; Owner (OD-11) |
 | G-02 | Product Scope Correctness | **PASS** (static) | Yes | — | Yes | K-02, K-03, K-04 | Maintainer |
-| G-03 | Validators and Regression Tests | **PASS** (local) | Yes | — | Yes | K-05, K-06, K-07 | Maintainer |
-| G-04 | Manual Offline Validation | **NOT_RUN** (final source) | Yes | — | Yes | K-08 | Maintainer |
+| G-03 | Validators and Regression Tests | **PASS** (on `38570b3` and `4bda4db`; Node 20.11.0 and 24.22.0) | Yes | — | Yes | K-05, K-06, K-07 | Maintainer |
+| G-04 | Manual Offline Validation | **NOT_RUN** (final stable source; RC sources PASS) | Yes | — | Yes | K-08 | Maintainer |
 | G-05 | Version Integrity | **BLOCKED** (committed freeze) | Yes | — | Yes | K-09 | Maintainer; Owner (OD-02) |
 | G-06 | Claude Code Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-10 | Evaluation Operator |
 | G-07 | Codex Lifecycle | **BLOCKED** (committed freeze) | — | — | Yes | K-06, K-11 | Evaluation Operator; Maintainer |
 | G-08 | Copilot Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-12 | Evaluation Operator |
-| G-09 | Automatic Routing ≥ 85% per CLI | **FAIL** | — | — | Yes | K-03, K-13 | Evaluation Operator; Owner (OD-05) |
+| G-09 | Automatic Routing ≥ 85% per CLI | **BLOCKED** (was FAIL; not measured) | — | — | Yes | K-03, K-13 | Evaluation Operator; Owner (OD-05) |
 | G-10 | Explicit Invocation and No-match | **BLOCKED** | — | — | Yes | K-07, K-14 | Evaluation Operator; Maintainer |
 | G-11 | Humanizer Quality | **BLOCKED** (content fixed) | Content parts | — | Yes | K-04, K-05, K-15 | Owner (OD-06, OD-07); Reviewers; Operator |
 | G-12 | Engineering Capability Sampling | **BLOCKED** | — | — | Yes | K-16 | Owner (OD-08); Operator |
-| G-13 | Technology Fact Checks | **NOT_RUN** | — | — | Yes | K-17 | Maintainer |
+| G-13 | Technology Fact Checks | **NOT_RUN** (73 PASS / 0 FAIL / 86 NOT_RUN) | — | — | Yes | K-17 | Maintainer |
 | G-14 | Agent Security | **BLOCKED** | Static part | — | Yes | K-01, K-18 | Operator; Owner (OD-11) |
 | G-15 | Public Distribution and License | **FAIL** | Licence files | Licence and rights | Yes | K-05, K-19 | Owner (OD-03); Maintainer |
 | G-16 | Security and Support Decision | **BLOCKED** | — | **Yes** | Yes | K-20 | Owner (OD-01) |
-| G-17 | Release Integrity | **BLOCKED** | — | — | Yes (final gate) | K-01, K-07, K-09 | Release Governance Lead; Owner (OD-12) |
+| G-17 | Source and Version Integrity (no GitHub Release) | **BLOCKED** | — | — | Yes (final gate) | K-01, K-07, K-09 | Release Governance Lead; Owner (OD-12) |
 
 | Status | Count | Gates |
 |---|---|---|
-| PASS | 3 | G-01, G-02, G-03 |
-| FAIL | 2 | G-09, G-15 |
+| PASS | 2 | G-02, G-03 |
+| FAIL | 1 | G-15 |
 | NOT_RUN | 2 | G-04, G-13 |
-| BLOCKED | 10 | G-05, G-06, G-07, G-08, G-10, G-11, G-12, G-14, G-16, G-17 |
+| BLOCKED | 12 | G-01, G-05, G-06, G-07, G-08, G-09, G-10, G-11, G-12, G-14, G-16, G-17 |
 | NOT_APPLICABLE | 0 | — |
 | **Total** | **17** | |
 
-**Release readiness:** **NOT READY.** All three milestones are blocked: M1
-by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the later G-16 decision, and M3 by 14 of the 17 gates. These are release milestone prerequisites, not reasons to stop isolated Phase 4 lifecycle work. Security/Support is LATER; accepted deferrals add no Phase 4 blockers.
+**Release readiness:** **NOT READY (Phase 6: NO-GO).** All three milestones are blocked:
+- M1 by G-01 (D-009 ratification), final-source G-04, G-05 and outstanding G-15 content;
+- M2 by the later G-16 decision;
+- M3 by 15 of the 17 gates. These are release milestone prerequisites, not reasons to stop isolated Phase 4 lifecycle work. Security/Support is LATER; accepted deferrals add no Phase 4 blockers.
+
+**Phase 6 final decision (2026-10-18): NO-GO.** The results are 2 PASS, 1 FAIL, 2 NOT_RUN and 12 BLOCKED. No approved disposition covers the failing or blocked gates. The checks were independently re-run on clean clones of `38570b3` and of the current tip `4bda4db`, which removes the GitHub Actions and GitHub Release requirements by owner decision and leaves the package byte-identical; see [final-checks.json](../../tests/production/results/2026-10-18-phase6/final-checks.json). G-01 was challenged from PASS to BLOCKED: scope §3.4 requires D-009/DF-03 to be ACCEPTED, and D-009 is still PROPOSED. No routing score exists on any CLI. Remaining work: [FINAL_RELEASE_CHECKLIST](FINAL_RELEASE_CHECKLIST.md) and [OWNER_APPROVAL_CHECKLIST](OWNER_APPROVAL_CHECKLIST.md).
+
+**Phase 5 (2026-10-18).** No automatic routing accuracy exists for any CLI. G-09 moved FAIL → BLOCKED only because its tooling preconditions (P1-008, P1-015) are now implemented. It is not a routing PASS: each CLI must still independently reach ≥ 85% on the frozen fingerprint. The runtime gates G-09..G-12 and G-14 (adversarial part) need OD-10 billed-run authorization with a budget, plus OD-05/OD-06/OD-08/OD-11 decisions, fluent reviewers and Copilot CLI ≥ 1.0.91. The prepared matrix is 2,268 calls (756 per CLI). Static checks never move these gates to PASS.
 
 **Roles.** These are roles, not named people:
 
@@ -157,7 +163,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | An evidence-log entry for each command: exit code, counts, revision. Re-run on the frozen candidate under G-17 |
 | Dependencies | None to establish. OD-11 for the D-009 ratification. Re-checked at G-17 |
 | Responsible party | Maintainer (runs); Release Governance Lead (review); Owner (OD-11) |
-| Current status | **PASS** (static). Phase 2 package/security/identity checks retain the native plugin architecture, shared source and static Markdown/JSON package. See the hardening report for current commands. D-009/DF-03 ratification remains outside Phase 2. |
+| Current status | **BLOCKED** (Phase 6 challenge; previously PASS). The technical parts PASS on candidate `38570b3`, re-run in Phase 6:<br>• static package of 254 `.md` + 2 `.json` files, with no hooks, agents, commands, scripts, MCP, settings or executables;<br>• one shared source; V-25 0 errors; boundaries 34/34; identity 15/15;<br>• `claude plugin validate --strict` PASS on the plugin and the marketplace.<br>The requirement also includes ratification of D-009/DF-03. `DECISIONS.md` still lists D-009 as PROPOSED (DF-03 OPEN), and scope §3.4 says a release-related decision must be ACCEPTED before its gate can PASS. Needs OD-11. |
 | Release-blocking behaviour | Blocks M1 and M3. Any later FAIL, such as an executable file, a hook or a second skills source, stops the release until fixed. A static PASS is never a runtime guarantee |
 
 ### G-02: Product Scope Correctness
@@ -181,7 +187,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Exit codes and pass counts on the candidate commit. The new negative controls are listed by ID and fail as expected when mutated |
 | Dependencies | K-05/K-06 (Phase 2), K-07 (Phase 3) |
 | Responsible party | Maintainer |
-| Current status | **PASS** (local, Phase 4 working-tree RC). All 19 aggregate groups pass on Node 20.11.0 and 24.22.0, including 179 validator cases, upstream/numeral guards, 40 offline lifecycle controls, current-doc mutations and nine RC fingerprint/isolation/inventory controls. Independent manifest/reference/MIT negative controls pass. Native Claude strict plugin/marketplace validation and actionlint pass. Exact snapshot/results are in NATIVE_LIFECYCLE_REPORT.md; frozen-commit checks must repeat later. This does not establish routing or remote CI PASS. |
+| Current status | **PASS** (Phase 6, on committed sources). `validate-all` passes 19/19 in clean clones of `38570b3` and of `4bda4db` on Node 24.22.0 and on the official Node 20.11.0 binary (SHA-256 verified). The evaluation suite and identity (15/15) pass on both. This includes 179 validator cases, the upstream-notice and numeral guards, the lifecycle and RC negative controls, and the current-doc mutations. With the uncommitted Phase 5/6 tooling, the working tree passes 20/20 groups (13 additional Phase 5 controls). Evidence: [final-checks.json](../../tests/production/results/2026-10-18-phase6/final-checks.json). This does not establish routing or provider behaviour. |
 | Release-blocking behaviour | Blocks M1 and M3. A failing suite on the candidate stops the freeze |
 
 ### G-04: Manual Offline Validation
@@ -193,7 +199,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Source SHA, commands, toolchain versions, exit codes, results and reviewer sign-off |
 | Dependencies | G-03; final candidate/stable source revision |
 | Responsible party | Maintainer and release approver |
-| Current status | **NOT_RUN on the final stable-version source.** Earlier RC working-tree offline checks passed; the former GitHub Actions pipeline is discontinued by Owner decision. |
+| Current status | **NOT_RUN on the final stable-version source**, because no `0.1.0` source exists yet. On the current RC sources, Phase 6 ran the G-04 method manually in clean clones of `38570b3` and `4bda4db`: `validate-all` 19/19 on Node 20.11.0 and 24.22.0, `check-identity` 15/15, `run-evaluation-suite --fail-fast` PASS, CI negative controls 4/4, and native strict validation 2/2 on `38570b3`. Reviewer sign-off on the final source is still required. The former GitHub Actions pipeline is discontinued by owner decision. |
 | Release-blocking behaviour | Blocks stable declaration if manual final-source checks fail or are not executed. GitHub Actions and GitHub Releases are not Release Gates. |
 
 ### G-05: Version Integrity
@@ -205,7 +211,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Identity 15/15 PASS on the candidate and the release commits; a diff of the four fields; tag-to-commit verification |
 | Dependencies | Accepted tag strategy; K-09 (later candidate freeze); G-02 content final |
 | Responsible party | Maintainer; Owner (OD-02, commit and tag authorization) |
-| Current status | **BLOCKED** on committed candidate freeze. Phase 4 applies approved OWN-07 `0.1.0-rc.1` to all four fields, CHANGELOG and supported-version docs. Version parity is verified on the identifiable working-tree package; package/metadata fingerprints are in the lifecycle report. HEAD is still the pre-edit revision. A commit/tag/publication is not authorized or created; later tag-to-commit verification remains open. |
+| Current status | **BLOCKED.** The four version fields agree on `0.1.0-rc.1` (identity 15/15 on `38570b3` and `4bda4db`) and the content is committed. Remaining: stable `0.1.0` source, CHANGELOG and SECURITY version table for the stable version, M1 prerequisites (G-01, G-15), and the canonical package-fingerprint rule (committed LF versus CRLF checkout). Git tags are optional by the 2026-10-18 owner decision; if created, they must use the ADR-0008 `vX.Y.Z` form and match the manifest revision. No tag was created. |
 | Release-blocking behaviour | Blocks M1 (candidate fields) and M3 |
 
 ### G-06: Claude Code Lifecycle
@@ -253,7 +259,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | A `summary.json` per CLI for the frozen fingerprint, with ≥ 3 runs per probe, a no-plugin baseline arm, per-type rates, Wilson intervals and a per-Skill breakdown |
 | Dependencies | M1 (final descriptions after K-03 and K-04); G-06..G-08 install working; K-13; OD-05, OD-10 |
 | Responsible party | Evaluation Operator; Owner (OD-05, OD-10); Release Governance Lead (review) |
-| Current status | **FAIL** on existing evaluation preconditions P1-008/P1-015. Phase 2 descriptions changed, invalidating all historical routing evidence. Nitro/Elysia no-match and i18n engineering probes now agree with scope. Automatic routing >=85% must be measured independently per CLI in Phase 5 on the new frozen build; no routing PASS is claimed. |
+| Current status | **BLOCKED** (was FAIL on preconditions P1-008/P1-015). Phase 5 implements those preconditions, offline-verified:<br>• a frozen 82-scenario probe set: 44 positive covering all 15 Skills twice plus 14 overlap probes, 12 negative, 10 no-match, 1 inspect-first, 15 explicit;<br>• `run-phase5.mjs`, which measures the natively installed candidate on Claude, Codex and Copilot and records commit, package/metadata fingerprints, probe hash, CLI version and model;<br>• per-CLI Wilson summaries that refuse pooling.<br>**0 provider runs**, so no accuracy is claimed for any CLI. Remaining: OD-10 authorization and budget; OD-05 review of expected sets and PT-01..06; Codex signal pilot review; Copilot CLI install. See [ROUTING_EVALUATION](ROUTING_EVALUATION.md). |
 | Release-blocking behaviour | Blocks M3. A CLI below 85% blocks the release; it cannot stay listed as supported and be excused. Any description change resets the gate |
 
 ### G-10: Explicit Invocation and No-match
@@ -265,7 +271,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | The per-CLI summaries from G-09, explicit and no-match sections; corrected docs |
 | Dependencies | As G-09; K-07 (docs), K-14; OD-05, OD-11 |
 | Responsible party | Evaluation Operator; Maintainer (docs) |
-| Current status | **BLOCKED** on candidate and authorized native measurements. Phase 3 fixes P1-009/P1-036 documentation: old namespace/build results are explicitly historical and no longer credited to `/chayen:`. Current explicit invocation and no-match remain NOT_RUN per CLI; no runtime PASS is claimed. |
+| Current status | **BLOCKED** on authorized native measurements. Phase 3 fixes P1-009/P1-036 documentation. Phase 5 prepares 15 explicit probes (one per Skill, native syntax per host) and 10 no-match plus 12 negative probes with a no-plugin baseline arm. Explicit invocation and no-match remain NOT_RUN on every CLI; no runtime PASS is claimed. |
 | Release-blocking behaviour | Blocks M3 |
 
 ### G-11: Humanizer Quality
@@ -277,7 +283,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Arm outputs per CLI, scorer reports, signed reviewer score files, the case-provenance record, MHR rows promoted only from this evidence |
 | Dependencies | OD-06, OD-07, OD-10; K-04, K-05, K-15; M1 |
 | Responsible party | Owner (OD-06, OD-07); Reviewers; Evaluation Operator; Maintainer (content) |
-| Current status | **BLOCKED.** Phase 2 content/scorer defects P1-012/P1-014 are fixed with numeric and calendar regression tests. Provider/human quality evaluation is NOT_RUN; rubric approval, independent fluent reviewers, candidate and authorized evaluation remain prerequisites (P1-010/P1-011/P1-032). |
+| Current status | **BLOCKED.** Phase 2 content/scorer defects P1-012/P1-014 are fixed with numeric and calendar regression tests. Phase 5 prepares a 30-case risk-based subset (12 TH, 12 EN, 6 mixed/adversarial) with baseline and plugin arms in Step 40 scorer format. It records dataset gaps: no Thai-digit case and one BE case; three supplementary cases are PROPOSED. **0 model outputs; no human scores exist or are invented.** Rubric approval (OD-06), reviewers and authorization (OD-10) remain prerequisites. See [HUMANIZER_QUALITY_REPORT](HUMANIZER_QUALITY_REPORT.md). |
 | Release-blocking behaviour | The content parts block M1; the evaluation blocks M3 |
 
 ### G-12: Engineering Capability Sampling
@@ -289,7 +295,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Run files under `tests/**/results` for the agreed sample, grading records, updated catalog statuses |
 | Dependencies | OD-08, OD-10; M1; an agent runner or procedure for recipe and workflow cases (none exists today, KL-15) |
 | Responsible party | Owner (OD-08); Evaluation Operator; Maintainer |
-| Current status | **BLOCKED.** No approved sample, no authorization, no candidate, no runner. Baseline: 0 of 206, 0 of 108 and 0 of 12 VERIFIED (E-18; P1-022; PG-22 recorded NOT_RUN under the audit's wording) |
+| Current status | **BLOCKED.** Phase 5 provides a runner and a proposed sample of 24 scenarios across .NET, Angular/TS, SQL Server, PostgreSQL, cross-stack, security, testing and DevOps, plus 4 workflows (WF-01, WF-05, WF-07, WF-10), with a no-plugin baseline (KL-15 runner gap addressed). No approved sample (OD-08), no authorization (OD-10) and 0 runs. Still 0 of 206, 0 of 108 and 0 of 12 VERIFIED; untested capabilities stay IMPLEMENTED. See [CAPABILITY_SAMPLE_RESULTS](CAPABILITY_SAMPLE_RESULTS.md) |
 | Release-blocking behaviour | Blocks M3 |
 
 ### G-13: Technology Fact Checks
@@ -301,7 +307,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Six reports with versions and PASS/FAIL/NOT_RUN counts, plus the clean-up record |
 | Dependencies | A disposable environment (container or CI job, K-08 infrastructure); OD-09 if any NOT_RUN remains. Technology content changes after the run reset this gate |
 | Responsible party | Maintainer; Owner (OD-09) |
-| Current status | **NOT_RUN.** Baseline JS packs: 8 PASS, 0 FAIL, 48 NOT_RUN (E-25..E-27). The .NET, SQL Server and PostgreSQL suites were not run because of side effects (P1-023) |
+| Current status | **NOT_RUN** (partially executed, 0 FAIL). On 2026-10-18 all six suites ran in disposable environments: temp fixture copies, NuGet caches in scratch, and a LocalDB `ChayenFacts` instance created and then deleted. Result: **159 checks: 73 PASS, 0 FAIL, 86 NOT_RUN**.<br>• JS packs 8/0/48<br>• .NET 24/0/7 (`dotnet-ef` and .NET 8 SDK absent)<br>• SQL Server 30/0/0<br>• PostgreSQL/cross-stack 11/0/31 (no PostgreSQL binaries, Python deps or browser)<br>159 versus 152 reconciled: E-06 excludes the 7 driver-reference checks. Closing the gate needs the NOT_RUN checks run in a pinned container/CI job, or an explicit OD-09 list. See [CAPABILITY_SAMPLE_RESULTS](CAPABILITY_SAMPLE_RESULTS.md) |
 | Release-blocking behaviour | Blocks M3 |
 
 ### G-14: Agent Security
@@ -313,7 +319,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Static outputs on the candidate; per-CLI adversarial run records with transcripts and outcome per case |
 | Dependencies | M1; OD-10, OD-11; K-18 |
 | Responsible party | Evaluation Operator; Owner (OD-11); Release Governance Lead |
-| Current status | **BLOCKED.** The static part passes (E-02, E-03). The adversarial runs have not been executed (P1-024; KL-40, KL-44). ADR-0007 is PROPOSED |
+| Current status | **BLOCKED.** The static part passes on the candidate (V-25 0 errors; boundaries 34/34). Phase 5 prepares 16 adversarial cases, two per category: repository injection, malicious tool output, forged approval, unauthorized file change, secret disclosure, destructive database, unauthorized publishing, dangerous shell. They use a disposable fixture, harmless sentinel payloads and CRITICAL/UNSAFE_ATTEMPT classification under native permissions. **0 executed adversarial runs**, so there is no zero-critical result yet (P1-024; KL-40, KL-44). ADR-0007 is PROPOSED. See [SECURITY_TEST_REPORT](SECURITY_TEST_REPORT.md) |
 | Release-blocking behaviour | The static part blocks M1; the whole gate blocks M3. One injection-driven action is a FAIL |
 
 ### G-15: Public Distribution and License
@@ -349,7 +355,7 @@ by final-source G-04, committed G-05 and outstanding G-15 content, M2 by the lat
 | Required evidence | Stable source revision, matching versions/fingerprints, manual validation results, provider smoke results, final scope/risks disclosure, owner sign-off |
 | Dependencies | All other scoped release gates including G-16, unless G-16 is separately revised by the owner |
 | Responsible party | Maintainer, Release Governance Lead and Owner |
-| Current status | **BLOCKED.** A stable-version source and complete three-CLI runtime evidence are not yet established. The old GitHub Actions and GitHub Releases requirements have been removed, but other release blockers remain. |
+| Current status | **BLOCKED.** No stable-version (`0.1.0`) source exists. The latest RC sources (`38570b3`, and `4bda4db` with an identical package) lack complete three-CLI runtime evidence: Claude disabled loading and all Copilot lifecycle work are open, and Phase 5 executed no runtime evaluation (OD-10). G-01 is BLOCKED (D-009) and G-04 is NOT_RUN on the final source. Limitation disclosures are incomplete: the AR-01 verbatim statement, the AR-03 pinned-install advice and the AR-04 DECISIONS header are missing. Release-related decisions (scope §3.4) are not ACCEPTED and no publication authorization is recorded. The owner removed the GitHub Actions and GitHub Release requirements on 2026-10-18; they are not counted as blockers. No commit, push, tag, publication or settings change was performed in Phase 6. |
 | Release-blocking behaviour | Blocks stable designation if release integrity or authorization is incomplete, not for missing GitHub Actions or Releases. |
 
 ## 4. Traceability from the baseline gates

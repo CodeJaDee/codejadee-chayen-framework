@@ -9,7 +9,7 @@ import { inside, assertTreeNoLinks } from "../../tools/validate/safe-paths.mjs";
 
 const repo = path.resolve(import.meta.dirname, "../..");
 const parent = fs.realpathSync(os.tmpdir()), dir = fs.mkdtempSync(path.join(parent, "chayen-doc-tests-"));
-for (const rel of ["README.md", "SECURITY.md", "CHANGELOG.md", "plugins", "catalog", "docs", "response-style", ".claude-plugin", ".agents", ".github", "tools", "tests/provider-compatibility", "tests/evaluation/README.md", "tests/evaluation/step40/README.md", "tests/ci"]) {
+for (const rel of ["README.md", "SECURITY.md", "CHANGELOG.md", "plugins", "catalog", "docs", "response-style", ".claude-plugin", ".agents", ".github", "tools", "tests/provider-compatibility", "tests/evaluation/README.md", "tests/evaluation/step40/README.md", "tests/evaluation/phase5", "tests/production/results", "tests/ci"]) {
   const source = inside(repo, rel); assertTreeNoLinks(source); fs.cpSync(source, inside(dir, rel), { recursive: true });
 }
 test.after(() => { assert.equal(path.dirname(fs.realpathSync(dir)), parent); assert.ok(path.basename(dir).startsWith("chayen-doc-tests-")); fs.rmSync(dir, { recursive: true, force: true }); });

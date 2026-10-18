@@ -1,0 +1,1112 @@
+{
+  "$comment": "Phase 5 frozen routing probe set (developer-only). Prompts and expectations are copied verbatim from the cited reviewed sources by build-fixtures.mjs. Explicit prompts are prefixed at run time with the host's native syntax. Expected sets need owner review (OD-05) before the first scored run; the probe-file SHA-256 is recorded with every result.",
+  "version": 1,
+  "fixture": "tests/evaluation/fixture",
+  "runsRequired": 3,
+  "thresholds": {
+    "automaticRoutingAccuracyPerCli": 0.85,
+    "proposed": [
+      "PT-01",
+      "PT-02",
+      "PT-03",
+      "PT-04",
+      "PT-05",
+      "PT-06"
+    ]
+  },
+  "probes": [
+    {
+      "id": "p5-pos-ai-rag-design",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-ai-engineering",
+      "source": "tests/skills/trigger-cases.json#pos-ai-rag-design",
+      "prompt": "Design a RAG pipeline over our internal docs that respects document permissions.",
+      "expect": {
+        "any_of": [
+          "chayen-ai-engineering"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-ai-agent-permissions",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-ai-engineering",
+      "source": "tests/skills/trigger-cases.json#pos-ai-agent-permissions",
+      "prompt": "Review what our coding agent is allowed to run on developer machines.",
+      "expect": {
+        "any_of": [
+          "chayen-ai-engineering"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-architecture-options",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-architecture",
+      "source": "tests/skills/trigger-cases.json#pos-architecture-options",
+      "prompt": "Should our order service call inventory over HTTP or through a message queue? Compare the options and trade-offs.",
+      "expect": {
+        "any_of": [
+          "chayen-architecture"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-architecture-migration",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-architecture",
+      "source": "tests/skills/trigger-cases.json#pos-architecture-migration",
+      "prompt": "Plan our migration from .NET Framework 4.8 to .NET 8 in safe phases with rollback points.",
+      "expect": {
+        "any_of": [
+          "chayen-architecture"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-backend-efcore-paging",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-backend",
+      "source": "tests/skills/trigger-cases.json#pos-backend-efcore-paging",
+      "prompt": "Add a paginated GET endpoint for products to our .NET Web API using EF Core and SQL Server.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-backend-webhooks",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-backend",
+      "source": "tests/skills/trigger-cases.json#pos-backend-webhooks",
+      "prompt": "Receive Stripe webhooks safely in our ASP.NET Core API.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-data-sqlserver-deadlock",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-data",
+      "source": "tests/skills/trigger-cases.json#pos-data-sqlserver-deadlock",
+      "prompt": "We get SQL Server deadlocks (error 1205) every night between the billing job and the API. Here is the deadlock graph; fix it.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-data-postgres-rls",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-data",
+      "source": "tests/skills/trigger-cases.json#pos-data-postgres-rls",
+      "prompt": "Enforce tenant isolation in our Postgres database with row-level security policies, and test it as the app role.",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-devops-github-actions",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-devops",
+      "source": "tests/skills/trigger-cases.json#pos-devops-github-actions",
+      "prompt": "Create a GitHub Actions workflow that builds and tests our .NET API and Angular app.",
+      "expect": {
+        "any_of": [
+          "chayen-devops"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-devops-tracing",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-devops",
+      "source": "tests/skills/trigger-cases.json#pos-devops-tracing",
+      "prompt": "Add OpenTelemetry tracing to our .NET API and propagate it through the queue consumer.",
+      "expect": {
+        "any_of": [
+          "chayen-devops"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-documentation-pr-description",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-documentation",
+      "source": "tests/skills/trigger-cases.json#pos-documentation-pr-description",
+      "prompt": "Prepare a pull request description for my current changes.",
+      "expect": {
+        "any_of": [
+          "chayen-documentation"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-documentation-release-notes",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-documentation",
+      "source": "tests/skills/trigger-cases.json#pos-documentation-release-notes",
+      "prompt": "Write release notes for version 2.4 from the merged pull requests.",
+      "expect": {
+        "any_of": [
+          "chayen-documentation"
+        ]
+      },
+      "forbid": [
+        "chayen-devops"
+      ]
+    },
+    {
+      "id": "p5-pos-frontend-angular-form",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-frontend",
+      "source": "tests/skills/trigger-cases.json#pos-frontend-angular-form",
+      "prompt": "Create an Angular form for customer registration with name, email and password validation.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      },
+      "forbid": [
+        "chayen-backend"
+      ]
+    },
+    {
+      "id": "p5-pos-frontend-angular-signals",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-frontend",
+      "source": "tests/skills/trigger-cases.json#pos-frontend-angular-signals",
+      "prompt": "Fix the computed signal total in our Angular cart component without changing its RxJS service.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-humanizer-en-readme-prose",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-humanizer-en",
+      "source": "tests/skills/trigger-cases.json#pos-humanizer-en-readme-prose",
+      "prompt": "The prose in our README sounds stiff and padded. Tighten the wording without changing any commands or links.",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-en"
+        ]
+      },
+      "forbid": [
+        "chayen-humanizer-th"
+      ]
+    },
+    {
+      "id": "p5-pos-humanizer-en-locale-strings",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-humanizer-en",
+      "source": "tests/skills/trigger-cases.json#pos-humanizer-en-locale-strings",
+      "prompt": "Make the English strings in locales/en.json shorter and friendlier, and keep every key and {placeholder}.",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-en"
+        ]
+      },
+      "forbid": [
+        "chayen-humanizer-th"
+      ]
+    },
+    {
+      "id": "p5-pos-humanizer-th-audit",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-humanizer-th",
+      "source": "tests/skills/trigger-cases.json#pos-humanizer-th-audit",
+      "prompt": "ช่วยตรวจบทความภาษาไทยนี้หน่อย อ่านแล้วเหมือนแปลมาจากภาษาอังกฤษ ยังไม่ต้องแก้ แค่ชี้ว่าตรงไหนแข็งและเพราะอะไร",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-th"
+        ]
+      },
+      "forbid": [
+        "chayen-documentation",
+        "chayen-humanizer-en"
+      ]
+    },
+    {
+      "id": "p5-pos-humanizer-th-locale-strings",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-humanizer-th",
+      "source": "tests/skills/trigger-cases.json#pos-humanizer-th-locale-strings",
+      "prompt": "ปรับข้อความภาษาไทยใน locales/th.json ให้สั้นและเป็นกันเองขึ้น โดยห้ามแตะ key และ placeholder อย่าง {count}",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-th"
+        ]
+      },
+      "forbid": [
+        "chayen-humanizer-en"
+      ]
+    },
+    {
+      "id": "p5-pos-implementation-csv-export",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-implementation",
+      "source": "tests/skills/trigger-cases.json#pos-implementation-csv-export",
+      "prompt": "Implement CSV export of a user's orders end to end: the database query, an API endpoint, and a download button on the orders page.",
+      "expect": {
+        "any_of": [
+          "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-impl-csharp-nullability",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-implementation",
+      "source": "tests/skills/trigger-cases.json#pos-impl-csharp-nullability",
+      "prompt": "Enable nullable reference types in our C# class library and fix the warnings properly instead of hiding them.",
+      "expect": {
+        "any_of": [
+          "chayen-implementation"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-performance-memory-leak",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-performance",
+      "source": "tests/skills/trigger-cases.json#pos-performance-memory-leak",
+      "prompt": "Our .NET service's memory grows until the pod is OOM-killed. Find the leak.",
+      "expect": {
+        "any_of": [
+          "chayen-performance"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-performance-k6",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-performance",
+      "source": "tests/skills/trigger-cases.json#pos-performance-k6",
+      "prompt": "Write a k6 load test for our checkout API at 500 requests per second with p95 under 300 ms.",
+      "expect": {
+        "any_of": [
+          "chayen-performance"
+        ]
+      },
+      "forbid": [
+        "chayen-testing"
+      ]
+    },
+    {
+      "id": "p5-pos-repository-overview",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-repository",
+      "source": "tests/skills/trigger-cases.json#pos-repository-overview",
+      "prompt": "I just cloned this repository. Give me an overview of how it is structured and how to build it and run its tests.",
+      "expect": {
+        "any_of": [
+          "chayen-repository"
+        ]
+      },
+      "forbid": [
+        "chayen-security"
+      ]
+    },
+    {
+      "id": "p5-pos-repository-impact",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-repository",
+      "source": "tests/skills/trigger-cases.json#pos-repository-impact",
+      "prompt": "If I rename the CustomerId column in the Orders table, what else in this codebase would break? Don't change anything yet.",
+      "expect": {
+        "any_of": [
+          "chayen-repository"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-requirements-acceptance",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-requirements",
+      "source": "tests/skills/trigger-cases.json#pos-requirements-acceptance",
+      "prompt": "Write acceptance criteria for this story: as a customer I can cancel a booking up to 24 hours before it starts.",
+      "expect": {
+        "any_of": [
+          "chayen-requirements"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-requirements-nfr",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-requirements",
+      "source": "tests/skills/trigger-cases.json#pos-requirements-nfr",
+      "prompt": "Turn 'the payments API must be fast and reliable' into measurable non-functional requirements.",
+      "expect": {
+        "any_of": [
+          "chayen-requirements"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-security-sql-injection",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-security",
+      "source": "tests/skills/trigger-cases.json#pos-security-sql-injection",
+      "prompt": "Is this SQL query built in our repository class vulnerable to injection?",
+      "expect": {
+        "any_of": [
+          "chayen-security"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-security-cors-auth",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-security",
+      "source": "tests/skills/trigger-cases.json#pos-security-cors-auth",
+      "prompt": "Harden the CORS and authentication configuration of our ASP.NET Core API.",
+      "expect": {
+        "any_of": [
+          "chayen-security"
+        ]
+      }
+    },
+    {
+      "id": "p5-pos-testing-webapplicationfactory",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-testing",
+      "source": "tests/skills/trigger-cases.json#pos-testing-webapplicationfactory",
+      "prompt": "Write WebApplicationFactory integration tests for our ASP.NET Core orders endpoints, including the 401 and 403 paths.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-pos-testing-angular-karma",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-testing",
+      "source": "tests/skills/trigger-cases.json#pos-testing-angular-karma",
+      "prompt": "Write Angular form and HTTP failure tests with our existing Karma Jasmine runner.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-ovl-doc-01",
+      "type": "positive",
+      "group": "overlap-documentation",
+      "primary": "chayen-documentation",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-doc-01",
+      "prompt": "Update the README so the setup and test commands match what the repository actually uses.",
+      "expect": {
+        "any_of": [
+          "chayen-documentation"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-doc-02",
+      "type": "positive",
+      "group": "overlap-documentation",
+      "primary": "chayen-humanizer-en",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-doc-02",
+      "prompt": "Tighten the wording of this README intro; the commands are already correct: This project is a tool that has been developed in order to make it possible to convert CSV files.",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-en"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-doc-03",
+      "type": "positive",
+      "group": "overlap-documentation",
+      "primary": "chayen-documentation",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-doc-03",
+      "prompt": "Update the README so the setup commands match what the repo uses, and tighten the wording while you're at it.",
+      "expect": {
+        "any_of": [
+          "chayen-documentation",
+          "chayen-humanizer-en"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-doc-04",
+      "type": "positive",
+      "group": "overlap-documentation",
+      "primary": "chayen-documentation",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-doc-04",
+      "prompt": "เขียน README ภาษาไทยให้โปรเจกต์นี้ และตรวจว่าคำสั่ง build กับ test ตรงกับที่ repo ใช้จริง",
+      "expect": {
+        "any_of": [
+          "chayen-documentation",
+          "chayen-humanizer-th"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-doc-05",
+      "type": "positive",
+      "group": "overlap-documentation",
+      "primary": "chayen-documentation",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-doc-05",
+      "prompt": "Write an architecture decision record for moving the reporting service to a message queue.",
+      "expect": {
+        "any_of": [
+          "chayen-documentation",
+          "chayen-architecture"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-doc-06",
+      "type": "positive",
+      "group": "overlap-documentation",
+      "primary": "chayen-humanizer-th",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-doc-06",
+      "prompt": "ปรับสำนวนย่อหน้านี้ใน README ภาษาไทยให้อ่านลื่น คำสั่งถูกต้องอยู่แล้ว: ให้ทำการรันคำสั่ง npm install เพื่อทำการติดตั้ง dependency ทั้งหมด",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-th"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-01",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-backend",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-01",
+      "prompt": "GET /api/orders/{id} in our API returns 500 when the order has no customer. Find the cause and fix it.",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-02",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-frontend",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-02",
+      "prompt": "Add email and phone validation to the customer form in the admin app, with an error message under each invalid field.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-03",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-data",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-03",
+      "prompt": "The monthly revenue query in the analytics service is far too slow. Optimize it.",
+      "expect": {
+        "any_of": [
+          "chayen-data",
+          "chayen-performance"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-04",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-frontend",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-04",
+      "prompt": "Add Thai and English language support to our Angular admin app, including date and currency formatting.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-05",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-backend",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-05",
+      "prompt": "API ตัวนี้คืนค่า 500 ตอนดึงออเดอร์ที่ไม่มีลูกค้า ช่วยหาสาเหตุใน OrdersController แล้วแก้ให้หน่อย",
+      "expect": {
+        "any_of": [
+          "chayen-backend",
+          "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-06",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-testing",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-06",
+      "prompt": "Write pytest tests for the reporting service's date-range parser, including the empty-range case.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-07",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-devops",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-07",
+      "prompt": "Harden the Dockerfile for the API: run as a non-root user and pin the base image.",
+      "expect": {
+        "any_of": [
+          "chayen-devops",
+          "chayen-security"
+        ]
+      }
+    },
+    {
+      "id": "p5-ovl-eng-08",
+      "type": "positive",
+      "group": "overlap-engineering",
+      "primary": "chayen-frontend",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-eng-08",
+      "prompt": "แก้ข้อความ error ในฟอร์มสมัครสมาชิกให้แสดงใต้ช่องที่กรอกผิด และเพิ่มการตรวจรูปแบบอีเมลด้วย",
+      "expect": {
+        "any_of": [
+          "chayen-frontend",
+          "chayen-implementation",
+          "chayen-humanizer-th"
+        ]
+      }
+    },
+    {
+      "id": "p5-neg-backend-nitro",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-backend-nitro",
+      "prompt": "Build a standalone Nitro API route with framework-specific validation.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-neg-backend-elysia-route",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-backend-elysia-route",
+      "prompt": "Create an Elysia route that returns a user by id with schema validation of the id parameter.",
+      "expect": {
+        "none": true
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-neg-unity",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-unity",
+      "prompt": "Add a double-jump mechanic to my Unity player controller script in C#.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-neg-swiftui",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-swiftui",
+      "prompt": "Build a SwiftUI settings screen for my iOS app with a dark mode toggle.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-neg-flutter",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-flutter",
+      "prompt": "Add pull-to-refresh to the order list screen in my Flutter app.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-neg-rust-axum-handler",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-rust-axum-handler",
+      "prompt": "In our Rust Axum service, make GET /orders/:id return 404 with a JSON error body for unknown order IDs.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-neg-spring-boot",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-spring-boot",
+      "prompt": "Fix a NullPointerException in my Spring Boot REST controller.",
+      "expect": {
+        "none_or": [
+          "chayen-backend"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend",
+        "chayen-repository"
+      ]
+    },
+    {
+      "id": "p5-neg-react-native",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-react-native",
+      "prompt": "Fix the janky FlatList scrolling in our React Native app.",
+      "expect": {
+        "none_or": [
+          "chayen-frontend"
+        ]
+      },
+      "forbid": [
+        "chayen-backend"
+      ]
+    },
+    {
+      "id": "p5-neg-mongodb",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-mongodb",
+      "prompt": "Add an index to speed up this MongoDB aggregation pipeline.",
+      "expect": {
+        "none_or": [
+          "chayen-data"
+        ]
+      },
+      "forbid": [
+        "chayen-frontend"
+      ]
+    },
+    {
+      "id": "p5-neg-pentest-production",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-pentest-production",
+      "prompt": "Run a penetration test against our production website and try to break in.",
+      "expect": {
+        "none_or": [
+          "chayen-security"
+        ]
+      },
+      "forbid": [
+        "chayen-performance"
+      ]
+    },
+    {
+      "id": "p5-neg-detector-evasion-english",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-detector-evasion-english",
+      "prompt": "Rewrite this essay so it passes an AI detector and tell my teacher I wrote it myself.",
+      "expect": {
+        "none_or": [
+          "chayen-humanizer-en"
+        ]
+      }
+    },
+    {
+      "id": "p5-neg-thai-ai-detector-evasion",
+      "type": "negative",
+      "group": "negative",
+      "source": "tests/skills/trigger-cases.json#uns-thai-ai-detector-evasion",
+      "prompt": "เขียนบทความนี้ใหม่ให้ผ่าน AI detector ได้ร้อยเปอร์เซ็นต์ และรับรองว่าดูเหมือนคนเขียนจริง",
+      "expect": {
+        "none_or": [
+          "chayen-humanizer-th"
+        ]
+      }
+    },
+    {
+      "id": "p5-nm-weather",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-weather",
+      "prompt": "Explain today's weather in Bangkok.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-poem",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-poem",
+      "prompt": "Write a short poem about autumn leaves.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-math",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-math",
+      "prompt": "What is 17 percent of 2,340?",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-hamlet",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-hamlet",
+      "prompt": "Summarize the plot of Hamlet in three sentences.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-git-concept",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-git-concept",
+      "prompt": "In general terms, what does git rebase do compared to git merge?",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-explain-csharp-record",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-explain-csharp-record",
+      "prompt": "What is the difference between a record and a class in C#? Just explain it.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-explain-postgres-mvcc",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-explain-postgres-mvcc",
+      "prompt": "Briefly explain what MVCC means in PostgreSQL, without changing any files.",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-thai-question-kubernetes",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-thai-question-kubernetes",
+      "prompt": "อธิบายสั้น ๆ หน่อยว่า Kubernetes คืออะไร",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-thai-linguistics-question",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-thai-linguistics-question",
+      "prompt": "ประโยคกรรมที่ใช้คำว่า 'ถูก' ในภาษาไทยมีที่มาอย่างไร อธิบายสั้น ๆ",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-nm-explicit-decline",
+      "type": "no-match",
+      "group": "no-match",
+      "source": "tests/skills/trigger-cases.json#neg-explicit-decline",
+      "prompt": "Do not load or use any skills or plugins for this. Just answer from what you know: why would an ASP.NET Core endpoint return 500 when a navigation property is null?",
+      "expect": {
+        "none": true
+      }
+    },
+    {
+      "id": "p5-amb-monorepo-ambiguous",
+      "type": "ambiguous",
+      "group": "ambiguous",
+      "source": "tests/evaluation/provider-probes.json#pr-monorepo-ambiguous",
+      "prompt": "Order totals are wrong. Fix it.",
+      "expect": {
+        "inspect_first": true
+      }
+    },
+    {
+      "id": "p5-exp-ai-engineering",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-ai-engineering",
+      "source": "tests/skills/trigger-cases.json#pos-ai-prompt-eval",
+      "prompt": "Compare these two system prompts on our eval set before we ship.",
+      "expect": {
+        "any_of": [
+          "chayen-ai-engineering"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-architecture",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-architecture",
+      "source": "tests/skills/trigger-cases.json#pos-architecture-adr",
+      "prompt": "Write an ADR for moving from REST polling to SignalR for order status updates.",
+      "expect": {
+        "any_of": [
+          "chayen-architecture"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-backend",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-backend",
+      "source": "tests/skills/trigger-cases.json#pos-backend-aspnet-bug",
+      "prompt": "Fix this ASP.NET Core API bug: GET /api/orders/{id} returns 500 when the order has no customer.",
+      "expect": {
+        "any_of": [
+          "chayen-backend"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-data",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-data",
+      "source": "tests/evaluation/provider-probes.json#pr-explicit-reference",
+      "prompt": "Our API uses SQL Server through EF Core and Microsoft.Data.SqlClient. Two order-update transactions deadlock. How should I diagnose it?",
+      "expect": {
+        "any_of": [
+          "chayen-data"
+        ]
+      },
+      "refs": {
+        "skill": "chayen-data",
+        "pattern": "sql-server|sqlserver"
+      }
+    },
+    {
+      "id": "p5-exp-devops",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-devops",
+      "source": "tests/skills/trigger-cases.json#pos-devops-incident",
+      "prompt": "Error rates jumped after the 14:00 deploy. Help me triage.",
+      "expect": {
+        "any_of": [
+          "chayen-devops"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-documentation",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-documentation",
+      "source": "tests/skills/trigger-cases.json#pos-documentation-readme",
+      "prompt": "Update the README so the setup and test commands match what the repository actually uses.",
+      "expect": {
+        "any_of": [
+          "chayen-documentation"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-frontend",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-frontend",
+      "source": "tests/skills/trigger-cases.json#pos-frontend-react-rerender",
+      "prompt": "This React search component re-renders the whole list on every keystroke. Fix it.",
+      "expect": {
+        "any_of": [
+          "chayen-frontend"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-humanizer-en",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-humanizer-en",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-xen-01",
+      "prompt": "Audit this sentence for AI-sounding patterns without rewriting it: In today's fast-paced landscape, our tool seamlessly empowers teams.",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-en"
+        ]
+      },
+      "marker": "EN-"
+    },
+    {
+      "id": "p5-exp-humanizer-th",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-humanizer-th",
+      "source": "tests/evaluation/step40/discovery-probes.json#s40-dp-xth-01",
+      "prompt": "ตรวจย่อหน้านี้ว่าตรงไหนอ่านแล้วเหมือนแปล ยังไม่ต้องแก้: มันเป็นสิ่งสำคัญที่จะต้องทำการสำรองข้อมูลก่อนทำการอัปเกรด",
+      "expect": {
+        "any_of": [
+          "chayen-humanizer-th"
+        ]
+      },
+      "marker": "TH-"
+    },
+    {
+      "id": "p5-exp-implementation",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-implementation",
+      "source": "tests/skills/trigger-cases.json#pos-implementation-refactor",
+      "prompt": "Refactor the payment module to remove the duplicated retry logic across the three gateway clients without changing behavior.",
+      "expect": {
+        "any_of": [
+          "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-performance",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-performance",
+      "source": "tests/skills/trigger-cases.json#pos-performance-bottleneck",
+      "prompt": "Our order API takes 3 seconds under load. Find the bottleneck.",
+      "expect": {
+        "any_of": [
+          "chayen-performance"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-repository",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-repository",
+      "source": "tests/skills/trigger-cases.json#pos-repository-conventions",
+      "prompt": "What naming and folder conventions does this codebase follow? Point me to examples.",
+      "expect": {
+        "any_of": [
+          "chayen-repository"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-requirements",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-requirements",
+      "source": "tests/skills/trigger-cases.json#pos-requirements-edge-cases",
+      "prompt": "What edge cases should we cover for booking cancellation before we start building it?",
+      "expect": {
+        "any_of": [
+          "chayen-requirements"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-security",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-security",
+      "source": "tests/evaluation/provider-probes.json#pr-explicit-security",
+      "prompt": "Review this C# line for injection risk: var sql = \"SELECT * FROM Users WHERE Name = '\" + name + \"'\";",
+      "expect": {
+        "any_of": [
+          "chayen-security"
+        ]
+      },
+      "marker": "Security review — scope:"
+    },
+    {
+      "id": "p5-exp-testing",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-testing",
+      "source": "tests/skills/trigger-cases.json#pos-testing-unit",
+      "prompt": "Write unit tests for the OrderService class.",
+      "expect": {
+        "any_of": [
+          "chayen-testing"
+        ]
+      }
+    }
+  ]
+}

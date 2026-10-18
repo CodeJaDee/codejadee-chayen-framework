@@ -1,0 +1,75 @@
+{
+  "phase": 5,
+  "recordedAt": "2026-10-18",
+  "commit": "38570b3a83cb5181e15f12daef921653bc0add36",
+  "sourceState": "working-tree snapshot; not a committed freeze",
+  "remote": "origin/main == HEAD (verified 2026-10-18); no tag",
+  "plugin": "chayen",
+  "version": "0.1.0-rc.1",
+  "claudeManifestVersion": "0.1.0-rc.1",
+  "skills": [
+    "chayen-ai-engineering",
+    "chayen-architecture",
+    "chayen-backend",
+    "chayen-data",
+    "chayen-devops",
+    "chayen-documentation",
+    "chayen-frontend",
+    "chayen-humanizer-en",
+    "chayen-humanizer-th",
+    "chayen-implementation",
+    "chayen-performance",
+    "chayen-repository",
+    "chayen-requirements",
+    "chayen-security",
+    "chayen-testing"
+  ],
+  "skillMetadataFingerprint": "339b3125d1347648",
+  "skillMetadataFingerprintFromInstalledLayoutCheck": "339b3125d1347648",
+  "phase4": {
+    "packageSha256": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+    "skillMetadataFingerprint": "339b3125d1347648",
+    "matchesWorkingTree": true
+  },
+  "acceptedPackageFingerprints": [
+    {
+      "sha256": "efc4c6e6567a4ce3bb0b2733d4bbe6194677b9cf0d77c47b26f6959b55fcd85d",
+      "bytes": "committed blobs (git archive HEAD; LF) — what a non-autocrlf clone or remote marketplace install receives",
+      "files": 256
+    },
+    {
+      "sha256": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+      "bytes": "Windows working tree with core.autocrlf=true (214 of 256 files CRLF) — the exact Phase 4 native-tested snapshot",
+      "files": 256
+    }
+  ],
+  "contentFingerprintLfNormalized": {
+    "workingTree": "d5e9a80e505b2411e7e4e732ab98102bb45563608d6a915da7b25c8655603626",
+    "committed": "d5e9a80e505b2411e7e4e732ab98102bb45563608d6a915da7b25c8655603626",
+    "note": "Equal: the two accepted fingerprints differ only by line endings"
+  },
+  "marketplaces": [
+    {
+      "file": ".claude-plugin/marketplace.json",
+      "name": "codejadee",
+      "metadataVersion": null,
+      "pluginVersion": null,
+      "sha256": "b2f81a16ea9395a09470ff719e15cd483bacbe721738493cb0a9e68650f34b17"
+    },
+    {
+      "file": ".agents/plugins/marketplace.json",
+      "name": "codejadee",
+      "metadataVersion": null,
+      "pluginVersion": null,
+      "sha256": "8f3a7567efe7aa699290bc4bd2ea7259f6338558adb50011301193c5f07fecda"
+    },
+    {
+      "file": ".github/plugin/marketplace.json",
+      "name": "codejadee",
+      "metadataVersion": "0.1.0-rc.1",
+      "pluginVersion": "0.1.0-rc.1",
+      "sha256": "0bd1c3727580bfbb409b524011143fe1c4d3ad5ae1be58de681eb093f5c9f5f1"
+    }
+  ],
+  "freezeStatus": "Committed RC.1 candidate. Not a formal M1 freeze: G-04 remote CI and G-15 LICENSE/manifest licence are outstanding; adding a manifest `license` field changes the package fingerprint (not the Skill metadata fingerprint) and, after M1, would reset G-06..G-14."
+}

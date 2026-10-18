@@ -1,0 +1,131 @@
+{
+  "phase": 6,
+  "recordedAt": "2026-10-18",
+  "candidate": {
+    "commit": "38570b3a83cb5181e15f12daef921653bc0add36",
+    "remote": "git ls-remote origin: HEAD and refs/heads/main = 38570b3; no tags",
+    "workingTree": "Phase 5/6 tooling and docs uncommitted; plugin package unchanged",
+    "method": "fresh local clone (core.longpaths=true), detached at 38570b3, clean status",
+    "version": "0.1.0-rc.1 (root manifest, Claude manifest, Copilot entry, Copilot metadata)",
+    "packageSha256CommittedBytes": "efc4c6e6567a4ce3bb0b2733d4bbe6194677b9cf0d77c47b26f6959b55fcd85d",
+    "packageSha256WindowsCrlfCheckout": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+    "skillMetadataFingerprint": "339b3125d1347648"
+  },
+  "deterministicChecksOnCandidate": [
+    {
+      "command": "node tools/validate/validate-all.mjs",
+      "runtime": "Node 24.22.0",
+      "exit": 0,
+      "result": "19/19 groups PASS"
+    },
+    {
+      "command": "node tools/validate/validate-all.mjs",
+      "runtime": "Node 20.11.0 portable, SHA-256 5da5e201155bb3ea99134b404180adebcfa696b0dbc09571d01a09ca5489f53e (matches Phase 4 SHASUMS record)",
+      "exit": 0,
+      "result": "19/19 groups PASS"
+    },
+    {
+      "command": "node tools/evals/run-evaluation-suite.mjs --fail-fast",
+      "runtime": "Node 24.22.0 and Node 20.11.0",
+      "exit": 0,
+      "result": "static/traceability levels PASS"
+    },
+    {
+      "command": "node tests/provider-compatibility/check-identity.mjs",
+      "exit": 0,
+      "result": "15/15 PASS"
+    },
+    {
+      "command": "claude plugin validate --strict plugins/codejadee-chayen-framework",
+      "tool": "Claude Code 2.1.302 (local validation, no model call)",
+      "exit": 0,
+      "result": "PASS; advice: plugin README lacks a one-step install line (P1-030)"
+    },
+    {
+      "command": "claude plugin validate --strict .",
+      "exit": 0,
+      "result": "PASS (marketplace); same advice"
+    },
+    {
+      "command": "node tools/ci/check-workflow.mjs (PowerShell)",
+      "exit": 0,
+      "result": "actionlint 1.7.12 PASS, archive SHA-256 verified"
+    },
+    {
+      "command": "node --test tests/ci/negative-controls.test.mjs",
+      "exit": 0,
+      "result": "4/4 PASS"
+    },
+    {
+      "command": "package inventory",
+      "result": "256 files: 254 .md, 2 .json; 15 Entry Skills; no hooks/agents/commands/scripts/MCP/settings/executables"
+    },
+    {
+      "command": "metadata review",
+      "result": "plugin chayen; marketplaces codejadee x3; author/owner CodeJaDee; no root LICENSE; no manifest license field; upstream Humanizer MIT notice complete (copyright, grant, disclaimer)"
+    }
+  ],
+  "githubActions": {
+    "observed": false,
+    "status": "Discontinued by owner decision (4bda4db removes .github/workflows/validate.yml); no longer a release gate. No remote run was ever observed (private repository, 404 unauthenticated)."
+  },
+  "publicVisibility": {
+    "https://github.com/CodeJaDee/codejadee-chayen-framework": 404,
+    "interpretation": "private or not found; public install untestable"
+  },
+  "publicSafetyScan": {
+    "scope": "all 42 commits (git grep over every revision) plus HEAD",
+    "credentials": "0 private keys, AWS, GitHub, Slack, Google, JWT or password assignments; 2 'sk-' hits are validator mutation IDs (false positive); 21 'PASSWORD=<local-only>' placeholders",
+    "personalData": "41 commits authored/committed as a personal Gmail address (commit metadata); local Windows usernames and absolute user-profile paths (values withheld) in 3 HEAD files and ~190 history occurrences",
+    "sensitiveFiles": "none added in history (3 filename hits are eval cases named 'credentials')",
+    "binaries": "none in history",
+    "urls": "localhost/example/.invalid only"
+  },
+  "environmentNotes": [
+    "A clone into a ~150-character Windows path fails with 'Filename too long' unless core.longpaths=true; native plugin caches use shorter paths and Phase 4 installs succeeded"
+  ],
+  "contractAmendment": {
+    "commit": "4bda4db8fb6b50b78388f8400a576ccc07fe7c53",
+    "author": "repository owner (pushed during Phase 6)",
+    "summary": "Owner decision 2026-10-18: GitHub Actions and GitHub Releases are not part of distribution; G-04 = Manual Offline Validation on the final source; G-17 without GitHub Release; tags optional; routing >=85% per CLI and Security/Support LATER unchanged",
+    "packageFilesChanged": 0,
+    "recordedIn": [
+      "docs/production/RELEASE_SCOPE_DECISION.md",
+      "docs/production/RELEASE_GATE_MATRIX.md"
+    ],
+    "notRecordedIn": "docs/chayen/DECISIONS.md"
+  },
+  "tipChecks": {
+    "commit": "4bda4db8fb6b50b78388f8400a576ccc07fe7c53",
+    "method": "same clean clone, checked out at the fetched origin/main",
+    "results": [
+      {
+        "command": "node tools/validate/validate-all.mjs",
+        "runtime": "Node 24.22.0",
+        "exit": 0,
+        "result": "19/19 groups PASS"
+      },
+      {
+        "command": "node tools/evals/run-evaluation-suite.mjs --fail-fast",
+        "runtime": "Node 24.22.0",
+        "exit": 0,
+        "result": "PASS"
+      },
+      {
+        "command": "node tests/provider-compatibility/check-identity.mjs",
+        "exit": 0,
+        "result": "15/15 PASS"
+      },
+      {
+        "command": "node --test tests/ci/negative-controls.test.mjs",
+        "exit": 0,
+        "result": "4/4 PASS"
+      },
+      {
+        "command": "package fingerprint",
+        "result": "efc4c6e6567a4ce3bb0b2733d4bbe6194677b9cf0d77c47b26f6959b55fcd85d (identical to 38570b3)"
+      }
+    ]
+  },
+  "localBranch": "Local main fast-forwarded 38570b3 -> 4bda4db (ff-only) during Phase 6; uncommitted Phase 5/6 edits re-applied; RELEASE_GATE_MATRIX.md conflict resolved keeping the owner amended G-04/G-17 definitions; merged working tree validate-all 20/20 PASS, check-docs 34 files 0 errors"
+}

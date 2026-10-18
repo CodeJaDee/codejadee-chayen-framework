@@ -1,0 +1,33 @@
+{
+  "phase": 5,
+  "recordedAt": "2026-10-18",
+  "revision": "38570b3a83cb5181e15f12daef921653bc0add36 plus uncommitted Phase 5 tooling/docs (package unchanged)",
+  "host": "Windows 11 Pro 10.0.26200; Node v24.22.0 (Node 20.11.0 not re-run in Phase 5)",
+  "packageUnchangedByPhase5": true,
+  "providerCalls": 0,
+  "providerCliVersions": {
+    "claude": "2.1.302 (Claude Code) — `--version` only; no prompt sent",
+    "codex": "codex-cli 0.163.0 — `--version` only; no prompt sent",
+    "copilot": "ENOENT — executable not installed; nothing attempted"
+  },
+  "checks": [
+    { "command": "node tools/validate/validate-all.mjs", "exit": 0, "result": "PASS 20/20 groups (19 Phase 4 groups + Phase 5 controls); 179/179 validator self-tests; 56/56 Step 40 scorer controls" },
+    { "command": "node --test tests/evaluation/phase5/phase5.test.mjs", "exit": 0, "result": "PASS 13/13 offline controls" },
+    { "command": "mutation spot-check: THRESHOLD 0.85 -> 0.80 and one copied prompt altered", "exit": 1, "result": "Expected failures detected (2 controls failed); files restored; 13/13 PASS afterwards" },
+    { "command": "node tests/evaluation/phase5/build-fixtures.mjs --check", "exit": 0, "result": "PASS 3/3 fixtures equal their reviewed sources" },
+    { "command": "node tools/evals/run-evaluation-suite.mjs --fail-fast", "exit": 0, "result": "PASS static/traceability levels; SIM lexical proxy top1 0.5 (not routing evidence)" },
+    { "command": "node tools/evals/score-step40.mjs --check", "exit": 0, "result": "PASS 120 cases, 55 discovery probes" },
+    { "command": "node tools/evals/score-step40.mjs", "exit": 0, "result": "NOT_RUN discovery, language quality, human review (no outputs or reviews exist)" },
+    { "command": "node tests/provider-compatibility/check-identity.mjs", "exit": 0, "result": "PASS 15/15" },
+    { "command": "node --test tests/security/boundaries.test.mjs", "exit": 0, "result": "PASS 34/34" },
+    { "command": "node tools/validate/check-security.mjs", "exit": 0, "result": "PASS V-25: 256 package files, 15 Skills, 237 references, 0 errors" },
+    { "command": "node tests/evaluation/phase5/run-phase5.mjs --plan --json", "exit": 0, "result": "2268 planned billed calls; nothing created or sent (plan.json)" },
+    { "command": "node tools/validate/check-docs.mjs", "exit": 0, "result": "PASS 29 files (four Phase 5 reports added to its scope), 0 errors" },
+    { "command": "node --test tests/ci/documentation.test.mjs", "exit": 0, "result": "PASS after adding tests/evaluation/phase5 to the disposable doc-test copy (first run failed D-01: the copy lacked the linked Phase 5 evidence)" },
+    { "command": "node --test tests/ci/negative-controls.test.mjs", "exit": 0, "result": "PASS 4/4" },
+    { "command": "node tools/ci/check-workflow.mjs (PowerShell)", "exit": 0, "result": "PASS actionlint 1.7.12, archive SHA-256 verified; the same command under Git Bash failed in tar path handling (environment), workflow file unchanged" },
+    { "command": "node tools/validate/validate-all.mjs (final, after reports)", "exit": 0, "result": "PASS 20/20 groups" },
+    { "command": "git diff --check", "exit": 0, "result": "PASS" }
+  ],
+  "technologyFactChecks": "facts/fact-checks.json — 159 checks: 73 PASS, 0 FAIL, 86 NOT_RUN"
+}

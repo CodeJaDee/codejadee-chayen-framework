@@ -1,0 +1,242 @@
+[
+  {
+    "suite": "routing",
+    "provider": "claude",
+    "arm": "plugin",
+    "scenarios": 82,
+    "runs": 3,
+    "calls": 246,
+    "estUsd": 61.5,
+    "specHash": "ae96f187099fa752"
+  },
+  {
+    "suite": "routing",
+    "provider": "claude",
+    "arm": "baseline",
+    "scenarios": 22,
+    "runs": 3,
+    "calls": 66,
+    "estUsd": 16.5,
+    "specHash": "ae96f187099fa752"
+  },
+  {
+    "suite": "routing",
+    "provider": "codex",
+    "arm": "plugin",
+    "scenarios": 82,
+    "runs": 3,
+    "calls": 246,
+    "estUsd": null,
+    "specHash": "ae96f187099fa752"
+  },
+  {
+    "suite": "routing",
+    "provider": "codex",
+    "arm": "baseline",
+    "scenarios": 22,
+    "runs": 3,
+    "calls": 66,
+    "estUsd": null,
+    "specHash": "ae96f187099fa752"
+  },
+  {
+    "suite": "routing",
+    "provider": "copilot",
+    "arm": "plugin",
+    "scenarios": 82,
+    "runs": 3,
+    "calls": 246,
+    "estUsd": null,
+    "specHash": "ae96f187099fa752"
+  },
+  {
+    "suite": "routing",
+    "provider": "copilot",
+    "arm": "baseline",
+    "scenarios": 22,
+    "runs": 3,
+    "calls": 66,
+    "estUsd": null,
+    "specHash": "ae96f187099fa752"
+  },
+  {
+    "suite": "humanizer",
+    "provider": "claude",
+    "arm": "plugin",
+    "scenarios": 30,
+    "runs": 3,
+    "calls": 90,
+    "estUsd": 22.5,
+    "specHash": "e52edc4cfdd7762a"
+  },
+  {
+    "suite": "humanizer",
+    "provider": "claude",
+    "arm": "baseline",
+    "scenarios": 30,
+    "runs": 3,
+    "calls": 90,
+    "estUsd": 22.5,
+    "specHash": "e52edc4cfdd7762a"
+  },
+  {
+    "suite": "humanizer",
+    "provider": "codex",
+    "arm": "plugin",
+    "scenarios": 30,
+    "runs": 3,
+    "calls": 90,
+    "estUsd": null,
+    "specHash": "e52edc4cfdd7762a"
+  },
+  {
+    "suite": "humanizer",
+    "provider": "codex",
+    "arm": "baseline",
+    "scenarios": 30,
+    "runs": 3,
+    "calls": 90,
+    "estUsd": null,
+    "specHash": "e52edc4cfdd7762a"
+  },
+  {
+    "suite": "humanizer",
+    "provider": "copilot",
+    "arm": "plugin",
+    "scenarios": 30,
+    "runs": 3,
+    "calls": 90,
+    "estUsd": null,
+    "specHash": "e52edc4cfdd7762a"
+  },
+  {
+    "suite": "humanizer",
+    "provider": "copilot",
+    "arm": "baseline",
+    "scenarios": 30,
+    "runs": 3,
+    "calls": 90,
+    "estUsd": null,
+    "specHash": "e52edc4cfdd7762a"
+  },
+  {
+    "suite": "capability",
+    "provider": "claude",
+    "arm": "plugin",
+    "scenarios": 28,
+    "runs": 3,
+    "calls": 84,
+    "estUsd": 50.4,
+    "specHash": "d2c64d5d837d2951"
+  },
+  {
+    "suite": "capability",
+    "provider": "claude",
+    "arm": "baseline",
+    "scenarios": 28,
+    "runs": 3,
+    "calls": 84,
+    "estUsd": 50.4,
+    "specHash": "d2c64d5d837d2951"
+  },
+  {
+    "suite": "capability",
+    "provider": "codex",
+    "arm": "plugin",
+    "scenarios": 28,
+    "runs": 3,
+    "calls": 84,
+    "estUsd": null,
+    "specHash": "d2c64d5d837d2951"
+  },
+  {
+    "suite": "capability",
+    "provider": "codex",
+    "arm": "baseline",
+    "scenarios": 28,
+    "runs": 3,
+    "calls": 84,
+    "estUsd": null,
+    "specHash": "d2c64d5d837d2951"
+  },
+  {
+    "suite": "capability",
+    "provider": "copilot",
+    "arm": "plugin",
+    "scenarios": 28,
+    "runs": 3,
+    "calls": 84,
+    "estUsd": null,
+    "specHash": "d2c64d5d837d2951"
+  },
+  {
+    "suite": "capability",
+    "provider": "copilot",
+    "arm": "baseline",
+    "scenarios": 28,
+    "runs": 3,
+    "calls": 84,
+    "estUsd": null,
+    "specHash": "d2c64d5d837d2951"
+  },
+  {
+    "suite": "security",
+    "provider": "claude",
+    "arm": "plugin",
+    "scenarios": 16,
+    "runs": 3,
+    "calls": 48,
+    "estUsd": 24,
+    "specHash": "45f56e52bf77aed4"
+  },
+  {
+    "suite": "security",
+    "provider": "claude",
+    "arm": "baseline",
+    "scenarios": 16,
+    "runs": 3,
+    "calls": 48,
+    "estUsd": 24,
+    "specHash": "45f56e52bf77aed4"
+  },
+  {
+    "suite": "security",
+    "provider": "codex",
+    "arm": "plugin",
+    "scenarios": 16,
+    "runs": 3,
+    "calls": 48,
+    "estUsd": null,
+    "specHash": "45f56e52bf77aed4"
+  },
+  {
+    "suite": "security",
+    "provider": "codex",
+    "arm": "baseline",
+    "scenarios": 16,
+    "runs": 3,
+    "calls": 48,
+    "estUsd": null,
+    "specHash": "45f56e52bf77aed4"
+  },
+  {
+    "suite": "security",
+    "provider": "copilot",
+    "arm": "plugin",
+    "scenarios": 16,
+    "runs": 3,
+    "calls": 48,
+    "estUsd": null,
+    "specHash": "45f56e52bf77aed4"
+  },
+  {
+    "suite": "security",
+    "provider": "copilot",
+    "arm": "baseline",
+    "scenarios": 16,
+    "runs": 3,
+    "calls": 48,
+    "estUsd": null,
+    "specHash": "45f56e52bf77aed4"
+  }
+]
