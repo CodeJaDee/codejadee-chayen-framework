@@ -1,6 +1,6 @@
 # Release metadata
 
-Reviewed 2026-10-18, Phase 3. Approved target: **Chayen v0.1.0, PUBLIC,
+Reviewed 2026-10-18, Phase 4. Approved target: **Chayen v0.1.0, PUBLIC,
 MIT, publisher CodeJaDee**. These decisions do not mean the release has
 been published or the project licence applied.
 
@@ -10,7 +10,7 @@ been published or the project licence applied.
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `0.1.0-dev` in both manifests and both Copilot version fields |
+| Version | `0.1.0-rc.1` in both manifests and both Copilot version fields; applied in Phase 4 under OWN-07 |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
 | Entry Skills | 15: 13 engineering, 2 writing |
@@ -30,8 +30,10 @@ have independent plugin-version fields.
 
 Keep the accepted [ADR-0008](../chayen/ADRS/ADR-0008-packaging-and-marketplace-strategy.md)
 Git tag form **`vX.Y.Z`**: `v0.1.0-rc.1`, then `v0.1.0`. Phase 3 removes the
-contradictory checklist suggestion of provider-generated tags. No tag or
-version change is made by this documentation update.
+contradictory checklist suggestion of provider-generated tags. No tag
+is created by this work. Phase 4 applies the already approved candidate
+version; it does not authorize a commit or publication. Exact snapshot and
+native evidence: [lifecycle report](../production/NATIVE_LIFECYCLE_REPORT.md).
 
 At candidate freeze, add the project MIT licence using the confirmed rights
 holder, add `license: MIT` in both manifests, and align CHANGELOG and

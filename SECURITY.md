@@ -4,7 +4,7 @@
 
 | Version | Supported |
 |---|---|
-| `0.1.0-dev` (pre-release, unpublished) | Best effort, during development |
+| `0.1.0-rc.1` (release candidate, unpublished) | Best effort, during qualification; Security/Support remains LATER |
 
 No stable release exists yet. This table will list supported releases once
 one is published.

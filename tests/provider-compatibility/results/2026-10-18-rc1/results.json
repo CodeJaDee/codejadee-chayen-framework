@@ -1,0 +1,2698 @@
+{
+  "date": "2026-10-18T06:05:04.104Z",
+  "candidate": {
+    "baseCommit": "9ef22cc9b6abf348d145f0df8ead160207526540",
+    "sourceState": "working-tree snapshot; not a committed freeze",
+    "plugin": "chayen",
+    "version": "0.1.0-rc.1",
+    "claudeVersion": "0.1.0-rc.1",
+    "skills": [
+      "chayen-ai-engineering",
+      "chayen-architecture",
+      "chayen-backend",
+      "chayen-data",
+      "chayen-devops",
+      "chayen-documentation",
+      "chayen-frontend",
+      "chayen-humanizer-en",
+      "chayen-humanizer-th",
+      "chayen-implementation",
+      "chayen-performance",
+      "chayen-repository",
+      "chayen-requirements",
+      "chayen-security",
+      "chayen-testing"
+    ],
+    "skillMetadataFingerprint": "339b3125d1347648",
+    "package": {
+      "sha256": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+      "files": [
+        [
+          ".claude-plugin/plugin.json",
+          "048ae3cbdfb7e6152872331f3a21ea5bd57600c3aa0ce4d7b328eac7c897c7b7"
+        ],
+        [
+          "README.md",
+          "5b77b7e7fb7bf039234a4b1ad2d872b7cafcfcc4cb762f30ecbe8ed13daaa312"
+        ],
+        [
+          "plugin.json",
+          "4d25e1ed2bcb49d6856f63e59bf049bc8956b1c52ea919dd494fc30d6d9da62d"
+        ],
+        [
+          "skills/README.md",
+          "e2874cf93b818255b73bf7f8a6282d3aa95ebeee44e65fa51621ce1faccb96bf"
+        ],
+        [
+          "skills/chayen-ai-engineering/SKILL.md",
+          "caaf0b7027ed88bd0c5a15204df0c18a419c0b180bd8de45e4668bb17d68e78a"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/agent-governance.md",
+          "10c965e117c35aa69d2abbbd6afcaea15ccd95b466f2fc4c488ce83e73e71b67"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/agent-skills.md",
+          "6776755a3b3b2fefbbcb09814c28b58a98db33df130b066ed6631940e6ff4009"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/ai-tooling.md",
+          "8b6f7be552bf715db93595f0e69bdf5194ef37d8641c9e35cd0e0a3817f46591"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/context-capsule-template.md",
+          "f535eb636a0e63c9963e4a8cc2450eab58aea15a3ea0fd78bb4e348359891b5e"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/llm-and-agent-evaluation.md",
+          "4804a7ca6df745e652d14843edecf3ad2980a331f47ac0f198bff6ead02592d7"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/llm-observability.md",
+          "c07a58bba68f2d41216137578466556b6514b484e16a9100472223cbcec63fa5"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/llm-safety.md",
+          "725a83eb984596e179eb56000c26292a67f46c07e6ea5ea44f2348a06ec872a6"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/ml-data.md",
+          "e797e6a0ad1516d78146b1ad123985098a39ecd86083d9bc4c9fd5870a92768b"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/ml-experiments-and-evaluation.md",
+          "0d066b41b9f616b535ce3768c63a491a0ec9653fc4adbb361d9bbe574860752a"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/model-serving.md",
+          "2ab2c18f41c9ffbad7246be8a2960d2ddc5108915c5f83771f89024ff01b3170"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/provider-compatibility.md",
+          "4db5eb2739f80694e2daa6c9c6a74d38bf2e4a5c6a010bf73bbb910269bf35ff"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/rag.md",
+          "cf1b700d118ac1d4831ac6a6982ab5084dc5edf2e66a98cb8007072cebba1a7e"
+        ],
+        [
+          "skills/chayen-ai-engineering/references/session-handoff.md",
+          "80b68c7b56421bb1be837e911827c2daddf05b0fdbf9cfc2ca7b88631af12094"
+        ],
+        [
+          "skills/chayen-architecture/SKILL.md",
+          "a10300aba49dc7ba67d59f4a606e809f9cfeb843bf0abccd565ad7b50ac090f5"
+        ],
+        [
+          "skills/chayen-architecture/references/architecture-decision-record-template.md",
+          "ddb154d17423da7bf3c87c272849beee7afc27beaa9b2cdeba3a75dde66afe2c"
+        ],
+        [
+          "skills/chayen-architecture/references/architecture-review.md",
+          "d030c894413ff7c078f1a1492e578b82b2d8c28277f95f63b21397dd0fc49050"
+        ],
+        [
+          "skills/chayen-architecture/references/architecture-styles.md",
+          "e48dba9dc3794a7e38679e02a073cd72132eeca9ccfc0d0b8db306d3103b2a8d"
+        ],
+        [
+          "skills/chayen-architecture/references/boundaries-and-domain.md",
+          "0607e98f978580a86ae45ce3cfbd71c7fb41b9d8081683a4e47a15dca3970627"
+        ],
+        [
+          "skills/chayen-architecture/references/decision-records.md",
+          "7d91c2dd4021340345d61c6da3ade171622ab0b1ea34425beb7fad182a1aca76"
+        ],
+        [
+          "skills/chayen-architecture/references/migration-strategy.md",
+          "15a21374a4e95e8b824170fe1dc0d44d33cc82c8e13dde09225c7ff3d7736acf"
+        ],
+        [
+          "skills/chayen-architecture/references/multitenancy.md",
+          "7fffed481701903ed95e524175b7dcb8b971f82f373b48491aa20d4ac16931de"
+        ],
+        [
+          "skills/chayen-architecture/references/realtime-systems.md",
+          "a049ff6c4741d2dc8509a9c3a58d9846b7bbd203a783e40e47faa82f7465ccda"
+        ],
+        [
+          "skills/chayen-architecture/references/resilience.md",
+          "12d23faf94df42541779e96e9b3c6a9bac88bd6a349af343bc299247e0fcc4c4"
+        ],
+        [
+          "skills/chayen-architecture/references/rollout-planning.md",
+          "1cc1b95dacdbd6ed029ce8ba3812a13530c4875d28fee9e4b3b9f9a00bbbc70c"
+        ],
+        [
+          "skills/chayen-architecture/references/sequence-and-dataflow.md",
+          "951016d6b004f900b1c272a2e3e249b3bb1bb9a78d80625269677a294c565a7e"
+        ],
+        [
+          "skills/chayen-backend/SKILL.md",
+          "8faabfabdd5fdece153392106bb9d57cad072624427cd09e28318b5d49166cfa"
+        ],
+        [
+          "skills/chayen-backend/references/api-design.md",
+          "1c36eae0066e96eb6c4d1797861eab7efca420c58d626e6801a288932d79f88e"
+        ],
+        [
+          "skills/chayen-backend/references/api-endpoints.md",
+          "5b220434ecd30505fc8ca0f6a98c5e257d1bf86153f75446623a8e369289b0e6"
+        ],
+        [
+          "skills/chayen-backend/references/aspnetcore-auth.md",
+          "969423cdd4821cc3175e245dd5c51965db28235cefb289fb37ac7c140ef93460"
+        ],
+        [
+          "skills/chayen-backend/references/aspnetcore-background-services.md",
+          "254496f6aa49628f6c9b3f7f5d0251735e1a8b1079f043d6e5e9c75b9b73914b"
+        ],
+        [
+          "skills/chayen-backend/references/aspnetcore-data-access.md",
+          "262c6a0a4664634fa6e4cc37a8bb076cc51ec8c4b7b19a63bcb25ea4493a76bd"
+        ],
+        [
+          "skills/chayen-backend/references/aspnetcore-endpoints.md",
+          "214d080f07638322a97e1b1b4ca168496345914448b52fcc41db30ba46255215"
+        ],
+        [
+          "skills/chayen-backend/references/aspnetcore-pipeline.md",
+          "de11d00d008f48872dfe01f8b885384baf0b538fce331ca4098a8b97419ca625"
+        ],
+        [
+          "skills/chayen-backend/references/aspnetcore-webapi.md",
+          "bb9ce5a2206eb86cc917e96f07a6179cc342f39b2cea0a652d52668f0310b6d4"
+        ],
+        [
+          "skills/chayen-backend/references/authn-authz.md",
+          "cd3127ef46117a4fde16fbf5e0bc2dfd6bd1311bb8ddfd13ea881b1ae2edc7e0"
+        ],
+        [
+          "skills/chayen-backend/references/background-jobs.md",
+          "60580806422daebbd4cc37cca88c4622cb051eb1a07560db15e65dd16a99b694"
+        ],
+        [
+          "skills/chayen-backend/references/crossstack-api-contracts.md",
+          "d626c4f6a3139a21c2a9f5b8f37f89dfc1edeb92878c5f5f8b7323088c224639"
+        ],
+        [
+          "skills/chayen-backend/references/crossstack-auth-boundaries.md",
+          "4a63c47eba5b18488bb249f9effe9812211e8cbeeb982882254a58f8e4eb9054"
+        ],
+        [
+          "skills/chayen-backend/references/data-access.md",
+          "c01cb7d6576fbdb1659a3a074771bba0a2577c15c1c24860558c94fcfb356f5a"
+        ],
+        [
+          "skills/chayen-backend/references/external-integrations.md",
+          "2d01334075a8472d0ae4fb0e2444b85fc94505277acba5d0d98b00ff67d8b359"
+        ],
+        [
+          "skills/chayen-backend/references/file-processing.md",
+          "1586b48a17221b702ec03192dd74a1167409ac29fc880f5a40ef71dcfe1d347a"
+        ],
+        [
+          "skills/chayen-backend/references/idempotency-and-consistency.md",
+          "6b38454043f9af6702adfb4832679bb5b62c2f62c2f8ee395da5ceb76a5cae73"
+        ],
+        [
+          "skills/chayen-backend/references/messaging.md",
+          "8c8096f4d3b23e6ed58ef3e052d50f26f06c78e414b97cceba8f2813a20a8bdb"
+        ],
+        [
+          "skills/chayen-backend/references/nextjs-data-auth.md",
+          "062b7d81a2abfc6981f164015ec8c7052582500819bc2c39674a30c151f0999d"
+        ],
+        [
+          "skills/chayen-backend/references/nextjs-mutations.md",
+          "105ce648a2019a2caecde0d782d56e8ed94c426c987bf050113fd956b685269e"
+        ],
+        [
+          "skills/chayen-backend/references/nextjs-server.md",
+          "b467ef06a9e0a19d7290048c4c2f419f5086f2c6201036baa99364e89d0e0465"
+        ],
+        [
+          "skills/chayen-backend/references/node-servers.md",
+          "d265456f89264dc546c553a6e63fc24a99f047b86105beff4d5b3bc8756835d8"
+        ],
+        [
+          "skills/chayen-backend/references/nuxt-server.md",
+          "501eca23c88d8f47705b8006e282fbe25397800b943c7d1e42dcccf09702b940"
+        ],
+        [
+          "skills/chayen-backend/references/python-web-apis.md",
+          "fee9c76b6048ae476e44a915c1396ab689519634dac6d9419a17be93c0fe2a8c"
+        ],
+        [
+          "skills/chayen-backend/references/workflow-api-integration.md",
+          "dca77e188edd9ae16222629f74a9b0bc47bfd175cfdd013f271abfa5073cf266"
+        ],
+        [
+          "skills/chayen-data/SKILL.md",
+          "9a510255d7d17a2f2274d0e29d2540c23924cfe1ae7b5ae1f9dd2a6255db28a9"
+        ],
+        [
+          "skills/chayen-data/references/backup-restore.md",
+          "efa6de9403cb73340e2edb155c0b7c47449fd28c168043b8a6fba68e41df8e7a"
+        ],
+        [
+          "skills/chayen-data/references/data-modeling.md",
+          "e8c42bdb272fc96b1337a0c818635da884496211cb3af20bb32e9a074d286ecf"
+        ],
+        [
+          "skills/chayen-data/references/data-quality-and-integrity.md",
+          "c31716882c6a922190e9439cab546286c3afe582153f1aa03bcdf2fbd34d8e86"
+        ],
+        [
+          "skills/chayen-data/references/database-portability.md",
+          "9aa7dbca387d30371093094f00dff2a7701b796c7fac5b6a7ff8e4a2d6a9819c"
+        ],
+        [
+          "skills/chayen-data/references/database-safety.md",
+          "ae4249a0f636f2784fcf8c6ea95e690b2bc128dfde8389552fa59fca1478fabe"
+        ],
+        [
+          "skills/chayen-data/references/efcore-migrations.md",
+          "1975450d08012456741cc157a3384878bd8e0a9a6656721eeb83d658a6a11587"
+        ],
+        [
+          "skills/chayen-data/references/etl-pipelines.md",
+          "52eac0103389ed3763f76c2796a332d7ff16144c34336c736baa5969bde4b3f6"
+        ],
+        [
+          "skills/chayen-data/references/geospatial.md",
+          "84b765ca54901cf11ad33393fd7bcdad29656c9e96e6ecc7bf84331df092d714"
+        ],
+        [
+          "skills/chayen-data/references/postgres-concurrency-security.md",
+          "dfa6d4f3cd8c9836ff87c86b939da7948453d1f03f681f91bdbfcffc638a030a"
+        ],
+        [
+          "skills/chayen-data/references/postgres-data-access.md",
+          "d2052e8ece16e0e5aafae61b3186871a5fa20a382edfc89977649f21e2e86854"
+        ],
+        [
+          "skills/chayen-data/references/postgres-operations.md",
+          "e2440075ce5693fb9791ebb78fcf624f9578e82794ee3cc22ab7bd3a20acfe2d"
+        ],
+        [
+          "skills/chayen-data/references/postgres-query-tuning.md",
+          "f1358aac90e21e6d668efcbbdc1371c6f7a73ab53891c664bf8c4f84dbe9ba77"
+        ],
+        [
+          "skills/chayen-data/references/postgres-schema-changes.md",
+          "29cc9b4b3f267ae0c6e3e7ad8a17aca068eedd0af6251a8cc2c8e7fb36b2c4a3"
+        ],
+        [
+          "skills/chayen-data/references/postgres-sql.md",
+          "0c45f2d2d28576462b828a2eb8839968ac0c2cb30eb2853c443eeb603770be54"
+        ],
+        [
+          "skills/chayen-data/references/postgresql.md",
+          "13c8fa25234a40762af96856227ab9ebf782ab5df0bad7bd257664918beca9ce"
+        ],
+        [
+          "skills/chayen-data/references/query-performance.md",
+          "5037825ff8b5866f66d615474670a8f1453352f97609d3924a71eb0aa4ace427"
+        ],
+        [
+          "skills/chayen-data/references/retention-and-governance.md",
+          "86fda9fa75550cd355cebb3af3d8f167271613538697799458d3b6cfc0994fa8"
+        ],
+        [
+          "skills/chayen-data/references/schema-and-data-migration.md",
+          "0a9543b7fb9108c5db8f3ef6a8a1b4176cb11397b70d776704cfde019d607ab3"
+        ],
+        [
+          "skills/chayen-data/references/search-and-indexing.md",
+          "d72932a3b3bc31d524364b60b96559e46e38639830c53d34b2c7478d30bba43d"
+        ],
+        [
+          "skills/chayen-data/references/sql-server.md",
+          "cfef4f2102432712793ebf4c38fdfd0ae8108459f9722362b743a7cbf25c7415"
+        ],
+        [
+          "skills/chayen-data/references/sqlserver-concurrency.md",
+          "d0e657c5124ca7b1b23ebc8371f10e45fec48f587014f89f9c80415b8f0038da"
+        ],
+        [
+          "skills/chayen-data/references/sqlserver-data-access.md",
+          "ad30d9f3faa1b7fadaf0c1347815bfdbe8a3e2384dde97b530f4549a685cc600"
+        ],
+        [
+          "skills/chayen-data/references/sqlserver-operations.md",
+          "0a00202fca01a7e52d95ac84459f65e066868dac5fee4edfd2b2c05d28d4236b"
+        ],
+        [
+          "skills/chayen-data/references/sqlserver-query-tuning.md",
+          "914f0dbf979e626c1140fd205f2e1fcd0acbfb3e2d69ae7edf497e02dfb75fd2"
+        ],
+        [
+          "skills/chayen-data/references/sqlserver-schema-security.md",
+          "ef17695abad649bf61f740b13448deff388cdcc7da32df7feb970e2d0bb70c5e"
+        ],
+        [
+          "skills/chayen-data/references/sqlserver-tsql.md",
+          "66861caa7996df510addab04bec01eef342d7e5d3994d109ca1b22521b44cdf7"
+        ],
+        [
+          "skills/chayen-data/references/transactions.md",
+          "612fd1a07510f38de579763e27e39dc7c33b99a1238a427d2798367a75dfa043"
+        ],
+        [
+          "skills/chayen-data/references/workflow-schema-migration.md",
+          "a4c622131418fcdf790b677045607f6250a428d027e4d9ef866b9d41abedac1b"
+        ],
+        [
+          "skills/chayen-devops/SKILL.md",
+          "e4c269a9db5aed8c12fbe2b6dc9eb9e31db961f651bc5c2f0f971382c2e1c562"
+        ],
+        [
+          "skills/chayen-devops/references/alerting-and-incidents.md",
+          "141daf99a8bb0b9088ac98aab47c859de5fa41baf2138eba9a35fc42949e6c4e"
+        ],
+        [
+          "skills/chayen-devops/references/aspnetcore-hosting.md",
+          "5e56da2184716d7ecdeb5bdd2ae6da6713df9f6cb0b92d22119ad8391804d1ab"
+        ],
+        [
+          "skills/chayen-devops/references/build-systems.md",
+          "362d7f89011e70fede59701a62642713572aa32f618c993473cacaba4ba1b0f9"
+        ],
+        [
+          "skills/chayen-devops/references/containers.md",
+          "d1a9fbfd90ba01464958611755aec0ff11ee6a52d3d2ad775401a5ddef8e611c"
+        ],
+        [
+          "skills/chayen-devops/references/disaster-recovery.md",
+          "5ffddfe4768f893c87a534d3d0d24877766b7930252c188ccb9425e09843bcfd"
+        ],
+        [
+          "skills/chayen-devops/references/environment-parity.md",
+          "b8532a3d99c71033afc151a10e05037c830b9e416122a369182de3c7469ebef1"
+        ],
+        [
+          "skills/chayen-devops/references/hotfix.md",
+          "4cc1826fa84e7d565cd314627712bed2c90c07e6b5954c77be97861a5aa312dc"
+        ],
+        [
+          "skills/chayen-devops/references/infrastructure-as-code.md",
+          "df87f9a2abea094696a1039f953beb270b489f9341249101004c947b80d4381d"
+        ],
+        [
+          "skills/chayen-devops/references/nextjs-deployment.md",
+          "cdddf02ed468d0cf1fdce0bb17f06aee54249059c13d821309d6e180e3873bba"
+        ],
+        [
+          "skills/chayen-devops/references/nuxt-deployment.md",
+          "83a2c82d3d80f6130aafd78bcbeae17ae10caa68ce2b1bdf4b197cf4e691be78"
+        ],
+        [
+          "skills/chayen-devops/references/observability.md",
+          "b801ee6c917ed95431fac73c45fa385ac1f1eeb0c8b661c80c5afd464a35bfd5"
+        ],
+        [
+          "skills/chayen-devops/references/operations-safety.md",
+          "504947f0d4eb6c3585b4cfee26526ea6ca1e0e628ac1ebfb5beee1503e149851"
+        ],
+        [
+          "skills/chayen-devops/references/pipelines.md",
+          "cd23e217769033351b3edbb806bd9a8271d0e11f7e964314ff3661cb8887a9c6"
+        ],
+        [
+          "skills/chayen-devops/references/policy-as-code.md",
+          "196bed917a430be76b3b71c9ff0b166f926932a362af5a3e8f62fcd36bf3368a"
+        ],
+        [
+          "skills/chayen-devops/references/rca-and-postmortems.md",
+          "f48a1d772fbcaf89b6d15d41ea8582da62d12da9d91daf9b2c3ccaf053a365f3"
+        ],
+        [
+          "skills/chayen-devops/references/release-and-rollout.md",
+          "a6c3e8c7c3379dbf4997725d6155c9167784bc93f90bc85a2adb5c4a9065660a"
+        ],
+        [
+          "skills/chayen-devops/references/releases-and-provenance.md",
+          "7e133777fac07b1c5f240139638e59dc686ae7c7a00629bbd6f2bc9e2caaf224"
+        ],
+        [
+          "skills/chayen-devops/references/runbooks.md",
+          "fb3b66b2d8cb695b5595deb5c2201d80337e1505e72f40564cbf5bf3d4499eaa"
+        ],
+        [
+          "skills/chayen-devops/references/secrets-management.md",
+          "716db903470422ae864f76f9ec7a031e971e98eef3ed4718e1f75e6796c39504"
+        ],
+        [
+          "skills/chayen-devops/references/tooling.md",
+          "f71165a20850925096ce542e46ed9d280446a1a369e3ed8c3b4f703e65252460"
+        ],
+        [
+          "skills/chayen-devops/references/vite-toolchain.md",
+          "57eefd0005ac28f437f5a2fc963d738d133638eb6984f15936fc700c506b524f"
+        ],
+        [
+          "skills/chayen-devops/references/workflow-incident-investigation.md",
+          "ffd726357ba38c56b26068a567b244870fb3098eef70714cc9565779fc5b0b9e"
+        ],
+        [
+          "skills/chayen-devops/references/workflow-release-readiness.md",
+          "9e87257cbf8018466778cacae4f266326c1d27e89b5f133f6d1241409d4a12b5"
+        ],
+        [
+          "skills/chayen-documentation/SKILL.md",
+          "4328de1ba386ec791d62d91a4ad3d15e6cbe8b14717dc123e8bd973e2090e155"
+        ],
+        [
+          "skills/chayen-documentation/references/api-docs.md",
+          "1a5f3d07f4c537bc63bc9db45e546f1b014df3c9f7449113b5b63f0f8d2ca02b"
+        ],
+        [
+          "skills/chayen-documentation/references/architecture-docs.md",
+          "8d111467a7387786ee9df921fdb175b06fe4df99535475e792e3a39f3f27b3d0"
+        ],
+        [
+          "skills/chayen-documentation/references/fact-checking.md",
+          "e0a564a9ba29f5613b3a41c6329e7129106d52518c0f22622a0d4d3b01a9d103"
+        ],
+        [
+          "skills/chayen-documentation/references/git-workflow.md",
+          "ab0be1dea714f9c63479b99afec260152404360731b836b0c15996cd002a2852"
+        ],
+        [
+          "skills/chayen-documentation/references/project-docs.md",
+          "234b5c574e7237b25093665eb1ec3712a84ddca41c834295e8fac7c97346905f"
+        ],
+        [
+          "skills/chayen-documentation/references/pull-requests-and-review.md",
+          "2229d2e665230b7d99b47c32b936b4162722f7de7cd257e7a8cc1f5ca134c129"
+        ],
+        [
+          "skills/chayen-documentation/references/release-notes.md",
+          "e8c3d39186cbd7dee48da3deebb7d39bec279fa3f79b50997a45b61141578081"
+        ],
+        [
+          "skills/chayen-documentation/references/workflow-pull-request.md",
+          "86da4d249d5bad24aa671eb098c6481d9fa61714bdc25bed7b4920719dbaf44b"
+        ],
+        [
+          "skills/chayen-frontend/SKILL.md",
+          "298c8ba627ed5a49cc25092cff286d6d7c97c5e0ac23a5defab5bcdfee810d59"
+        ],
+        [
+          "skills/chayen-frontend/references/accessibility.md",
+          "698b6b4ee09e5be3a02bd023995acd090488df38db1bccd5b3ac804910ef3875"
+        ],
+        [
+          "skills/chayen-frontend/references/angular-components.md",
+          "bb4e166c10d652b26bcb6a3e6af727d991a3f38a02d0544b971dd7affa151709"
+        ],
+        [
+          "skills/chayen-frontend/references/angular-forms-accessibility.md",
+          "178bb73a4fdf1bdc45be84c05b36455bcb169c14b82e1cb21be36b288c21ad81"
+        ],
+        [
+          "skills/chayen-frontend/references/angular-navigation-http.md",
+          "45562fc395a8dfc606e90141af6d5f0117db26fc52c038404f34bd4d9c01e22b"
+        ],
+        [
+          "skills/chayen-frontend/references/angular-reactivity.md",
+          "d5c8165d6b9e533d34d872dc1c356b8886edd3f42936e80f7c28c3da4851cfdf"
+        ],
+        [
+          "skills/chayen-frontend/references/angular-ssr-upgrades.md",
+          "6327bf3a19ce6d691718dbe38851ca6e5af9274550e431ba4f74f35c996963e7"
+        ],
+        [
+          "skills/chayen-frontend/references/angular.md",
+          "da87d65ad0201597863a1e7ce1034fd45ff8c9cd8e91c8929633cea82cfbccf3"
+        ],
+        [
+          "skills/chayen-frontend/references/app-shells.md",
+          "09c9d107e796d50556a1a5929487b0d664191b6a05851b2de698f41788789cdd"
+        ],
+        [
+          "skills/chayen-frontend/references/browser-extensions.md",
+          "d86ffdf42f604fc336223be4456ea8a0d0d97f0c0206187e971fa4eaa4ce554d"
+        ],
+        [
+          "skills/chayen-frontend/references/component-architecture.md",
+          "dafbf47465c0bd495f5abbf0f9231b8c757c144e788bae79be09bda431af1436"
+        ],
+        [
+          "skills/chayen-frontend/references/desktop-packaging.md",
+          "c9fbb8f514692cbfcb874edc28ff13ac39645212381ff460a2f0ab14df9370eb"
+        ],
+        [
+          "skills/chayen-frontend/references/device-permissions-and-push.md",
+          "8732e42423f83d143f89911744006480e4db686abade465b844009dcd6867aa8"
+        ],
+        [
+          "skills/chayen-frontend/references/frontend-error-handling.md",
+          "544f3931aa549bc60be5ca3511e5d803d12c2117335656d3f6638de852c0537d"
+        ],
+        [
+          "skills/chayen-frontend/references/frontend-performance.md",
+          "f58d679bcef40c740000c9c433131c1a1ff535f494fbb98048aa9d403f554471"
+        ],
+        [
+          "skills/chayen-frontend/references/hybrid-mobile.md",
+          "ef9d1d9d01c6070789e3d9c133bbdbf24027f01c016056fd5c5aa1dd717b9290"
+        ],
+        [
+          "skills/chayen-frontend/references/internationalization.md",
+          "22f6009f1f82543f5943f905383e7229302776d42fd86283d60a4c67515b5465"
+        ],
+        [
+          "skills/chayen-frontend/references/layout-and-design-system.md",
+          "c59bd809fe51241c54de7c3369ebc1f30d344281dcc7a5b31be6ba19e09935bc"
+        ],
+        [
+          "skills/chayen-frontend/references/nextjs-rendering-seo.md",
+          "44c005b4cdd9cdd6038a56d2a023f916c2772624248be3b29e5531ffe8c61cd5"
+        ],
+        [
+          "skills/chayen-frontend/references/nextjs-routing-boundaries.md",
+          "d3dfabcde93e337bcda6d1e15e6430af9e38babeac5433fc2ac3e4d2e294030d"
+        ],
+        [
+          "skills/chayen-frontend/references/nuxt-app.md",
+          "3ff9bc8644171923257b6d9eff7004ad5b13a996901af176a8779e314b3b7ebb"
+        ],
+        [
+          "skills/chayen-frontend/references/nuxt-modules.md",
+          "2264a1790d491df8f10b017b6bc40eab788c95031227bb1680942e4bfb6120f4"
+        ],
+        [
+          "skills/chayen-frontend/references/offline-and-mobile-performance.md",
+          "c839bc55a01ab61beeffdf15092ddf525f3007b33841fcde5a0306028775b26d"
+        ],
+        [
+          "skills/chayen-frontend/references/react-components-state.md",
+          "b40e9422cda236bfc46fa288dbcc68404a2347cffa8dde2eb1dcea7e238fa97e"
+        ],
+        [
+          "skills/chayen-frontend/references/react-data-forms.md",
+          "695a03b74d388011b5c9688bf50cf5054d365cfc6259c4ee3494705a1bd3a0f9"
+        ],
+        [
+          "skills/chayen-frontend/references/react-navigation-accessibility.md",
+          "22428b2627195efbffc2c15852c08e4b6e8c4166e6ed2709b1c0b11aa590aa98"
+        ],
+        [
+          "skills/chayen-frontend/references/react-nextjs.md",
+          "8cee405526b97d153d9f7e7b87e2b4aec13d7457eadfb4a6da7133e3d3fd3ef2"
+        ],
+        [
+          "skills/chayen-frontend/references/react-rendering.md",
+          "f97edbd1290601d2bfc1890717093fed09fe8d64a7b554ed5267ed1203c6daae"
+        ],
+        [
+          "skills/chayen-frontend/references/ui-features.md",
+          "b929781d689525d4ccbe051b8b0772bb0db86962f6bbc6da7f07f1e0cb1405fd"
+        ],
+        [
+          "skills/chayen-frontend/references/ui-states.md",
+          "f2f361fdc4ad3201ea4a823648d8cc311381afb5cf05ef2ff96e47953b85d3f7"
+        ],
+        [
+          "skills/chayen-frontend/references/vue-composition.md",
+          "8dcc3ea0ca2647fa2cf79461c5fb276d35213a08432c3848551a9786a0633070"
+        ],
+        [
+          "skills/chayen-frontend/references/vue-nuxt.md",
+          "61b66f589379417beecfd4c5b3f50c417ec8d8a5e400f6b05e160077fb0eb7af"
+        ],
+        [
+          "skills/chayen-frontend/references/vue-performance.md",
+          "90066a930be473855c7ba30831d285c8d1f28ba179f689d72cb83adf067d83ce"
+        ],
+        [
+          "skills/chayen-frontend/references/vue-routing-state.md",
+          "2a982a613d5c556ec5cacd28f092d2a167015e88e76f7737a1cc8c0274768e85"
+        ],
+        [
+          "skills/chayen-humanizer-en/SKILL.md",
+          "bcba40e75e2668d38c13ac3b9c28bfa6e1b247dac0fedec22750174d6bb76a9b"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/content-creation.md",
+          "792d524abf4c15863e9aa15b4d11dbdb1ceabad91713428b59a8845fae0fb855"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/english-conventions.md",
+          "ffd00baab8c73e11101c548c2b55c19b96a91821f7b41f2e94dc2034555ac81a"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/output-formats.md",
+          "87d7f64166cc703c6a06e8699d828391220bb01695e8e68291385eefde20746e"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/patterns-format-and-reader.md",
+          "22957453efb673e265eca9a70e55def0c38eebc64653e784df267202beabf317"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/patterns-inflation-and-claims.md",
+          "af2cf4367591290517c4c18aab8786dd122cdf991872304ea32f8c2191322ef6"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/patterns-staging-and-rhythm.md",
+          "3fa16be0e98d2c66bb26b5ee9680bc4b7eb5291328d84c1e756189f996fbdde0"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/protected-content.md",
+          "2b2f560d21362fbffa9fca71a1bb3f5aafd9423f4b6ed7de5bd9532af04e81f3"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/upstream-notice.md",
+          "885368586ce8690ef3adfe9a58015b7ddd40a9768f1229c5703f6edd20221809"
+        ],
+        [
+          "skills/chayen-humanizer-en/references/website-content.md",
+          "ee84fd86eef01df11a7ca2f27aa123b1c35d1766c98c014e7de1942f0198b2a3"
+        ],
+        [
+          "skills/chayen-humanizer-th/SKILL.md",
+          "1a871dc577940ad958cecfcf5663a9a70f30b438ae05bdf04bc42c84ce437e93"
+        ],
+        [
+          "skills/chayen-humanizer-th/references/content-creation.md",
+          "cd0641588892fadbaf48146c1cb0b25c50e829afc4ef38e19209b4ddeb270ec7"
+        ],
+        [
+          "skills/chayen-humanizer-th/references/output-formats.md",
+          "5ae143180a27515eb89ded7e0b838fa31317423321d09a700e0ee64d67beabc6"
+        ],
+        [
+          "skills/chayen-humanizer-th/references/patterns-content.md",
+          "63ae92182855744cba559f0c2eeb90cbe604ac785be9aa033cb9bed87c15ed5b"
+        ],
+        [
+          "skills/chayen-humanizer-th/references/patterns-language.md",
+          "e9d6626e545728ea41d2d8a4b31ab8c7127beb44f44780d5581ee6f4f5714e3f"
+        ],
+        [
+          "skills/chayen-humanizer-th/references/protected-content.md",
+          "f59ca2e3222e2491104c8771a97f5a504ebf8b7c560a4662b85d52fa85c5540a"
+        ],
+        [
+          "skills/chayen-humanizer-th/references/thai-conventions.md",
+          "156582a84039b8306c18dd3d93eb0ed89ef21594e3c51146d327093ccba44465"
+        ],
+        [
+          "skills/chayen-humanizer-th/references/website-content.md",
+          "41b1d6cd69eb01c776d84bf7fd544cb5b6f19dfe0071b9fdedff41f549f332ef"
+        ],
+        [
+          "skills/chayen-implementation/SKILL.md",
+          "0b322c38d37ca73b3233941bb675c0084201c4415cea1bcb444b8a05635fd4f9"
+        ],
+        [
+          "skills/chayen-implementation/references/algorithm-design.md",
+          "93d62a732cf58af53ab42fba547b680d164a53802509e57e655d4429212b17e2"
+        ],
+        [
+          "skills/chayen-implementation/references/bug-fix.md",
+          "c3b274f7f80a279e1970e33ee4d7e9588cc9607cf5450ae194db86af7a500c30"
+        ],
+        [
+          "skills/chayen-implementation/references/change-passport-template.md",
+          "eeb739f45b955e129cec5b50f56945a2c4ac3e35a4f1f17df756d84310e157f7"
+        ],
+        [
+          "skills/chayen-implementation/references/change-summary.md",
+          "c45052e6e3b79a4d07cb235bf86142b1c681fd4d5c3904e07e9a98c6804152a5"
+        ],
+        [
+          "skills/chayen-implementation/references/compatibility.md",
+          "e9e027cd32409839a8de0f3fa7872980956271bfa980142e561cd14dbbdebeee"
+        ],
+        [
+          "skills/chayen-implementation/references/concurrency-safety.md",
+          "1d2107d7b274af54c456b35ff24458cce6c572ccd13a9df0832182e9c375c8cb"
+        ],
+        [
+          "skills/chayen-implementation/references/configuration-and-flags.md",
+          "e766f8ea6de169d9f3e08c7f88ff8f400eeb89fbadbb8a828692f2c1b2e4b433"
+        ],
+        [
+          "skills/chayen-implementation/references/contract-codegen.md",
+          "0dff27615309310d2baf396560c99ce22558f3be6f34949a8cd2e8236470c301"
+        ],
+        [
+          "skills/chayen-implementation/references/crossstack-types-and-time.md",
+          "f1aedc08f540d7b7614d4bcd2a37259aa1f5f5a608ca2be7585ada137d27d441"
+        ],
+        [
+          "skills/chayen-implementation/references/csharp-async-and-memory.md",
+          "4484e224b3d7d5a509d585503bdd832b5c84f7d361b2e1ae4032799b3246093c"
+        ],
+        [
+          "skills/chayen-implementation/references/csharp-linq-and-serialization.md",
+          "e3ee4f9d098b8b09ec1426ec7bd6120bd7248d32daeb0448c699a95e87084535"
+        ],
+        [
+          "skills/chayen-implementation/references/csharp-project-health.md",
+          "0019e8b48eaf3e05242aa5999f0cda207ae083bf47ef692d0b14986049d898ec"
+        ],
+        [
+          "skills/chayen-implementation/references/csharp-types-and-nullability.md",
+          "f183580c111dfbd48a021960258c43e779d134df9b8db3832bcc161cb6a6e13a"
+        ],
+        [
+          "skills/chayen-implementation/references/dead-code-and-deprecation.md",
+          "36fc988aa719b6b8b78cacc6a057ecad7143c043687b6784d805031fd8bb8cc5"
+        ],
+        [
+          "skills/chayen-implementation/references/error-handling.md",
+          "adce0d99e53d52cc6a73ef8c72e995cdf1524e804adf695ce9d6985b72fcb9a9"
+        ],
+        [
+          "skills/chayen-implementation/references/feature-delivery.md",
+          "e80d8edbc3d375871e868a12de44ab878ab2ced360f30f3ef1c7719f7283757e"
+        ],
+        [
+          "skills/chayen-implementation/references/implementation-plan-template.md",
+          "5932d7273851d2e3e79270fc0f1ee87393391a3c0ae4204204e7849cc65ea31e"
+        ],
+        [
+          "skills/chayen-implementation/references/javascript-runtime.md",
+          "0e687a0cbb2ae7c4b20e83c962fa65b919071cf76000449034d7d12f2191031a"
+        ],
+        [
+          "skills/chayen-implementation/references/refactoring.md",
+          "06fe09b4d2f605f2bc8ea59443cb257657cf342b223321eb7b8a774e17401183"
+        ],
+        [
+          "skills/chayen-implementation/references/risk-assessment-template.md",
+          "02b31a923875e5e004cdf963f50b70e55b1943399826ecf1472aca96f8f1eb54"
+        ],
+        [
+          "skills/chayen-implementation/references/task-contract-template.md",
+          "b2f0024b51de1ac03c693f8734df38c8e3249c88b570628406704117fb528e91"
+        ],
+        [
+          "skills/chayen-implementation/references/task-contract.md",
+          "93dae4de6dd8170a07fc169d3a9679814d1232143c56608d9bd56aa85e361b73"
+        ],
+        [
+          "skills/chayen-implementation/references/typescript-javascript.md",
+          "ed2d5140b7f1fc9c99bd74d2ee5ea0a37d35a7a7da34dcd2b3a6455565320511"
+        ],
+        [
+          "skills/chayen-implementation/references/typescript-types.md",
+          "6c623135619acb55a37842a8d37720ac3c6818cbf6af293e385d884fdfcfc950"
+        ],
+        [
+          "skills/chayen-implementation/references/typescript-workspace.md",
+          "f36d5565a5d4a17cd0a3cda6dab43b896ab78c2e662a12bee3873c11092dd121"
+        ],
+        [
+          "skills/chayen-implementation/references/upgrades.md",
+          "4365ace0476b2722c1cefb76ed60ffcacfcd7a4fcb0eab4ebd5ddfb9c2f0ca18"
+        ],
+        [
+          "skills/chayen-implementation/references/verification-report-template.md",
+          "b9f6bd4b79f0bbcd337a4525b3a52e4788622129f8b5e82edce8ec44270ab67d"
+        ],
+        [
+          "skills/chayen-implementation/references/workflow-bug-repair.md",
+          "87b78553853dd090e17b2e0ccf39568c52c39fdc4883f5090b1cfbce4ce0349a"
+        ],
+        [
+          "skills/chayen-implementation/references/workflow-dependency-upgrade.md",
+          "b625672700f27df85404fb8a40d858221d42fd63f3a93ae23d5d53517186109c"
+        ],
+        [
+          "skills/chayen-implementation/references/workflow-new-feature.md",
+          "4bda6bced2398681ca2c2771c3595a22b3c08cf1523b1a0424f7d831bdfed563"
+        ],
+        [
+          "skills/chayen-implementation/references/workflow-refactoring.md",
+          "6c2ff5d08699558f275c71fe0c0008a5e591db5eaccac4b519a612699b5a4e30"
+        ],
+        [
+          "skills/chayen-performance/SKILL.md",
+          "356c7649d0cf3d7cd0ff3511dd10a2678832e21ea095bd525396748d55317720"
+        ],
+        [
+          "skills/chayen-performance/references/aspnetcore-performance.md",
+          "ded769bde4021bc7667ffc444b51f12506d2e8798b1f73284996a997983f533a"
+        ],
+        [
+          "skills/chayen-performance/references/baseline-and-profiling.md",
+          "fa9b3ae682b1f3172b57225c8f6b2e877f9187147abcfd534b5c3a1ae090bcf9"
+        ],
+        [
+          "skills/chayen-performance/references/budgets-and-capacity.md",
+          "9f118e925713d194fb033e66fda8f925eeffc9aafee604e2b5fafde4ad9edc37"
+        ],
+        [
+          "skills/chayen-performance/references/caching.md",
+          "e182fc94fec9eaee2954e74c6488773c5026cd0049334abd7b8d6dee6d77d8a5"
+        ],
+        [
+          "skills/chayen-performance/references/load-testing.md",
+          "7435d49952dab947dbd3d56e90071f14eb5738da23439f3b24ed6dde21ab5430"
+        ],
+        [
+          "skills/chayen-performance/references/memory-leaks.md",
+          "6aeccddd08f27f2db5d20d1d0d90aa27640e4f843a8bc6a2d6b8c6c6a6cb4807"
+        ],
+        [
+          "skills/chayen-performance/references/runtime-tools.md",
+          "8ed21392aa57821e3c0f9aa1cfd8c96bd1fb21b79763f8588793edf865e465c7"
+        ],
+        [
+          "skills/chayen-performance/references/workflow-performance-investigation.md",
+          "fc28ae1ba67b883a4d0b3f5b131d30291013cc710b9a551e4e762e8e57ac0987"
+        ],
+        [
+          "skills/chayen-repository/SKILL.md",
+          "ac63473b4e224e521957f802a0a8ac10fc020d209f090a19a02719e4c48f8c37"
+        ],
+        [
+          "skills/chayen-repository/references/dependency-and-impact.md",
+          "21955f39eec197489cedaf5f4018acb5e2770eb68041f8dc62166b1f9f6ce0f0"
+        ],
+        [
+          "skills/chayen-repository/references/history-and-ownership.md",
+          "8b2e17f35211e2e0d77c4898ed74d7214539f66fb429041a1e957a5b2019261b"
+        ],
+        [
+          "skills/chayen-repository/references/legacy-assessment.md",
+          "d527cedcdde1785be5242cce3c9266ee2051c8d57692ed7e127e4dc3d87dcf85"
+        ],
+        [
+          "skills/chayen-repository/references/repository-profile.md",
+          "0d22d44e61f89859c07b69952af522c27f4313be4e2a60c9c902a97fd7bbc12f"
+        ],
+        [
+          "skills/chayen-repository/references/stack-detection.md",
+          "2acf167c0698794e930f6fa37ebba320f761812eb3ebeb3d5dc24421d9998aaa"
+        ],
+        [
+          "skills/chayen-repository/references/technical-debt-inventory.md",
+          "3837889cc1f0a482e7e0762df99654de657bb0b3af2f15b2b8be5cd678447871"
+        ],
+        [
+          "skills/chayen-repository/references/technical-debt-prioritization.md",
+          "a9c26ddc24a99fef39e1157a77074251f2cbc29b877f0fe1c84cd3b00ccf594d"
+        ],
+        [
+          "skills/chayen-repository/references/unknowns-and-assumptions.md",
+          "e0ed523d7bc21d29ae3658212fea6537ef1052d2620e60a816c49aa5c702f120"
+        ],
+        [
+          "skills/chayen-requirements/SKILL.md",
+          "4dfebd59e08fee57e533e7f85cb8916a67a1662b660dd6a0b1124d734d9d5ed3"
+        ],
+        [
+          "skills/chayen-requirements/references/elicitation-and-modeling.md",
+          "1365bf99e5547e693cf834cb14b8b72ceaa867f1e142b96e10aa78323f7c995b"
+        ],
+        [
+          "skills/chayen-requirements/references/nonfunctional-requirements.md",
+          "a793560fd2eb1f7b341227f13b773070a97944710c68c2ab98016a4f255aa97f"
+        ],
+        [
+          "skills/chayen-requirements/references/requirement-traceability.md",
+          "f50ebb36cc8123fd3bcc605f67f8cc2a45b1f934c29bcd6300a569740681a36e"
+        ],
+        [
+          "skills/chayen-requirements/references/requirements-record.md",
+          "2adcb5af626845e74d7fb29f8eb8ed6553927e365a9e558f19f6085aee86257e"
+        ],
+        [
+          "skills/chayen-requirements/references/scope-and-backlog.md",
+          "da488ca9f77e0fca042787f4d32d34b8b6713c96e992912b6d4525a36af72a61"
+        ],
+        [
+          "skills/chayen-requirements/references/stories-and-acceptance.md",
+          "1422e10265c282e93615b0082949c9790ee16f2400d8858566bed2736689d025"
+        ],
+        [
+          "skills/chayen-security/SKILL.md",
+          "7b922a0249313921d4634660ed2fdb4437be11287c003e1a7408f83259bc659e"
+        ],
+        [
+          "skills/chayen-security/references/access-reviews.md",
+          "ce6851d46a85ea369de4a970c38c1c8a410483ed058ec928e02a3dbbd494fd6f"
+        ],
+        [
+          "skills/chayen-security/references/infrastructure-security-review.md",
+          "ef3607ea68aee4a5612b4b3fa86a95ab8d4189dd9131dbcec599e4f31c7bf0dd"
+        ],
+        [
+          "skills/chayen-security/references/privacy.md",
+          "9dd392a26d1d7a175e76072b4c9accca74dab88fa60a809dd464ae64d00ae767"
+        ],
+        [
+          "skills/chayen-security/references/review-checklist.md",
+          "cc013fc9403b0c25f63cd64e6f64fb097d71596ffc34d004048a04181e5555c4"
+        ],
+        [
+          "skills/chayen-security/references/sbom-and-licenses.md",
+          "970da27d27957eda3bc0a91cc5b16048c8743a4757722e40f36954b24a372622"
+        ],
+        [
+          "skills/chayen-security/references/scanner-triage.md",
+          "c92c81cccd6c3014d4324935257fa17679215de202bed4740c560e770a0f86d5"
+        ],
+        [
+          "skills/chayen-security/references/secret-exposure-response.md",
+          "3cedc94f3ece1ee18ff1ae714769c1120d852b5cd72eac6ce79d080976f74911"
+        ],
+        [
+          "skills/chayen-security/references/secure-review.md",
+          "7c62ea63145b3770fdaff54cf5bac6c97dd2d3f8f4fec072c6f9fa25a26de78a"
+        ],
+        [
+          "skills/chayen-security/references/stack-hardening.md",
+          "758e768ea44d42c46586232836c6c5dfd1a9fd3f0d9a77a59f8bbaae66ccf331"
+        ],
+        [
+          "skills/chayen-security/references/threat-modeling.md",
+          "8ea99ec6fdb221f71738870d8acf2f8af75a015118d14de0f8bb9b57b758c074"
+        ],
+        [
+          "skills/chayen-security/references/vulnerability-remediation.md",
+          "a33172c7ef27fb6c7d22235cf606f205b430732015a2fb20341b1bd5a1ad6e18"
+        ],
+        [
+          "skills/chayen-security/references/workflow-security-review.md",
+          "8956be666c4a50a8ed25f21d67ad955178ec1ddd34faae8379d2ae2e17d73df8"
+        ],
+        [
+          "skills/chayen-testing/SKILL.md",
+          "dc3bdfe6abe716a6373ddbed60ac3db09fb052951560f480baaeff8f90930d93"
+        ],
+        [
+          "skills/chayen-testing/references/advanced-test-techniques.md",
+          "beea4fa675b06bca3e68131f362c2e6ab4502b5f19e3df0eb6cf61111ae22749"
+        ],
+        [
+          "skills/chayen-testing/references/angular-testing.md",
+          "2f405b53808d0c650414fda0d24d0f460bfc5acafe2507285c220b4968cbec4c"
+        ],
+        [
+          "skills/chayen-testing/references/api-and-contract-tests.md",
+          "d83cf81c06183daf90d048430a418d561ceaf2e42d58d1257c267b23c3beeadf"
+        ],
+        [
+          "skills/chayen-testing/references/coverage-gaps.md",
+          "feb62f963240bf2faa394a2499e52002720e554bf43295954faaabcfef84623f"
+        ],
+        [
+          "skills/chayen-testing/references/crossstack-e2e.md",
+          "ebfecdc24c5b84733d492de7969d8b66b0193ace542a546b23e6af0e0c855a2f"
+        ],
+        [
+          "skills/chayen-testing/references/dotnet-testing.md",
+          "d1e6f90c8a9956bc448c11e6f60983aba2d6c94d1a590c84a7df0e55c6aae41e"
+        ],
+        [
+          "skills/chayen-testing/references/failing-and-flaky-tests.md",
+          "f36dc78b66cfccf2ae8aeedbe939d586ae7bcb9fb0b6609b7cdf91b1c9ea2024"
+        ],
+        [
+          "skills/chayen-testing/references/javascript-testing.md",
+          "637cf8d5793a3fdb44543fe94833466c4ac49b5d0e472b4815539e56d97b998b"
+        ],
+        [
+          "skills/chayen-testing/references/python-testing.md",
+          "cec830ce52326c0840d0c96e8282d763b0b5aaaca2dc20a88bc5a0c3d639d096"
+        ],
+        [
+          "skills/chayen-testing/references/react-testing.md",
+          "0ce432456a38b5ece38e3b54ed779782273fb0b850e29feef9f61a70e75ed832"
+        ],
+        [
+          "skills/chayen-testing/references/test-authoring.md",
+          "077b130d74ae5f643071ef8ca3625f68ca8b57b4ea278a499960d310b2e4a59c"
+        ],
+        [
+          "skills/chayen-testing/references/test-data.md",
+          "531c2c9a5648c80cc494db0b91885b0b5bd4f8e27ac2b991dd31c7ea6f27bd29"
+        ],
+        [
+          "skills/chayen-testing/references/test-strategy.md",
+          "dd99818e8fa08f510ec477685d8622180dfa3beda5b5a300bda1818f30327c2e"
+        ],
+        [
+          "skills/chayen-testing/references/vite-testing.md",
+          "2671275d842391488921d59c5c30ed02d7a2fbf6d96f97a4e2c99e0a59ac9eb8"
+        ],
+        [
+          "skills/chayen-testing/references/vue-testing.md",
+          "fd07c2990136179c35269c9f8b03ad2e13c7f02064a3bd0bc97ea7b10e5886fb"
+        ],
+        [
+          "skills/chayen-testing/references/workflow-testing-regression.md",
+          "dfe18c8fecb5ef7b617dc14c40f6364d34d5c0ccdb001a2ea61beaf86e820c56"
+        ]
+      ]
+    },
+    "marketplaces": [
+      {
+        "file": ".claude-plugin/marketplace.json",
+        "name": "codejadee",
+        "metadataVersion": null,
+        "pluginVersion": null,
+        "sha256": "b2f81a16ea9395a09470ff719e15cd483bacbe721738493cb0a9e68650f34b17"
+      },
+      {
+        "file": ".agents/plugins/marketplace.json",
+        "name": "codejadee",
+        "metadataVersion": null,
+        "pluginVersion": null,
+        "sha256": "8f3a7567efe7aa699290bc4bd2ea7259f6338558adb50011301193c5f07fecda"
+      },
+      {
+        "file": ".github/plugin/marketplace.json",
+        "name": "codejadee",
+        "metadataVersion": "0.1.0-rc.1",
+        "pluginVersion": "0.1.0-rc.1",
+        "sha256": "0bd1c3727580bfbb409b524011143fe1c4d3ad5ae1be58de681eb093f5c9f5f1"
+      }
+    ]
+  },
+  "providers": [
+    {
+      "provider": "claude",
+      "executable": "<user-home>/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+      "version": "2.1.302 (Claude Code)",
+      "rows": [
+        {
+          "step": "register",
+          "result": "PASS",
+          "output": "Configured marketplaces:\n\n  > anthropic-plugin-directory\n    Source: Built in (Anthropic Directory)\n\n  > codejadee\n    Source: Folder (<scratch>\\claude\\marketplace)\n\n"
+        },
+        {
+          "step": "install",
+          "result": "PASS",
+          "output": "Installing plugin \"chayen@codejadee\"...√ Successfully installed plugin: chayen@codejadee (scope: user)\n"
+        },
+        {
+          "step": "list",
+          "result": "PASS",
+          "output": [
+            {
+              "id": "chayen@codejadee",
+              "version": "0.1.0-rc.1",
+              "scope": "user",
+              "enabled": true,
+              "installPath": "<scratch>\\claude\\profile\\.claude\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1",
+              "readFromFolder": "<scratch>\\claude\\marketplace\\plugins\\codejadee-chayen-framework",
+              "folderVersion": "0.1.0-rc.1",
+              "installedAt": "2026-10-18T06:05:05.798Z",
+              "lastUpdated": "2026-10-18T06:05:05.798Z",
+              "projectEnabled": false
+            }
+          ]
+        },
+        {
+          "step": "discover",
+          "result": "PASS",
+          "version": "0.1.0-rc.1",
+          "installPath": "<scratch>\\claude\\profile\\.claude\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1",
+          "packageFingerprint": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+          "loadedSkills": 15,
+          "output": "chayen 0.1.0-rc.1\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n"
+        },
+        {
+          "step": "disable",
+          "result": "PASS",
+          "enabled": false
+        },
+        {
+          "step": "disabled-behavior",
+          "result": "BLOCKED",
+          "reason": "plugin details enumerates disabled plugin contents too; this is not an activation test. Native list confirms disabled; model-session behavior requires separate authorized test access"
+        },
+        {
+          "step": "enable",
+          "result": "PASS",
+          "enabled": true
+        },
+        {
+          "step": "enabled-behavior",
+          "result": "PASS",
+          "loadedSkills": 15,
+          "output": "chayen 0.1.0-rc.1\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n"
+        },
+        {
+          "step": "update",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\claude\\profile\\.claude\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353"
+        },
+        {
+          "step": "updated-content",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\claude\\profile\\.claude\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353",
+          "loadedSkills": 15,
+          "output": "chayen 0.1.0-rc.2\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n"
+        },
+        {
+          "step": "uninstall",
+          "result": "PASS",
+          "output": "√ Successfully uninstalled plugin: chayen (scope: user)\n"
+        },
+        {
+          "step": "absent",
+          "result": "PASS",
+          "output": []
+        },
+        {
+          "step": "reinstall",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\claude\\profile\\.claude\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353"
+        },
+        {
+          "step": "restart",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\claude\\profile\\.claude\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353",
+          "loadedSkills": 15,
+          "output": "chayen 0.1.0-rc.2\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+          "restart": "new native process; no reused model session"
+        },
+        {
+          "step": "migration",
+          "result": "PASS",
+          "legacyAbsent": true,
+          "version": "0.1.0-rc.1",
+          "installPath": "<scratch>\\claude\\profile\\.claude\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1",
+          "packageFingerprint": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+          "loadedSkills": 15,
+          "output": "chayen 0.1.0-rc.1\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+          "fixture": "former identifier replay on current Skill body"
+        },
+        {
+          "step": "cleanup-uninstall",
+          "result": "PASS"
+        },
+        {
+          "step": "unregister",
+          "result": "PASS",
+          "output": "Configured marketplaces:\n\n  > anthropic-plugin-directory\n    Source: Built in (Anthropic Directory)\n\n"
+        },
+        {
+          "step": "fixture-unchanged",
+          "result": "PASS"
+        }
+      ],
+      "commands": {
+        "disable": true,
+        "enable": true,
+        "update": true,
+        "marketplaceUpgrade": false
+      }
+    },
+    {
+      "provider": "codex",
+      "executable": "<user-home>/AppData/Local/Programs/OpenAI/Codex/bin/codex.exe",
+      "version": "codex-cli 0.163.0",
+      "rows": [
+        {
+          "step": "register",
+          "result": "PASS",
+          "output": "MARKETPLACE  ROOT\ncodejadee    <scratch>\\codex\\marketplace\n"
+        },
+        {
+          "step": "install",
+          "result": "PASS",
+          "output": "Added plugin `chayen` from marketplace `codejadee`.\nInstalled plugin root: <scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\n"
+        },
+        {
+          "step": "list",
+          "result": "PASS",
+          "output": {
+            "installed": [
+              {
+                "pluginId": "chayen@codejadee",
+                "name": "chayen",
+                "marketplaceName": "codejadee",
+                "version": "0.1.0-rc.1",
+                "installed": true,
+                "enabled": true,
+                "source": {
+                  "source": "local",
+                  "path": "<scratch>\\codex\\marketplace\\plugins\\codejadee-chayen-framework"
+                },
+                "marketplaceSource": {
+                  "sourceType": "local",
+                  "source": "\\\\?\\<scratch>\\codex\\marketplace"
+                },
+                "installPolicy": "AVAILABLE",
+                "authPolicy": "ON_INSTALL"
+              }
+            ],
+            "available": []
+          }
+        },
+        {
+          "step": "discover",
+          "result": "PASS",
+          "version": "0.1.0-rc.1",
+          "installPath": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1",
+          "packageFingerprint": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+          "loadedSkills": 15,
+          "output": {
+            "data": [
+              {
+                "cwd": "<scratch>\\codex\\fixture",
+                "skills": [
+                  {
+                    "name": "chayen:chayen-ai-engineering",
+                    "description": "Build and evaluate ML and LLM features in Python, .NET, or TypeScript, covering dataset readiness and leakage, experiment design, model evaluation and serving, drift, RAG pipelines and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent skills, and agent permission reviews. Not for routine data pipelines, attacking third-party AI systems, or legal AI compliance.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-ai-engineering\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-architecture",
+                    "description": "Design, review, and plan software architecture from repository evidence. Compares options with trade-offs, writes ADRs and decision registers, defines module and service boundaries, domain models, data flows, multitenancy, resilience, and fitness tests for dependency rules, and plans phased migrations and staged rollouts. Not for implementing features, writing infrastructure code, or sizing backlog items.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-architecture\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-backend",
+                    "description": "Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for Nitro, Elysia, UI components, mobile apps, or infrastructure-only tasks.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-backend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-data",
+                    "description": "Design, change, or review relational data in SQL Server or PostgreSQL through EF Core, Dapper, Prisma, SQLAlchemy, Django, or raw SQL, covering schema modeling, migrations, query and index tuning, transactions, integrity, data migrations and backfills, ETL, data quality, retention, and restore drills. Not for API endpoint code, NoSQL or warehouse platforms such as MongoDB or Snowflake, or database provisioning.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-data\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-devops",
+                    "description": "Design or fix builds, delivery, and operations, covering build systems, CI/CD pipelines in GitHub Actions, Azure Pipelines, or GitLab CI, Dockerfiles, Terraform, Bicep, Kubernetes, or Helm, environments and secrets, releases and provenance, deploy and rollback checks, observability and SLOs, alerts and incidents, postmortems, disaster recovery, and runbooks. Not for application feature code or IaC security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-devops\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-documentation",
+                    "description": "Write or update engineering docs and collaboration artifacts from verified repository facts, covering READMEs, onboarding guides, API and architecture docs, knowledge transfer, pull request descriptions, code review, review comment resolution, release notes, and git workflow help. Never invents commands, test results, or behaviour. Not for end-user manuals, marketing copy, or security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-documentation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-frontend",
+                    "description": "Build or fix web UI in Angular, React, Next.js, Vue, Nuxt, or Vite apps, their PWA, Capacitor, Ionic, Electron, or Tauri shells, and browser extensions, for components, state, forms, design systems, accessibility, i18n, performance, UI errors, offline, permissions and push, and desktop packaging. Not for server-only APIs, native or game UI such as SwiftUI, Flutter, React Native, WPF, or Unity, or design without code.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-frontend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-en",
+                    "description": "Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-humanizer-en\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-th",
+                    "description": "Write, audit, or reword Thai prose for articles, blogs, landing pages, READMEs, product descriptions, UI microcopy and Thai copy in localization files. Fix phrasing, register, repetition and Thai-English terms; keep facts and markup. Not for non-Thai output, engineering doc verification, i18n configuration, routing, key wiring or application logic.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-humanizer-th\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-implementation",
+                    "description": "Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-implementation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-performance",
+                    "description": "Measure and improve runtime performance of .NET, Node, and Python services and browser apps, covering baselines and benchmarks, profiling, load tests with k6, JMeter, Locust, or NBomber, bottleneck analysis, memory leaks, latency budgets, capacity planning, caching, and cost trade-offs, always from measurements. Not for single SQL query tuning, frontend bundle size, or functional tests.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-performance\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-repository",
+                    "description": "Analyze an existing codebase without changing it. Reports stacks and versions, layout, build and test commands, conventions, project and package dependencies, change impact, git history and code ownership, technical debt and its priority, legacy assessments, and unknowns, citing evidence for every finding. Not for writing code or docs, or git operations such as rebase or merge.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-repository\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-requirements",
+                    "description": "Analyze software requirements before code is written. Clarifies vague requests, refines user stories, writes testable acceptance criteria and edge cases, models use cases, extracts business rules from code, SQL, or documents, defines non-functional targets, sets scope, splits and sizes backlogs, and traces requirements to code and tests. Not for writing code, architecture design, or delivery schedules.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-requirements\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-security",
+                    "description": "Review or harden application security in .NET, TypeScript or JavaScript, Python, and SQL code, covering threat models, secure code review, SAST and dependency triage, exposed secrets, authorization, injection and XSS, SSRF, cryptography, privacy, secure logging, SBOMs and licences, Dockerfile and IaC review, and fixes. Advisory review. Not a penetration test, compliance audit, or replacement for security tooling.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-security\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-testing",
+                    "description": "Plan, write, or fix automated tests with xUnit, NUnit, MSTest, Jasmine, Jest, Vitest, Playwright, Cypress, or pytest, covering test strategy, unit, integration, end-to-end, API and contract, regression, property-based, mutation, and fuzz tests, test data builders, coverage gaps, and failing or flaky test triage. Not for manual QA plans, load testing, or production monitoring.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-testing\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "imagegen",
+                    "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                    "interface": {
+                      "displayName": "Image Gen",
+                      "shortDescription": "Generate or edit images for websites, games, and more",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "openai-docs",
+                    "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                    "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                    "interface": {
+                      "displayName": "OpenAI Docs",
+                      "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "review-agent",
+                    "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                    "interface": {
+                      "displayName": "Review Agent",
+                      "shortDescription": "Find actionable bugs in code changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\review-agent\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-creator",
+                    "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                    "shortDescription": "Create or update a skill",
+                    "interface": {
+                      "displayName": "Skill Creator",
+                      "shortDescription": "Create or update a skill",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-installer",
+                    "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                    "shortDescription": "Install curated skills from openai/skills or other repos",
+                    "interface": {
+                      "displayName": "Skill Installer",
+                      "shortDescription": "Install curated skills from openai/skills or other repos",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  }
+                ],
+                "errors": []
+              }
+            ]
+          }
+        },
+        {
+          "step": "disable",
+          "result": "UNSUPPORTED",
+          "reason": "No plugin disable subcommand; native alternative is the plugin enabled setting in disposable CODEX_HOME/config.toml"
+        },
+        {
+          "step": "disable-native-config",
+          "result": "PASS",
+          "enabled": false
+        },
+        {
+          "step": "disabled-behavior",
+          "result": "PASS",
+          "loadedSkills": 0,
+          "output": {
+            "data": [
+              {
+                "cwd": "<scratch>\\codex\\fixture",
+                "skills": [
+                  {
+                    "name": "imagegen",
+                    "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                    "interface": {
+                      "displayName": "Image Gen",
+                      "shortDescription": "Generate or edit images for websites, games, and more",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "openai-docs",
+                    "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                    "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                    "interface": {
+                      "displayName": "OpenAI Docs",
+                      "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "review-agent",
+                    "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                    "interface": {
+                      "displayName": "Review Agent",
+                      "shortDescription": "Find actionable bugs in code changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\review-agent\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-creator",
+                    "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                    "shortDescription": "Create or update a skill",
+                    "interface": {
+                      "displayName": "Skill Creator",
+                      "shortDescription": "Create or update a skill",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-installer",
+                    "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                    "shortDescription": "Install curated skills from openai/skills or other repos",
+                    "interface": {
+                      "displayName": "Skill Installer",
+                      "shortDescription": "Install curated skills from openai/skills or other repos",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  }
+                ],
+                "errors": []
+              }
+            ]
+          }
+        },
+        {
+          "step": "enable",
+          "result": "UNSUPPORTED",
+          "reason": "No plugin enable subcommand; native alternative is the plugin enabled setting in disposable CODEX_HOME/config.toml"
+        },
+        {
+          "step": "enable-native-config",
+          "result": "PASS",
+          "enabled": true
+        },
+        {
+          "step": "enabled-behavior",
+          "result": "PASS",
+          "loadedSkills": 15,
+          "output": {
+            "data": [
+              {
+                "cwd": "<scratch>\\codex\\fixture",
+                "skills": [
+                  {
+                    "name": "chayen:chayen-ai-engineering",
+                    "description": "Build and evaluate ML and LLM features in Python, .NET, or TypeScript, covering dataset readiness and leakage, experiment design, model evaluation and serving, drift, RAG pipelines and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent skills, and agent permission reviews. Not for routine data pipelines, attacking third-party AI systems, or legal AI compliance.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-ai-engineering\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-architecture",
+                    "description": "Design, review, and plan software architecture from repository evidence. Compares options with trade-offs, writes ADRs and decision registers, defines module and service boundaries, domain models, data flows, multitenancy, resilience, and fitness tests for dependency rules, and plans phased migrations and staged rollouts. Not for implementing features, writing infrastructure code, or sizing backlog items.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-architecture\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-backend",
+                    "description": "Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for Nitro, Elysia, UI components, mobile apps, or infrastructure-only tasks.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-backend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-data",
+                    "description": "Design, change, or review relational data in SQL Server or PostgreSQL through EF Core, Dapper, Prisma, SQLAlchemy, Django, or raw SQL, covering schema modeling, migrations, query and index tuning, transactions, integrity, data migrations and backfills, ETL, data quality, retention, and restore drills. Not for API endpoint code, NoSQL or warehouse platforms such as MongoDB or Snowflake, or database provisioning.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-data\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-devops",
+                    "description": "Design or fix builds, delivery, and operations, covering build systems, CI/CD pipelines in GitHub Actions, Azure Pipelines, or GitLab CI, Dockerfiles, Terraform, Bicep, Kubernetes, or Helm, environments and secrets, releases and provenance, deploy and rollback checks, observability and SLOs, alerts and incidents, postmortems, disaster recovery, and runbooks. Not for application feature code or IaC security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-devops\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-documentation",
+                    "description": "Write or update engineering docs and collaboration artifacts from verified repository facts, covering READMEs, onboarding guides, API and architecture docs, knowledge transfer, pull request descriptions, code review, review comment resolution, release notes, and git workflow help. Never invents commands, test results, or behaviour. Not for end-user manuals, marketing copy, or security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-documentation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-frontend",
+                    "description": "Build or fix web UI in Angular, React, Next.js, Vue, Nuxt, or Vite apps, their PWA, Capacitor, Ionic, Electron, or Tauri shells, and browser extensions, for components, state, forms, design systems, accessibility, i18n, performance, UI errors, offline, permissions and push, and desktop packaging. Not for server-only APIs, native or game UI such as SwiftUI, Flutter, React Native, WPF, or Unity, or design without code.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-frontend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-en",
+                    "description": "Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-humanizer-en\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-th",
+                    "description": "Write, audit, or reword Thai prose for articles, blogs, landing pages, READMEs, product descriptions, UI microcopy and Thai copy in localization files. Fix phrasing, register, repetition and Thai-English terms; keep facts and markup. Not for non-Thai output, engineering doc verification, i18n configuration, routing, key wiring or application logic.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-humanizer-th\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-implementation",
+                    "description": "Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-implementation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-performance",
+                    "description": "Measure and improve runtime performance of .NET, Node, and Python services and browser apps, covering baselines and benchmarks, profiling, load tests with k6, JMeter, Locust, or NBomber, bottleneck analysis, memory leaks, latency budgets, capacity planning, caching, and cost trade-offs, always from measurements. Not for single SQL query tuning, frontend bundle size, or functional tests.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-performance\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-repository",
+                    "description": "Analyze an existing codebase without changing it. Reports stacks and versions, layout, build and test commands, conventions, project and package dependencies, change impact, git history and code ownership, technical debt and its priority, legacy assessments, and unknowns, citing evidence for every finding. Not for writing code or docs, or git operations such as rebase or merge.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-repository\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-requirements",
+                    "description": "Analyze software requirements before code is written. Clarifies vague requests, refines user stories, writes testable acceptance criteria and edge cases, models use cases, extracts business rules from code, SQL, or documents, defines non-functional targets, sets scope, splits and sizes backlogs, and traces requirements to code and tests. Not for writing code, architecture design, or delivery schedules.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-requirements\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-security",
+                    "description": "Review or harden application security in .NET, TypeScript or JavaScript, Python, and SQL code, covering threat models, secure code review, SAST and dependency triage, exposed secrets, authorization, injection and XSS, SSRF, cryptography, privacy, secure logging, SBOMs and licences, Dockerfile and IaC review, and fixes. Advisory review. Not a penetration test, compliance audit, or replacement for security tooling.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-security\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-testing",
+                    "description": "Plan, write, or fix automated tests with xUnit, NUnit, MSTest, Jasmine, Jest, Vitest, Playwright, Cypress, or pytest, covering test strategy, unit, integration, end-to-end, API and contract, regression, property-based, mutation, and fuzz tests, test data builders, coverage gaps, and failing or flaky test triage. Not for manual QA plans, load testing, or production monitoring.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-testing\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "imagegen",
+                    "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                    "interface": {
+                      "displayName": "Image Gen",
+                      "shortDescription": "Generate or edit images for websites, games, and more",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "openai-docs",
+                    "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                    "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                    "interface": {
+                      "displayName": "OpenAI Docs",
+                      "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "review-agent",
+                    "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                    "interface": {
+                      "displayName": "Review Agent",
+                      "shortDescription": "Find actionable bugs in code changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\review-agent\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-creator",
+                    "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                    "shortDescription": "Create or update a skill",
+                    "interface": {
+                      "displayName": "Skill Creator",
+                      "shortDescription": "Create or update a skill",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-installer",
+                    "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                    "shortDescription": "Install curated skills from openai/skills or other repos",
+                    "interface": {
+                      "displayName": "Skill Installer",
+                      "shortDescription": "Install curated skills from openai/skills or other repos",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  }
+                ],
+                "errors": []
+              }
+            ]
+          }
+        },
+        {
+          "step": "update-native-reinstall",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353"
+        },
+        {
+          "step": "update",
+          "result": "UNSUPPORTED",
+          "reason": "No dedicated plugin update subcommand; remove/add is tested separately, marketplace upgrade refreshes Git catalog snapshots"
+        },
+        {
+          "step": "updated-content",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353",
+          "loadedSkills": 15,
+          "output": {
+            "data": [
+              {
+                "cwd": "<scratch>\\codex\\fixture",
+                "skills": [
+                  {
+                    "name": "chayen:chayen-ai-engineering",
+                    "description": "Build and evaluate ML and LLM features in Python, .NET, or TypeScript, covering dataset readiness and leakage, experiment design, model evaluation and serving, drift, RAG pipelines and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent skills, and agent permission reviews. Not for routine data pipelines, attacking third-party AI systems, or legal AI compliance.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-ai-engineering\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-architecture",
+                    "description": "Design, review, and plan software architecture from repository evidence. Compares options with trade-offs, writes ADRs and decision registers, defines module and service boundaries, domain models, data flows, multitenancy, resilience, and fitness tests for dependency rules, and plans phased migrations and staged rollouts. Not for implementing features, writing infrastructure code, or sizing backlog items.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-architecture\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-backend",
+                    "description": "Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for Nitro, Elysia, UI components, mobile apps, or infrastructure-only tasks.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-backend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-data",
+                    "description": "Design, change, or review relational data in SQL Server or PostgreSQL through EF Core, Dapper, Prisma, SQLAlchemy, Django, or raw SQL, covering schema modeling, migrations, query and index tuning, transactions, integrity, data migrations and backfills, ETL, data quality, retention, and restore drills. Not for API endpoint code, NoSQL or warehouse platforms such as MongoDB or Snowflake, or database provisioning.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-data\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-devops",
+                    "description": "Design or fix builds, delivery, and operations, covering build systems, CI/CD pipelines in GitHub Actions, Azure Pipelines, or GitLab CI, Dockerfiles, Terraform, Bicep, Kubernetes, or Helm, environments and secrets, releases and provenance, deploy and rollback checks, observability and SLOs, alerts and incidents, postmortems, disaster recovery, and runbooks. Not for application feature code or IaC security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-devops\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-documentation",
+                    "description": "Write or update engineering docs and collaboration artifacts from verified repository facts, covering READMEs, onboarding guides, API and architecture docs, knowledge transfer, pull request descriptions, code review, review comment resolution, release notes, and git workflow help. Never invents commands, test results, or behaviour. Not for end-user manuals, marketing copy, or security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-documentation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-frontend",
+                    "description": "Build or fix web UI in Angular, React, Next.js, Vue, Nuxt, or Vite apps, their PWA, Capacitor, Ionic, Electron, or Tauri shells, and browser extensions, for components, state, forms, design systems, accessibility, i18n, performance, UI errors, offline, permissions and push, and desktop packaging. Not for server-only APIs, native or game UI such as SwiftUI, Flutter, React Native, WPF, or Unity, or design without code.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-frontend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-en",
+                    "description": "Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-humanizer-en\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-th",
+                    "description": "Write, audit, or reword Thai prose for articles, blogs, landing pages, READMEs, product descriptions, UI microcopy and Thai copy in localization files. Fix phrasing, register, repetition and Thai-English terms; keep facts and markup. Not for non-Thai output, engineering doc verification, i18n configuration, routing, key wiring or application logic.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-humanizer-th\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-implementation",
+                    "description": "Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-implementation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-performance",
+                    "description": "Measure and improve runtime performance of .NET, Node, and Python services and browser apps, covering baselines and benchmarks, profiling, load tests with k6, JMeter, Locust, or NBomber, bottleneck analysis, memory leaks, latency budgets, capacity planning, caching, and cost trade-offs, always from measurements. Not for single SQL query tuning, frontend bundle size, or functional tests.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-performance\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-repository",
+                    "description": "Analyze an existing codebase without changing it. Reports stacks and versions, layout, build and test commands, conventions, project and package dependencies, change impact, git history and code ownership, technical debt and its priority, legacy assessments, and unknowns, citing evidence for every finding. Not for writing code or docs, or git operations such as rebase or merge.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-repository\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-requirements",
+                    "description": "Analyze software requirements before code is written. Clarifies vague requests, refines user stories, writes testable acceptance criteria and edge cases, models use cases, extracts business rules from code, SQL, or documents, defines non-functional targets, sets scope, splits and sizes backlogs, and traces requirements to code and tests. Not for writing code, architecture design, or delivery schedules.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-requirements\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-security",
+                    "description": "Review or harden application security in .NET, TypeScript or JavaScript, Python, and SQL code, covering threat models, secure code review, SAST and dependency triage, exposed secrets, authorization, injection and XSS, SSRF, cryptography, privacy, secure logging, SBOMs and licences, Dockerfile and IaC review, and fixes. Advisory review. Not a penetration test, compliance audit, or replacement for security tooling.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-security\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-testing",
+                    "description": "Plan, write, or fix automated tests with xUnit, NUnit, MSTest, Jasmine, Jest, Vitest, Playwright, Cypress, or pytest, covering test strategy, unit, integration, end-to-end, API and contract, regression, property-based, mutation, and fuzz tests, test data builders, coverage gaps, and failing or flaky test triage. Not for manual QA plans, load testing, or production monitoring.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-testing\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "imagegen",
+                    "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                    "interface": {
+                      "displayName": "Image Gen",
+                      "shortDescription": "Generate or edit images for websites, games, and more",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "openai-docs",
+                    "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                    "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                    "interface": {
+                      "displayName": "OpenAI Docs",
+                      "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "review-agent",
+                    "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                    "interface": {
+                      "displayName": "Review Agent",
+                      "shortDescription": "Find actionable bugs in code changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\review-agent\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-creator",
+                    "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                    "shortDescription": "Create or update a skill",
+                    "interface": {
+                      "displayName": "Skill Creator",
+                      "shortDescription": "Create or update a skill",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-installer",
+                    "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                    "shortDescription": "Install curated skills from openai/skills or other repos",
+                    "interface": {
+                      "displayName": "Skill Installer",
+                      "shortDescription": "Install curated skills from openai/skills or other repos",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  }
+                ],
+                "errors": []
+              }
+            ]
+          }
+        },
+        {
+          "step": "uninstall",
+          "result": "PASS",
+          "output": "Removed plugin `chayen` from marketplace `codejadee`.\n"
+        },
+        {
+          "step": "absent",
+          "result": "PASS",
+          "output": {
+            "installed": [],
+            "available": []
+          }
+        },
+        {
+          "step": "reinstall",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353"
+        },
+        {
+          "step": "restart",
+          "result": "PASS",
+          "version": "0.1.0-rc.2",
+          "installPath": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2",
+          "packageFingerprint": "b05fa7bcf854aca8f1183918e45f521c4b84bf611ee0ab85850a74b9399f4353",
+          "loadedSkills": 15,
+          "output": {
+            "data": [
+              {
+                "cwd": "<scratch>\\codex\\fixture",
+                "skills": [
+                  {
+                    "name": "chayen:chayen-ai-engineering",
+                    "description": "Build and evaluate ML and LLM features in Python, .NET, or TypeScript, covering dataset readiness and leakage, experiment design, model evaluation and serving, drift, RAG pipelines and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent skills, and agent permission reviews. Not for routine data pipelines, attacking third-party AI systems, or legal AI compliance.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-ai-engineering\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-architecture",
+                    "description": "Design, review, and plan software architecture from repository evidence. Compares options with trade-offs, writes ADRs and decision registers, defines module and service boundaries, domain models, data flows, multitenancy, resilience, and fitness tests for dependency rules, and plans phased migrations and staged rollouts. Not for implementing features, writing infrastructure code, or sizing backlog items.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-architecture\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-backend",
+                    "description": "Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for Nitro, Elysia, UI components, mobile apps, or infrastructure-only tasks.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-backend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-data",
+                    "description": "Design, change, or review relational data in SQL Server or PostgreSQL through EF Core, Dapper, Prisma, SQLAlchemy, Django, or raw SQL, covering schema modeling, migrations, query and index tuning, transactions, integrity, data migrations and backfills, ETL, data quality, retention, and restore drills. Not for API endpoint code, NoSQL or warehouse platforms such as MongoDB or Snowflake, or database provisioning.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-data\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-devops",
+                    "description": "Design or fix builds, delivery, and operations, covering build systems, CI/CD pipelines in GitHub Actions, Azure Pipelines, or GitLab CI, Dockerfiles, Terraform, Bicep, Kubernetes, or Helm, environments and secrets, releases and provenance, deploy and rollback checks, observability and SLOs, alerts and incidents, postmortems, disaster recovery, and runbooks. Not for application feature code or IaC security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-devops\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-documentation",
+                    "description": "Write or update engineering docs and collaboration artifacts from verified repository facts, covering READMEs, onboarding guides, API and architecture docs, knowledge transfer, pull request descriptions, code review, review comment resolution, release notes, and git workflow help. Never invents commands, test results, or behaviour. Not for end-user manuals, marketing copy, or security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-documentation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-frontend",
+                    "description": "Build or fix web UI in Angular, React, Next.js, Vue, Nuxt, or Vite apps, their PWA, Capacitor, Ionic, Electron, or Tauri shells, and browser extensions, for components, state, forms, design systems, accessibility, i18n, performance, UI errors, offline, permissions and push, and desktop packaging. Not for server-only APIs, native or game UI such as SwiftUI, Flutter, React Native, WPF, or Unity, or design without code.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-frontend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-en",
+                    "description": "Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-humanizer-en\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-th",
+                    "description": "Write, audit, or reword Thai prose for articles, blogs, landing pages, READMEs, product descriptions, UI microcopy and Thai copy in localization files. Fix phrasing, register, repetition and Thai-English terms; keep facts and markup. Not for non-Thai output, engineering doc verification, i18n configuration, routing, key wiring or application logic.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-humanizer-th\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-implementation",
+                    "description": "Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-implementation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-performance",
+                    "description": "Measure and improve runtime performance of .NET, Node, and Python services and browser apps, covering baselines and benchmarks, profiling, load tests with k6, JMeter, Locust, or NBomber, bottleneck analysis, memory leaks, latency budgets, capacity planning, caching, and cost trade-offs, always from measurements. Not for single SQL query tuning, frontend bundle size, or functional tests.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-performance\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-repository",
+                    "description": "Analyze an existing codebase without changing it. Reports stacks and versions, layout, build and test commands, conventions, project and package dependencies, change impact, git history and code ownership, technical debt and its priority, legacy assessments, and unknowns, citing evidence for every finding. Not for writing code or docs, or git operations such as rebase or merge.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-repository\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-requirements",
+                    "description": "Analyze software requirements before code is written. Clarifies vague requests, refines user stories, writes testable acceptance criteria and edge cases, models use cases, extracts business rules from code, SQL, or documents, defines non-functional targets, sets scope, splits and sizes backlogs, and traces requirements to code and tests. Not for writing code, architecture design, or delivery schedules.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-requirements\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-security",
+                    "description": "Review or harden application security in .NET, TypeScript or JavaScript, Python, and SQL code, covering threat models, secure code review, SAST and dependency triage, exposed secrets, authorization, injection and XSS, SSRF, cryptography, privacy, secure logging, SBOMs and licences, Dockerfile and IaC review, and fixes. Advisory review. Not a penetration test, compliance audit, or replacement for security tooling.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-security\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-testing",
+                    "description": "Plan, write, or fix automated tests with xUnit, NUnit, MSTest, Jasmine, Jest, Vitest, Playwright, Cypress, or pytest, covering test strategy, unit, integration, end-to-end, API and contract, regression, property-based, mutation, and fuzz tests, test data builders, coverage gaps, and failing or flaky test triage. Not for manual QA plans, load testing, or production monitoring.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.2\\skills\\chayen-testing\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "imagegen",
+                    "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                    "interface": {
+                      "displayName": "Image Gen",
+                      "shortDescription": "Generate or edit images for websites, games, and more",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "openai-docs",
+                    "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                    "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                    "interface": {
+                      "displayName": "OpenAI Docs",
+                      "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "review-agent",
+                    "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                    "interface": {
+                      "displayName": "Review Agent",
+                      "shortDescription": "Find actionable bugs in code changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\review-agent\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-creator",
+                    "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                    "shortDescription": "Create or update a skill",
+                    "interface": {
+                      "displayName": "Skill Creator",
+                      "shortDescription": "Create or update a skill",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-installer",
+                    "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                    "shortDescription": "Install curated skills from openai/skills or other repos",
+                    "interface": {
+                      "displayName": "Skill Installer",
+                      "shortDescription": "Install curated skills from openai/skills or other repos",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  }
+                ],
+                "errors": []
+              }
+            ]
+          },
+          "restart": "new native process; no reused model session"
+        },
+        {
+          "step": "migration",
+          "result": "PASS",
+          "legacyAbsent": true,
+          "version": "0.1.0-rc.1",
+          "installPath": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1",
+          "packageFingerprint": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+          "loadedSkills": 15,
+          "output": {
+            "data": [
+              {
+                "cwd": "<scratch>\\codex\\fixture",
+                "skills": [
+                  {
+                    "name": "chayen:chayen-ai-engineering",
+                    "description": "Build and evaluate ML and LLM features in Python, .NET, or TypeScript, covering dataset readiness and leakage, experiment design, model evaluation and serving, drift, RAG pipelines and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent skills, and agent permission reviews. Not for routine data pipelines, attacking third-party AI systems, or legal AI compliance.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-ai-engineering\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-architecture",
+                    "description": "Design, review, and plan software architecture from repository evidence. Compares options with trade-offs, writes ADRs and decision registers, defines module and service boundaries, domain models, data flows, multitenancy, resilience, and fitness tests for dependency rules, and plans phased migrations and staged rollouts. Not for implementing features, writing infrastructure code, or sizing backlog items.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-architecture\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-backend",
+                    "description": "Build or fix server-side code in the project's own stack, such as ASP.NET Core (C#, EF Core, Dapper), Node servers (Next.js or Nuxt routes), or Python (FastAPI, Django, Flask). Covers API design and versioning, endpoints, validation, auth, data access and migrations, background jobs, messaging, external integrations, and idempotency. Not for Nitro, Elysia, UI components, mobile apps, or infrastructure-only tasks.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-backend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-data",
+                    "description": "Design, change, or review relational data in SQL Server or PostgreSQL through EF Core, Dapper, Prisma, SQLAlchemy, Django, or raw SQL, covering schema modeling, migrations, query and index tuning, transactions, integrity, data migrations and backfills, ETL, data quality, retention, and restore drills. Not for API endpoint code, NoSQL or warehouse platforms such as MongoDB or Snowflake, or database provisioning.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-data\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-devops",
+                    "description": "Design or fix builds, delivery, and operations, covering build systems, CI/CD pipelines in GitHub Actions, Azure Pipelines, or GitLab CI, Dockerfiles, Terraform, Bicep, Kubernetes, or Helm, environments and secrets, releases and provenance, deploy and rollback checks, observability and SLOs, alerts and incidents, postmortems, disaster recovery, and runbooks. Not for application feature code or IaC security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-devops\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-documentation",
+                    "description": "Write or update engineering docs and collaboration artifacts from verified repository facts, covering READMEs, onboarding guides, API and architecture docs, knowledge transfer, pull request descriptions, code review, review comment resolution, release notes, and git workflow help. Never invents commands, test results, or behaviour. Not for end-user manuals, marketing copy, or security review.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-documentation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-frontend",
+                    "description": "Build or fix web UI in Angular, React, Next.js, Vue, Nuxt, or Vite apps, their PWA, Capacitor, Ionic, Electron, or Tauri shells, and browser extensions, for components, state, forms, design systems, accessibility, i18n, performance, UI errors, offline, permissions and push, and desktop packaging. Not for server-only APIs, native or game UI such as SwiftUI, Flutter, React Native, WPF, or Unity, or design without code.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-frontend\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-en",
+                    "description": "Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-humanizer-en\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-humanizer-th",
+                    "description": "Write, audit, or reword Thai prose for articles, blogs, landing pages, READMEs, product descriptions, UI microcopy and Thai copy in localization files. Fix phrasing, register, repetition and Thai-English terms; keep facts and markup. Not for non-Thai output, engineering doc verification, i18n configuration, routing, key wiring or application logic.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-humanizer-th\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-implementation",
+                    "description": "Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-implementation\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-performance",
+                    "description": "Measure and improve runtime performance of .NET, Node, and Python services and browser apps, covering baselines and benchmarks, profiling, load tests with k6, JMeter, Locust, or NBomber, bottleneck analysis, memory leaks, latency budgets, capacity planning, caching, and cost trade-offs, always from measurements. Not for single SQL query tuning, frontend bundle size, or functional tests.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-performance\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-repository",
+                    "description": "Analyze an existing codebase without changing it. Reports stacks and versions, layout, build and test commands, conventions, project and package dependencies, change impact, git history and code ownership, technical debt and its priority, legacy assessments, and unknowns, citing evidence for every finding. Not for writing code or docs, or git operations such as rebase or merge.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-repository\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-requirements",
+                    "description": "Analyze software requirements before code is written. Clarifies vague requests, refines user stories, writes testable acceptance criteria and edge cases, models use cases, extracts business rules from code, SQL, or documents, defines non-functional targets, sets scope, splits and sizes backlogs, and traces requirements to code and tests. Not for writing code, architecture design, or delivery schedules.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-requirements\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-security",
+                    "description": "Review or harden application security in .NET, TypeScript or JavaScript, Python, and SQL code, covering threat models, secure code review, SAST and dependency triage, exposed secrets, authorization, injection and XSS, SSRF, cryptography, privacy, secure logging, SBOMs and licences, Dockerfile and IaC review, and fixes. Advisory review. Not a penetration test, compliance audit, or replacement for security tooling.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-security\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "chayen:chayen-testing",
+                    "description": "Plan, write, or fix automated tests with xUnit, NUnit, MSTest, Jasmine, Jest, Vitest, Playwright, Cypress, or pytest, covering test strategy, unit, integration, end-to-end, API and contract, regression, property-based, mutation, and fuzz tests, test data builders, coverage gaps, and failing or flaky test triage. Not for manual QA plans, load testing, or production monitoring.",
+                    "path": "<scratch>\\codex\\profile\\.codex\\plugins\\cache\\codejadee\\chayen\\0.1.0-rc.1\\skills\\chayen-testing\\SKILL.md",
+                    "scope": "user",
+                    "enabled": true,
+                    "pluginId": "chayen@codejadee"
+                  },
+                  {
+                    "name": "imagegen",
+                    "description": "Generate or edit raster images when the task benefits from AI-created bitmap visuals such as photos, illustrations, textures, sprites, mockups, or transparent-background cutouts. Use when Codex should create a brand-new image, transform an existing image, or derive visual variants from references, and the output should be a bitmap asset rather than repo-native code or vector. Do not use when the task is better handled by editing existing SVG/vector/code-native assets, extending an established icon or logo system, or building the visual directly in HTML/CSS/canvas.",
+                    "interface": {
+                      "displayName": "Image Gen",
+                      "shortDescription": "Generate or edit images for websites, games, and more",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\assets\\imagegen.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $imagegen to make or edit an image for this project."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\imagegen\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "openai-docs",
+                    "description": "Use for Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, customization, automations, and self-knowledge—including 'you,' 'your,' 'this app,' or 'this coding agent' when they refer to Codex—and for OpenAI APIs/products and ChatGPT Work. Also use for model choice/migration, prompting, SDKs, Responses, Realtime, agents, evals, and Chat/Work/Codex comparisons. Do not use for generic app/software tasks that merely mention Codex.",
+                    "shortDescription": "Codex models/pricing, scheduled tasks, skills, settings, setup, troubleshooting, and self-knowledge; OpenAI APIs and ChatGPT Work. 'You'/'this app' means Codex only.",
+                    "interface": {
+                      "displayName": "OpenAI Docs",
+                      "shortDescription": "OpenAI and Codex docs for models, skills, tasks, and setup",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\assets\\openai.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use OpenAI Docs for official docs lookup, questions about Codex itself or Codex surfaces, model selection, model migration, and prompt-upgrade work."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\openai-docs\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "review-agent",
+                    "description": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+                    "interface": {
+                      "displayName": "Review Agent",
+                      "shortDescription": "Find actionable bugs in code changes",
+                      "iconSmall": null,
+                      "iconLarge": null,
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": "Use $review-agent to review the requested code changes and return actionable findings."
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\review-agent\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-creator",
+                    "description": "Create or update a Codex skill with appropriately scoped instructions and any needed supporting resources.",
+                    "shortDescription": "Create or update a skill",
+                    "interface": {
+                      "displayName": "Skill Creator",
+                      "shortDescription": "Create or update a skill",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\assets\\skill-creator.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-creator\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  },
+                  {
+                    "name": "skill-installer",
+                    "description": "Install Codex skills into $CODEX_HOME/skills from a curated list or a GitHub repo path. Use when a user asks to list installable skills, install a curated skill, or install a skill from another repo (including private repos).",
+                    "shortDescription": "Install curated skills from openai/skills or other repos",
+                    "interface": {
+                      "displayName": "Skill Installer",
+                      "shortDescription": "Install curated skills from openai/skills or other repos",
+                      "iconSmall": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer-small.svg",
+                      "iconLarge": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\assets\\skill-installer.png",
+                      "iconSmallUrl": null,
+                      "iconLargeUrl": null,
+                      "brandColor": null,
+                      "defaultPrompt": null
+                    },
+                    "path": "<scratch>\\codex\\profile\\.codex\\skills\\.system\\skill-installer\\SKILL.md",
+                    "scope": "system",
+                    "enabled": true,
+                    "pluginId": null
+                  }
+                ],
+                "errors": []
+              }
+            ]
+          },
+          "fixture": "former identifier replay on current Skill body"
+        },
+        {
+          "step": "cleanup-uninstall",
+          "result": "PASS"
+        },
+        {
+          "step": "unregister",
+          "result": "PASS",
+          "output": "No plugin marketplaces in scope.\n"
+        },
+        {
+          "step": "fixture-unchanged",
+          "result": "PASS"
+        }
+      ],
+      "commands": {
+        "disable": false,
+        "enable": false,
+        "update": false,
+        "marketplaceUpgrade": true
+      }
+    },
+    {
+      "provider": "copilot",
+      "executable": "copilot",
+      "version": "unavailable",
+      "rows": [
+        {
+          "step": "register",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "install",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "list",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "discover",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "disable",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "disabled-behavior",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "enable",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "enabled-behavior",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "update",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "updated-content",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "uninstall",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "absent",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "reinstall",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "restart",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "migration",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "unregister",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "fixture-unchanged",
+          "result": "PASS"
+        }
+      ]
+    }
+  ],
+  "protections": {
+    "realConfigsUnchanged": true,
+    "noModelCalls": true,
+    "realConfigFingerprintBefore": "ff1534a6b12d0a4cd18591d86859562c965e38ae9e8b11272a8aa2e91c0e8159",
+    "realConfigFingerprintAfter": "ff1534a6b12d0a4cd18591d86859562c965e38ae9e8b11272a8aa2e91c0e8159",
+    "changedConfigurationPaths": [],
+    "excludedRuntimeCache": "models_cache.json only; no configuration, credential or registry exclusions",
+    "sourcePackageUnchanged": true
+  }
+}

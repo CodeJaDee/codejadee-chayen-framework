@@ -2,7 +2,7 @@
 
 Chayen is a native plugin of engineering and Thai/English writing Skills for
 coding agents. Publisher: **CodeJaDee**. Public release target: **v0.1.0, MIT**.
-This checkout is a development build; no stable release or public availability
+This checkout is an unpublished release candidate; no stable release or public availability
 is claimed. The project MIT file and manifest licence await candidate freeze.
 The upstream Humanizer MIT notice remains independently required.
 
@@ -12,7 +12,7 @@ The upstream Humanizer MIT notice remains independently required.
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Current version | `0.1.0-dev` |
+| Current version | `0.1.0-rc.1` |
 | Entry Skills | 15 |
 | Package files | 256 |
 | Skill references | 237 |
@@ -26,14 +26,16 @@ static Markdown/JSON: no executable, hook, MCP server, service or telemetry.
 ## Supported release hosts
 
 The production target covers **Claude Code CLI, Codex CLI and GitHub Copilot
-CLI** (Copilot >=1.0.91). Current-build qualification is pending: native
-lifecycle, explicit invocation, no-match and **automatic routing >=85% on
-each CLI independently** must be measured in Phase 5.
+CLI** (Copilot >=1.0.91). [Phase 4 lifecycle evidence](docs/production/NATIVE_LIFECYCLE_REPORT.md)
+is partial: Claude 2.1.302 and Codex 0.163.0 install/discover/update/remove
+were tested in isolated profiles; Claude disabled loading remains BLOCKED,
+and Copilot CLI is unavailable. Explicit invocation, no-match and **automatic
+routing >=85% on each CLI independently** must be measured in Phase 5.
 
 VS Code surfaces are **unverified and outside the v0.1.0 support claim**.
 Response Style Policy host tests, VS Code runtime tests, Branch Protection,
 Required Reviews and unrelated ADR/repository hygiene work are deferred.
-Those deferred items do not block Phase 3 completion. Offline CI is not
+Those deferred items do not block Phase 4 implementation. Offline CI is not
 evidence of runtime routing or Skill compliance.
 
 ## Quick start
@@ -107,7 +109,7 @@ Unprotected `main` is an **accepted release-process risk**. CI is not made a
 required status check here. Manual release sign-off is required before a
 version change is committed, pushed, tagged or published; a green check
 does not authorize those actions. Version strategy:
-`0.1.0-dev` -> `0.1.0-rc.1` -> `0.1.0`, with `vX.Y.Z` Git tags.
+Current candidate `0.1.0-rc.1` -> stable `0.1.0`, with `vX.Y.Z` Git tags.
 
 ## Credits
 

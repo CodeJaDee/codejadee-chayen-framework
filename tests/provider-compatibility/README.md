@@ -1,125 +1,120 @@
-# Provider lifecycle runbook (developer-only)
+# Native CLI lifecycle qualification (developer-only)
 
 Current Entry Skills: **15**. Plugin identity: `chayen@codejadee`.
-One canonical static Markdown/JSON package serves Claude Code CLI, Codex CLI
-and Copilot CLI. These tools are outside the shipped package.
+The canonical package contains static Markdown/JSON only. These scripts are
+developer tooling outside that package. Phase 4 tests lifecycle; automatic
+routing >=85% per CLI belongs to Phase 5 and has not been run here.
 
-Phase 2 validates tooling offline. **No native lifecycle is authorized by
-this runbook.** Native evidence and automatic routing of the changed build
-remain NOT_RUN until the separately authorized Phase 5 evaluation.
-The >=85% automatic routing threshold applies independently to each CLI.
+## Authorization and isolation
 
-| File | Purpose |
-|---|---|
-| `check-identity.mjs` | Offline manifest/marketplace parity and canonical Skill discovery |
-| `run-lifecycle.sh` | Existing shell entry point for guarded native lifecycle |
-| `lifecycle.mjs` | Isolated child environments, command discovery, update and uninstall assertions |
-| `lifecycle.test.mjs` | Offline synthetic native-command responses; no provider executable runs |
-| `results/2026-10-14-step06.md` | Historical six-Skill evidence under the old identity; invalid for this build |
+Review the installed native binaries and scripts first. Native execution needs
+an explicit task authorization. The Phase 4 request authorizes disposable
+provider profiles and temporary configuration homes; it does not authorize
+personal profile changes, production credentials, prompts or billable evaluations.
+Opt-in flags attest to that authorization; they do not create it.
 
-## Before any native execution
+Prefer a disposable VM/container/account for full OS isolation. Config-home
+overrides isolate these trusted CLI tests but are **not an OS sandbox**.
+Never claim the developer's whole machine is disposable. No real auth file
+or inherited provider token is copied. Missing authentication means BLOCKED.
 
-1. Obtain explicit authorization for native provider execution. Inspect the
-   scripts, binaries and package first. Opt-in flags record intent and do
-   not grant authorization. No model call is made by this runner.
-2. Use a disposable machine, container, VM or OS test account with no access
-   to personal configuration or credentials. Config-home overrides alone
-   are not an OS sandbox and cannot confine a malicious native executable.
-3. Choose a fresh scratch directory outside this repository and every real
-   provider profile, with an existing parent. Existing targets and linked
-   installation sources are refused. The runner never deletes the target.
-4. Use reviewed native executables on PATH. On Windows, use executables
-   rather than `.cmd` wrappers: the runner does not enable shell execution.
-5. Derive the count from the candidate, and record the source revision,
-   package fingerprint, provider version, OS, identity and result for each
-   operation. Currently the invariant is 15 Skills:
+Choose a fresh scratch directory outside the repository and actual provider
+profiles. Existing targets and links are rejected. The runner retains scratch
+evidence for inspection and never deletes personal configuration.
 
-   ```bash
-   find plugins/codejadee-chayen-framework/skills -mindepth 2 -maxdepth 2 -name SKILL.md | wc -l
-   ```
+`isolatedEnvironment` creates child-only HOME, USERPROFILE, AppData, XDG,
+CLAUDE_CONFIG_DIR, CODEX_HOME, COPILOT_HOME and temporary directories. It
+strips inherited credentials and shell startup variables, sets
+`COPILOT_AUTO_UPDATE=false` and `DISABLE_AUTOUPDATER=1`, and suppresses Claude
+nonessential traffic. The parent environment is unchanged.
 
-6. Copilot CLI must meet the release minimum (>=1.0.91). Record the actual
-   version with automatic updates disabled. If an installed binary lacks
-   a required command, it cannot earn a lifecycle PASS from this script.
+## Commands
 
-## Offline checks (safe for Phase 2)
+Offline (ordinary CI, no provider binaries):
 
 ```bash
-node tools/validate/validate-all.mjs
+node tools/validate/validate-all.mjs --fail-fast
 node tests/provider-compatibility/check-identity.mjs
-node --test tests/provider-compatibility/lifecycle.test.mjs
-node tools/validate/check-hardening.mjs
+node --test tests/provider-compatibility/lifecycle.test.mjs tests/provider-compatibility/qualify-rc.test.mjs
 ```
 
-Identity check totals and reference counts come from its JSON output; do
-not copy historical totals. Offline PASS establishes tooling behavior only.
-
-## Native lifecycle (later, separately authorized)
-
-Only inside the disposable environment, after review and authorization:
+After authorization, inside the isolated test environment:
 
 ```bash
 CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 CHAYEN_DISPOSABLE_ENVIRONMENT=1 \
-  bash tests/provider-compatibility/run-lifecycle.sh /tmp/chayen-lifecycle-fresh
+  node tests/provider-compatibility/qualify-rc.mjs /tmp/chayen-rc-fresh \
+  --claude-exe /absolute/path/to/claude --codex-exe /absolute/path/to/codex
 ```
 
-The Node implementation also accepts the same fresh directory when Bash
-is unavailable. Both guards are required before any native executable runs.
-It creates separate marketplace copies, application fixtures and empty
-provider profiles. Each child gets isolated HOME, USERPROFILE, XDG, AppData,
-temporary directories and provider-specific configuration homes. Inherited
-provider paths, auth tokens and shell startup variables are not forwarded.
-It sets `COPILOT_AUTO_UPDATE=false`, `DISABLE_AUTOUPDATER=1` and disables
-Claude's nonessential traffic. Never copy real auth files into scratch.
-If authentication is required, stop and use separately approved test access.
+On Windows, pass full `.exe` paths (including the native executable behind
+an npm PowerShell shim); `.cmd`, `.bat` and `.ps1` execution is refused.
+Do not change global PATH or global config to make a test pass. Optional
+`--copilot-exe` identifies an already installed native binary. Minimum Copilot
+version is >=1.0.91. No automatic CLI installation or upgrade occurs.
 
-The runner hashes real configuration files before and after, including
-configured non-default homes, and records only hashes/results. The fixture
-must remain byte-identical with no added files. Any drift is FAIL. The
-scratch tree and `results.json` are retained for review; review outputs for
-local paths before sharing them.
+`run-lifecycle.sh` and `lifecycle.mjs` remain the guarded Phase 2 regression
+baseline. The richer Phase 4 entry point is `qualify-rc.mjs`; it reuses the
+existing isolation, authorization and scratch-update helpers. `codex-skills.mjs`
+uses the CLI's local stdio app-server `initialize` and `skills/list` only.
+It creates no thread, model turn, remote daemon or VS Code session.
 
-## Required operations and evidence
+## Required evidence and provider differences
 
-| Operation | Required observation |
+The runner saves `candidate.json`, `results.json` and per-provider
+`transcript.json` in scratch. Source Git SHA, full package file hashes, Skill
+metadata fingerprint, versions, command exit codes and per-step outcomes are
+recorded. A dirty candidate is a **working-tree snapshot**, not a frozen commit.
+Commit/tag/push/publication each still needs separate explicit authorization.
+
+| Operation | Qualification rule |
 |---|---|
-| Register marketplace | Native add command exits zero |
-| Install | Native command exits zero AND list confirms installed; success text cannot mask a nonzero exit |
-| Discover | Actual isolated cached manifest identifies `chayen`, version matches, all 15 Skills exist, and backend content hash matches the reviewed source |
-| Disable | Native list confirms this plugin is installed and disabled |
-| Enable | Native list confirms this plugin is installed and enabled |
-| Update | In the scratch marketplace only, change all four version fields and backend content; refresh marketplace and update; verify the changed version and content hash in the isolated cache |
-| Uninstall | Native command exits zero AND native list proves absence; disabled or ambiguous state fails |
-| Remove marketplace | Native remove exits zero AND marketplace list has no `codejadee` entry |
+| Register/install/list | Native commands succeed and subsequent native list confirms identity, version and enabled installation |
+| Discover | Native inventory contains all 15 Skills; full installed package fingerprint matches candidate |
+| Disable/enable | Native list confirms persisted state; fresh native inventory checks activation where supported |
+| Update | Scratch-only RC version advances and backend content changes; active version and full installed tree must match; exit zero alone is insufficient |
+| Uninstall/absent | Fresh list contains no installation; disabled is still installed |
+| Reinstall/restart | Reinstall and a newly launched native process see the expected version, full package and Skill inventory |
+| Migration | Install a former-identifier fixture, remove it and prove absence, restore exact RC bytes, install current identity and verify full content/inventory |
+| Cleanup | Uninstall and unregister, verify marketplace absence; real configuration and project fixture hashes unchanged |
 
-Every native command is checked against that installed binary's `--help`.
-Claude and Copilot use install/uninstall where available; Codex uses
-add/remove where available. The runner does **not** assume that Codex has
-CLI disable, enable or update commands. A missing command yields NOT_RUN;
-complete that operation in the reviewed native plugin UI on the same
-disposable profile and save explicit before/after evidence. Do not edit
-personal configuration to simulate a native lifecycle operation.
+Claude 2.1.302 provides install/uninstall, disable/enable, update and details.
+`plugin details` also enumerates disabled packages, so it **cannot establish
+disabled loading behavior**. That assertion stays BLOCKED until an authorized
+disposable session can prove Skills are unavailable. Enabled inventory is
+not an automatic-routing measurement.
 
-The update test uses a version bump and a content marker. A changed version
-alone, success message alone, or changed source file alone is insufficient.
-Old cached versions may remain; the new installed content must be present.
-Same-version cache refresh is a separate diagnostic and is not proven by
-this test. Likewise, local marketplace success does not prove remote public
-installation. A Copilot uninstall that only disables is FAIL.
+Codex 0.163.0 has add/remove/list and marketplace add/list/upgrade/remove.
+Dedicated disable/enable/update subcommands are **UNSUPPORTED**. Tested native
+alternatives: edit only disposable CODEX_HOME/config.toml
+`[plugins."chayen@codejadee"] enabled = false/true`, then observe list and a
+new app-server's skills/list (0/15 enabled Skills). Replace via remove/add for
+changed version/content. This is a reinstall alternative, not an in-place
+update. Marketplace upgrade refreshes Git snapshots, not this local source.
 
-Exit 0 means every required operation passed; exit 1 means a failure; exit
-2 means missing prerequisites, unavailable commands or NOT_RUN operations.
-Missing CLIs never count as PASS. Review all operation rows, not just exit.
+Copilot is **BLOCKED** on this machine: no native executable was found.
+Do not infer its commands from Claude or claim a missing-binary result is
+UNSUPPORTED. The exact pending procedure is in the
+[Phase 4 report](../../docs/production/NATIVE_LIFECYCLE_REPORT.md).
+The Copilot inventory adapter deliberately fails closed pending binary review.
 
-## Evaluation and deferred surfaces
+Real settings, auth and plugin registries are hashed before/after, including
+custom homes and root-level `.claude.json`. Only `models_cache.json`, a volatile
+Codex model catalogue refreshed by the active parent process, is excluded from
+the Phase 4 configuration comparison. Every configuration drift remains FAIL;
+the offline controls prove that cache exclusion cannot mask config.toml changes.
+No configuration contents are written to evidence. Scratch paths in retained
+repository evidence are replaced with placeholders; raw logs remain in temp.
 
-Automatic routing, explicit invocation and no-match measurement use
-[the evaluation fixtures](../evaluation/README.md) in Phase 5. Changing Skill
-descriptions invalidates historical routing evidence. Synthetic scorer and
-lifecycle tests are not provider measurements.
+Exit 0 means covered checks passed, 1 means FAIL, 2 means BLOCKED prerequisites.
+Always review UNSUPPORTED rows and their separately tested alternatives.
+Do not confuse successful cleanup with successful lifecycle qualification.
 
-The [Claude VS Code procedure](claude-code-vscode.md),
-[Copilot VS Code procedure](copilot-vscode.md) and
-[Codex IDE limitation](codex-vscode.md) are historical/deferred references.
-VS Code runtime testing and persistent Response Style Policy runtime tests
-are outside this phase and the scoped release contract.
+## Evidence scope
+
+Current results: [2026-10-18 RC report](../../docs/production/NATIVE_LIFECYCLE_REPORT.md).
+Migration replays the former identifier using the current 15-Skill body; it
+does not reproduce the historical package. Restart means a new native process
+and inventory reload, not conversation resumption. Local marketplace evidence
+does not prove remote public installation. Historical six-/thirteen-Skill
+reports remain historical. No VS Code or Response Style Policy host tests run.
+Security/Support is LATER and does not block this lifecycle implementation.

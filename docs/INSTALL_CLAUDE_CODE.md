@@ -62,7 +62,7 @@ claude plugin marketplace remove codejadee
 ```
 
 Manage the matching user/project/local scope. Verify changed installed
-content and active version after update; unchanged `0.1.0-dev` can retain
+content and active version after update; unchanged `0.1.0-rc.1` can retain
 old cached content. Inspect/reinstall when needed. Verify uninstall by
 absence: disabled is still installed. Restart after changes. Do not delete
 the whole provider configuration directory to remove Chayen.
@@ -74,8 +74,13 @@ and not installed or removed with the plugin.
 
 ## Verification status
 
-Current lifecycle, migration, routing and explicit invocation are NOT_RUN;
-[Compatibility](COMPATIBILITY_MATRIX.md) separates historical evidence.
+Phase 4 verified native install, 15-Skill inventory, toggle persistence,
+changed-content update, uninstall absence, reinstall/new-process inventory
+and former-identifier migration on Claude Code 2.1.302 in temporary profiles.
+Disabled loading behavior remains BLOCKED; `plugin details` still enumerates
+disabled contents. A committed candidate freeze is pending. Routing and explicit
+invocation are NOT_RUN. [Compatibility](COMPATIBILITY_MATRIX.md) links exact
+snapshot fingerprints and transcripts and separates historical evidence.
 Security/Support is LATER; no channel is selected. Syntax was reviewed on
 2026-10-18 against the [official command reference](https://code.claude.com/docs/en/plugins/cli-reference).
 Use local help when versions differ.

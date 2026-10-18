@@ -1,0 +1,21 @@
+{
+  "earlierAudit": {
+    "date": "2026-10-18T06:03:46.707Z",
+    "baseCommit": "9ef22cc9b6abf348d145f0df8ead160207526540",
+    "packageFingerprint": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+    "realConfigFingerprintBefore": "ba82a7b3b11b7496d196db9f9ded9deaec0122b7fcc98ebabceb6ec17409d532",
+    "realConfigFingerprintAfter": "66961dcf4c70bb1a1033948ab37dfbf60441e704cb8db4b28496ade30f0a8ca1",
+    "result": "FAIL: broad profile hash drift; not accepted as qualification",
+    "observation": "Codex models_cache.json mtime changed within the audit; setting/auth file mtimes predated it. Per-file before hashes were not retained, so exact original drift attribution is not independently proved."
+  },
+  "harnessCorrections": [
+    "Codex native Skill names are namespaced; match exact pluginId and strip chayen: before comparing 15 canonical names.",
+    "Claude details inventory includes disabled package contents; activation assertion must stay BLOCKED."
+  ],
+  "reviewedRun": {
+    "date": "2026-10-18T06:05:04.104Z",
+    "configurationScope": "All prior config files plus root .claude.json; only volatile models_cache.json excluded",
+    "configurationDriftDetected": false,
+    "qualificationExit": 2
+  }
+}

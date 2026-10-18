@@ -1,0 +1,466 @@
+[
+  {
+    "args": [
+      "--version"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "2.1.302 (Claude Code)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "--help"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Usage: claude plugin|plugins [options] [command]\n\nManage Claude Code plugins\n\nOptions:\n  -h, --help                           Display help for command\n\nCommands:\n  configure [options] <plugin>         Show a plugin's options and which are\n                                       unset, or save values from stdin with\n                                       --values-stdin\n  details [options] <name>             Show a plugin's component inventory and\n                                       projected token cost\n  disable [options] [plugin]           Disable an enabled plugin\n  enable [options] <plugin>            Enable a disabled plugin\n  eval [options] [target]              Run eval cases (<eval dir>/**/case.yaml\n                                       or prompt.md + graders/*.md; the eval dir\n                                       is evals/ unless --eval-dir or the\n                                       manifest says otherwise) against a plugin\n                                       and report scored results. Target is a\n                                       path, a plugin name, or a\n                                       `plugin@marketplace` id — installed and\n                                       skills-dir plugins both resolve (and add\n                                       a no-plugin baseline arm). It loads the\n                                       plugin and runs its eval suite (prompts,\n                                       graders; scaffold scripts and real MCP\n                                       servers only when you opt in) on your\n                                       machine, as you: only evaluate plugins\n                                       you trust — the run's sandboxing limits\n                                       what a malicious plugin can reach but is\n                                       not a guarantee, and a bundled suite\n                                       passing is not a security vetting. The\n                                       first run in an untrusted plugin\n                                       directory asks you to confirm\n                                       (--trust-plugin answers for CI)\n  help [command]                       display help for command\n  init|new [options] <name>            Scaffold a new plugin at\n                                       ~/.claude/skills/<name>/ (auto-loads next\n                                       session as <name>@skills-dir)\n  install|i [options] <plugin>         Install a plugin from available\n                                       marketplaces (use plugin@marketplace for\n                                       specific marketplace)\n  list [options]                       List installed plugins\n  marketplace                          Manage Claude Code marketplaces\n  prune|autoremove [options]           Remove auto-installed dependencies that\n                                       are no longer needed\n  tag [options] [path]                 Create a {name}--v{version} git tag for a\n                                       plugin release, validating that\n                                       plugin.json and any enclosing marketplace\n                                       entry agree\n  test [dir]                           Run a mod's tests\n  uninstall|remove [options] <plugin>  Uninstall an installed plugin\n  update [options] <plugin>            Update a plugin to the latest version\n                                       (restart required to apply)\n  validate [options] <path>            Validate a plugin or marketplace\n                                       manifest, or the skills, agents, and\n                                       commands in a directory\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "--help"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Usage: claude plugin marketplace [options] [command]\n\nManage Claude Code marketplaces\n\nOptions:\n  -h, --help                  Display help for command\n\nCommands:\n  add [options] <source>      Add a marketplace from a URL, path, or GitHub repo\n  help [command]              display help for command\n  list [options]              List all configured marketplaces\n  remove|rm [options] <name>  Remove a configured marketplace\n  update [options] [name]     Update marketplace(s) from their source - updates\n                              all if no name specified\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "add",
+      "<scratch>\\claude\\marketplace"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Adding marketplace…√ Successfully added marketplace: codejadee (declared in user settings)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "list"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Configured marketplaces:\n\n  > anthropic-plugin-directory\n    Source: Built in (Anthropic Directory)\n\n  > codejadee\n    Source: Folder (<scratch>\\claude\\marketplace)\n\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "install",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Installing plugin \"chayen@codejadee\"...√ Successfully installed plugin: chayen@codejadee (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.1\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.1\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.1\",\n    \"installedAt\": \"2026-10-18T06:05:05.798Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:05.798Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.1\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.1\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.1\",\n    \"installedAt\": \"2026-10-18T06:05:05.798Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:05.798Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "details",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "chayen 0.1.0-rc.1\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "disable",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "√ Successfully disabled plugin: chayen (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.1\",\n    \"scope\": \"user\",\n    \"enabled\": false,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.1\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.1\",\n    \"installedAt\": \"2026-10-18T06:05:05.798Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:05.798Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "details",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "chayen 0.1.0-rc.1\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "enable",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "√ Successfully enabled plugin: chayen (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.1\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.1\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.1\",\n    \"installedAt\": \"2026-10-18T06:05:05.798Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:05.798Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "details",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "chayen 0.1.0-rc.1\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "update",
+      "codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Updating marketplace: codejadee...Validating local marketplace\n√ Successfully updated marketplace: codejadee\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "update",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Checking for updates for plugin \"chayen@codejadee\"…\n√ Plugin \"chayen\" updated from 0.1.0-rc.1 to 0.1.0-rc.2 for scope user. Restart to apply changes.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.2\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.2\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.2\",\n    \"installedAt\": \"2026-10-18T06:05:05.798Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:08.825Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.2\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.2\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.2\",\n    \"installedAt\": \"2026-10-18T06:05:05.798Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:08.825Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "details",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "chayen 0.1.0-rc.2\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "uninstall",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "√ Successfully uninstalled plugin: chayen (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "install",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Installing plugin \"chayen@codejadee\"...√ Successfully installed plugin: chayen@codejadee (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.2\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.2\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.2\",\n    \"installedAt\": \"2026-10-18T06:05:10.750Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:10.750Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.2\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.2\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.2\",\n    \"installedAt\": \"2026-10-18T06:05:10.750Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:10.750Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "details",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "chayen 0.1.0-rc.2\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "uninstall",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "√ Successfully uninstalled plugin: chayen (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "update",
+      "codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Updating marketplace: codejadee...Validating local marketplace\n√ Successfully updated marketplace: codejadee\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "install",
+      "codejadee-chayen-framework@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Installing plugin \"codejadee-chayen-framework@codejadee\"...√ Successfully installed plugin: codejadee-chayen-framework@codejadee (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"codejadee-chayen-framework@codejadee\",\n    \"version\": \"0.1.0-rc.2\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\codejadee-chayen-framework\\\\0.1.0-rc.2\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.2\",\n    \"installedAt\": \"2026-10-18T06:05:12.725Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:12.725Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "uninstall",
+      "codejadee-chayen-framework@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "√ Successfully uninstalled plugin: codejadee-chayen-framework (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "update",
+      "codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Updating marketplace: codejadee...Validating local marketplace\n√ Successfully updated marketplace: codejadee\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "install",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Installing plugin \"chayen@codejadee\"...√ Successfully installed plugin: chayen@codejadee (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[\n  {\n    \"id\": \"chayen@codejadee\",\n    \"version\": \"0.1.0-rc.1\",\n    \"scope\": \"user\",\n    \"enabled\": true,\n    \"installPath\": \"<user-home>\\\\claude\\\\profile\\\\.claude\\\\plugins\\\\cache\\\\codejadee\\\\chayen\\\\0.1.0-rc.1\",\n    \"readFromFolder\": \"<user-home>\\\\claude\\\\marketplace\\\\plugins\\\\codejadee-chayen-framework\",\n    \"folderVersion\": \"0.1.0-rc.1\",\n    \"installedAt\": \"2026-10-18T06:05:14.079Z\",\n    \"lastUpdated\": \"2026-10-18T06:05:14.079Z\",\n    \"projectEnabled\": false\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "details",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "chayen 0.1.0-rc.1\n  Description: Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.\n  Source: chayen@codejadee\n\nComponent inventory\n  Skills (15)  chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-devops, chayen-documentation, chayen-frontend, chayen-humanizer-en, chayen-humanizer-th, chayen-implementation, chayen-performance, chayen-repository, chayen-requirements, chayen-security, chayen-testing\n  Agents (0)\n  Hooks (0)\n  MCP servers (0)\n  LSP servers (0)\n\nProjected token cost\n  Always-on:   ~1,584 tok   added to every session\n\nPer-component (rounded)\n  component              always-on  on-invoke\n  chayen-ai-engineering       ~110      ~2.7k\n  chayen-architecture         ~110      ~2.6k\n  chayen-backend              ~110      ~3.4k\n  chayen-data                 ~110      ~3.6k\n  chayen-devops               ~110      ~3.4k\n  chayen-documentation        ~110      ~2.2k\n  chayen-frontend             ~110      ~4.1k\n  chayen-humanizer-en          ~90      ~2.7k\n  chayen-humanizer-th          ~90      ~2.4k\n  chayen-implementation       ~110      ~3.7k\n  chayen-performance          ~100      ~2.4k\n  chayen-repository           ~100      ~2.3k\n  chayen-requirements         ~110      ~2.2k\n  chayen-security             ~110      ~2.7k\n  chayen-testing              ~100      ~2.7k\n\n  On-invoke cost is paid each time a skill or agent fires.\n  Token counts are estimates and may differ from actual usage.\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "uninstall",
+      "chayen@codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "√ Successfully uninstalled plugin: chayen (scope: user)\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "list",
+      "--json"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "remove",
+      "codejadee"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "√ Successfully removed marketplace: codejadee\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "marketplace",
+      "list"
+    ],
+    "exit": 0,
+    "signal": null,
+    "stdout": "Configured marketplaces:\n\n  > anthropic-plugin-directory\n    Source: Built in (Anthropic Directory)\n\n",
+    "stderr": ""
+  }
+]

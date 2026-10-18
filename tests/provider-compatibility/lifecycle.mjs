@@ -103,7 +103,10 @@ export function installedBuild(profile, expected) {
   return found;
 }
 export function changeUpdateContent(marketplace) {
-  const before = expectedBuild(marketplace), version = "0.1.0-lifecycle.1";
+  const before = expectedBuild(marketplace);
+  // A changed RC must sort after the source, rather than downgrading rc.1 to lifecycle.1.
+  const rc = /^(\d+\.\d+\.\d+)-rc\.(\d+)$/.exec(before.version);
+  const version = rc ? `${rc[1]}-rc.${Number(rc[2]) + 1}` : `${before.version.split("-")[0]}-rc.999`;
   for (const f of [`${packagePath}/plugin.json`, `${packagePath}/.claude-plugin/plugin.json`, ".github/plugin/marketplace.json"]) {
     const file = path.join(marketplace, f), value = JSON.parse(read(file));
     if (value.plugins) { value.metadata.version = version; value.plugins[0].version = version; }
@@ -173,17 +176,23 @@ export function runProvider(provider, { marketplace, profile }, execute) {
   }
   return rows;
 }
-export function configFingerprint(homes) {
+export function configEntries(homes, { ignoreRuntimeCaches = false } = {}) {
   const state = [];
   for (const home of new Set(homes)) {
     const names = new Set(["settings.json", "settings.local.json", "config.toml", "config.json", "auth.json", "plugins/installed_plugins.json", "plugins/known_marketplaces.json", "plugins/config.json"]);
     if (fs.existsSync(home)) for (const e of fs.readdirSync(home, { withFileTypes: true })) if (e.isFile() && /\.(?:json|toml|ya?ml)$/.test(e.name)) names.add(e.name);
     for (const name of [...names].sort()) {
+    // The active parent Codex process refreshes this model catalogue independently.
+    // It is a runtime cache, never a provider setting, credential or plugin registry.
+    if (ignoreRuntimeCaches && name === "models_cache.json") continue;
     const file = path.join(home, name);
     state.push([file, fs.existsSync(file) ? digest(fs.readFileSync(file)) : "absent"]);
     }
   }
-  return digest(JSON.stringify(state)); // never emit real configuration content
+  return state; // file paths and digests only; never configuration content
+}
+export function configFingerprint(homes, options) {
+  return digest(JSON.stringify(configEntries(homes, options)));
 }
 export function meetsMinimum(provider, version) {
   if (provider !== "copilot") return Boolean(version.trim());

@@ -6,13 +6,14 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **No version has been released yet.**
 
-## [Unreleased]: proposed `0.1.0`
+## [Unreleased]: `0.1.0-rc.1`
 
-**Release candidate content, pending project-owner approval.** The version
-in the manifests is still `0.1.0-dev`. Changing it is a release step (see
-[docs/distribution/RELEASE_CHECKLIST.md](docs/distribution/RELEASE_CHECKLIST.md)).
-Proposed, not applied: `0.1.0-rc.1` for a release candidate or pilot, then
-`0.1.0` for the release ([docs/distribution/RELEASE_METADATA.md](docs/distribution/RELEASE_METADATA.md)).
+Candidate version applied under approved scope decision OWN-07 on 2026-10-18.
+The four manifest/marketplace version fields agree. This working-tree candidate
+has not been committed, tagged or published. Qualification and remaining
+release gates are recorded in
+[the native lifecycle report](docs/production/NATIVE_LIFECYCLE_REPORT.md).
+Stable target remains `0.1.0`.
 
 ### Changed
 

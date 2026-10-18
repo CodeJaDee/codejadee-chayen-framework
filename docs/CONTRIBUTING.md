@@ -16,7 +16,7 @@ Support channel. No issue tracker or address is approved here. Include:
 | Field | Example |
 |---|---|
 | Provider and surface, with version | Claude Code CLI 2.1.270 / Copilot CLI 1.0.97 / VS Code 1.141.1 + Copilot Chat |
-| Chayen version | `0.1.0-dev`, from `claude plugin list`, `codex plugin list`, or `copilot plugin list` |
+| Chayen version | `0.1.0-rc.1`, from `claude plugin list`, `codex plugin list`, or `copilot plugin list` |
 | What you asked | The prompt, without secrets or proprietary code |
 | What happened | Which skill loaded, if any; the relevant part of the answer |
 | What you expected | The skill you expected, or "no skill" |

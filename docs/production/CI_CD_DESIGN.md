@@ -1,5 +1,11 @@
 # Phase 3: CI/CD design and local evidence
 
+Phase 4 addendum (2026-10-18): the current aggregate adds offline RC
+fingerprint/isolation negative controls, for 19 groups. Native lifecycle
+scripts remain excluded from CI. Historical Phase 3 results below describe
+the original 18-group implementation; current candidate results are in
+[NATIVE_LIFECYCLE_REPORT.md](NATIVE_LIFECYCLE_REPORT.md).
+
 Date: 2026-10-18. Base: `91a61dfd59a62f51c3c906ca7deb10d3ad531945` (`main`,
 clean at start). Phase 1 contract and Phase 2 product hardening are preserved.
 This phase implements validation and documentation only; it does not start

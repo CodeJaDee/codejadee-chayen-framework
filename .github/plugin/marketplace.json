@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "CodeJaDee engineering plugins for coding agents.",
-    "version": "0.1.0-dev"
+    "version": "0.1.0-rc.1"
   },
   "plugins": [
     {
       "name": "chayen",
       "description": "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.",
-      "version": "0.1.0-dev",
+      "version": "0.1.0-rc.1",
       "source": "./plugins/codejadee-chayen-framework"
     }
   ]

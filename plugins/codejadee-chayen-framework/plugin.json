@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "chayen",
-  "version": "0.1.0-dev",
+  "version": "0.1.0-rc.1",
   "description": "Technology-aware software engineering skills for C#/ASP.NET Core, Angular, SQL Server and modern web stacks.",
   "author": {
     "name": "CodeJaDee",

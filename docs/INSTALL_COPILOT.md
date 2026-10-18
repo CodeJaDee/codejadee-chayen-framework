@@ -69,7 +69,7 @@ Skill discovery. Do not delete the whole Copilot configuration directory.
 ## VS Code (GitHub Copilot Chat)
 
 Unverified and excluded from the v0.1.0 support claim. CLI results do not
-qualify it. No VS Code runtime test is required in Phase 3.
+qualify it. No VS Code runtime test is required in Phase 4.
 
 ## Optional: response style policy
 
@@ -78,7 +78,10 @@ removed, and unverified on hosts. Security/Support is LATER; no channel is selec
 
 ## Verification status
 
-Current lifecycle, migration, routing and explicit invocation are NOT_RUN;
+Phase 4 lifecycle and migration are BLOCKED: no Copilot CLI executable was
+available (ENOENT); no command capability or native success is inferred.
+The [lifecycle report](production/NATIVE_LIFECYCLE_REPORT.md) supplies exact
+pending steps. Routing and explicit invocation remain NOT_RUN;
 see [Compatibility](COMPATIBILITY_MATRIX.md). Syntax was reviewed against
 the [official CLI plugin reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference)
 on 2026-10-18. Documentation review is not a native execution result.

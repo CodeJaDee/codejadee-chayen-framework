@@ -1,7 +1,7 @@
 # Compatibility matrix
 
-**Current build:** `0.1.0-dev`, 15 Skills (13 engineering, 2 writing).
-**Reviewed:** 2026-10-18, Phase 3. Production target: Claude Code CLI,
+**Current build:** `0.1.0-rc.1`, 15 Skills (13 engineering, 2 writing).
+**Reviewed:** 2026-10-18, Phase 4. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 
 ## Current build
@@ -9,11 +9,30 @@ Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 | Check | Claude Code CLI | Codex CLI | Copilot CLI |
 |---|---|---|---|
 | Shared package/marketplace identity | PASS, static | PASS, static | PASS, static |
-| Native install/discover/toggle/update/uninstall | NOT_RUN | NOT_RUN | NOT_RUN |
+| Native version tested | 2.1.302 | 0.163.0 | Unavailable (ENOENT) |
+| Local marketplace register/install/list | PASS | PASS | BLOCKED |
+| Native discovery; complete package hash | PASS; 15 Skills | PASS; 15 Skills | BLOCKED |
+| Disable/enable command | PASS | UNSUPPORTED subcommands; native config alternative PASS | BLOCKED |
+| Disabled loading behavior | BLOCKED; details includes disabled contents | PASS; fresh inventory 0/15 after disable/enable | BLOCKED |
+| Update version and content | PASS; RC.1 to scratch RC.2 | UNSUPPORTED dedicated update; native remove/add replacement PASS | BLOCKED |
+| Uninstall and verified absence | PASS | PASS | BLOCKED |
+| Reinstall/new-process inventory | PASS; 15 Skills | PASS; 15 Skills | BLOCKED |
+| Former-identifier migration fixture | PASS; exact RC.1 restored | PASS; exact RC.1 restored | BLOCKED |
+| Qualification on committed frozen candidate | BLOCKED; freeze pending | BLOCKED; freeze pending | BLOCKED |
 | Automatic routing >=85% independently per CLI | NOT_RUN | NOT_RUN | NOT_RUN |
 | Explicit invocation with current identity; no-match | NOT_RUN | NOT_RUN | NOT_RUN |
 | Thai/English output quality | NOT_RUN | NOT_RUN | NOT_RUN |
 | Response Style Policy loaded/followed | Deferred; unverified | Deferred; unverified | Deferred; unverified |
+
+These native results identify a working-tree snapshot based on
+`9ef22cc9b6abf348d145f0df8ead160207526540`, package SHA-256
+`9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb`.
+They do not claim an already frozen commit. Exact operations, transcripts,
+provider alternatives, migration scope and blockers are in the
+[native lifecycle report](production/NATIVE_LIFECYCLE_REPORT.md).
+Restart is a new native process, not conversation resumption. All profiles
+were isolated; configuration/fixture checks passed. The three-provider gate
+remains open. Security/Support is LATER and is unrelated to this lifecycle work.
 
 Offline results do not qualify runtime behavior. No routing PASS exists for
 current metadata fingerprint `339b3125d1347648`. Phase 2 description changes

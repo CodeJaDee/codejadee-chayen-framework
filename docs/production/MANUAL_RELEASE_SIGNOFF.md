@@ -17,13 +17,13 @@ are deferred; enabling them is not a condition for Phase 3 completion.
 
 | Field | Value to record at sign-off |
 |---|---|
-| Candidate/release version | Pending; `0.1.0-rc.1` then `0.1.0` |
+| Candidate/release version | Phase 4 applies approved `0.1.0-rc.1`; stable target `0.1.0` |
 | Exact commit SHA and reviewed diff | Pending |
-| Package and metadata fingerprints | Pending for frozen candidate; current metadata `339b3125d1347648` |
+| Package and metadata fingerprints | Working-tree snapshot in [Phase 4 report](NATIVE_LIFECYCLE_REPORT.md); metadata `339b3125d1347648`; committed freeze pending |
 | Maintainer/reviewer and review date | Pending |
 | Owner decision and timestamp | Pending |
 | Real Actions run URL, SHA and each job conclusion | NOT_RUN in Phase 3 |
-| Per-CLI lifecycle/routing/explicit/no-match evidence | NOT_RUN; Phase 5 |
+| Per-CLI lifecycle/routing/explicit/no-match evidence | Phase 4 lifecycle partially verified; see report. Routing/explicit/no-match NOT_RUN; Phase 5 |
 | Human quality/technology/security evidence | Pending scoped release gates |
 | Rights-holder/project MIT licence confirmation | Pending later candidate freeze |
 | Security/Support owner decision | LATER; no channel selected |
@@ -70,7 +70,7 @@ reset affected runtime evidence. The stable version-only delta follows G-17.
 After any authorized publication, separately verify remote public native
 installation on the three CLIs and record actual results.
 
-## Phase 3 disposition
+## Historical Phase 3 disposition
 
 Local implementation/review only. This form authorizes no commit, push,
 tag, publication, visibility change, branch rule, provider installation or
@@ -78,3 +78,12 @@ message to an external party. The agent issued none of those commands.
 The external commit observed during work is recorded in CI_CD_DESIGN.md and
 preserved. Stop after Phase 3; candidate freeze and runtime evaluation are
 later tasks.
+
+## Phase 4 status
+
+The later Phase 4 user request separately authorized temporary profile
+lifecycle testing and application of the already approved RC version.
+[The lifecycle report](NATIVE_LIFECYCLE_REPORT.md) records the resulting
+working-tree candidate and partial native qualification. The three-provider
+gate is still open; this form remains unsigned. No commit/push/tag/publication
+or repository setting change was performed. Phase 5 is not started.

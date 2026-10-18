@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-18T06:26:43.750Z",
+  "sourceBase": "9ef22cc9b6abf348d145f0df8ead160207526540",
+  "packageFingerprint": "9e5705fe32b19799d24ca9b671793fc54159943b0a6c12758b45f73d2c2833eb",
+  "skillMetadataFingerprint": "339b3125d1347648",
+  "commands": [
+    {
+      "nodeVersion": "24.22.0",
+      "command": "node tools/validate/validate-all.mjs --fail-fast",
+      "exit": 0,
+      "log": "PASS  G-SEC offline security profile (V-25): Provider behavior, live links, dependency advisories and runtime defenses NOT_RUN; static PASS is not a security guarantee.\r\nPASS  G-SEC-T offline security boundary regressions: ℹ duration_ms 1688.0035\r\nPASS  Phase 2 scope, upstream notice and lifecycle invariants: PASS Phase 2 hardening invariants: 0 error(s)\r\nPASS  Phase 2 hardening validator regressions: ℹ duration_ms 5834.9553\r\nPASS  Phase 2 Thai numerals and calendar scorer regressions: ℹ duration_ms 90.9236\r\nPASS  Phase 2 isolated lifecycle regressions (offline fakes): ℹ duration_ms 8972.3838\r\nPASS  RC fingerprint and isolation negative controls (offline): ℹ duration_ms 3332.892\r\nPASS  G-01 G-02 G-04..G-10 package, skills, references, catalog alignment: 0 error(s), 5 warning(s), root=<repo>\r\nPASS  G-03 catalog integrity (V-11): PASS: 0 errors, 0 warning(s)\r\nPASS  G-03b technology catalog (V-23): 0 error(s); 108 technology capabilities, root=<repo>\r\nPASS  G-03c composite workflows and templates (V-24): 0 error(s); workflow checks are static, agent/provider behavior NOT_RUN\r\nPASS  G-11 trigger eval cases in sync: Claude eval cases up to date: 218 cases, 526 files.\r\nPASS  G-13 validator self-tests: 179/179 passed\r\nPASS  G-14 user and release documentation links and identifiers: PASS documentation: 25 files, 0 error(s), 12 external link(s) listed not fetched\r\nPASS  Phase 3 current documentation build-fact regressions: ℹ duration_ms 3205.796\r\nPASS  G-15E editorial pattern inventory and case specifications (static): PASS editorial cases: 2 skills, 40 patterns, 156 case specifications; behavior NOT_RUN\r\nPASS  G-16 opt-in response style policy, template, budget and package isolation (static): PASS response style policy v1: 2978 body characters (limit 3500), 3074 UTF-8 bytes, 48 Thai characters; template in sync; package does not ship it. Host loading and behavior NOT_RUN\r\nPASS  G-16T response style setup rules on disposable fixtures: ℹ duration_ms 441.0231\r\nPASS  G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored): PASS step40 scorer self-test: 56/56 synthetic controls (scorer controls, not evaluation evidence)\r\n\r\nAll automated gates passed\r\n"
+    },
+    {
+      "nodeVersion": "20.11.0",
+      "command": "node tools/validate/validate-all.mjs --fail-fast",
+      "exit": 0,
+      "log": "PASS  G-SEC offline security profile (V-25): Provider behavior, live links, dependency advisories and runtime defenses NOT_RUN; static PASS is not a security guarantee.\r\nPASS  G-SEC-T offline security boundary regressions: # duration_ms 1935.9327\r\nPASS  Phase 2 scope, upstream notice and lifecycle invariants: PASS Phase 2 hardening invariants: 0 error(s)\r\nPASS  Phase 2 hardening validator regressions: # duration_ms 5193.9836\r\nPASS  Phase 2 Thai numerals and calendar scorer regressions: # duration_ms 120.3105\r\nPASS  Phase 2 isolated lifecycle regressions (offline fakes): # duration_ms 18217.107\r\nPASS  RC fingerprint and isolation negative controls (offline): # duration_ms 9186.1279\r\nPASS  G-01 G-02 G-04..G-10 package, skills, references, catalog alignment: 0 error(s), 5 warning(s), root=<repo>\r\nPASS  G-03 catalog integrity (V-11): PASS: 0 errors, 0 warning(s)\r\nPASS  G-03b technology catalog (V-23): 0 error(s); 108 technology capabilities, root=<repo>\r\nPASS  G-03c composite workflows and templates (V-24): 0 error(s); workflow checks are static, agent/provider behavior NOT_RUN\r\nPASS  G-11 trigger eval cases in sync: Claude eval cases up to date: 218 cases, 526 files.\r\nPASS  G-13 validator self-tests: 179/179 passed\r\nPASS  G-14 user and release documentation links and identifiers: PASS documentation: 25 files, 0 error(s), 12 external link(s) listed not fetched\r\nPASS  Phase 3 current documentation build-fact regressions: # duration_ms 3292.4793\r\nPASS  G-15E editorial pattern inventory and case specifications (static): PASS editorial cases: 2 skills, 40 patterns, 156 case specifications; behavior NOT_RUN\r\nPASS  G-16 opt-in response style policy, template, budget and package isolation (static): PASS response style policy v1: 2978 body characters (limit 3500), 3074 UTF-8 bytes, 48 Thai characters; template in sync; package does not ship it. Host loading and behavior NOT_RUN\r\nPASS  G-16T response style setup rules on disposable fixtures: # duration_ms 453.3884\r\nPASS  G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored): PASS step40 scorer self-test: 56/56 synthetic controls (scorer controls, not evaluation evidence)\r\n\r\nAll automated gates passed\r\n"
+    },
+    {
+      "nodeVersion": "24.22.0",
+      "command": "node tools/evals/run-evaluation-suite.mjs --fail-fast",
+      "exit": 0,
+      "log": "PASS  S-ALL  All automated gates passed\r\nPASS  S-IDENTITY  15/15 PASS\r\nPASS  S-AUDIT206  Shared description terms: data: chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-testing; review: chayen-architecture, chayen-data, chayen-devops, chayen-documentation, \r\nPASS  S-EVALSYNC  Claude eval cases up to date: 218 cases, 526 files.\r\nPASS  T-206 engineering: 206/206 with positive+negative recipe cases; 206/206 with catalog triggers\r\nPASS  T-TECH technology: 108/108\r\nPASS  T-WF workflows: 12/12\r\nPASS  T-ROUTING 11/11 requested examples have a trigger case and a provider probe\r\nPASS  S-HANDOFF 253 files; dangling 0; provider syntax 0\r\nSIM   lexical proxy: top1 0.5, top3 0.774, precision 0.465, no-match 0.467, ambiguous 18/27\r\nINFO  L0 metadata 6217/6500 chars (~1554 tokens)\r\nINFO  Projected registered L0 6217/6500 chars (includes planned editorial metadata)\r\n\r\nEvaluation suite static/traceability levels PASS\r\n"
+    },
+    {
+      "nodeVersion": "20.11.0",
+      "command": "node tools/evals/run-evaluation-suite.mjs --fail-fast",
+      "exit": 0,
+      "log": "PASS  S-ALL  All automated gates passed\r\nPASS  S-IDENTITY  15/15 PASS\r\nPASS  S-AUDIT206  Shared description terms: data: chayen-ai-engineering, chayen-architecture, chayen-backend, chayen-data, chayen-testing; review: chayen-architecture, chayen-data, chayen-devops, chayen-documentation, \r\nPASS  S-EVALSYNC  Claude eval cases up to date: 218 cases, 526 files.\r\nPASS  T-206 engineering: 206/206 with positive+negative recipe cases; 206/206 with catalog triggers\r\nPASS  T-TECH technology: 108/108\r\nPASS  T-WF workflows: 12/12\r\nPASS  T-ROUTING 11/11 requested examples have a trigger case and a provider probe\r\nPASS  S-HANDOFF 253 files; dangling 0; provider syntax 0\r\nSIM   lexical proxy: top1 0.5, top3 0.774, precision 0.465, no-match 0.467, ambiguous 18/27\r\nINFO  L0 metadata 6217/6500 chars (~1554 tokens)\r\nINFO  Projected registered L0 6217/6500 chars (includes planned editorial metadata)\r\n\r\nEvaluation suite static/traceability levels PASS\r\n"
+    }
+  ],
+  "independent": {
+    "rcControls": {
+      "versions": [
+        "20.11.0",
+        "24.22.0"
+      ],
+      "passed": 9,
+      "failed": 0
+    },
+    "documentationControls": {
+      "passed": 15,
+      "failed": 0
+    },
+    "ciFailureControls": {
+      "passed": 4,
+      "detected": [
+        "invalid manifest: V-02, exit 1",
+        "invalid Skill reference: V-08, exit 1",
+        "missing upstream notice: H-LICENSE, exit 1"
+      ]
+    },
+    "strictClaudeValidation": {
+      "passed": 2,
+      "failed": 0
+    },
+    "workflowSyntax": {
+      "result": "PASS",
+      "actionlint": "1.7.12",
+      "archiveSha256Verified": true
+    },
+    "recordedNativeInventoryReplay": 6,
+    "candidateBytesMatch": true
+  },
+  "nativeQualificationExit": 2,
+  "remoteGitHubActions": "NOT_RUN",
+  "node20Binary": {
+    "source": "https://nodejs.org/dist/v20.11.0/win-x64/node.exe",
+    "sha256": "5da5e201155bb3ea99134b404180adebcfa696b0dbc09571d01a09ca5489f53e",
+    "releaseChecksumsVerified": true
+  }
+}

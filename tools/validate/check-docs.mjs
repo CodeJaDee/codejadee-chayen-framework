@@ -30,7 +30,7 @@ for (const dir of ["docs", "docs/distribution"]) {
   const d = path.join(root, dir);
   if (fs.existsSync(d)) for (const f of fs.readdirSync(d)) if (f.endsWith(".md")) docs.push(path.join(d, f));
 }
-for (const file of ["plugins/codejadee-chayen-framework/README.md", "docs/production/CI_CD_DESIGN.md", "docs/production/MANUAL_RELEASE_SIGNOFF.md", "docs/production/RELEASE_GATE_MATRIX.md"]) {
+for (const file of ["plugins/codejadee-chayen-framework/README.md", "docs/production/CI_CD_DESIGN.md", "docs/production/MANUAL_RELEASE_SIGNOFF.md", "docs/production/RELEASE_GATE_MATRIX.md", "docs/production/NATIVE_LIFECYCLE_REPORT.md"]) {
   if (fs.existsSync(path.join(root, file))) docs.push(path.join(root, file));
 }
 

@@ -1,0 +1,24 @@
+[
+  {
+    "args": [
+      "plugin",
+      "validate",
+      "--strict",
+      "<user-home>\\source\\repos\\CodeJaDee\\codejadee-chayen-framework\\plugins\\codejadee-chayen-framework"
+    ],
+    "exit": 0,
+    "stdout": "Validating plugin manifest: <user-home>\\source\\repos\\CodeJaDee\\codejadee-chayen-framework\\plugins\\codejadee-chayen-framework\\.claude-plugin\\plugin.json\n\ni Advice (does not change the verdict):\n\n  > <user-home>\\source\\repos\\CodeJaDee\\codejadee-chayen-framework\\plugins\\codejadee-chayen-framework\\README.md: This README has no line that installs \"chayen\" from a marketplace. Add the install line, which works in one step on Claude Code 2.1.275 or later. Validate the folder that holds its marketplace.json to have <owner>/<repo> filled in, and the name its marketplace lists it under.\n      /plugin install chayen --marketplace <owner>/<repo>\n\n√ Validation passed\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "plugin",
+      "validate",
+      "--strict",
+      "<user-home>\\source\\repos\\CodeJaDee\\codejadee-chayen-framework\\.claude-plugin\\marketplace.json"
+    ],
+    "exit": 0,
+    "stdout": "Validating marketplace manifest: <user-home>\\source\\repos\\CodeJaDee\\codejadee-chayen-framework\\.claude-plugin\\marketplace.json\n\n√ Validation passed\n",
+    "stderr": ""
+  }
+]

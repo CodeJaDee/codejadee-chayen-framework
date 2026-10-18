@@ -3,8 +3,8 @@
 | Field | Value |
 |---|---|
 | Release | Chayen v0.1.0: public production release for verified CLI providers |
-| Date | 2026-10-18 (Plan v4, Phase 3: CI/CD and documentation alignment) |
-| Status as of | Phase 3 changes relative to `91a61dfd59a62f51c3c906ca7deb10d3ad531945`; HEAD advanced externally to `8730bb2442ffe28e951294b4995efe7d4af88503` during work. The agent did not commit/push. Current evidence: [CI_CD_DESIGN.md](CI_CD_DESIGN.md); remote Actions NOT_RUN. Baseline E-01..E-31 and the Phase 2 report remain historical |
+| Date | 2026-10-18 (Plan v4, Phase 4: RC and native CLI lifecycle) |
+| Status as of | Working-tree RC based on `9ef22cc9b6abf348d145f0df8ead160207526540`; approved RC.1 fields applied. Exact package and native evidence: [NATIVE_LIFECYCLE_REPORT.md](NATIVE_LIFECYCLE_REPORT.md). No committed M1 freeze, push or tag; remote Actions NOT_RUN. Phase 1..3 evidence remains historical |
 | Scope and contract | [RELEASE_SCOPE_DECISION.md](RELEASE_SCOPE_DECISION.md) (owner decisions, K-01..K-20, routing contract §4) |
 | Accepted risks | [ACCEPTED_RISKS.md](ACCEPTED_RISKS.md) (AR-01..AR-04) |
 | Baseline (preserved) | [PRODUCTION_READINESS_MATRIX.md](PRODUCTION_READINESS_MATRIX.md) (PG-01..PG-43) · [PRODUCTION_GAP_ANALYSIS.md](PRODUCTION_GAP_ANALYSIS.md) · [PHASE_01_EVIDENCE.md](PHASE_01_EVIDENCE.md) |
@@ -107,9 +107,9 @@ and the date.
 | G-02 | Product Scope Correctness | **PASS** (static) | Yes | — | Yes | K-02, K-03, K-04 | Maintainer |
 | G-03 | Validators and Regression Tests | **PASS** (local) | Yes | — | Yes | K-05, K-06, K-07 | Maintainer |
 | G-04 | CI/CD | **NOT_RUN** (remote) | Yes | — | Yes | K-08 | Maintainer |
-| G-05 | Version Integrity | **FAIL** | Yes | — | Yes | K-09 | Maintainer; Owner (OD-02) |
+| G-05 | Version Integrity | **BLOCKED** (committed freeze) | Yes | — | Yes | K-09 | Maintainer; Owner (OD-02) |
 | G-06 | Claude Code Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-10 | Evaluation Operator |
-| G-07 | Codex Lifecycle | **FAIL** | — | — | Yes | K-06, K-11 | Evaluation Operator; Maintainer |
+| G-07 | Codex Lifecycle | **BLOCKED** (committed freeze) | — | — | Yes | K-06, K-11 | Evaluation Operator; Maintainer |
 | G-08 | Copilot Lifecycle | **BLOCKED** | — | — | Yes | K-06, K-12 | Evaluation Operator |
 | G-09 | Automatic Routing ≥ 85% per CLI | **FAIL** | — | — | Yes | K-03, K-13 | Evaluation Operator; Owner (OD-05) |
 | G-10 | Explicit Invocation and No-match | **BLOCKED** | — | — | Yes | K-07, K-14 | Evaluation Operator; Maintainer |
@@ -124,14 +124,14 @@ and the date.
 | Status | Count | Gates |
 |---|---|---|
 | PASS | 3 | G-01, G-02, G-03 |
-| FAIL | 4 | G-05, G-07, G-09, G-15 |
+| FAIL | 2 | G-09, G-15 |
 | NOT_RUN | 2 | G-04, G-13 |
-| BLOCKED | 8 | G-06, G-08, G-10, G-11, G-12, G-14, G-16, G-17 |
+| BLOCKED | 10 | G-05, G-06, G-07, G-08, G-10, G-11, G-12, G-14, G-16, G-17 |
 | NOT_APPLICABLE | 0 | — |
 | **Total** | **17** | |
 
 **Release readiness:** **NOT READY.** All three milestones are blocked: M1
-by remote G-04, G-05 and outstanding G-15 content, M2 by the later G-16 decision, and M3 by 14 of the 17 gates. Accepted deferrals are not additional Phase 3 blockers.
+by remote G-04, committed G-05 and outstanding G-15 content, M2 by the later G-16 decision, and M3 by 14 of the 17 gates. These are release milestone prerequisites, not reasons to stop isolated Phase 4 lifecycle work. Security/Support is LATER; accepted deferrals add no Phase 4 blockers.
 
 **Roles.** These are roles, not named people:
 
@@ -178,7 +178,7 @@ by remote G-04, G-05 and outstanding G-15 content, M2 by the later G-16 decision
 | Required evidence | Exit codes and pass counts on the candidate commit. The new negative controls are listed by ID and fail as expected when mutated |
 | Dependencies | K-05/K-06 (Phase 2), K-07 (Phase 3) |
 | Responsible party | Maintainer |
-| Current status | **PASS** (local, Phase 3 working tree). All five guard groups exist: Phase 2 upstream/numeral/lifecycle/runbook checks plus D-06 current documentation build-fact consistency. Documentation mutations cover count, file/reference total, L0, identity, version and historical scoping. Mandatory local results on both pinned Node versions are in CI_CD_DESIGN.md. Frozen-candidate checks must repeat later; this does not establish runtime or remote CI PASS. |
+| Current status | **PASS** (local, Phase 4 working-tree RC). All 19 aggregate groups pass on Node 20.11.0 and 24.22.0, including 179 validator cases, upstream/numeral guards, 40 offline lifecycle controls, current-doc mutations and nine RC fingerprint/isolation/inventory controls. Independent manifest/reference/MIT negative controls pass. Native Claude strict plugin/marketplace validation and actionlint pass. Exact snapshot/results are in NATIVE_LIFECYCLE_REPORT.md; frozen-commit checks must repeat later. This does not establish routing or remote CI PASS. |
 | Release-blocking behaviour | Blocks M1 and M3. A failing suite on the candidate stops the freeze |
 
 ### G-04: CI/CD
@@ -202,19 +202,19 @@ by remote G-04, G-05 and outstanding G-15 content, M2 by the later G-16 decision
 | Required evidence | Identity 15/15 PASS on the candidate and the release commits; a diff of the four fields; tag-to-commit verification |
 | Dependencies | Accepted tag strategy; K-09 (later candidate freeze); G-02 content final |
 | Responsible party | Maintainer; Owner (OD-02, commit and tag authorization) |
-| Current status | **FAIL** until later candidate freeze. Current four fields remain `0.1.0-dev`. Phase 3 aligns current release documentation with accepted ADR-0008 tag format `vX.Y.Z`; the conflicting provider-generated tag suggestion was removed. No version, tag or publication was performed by the agent. |
+| Current status | **BLOCKED** on committed candidate freeze. Phase 4 applies approved OWN-07 `0.1.0-rc.1` to all four fields, CHANGELOG and supported-version docs. Version parity is verified on the identifiable working-tree package; package/metadata fingerprints are in the lifecycle report. HEAD is still the pre-edit revision. A commit/tag/publication is not authorized or created; later tag-to-commit verification remains open. |
 | Release-blocking behaviour | Blocks M1 (candidate fields) and M3 |
 
 ### G-06: Claude Code Lifecycle
 
 | Field | Definition |
 |---|---|
-| Requirement | On Claude Code CLI, in an isolated config home, from the frozen candidate: marketplace add; install `chayen@codejadee`; `plugin details` shows Skills (15); disable; enable; update from `0.1.0-dev` to `0.1.0-rc.1`; uninstall, verified by absence; marketplace remove. Real config homes are fingerprinted before and after the run and show no change. CLI version recorded |
+| Requirement | On Claude Code CLI, in an isolated config home, from the frozen candidate: marketplace add; install `chayen@codejadee`; native inventory shows Skills (15); disable and prove disabled loading; enable; advance version and content in scratch and verify active version/full installed hash; uninstall, verified by absence; reinstall/new-process inventory; former-identifier migration; marketplace remove. Real configuration and application fixtures are unchanged. CLI version recorded |
 | Verification method | The corrected `tests/provider-compatibility/run-lifecycle.sh` (K-06) and runbook R-1..R-10 |
 | Required evidence | A dated result file under `tests/provider-compatibility/results/` naming the revision, package fingerprint, CLI version, skill count and identifier, with each step's outcome |
 | Dependencies | M1 (G-01..G-05); K-06; OD-10 (authorization, isolated profile) |
 | Responsible party | Evaluation Operator; Release Governance Lead (review) |
-| Current status | **BLOCKED.** Phase 2 lifecycle tooling now validates isolated profiles, command support, changed update content and actual uninstall. No native run was performed; no frozen candidate or execution authorization. Historical six-Skill evidence is invalid for this build. |
+| Current status | **BLOCKED.** Claude Code 2.1.302 native register/install/list/15-Skill inventory, toggle persistence, RC.1-to-scratch-RC.2 changed-content update, uninstall absence, reinstall/new-process inventory and former-identifier migration PASS on the recorded snapshot. Disabled loading remains BLOCKED: details includes disabled contents and cannot prove activation. Committed M1 freeze also pending. Configuration/application checks PASS. See Phase 4 report/transcripts; no model-routing evidence is claimed. |
 | Release-blocking behaviour | Blocks M3. An uninstall that only disables the plugin is FAIL, never PASS |
 
 ### G-07: Codex Lifecycle
@@ -226,7 +226,7 @@ by remote G-04, G-05 and outstanding G-15 content, M2 by the later G-16 decision
 | Required evidence | A dated result file as in G-06, plus the official-source citation for the marketplace fields |
 | Dependencies | M1; K-06, K-11; OD-10 |
 | Responsible party | Evaluation Operator; Maintainer (marketplace fields) |
-| Current status | **FAIL.** Marketplace-field confirmation P1-026 remains open. Phase 2 lifecycle tooling uses command discovery; unavailable Codex disable/enable/update operations become NOT_RUN and require reviewed native UI evidence. No native lifecycle run was performed. |
+| Current status | **BLOCKED** on committed M1 freeze. Codex CLI 0.163.0 supported native lifecycle PASS on the exact snapshot: add/list/15-Skill native inventory; disposable config disable/enable with fresh skills/list 0/15; changed-version/full-content remove/add replacement; remove/absence; reinstall/new-process inventory; former-identifier migration. Dedicated disable/enable/update commands are UNSUPPORTED, with tested native alternatives. Official OpenAI source confirms marketplace fields; root manifest installation required no authentication. P1-026/P1-027 parts addressed. Real config/application checks PASS. See Phase 4 report for dated source and transcripts. |
 | Release-blocking behaviour | Blocks M3 |
 
 ### G-08: Copilot Lifecycle
@@ -238,7 +238,7 @@ by remote G-04, G-05 and outstanding G-15 content, M2 by the later G-16 decision
 | Required evidence | A dated result file as in G-06 |
 | Dependencies | M1; K-06, K-12; OD-10, including installing Copilot CLI |
 | Responsible party | Evaluation Operator |
-| Current status | **BLOCKED.** Phase 2 adds Copilot auto-update suppression, minimum-version preflight, changed-content update checks and uninstall-by-absence; disabled is still installed. No native run; historical KL-33 is not presumed resolved on a provider. |
+| Current status | **BLOCKED.** Native executable unavailable (ENOENT) on 2026-10-18; every provider operation is BLOCKED, not UNSUPPORTED or PASS. Phase 4 report supplies the exact pending native procedure, local live-source update distinction, version/content/absence assertions and migration steps. No CLI install, sign-in or production credential use was attempted. Historical KL-33 is not presumed resolved. |
 | Release-blocking behaviour | Blocks M3. An uninstall that only disables is FAIL (see §1.2 for the amendment route) |
 
 ### G-09: Automatic Routing ≥ 85% per CLI
@@ -346,7 +346,7 @@ by remote G-04, G-05 and outstanding G-15 content, M2 by the later G-16 decision
 | Required evidence | A release record listing the candidate and release SHAs, the fingerprints, every gate's evidence reference, the delta diff, the smoke results, the tag verification and the approval references |
 | Dependencies | Every other gate; OD-02, OD-11, OD-12 |
 | Responsible party | Release Governance Lead; Owner (authorization) |
-| Current status | **BLOCKED.** No frozen candidate exists and scoped release gates remain open. Phase 3 aligns current user/release docs and adds manual sign-off for accepted unprotected-main risk. Remote CI, candidate/version/licensing and authorized runtime/publication evidence remain later work; unrelated ADR/hygiene and deferred host tests are not added as blockers. |
+| Current status | **BLOCKED.** Phase 4 records an exact RC.1 working-tree package and metadata fingerprint with native evidence, but no committed M1 freeze exists. Claude disabled loading and all Copilot lifecycle work remain open. Remote CI is NOT_RUN; Phase 5 is not started. Manual release sign-off remains required for accepted unprotected-main risk. No commit/push/tag/publication/settings change is authorized or performed by this phase. Deferred host tests and unrelated hygiene are not added as blockers. |
 | Release-blocking behaviour | The final gate: blocks M3 and the tag act. A PASS here does not itself authorize publication |
 
 ## 4. Traceability from the baseline gates

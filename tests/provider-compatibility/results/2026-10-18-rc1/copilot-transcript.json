@@ -1,0 +1,12 @@
+[
+  {
+    "args": [
+      "--version"
+    ],
+    "exit": null,
+    "signal": null,
+    "error": "ENOENT",
+    "stdout": "",
+    "stderr": ""
+  }
+]

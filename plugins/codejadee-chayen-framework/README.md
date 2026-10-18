@@ -13,9 +13,9 @@ installs it through its own native plugin mechanism.
 | `.claude-plugin/plugin.json` | Claude Code |
 | `skills/` | Every provider. This is the single canonical skill source. |
 
-## Current state: 0.1.0-dev
+## Current state: 0.1.0-rc.1
 
-This is a **development build** with 15 entry skills. The public release
+This is an **unpublished release candidate** with 15 entry skills. The public release
 target is v0.1.0, MIT, publisher CodeJaDee; project licence application is
 pending. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
 VS Code and Response Style Policy host behavior are unverified/deferred.
@@ -24,7 +24,9 @@ The list is in
 
 - Skills activate automatically when a request matches their description.
 - Requests that match no skill are handled by the agent normally.
-- Current native lifecycle and routing are NOT_RUN. Earlier Claude Code
+- Native lifecycle qualification is incomplete; see the dated Phase 4 report
+  in `docs/production/NATIVE_LIFECYCLE_REPORT.md`. Current automatic routing
+  is NOT_RUN. Earlier Claude Code
   measurements apply only to an older build/identity; Phase 2 description
   changes invalidated that evidence. Automatic routing must reach >=85%
   independently per CLI in Phase 5. See
