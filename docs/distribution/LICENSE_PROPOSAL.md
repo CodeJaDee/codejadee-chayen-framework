@@ -1,7 +1,14 @@
 # Licence proposal
 
-**Status: PROPOSAL. Requires project-owner confirmation.** This is not
-legal advice, and no `LICENSE` file has been created.
+**Status: DECIDED. The owner chose option A, MIT, on 2026-10-18
+([D-060](../chayen/DECISIONS.md#d-060--chayen-v010-release-scope-and-owner-release-decisions)).**
+No `LICENSE` file has been created yet. It is added at the candidate freeze
+(release gate G-15 in [RELEASE_GATE_MATRIX.md](../production/RELEASE_GATE_MATRIX.md)).
+The copyright-holder line and items 1, 2 and 4 below still need owner input.
+See the rights check in
+[RELEASE_SCOPE_DECISION.md §5](../production/RELEASE_SCOPE_DECISION.md#5-licence-and-distribution-rights).
+This is not legal advice. The analysis below is kept as the record of the
+options.
 
 - **Current state:** the repository has no licence, and the manifests have
   no `license` field. Until a licence is published, the default is that no

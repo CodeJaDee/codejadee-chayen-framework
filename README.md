@@ -15,7 +15,8 @@ behaves exactly as it would without Chayen.
 >
 > - The GitHub repository is currently **private**, so installing from it
 >   requires repository access.
-> - No licence has been chosen yet. See
+> - The owner has chosen the MIT licence, but no `LICENSE` file has been
+>   published yet, so no licence is granted until it is. See
 >   [docs/distribution/LICENSE_PROPOSAL.md](docs/distribution/LICENSE_PROPOSAL.md).
 > - Verification is partial. Real-host results exist only for the 13
 >   engineering skills on Claude Code CLI; the two writing skills and the
@@ -121,4 +122,4 @@ The full walkthrough is in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
 | Engineering | Contributors as recorded in Git history. At 2026-10-15, all commits are authored by the GitHub account `0xPratyaDev7x` (also recorded as "Pratya S."). |
 | AI-assisted development | Much of the skill content, documentation, validators, and evaluations was drafted with an AI coding assistant (Anthropic Claude, through Claude Code), step by step under the project owner's direction. The project owner makes the commits, and the governance log tracks each step's review status. AI output can be wrong; see [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md). |
 | Third-party material | The English writing skill adapts patterns from the MIT-licensed [humanizer](https://github.com/blader/humanizer) skill by Siqi Chen; the licence notice ships in `chayen-humanizer-en/references/upstream-notice.md`. |
-| Licence | **Pending project-owner confirmation.** See [docs/distribution/LICENSE_PROPOSAL.md](docs/distribution/LICENSE_PROPOSAL.md). Until a licence is published, no licence is granted. |
+| Licence | **MIT, chosen by the owner, not yet published.** The `LICENSE` file is added for the release candidate. Until it is published, no licence is granted. See [docs/distribution/LICENSE_PROPOSAL.md](docs/distribution/LICENSE_PROPOSAL.md). |

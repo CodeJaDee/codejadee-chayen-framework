@@ -1350,6 +1350,9 @@ Decision statuses:
 
 - **Status:** PROPOSED; **not applied**. The Step 41 instruction says to make
   only approved version changes, and no version was approved.
+  **2026-10-18:** D-060 fixes the values to `0.1.0-rc.1` for the candidate
+  and then `0.1.0`. They are still not applied, and the tag format is still
+  open.
 - **Context:** all four version fields (both manifests, the Copilot
   marketplace entry and its `metadata.version`) say `0.1.0-dev`, unchanged
   since the 6-skill build while the package grew to 15 skills. Claude Code pins
@@ -1387,6 +1390,49 @@ Decision statuses:
   validator mutations use the new name; `check-docs.mjs` allows the old identifier only
   as migration text. Historical step records keep the old name.
 - **Not verified:** install, invocation and migration under the new name on any host.
+
+### D-060 — Chayen v0.1.0 release scope and owner release decisions
+
+- **Status:** ACCEPTED (explicit Product Owner decisions, Production Readiness
+  Plan v4 Phase 1 instruction, 2026-10-18) for the items under **Decision**.
+  The security and support item is **not decided**. The tag format is open.
+  Nothing is applied to the manifests, `LICENSE` or repository settings by
+  this record.
+- **Decision:**
+  - Release: "Chayen v0.1.0 — Public Production Release for verified CLI providers".
+  - Distribution: public.
+  - Licence: MIT.
+  - Publisher identity: CodeJaDee.
+  - Production-supported hosts: Claude Code CLI, OpenAI Codex CLI and GitHub
+    Copilot CLI.
+  - Automatic Skill routing: ≥ 85%, measured independently on each
+    supported CLI.
+  - Versions: target stable version `0.1.0`; release candidate
+    `0.1.0-rc.1`.
+  - Out of scope: Nitro and Elysia.
+  - Accepted risks AR-01..AR-04:
+    - AR-01: Response Style Policy host testing;
+    - AR-02: VS Code extension and Copilot Chat testing;
+    - AR-03: branch protection and required reviews;
+    - AR-04: unrelated ADR closure and repository hygiene.
+- **Not decided:**
+  - **Security and support.** The owner answered "later". This approves no
+    channel: not GitHub Issues, not private vulnerability reporting, not
+    email, not any other method. No address or URL may be added until the
+    owner decides.
+  - **Tag format.** ADR-0008 `vX.Y.Z` is recommended over `claude plugin
+    tag` names.
+- **Effect on earlier records:**
+  - The version values in D-058 are fixed (still not applied).
+  - ISSUES Q-05 (licence) is resolved as MIT.
+  - P1-005 (distribution and publisher) is decided.
+  - Publication acts still each need explicit approval (BC-30, BC-31).
+- **Details:**
+  - [RELEASE_SCOPE_DECISION.md](../production/RELEASE_SCOPE_DECISION.md):
+    scope, KEEP items, routing contract and licence rights check;
+  - [RELEASE_GATE_MATRIX.md](../production/RELEASE_GATE_MATRIX.md): release
+    gates G-01..G-17 (not the skill-quality gates with the same labels);
+  - [ACCEPTED_RISKS.md](../production/ACCEPTED_RISKS.md).
 
 ## Architecture assumptions (checked in Step 02)
 

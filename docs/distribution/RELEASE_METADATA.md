@@ -4,6 +4,21 @@
 and marketplace files still carry `0.1.0-dev`. Applying these values is a
 release step that needs project-owner approval (BC-30, R-54).
 
+**2026-10-18 owner decisions (D-060), not yet applied:**
+
+- versions: `0.1.0-rc.1` for the candidate, then `0.1.0`;
+- licence: `MIT`;
+- publisher: `CodeJaDee`;
+- distribution: public.
+
+Still open:
+
+- the tag format;
+- the copyright-holder line;
+- the security and support contacts (deferred, none chosen).
+
+See [RELEASE_SCOPE_DECISION.md](../production/RELEASE_SCOPE_DECISION.md).
+
 ## Current metadata (validated 2026-10-15)
 
 | Field | `plugin.json` (Agent Plugins) | `.claude-plugin/plugin.json` | Copilot marketplace entry | Notes |

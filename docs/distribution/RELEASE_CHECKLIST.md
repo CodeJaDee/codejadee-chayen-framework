@@ -6,6 +6,16 @@ proposed in [RELEASE_METADATA.md](RELEASE_METADATA.md) and not applied. The
 current readiness assessment is
 [docs/chayen/RELEASE_READINESS.md](../chayen/RELEASE_READINESS.md).
 
+**2026-10-18 (Plan v4 Phase 1):** the binding release gates for v0.1.0 are
+now release gates G-01..G-17. These are not the skill-quality gates that
+`validate-all` prints under the same labels. They are defined in
+[RELEASE_GATE_MATRIX.md](../production/RELEASE_GATE_MATRIX.md). Scope and
+owner decisions are in
+[RELEASE_SCOPE_DECISION.md](../production/RELEASE_SCOPE_DECISION.md), and
+deferred items in [ACCEPTED_RISKS.md](../production/ACCEPTED_RISKS.md). This
+checklist remains the operator's step list. Where the two disagree, the gate
+matrix governs.
+
 **Status: NOT READY.** Blocking items are marked ⛔. Each item says who acts.
 
 Release actions are taken only by the project owner, with explicit
@@ -19,18 +29,19 @@ approval for each one (BC-30, BC-31):
 
 ## A. Owner decisions (blocking)
 
-- [ ] ⛔ **Licence chosen** ([LICENSE_PROPOSAL.md](LICENSE_PROPOSAL.md)),
-  `LICENSE` added, and `license` set in both manifests. *Owner.*
-- [ ] ⛔ **Publisher identity confirmed.** Is `CodeJaDee` the legal name for
-  `author` and the marketplace owners? *Owner.*
-- [ ] ⛔ **Distribution model decided:**
-  - internal: private repository, access-controlled installs; or
-  - public: repository made public, or a public mirror.
-
-  *Owner.*
-- [ ] ⛔ **Security contact published** in `SECURITY.md`, for example by
-  enabling GitHub private vulnerability reporting. *Owner.*
-- [ ] **Support channel stated:** issues URL or email. *Owner.*
+- [x] **Licence chosen:** MIT (D-060, 2026-10-18).
+- [ ] ⛔ `LICENSE` added with the owner-confirmed copyright-holder line, and
+  `license` set to `MIT` in both manifests (release gate G-15). *Owner, then
+  Maintainer.*
+- [x] **Publisher identity confirmed:** `CodeJaDee` (D-060). The
+  copyright-holder line for `LICENSE` is a separate input (release gate G-15).
+- [x] **Distribution model decided:** public (D-060). Making the repository
+  public is a separate act that needs explicit approval, after release gate G-16.
+- [ ] ⛔ **Security contact published** in `SECURITY.md`. *Owner.* The
+  decision is deferred (D-060). No channel has been chosen, and none may
+  be assumed (release gate G-16).
+- [ ] ⛔ **Support channel stated.** *Owner.* Deferred with the security
+  decision (release gate G-16).
 - [ ] **Codex IDE extension position decided** (ISSUES Q-02): document it
   as unsupported (the current docs do this), or something else. *Owner.*
 - [ ] **Java scope for v1 confirmed out of scope** (Q-08). *Owner.*
@@ -109,8 +120,12 @@ They need an authorized environment and test identities.
 
 ## F. Release (owner only, after explicit approval)
 
-- [ ] Commit, then tag (`claude plugin tag` can create a
-  `{name}--v{version}` tag that checks manifest and marketplace agreement).
+- [ ] Commit, then tag. **The tag format is not final** (gate G-05, OD-02):
+  - [ADR-0008](../chayen/ADRS/ADR-0008-packaging-and-marketplace-strategy.md)
+    specifies `vX.Y.Z`;
+  - `claude plugin tag` would create `{name}--v{version}`.
+
+  Use the one format the owner confirms.
 - [ ] Push.
 - [ ] Create a GitHub release with the changelog section.
 - [ ] Marketplace or directory submissions, if any
