@@ -9,7 +9,8 @@
 // Usage: node tools/validate/run-validator-tests.mjs [--only <case-id>] [--keep]
 // Case files: tests/catalog/catalog-mutations.json, tests/skills/validator-mutations.json,
 // tests/catalog/technology-mutations.json, tests/catalog/workflow-mutations.json,
-// tests/catalog/editorial-mutations.json, tests/response-style/response-style-mutations.json
+// tests/catalog/editorial-mutations.json, tests/catalog/project-mutations.json,
+// tests/response-style/response-style-mutations.json
 
 import fs from "node:fs";
 import os from "node:os";
@@ -22,7 +23,7 @@ const argv = process.argv.slice(2);
 const only = argv.includes("--only") ? argv[argv.indexOf("--only") + 1] : null;
 const keep = argv.includes("--keep");
 const COPY = ["plugins", ".claude-plugin", ".github/plugin", ".agents/plugins", "catalog", "tests/skills", "tests/editorial", "docs/chayen/CAPABILITY_COVERAGE.md", "docs/chayen/TECHNOLOGY_COVERAGE.md", "docs/chayen/WORKFLOW_COVERAGE.md", "tests/technology/dotnet/run-fact-checks.mjs", "tests/technology/angular-typescript/run-fact-checks.mjs", "tests/technology/react-nextjs/run-fact-checks.mjs", "tests/technology/vue-nuxt-vite/run-fact-checks.mjs", "tests/technology/sqlserver/run-fact-checks.mjs", "tests/technology/sqlserver/fixture", "tests/technology/postgres-crossstack/run-fact-checks.mjs", "tests/technology/postgres-crossstack/fixture", "response-style", "docs/RESPONSE_STYLE.md", "docs/chayen/RESPONSE_STYLE_DESIGN.md", "tools/response-style"];
-const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json", "tests/catalog/technology-mutations.json", "tests/catalog/workflow-mutations.json", "tests/catalog/editorial-mutations.json", "tests/response-style/response-style-mutations.json"];
+const SUITES = ["tests/catalog/catalog-mutations.json", "tests/skills/validator-mutations.json", "tests/catalog/technology-mutations.json", "tests/catalog/workflow-mutations.json", "tests/catalog/editorial-mutations.json", "tests/catalog/project-mutations.json", "tests/response-style/response-style-mutations.json"];
 const VALIDATORS = {
   package: (dir) => [path.join(repo, "tools/validate/validate-package.mjs"), dir],
   catalog: (dir) => [path.join(repo, "tools/catalog/check-catalog.mjs"), "--root", dir],

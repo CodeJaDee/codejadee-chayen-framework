@@ -49,7 +49,8 @@ the owner's Support decision:
 Most requests are added as a **recipe or technology reference inside an
 existing skill**:
 
-- L0 metadata usage is 6,217 / 6,500 characters, and all 15 entry points ship;
+- L0 metadata usage is 6,563 / 7,000 characters, and all 16 entry points ship
+  (D-062 raised the ceiling to 16 for `chayen-init`);
 - each new entry skill competes with the others for selection.
 
 A new entry skill needs a recorded decision and owner approval.

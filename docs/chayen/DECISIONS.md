@@ -1457,6 +1457,32 @@ Decision statuses:
 - **Unchanged from D-060:** Security and Support remain LATER; no contact or
   channel is added.
 
+### D-062 — Project knowledge initialization Skill (`chayen-init`)
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-19: "อยากทำ skill
+  init อะ หากมีข้อจำกัดเรื่องจำนวนสกิลก็ขยายไปได้เลย" — build an init Skill and
+  raise the Skill ceiling if needed), after an architecture review of a larger
+  `/init` proposal in the same session. Full record:
+  [ADR-0012](ADRS/ADR-0012-project-knowledge-initialization.md).
+- **Decision:**
+  - New Entry Skill `chayen-init`: on explicit request, writes `.chayen/`
+    `profile.md`, `conventions.md`, team-owned `rules.md` and per-unit files
+    after a preview and approval, and offers an opt-in marked pointer block in
+    the repository's agent instruction files (ADR-0010 mechanism B).
+  - New registration category `catalog/project-skills.json` (allow-list
+    `chayen-init`), validated like the editorial registry. The 206-capability
+    Engineering Catalog is unchanged.
+  - Entry Skill ceiling 15 → 16 and L0 budget 6,500 → 7,000 characters in
+    `tools/catalog/skill-registration.mjs`. Actual L0 6,563.
+  - V-10 allows the `.chayen` path in shipped content; other self-references
+    stay rejected (PT-08 amended for the path only).
+- **Not decided:** the version number. The build stays `1.0.0`; a release that
+  contains `chayen-init` needs its own owner decision (D-058 pattern).
+- **Evidence:** static gates only; routing, behaviour and host loading of the
+  pointer block are NOT_RUN. RC qualification pins in
+  `tests/provider-compatibility/qualify-rc.test.mjs` were updated to the new
+  package (16 Skills, 263 files); recorded 1.0.0 RC evidence stays historical.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

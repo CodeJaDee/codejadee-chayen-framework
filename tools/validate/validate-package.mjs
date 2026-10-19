@@ -16,7 +16,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { inside, assertTreeNoLinks } from "./safe-paths.mjs";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
-import { loadEditorialRegistration, MAX_ENTRY_SKILLS, L0_BUDGET } from "../catalog/skill-registration.mjs";
+import { loadEditorialRegistration, loadProjectRegistration, MAX_ENTRY_SKILLS, L0_BUDGET } from "../catalog/skill-registration.mjs";
 
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, "..", ".."));
 const PLUGIN_DIR_REL = "plugins/codejadee-chayen-framework";
@@ -296,6 +296,7 @@ function parseFrontmatter(text) {
 // ---------- 6b. Skill content checks (V-06, V-07, V-08, V-10, V-12, V-17, V-18, V-19, V-20, V-22) ----------
 const SKILLS_DIR = abs(`${PLUGIN_DIR_REL}/skills`);
 const editorialRegistration = loadEditorialRegistration(root);
+const projectRegistration = loadProjectRegistration(root);
 const skillDirs = fs.existsSync(SKILLS_DIR)
   ? fs.readdirSync(SKILLS_DIR, { withFileTypes: true }).filter((d) => d.isDirectory() && fs.existsSync(path.join(SKILLS_DIR, d.name, "SKILL.md"))).map((d) => d.name).sort()
   : [];
@@ -333,7 +334,7 @@ for (const s of skillDirs) {
 // Planned editorial descriptions are checked now, without shipping Skill bodies.
 // Existing editorial descriptions must match their registry; no double counting.
 const discoveryMeta = { ...skillMeta };
-for (const [name, record] of editorialRegistration.skills) {
+for (const [name, record] of [...editorialRegistration.skills, ...projectRegistration.skills]) {
   if (!discoveryMeta[name] && typeof record.description === "string") discoveryMeta[name] = { desc: record.description };
 }
 { // V-07 actual/projected metadata budget, description safety and distinctness
@@ -505,7 +506,7 @@ for (const [name, record] of editorialRegistration.skills) {
     [/\$\{CLAUDE_[A-Z_]+\}/, "provider-only variable (P-01)"],
     [/\b(?:this skill|this guidance|chayen)\s+(?:guarantees|enforces|ensures security)\b/i, "enforcement claim (D-003)"],
     [/\b(?:fully|completely|100%|guaranteed)\s+secure\b/i, "absolute security claim (D-003)"],
-    [/\bchayen\b(?!-)/i, "self-reference to Chayen in shipped content (SK-06)"],
+    [/(?<!\.)\bchayen\b(?!-)/i, "self-reference to Chayen in shipped content (SK-06; the .chayen project knowledge path is allowed, D-062)"],
   ];
   for (const f of walk(abs(PLUGIN_DIR_REL)).filter((x) => !x.dir && x.p.endsWith(".md"))) {
     const rel = path.relative(root, f.p).split(path.sep).join("/");
@@ -534,7 +535,7 @@ for (const [name, record] of editorialRegistration.skills) {
 let catalog = null;
 {
   const c = "V-19 catalog-mapping";
-  for (const message of editorialRegistration.errors) error(c, message);
+  for (const message of [...editorialRegistration.errors, ...projectRegistration.errors]) error(c, message);
   const rel = "catalog/engineering-capabilities.yaml";
   if (!exists(rel)) error(c, `${rel} is missing`);
   else {
@@ -545,18 +546,23 @@ let catalog = null;
     const capById = new Map((catalog.capabilities ?? []).map((x) => [x.id, x]));
     const catSkills = new Map((catalog.entry_skills ?? []).map((x) => [x.name, x]));
     for (const s of skillDirs) {
-      const editorial = editorialRegistration.skills.get(s);
-      if (editorial) {
+      const editorial = editorialRegistration.skills.get(s), project = projectRegistration.skills.get(s);
+      if (project) {
+        if (project.mapping !== "existing") error(c, `${s}: shipped project Skill is not registered as existing`);
+        if (skillMeta[s].desc !== project.description) error(c, `${s}: shipped project Skill metadata differs from registry`);
+      }
+      else if (editorial) {
         if (editorial.mapping !== "existing") error(c, `${s}: shipped Editorial Skill is not registered as existing`);
         if (skillMeta[s].desc !== editorial.description) error(c, `${s}: shipped Humanizer metadata differs from registry`);
       }
-      else if (!catSkills.has(s)) error(c, `${s}: shipped skill is not a registered engineering/editorial Entry Skill (CA-01)`);
+      else if (!catSkills.has(s)) error(c, `${s}: shipped skill is not a registered engineering/editorial/project Entry Skill (CA-01)`);
       else if (catSkills.get(s).mapping !== "existing") error(c, `${s}: catalog marks the skill "${catSkills.get(s).mapping}", expected existing (CA-01)`);
     }
     const listed = new Map(); // recipe path -> Set(ids)
     for (const s of skillDirs) for (const r of refFiles[s]) {
       if (r.fields?.kind !== "recipe" || !Array.isArray(r.fields.capabilities)) continue;
       if (editorialRegistration.skills.has(s)) error(c, `${s}: Editorial Skills cannot declare engineering capability recipes`);
+      if (projectRegistration.skills.has(s)) error(c, `${s}: project Skills cannot declare engineering capability recipes`);
       listed.set(r.rel, new Set(r.fields.capabilities));
       for (const id of r.fields.capabilities) {
         const cap = capById.get(id);
@@ -574,7 +580,7 @@ let catalog = null;
       if (ref.fields?.kind !== "recipe") error(c, `${cap.id}: catalog recipe ${p} is kind "${ref.fields?.kind}", expected recipe (CA-02)`);
       else if (!listed.get(p)?.has(cap.id) && cap.status !== "PLANNED") error(c, `${cap.id}: mapped to ${p} but not listed in its capabilities and not PLANNED (RC-02)`);
     }
-    if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} shipped skills registered; ${editorialRegistration.skills.size} editorial registrations; ${listed.size} recipe file(s) agree with the isolated Engineering Catalog (${[...listed.values()].reduce((n, x) => n + x.size, 0)} capabilities)`);
+    if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} shipped skills registered; ${editorialRegistration.skills.size} editorial registrations; ${projectRegistration.skills.size} project registration(s); ${listed.size} recipe file(s) agree with the isolated Engineering Catalog (${[...listed.values()].reduce((n, x) => n + x.size, 0)} capabilities)`);
 
     const c22 = "V-22 recipe-cases";
     const crel = "tests/skills/recipe-cases.json";

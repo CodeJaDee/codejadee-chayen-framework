@@ -102,23 +102,23 @@
     },
     {
       "id": "ed36-exceeded-count",
-      "description": "A sixteenth shipped directory exceeds the ceiling of 15 (13 engineering + 2 editorial + 1)",
+      "description": "A seventeenth shipped directory exceeds the ceiling of 16 (13 engineering + 2 editorial + 1 project + 1; D-062)",
       "edits": [
         {
           "op": "copydir",
           "from": "plugins/codejadee-chayen-framework/skills/chayen-testing",
-          "to": "plugins/codejadee-chayen-framework/skills/chayen-sixteenth"
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-seventeenth"
         }
       ],
       "expect": {
         "validator": "package",
         "error": "V-07 metadata-budget",
-        "message": "16 entry skills > 15"
+        "message": "17 entry skills > 16"
       }
     },
     {
       "id": "ed36-exceeded-planned-budget",
-      "description": "Editorial metadata pushes the shipped surface above the L0 budget (6,221 + 451 > 6,500)",
+      "description": "Editorial metadata pushes the shipped surface above the L0 budget of 7,000 (D-062)",
       "edits": [
         {
           "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/SKILL.md",
@@ -319,7 +319,7 @@
     },
     {
       "id": "ed36-registered-count",
-      "description": "Planned registrations count toward the ceiling even when only 13 directories ship",
+      "description": "Planned registrations count toward the ceiling of 16, including the project registration (D-062)",
       "edits": [
         {
           "file": "catalog/engineering-capabilities.yaml",
@@ -331,7 +331,7 @@
       "expect": {
         "validator": "package",
         "error": "V-19 catalog-mapping",
-        "message": "registered Entry Skill count exceeds 15"
+        "message": "registered Entry Skill count exceeds 16"
       }
     },
     {

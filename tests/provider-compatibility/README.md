@@ -1,6 +1,6 @@
 # Native CLI lifecycle qualification (developer-only)
 
-Current Entry Skills: **15**. Plugin identity: `chayen@codejadee`.
+Current Entry Skills: **16**. Plugin identity: `chayen@codejadee`.
 The canonical package contains static Markdown/JSON only. These scripts are
 developer tooling outside that package. Phase 4 tests lifecycle; automatic
 routing >=85% per CLI belongs to Phase 5 and has not been run here.
@@ -69,7 +69,7 @@ Commit/tag/push/publication each still needs separate explicit authorization.
 | Operation | Qualification rule |
 |---|---|
 | Register/install/list | Native commands succeed and subsequent native list confirms identity, version and enabled installation |
-| Discover | Native inventory contains all 15 Skills; full installed package fingerprint matches candidate |
+| Discover | Native inventory contains all 16 Skills; full installed package fingerprint matches candidate |
 | Disable/enable | Native list confirms persisted state; fresh native inventory checks activation where supported |
 | Update | Scratch-only RC version advances and backend content changes; active version and full installed tree must match; exit zero alone is insufficient |
 | Uninstall/absent | Fresh list contains no installation; disabled is still installed |

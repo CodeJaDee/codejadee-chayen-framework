@@ -17,7 +17,8 @@
     "chayen-documentation",
     "chayen-ai-engineering",
     "chayen-humanizer-th",
-    "chayen-humanizer-en"
+    "chayen-humanizer-en",
+    "chayen-init"
   ],
   "cases": [
     { "id": "uns-backend-nitro", "category": "unsupported", "prompt": "Build a standalone Nitro API route with framework-specific validation.", "expect": { "none": true } },
@@ -644,6 +645,11 @@
     { "id": "amb-review-reply-leads-with-decision", "category": "ambiguous", "prompt": "Edit this reply to a review comment so it leads with the decision instead of re-explaining the whole thread.", "expect": {"any_of": ["chayen-humanizer-en", "chayen-documentation"]}, "forbid": ["chayen-humanizer-th"], "notes": "Step 38: documentation also names review comments; the English skill covers wording." },
     { "id": "uns-detector-evasion-english", "category": "unsupported", "prompt": "Rewrite this essay so it passes an AI detector and tell my teacher I wrote it myself.", "expect": {"none_or": ["chayen-humanizer-en"]}, "notes": "Step 38: detector evasion and authorship claims are declined; the English skill may load only to offer a quality edit." },
     {"id": "pos-frontend-i18n-routing", "category": "positive", "prompt": "Configure locale routing and language detection in our Next.js application.", "expect": {"any_of": ["chayen-frontend"]}, "forbid": ["chayen-humanizer-th", "chayen-humanizer-en"]},
-    {"id": "pos-frontend-i18n-key-wiring", "category": "positive", "prompt": "Wire the translation keys into our Angular component using the existing i18n library; keep all Thai wording unchanged.", "expect": {"any_of": ["chayen-frontend"]}, "forbid": ["chayen-humanizer-th", "chayen-humanizer-en"]}
+    {"id": "pos-frontend-i18n-key-wiring", "category": "positive", "prompt": "Wire the translation keys into our Angular component using the existing i18n library; keep all Thai wording unchanged.", "expect": {"any_of": ["chayen-frontend"]}, "forbid": ["chayen-humanizer-th", "chayen-humanizer-en"]},
+    {"id": "pos-init-project-knowledge", "category": "positive", "prompt": "Initialize persistent project knowledge for this repository so later agent sessions reuse the detected stack, commands, and conventions instead of rediscovering them.", "expect": {"any_of": ["chayen-init"]}, "forbid": ["chayen-documentation"], "notes": "D-062: explicit initialization request."},
+    {"id": "pos-init-refresh", "category": "positive", "prompt": "We upgraded to .NET 9 and moved the test projects. Refresh the project knowledge files that the coding agents read before each task.", "expect": {"any_of": ["chayen-init"]}, "forbid": ["chayen-implementation"], "notes": "D-062: refresh of existing knowledge files, not a code change."},
+    {"id": "pos-init-monorepo-pointer", "category": "positive", "prompt": "Set up the project profile, conventions, and team rules files for our monorepo, starting with the api and web apps, and add a pointer to them in AGENTS.md.", "expect": {"any_of": ["chayen-init"]}, "forbid": ["chayen-documentation"], "notes": "D-062: monorepo unit selection and the opt-in pointer block."},
+    {"id": "pos-repository-structure-not-init", "category": "positive", "prompt": "How is this repository structured, and where should a new API endpoint go?", "expect": {"any_of": ["chayen-repository"]}, "forbid": ["chayen-init"], "notes": "D-062: a one-off structure question must not create knowledge files."},
+    {"id": "pos-docs-onboarding-not-init", "category": "positive", "prompt": "Write an onboarding guide for new developers joining this repository, covering setup, the test commands, and our conventions.", "expect": {"any_of": ["chayen-documentation"]}, "forbid": ["chayen-init"], "notes": "D-062: human documentation, not agent knowledge files."}
   ]
 }

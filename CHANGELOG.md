@@ -6,7 +6,27 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
-Nothing yet.
+### Added
+
+- **`chayen-init` project knowledge Skill** (D-062, ADR-0012). On explicit
+  request it detects a repository's units, stacks, versions, commands, layout
+  and conventions and, after a preview and approval, writes
+  `.chayen/profile.md`, `.chayen/conventions.md`, a team-owned
+  `.chayen/rules.md` and per-unit files, plus an optional marked pointer block
+  in `AGENTS.md`, `CLAUDE.md` or `.github/copilot-instructions.md`. Refresh
+  uses `git hash-object` fingerprints to limit work to changed evidence.
+- `catalog/project-skills.json`, a third registration category for Skills
+  that own no engineering capability, with validator and negative controls.
+
+### Changed
+
+- Entry Skill ceiling 15 → 16 and L0 budget 6,500 → 7,000 characters
+  (D-062). Current usage 6,563.
+- V-10 allows the `.chayen` path in shipped content; other self-references
+  are still rejected.
+
+The version is still `1.0.0`; existing installations receive `chayen-init`
+only after a version change.
 
 ## [1.0.0] - 2026-10-18
 

@@ -15,7 +15,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
 import { inside } from "../validate/safe-paths.mjs";
-import { L0_BUDGET, loadEditorialRegistration } from "../catalog/skill-registration.mjs";
+import { L0_BUDGET, loadEditorialRegistration, loadProjectRegistration } from "../catalog/skill-registration.mjs";
 
 const root = path.resolve(import.meta.dirname, "..", "..");
 const rel = (p) => inside(root, p);
@@ -131,12 +131,14 @@ report.metrics.contextOverhead = {
 
 // ---------- Level 2: SIMULATED lexical routing proxy (not a model) ----------
 const editorialRegistration = loadEditorialRegistration(root, catalog);
+const projectRegistration = loadProjectRegistration(root, catalog);
 report.metrics.contextOverhead.projectedRegisteredL0 = {
-  chars: report.metrics.contextOverhead.alwaysOnL0.chars + [...editorialRegistration.skills.values()].filter(s => s.mapping === "planned").reduce((n, s) => n + s.name.length + s.description.length, 0),
+  chars: report.metrics.contextOverhead.alwaysOnL0.chars + [...editorialRegistration.skills.values(), ...projectRegistration.skills.values()].filter(s => s.mapping === "planned").reduce((n, s) => n + s.name.length + s.description.length, 0),
   cap: L0_BUDGET,
-  note: "Includes planned editorial metadata only; no editorial bodies shipped or provider behavior measured.",
+  note: "Includes planned editorial and project metadata only; no planned bodies shipped or provider behavior measured.",
 };
 if (editorialRegistration.errors.length) fail("S-REGISTRATION", "editorial registration invalid");
+if (projectRegistration.errors.length) fail("S-REGISTRATION", "project registration invalid");
 const STOP = new Set("a an and are as at be by can do does for from has have how i in into is it its me my of on or our should so that the their them then this to use we what when where which why will with without you your not only all any".split(" "));
 const tok = (s) => s.toLowerCase().replace(/[^a-z0-9.#+]+/g, " ").split(" ").filter((w) => w.length > 1 && !STOP.has(w));
 const docs = skills.map((s) => ({ skill: s.skill, terms: tok(`${s.skill.replace("chayen-", "")} ${s.description}`) }));

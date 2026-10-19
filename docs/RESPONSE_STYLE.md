@@ -20,7 +20,7 @@ been tested yet (see [Limitations](#limitations)).
 
 | Setup | What you do | What you get | Status |
 |---|---|---|---|
-| **A. Plugin only** | Install the plugin | The 15 Skills are available for matching tasks. No always-on wording policy is installed. | Static packaging passes; current native routing/behavior NOT_RUN. Historical results do not qualify this build ([COMPATIBILITY_MATRIX.md](COMPATIBILITY_MATRIX.md)) |
+| **A. Plugin only** | Install the plugin | The 16 Skills are available for matching tasks. No always-on wording policy is installed. | Static packaging passes; current native routing/behavior NOT_RUN. Historical results do not qualify this build ([COMPATIBILITY_MATRIX.md](COMPATIBILITY_MATRIX.md)) |
 | **B. Plugin + opt-in policy** | Install the plugin **and** add the policy block to one of your own instruction files ([Opt in](#opt-in)) | A, plus advisory Thai/English wording guidance on every ordinary reply, without naming a skill | Locations documented by each provider; setup and removal rules tested on disposable fixtures. **Loading and behaviour on real hosts not tested.** |
 | **C. Install-only always-on** | Install the plugin and nothing else, expecting the policy to apply automatically | — | **Not available and not claimed.** No host we checked lets a static plugin add always-on instructions, and this project does not use hooks or installers to do it. |
 
@@ -199,7 +199,7 @@ The block is sent with every request in every session where it is loaded.
 | Copilot template | 3,079 characters, 34 lines (adds 22 characters of frontmatter) |
 | Estimated tokens | About 750–850 per request (a character-based estimate, not measured with a provider tokenizer) |
 
-The plugin's own Skill metadata budget (6,500 characters) does not include
+The plugin's own Skill metadata budget (7,000 characters) does not include
 this cost; the two are measured separately. The repository gate G-16 keeps
 the policy body at or below 3,500 characters.
 

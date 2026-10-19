@@ -4806,3 +4806,58 @@ configuration change. Waiting for Product Owner approval; no further step is sta
 | A `renames` migration map | Support in Claude Code 2.1.220 and in V-01a is unverified; pre-release with one known install |
 
 No commit, push, tag or release.
+
+## Owner follow-up — project knowledge Skill `chayen-init` (D-062)
+
+Owner instruction (2026-10-19): build an init Skill, and raise the Skill
+ceiling if it is a constraint. Design follows the in-session architecture
+review of a larger `/init` proposal; record in
+[ADR-0012](ADRS/ADR-0012-project-knowledge-initialization.md).
+
+### Work performed
+
+- New Skill `chayen-init` (SKILL.md plus five references: detection and
+  refresh checklist; profile/unit, conventions, team rules and pointer block
+  templates). Explicit-request only; preview before every write; writes only
+  `.chayen/` and an approved marked block.
+- New registration category `catalog/project-skills.json` with
+  `loadProjectRegistration` in `tools/catalog/skill-registration.mjs`, wired
+  into V-07, V-11.3, V-19, V-25.5 and the evaluation suite. Ceiling 15 → 16,
+  L0 6,500 → 7,000. V-10 allows the `.chayen` path only.
+- Schema id and pointer marker avoid the `chayen-` prefix, which the S-HANDOFF
+  check reads as a Skill name.
+- Tests: 5 trigger cases (3 positive for `chayen-init`, 2 that forbid it);
+  regenerated Claude eval cases; Phase 5 routing set gains 2 core probes and
+  1 explicit probe; 10 new negative controls in
+  `tests/catalog/project-mutations.json`; security fixture and 2 new boundary
+  modes; count pins updated (editorial controls, lifecycle, hardening, RC
+  qualification fingerprint `411b6adbbea7e121`, 263 files, Phase 5 plan
+  2,295 calls, documentation regressions).
+- Docs: current counts updated; recorded RC.1 evidence wrapped in historical
+  markers instead of being rewritten.
+
+### File ledger
+
+| Action | Path |
+|---|---|
+| Added | `plugins/codejadee-chayen-framework/skills/chayen-init/` (6 files), `catalog/project-skills.json`, `tests/catalog/project-mutations.json`, `docs/chayen/ADRS/ADR-0012-project-knowledge-initialization.md`, 5 directories under `tests/evals/claude/` |
+| Modified | `tools/catalog/skill-registration.mjs`, `check-catalog.mjs`; `tools/validate/validate-package.mjs`, `check-security.mjs`, `run-validator-tests.mjs`, `README.md`; `tools/evals/run-evaluation-suite.mjs` |
+| Modified | `tests/skills/trigger-cases.json`, `tests/catalog/editorial-mutations.json`, `tests/ci/documentation.test.mjs`, `tests/evaluation/phase5/` (builder, test, README, routing probes), `tests/production/hardening.test.mjs`, `tests/provider-compatibility/` (README, `lifecycle.mjs`, `qualify-rc.test.mjs`), `tests/security/boundaries.test.mjs` |
+| Modified | `README.md`, `CHANGELOG.md`, `docs/` user guides, `docs/distribution/` listings and checklist, plugin `README.md` and `skills/README.md` |
+| Modified | `docs/chayen/DECISIONS.md` (D-062), `ADRS/README.md`, `ARCHITECTURE.md`, `KNOWN_LIMITATIONS.md` (KL-03, KL-04, KL-56), `SKILL_AUTHORING_STANDARD.md`, `SKILL_QUALITY_GATES.md`, `SKILL_REGISTRATION.md`, `PROGRESS.md` |
+
+### Actual verification
+
+| Command | Result |
+|---|---|
+| `node tools/validate/validate-all.mjs` | PASS, all 20 gate steps; 189/189 validator self-tests; package 0 errors, 5 pre-existing warnings |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | PASS: identity, 206/108/12 traceability, handoff 0 dangling |
+| `node tools/validate/validate-package.mjs` | 16 Skills; L0 6,563 / 7,000; max description overlap 0.24 (unchanged pair) |
+
+| Not run | Reason |
+|---|---|
+| Routing, explicit invocation and behaviour of `chayen-init` on any host | Billed provider calls not authorized |
+| Host loading of the pointer block | Same; also NOT_RUN for the response style policy (R-60) |
+| Version change | Not approved; build stays `1.0.0` (D-062) |
+
+No commit, push, tag or release.

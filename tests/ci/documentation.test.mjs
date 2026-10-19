@@ -20,11 +20,11 @@ const run = () => {
 };
 test("current user/release docs match canonical build and resolve links", () => { const r = run(); assert.equal(r.code, 0, r.out); });
 for (const [name, from, to] of [
-  ["Skill count", "| Entry Skills | 15 |", "| Entry Skills | 13 |"],
-  ["package file count", "| Package files | 257 |", "| Package files | 256 |"],
-  ["reference count", "| Skill references | 237 |", "| Skill references | 221 |"],
-  ["metadata usage", "6,217 / 6,500 characters", "6,221 / 6,500 characters"],
-  ["metadata budget", "6,217 / 6,500 characters", "6,217 / 5,500 characters"],
+  ["Skill count", "| Entry Skills | 16 |", "| Entry Skills | 15 |"],
+  ["package file count", "| Package files | 263 |", "| Package files | 257 |"],
+  ["reference count", "| Skill references | 242 |", "| Skill references | 237 |"],
+  ["metadata usage", "6,563 / 7,000 characters", "6,217 / 7,000 characters"],
+  ["metadata budget", "6,563 / 7,000 characters", "6,563 / 6,500 characters"],
   ["plugin name", "| Plugin name | `chayen` |", "| Plugin name | `other` |"],
   ["marketplace", "| Marketplace name | `codejadee` |", "| Marketplace name | `other` |"],
   ["current version", "| Current version | `1.0.0` |", "| Current version | `1.1.0-dev` |"],

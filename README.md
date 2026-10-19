@@ -15,12 +15,14 @@ The upstream Humanizer MIT notice remains independently required.
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
 | Current version | `1.0.0` |
-| Entry Skills | 15 |
-| Package files | 257 |
-| Skill references | 237 |
-| L0 metadata | 6,217 / 6,500 characters |
+| Entry Skills | 16 |
+| Package files | 263 |
+| Skill references | 242 |
+| L0 metadata | 6,563 / 7,000 characters |
 
-There are 13 engineering and 2 writing entry points, 206 engineering
+There are 13 engineering entry points, 2 writing entry points and 1 project
+knowledge entry point (`chayen-init`, added after the 1.0.0 release and not in
+a released version yet; D-062), 206 engineering
 capabilities, 108 technology capabilities, 12 workflows and 7 templates.
 One shared Skills source serves all providers. The installed package is
 static Markdown/JSON: no executable, hook, MCP server, service or telemetry.

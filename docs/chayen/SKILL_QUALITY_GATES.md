@@ -26,6 +26,11 @@ runners and paid provider calls were not part of its verification. The D-051
 follow-up runs count-boundary and validator regressions in isolated scratch
 copies; it still makes no provider calls or host configuration changes.
 
+**D-062 amendment:** maximum 16 and L0 7,000; a third registration category
+(`catalog/project-skills.json`, exactly `chayen-init`) is validated by V-07,
+V-11.3, V-19 and V-25.5, with negative controls in
+`tests/catalog/project-mutations.json`. V-10 allows the `.chayen` path only.
+
 **Step 36 amendment (D-053):** registration/CA-01/V-19 is now approved and
 implemented; maximum is 15. L0 remains 6,500, checked for both actual and
 projected metadata. Shared rules validate two planned editorial identities,

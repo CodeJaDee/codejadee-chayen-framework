@@ -13,7 +13,7 @@ These tools are for **repository maintainers only**.
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
 node tools/validate/validate-package.mjs       # package, skills, references, catalog alignment (detail)
-node tools/validate/run-validator-tests.mjs    # self-tests: 6 baselines + 173 negative controls (includes editorial and 14 response-style)
+node tools/validate/run-validator-tests.mjs    # self-tests: 6 baselines + 183 negative controls (includes editorial, 10 project and 14 response-style)
 node tools/validate/check-security.mjs        # offline V-25 profile; no commands/network
 node --test tests/security/boundaries.test.mjs # offline adversarial script controls
 ```
@@ -52,7 +52,7 @@ The gates are in
 | V-09 | The plugin contains only `.md` and `.json` files, with no hooks, MCP servers, agents, commands, scripts, or symlinks. |
 | V-05 | `SKILL.md` files exist only under `skills/`. Their frontmatter is strictly parsed (valid YAML subset, no duplicate keys, YAML-safe values) and uses only portable fields. Names are valid, equal the directory, and are unique. |
 | V-06 | `SKILL.md` ≤300 lines (warning above 200). Reference files ≤300 lines. |
-| V-07 / V-07b | L0 ≤6,500 (D-052) for both shipped and projected metadata; ≤15 Skills (D-053). Canonical planned/editorial descriptions share length, YAML safety, boundary and distinctness checks. Constants are shared with catalog/evaluation tooling. |
+| V-07 / V-07b | L0 ≤7,000 (D-062) for both shipped and projected metadata; ≤16 Skills (D-062). Canonical planned/editorial descriptions share length, YAML safety, boundary and distinctness checks. Constants are shared with catalog/evaluation tooling. |
 | V-08 | Links and heading anchors resolve, stay inside the skill directory, are ≤2 hops away, and every reference file is reachable from `SKILL.md`. |
 | V-10 | No provider-specific tool names or variables, enforcement claims, or self-references. |
 | V-12 | No placeholder text in prose (code spans and fenced blocks are exempt, so a recipe can name the markers it searches for). No required recipe section with fewer than 12 words (TODO-only recipes). |

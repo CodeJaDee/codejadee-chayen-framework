@@ -2,7 +2,9 @@
 
 - **Architecture approval:** D-053 ACCEPTED from the owner's instruction to
   proceed after the missing registry approval was identified.
-- **Limits:** maximum 15 Entry Skills (latest Step 36 requirement, superseding
+- **Current limits (D-062):** maximum 16 Entry Skills; L0 ≤7,000. 16 Skills
+  ship (13 engineering, 2 editorial, 1 project); actual L0 6,563.
+- **Limits at Step 36:** maximum 15 Entry Skills (latest Step 36 requirement, superseding
   D-051's 25); L0 ≤6,500 (D-052). Shared constants live in the developer-only
   `tools/catalog/skill-registration.mjs`.
 - **Shipment at Step 36:** 13 engineering Skills, no editorial Skill bodies.
@@ -26,6 +28,7 @@
 | Category | Canonical registration | Ownership and mapping |
 |---|---|---|
 | Engineering | `catalog/engineering-capabilities.yaml` | Unchanged 206 capabilities / 20 domains and 13 Entry Skills. Existing mappings, recipes, status and inventory checks continue. |
+| Project (D-062) | `catalog/project-skills.json` | Exactly `chayen-init` with `name`, `mapping` and `description` only. No Engineering Capability IDs, recipes or secondary mappings. Same planned/existing parity and description-match rules as editorial records. Counts toward the combined ceiling. |
 | Editorial | `catalog/editorial-skills.json` | Exactly `chayen-humanizer-th` (th) and `chayen-humanizer-en` (en), both `mapping: planned` now. No Engineering Capability IDs or fabricated recipes. |
 
 The editorial JSON contains only `version: 1` and `skills`. Each record has
@@ -47,7 +50,7 @@ and gets no runtime or dependency.
 
 | Check | Extension |
 |---|---|
-| V-07 | Count ≤15; portable descriptions; measure actual shipped L0 separately from projected registered metadata, including unshipped editorial descriptions. Both must fit 6,500. |
+| V-07 | Count ≤16 (≤15 before D-062); portable descriptions; measure actual shipped L0 separately from projected registered metadata, including unshipped editorial descriptions. Both must fit 6,500. |
 | V-07b / V-20 | Apply distinctness/breadth checks to all shipped and planned metadata. Add editorial artifact vocabulary, retain existing thresholds and no-catch-all/boundary rules. |
 | V-19 / CA-01 | Each shipped Skill must belong to exactly one registry with matching existing status. Engineering recipes still match the original catalog. Editorial names cannot become engineering owners or secondary mappings; editorial references cannot declare engineering capability recipes. |
 | V-11.3 | Reuse the same registry rules and count cap; allow a shipped editorial directory only through its editorial registration. Engineering coverage and inventory fingerprints remain unchanged. |

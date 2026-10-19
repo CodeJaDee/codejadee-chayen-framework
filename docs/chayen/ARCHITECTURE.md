@@ -25,6 +25,11 @@
 > See [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md); earlier pending-registry
 > statements below describe historical Step 35 proposals. No host integration.
 >
+> **D-062 (2026-10-19):** `chayen-init` adds a project knowledge category
+> (`catalog/project-skills.json`); maximum **16** Skills and L0 **7,000**;
+> actual L0 6,563. See
+> [ADR-0012](ADRS/ADR-0012-project-knowledge-initialization.md).
+>
 > **Step 35 L0 follow-up (D-052, 2026-10-17):** owner-authorized L0 ceiling
 > is now **6,500 characters**, implemented in V-07 and evaluation reporting.
 > Current metadata is unchanged at 5,485, leaving 1,015 characters; count
@@ -294,7 +299,7 @@ Entry skills are the **only** objects the provider's discovery sees.
 - **Budget** (enforced by C-12, derivation in §8):
   - at most **15** registered/shipped entry skills (D-053; previously 25 D-051);
   - each `description` targets ≤280 characters (hard limit 1024);
-  - Chayen's total listing metadata is ≤6,500 characters (D-052; previously 5,500 under D-037).
+  - Chayen's total listing metadata is ≤7,000 characters (D-062; 6,500 under D-052, 5,500 under D-037).
 - **Naming:** `chayen-<intent>`. The prefix is short, which gives collision
   resistance against Copilot's silent drop (F-05, R-10).
 - **`SKILL.md` anatomy** (template in PLUGIN_PACKAGE_DESIGN §4):
@@ -399,7 +404,7 @@ sequenceDiagram
     participant S as SKILL.md (L1)
     participant I as Pack INDEX.md (L2)
     participant T as Topic / workflow / template (L3)
-    Note over P: L0: every turn, names + descriptions only (≤6,500 chars total, D-052)
+    Note over P: L0: every turn, names + descriptions only (≤7,000 chars total, D-062)
     U->>M: "Add a paged GET endpoint for orders"
     P->>M: candidate: chayen-feature-delivery
     M->>S: load body (≤300 lines)
@@ -412,7 +417,7 @@ sequenceDiagram
 
 | Level | Content | Loaded when | Budget |
 |---|---|---|---|
-| L0 | `name` + `description` of each entry skill | Always (by the provider) | ≤6,500 characters total (D-052) |
+| L0 | `name` + `description` of each entry skill | Always (by the provider) | ≤7,000 characters total (D-062) |
 | L1 | `SKILL.md` body | On match | ≤300 lines (spec allows 500) |
 | L2 | Pack `INDEX.md`, workflow file, template | When the skill routes to it | ≤80 lines per INDEX. ≤200 lines per workflow or template. |
 | L3 | Topic files | When INDEX or a workflow points to them | ≤300 lines each |
@@ -656,7 +661,7 @@ flowchart TB
 
 | Attribute | Target | Derivation | Checked by |
 |---|---|---|---|
-| L0 metadata footprint | ≤6,500 characters total (D-052; formerly 5,500 D-037) | Owner-authorized internal budget for target 15; current 5,485 leaves 1,015 characters. Host capacity and token overhead require per-surface measurement; this is not a verified provider limit. | V-07; evaluation context report |
+| L0 metadata footprint | ≤7,000 characters total (D-062; formerly 6,500 D-052, 5,500 D-037) | Owner-authorized internal budget for 16 Skills; current 6,563 leaves 437 characters. Host capacity and token overhead require per-surface measurement; this is not a verified provider limit. | V-07; evaluation context report |
 | Entry skills | ≤15 (D-053) | Latest Step 36 requirement, independent of L0. 13 shipped engineering plus two planned editorial registrations. | V-07, V-11.3, V-19 |
 | `SKILL.md` body | ≤300 lines | Below the 500-line spec ceiling (S7, S24), leaving headroom | V-06 |
 | Link depth | ≤2 hops | ADR-0004 | V-08 |

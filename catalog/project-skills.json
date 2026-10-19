@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "chayen-init",
+      "mapping": "existing",
+      "description": "Initialize or refresh persistent project knowledge files for a repository when explicitly asked, writing a profile of units, stacks, versions, commands and layout, observed conventions, and a team rules file, plus an opt-in pointer block in AGENTS.md or CLAUDE.md. Not for one-off repository questions, README writing, or code changes."
+    }
+  ]
+}
