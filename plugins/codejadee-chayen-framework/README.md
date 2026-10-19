@@ -4,6 +4,9 @@ Plugin `name`: `chayen` (renamed from `codejadee-chayen-framework` on
 2026-10-17, D-059). The directory keeps the repository name. In Claude Code
 the skills appear as `/chayen:<skill>`.
 
+**Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
+GitHub [@CodeJaDee](https://github.com/CodeJaDee)
+
 This directory is the **only** distributable unit of Chayen. Each provider
 installs it through its own native plugin mechanism.
 

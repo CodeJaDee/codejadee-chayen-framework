@@ -9,6 +9,9 @@ with some qualification gates still open; see
 [Final release readiness](docs/production/FINAL_RELEASE_READINESS.md).
 The upstream Humanizer MIT notice remains independently required.
 
+**Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
+GitHub [@CodeJaDee](https://github.com/CodeJaDee)
+
 ## Current build
 
 | Fact | Value |
