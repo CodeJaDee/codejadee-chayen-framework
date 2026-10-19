@@ -13,12 +13,11 @@ installs it through its own native plugin mechanism.
 | `.claude-plugin/plugin.json` | Claude Code |
 | `skills/` | Every provider. This is the single canonical skill source. |
 
-## Current state: 1.0.0
+## Current state: 1.1.0
 
-This build is version **1.0.0** (released 2026-10-18) plus the unreleased
-`chayen-init` Skill (D-062), 16 entry skills in total: MIT licence
-(`LICENSE.md`), publisher CodeJaDee. Existing `1.0.0` installations do not
-receive `chayen-init` until the version changes. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
+This is version **1.1.0** (2026-10-19), which adds the `chayen-init` Skill
+(D-062) to the 1.0.0 release, 16 entry skills in total: MIT licence
+(`LICENSE.md`), publisher CodeJaDee. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
 VS Code and Response Style Policy host behavior are unverified/deferred.
 The list is in
 [skills/README.md](skills/README.md).

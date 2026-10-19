@@ -1,9 +1,9 @@
 # Getting started
 
 Chayen targets a public MIT v0.1.0 release under CodeJaDee. The current
-development build has 16 Skills and identifier `chayen@codejadee`. The newest,
-`chayen-init`, is not in a released version yet (D-062), so an existing
-`1.0.0` installation does not receive it until the version changes.
+development build has 16 Skills and identifier `chayen@codejadee`. Version
+`1.1.0` adds `chayen-init` (D-062, D-063); update an existing `1.0.0`
+installation to receive it.
 
 ## 1. Choose a CLI
 

@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
-| Build | `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
+| Build | `1.1.0` (2026-10-19, D-063): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
 | Companions | [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md), [RELEASE_READINESS.md](RELEASE_READINESS.md) |
 | User-facing summary | [docs/SECURITY_AND_LIMITATIONS.md](../SECURITY_AND_LIMITATIONS.md) |
 
@@ -86,5 +86,5 @@ fixture.
 | KL-52 | No CI pipeline runs the validators automatically. | REQ-10 evidence: "CI not set up" |
 | KL-53 | DF-02: `claude plugin validate` on the `skills/` directory fails with some CLI versions. The plugin and marketplace targets pass. | ISSUES DF-02 |
 | KL-54 | **Third-party notice obligation.** `chayen-humanizer-en` adapts MIT-licensed material (humanizer, Siqi Chen). Its notice ships inside the skill and must stay with every copy, whichever licence Chayen adopts. No root notices file exists yet. | upstream-notice.md (byte-identical to upstream `LICENSE`, 2026-10-17); LICENSE_PROPOSAL item 3 |
-| KL-56 | **`chayen-init` is unevaluated and unreleased (D-062).** Its routing, its preview-before-write behaviour, the quality of generated `.chayen/` files, host loading of the pointer block and agent compliance with it are NOT_RUN. It is not in a released version; `1.0.0` installs do not receive it until the version changes (KL-31). Its write safety is advisory (KL-01). | ADR-0012; D-062 |
+| KL-56 | **`chayen-init` is unevaluated (D-062).** Its routing, its preview-before-write behaviour, the quality of generated `.chayen/` files, host loading of the pointer block and agent compliance with it are NOT_RUN. It ships from `1.1.0` (D-063); the update from `1.0.0` has not been tested on a host (KL-31). Its write safety is advisory (KL-01). | ADR-0012; D-062 |
 | KL-55 | **Installed test-machine versions differ from the analysed ones** (Claude Code 2.1.220 vs 2.1.270; Copilot CLI 1.0.89 vs 1.0.97, below the 1.0.91 needed for enable/disable). Earlier static host findings are not re-verified on them. | COMPATIBILITY_MATRIX; HUMANIZER_EVALUATION_REPORT §1 |

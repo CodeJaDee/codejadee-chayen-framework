@@ -165,7 +165,7 @@ attribution and licence notice ship with the skill.
 
 ### chayen-init
 
-*Project knowledge skill. Owns no engineering capabilities; registered in `catalog/project-skills.json` (D-062). Not in a released version yet.*
+*Project knowledge skill. Owns no engineering capabilities; registered in `catalog/project-skills.json` (D-062). New in 1.1.0.*
 
 > Initialize or refresh persistent project knowledge files for a repository when explicitly asked, writing a profile of units, stacks, versions, commands and layout, observed conventions, and a team rules file, plus an opt-in pointer block in AGENTS.md or CLAUDE.md. Not for one-off repository questions, README writing, or code changes.
 

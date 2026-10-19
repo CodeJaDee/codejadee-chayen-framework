@@ -12,7 +12,7 @@ Each skill is a directory, `skills/<skill-name>/SKILL.md`, plus optional
 **Frontmatter** uses only the Agent Skills standard fields: `name` and
 `description`. `name` must equal the directory name.
 
-## Entry skills (1.0.0)
+## Entry skills (1.1.0)
 
 Twelve composite workflows are conditional checklist references in the existing
 skills, alongside seven reusable template leaves. They reuse capability recipes,
@@ -78,5 +78,5 @@ end-to-end tests in testing, and a database portability review in data.
 | `chayen-documentation` | Engineering docs and collaboration from verified repository facts: READMEs, onboarding, API and architecture docs, knowledge transfer, PR descriptions, code review, review comments, release notes, git workflow; never invents commands or test results |
 | `chayen-ai-engineering` | ML, LLM, and agent engineering: dataset readiness and drift, experiments and model evaluation, serving, RAG and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent permission reviews, and agent skills (authoring, review, testing, migration, provider compatibility, instruction conflicts, session handoff, benchmarks); recommendations are never authorizations |
 | `chayen-humanizer-th` | Thai writing and editing: audit, rewrite, new content and website or UI copy in articles, developer blogs, landing pages, READMEs, product descriptions and localization files; preserves facts, terminology, code and markup; editorial only, owns no engineering capability |
-| `chayen-init` | Project knowledge on explicit request: `.chayen/` profile, conventions, team rules and per-unit files, plus an opt-in pointer block in agent instruction files; previews every write, never overwrites the team rules file (D-062, unreleased) |
+| `chayen-init` | Project knowledge on explicit request: `.chayen/` profile, conventions, team rules and per-unit files, plus an opt-in pointer block in agent instruction files; previews every write, never overwrites the team rules file (D-062, new in 1.1.0) |
 | `chayen-humanizer-en` | English writing and editing: audit, rewrite, new content and website or UI copy in articles, blogs, documentation and README prose, developer replies, product and marketing copy, landing pages and localization files; removes stock AI phrasing and filler while keeping facts, identifiers, tone and spelling variety; editorial only, owns no engineering capability |

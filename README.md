@@ -1,7 +1,8 @@
 # Chayen
 
 Chayen is a native plugin of engineering and Thai/English writing Skills for
-coding agents. Publisher: **CodeJaDee**. Released as **v1.0.0** on 2026-10-18
+coding agents. Publisher: **CodeJaDee**. Current version **v1.1.0**
+(2026-10-19, adds `chayen-init`; D-063); first released as v1.0.0 on 2026-10-18
 under the [MIT licence](LICENSE), from the public repository
 `CodeJaDee/codejadee-chayen-framework` (owner decision D-061). The owner released
 with some qualification gates still open; see
@@ -14,15 +15,14 @@ The upstream Humanizer MIT notice remains independently required.
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Current version | `1.0.0` |
+| Current version | `1.1.0` |
 | Entry Skills | 16 |
 | Package files | 263 |
 | Skill references | 242 |
 | L0 metadata | 6,563 / 7,000 characters |
 
 There are 13 engineering entry points, 2 writing entry points and 1 project
-knowledge entry point (`chayen-init`, added after the 1.0.0 release and not in
-a released version yet; D-062), 206 engineering
+knowledge entry point (`chayen-init`, new in 1.1.0; D-062), 206 engineering
 capabilities, 108 technology capabilities, 12 workflows and 7 templates.
 One shared Skills source serves all providers. The installed package is
 static Markdown/JSON: no executable, hook, MCP server, service or telemetry.

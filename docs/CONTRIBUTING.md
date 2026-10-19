@@ -2,7 +2,7 @@
 
 Thank you for helping improve Chayen.
 
-- Released: **Chayen v1.0.0, MIT, CodeJaDee** (D-061). Contributions are
+- Released: **Chayen v1.1.0, MIT, CodeJaDee** (D-063; first release v1.0.0, D-061). Contributions are
   accepted under the [MIT licence](../LICENSE); see
   [Licence status](distribution/LICENSE_PROPOSAL.md).
 - Repository access is needed until publication is confirmed.

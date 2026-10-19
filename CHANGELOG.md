@@ -6,6 +6,13 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
+Nothing yet.
+
+## [1.1.0] - 2026-10-19
+
+Version change approved by the owner (D-063), so version-pinned installations
+receive the new Skill through a normal update.
+
 ### Added
 
 - **`chayen-init` project knowledge Skill** (D-062, ADR-0012). On explicit
@@ -25,8 +32,8 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - V-10 allows the `.chayen` path in shipped content; other self-references
   are still rejected.
 
-The version is still `1.0.0`; existing installations receive `chayen-init`
-only after a version change.
+Routing, behaviour and host loading of the new Skill and its pointer block are
+NOT_RUN. Recorded RC lifecycle evidence covers the earlier 15-Skill package.
 
 ## [1.0.0] - 2026-10-18
 

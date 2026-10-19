@@ -1483,6 +1483,18 @@ Decision statuses:
   `tests/provider-compatibility/qualify-rc.test.mjs` were updated to the new
   package (16 Skills, 263 files); recorded 1.0.0 RC evidence stays historical.
 
+### D-063 — Version `1.1.0`
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-19: "ทำการเปลี่ยน
+  version เลย", after being told that version-pinned `1.0.0` installs do not
+  receive `chayen-init` without a version change).
+- **Decision:** `version` is `1.1.0` in both manifests, the Copilot marketplace
+  entry and its `metadata.version`. Minor bump: one added Skill, no removed or
+  renamed Skill, no breaking change. `CHANGELOG.md` moves the D-062 entries to
+  `[1.1.0] - 2026-10-19`. `SECURITY.md` supports `1.1.x`.
+- **Not done:** commit, Git tag `v1.1.0`, push. Host installation and update
+  from `1.0.0` are NOT_RUN.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

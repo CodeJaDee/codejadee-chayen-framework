@@ -14,10 +14,10 @@
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `1.0.0` in both manifests and both Copilot version fields (D-061) |
+| Version | `1.1.0` in both manifests and both Copilot version fields (D-063; `1.0.0` under D-061) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
-| Entry Skills | 15: 13 engineering, 2 writing |
+| Entry Skills | 16: 13 engineering, 2 writing, 1 project knowledge |
 | Project licence | MIT; root `LICENSE`, plugin `LICENSE.md` and both manifests' `license` |
 | Upstream licence | Existing Humanizer MIT notice/attribution retained and guarded |
 | Public source | `https://github.com/CodeJaDee/codejadee-chayen-framework`, public since 2026-10-18 |

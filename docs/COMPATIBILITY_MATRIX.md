@@ -1,6 +1,6 @@
 # Compatibility matrix
 
-**Current build:** `1.0.0` plus the unreleased `chayen-init` Skill (D-062): 16 Skills (13 engineering, 2 writing, 1 project knowledge). The results below were recorded on the `0.1.0-rc.1` candidate, before `chayen-init` was added; neither the `1.0.0` version nor `chayen-init` has been installed on a host yet.
+**Current build:** `1.1.0` (D-063): 16 Skills (13 engineering, 2 writing, 1 project knowledge). The results below were recorded on the `0.1.0-rc.1` candidate, before `chayen-init` was added; neither `1.0.0` nor `1.1.0` has been installed on a host yet.
 **Reviewed:** 2026-10-18, Phase 4. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 

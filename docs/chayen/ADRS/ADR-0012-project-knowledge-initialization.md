@@ -86,8 +86,8 @@ design has evaluation evidence.
   user's repository; its safety relies on preview/approval guidance and native
   permissions (KL-01). Generated files can go stale; mitigated by fingerprints
   and the rule that source wins.
-- `chayen-init` is not in a released version. Version-pinned installs of
-  `1.0.0` do not receive it until the version changes (KL-31). RC
+- `chayen-init` ships from version `1.1.0` (D-063). Version-pinned installs
+  of `1.0.0` receive it through a normal update (KL-31). RC
   qualification evidence for 15 Skills does not cover this build.
 - Routing, behaviour, host loading of the pointer block and agent compliance
   with it are NOT_RUN.

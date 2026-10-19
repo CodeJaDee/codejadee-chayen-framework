@@ -4861,3 +4861,22 @@ review of a larger `/init` proposal; record in
 | Version change | Not approved; build stays `1.0.0` (D-062) |
 
 No commit, push, tag or release.
+
+## Owner follow-up — version `1.1.0` (D-063)
+
+Owner instruction (2026-10-19): change the version so that version-pinned
+`1.0.0` installations receive `chayen-init` through a normal update.
+
+| Action | Path |
+|---|---|
+| Modified | Both manifests and `.github/plugin/marketplace.json` (plugin `version` and `metadata.version`) → `1.1.0` |
+| Modified | `CHANGELOG.md` (`[1.1.0] - 2026-10-19`), `README.md`, `SECURITY.md`, `docs/COMPATIBILITY_MATRIX.md`, `CONTRIBUTING.md`, `GETTING_STARTED.md`, `SKILLS_CATALOG.md`, `docs/distribution/RELEASE_METADATA.md`, plugin `README.md` and `skills/README.md` |
+| Modified | `docs/chayen/DECISIONS.md` (D-063), `KNOWN_LIMITATIONS.md` (build row, KL-56), `ADRS/ADR-0012-…` |
+| Modified | `tests/skills/validator-mutations.json` (version find string), `tests/ci/documentation.test.mjs`, `tests/provider-compatibility/qualify-rc.test.mjs` (synthetic update `1.1.1-rc.1`) |
+
+| Command | Result |
+|---|---|
+| `node tools/validate/validate-all.mjs` | PASS, all gate steps; 189/189 self-tests |
+| `node tools/evals/run-evaluation-suite.mjs` | PASS |
+
+Not run: host update from `1.0.0` to `1.1.0`. No commit, tag or push.
