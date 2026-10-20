@@ -16,7 +16,9 @@ Goal: <requested observable outcome>
 Scope source: <user instruction or authorized task reference>
 In scope: <owners, behavior and permitted actions>
 Out of scope: <explicit exclusions and untouched work>
-Acceptance criteria: <observable checks, one per criterion>
+Acceptance criteria:
+| AC | Criterion | Planned evidence | Observed evidence | Verdict |
+| AC-1 | <observable outcome> | <test, diff, screenshot or query plan> | <filled after verification> | accept / verify_more / revise |
 Affected owners and versions: <from repository evidence>
 Existing pattern: <analogous file and line>
 Assumptions and unknowns: <fact needed and impact>
@@ -37,7 +39,11 @@ NOT_PROVIDED remains until authorization for the exact action and target was
 actually provided through an authorized process; record its source, scope,
 authority and date without inventing identities or times. Retain valid prior
 authorization within its scope instead of requesting it again unnecessarily.
-Use DONE only for completed scope and required verification; otherwise mark
+Name the planned evidence for each criterion before editing. Give each
+criterion one verdict: accept when the observed evidence shows it is met,
+verify_more when the evidence is missing, partial or not re-runnable, and
+revise when the evidence contradicts it. Use DONE only for completed scope,
+required verification and every criterion at accept; otherwise mark
 PARTIAL or BLOCKED and the next safe action. Commands not run are NOT_RUN,
 not PASS or N/A. Redact secrets and personal data; handoffs revalidate stale
 facts and the scope of approvals. ADRs begin PROPOSED; an accepted decision

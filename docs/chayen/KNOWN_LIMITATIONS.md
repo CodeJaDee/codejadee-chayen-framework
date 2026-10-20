@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
-| Build | `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
+| Build | `1.1.1` (released 2026-10-20, D-062; guidance text changed in five Skills since `1.0.0`, Skill metadata unchanged): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
 | Companions | [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md), [RELEASE_READINESS.md](RELEASE_READINESS.md) |
 | User-facing summary | [docs/SECURITY_AND_LIMITATIONS.md](../SECURITY_AND_LIMITATIONS.md) |
 
@@ -59,7 +59,7 @@ fixture.
 | ID | Surface | Limitation |
 |---|---|---|
 | KL-30 | All CLIs | **Native marketplace install of the current 13-skill build has not been executed.** The lifecycle opt-in was denied in STEP 31; earlier-build installs passed. (R-53) |
-| KL-31 | Claude Code | Installs pin to the version, so `update` delivers new content only when the version changes (R-54); the update to `1.0.0` has not been tested on a host. Auto-update is off for third-party marketplaces. |
+| KL-31 | Claude Code | Installs pin to the version, so `update` delivers new content only when the version changes (R-54); the updates to `1.0.0` and `1.1.1` have not been tested on a host. Auto-update is off for third-party marketplaces. |
 | KL-32 | Codex CLI | No per-plugin update command (0.160.1). Disable works only through `/plugins` or `config.toml`; the `-c` override did not disable the plugin. Current-build behaviour is not tested (no authorized install). |
 | KL-33 | Copilot CLI | Needs runtime ≥ 1.0.91 for enable/disable. Uninstall from a local marketplace only disabled the plugin. A same-name personal or project skill silently overrides a plugin skill. Current-build behaviour is not tested (isolated home unauthenticated). |
 | KL-34 | Claude Code VS Code extension | Not tested. Only static validation with the bundled 2.1.299 binary. |

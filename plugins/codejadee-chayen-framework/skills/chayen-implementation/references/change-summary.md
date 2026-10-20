@@ -36,8 +36,14 @@ and record approval only from an actual authorized process, never from a draft.
    - A check that was not executed is NOT_RUN, with a reason. It is never
      omitted, and never reported as passing.
    - List pre-existing baseline failures separately from new ones.
-4. **Map each acceptance criterion** to the test or check that demonstrates
-   it, or mark it not verified.
+4. **Map each acceptance criterion** to the evidence that demonstrates it
+   (test output, diff, screenshot, or query plan), and give it one verdict:
+   - **accept:** the evidence shows the criterion is met;
+   - **verify_more:** the evidence is missing, partial, or not re-runnable;
+   - **revise:** the evidence contradicts the criterion.
+
+   These match the evidence-audit verdicts below: supported is accept,
+   unsupported is revise, and not re-runnable is verify_more.
 5. **Describe rollback**, including the data or migration steps that a plain
    revert would not undo.
 6. **For a hand-over, add the next steps:** what is unfinished, which
@@ -74,7 +80,7 @@ and record approval only from an actual authorized process, never from a draft.
   - files changed;
   - conventions followed;
   - verification table;
-  - acceptance mapping;
+  - acceptance mapping, with a verdict per criterion;
   - risks;
   - rollback;
   - not verified.
@@ -96,7 +102,9 @@ Verification:
 | Build | <cmd> | PASS / FAIL / NOT_RUN (<reason>) |
 | Tests | <cmd> | PASS 42 / FAIL 0 / SKIPPED 1 — new: <test names> |
 | Lint / typecheck | <cmd> | PASS / FAIL / NOT_RUN (<reason>) |
-Acceptance criteria: 1 → <test or check>, 2 → <test or check>
+Acceptance criteria:
+| AC | Evidence | Verdict |
+| AC-1 | <test output, diff or screenshot> | accept / verify_more / revise |
 Risks and follow-ups: <items>
 Rollback: <how to revert, including data or migration steps>
 Not verified: <items and why>
@@ -128,8 +136,9 @@ add`, `alembic revision`, or the package manager that rewrote the lock file.
   other file appears there.
 - Every verification row has a command and an observed result. Unexecuted
   checks are NOT_RUN with a reason.
-- Every acceptance criterion from the task contract is mapped, or listed as
-  not verified.
+- Every acceptance criterion from the task contract is mapped to evidence
+  and has one verdict. A criterion without evidence is verify_more, never
+  accept.
 - The summary contains no secret values.
 - The passport for a fixture change lists every changed file and labels a
   skipped lint run NOT_RUN.

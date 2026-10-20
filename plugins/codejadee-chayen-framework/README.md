@@ -13,9 +13,9 @@ installs it through its own native plugin mechanism.
 | `.claude-plugin/plugin.json` | Claude Code |
 | `skills/` | Every provider. This is the single canonical skill source. |
 
-## Current state: 1.0.0
+## Current state: 1.1.1
 
-This is the **1.0.0 release** (2026-10-18) with 15 entry skills: MIT
+This is the **1.1.1 release** (2026-10-20) with 15 entry skills: MIT
 licence (`LICENSE.md`), publisher CodeJaDee. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
 VS Code and Response Style Policy host behavior are unverified/deferred.
 The list is in

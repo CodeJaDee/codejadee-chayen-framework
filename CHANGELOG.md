@@ -8,6 +8,34 @@ All notable changes to codejadee-chayen-framework are recorded here.
 
 Nothing yet.
 
+## [1.1.1] - 2026-10-20
+
+Guidance-only release (D-062). Skill names, descriptions and L0 metadata are
+unchanged, so routing metadata is the same as `1.0.0`; the package content and
+its fingerprint are not.
+
+### Changed
+
+- **Ambiguous requests:** `chayen-implementation` now asks for a task contract
+  for any request whose acceptance criteria cannot yet be stated as observable
+  checks, however small, and asks all clarifying questions in one message.
+  `chayen-backend` and `chayen-frontend` ask what "done" looks like when a
+  request is too vague to state acceptance criteria.
+- **Acceptance criteria tied to evidence:** the task contract template records
+  planned and observed evidence per criterion, and each criterion gets one
+  verdict: `accept`, `verify_more` or `revise`. `DONE` requires every criterion
+  at `accept`. The change summary uses the same verdicts and maps them to the
+  evidence-audit verdicts.
+- `chayen-backend`, `chayen-frontend`, `chayen-data` and `chayen-testing`
+  verification sections map each acceptance criterion to its evidence when the
+  task has criteria.
+
+### Not verified
+
+- Agent behaviour with the new guidance is NOT_RUN; only the offline
+  validators ran. Native install and update of `1.1.1` were not tested on a
+  host.
+
 ## [1.0.0] - 2026-10-18
 
 First release (owner decision D-061), from the public repository under the

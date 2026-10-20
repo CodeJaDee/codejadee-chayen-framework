@@ -72,7 +72,8 @@ If the request does not fit, stop following this skill and continue normally wit
     Tauri, with its version, plugins, and build scripts.
 - **Ask when missing and it matters:** field rules, empty and error
   behaviour, the API endpoint, target locales or viewports, the offline
-  conflict policy, the push provider, or the signing setup.
+  conflict policy, the push provider, the signing setup, or what "done"
+  looks like when the request is too vague to state acceptance criteria.
 
 ## Workflow
 
@@ -143,6 +144,9 @@ If the request does not fit, stop following this skill and continue normally wit
   example no Xcode on this machine.
 - Visual, interactive, and device behaviour not observed is marked "not
   verified in browser" or "not verified on device".
+- When the task has acceptance criteria, each one is mapped to its evidence
+  (a test, a screenshot, or a diff), with a verdict: accept, verify_more, or
+  revise.
 
 ## Failure handling
 

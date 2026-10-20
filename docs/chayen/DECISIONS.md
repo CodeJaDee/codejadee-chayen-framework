@@ -1457,6 +1457,22 @@ Decision statuses:
 - **Unchanged from D-060:** Security and Support remain LATER; no contact or
   channel is added.
 
+### D-062 — Release `1.1.1`
+
+- **Status:** ACCEPTED (explicit maintainer instruction, 2026-10-20: release the
+  acceptance-evidence and ambiguous-request guidance as `1.1.1`).
+- **Decision:**
+  - `version` is `1.1.1` in both manifests, the Copilot marketplace entry and its
+    `metadata.version`. Git tags remain optional; no GitHub Release.
+  - Content: guidance text in `chayen-implementation` (SKILL.md, task contract
+    template, change summary), `chayen-backend`, `chayen-frontend`,
+    `chayen-data` and `chayen-testing`. Skill names, descriptions and L0
+    metadata are unchanged; no package file is added or removed.
+- **Evidence at release:** `validate-all.mjs` passed every gate offline
+  (Node.js 26.8.1). Agent behaviour with the new guidance, native install and
+  update of `1.1.1`, and routing remain NOT_RUN. The open items accepted under
+  D-061 stay open.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

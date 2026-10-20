@@ -8,13 +8,16 @@
 > Git tag `v1.0.0`. No GitHub Release is created. The table below is current;
 > the strategy text after it is the earlier `0.1.0` plan.
 
+> **Decision D-062 (2026-10-20):** version `1.1.1`, a guidance-only update to
+> the same 15 Skills. Git tags remain optional.
+
 ## Current build
 
 | Field | Actual value |
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `1.0.0` in both manifests and both Copilot version fields (D-061) |
+| Version | `1.1.1` in both manifests and both Copilot version fields (D-062) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
 | Entry Skills | 15: 13 engineering, 2 writing |

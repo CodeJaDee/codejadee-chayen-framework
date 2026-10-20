@@ -122,6 +122,8 @@ Report every test or suite with exactly one status:
 - Flaky fixes: report repeated-run counts with the command.
 - No skipped, disabled, or retried tests were added without the user's
   agreement.
+- When the task has acceptance criteria, each one names the test that
+  covers it and that test's status, or is marked uncovered.
 
 ## Failure handling
 

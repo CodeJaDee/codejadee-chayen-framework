@@ -82,7 +82,9 @@ If the request does not fit, stop following this skill and continue normally wit
   - expected status codes or error format;
   - authorization rules;
   - delivery guarantees;
-  - whether a database change may be applied locally.
+  - whether a database change may be applied locally;
+  - what "done" looks like, when the request is too vague to state
+    acceptance criteria.
 
 ## Workflow
 
@@ -149,6 +151,9 @@ No matching workflow => continue normal native behavior.
   rollback path is described.
 - Nothing is claimed as verified without a command and its result. Checks
   that could not run are NOT_RUN, with a reason.
+- When the task has acceptance criteria, each one is mapped to its evidence
+  (a test, a request and its response, or a diff), with a verdict: accept,
+  verify_more, or revise.
 
 ## Failure handling
 

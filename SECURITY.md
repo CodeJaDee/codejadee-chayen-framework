@@ -4,6 +4,7 @@
 
 | Version | Supported |
 |---|---|
+| `1.1.x` | Best effort; Security/Support remains LATER |
 | `1.0.x` | Best effort; Security/Support remains LATER |
 | Release candidates and development builds before `1.0.0` | No; update to `1.0.0` |
 

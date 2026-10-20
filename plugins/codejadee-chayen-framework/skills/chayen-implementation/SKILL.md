@@ -72,7 +72,9 @@ If the request does not fit, stop following this skill and continue normally wit
   - constraints (compatibility, performance, deadlines).
 
   When two reasonable interpretations exist, present them instead of
-  choosing silently.
+  choosing silently. When the request does not yet say what "done" looks
+  like, ask before editing, with all questions in one message. A fully
+  specified edit ("make the Save button green") needs no questions.
 
 ## Workflow
 
@@ -106,9 +108,11 @@ No matching workflow => continue normal native behavior.
    | Code generated from OpenAPI, GraphQL, protobuf, or JSON Schema | contract codegen |
    | Changing something others depend on | compatibility |
 
-4. **Task contract** for changes touching three or more files, or any risky
-   area. Classify the risk, and confirm when the risk is High or above, or
-   when an assumption changes the outcome.
+4. **Task contract** for changes touching three or more files, for any risky
+   area, and for any request whose acceptance criteria cannot yet be stated
+   as observable checks (for example "make the settings page better"),
+   however small. Classify the risk, and confirm when the risk is High or
+   above, or when an assumption changes the outcome.
 5. **Implement in small steps** following the recipe. Keep the build green
    after each step.
 6. **Verify** with the project's own commands. Compare the results with the
@@ -134,7 +138,7 @@ Report each check as PASS, FAIL, or NOT_RUN, with the exact command. Never imply
 | Build | The project's build command, and its result |
 | Tests | The project's test command, counts (passed / failed / skipped), and new tests |
 | Lint / format / typecheck | Only the checks the project configures |
-| Acceptance criteria | Each criterion mapped to the code or test that satisfies it |
+| Acceptance criteria | Each criterion mapped to its evidence (test output, diff, or screenshot), with a verdict: accept, verify_more, or revise |
 | Scope | The diff touches only the files the plan names (`git diff --stat`) |
 
 ## Failure handling
