@@ -1,15 +1,14 @@
 # Chayen
 
-Chayen is a native plugin of engineering and Thai/English writing Skills for
-coding agents. Publisher: **CodeJaDee**. Current version **v1.1.2**
-(2026-10-20, project map and real-schema guidance; D-065). v1.1.1 added
-acceptance-evidence guidance (D-064) and v1.1.0 (2026-10-19) added
-`chayen-init` (D-063); first released as v1.0.0 on 2026-10-18
-under the [MIT licence](LICENSE), from the public repository
-`CodeJaDee/codejadee-chayen-framework` (owner decision D-061). The owner released
-with some qualification gates still open; see
-[Final release readiness](docs/production/FINAL_RELEASE_READINESS.md).
-The upstream Humanizer MIT notice remains independently required.
+Chayen is a plugin of engineering and Thai/English writing Skills for coding
+agents on Claude Code CLI, Codex CLI and GitHub Copilot CLI. Each Skill tells
+the agent how to approach one kind of task: detect the project's stack and
+commands, agree what "done" means, make the smallest change, and back every
+claim with evidence. Skills are advisory text; the host's own permissions and
+approvals stay in control.
+
+Current version: **v1.1.2** (2026-10-20). Publisher: **CodeJaDee**. Licence:
+[MIT](LICENSE). Source: `CodeJaDee/codejadee-chayen-framework` (public).
 
 **Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
 GitHub [@CodeJaDee](https://github.com/CodeJaDee)
@@ -26,36 +25,62 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 | Skill references | 242 |
 | L0 metadata | 6,563 / 7,000 characters |
 
-There are 13 engineering entry points, 2 writing entry points and 1 project
-knowledge entry point (`chayen-init`, new in 1.1.0; D-062), 206 engineering
-capabilities, 108 technology capabilities, 12 workflows and 7 templates.
-One shared Skills source serves all providers. The installed package is
-static Markdown/JSON: no executable, hook, MCP server, service or telemetry.
+The 16 entry skills are 13 engineering Skills, 2 writing Skills and 1 project
+knowledge Skill. Behind them sit 206 engineering capabilities, 108 technology
+capabilities, 12 workflows and 7 templates, loaded only when a task needs
+them. The package is static Markdown and JSON: no executable, hook, MCP
+server, background service or telemetry.
 
-## Supported release hosts
+## Skills
 
-The production target covers **Claude Code CLI, Codex CLI and GitHub Copilot
-CLI** (Copilot >=1.0.91). [Phase 4 lifecycle evidence](docs/production/NATIVE_LIFECYCLE_REPORT.md)
-is partial: Claude 2.1.302 and Codex 0.163.0 install/discover/update/remove
-were tested in isolated profiles; Claude disabled loading remains BLOCKED,
-and Copilot CLI is unavailable. Explicit invocation, no-match and **automatic
-routing >=85% on each CLI independently** must be measured in Phase 5.
+| Area | Skill | Use it for |
+|---|---|---|
+| Understand | `chayen-repository` | Read-only analysis: stack, layout, commands, change impact, history, debt |
+| Plan | `chayen-requirements` | Clarifying requests, user stories, acceptance criteria, scope |
+| Plan | `chayen-architecture` | Options and trade-offs, ADRs, boundaries, migration plans |
+| Build | `chayen-implementation` | Cross-layer features, bug fixes, refactors, upgrades, with a task contract |
+| Build | `chayen-backend` | APIs, validation, auth, data access, jobs, messaging, integrations |
+| Build | `chayen-frontend` | Web UI in Angular, React/Next.js, Vue/Nuxt and Vite, plus app shells |
+| Build | `chayen-data` | SQL Server and PostgreSQL schema, migrations, queries, backfills |
+| Build | `chayen-ai-engineering` | ML and LLM features, RAG, evaluations, agent permission reviews |
+| Verify | `chayen-testing` | Test strategy, unit to end-to-end tests, flaky test triage |
+| Verify | `chayen-security` | Advisory secure code review, threat models, dependency triage |
+| Verify | `chayen-performance` | Baselines, profiling, load tests, bottlenecks |
+| Operate | `chayen-devops` | CI/CD, containers, IaC, releases, observability, runbooks |
+| Communicate | `chayen-documentation` | READMEs, API and architecture docs, PR descriptions, reviews |
+| Write | `chayen-humanizer-en` | English prose: audit, rewrite and new content |
+| Write | `chayen-humanizer-th` | Thai prose, including copy in localization files |
+| Project | `chayen-init` | Writing and refreshing `.chayen/` project knowledge files, on request |
 
-VS Code surfaces are **unverified and outside the v0.1.0 support claim**.
-Response Style Policy host tests, VS Code runtime tests, Branch Protection,
-Required Reviews and unrelated ADR/repository hygiene work are deferred.
-Those deferred items do not block CLI qualification. The owner has removed
-GitHub Actions and GitHub Releases from the project process. Maintainers run
-offline validators manually; passing them is not proof of runtime routing.
+The full catalog, with boundaries for each Skill, is in
+[docs/SKILLS_CATALOG.md](docs/SKILLS_CATALOG.md).
 
-## Quick start
+## Install
 
-Review the source and install with your native plugin manager:
-[Claude Code CLI](docs/INSTALL_CLAUDE_CODE.md),
-[Codex CLI](docs/INSTALL_CODEX.md), or [Copilot CLI](docs/INSTALL_COPILOT.md).
-All use `chayen@codejadee`. Git-backed installation needs repository access
-until public availability is confirmed; each guide also covers a local clone.
-No Chayen installer or package-manager dependency installation is needed.
+Commands from the install guides. Each guide also covers a local clone,
+updates, migration from the old plugin name, and removal.
+
+```bash
+# Claude Code CLI
+claude plugin marketplace add CodeJaDee/codejadee-chayen-framework
+claude plugin install chayen@codejadee
+
+# GitHub Copilot CLI (1.0.91 or later)
+copilot plugin marketplace add CodeJaDee/codejadee-chayen-framework
+copilot plugin install chayen@codejadee
+
+# Codex CLI (plugin add is available in recent CLI versions; see the guide)
+codex plugin marketplace add CodeJaDee/codejadee-chayen-framework
+codex plugin add chayen@codejadee
+```
+
+Guides: [Claude Code CLI](docs/INSTALL_CLAUDE_CODE.md),
+[Codex CLI](docs/INSTALL_CODEX.md), [Copilot CLI](docs/INSTALL_COPILOT.md).
+Claude Code installs pin to the version, so an update delivers new content
+only when the version number changes. No Chayen installer or package
+dependency is needed.
+
+## Use
 
 Work in your application directory and ask normally:
 
@@ -64,24 +89,103 @@ GET /api/orders/{id} returns 500 when the order has no customer. Fix it.
 Polish the Thai values in locales/th.json; preserve keys, numerals and calendar eras.
 ```
 
-These are intended routing examples. The provider model decides what to
-load. Skills are advisory and remain subject to native permissions.
-[Automatic Skill Discovery](docs/AUTOMATIC_SKILL_DISCOVERY.md) explains
-explicit invocation and the distinction between current and historical evidence.
+The host model decides which Skill to load from its description. To choose
+one yourself, name it: `/chayen:chayen-security <request>` in Claude Code,
+`$chayen-security <request>` in Codex, or `/chayen-security <request>` in
+Copilot. [Automatic Skill Discovery](docs/AUTOMATIC_SKILL_DISCOVERY.md)
+explains both paths. [Getting started](docs/GETTING_STARTED.md) walks through
+a first task.
 
-## What is covered
+What the engineering Skills ask the agent to do, as of 1.1.2 (the last item
+is specific to `chayen-data`):
+
+- When a request does not say what "done" looks like, ask before editing,
+  with all questions in one message. A fully specified edit goes ahead.
+- Name the evidence for each acceptance criterion before editing, and close
+  each one as `accept`, `verify_more` or `revise`. Work is `DONE` only when
+  every criterion is `accept`.
+- Report each build, test and lint check as PASS, FAIL or NOT_RUN with the
+  exact command. A check that did not run is never reported as passing.
+- Take table and column names from the real schema, never a guess.
+
+### Project knowledge (optional)
+
+Ask the agent to initialize project knowledge and `chayen-init` drafts
+`.chayen/profile.md`, `.chayen/conventions.md` and a team-owned
+`.chayen/rules.md` from the repository, then writes them only after you
+approve a preview. From 1.1.2, the implementation, backend, frontend, data
+and testing Skills read the profile and rules first when they exist. They
+treat the files as a map, confirm each fact in the source, and trust the
+source when the two disagree. Design:
+[ADR-0012](docs/chayen/ADRS/ADR-0012-project-knowledge-initialization.md).
+
+## Technology coverage
 
 C#/ASP.NET Core, Angular, TypeScript/JavaScript, React, Next.js, Vue, Nuxt,
 Vite, SQL Server, PostgreSQL and cross-stack integration have technology
-references. Python has general backend/testing guidance. **Standalone Nitro
-and Elysia are out of scope**; no pack is supplied for them.
-[Supported technologies](docs/SUPPORTED_TECHNOLOGIES.md) lists boundaries.
+references. Python has general backend and testing guidance. Standalone Nitro
+and Elysia are out of scope. [Supported technologies](docs/SUPPORTED_TECHNOLOGIES.md)
+lists the boundaries.
 
-Humanizer TH edits Thai copy, including values in localization files;
-i18n configuration, locale routing and key wiring remain engineering work.
-The [Response Style Policy](docs/RESPONSE_STYLE.md) is separate and opt-in.
-Plugin install/disable/uninstall do not manage it. Its setup/removal fixtures
-are tested; loading and behavior on hosts remain unverified and deferred.
+The writing Skills edit prose and localized copy; i18n configuration, locale
+routing and key wiring stay engineering work. The
+[Response Style Policy](docs/RESPONSE_STYLE.md) for everyday Thai and English
+replies is separate and opt-in: installing or removing the plugin does not
+turn it on or off.
+
+## Evidence and limitations
+
+Read this before relying on Chayen.
+
+- No Skill behaviour has been verified on the current build. The offline
+  validators pass, which proves the package is well formed, not that agents
+  follow it.
+- Automatic routing accuracy has not been measured for any CLI on the current
+  build: the Phase 5 run is BLOCKED pending authorization
+  ([routing evaluation](docs/production/ROUTING_EVALUATION.md)).
+- Install, discover, update and remove were tested in isolated profiles on
+  Claude Code 2.1.302 and Codex 0.163.0 for an earlier 15-Skill candidate.
+  Claude disabled loading is BLOCKED and Copilot CLI was not available
+  ([native lifecycle report](docs/production/NATIVE_LIFECYCLE_REPORT.md)).
+  Native install and update of `1.1.0`, `1.1.1` and `1.1.2` are not tested.
+- VS Code surfaces are unverified and outside the support claim.
+- Skills are guidance. Real controls are the host's permission prompts, your
+  CI and your branch protection
+  ([security and limitations](docs/SECURITY_AND_LIMITATIONS.md)).
+
+The owner released `1.0.0` with qualification gates still open; see
+[final release readiness](docs/production/FINAL_RELEASE_READINESS.md) and the
+[compatibility matrix](docs/COMPATIBILITY_MATRIX.md).
+
+## Version history
+
+Full entries are in the [changelog](CHANGELOG.md); decisions are recorded in
+[DECISIONS.md](docs/chayen/DECISIONS.md).
+
+| Version | Date | Decision | Summary |
+|---|---|---|---|
+| `1.1.2` | 2026-10-20 | D-065 | Engineering Skills read `.chayen/` project knowledge as a map; `chayen-data` uses the real schema only; CONTRIBUTING describes turning an agent failure into a test case; 5 new recipe cases |
+| `1.1.1` | 2026-10-20 | D-064 | Ask before editing when "done" is unclear; acceptance criteria tied to evidence with `accept` / `verify_more` / `revise` verdicts |
+| `1.1.0` | 2026-10-19 | D-062, D-063 | Adds the `chayen-init` project knowledge Skill (ADR-0012); entry Skill ceiling raised to 16 and L0 budget to 7,000 characters |
+| `1.0.0` | 2026-10-18 | D-061 | First release under MIT from the public repository; plugin renamed to `chayen`, installed as `chayen@codejadee` |
+
+<!-- historical:start -->
+Earlier builds, kept as recorded:
+
+- `1.0.0` shipped 15 entry skills (13 engineering, 2 writing), 237 skill
+  references and 257 package files, with L0 metadata at 6,217 / 6,500
+  characters. Versions `1.1.1` and `1.1.2` change guidance text only and keep
+  the 16-Skill metadata of `1.1.0`.
+- `0.1.0-rc.1` (2026-10-18) was the release candidate measured in Phase 4. It
+  became `1.0.0` with the same Skills content instead of the planned `0.1.0`
+  (D-061).
+- Development started on 2026-10-14 (ADR-0001 to ADR-0007). Early Claude Code
+  probes on the 13 engineering skills loaded the right skill in 12 of 22
+  relevant runs; those results do not apply to later builds.
+<!-- historical:end -->
+
+Git tags exist for `v1.0.0` and `1.1.0`; later versions are not tagged. Tags
+are optional reference pins, and the project uses no GitHub Releases.
 
 ## Documentation
 
@@ -101,12 +205,31 @@ are tested; loading and behavior on hosts remain unverified and deferred.
 
 ## Repository layout
 
-`plugins/codejadee-chayen-framework/` is the only installed directory. The
-repository and directory retain the long name; the plugin is `chayen`.
-`.claude-plugin/marketplace.json`, `.agents/plugins/marketplace.json` and
-`.github/plugin/marketplace.json` point at that same source.
-`catalog/`, `tools/`, `tests/`, `docs/` and `response-style/` are
-maintainer/opt-in material, not runtime components.
+| Path | Contents |
+|---|---|
+| `plugins/codejadee-chayen-framework/` | The installed plugin: manifests, `LICENSE.md` and `skills/`. The only runtime content. |
+| `.claude-plugin/`, `.agents/plugins/`, `.github/plugin/` | One marketplace file per host, all pointing at the plugin folder |
+| `catalog/` | Capability, technology, workflow and Skill registration data |
+| `tools/`, `tests/` | Developer validators, evaluation tooling and test data; never shipped |
+| `docs/` | User guides, design records (`docs/chayen/`) and release evidence (`docs/production/`) |
+| `response-style/` | The opt-in Response Style Policy |
+
+The repository and plugin folder keep the long name
+`codejadee-chayen-framework`; the plugin itself is `chayen`.
+
+## Contributing
+
+Use Node.js 24.22.0. The validators are offline and need no dependencies:
+
+```bash
+node tools/validate/validate-all.mjs
+```
+
+Passing them shows the package is well formed; it is not evidence of runtime
+routing. When you change a Skill, add positive and negative cases in
+`tests/skills/`. [Contributing](docs/CONTRIBUTING.md) covers the rules,
+provider runs that need authorization, and how to turn an observed agent
+failure into a test case and a guidance fix.
 
 ## Reporting problems and release process
 
@@ -115,17 +238,17 @@ approved or published.** Do not post vulnerabilities publicly or infer a
 contact from a repository URL. See [SECURITY.md](SECURITY.md). Prepare
 redacted reproduction details using [Contributing](docs/CONTRIBUTING.md).
 
-Unprotected `main` is an **accepted release-process risk**. There are no
-GitHub Actions or GitHub Releases in the Chayen release workflow. Run local
-validation and native CLI tests for the exact source revision, then obtain
-owner sign-off before publishing source/version changes. Version strategy:
-current candidate `0.1.0-rc.1` -> stable `0.1.0` in all plugin manifests.
-Git tags are optional reference pins, not a GitHub Release prerequisite.
+Unprotected `main` is an accepted release-process risk. There are no GitHub
+Actions or GitHub Releases. Before publishing a version change, run the local
+validators and native CLI tests for the exact source revision, then obtain
+owner sign-off ([manual release sign-off](docs/production/MANUAL_RELEASE_SIGNOFF.md)).
+Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and
+are identical in both manifests and the Copilot marketplace entry.
 
 ## Credits
 
 Publisher: **CodeJaDee**. Contributors and AI-assisted development are
 recorded in Git history and governance records. The English writing Skill
-adapts [humanizer](https://github.com/blader/humanizer) by Siqi Chen;
-its original MIT attribution/notice remains in the distributed Skill.
-Project MIT adoption does not replace that notice.
+adapts [humanizer](https://github.com/blader/humanizer) by Siqi Chen; its
+original MIT attribution and notice ship in that Skill and remain required
+alongside the project's MIT licence.
