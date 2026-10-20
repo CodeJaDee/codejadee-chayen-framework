@@ -20,9 +20,9 @@ test("fixtures are verbatim copies of their reviewed sources", () => {
   assert.equal(r.status, 0, r.stdout + r.stderr);
 });
 
-test("routing set: >=30 positive, every Entry Skill twice, overlap, >=12 negative/no-match, 15 explicit", () => {
+test("routing set: >=30 positive, every Entry Skill twice, overlap, >=12 negative/no-match, 16 explicit", () => {
   const by = (t) => routing.probes.filter((p) => p.type === t);
-  assert.equal(SKILLS.length, 15);
+  assert.equal(SKILLS.length, 16);
   assert.ok(by("positive").length >= 30);
   for (const s of SKILLS) assert.ok(by("positive").filter((p) => p.group === "core" && p.primary === s).length >= 2, s);
   assert.equal(by("positive").filter((p) => p.group === "overlap-documentation").length, 6);
@@ -159,5 +159,5 @@ test("runner sends nothing without authorization, budget cap or isolated home", 
   r = run(...base, "--allow-provider-calls", "--authorization", "TEST-ONLY", "--max-calls", "5"); assert.equal(r.status, 2); assert.match(r.stderr, /exceed --max-calls 5; nothing was sent/);
   r = spawnSync(process.execPath, [path.join(here, "run-phase5.mjs"), ...base, "--allow-provider-calls", "--authorization", "TEST-ONLY", "--max-calls", "1000"], { cwd: repo, encoding: "utf8", env: { ...process.env, CLAUDE_CONFIG_DIR: "" } });
   assert.equal(r.status, 2); assert.match(r.stderr, /isolated CLAUDE_CONFIG_DIR/);
-  r = run("--plan"); assert.equal(r.status, 0); assert.match(r.stdout, /total 2268 billed call\(s\); nothing was created or sent/);
+  r = run("--plan"); assert.equal(r.status, 0); assert.match(r.stdout, /total 2295 billed call\(s\); nothing was created or sent/);
 });

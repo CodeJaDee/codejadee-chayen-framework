@@ -1457,13 +1457,53 @@ Decision statuses:
 - **Unchanged from D-060:** Security and Support remain LATER; no contact or
   channel is added.
 
-### D-062 — Release `1.1.1`
+### D-062 — Project knowledge initialization Skill (`chayen-init`)
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-19: "อยากทำ skill
+  init อะ หากมีข้อจำกัดเรื่องจำนวนสกิลก็ขยายไปได้เลย" — build an init Skill and
+  raise the Skill ceiling if needed), after an architecture review of a larger
+  `/init` proposal in the same session. Full record:
+  [ADR-0012](ADRS/ADR-0012-project-knowledge-initialization.md).
+- **Decision:**
+  - New Entry Skill `chayen-init`: on explicit request, writes `.chayen/`
+    `profile.md`, `conventions.md`, team-owned `rules.md` and per-unit files
+    after a preview and approval, and offers an opt-in marked pointer block in
+    the repository's agent instruction files (ADR-0010 mechanism B).
+  - New registration category `catalog/project-skills.json` (allow-list
+    `chayen-init`), validated like the editorial registry. The 206-capability
+    Engineering Catalog is unchanged.
+  - Entry Skill ceiling 15 → 16 and L0 budget 6,500 → 7,000 characters in
+    `tools/catalog/skill-registration.mjs`. Actual L0 6,563.
+  - V-10 allows the `.chayen` path in shipped content; other self-references
+    stay rejected (PT-08 amended for the path only).
+- **Not decided:** the version number. The build stays `1.0.0`; a release that
+  contains `chayen-init` needs its own owner decision (D-058 pattern).
+- **Evidence:** static gates only; routing, behaviour and host loading of the
+  pointer block are NOT_RUN. RC qualification pins in
+  `tests/provider-compatibility/qualify-rc.test.mjs` were updated to the new
+  package (16 Skills, 263 files); recorded 1.0.0 RC evidence stays historical.
+
+### D-063 — Version `1.1.0`
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-19: "ทำการเปลี่ยน
+  version เลย", after being told that version-pinned `1.0.0` installs do not
+  receive `chayen-init` without a version change).
+- **Decision:** `version` is `1.1.0` in both manifests, the Copilot marketplace
+  entry and its `metadata.version`. Minor bump: one added Skill, no removed or
+  renamed Skill, no breaking change. `CHANGELOG.md` moves the D-062 entries to
+  `[1.1.0] - 2026-10-19`. `SECURITY.md` supports `1.1.x`.
+- **Not done:** commit, Git tag `v1.1.0`, push. Host installation and update
+  from `1.0.0` are NOT_RUN.
+
+### D-064 — Release `1.1.1`
 
 - **Status:** ACCEPTED (explicit maintainer instruction, 2026-10-20: release the
   acceptance-evidence and ambiguous-request guidance as `1.1.1`).
 - **Decision:**
   - `version` is `1.1.1` in both manifests, the Copilot marketplace entry and its
-    `metadata.version`. Git tags remain optional; no GitHub Release.
+    `metadata.version`. Patch bump on top of `1.1.0` (D-063): guidance text
+    only, no added, removed or renamed Skill. Git tags remain optional; no GitHub
+    Release.
   - Content: guidance text in `chayen-implementation` (SKILL.md, task contract
     template, change summary), `chayen-backend`, `chayen-frontend`,
     `chayen-data` and `chayen-testing`. Skill names, descriptions and L0
@@ -1471,7 +1511,7 @@ Decision statuses:
 - **Evidence at release:** `validate-all.mjs` passed every gate offline
   (Node.js 26.8.1). Agent behaviour with the new guidance, native install and
   update of `1.1.1`, and routing remain NOT_RUN. The open items accepted under
-  D-061 stay open.
+  D-061 and the NOT_RUN items of D-062 stay open.
 
 ## Architecture assumptions (checked in Step 02)
 

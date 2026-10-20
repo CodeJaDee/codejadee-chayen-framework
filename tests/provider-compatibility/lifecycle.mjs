@@ -6,7 +6,7 @@ import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { inside, assertTreeNoLinks } from "../../tools/validate/safe-paths.mjs";
 
-export const ID = "chayen@codejadee", EXPECTED_SKILLS = 15;
+export const ID = "chayen@codejadee", EXPECTED_SKILLS = 16;
 export const OPERATIONS = ["register", "install", "discover", "disable", "enable", "update", "uninstall", "unregister"];
 const packagePath = "plugins/codejadee-chayen-framework";
 const digest = text => crypto.createHash("sha256").update(text).digest("hex");

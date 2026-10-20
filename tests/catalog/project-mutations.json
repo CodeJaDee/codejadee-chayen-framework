@@ -1,0 +1,169 @@
+{
+  "$comment": "D-062 negative controls for the project knowledge registration (catalog/project-skills.json) and the chayen-init Skill. Registry-writing controls are built from the real registry so each stays a single fault. Invalid copies exist only in confined temporary test repositories.",
+  "version": 1,
+  "cases": [
+    {
+      "id": "pj62-unregistered",
+      "description": "The project knowledge Skill ships but its registration is missing",
+      "edits": [
+        {
+          "file": "catalog/project-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": []\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "unregistered project Skill"
+      }
+    },
+    {
+      "id": "pj62-metadata-drift",
+      "description": "Shipped SKILL.md description differs from the project registry",
+      "edits": [
+        {
+          "file": "catalog/project-skills.json",
+          "op": "replace",
+          "find": "Initialize or refresh persistent",
+          "with": "Initialize persistent"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "shipped project Skill metadata differs from registry"
+      }
+    },
+    {
+      "id": "pj62-unsupported-field",
+      "description": "A project record carries an executable or configuration field",
+      "edits": [
+        {
+          "file": "catalog/project-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-init\",\n      \"mapping\": \"existing\",\n      \"description\": \"Initialize or refresh persistent project knowledge files for a repository when explicitly asked, writing a profile of units, stacks, versions, commands and layout, observed conventions, and a team rules file, plus an opt-in pointer block in AGENTS.md or CLAUDE.md. Not for one-off repository questions, README writing, or code changes.\",\n      \"hooks\": \"setup\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "project record has missing or unsupported fields"
+      }
+    },
+    {
+      "id": "pj62-name-allow-list",
+      "description": "A project record name is outside the approved allow-list",
+      "edits": [
+        {
+          "file": "catalog/project-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-setup\",\n      \"mapping\": \"existing\",\n      \"description\": \"Initialize or refresh persistent project knowledge files for a repository when explicitly asked, writing a profile of units, stacks, versions, commands and layout, observed conventions, and a team rules file, plus an opt-in pointer block in AGENTS.md or CLAUDE.md. Not for one-off repository questions, README writing, or code changes.\"\n    }\n  ]\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "project name is outside the approved allow-list"
+      }
+    },
+    {
+      "id": "pj62-planned-with-directory",
+      "description": "A planned project registration must not ship a directory",
+      "edits": [
+        {
+          "file": "catalog/project-skills.json",
+          "op": "replace",
+          "find": "\"mapping\": \"existing\"",
+          "with": "\"mapping\": \"planned\""
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "planned registration must not have a shipped directory"
+      }
+    },
+    {
+      "id": "pj62-recipe-ownership",
+      "description": "The project knowledge Skill cannot carry an engineering capability recipe",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-init/references/stray-recipe.md",
+          "op": "write",
+          "content": "---\nkind: recipe\ncapabilities: [CAP-01-001]\n---\n# Stray recipe\n\n## Inputs\nSynthetic fixture text used only to test project Skill isolation from engineering recipes.\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "project Skills cannot declare engineering capability recipes"
+      }
+    },
+    {
+      "id": "pj62-capability-ownership",
+      "description": "An engineering capability cannot list the project Skill as a secondary skill",
+      "edits": [
+        {
+          "file": "catalog/engineering-capabilities.yaml",
+          "op": "regex",
+          "pattern": "secondary_skills: \\[chayen-backend, chayen-frontend\\]\\n",
+          "with": "secondary_skills: [chayen-backend, chayen-frontend, chayen-init]\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-19 catalog-mapping",
+        "message": "project Skills cannot own or substitute engineering capability mappings"
+      }
+    },
+    {
+      "id": "pj62-catalog-unregistered",
+      "description": "The catalog checker rejects a shipped project Skill without registration",
+      "edits": [
+        {
+          "file": "catalog/project-skills.json",
+          "op": "write",
+          "content": "{\n  \"version\": 1,\n  \"skills\": []\n}\n"
+        }
+      ],
+      "expect": {
+        "validator": "catalog",
+        "error": "V-11.3 entry-skills",
+        "message": "shipped skill chayen-init is not registered in any skill category"
+      }
+    },
+    {
+      "id": "pj62-self-reference",
+      "description": "The .chayen path is allowed, but a self-reference to the framework name in skill prose is still rejected",
+      "edits": [
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-init/SKILL.md",
+          "op": "append",
+          "content": "\nChayen writes these files.\n"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-10 wording",
+        "message": "self-reference to Chayen"
+      }
+    },
+    {
+      "id": "pj62-exceeded-count",
+      "description": "A seventeenth shipped directory exceeds the ceiling of 16 (13 engineering + 2 editorial + 1 project)",
+      "edits": [
+        {
+          "op": "copydir",
+          "from": "plugins/codejadee-chayen-framework/skills/chayen-init",
+          "to": "plugins/codejadee-chayen-framework/skills/chayen-seventeenth"
+        }
+      ],
+      "expect": {
+        "validator": "package",
+        "error": "V-07 metadata-budget",
+        "message": "17 entry skills > 16"
+      }
+    }
+  ]
+}

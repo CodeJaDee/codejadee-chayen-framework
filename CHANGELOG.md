@@ -10,8 +10,8 @@ Nothing yet.
 
 ## [1.1.1] - 2026-10-20
 
-Guidance-only release (D-062). Skill names, descriptions and L0 metadata are
-unchanged, so routing metadata is the same as `1.0.0`; the package content and
+Guidance-only release (D-064). Skill names, descriptions and L0 metadata are
+unchanged, so routing metadata is the same as `1.1.0`; the package content and
 its fingerprint are not.
 
 ### Changed
@@ -35,6 +35,33 @@ its fingerprint are not.
 - Agent behaviour with the new guidance is NOT_RUN; only the offline
   validators ran. Native install and update of `1.1.1` were not tested on a
   host.
+
+## [1.1.0] - 2026-10-19
+
+Version change approved by the owner (D-063), so version-pinned installations
+receive the new Skill through a normal update.
+
+### Added
+
+- **`chayen-init` project knowledge Skill** (D-062, ADR-0012). On explicit
+  request it detects a repository's units, stacks, versions, commands, layout
+  and conventions and, after a preview and approval, writes
+  `.chayen/profile.md`, `.chayen/conventions.md`, a team-owned
+  `.chayen/rules.md` and per-unit files, plus an optional marked pointer block
+  in `AGENTS.md`, `CLAUDE.md` or `.github/copilot-instructions.md`. Refresh
+  uses `git hash-object` fingerprints to limit work to changed evidence.
+- `catalog/project-skills.json`, a third registration category for Skills
+  that own no engineering capability, with validator and negative controls.
+
+### Changed
+
+- Entry Skill ceiling 15 → 16 and L0 budget 6,500 → 7,000 characters
+  (D-062). Current usage 6,563.
+- V-10 allows the `.chayen` path in shipped content; other self-references
+  are still rejected.
+
+Routing, behaviour and host loading of the new Skill and its pointer block are
+NOT_RUN. Recorded RC lifecycle evidence covers the earlier 15-Skill package.
 
 ## [1.0.0] - 2026-10-18
 

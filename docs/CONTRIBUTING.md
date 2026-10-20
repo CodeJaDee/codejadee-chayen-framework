@@ -2,7 +2,7 @@
 
 Thank you for helping improve Chayen.
 
-- Released: **Chayen v1.1.1, MIT, CodeJaDee** (D-062; first release D-061). Contributions are
+- Released: **Chayen v1.1.1, MIT, CodeJaDee** (D-064; first release v1.0.0, D-061). Contributions are
   accepted under the [MIT licence](../LICENSE); see
   [Licence status](distribution/LICENSE_PROPOSAL.md).
 - Repository access is needed until publication is confirmed.
@@ -49,7 +49,8 @@ the owner's Support decision:
 Most requests are added as a **recipe or technology reference inside an
 existing skill**:
 
-- L0 metadata usage is 6,217 / 6,500 characters, and all 15 entry points ship;
+- L0 metadata usage is 6,563 / 7,000 characters, and all 16 entry points ship
+  (D-062 raised the ceiling to 16 for `chayen-init`);
 - each new entry skill competes with the others for selection.
 
 A new entry skill needs a recorded decision and owner approval.

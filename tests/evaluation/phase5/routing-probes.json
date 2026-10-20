@@ -316,6 +316,38 @@
       ]
     },
     {
+      "id": "p5-pos-init-project-knowledge",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-init",
+      "source": "tests/skills/trigger-cases.json#pos-init-project-knowledge",
+      "prompt": "Initialize persistent project knowledge for this repository so later agent sessions reuse the detected stack, commands, and conventions instead of rediscovering them.",
+      "expect": {
+        "any_of": [
+          "chayen-init"
+        ]
+      },
+      "forbid": [
+        "chayen-documentation"
+      ]
+    },
+    {
+      "id": "p5-pos-init-monorepo-pointer",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-init",
+      "source": "tests/skills/trigger-cases.json#pos-init-monorepo-pointer",
+      "prompt": "Set up the project profile, conventions, and team rules files for our monorepo, starting with the api and web apps, and add a pointer to them in AGENTS.md.",
+      "expect": {
+        "any_of": [
+          "chayen-init"
+        ]
+      },
+      "forbid": [
+        "chayen-documentation"
+      ]
+    },
+    {
       "id": "p5-pos-performance-memory-leak",
       "type": "positive",
       "group": "core",
@@ -1039,6 +1071,19 @@
       "expect": {
         "any_of": [
           "chayen-implementation"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-init",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-init",
+      "source": "tests/skills/trigger-cases.json#pos-init-refresh",
+      "prompt": "We upgraded to .NET 9 and moved the test projects. Refresh the project knowledge files that the coding agents read before each task.",
+      "expect": {
+        "any_of": [
+          "chayen-init"
         ]
       }
     },

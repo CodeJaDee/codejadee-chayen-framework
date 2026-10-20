@@ -1,6 +1,6 @@
 # Skills catalog
 
-Chayen ships **15 entry skills**: 13 engineering skills and two editorial skills (Thai and English). Each is one directory,
+Chayen ships **16 entry skills**: 13 engineering skills, two editorial skills (Thai and English) and one project knowledge skill. Each is one directory,
 `plugins/codejadee-chayen-framework/skills/<name>/`, containing `SKILL.md`
 and on-demand `references/`.
 
@@ -28,7 +28,8 @@ to load a skill.
 | `chayen-ai-engineering` | 19 | — | 13 |
 | `chayen-humanizer-th` (editorial) | — | — | 7 |
 | `chayen-humanizer-en` (editorial) | — | — | 9 |
-| **Total** | **206** (20 domains) | **108** | **237** |
+| `chayen-init` (project knowledge) | — | — | 5 |
+| **Total** | **206** (20 domains) | **108** | **242** |
 
 Capability counts come from `catalog/engineering-capabilities.yaml` and
 `catalog/technology-capabilities.yaml`. Every capability is
@@ -162,6 +163,23 @@ patterns are adapted from the MIT-licensed
 [humanizer](https://github.com/blader/humanizer) skill by Siqi Chen; the
 attribution and licence notice ship with the skill.
 
+### chayen-init
+
+*Project knowledge skill. Owns no engineering capabilities; registered in `catalog/project-skills.json` (D-062). New in 1.1.0.*
+
+> Initialize or refresh persistent project knowledge files for a repository when explicitly asked, writing a profile of units, stacks, versions, commands and layout, observed conventions, and a team rules file, plus an opt-in pointer block in AGENTS.md or CLAUDE.md. Not for one-off repository questions, README writing, or code changes.
+
+Example prompt: *"Initialize project knowledge for this repository so future sessions stop rediscovering the stack."*
+
+It writes `.chayen/profile.md` and `.chayen/rules.md` (read before every
+task), `.chayen/conventions.md` (read before writing code), and
+`.chayen/units/<unit>.md` for multi-unit repositories, after showing a preview
+and getting approval. `rules.md` belongs to the team and is never overwritten.
+An optional marked block in `AGENTS.md`, `CLAUDE.md` or
+`.github/copilot-instructions.md` tells every session to read the files first.
+Explicit invocation in Claude Code: `/chayen:chayen-init`. Host loading of the
+block, routing and behaviour are NOT_RUN.
+
 ## Requesting a new skill or capability
 
 Prepare a request as described in
@@ -169,8 +187,7 @@ Prepare a request as described in
 
 - Most requests become a **recipe inside an existing skill**, not a new
   skill.
-- L0 metadata usage is 6,217 / 6,500 characters (D-052), leaving 283.
-  The Entry Skill ceiling and product
-  target are 15 (D-053) and all 15 now ship, so a further skill needs a new
-  decision. New Skills still need routing and metadata checks;
+- L0 metadata usage is 6,563 / 7,000 characters (D-062), leaving 437.
+  The Entry Skill ceiling is 16 (D-062) and all 16 now ship, so a further
+  skill needs a new decision. New Skills still need routing and metadata checks;
   this internal budget does not establish host capacity or routing quality.

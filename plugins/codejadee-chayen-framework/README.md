@@ -4,6 +4,9 @@ Plugin `name`: `chayen` (renamed from `codejadee-chayen-framework` on
 2026-10-17, D-059). The directory keeps the repository name. In Claude Code
 the skills appear as `/chayen:<skill>`.
 
+**Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
+GitHub [@CodeJaDee](https://github.com/CodeJaDee)
+
 This directory is the **only** distributable unit of Chayen. Each provider
 installs it through its own native plugin mechanism.
 
@@ -15,8 +18,10 @@ installs it through its own native plugin mechanism.
 
 ## Current state: 1.1.1
 
-This is the **1.1.1 release** (2026-10-20) with 15 entry skills: MIT
-licence (`LICENSE.md`), publisher CodeJaDee. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
+This is version **1.1.1** (2026-10-20), which updates guidance text in five
+Skills (D-064) on top of 1.1.0. Version 1.1.0 added the `chayen-init` Skill
+(D-062) to the 1.0.0 release, 16 entry skills in total: MIT licence
+(`LICENSE.md`), publisher CodeJaDee. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
 VS Code and Response Style Policy host behavior are unverified/deferred.
 The list is in
 [skills/README.md](skills/README.md).

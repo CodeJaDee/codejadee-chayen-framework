@@ -13,7 +13,7 @@ runs need the owner's recorded budget and access authorization (OD-10).
 
 | File | Purpose |
 |---|---|
-| `routing-probes.json` | Frozen routing set: 44 positive (2 per Entry Skill + 14 Step 40 overlap), 12 negative, 10 no-match, 1 inspect-first, 15 explicit. Generated |
+| `routing-probes.json` | Frozen routing set: 46 positive (2 per Entry Skill + 14 Step 40 overlap), 12 negative, 10 no-match, 1 inspect-first, 16 explicit (chayen-init added under D-062). Generated |
 | `humanizer-subset.json` | 12 TH, 12 EN, 6 mixed/adversarial Step 40 quality cases; coverage map; dataset gaps; three PROPOSED (unfrozen) supplementary cases. Generated |
 | `capability-sample.json` | 24 engineering/technology scenarios and 4 composite workflows. Generated |
 | `security-cases.json` | 16 adversarial cases in 8 categories, inline disposable fixture, harmless sentinel payloads. Authored |
@@ -28,7 +28,7 @@ runs need the owner's recorded budget and access authorization (OD-10).
 ```bash
 node tests/evaluation/phase5/build-fixtures.mjs --check
 node --test tests/evaluation/phase5/phase5.test.mjs
-node tests/evaluation/phase5/run-phase5.mjs --plan            # 2,268 billed calls for the full matrix
+node tests/evaluation/phase5/run-phase5.mjs --plan            # 2,295 billed calls for the full matrix
 node tests/evaluation/phase5/run-phase5.mjs --score <results dir>
 ```
 

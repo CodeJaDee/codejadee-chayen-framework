@@ -19,7 +19,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { parseYamlSubset } from "./catalog-lib.mjs";
-import { loadEditorialRegistration, MAX_ENTRY_SKILLS } from "./skill-registration.mjs";
+import { loadEditorialRegistration, loadProjectRegistration, MAX_ENTRY_SKILLS } from "./skill-registration.mjs";
 
 const argv = process.argv.slice(2);
 const opt = (name) => { const i = argv.indexOf(name); return i > -1 ? argv[i + 1] : undefined; };
@@ -363,6 +363,8 @@ const stackTokens = new Set(["any", ...packs, ...Object.keys(stackGroups)]);
 const skills = new Map();
 const editorialRegistration = loadEditorialRegistration(root, cat);
 for (const message of editorialRegistration.errors) err("V-11.3 entry-skills", message);
+const projectRegistration = loadProjectRegistration(root, cat);
+for (const message of projectRegistration.errors) err("V-11.3 entry-skills", message);
 if (!isArr(cat.entry_skills)) err("V-11.3 entry-skills", "entry_skills must be a list");
 else {
   if (cat.entry_skills.length > MAX_ENTRY_SKILLS) err("V-11.3 entry-skills", `${cat.entry_skills.length} entry skills exceed the cap of ${MAX_ENTRY_SKILLS} (D-053)`);
@@ -379,7 +381,7 @@ else {
   const skillsDir = pluginPath("skills");
   if (fs.existsSync(skillsDir)) {
     for (const d of fs.readdirSync(skillsDir, { withFileTypes: true })) {
-      if (d.isDirectory() && !skills.has(d.name) && !editorialRegistration.skills.has(d.name)) err("V-11.3 entry-skills", `shipped skill ${d.name} is not registered in either skill category`);
+      if (d.isDirectory() && !skills.has(d.name) && !editorialRegistration.skills.has(d.name) && !projectRegistration.skills.has(d.name)) err("V-11.3 entry-skills", `shipped skill ${d.name} is not registered in any skill category`);
     }
   }
 }

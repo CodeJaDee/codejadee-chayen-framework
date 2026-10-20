@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
-| Build | `1.1.1` (released 2026-10-20, D-062; guidance text changed in five Skills since `1.0.0`, Skill metadata unchanged): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
+| Build | `1.1.1` (2026-10-20, D-064; guidance text changed in five Skills since `1.1.0`, Skill metadata unchanged): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.1.0` (2026-10-19, D-063) added `chayen-init`; `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
 | Companions | [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md), [RELEASE_READINESS.md](RELEASE_READINESS.md) |
 | User-facing summary | [docs/SECURITY_AND_LIMITATIONS.md](../SECURITY_AND_LIMITATIONS.md) |
 
@@ -17,8 +17,8 @@ executed evidence exists. It does not mean the feature is known to fail.
 |---|---|---|
 | KL-01 | **Guidance is advisory.** Markdown cannot enforce permissions, policy, or approvals. Enforcement comes from the provider, the OS, and CI. | SECURITY_MODEL.md; BC-23; V-10 |
 | KL-02 | **Skill selection is probabilistic.** The model decides from descriptions, and no provider guarantees invocation. | Provider docs S7, S12, S17, S19; probe results (§3) |
-| KL-03 | **Metadata remains bounded:** L0 6,500 (D-052); shipped 6,221 with all 15 skills, 279 free. The count ceiling of 15 (D-053) is reached, so any further skill needs a new decision. Registry checks do not prove native routing or host capacity. Step 34's 5,485/5,500 measurement remains historical. | V-07; D-052; D-053; SKILL_REGISTRATION.md |
-| KL-04 | **One plugin, 15 entry skills (13 engineering, 2 writing).** Capabilities are recipes inside those skills, not separate skills, so they are not individually discoverable by name. | ADR-0004 (PROPOSED), D-023 |
+| KL-03 | **Metadata remains bounded:** L0 7,000 (D-062); shipped 6,563 with all 16 skills, 437 free. The count ceiling of 16 (D-062) is reached, so any further skill needs a new decision. Before D-062: 6,221 / 6,500 with 15 skills. Registry checks do not prove native routing or host capacity. Step 34's 5,485/5,500 measurement remains historical. | V-07; D-052; D-053; SKILL_REGISTRATION.md |
+| KL-04 | **One plugin, 16 entry skills (13 engineering, 2 writing, 1 project knowledge).** Capabilities are recipes inside those skills, not separate skills, so they are not individually discoverable by name. | ADR-0004 (PROPOSED), D-023 |
 | KL-05 | **No executable components:** no hooks, MCP, scripts, or commands. Features that need runtime enforcement are out of scope. | ADR-0005; V-09; V-25 |
 | KL-06 | **No path for the Codex IDE extension.** OpenAI documents that it doesn't support plugins. | S13 (re-read 2026-10-15); Q-02 open |
 | KL-07 | **No Claude Code cloud sessions.** Locally installed plugins are not loaded there. | S5 |
@@ -59,7 +59,7 @@ fixture.
 | ID | Surface | Limitation |
 |---|---|---|
 | KL-30 | All CLIs | **Native marketplace install of the current 13-skill build has not been executed.** The lifecycle opt-in was denied in STEP 31; earlier-build installs passed. (R-53) |
-| KL-31 | Claude Code | Installs pin to the version, so `update` delivers new content only when the version changes (R-54); the updates to `1.0.0` and `1.1.1` have not been tested on a host. Auto-update is off for third-party marketplaces. |
+| KL-31 | Claude Code | Installs pin to the version, so `update` delivers new content only when the version changes (R-54); the updates to `1.0.0`, `1.1.0` and `1.1.1` have not been tested on a host. Auto-update is off for third-party marketplaces. |
 | KL-32 | Codex CLI | No per-plugin update command (0.160.1). Disable works only through `/plugins` or `config.toml`; the `-c` override did not disable the plugin. Current-build behaviour is not tested (no authorized install). |
 | KL-33 | Copilot CLI | Needs runtime ≥ 1.0.91 for enable/disable. Uninstall from a local marketplace only disabled the plugin. A same-name personal or project skill silently overrides a plugin skill. Current-build behaviour is not tested (isolated home unauthenticated). |
 | KL-34 | Claude Code VS Code extension | Not tested. Only static validation with the bundled 2.1.299 binary. |
@@ -86,4 +86,5 @@ fixture.
 | KL-52 | No CI pipeline runs the validators automatically. | REQ-10 evidence: "CI not set up" |
 | KL-53 | DF-02: `claude plugin validate` on the `skills/` directory fails with some CLI versions. The plugin and marketplace targets pass. | ISSUES DF-02 |
 | KL-54 | **Third-party notice obligation.** `chayen-humanizer-en` adapts MIT-licensed material (humanizer, Siqi Chen). Its notice ships inside the skill and must stay with every copy, whichever licence Chayen adopts. No root notices file exists yet. | upstream-notice.md (byte-identical to upstream `LICENSE`, 2026-10-17); LICENSE_PROPOSAL item 3 |
+| KL-56 | **`chayen-init` is unevaluated (D-062).** Its routing, its preview-before-write behaviour, the quality of generated `.chayen/` files, host loading of the pointer block and agent compliance with it are NOT_RUN. It ships from `1.1.0` (D-063); the update from `1.0.0` has not been tested on a host (KL-31). Its write safety is advisory (KL-01). | ADR-0012; D-062 |
 | KL-55 | **Installed test-machine versions differ from the analysed ones** (Claude Code 2.1.220 vs 2.1.270; Copilot CLI 1.0.89 vs 1.0.97, below the 1.0.91 needed for enable/disable). Earlier static host findings are not re-verified on them. | COMPATIBILITY_MATRIX; HUMANIZER_EVALUATION_REPORT §1 |

@@ -1,10 +1,14 @@
 # Compatibility matrix
 
-**Current build:** `1.1.1`, 15 Skills (13 engineering, 2 writing). The results below were recorded on the `0.1.0-rc.1` candidate. `1.1.1` keeps the same Skill metadata but changes guidance text in five Skills (D-062); neither `1.0.0` nor `1.1.1` has been installed on a host yet.
+**Current build:** `1.1.1` (D-064): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1` changes guidance text in five Skills since `1.1.0` and keeps the Skill metadata. The results below were recorded on the `0.1.0-rc.1` candidate, before `chayen-init` was added; none of `1.0.0`, `1.1.0` or `1.1.1` has been installed on a host yet.
 **Reviewed:** 2026-10-18, Phase 4. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 
 ## Current build
+
+Rows record the `0.1.0-rc.1` candidate, before `chayen-init` was added.
+
+<!-- historical:start -->
 
 | Check | Claude Code CLI | Codex CLI | Copilot CLI |
 |---|---|---|---|
@@ -23,6 +27,8 @@ Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 | Explicit invocation with current identity; no-match | NOT_RUN | NOT_RUN | NOT_RUN |
 | Thai/English output quality | NOT_RUN | NOT_RUN | NOT_RUN |
 | Response Style Policy loaded/followed | Deferred; unverified | Deferred; unverified | Deferred; unverified |
+
+<!-- historical:end -->
 
 These native results identify a working-tree snapshot based on
 `9ef22cc9b6abf348d145f0df8ead160207526540`, package SHA-256

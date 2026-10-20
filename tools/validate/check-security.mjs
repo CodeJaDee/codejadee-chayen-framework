@@ -7,7 +7,7 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { inside, assertTreeNoLinks } from "./safe-paths.mjs";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
-import { loadEditorialRegistration, EDITORIAL_REGISTRY } from "../catalog/skill-registration.mjs";
+import { loadEditorialRegistration, loadProjectRegistration, EDITORIAL_REGISTRY, PROJECT_REGISTRY } from "../catalog/skill-registration.mjs";
 
 const args = process.argv.slice(2);
 const root = fs.realpathSync(args.includes("--root") ? args[args.indexOf("--root") + 1] : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../.."));
@@ -96,6 +96,8 @@ try {
   const developerFiles = [...files("tools", true), ...files("tests", true)];
   scanSecrets(EDITORIAL_REGISTRY, read(EDITORIAL_REGISTRY));
   for (const message of loadEditorialRegistration(root).errors) fail("V-25.5 editorial-registration", EDITORIAL_REGISTRY, message);
+  scanSecrets(PROJECT_REGISTRY, read(PROJECT_REGISTRY));
+  for (const message of loadProjectRegistration(root).errors) fail("V-25.5 project-registration", PROJECT_REGISTRY, message);
   const sources = developerFiles.filter(f => /\.(?:mjs|sh|py|cs|csproj)$/.test(f) || f.endsWith("requirements.txt"));
   for (const file of developerFiles.filter(f => /\.(?:md|json|yaml|txt)$/.test(f) && !sources.includes(f))) scanSecrets(file, read(file));
   for (const file of sources) {

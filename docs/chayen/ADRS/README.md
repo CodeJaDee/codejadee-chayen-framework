@@ -25,6 +25,7 @@ when that verification is still pending.
 | [ADR-0009](ADR-0009-multilingual-editorial-skills.md) | Multilingual Editorial Skills | PROPOSED for remaining behavior decisions; registration/limits ACCEPTED under D-051–D-053 | D-047, D-048, D-053, MHR-001–MHR-006, MHR-011 |
 | [ADR-0010](ADR-0010-persistent-multilingual-response-style-policy.md) | Persistent Multilingual Response Style Policy | A + B ACCEPTED by the Step 39 instruction (inferred, D-056; confirm); C not claimed | D-047, D-049, D-056, MHR-007–MHR-009 |
 | [ADR-0011](ADR-0011-multilingual-quality-and-safety.md) | Multilingual Quality and Safety | PROPOSED (Step 35); Step 40 rubric and fixtures proposed under D-057, nothing scored | D-047, D-050, D-057, MHR-010–MHR-012 |
+| [ADR-0012](ADR-0012-project-knowledge-initialization.md) | Project Knowledge Initialization | ACCEPTED (owner instruction, 2026-10-19) | D-062 |
 
 Step 35 checked that 0009–0011 were unused before allocation. These proposals
 identify affected ADRs explicitly; they do not change any existing ADR's
@@ -37,7 +38,8 @@ ADR-0009, including the editorial registry proposal, remains PROPOSED.
 
 Step 36 D-053 accepts and implements ADR-0009's editorial registration and
 CA-01/V-19 components. Its latest maximum is 15, superseding D-051's 25;
-L0 remains 6,500. Remaining editorial behavior decisions and ADR-0010/0011
+L0 remains 6,500 (both later raised by D-062: maximum 16, L0 7,000, for
+`chayen-init`). Remaining editorial behavior decisions and ADR-0010/0011
 remain PROPOSED. See [SKILL_REGISTRATION.md](../SKILL_REGISTRATION.md).
 
 Source IDs (S1–S24) refer to

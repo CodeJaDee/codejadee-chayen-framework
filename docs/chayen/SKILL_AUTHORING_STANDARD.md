@@ -31,6 +31,11 @@ registry is implemented; D-051/D-052 change count and L0 rules only. See
 
 The words MUST, MUST NOT, and SHOULD are used in their usual sense.
 
+**D-062 amendment:** maximum 16 Entry Skills and L0 ≤7,000 characters; a
+project registration (`catalog/project-skills.json`) joins CA-01; PT-08 allows
+the `.chayen` directory name as a path. See
+[ADR-0012](ADRS/ADR-0012-project-knowledge-initialization.md).
+
 **Step 36 accepted registration amendment (D-053):** maximum 15 Entry Skills;
 CA-01 now uses engineering/editorial registration as described in
 [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md). `catalog/editorial-skills.json`
@@ -56,7 +61,7 @@ plugins/codejadee-chayen-framework/skills/
 
 | Level | What loads | When | Budget |
 |---|---|---|---|
-| L0 | `name` + `description` of every entry skill | Always, by the provider | ≤6,500 characters for all Chayen skills together (D-052; previously 5,500 under D-037) |
+| L0 | `name` + `description` of every entry skill | Always, by the provider | ≤7,000 characters for all Chayen skills together (D-062; 6,500 under D-052, 5,500 under D-037) |
 | L1 | `SKILL.md` body | When the provider matches the description | ≤300 lines (hard). Target ≤200 lines. |
 | L2 | One or more `references/*.md` | When the SKILL.md routing table says so | ≤300 lines each |
 
@@ -86,7 +91,7 @@ PROVIDER_SPEC_RESEARCH §5.
 | PT-05 | Only `.md` files inside a skill. No scripts, executables, or symlinks (ADR-0005). | ADR-0005 | V-09 |
 | PT-06 | Links are relative Markdown links that stay inside the skill's own directory (D-016) and are at most 2 hops from `SKILL.md`. | S24, D-016 | V-08 |
 | PT-07 | Text names no provider-only tool or variable (for example "the Bash tool", `${CLAUDE_PLUGIN_ROOT}`). Use neutral verbs: read, search, edit, run. | P-01 | V-10 |
-| PT-08 | Skills never mention "Chayen". The user must not need to know the plugin exists (REQ-03). | SK-06 | V-10 |
+| PT-08 | Skills never mention "Chayen". The user must not need to know the plugin exists (REQ-03). The `.chayen` directory name may appear as a path (D-062). | SK-06 | V-10 |
 | PT-09 | Reference files MAY start with a small frontmatter block (§5.1). Providers do not parse reference files; the block is plain text that the validators read. | S24 (references are ordinary files) | V-18 |
 
 ---
@@ -102,7 +107,7 @@ decides triggering (REQ-02) and silence (REQ-04).
 | DS-02 | Name the concrete scope: stacks, tools, file types, or artifacts, from the validator vocabulary. Use at least 2 such terms. | V-20 |
 | DS-03 | End with a boundary clause starting "Not for" or "Not a", naming at least 2 exclusions. Exclusions name the neighbouring skills' work and the unsupported stacks that would otherwise attract the skill. | V-07, V-20 |
 | DS-04 | No catch-all wording: "any task", "anything", "everything", "all kinds of", "general purpose", "etc.", "and more", "and so on", "any language", "any framework". | V-20 |
-| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard. Total L0 is ≤6,500 characters (D-052; previously 5,500 under D-037). | V-07 |
+| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard. Total L0 is ≤7,000 characters (D-062; 6,500 under D-052, 5,500 under D-037). | V-07 |
 | DS-06 | Distinct from every other entry skill: word overlap ≤0.25 target, and >0.35 is an error. | V-07b |
 | DS-07 | YAML-safe: no `": "`, no `" #"`, and no leading indicator character. | V-07 |
 | DS-08 | At most 24 enumerated items (warning). Longer lists usually mean the skill is too broad, or should name stack families instead. | V-20 |
@@ -339,7 +344,7 @@ the same reason evals are staged rather than shipped (D-018):
 
 | ID | Rule | Checked by |
 |---|---|---|
-| CA-01 | Every shipped skill belongs to exactly one engineering/editorial registration with `mapping: existing`. Editorial identities/descriptions match their registry and never own Engineering Capabilities. Planned editorial records have no shipped directory. Combined registered/shipped counts fit maximum 15. | V-11.3, V-19; shared registration rules |
+| CA-01 | Every shipped skill belongs to exactly one engineering/editorial/project registration with `mapping: existing` (project category D-062; combined maximum 16). Editorial identities/descriptions match their registry and never own Engineering Capabilities. Planned editorial records have no shipped directory. Combined registered/shipped counts fit maximum 15. | V-11.3, V-19; shared registration rules |
 | CA-02 | Every catalog recipe marked `existing` is a `kind: recipe` reference file. | V-19 |
 | CA-03 | Catalog and recipe frontmatter agree (RC-01, RC-02). | V-19 |
 | CA-04 | After any catalog change, regenerate the coverage tables with `check-catalog.mjs --write-doc`. | V-11.11 |

@@ -1,7 +1,9 @@
 # Getting started
 
 Chayen targets a public MIT v0.1.0 release under CodeJaDee. The current
-development build has 15 Skills and identifier `chayen@codejadee`.
+development build has 16 Skills and identifier `chayen@codejadee`. Version
+`1.1.0` adds `chayen-init` (D-062, D-063); update an existing `1.0.0`
+installation to receive it.
 
 ## 1. Choose a CLI
 
@@ -19,7 +21,7 @@ surfaces have no Chayen production claim. See [Compatibility](COMPATIBILITY_MATR
 Review and pin a trusted source, then use the chosen native marketplace
 manager. Until publication is confirmed you need repository access or an
 authorized local clone. Verify `chayen` from `codejadee`, enabled state,
-version and all 15 Skills. Start a new session. An old six-Skill cache or
+version and all 16 Skills. Start a new session. An old six-Skill cache or
 the former long plugin identity is not this build; each install guide
 includes migration and removal instructions.
 

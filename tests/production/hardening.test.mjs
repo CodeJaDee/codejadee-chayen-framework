@@ -43,7 +43,7 @@ mutation("unsupported framework routed positively", "tests/skills/trigger-cases.
 mutation("unsupported framework in recipe fixture", "tests/skills/recipe-cases.json", s => s.replace("our Next.js API", "our Nitro API"), "H-ROUTING");
 mutation("Thai description excludes locale copy", th, s => s.replace("and Thai copy in localization files", "and application copy"), "H-TH-SCOPE");
 mutation("Thai registration drift", "catalog/editorial-skills.json", s => s.replace("i18n configuration, routing, key wiring", "all localization"), "H-TH-SCOPE");
-mutation("runbook reverts to stale count", "tests/provider-compatibility/README.md", s => s.replace("Current Entry Skills: **15**", "Current Entry Skills: **13**"), "H-RUNBOOK");
+mutation("runbook reverts to stale count", "tests/provider-compatibility/README.md", s => s.replace("Current Entry Skills: **16**", "Current Entry Skills: **13**"), "H-RUNBOOK");
 mutation("authorization guard removed", "tests/provider-compatibility/lifecycle.mjs", s => s.replaceAll("CHAYEN_ALLOW_PROVIDER_LIFECYCLE", "IGNORED_GUARD"), "H-LIFECYCLE");
 mutation("uninstall absence check removed", "tests/provider-compatibility/lifecycle.mjs", s => s.replace("state(false)", "state(true)"), "H-LIFECYCLE");
 mutation("update content verification removed", "tests/provider-compatibility/lifecycle.mjs", s => s.replace("if (!installedBuild(profile, expected))", "if (false)"), "H-LIFECYCLE");

@@ -2,12 +2,12 @@
 
 ## What the plugin contains
 
-The installed package, `plugins/codejadee-chayen-framework/`, has 257 files,
+The installed package, `plugins/codejadee-chayen-framework/`, has 263 files,
 all **Markdown and JSON**:
 
 - two manifests;
-- 15 skills (13 engineering, 2 writing);
-- 237 references;
+- 16 skills (13 engineering, 2 writing, 1 project knowledge);
+- 242 references;
 - two README files.
 
 The package contains **no** hooks, MCP servers, agents, commands, scripts,
@@ -21,6 +21,22 @@ instruction file.
 
 Your provider may still contact its own services, as it always does. Chayen
 does not control that.
+
+## Project knowledge files
+
+`chayen-init` (D-062) is the only skill whose purpose is to write files that
+persist in your repository: `.chayen/profile.md`, `conventions.md`,
+`rules.md`, optional `units/<unit>.md`, and an optional marked block in
+`AGENTS.md`, `CLAUDE.md` or `.github/copilot-instructions.md`.
+
+- It runs only when you ask, shows every file or diff first, and writes only
+  after you approve. `rules.md` is yours; refresh never overwrites it.
+- The files hold facts with evidence, never secret values. Review them like
+  code before you commit them, because later sessions read them.
+- They are project data. A stale or edited file cannot override your
+  instructions; the source code wins when the two disagree.
+- Whether hosts load the pointer block, and whether agents follow it, is
+  NOT_RUN. Its routing and behaviour are unevaluated.
 
 ## How Chayen relates to your agent's security
 

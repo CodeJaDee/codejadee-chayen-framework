@@ -107,6 +107,10 @@ function profileFixture(t) {
   write(root, "catalog/editorial-skills.json", registry);
   // Step 37: shipped (existing) editorial records need a SKILL.md in the synthetic package too.
   for (const s of registry.skills.filter(s => s.mapping === "existing")) write(root, `${pkg}/skills/${s.name}/SKILL.md`, guarded);
+  // D-062: the project knowledge registration and its shipped Skill.
+  const project = JSON.parse(fs.readFileSync(path.join(repo, "catalog/project-skills.json"), "utf8"));
+  write(root, "catalog/project-skills.json", project);
+  for (const s of project.skills.filter(s => s.mapping === "existing")) write(root, `${pkg}/skills/${s.name}/SKILL.md`, guarded);
   fs.mkdirSync(path.join(root, "tools")); fs.mkdirSync(path.join(root, "tests"));
   return { root, pkg, script: path.join(repo, "tools/validate/check-security.mjs") };
 }
@@ -114,7 +118,7 @@ test("offline profile accepts the metadata-only synthetic baseline", t => {
   const { root, script } = profileFixture(t), r = run(script, ["--root", root]);
   assert.equal(r.status, 0, output(r));
 });
-for (const mode of ["runtime-extension", "executable-asset", "authority-guard", "remote-marketplace", "secret-value", "malformed-json-secret", "editorial-runtime-field", "editorial-secret-value"]) {
+for (const mode of ["runtime-extension", "executable-asset", "authority-guard", "remote-marketplace", "secret-value", "malformed-json-secret", "editorial-runtime-field", "editorial-secret-value", "project-runtime-field", "project-secret-value"]) {
   test(`offline profile rejects ${mode}`, t => {
     const { root, pkg, script } = profileFixture(t);
     const token = "ghp_" + "A".repeat(36); // Synthetic sentinel, never a credential.
@@ -129,6 +133,12 @@ for (const mode of ["runtime-extension", "executable-asset", "authority-guard", 
       if (mode === "editorial-runtime-field") registry.skills[0].hooks = { start: "synthetic" };
       else registry.skills[0].description = token;
       write(root, "catalog/editorial-skills.json", registry);
+    }
+    if (mode.startsWith("project-")) {
+      const registry = JSON.parse(fs.readFileSync(path.join(root, "catalog/project-skills.json"), "utf8"));
+      if (mode === "project-runtime-field") registry.skills[0].hooks = { start: "synthetic" };
+      else registry.skills[0].description = token;
+      write(root, "catalog/project-skills.json", registry);
     }
     const r = run(script, ["--root", root]);
     assert.equal(r.status, 1, output(r));

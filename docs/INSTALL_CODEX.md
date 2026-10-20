@@ -36,7 +36,7 @@ codex plugin list --marketplace codejadee
 The add/list forms were verified on Codex CLI 0.163.0 in Phase 4; confirm availability
 with installed help on other versions. Missing installation controls mean BLOCKED; do not
 replace the native plugin with copied Skills. Verify identity, version,
-enabled state and all 15 Skills, then start a new session.
+enabled state and all 16 Skills, then start a new session.
 
 ## Renamed from codejadee-chayen-framework
 
@@ -89,10 +89,13 @@ plugin installation/removal, and unverified on hosts.
 
 ## Verification status
 
+<!-- historical:start -->
 Phase 4 verified supported native lifecycle and migration on Codex CLI 0.163.0
 with temporary profiles: install/list/15 Skills, config toggle, changed-version
 and full-content remove/add replacement, absence, reinstall and fresh process.
-Dedicated disable/enable/update subcommands are UNSUPPORTED. Committed candidate
+Dedicated disable/enable/update subcommands are UNSUPPORTED.
+<!-- historical:end -->
+That run predates `chayen-init` (D-062). Committed candidate
 qualification is pending. Routing and explicit invocation remain NOT_RUN;
 see [Compatibility](COMPATIBILITY_MATRIX.md). Security/Support remains LATER;
 no channel is selected. The [official OpenAI plugin guide](https://developers.openai.com/plugins/build/plugins)

@@ -17,7 +17,10 @@ Version strategy and the approved public/MIT/CodeJaDee target are in
 
 - [x] Target: public MIT Chayen v0.1.0, publisher CodeJaDee.
 - [x] Production hosts: Claude Code CLI, Codex CLI, Copilot CLI.
+<!-- historical:start -->
 - [x] 15 Skills, 206 engineering and 108 technology capabilities, 12 workflows.
+<!-- historical:end -->
+- [ ] Next release: include `chayen-init` (D-062), 16 Skills in total.
 - [x] Standalone Nitro/Elysia excluded; no new runtime components.
 - [ ] Later owner decisions: rights-holder line and Security/Support.
   Security/Support is LATER; no contact is selected by this checklist.

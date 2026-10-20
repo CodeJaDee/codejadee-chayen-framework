@@ -8,8 +8,8 @@
 > Git tag `v1.0.0`. No GitHub Release is created. The table below is current;
 > the strategy text after it is the earlier `0.1.0` plan.
 
-> **Decision D-062 (2026-10-20):** version `1.1.1`, a guidance-only update to
-> the same 15 Skills. Git tags remain optional.
+> **Decision D-064 (2026-10-20):** version `1.1.1`, a guidance-only update to
+> the same 16 Skills, after `1.1.0` (D-063). Git tags remain optional.
 
 ## Current build
 
@@ -17,10 +17,10 @@
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `1.1.1` in both manifests and both Copilot version fields (D-062) |
+| Version | `1.1.1` in both manifests and both Copilot version fields (D-064; `1.1.0` under D-063, `1.0.0` under D-061) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
-| Entry Skills | 15: 13 engineering, 2 writing |
+| Entry Skills | 16: 13 engineering, 2 writing, 1 project knowledge |
 | Project licence | MIT; root `LICENSE`, plugin `LICENSE.md` and both manifests' `license` |
 | Upstream licence | Existing Humanizer MIT notice/attribution retained and guarded |
 | Public source | `https://github.com/CodeJaDee/codejadee-chayen-framework`, public since 2026-10-18 |

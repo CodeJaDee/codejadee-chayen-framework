@@ -27,7 +27,7 @@ copilot skill list
 ```
 
 Alternatively add an authorized local clone path. Verify identity, version,
-enabled state and all 15 Skills; start a new session. Intended explicit
+enabled state and all 16 Skills; start a new session. Intended explicit
 syntax is `/chayen-security <request>`, pending current-build verification.
 Same-name personal Skills can shadow plugin Skills; inspect native discovery.
 
