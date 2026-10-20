@@ -26,6 +26,41 @@
       ]
     },
     {
+      "id": "rc-04-001-pos-vague-request",
+      "capability": "CAP-04-001",
+      "polarity": "positive",
+      "prompt": "The account settings page feels clunky. Make it better.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
+      "checks": [
+        "Clarifying questions about what 'better' means arrive in one message before any file edit",
+        "No file is edited before observable acceptance criteria are stated",
+        "The proposed task contract lists in-scope and out-of-scope items"
+      ]
+    },
+    {
+      "id": "rc-04-001-neg-specified-edit",
+      "capability": "CAP-04-001",
+      "polarity": "negative",
+      "prompt": "Change the Save button on the account settings page from blue to green.",
+      "expect": { "skill": "none", "not_loads": "references/task-contract.md" },
+      "checks": [
+        "No clarifying question is asked",
+        "No task contract is produced"
+      ]
+    },
+    {
+      "id": "rc-04-001-pos-project-map",
+      "capability": "CAP-04-001",
+      "polarity": "positive",
+      "prompt": "Show each user's last login date in the admin users table, from the database through the API to the UI.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
+      "checks": [
+        "When .chayen/profile.md exists in the fixture, it is read before searching the source",
+        "Every fact taken from .chayen/profile.md is confirmed in the source before it is used",
+        "A conflict between .chayen/profile.md and the source is resolved in favour of the source and reported as possible staleness"
+      ]
+    },
+    {
       "id": "rc-04-002-pos-soft-delete-plan",
       "capability": "CAP-04-002",
       "polarity": "positive",
@@ -92,6 +127,18 @@
       "checks": [
         "No change-summary template with a verification table is produced",
         "The output is written for customers, not reviewers"
+      ]
+    },
+    {
+      "id": "rc-04-007-pos-ac-verdicts",
+      "capability": "CAP-04-007",
+      "polarity": "positive",
+      "prompt": "Write the change summary for the export feature. One acceptance criterion has no test yet.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "Each acceptance criterion has exactly one verdict: accept, verify_more or revise",
+        "The criterion without a test is verify_more, never accept",
+        "The outcome is not DONE while any criterion is not accept"
       ]
     },
     {
@@ -2001,6 +2048,18 @@
       "expect": { "skill": "chayen-architecture", "not_loads": "references/schema-and-data-migration.md" },
       "checks": [
         "Platform migration planning is architecture work"
+      ]
+    },
+    {
+      "id": "rc-09-007-pos-real-schema",
+      "capability": "CAP-09-007",
+      "polarity": "positive",
+      "prompt": "Write a one-off script that copies each customer's city into the new addresses table.",
+      "expect": { "skill": "chayen-data", "loads": "references/schema-and-data-migration.md" },
+      "checks": [
+        "Table and column names are taken from migrations, the data model or the catalog, with the source cited",
+        "No guessed table or column name appears in the script",
+        "An existing repository script or command is reused when one fits, or its absence is stated"
       ]
     },
     {

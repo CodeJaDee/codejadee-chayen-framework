@@ -65,7 +65,10 @@ If the request does not fit, stop following this skill and continue normally wit
   - package manager (from the lock file);
   - the real build and test commands;
   - the closest analogous code;
-  - the accepted ADRs that constrain the change.
+  - the accepted ADRs that constrain the change;
+  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+    map, confirm each fact in the source, and trust the source when the two
+    disagree.
 - **Ask once if missing:**
   - expected behaviour;
   - affected users or roles;

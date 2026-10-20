@@ -42,6 +42,11 @@ If the request does not fit, stop following this skill and continue normally wit
 - **Know the engine.** Identify the engine, version, edition or managed
   service, and the access tool before writing SQL. Load one engine
   reference. Never write engine-specific SQL for an unknown engine.
+- **Use the real schema.** Take table, column, and type names from the
+  migrations, the data model, or the database catalog before writing a query
+  or script, and never guess a name; when the schema cannot be read, ask.
+  Prefer the repository's existing scripts and commands over a new one-off
+  script.
 - **Production is read-only by default.** Treat any database that is not a
   local or disposable one as production until shown otherwise. Run only
   bounded read queries there, and only when the user has provided access
@@ -65,7 +70,10 @@ If the request does not fit, stop following this skill and continue normally wit
     isolation settings;
   - the migration tool, data-access library, and naming conventions;
   - table sizes and write load where performance or locking matters;
-  - existing jobs, pipelines, and data checks.
+  - existing jobs, pipelines, and data checks;
+  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+    map, confirm each fact in the source, and trust the source when the two
+    disagree.
 - **Ask when missing and it matters:** invariants and business rules,
   downtime tolerance, retention periods (never invented), RPO and RTO
   targets, and the conflict or cleanup decision for bad rows.

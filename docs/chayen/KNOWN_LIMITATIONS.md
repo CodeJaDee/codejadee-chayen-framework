@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
-| Build | `1.1.1` (2026-10-20, D-064; guidance text changed in five Skills since `1.1.0`, Skill metadata unchanged): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.1.0` (2026-10-19, D-063) added `chayen-init`; `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
+| Build | `1.1.2` (2026-10-20, D-065; with `1.1.1`, D-064, guidance text changed in five Skills since `1.1.0`, Skill metadata unchanged): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.1.0` (2026-10-19, D-063) added `chayen-init`; `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
 | Companions | [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md), [RELEASE_READINESS.md](RELEASE_READINESS.md) |
 | User-facing summary | [docs/SECURITY_AND_LIMITATIONS.md](../SECURITY_AND_LIMITATIONS.md) |
 
@@ -34,7 +34,7 @@ executed evidence exists. It does not mean the feature is known to fail.
 | KL-12 | **Nitro and Elysia are out of scope. Python has general guidance only.** Python retains `python-web-apis.md` and `python-testing.md` with no cataloged technology pack. Historical standalone framework guidance was withdrawn in Phase 2. | STK-10/11 NOT_APPLICABLE; STK-12 IN_PROGRESS; R-45 |
 | KL-13 | **52 of 159 framework fact checks are NOT_RUN.** Angular 19, React/Next.js 13, Vue/Nuxt/Vite 16, .NET 8 SDK 2, and Node tools/browser 2 need toolchains that are not installed. | Fact runs 2026-10-15: 107 PASS / 0 FAIL / 52 NOT_RUN; R-41, R-43, R-49 |
 | KL-14 | **Fact checks ran on single versions:** SQL Server 2025 Express LocalDB, PostgreSQL 18.6 (C locale), .NET 10, Node 24.15.0. | R-46, R-47 |
-| KL-15 | **Recipe (445 cases), technology (315), and workflow (47) cases are specifications only.** No agent runner executes them. | EVALUATION_GAPS EG-06..EG-08 |
+| KL-15 | **Recipe (450 cases), technology (315), and workflow (47) cases are specifications only.** No agent runner executes them. | EVALUATION_GAPS EG-06..EG-08 |
 
 ## 3. Behaviour limitations (measured)
 
@@ -59,7 +59,7 @@ fixture.
 | ID | Surface | Limitation |
 |---|---|---|
 | KL-30 | All CLIs | **Native marketplace install of the current 13-skill build has not been executed.** The lifecycle opt-in was denied in STEP 31; earlier-build installs passed. (R-53) |
-| KL-31 | Claude Code | Installs pin to the version, so `update` delivers new content only when the version changes (R-54); the updates to `1.0.0`, `1.1.0` and `1.1.1` have not been tested on a host. Auto-update is off for third-party marketplaces. |
+| KL-31 | Claude Code | Installs pin to the version, so `update` delivers new content only when the version changes (R-54); the updates to `1.0.0`, `1.1.0`, `1.1.1` and `1.1.2` have not been tested on a host. Auto-update is off for third-party marketplaces. |
 | KL-32 | Codex CLI | No per-plugin update command (0.160.1). Disable works only through `/plugins` or `config.toml`; the `-c` override did not disable the plugin. Current-build behaviour is not tested (no authorized install). |
 | KL-33 | Copilot CLI | Needs runtime ≥ 1.0.91 for enable/disable. Uninstall from a local marketplace only disabled the plugin. A same-name personal or project skill silently overrides a plugin skill. Current-build behaviour is not tested (isolated home unauthenticated). |
 | KL-34 | Claude Code VS Code extension | Not tested. Only static validation with the bundled 2.1.299 binary. |

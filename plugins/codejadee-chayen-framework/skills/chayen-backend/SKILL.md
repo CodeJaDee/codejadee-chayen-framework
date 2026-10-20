@@ -77,7 +77,10 @@ If the request does not fit, stop following this skill and continue normally wit
   - data access and database;
   - validation, auth, job, messaging, and HTTP-client libraries;
   - test setup;
-  - the real build and test commands.
+  - the real build and test commands;
+  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+    map, confirm each fact in the source, and trust the source when the two
+    disagree.
 - **Ask when missing and it matters:**
   - expected status codes or error format;
   - authorization rules;

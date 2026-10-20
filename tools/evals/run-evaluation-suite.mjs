@@ -228,7 +228,7 @@ if (factsDir) {
 const cats = [
   [1, "Plugin schema and packaging", "S-ALL (V-01..V-04, V-09), S-IDENTITY, claude plugin validate --strict", "-", "lifecycle runbook R-3/R-5/R-7", "VS Code R-4/R-8"],
   [2, "Skill structure and reference integrity", "S-ALL (V-05..V-08, V-12, V-17..V-22)", "-", "pr-explicit-reference, ref checks on 5 probes", "-"],
-  [3, "206 engineering capability coverage", "S-ALL (V-11), S-AUDIT206, traceability T-206", "-", "recipe-cases.json (445) need a recipe runner (G-12)", "-"],
+  [3, "206 engineering capability coverage", "S-ALL (V-11), S-AUDIT206, traceability T-206", "-", `recipe-cases.json (${recipeCases.length}) need a recipe runner (G-12)`, "-"],
   [4, "Technology pack coverage", "S-ALL (V-23), traceability T-TECH, framework fact runners", "-", "pr-angular-form, pr-postgres-optimization, pr-sqlserver-query, pr-nextjs-route, pr-pytest", "-"],
   [5, "Automatic skill discovery", "S-EVALSYNC (186 trigger cases)", "lexical proxy top-1/top-3", "positive probes", "-"],
   [6, "Negative/no-match behavior", "S-EVALSYNC", "lexical proxy no-match", "pr-rust-unsupported, pr-general-conversation, pr-explicit-decline", "-"],

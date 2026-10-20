@@ -1513,6 +1513,29 @@ Decision statuses:
   update of `1.1.1`, and routing remain NOT_RUN. The open items accepted under
   D-061 and the NOT_RUN items of D-062 stay open.
 
+### D-065 — Release `1.1.2`
+
+- **Status:** ACCEPTED (explicit maintainer instruction, 2026-10-20: apply the
+  recommended project-map, real-schema and failure-to-fix follow-ups as
+  `1.1.2`).
+- **Decision:**
+  - `version` is `1.1.2` in both manifests, the Copilot marketplace entry and its
+    `metadata.version`. Patch bump: guidance text only, no added, removed or
+    renamed Skill. Git tags remain optional; no GitHub Release.
+  - The implementation, backend, frontend, data and testing Skills list
+    `.chayen/profile.md` and `.chayen/rules.md` under Discover, as a map
+    confirmed against the source. This amends ADR-0012 decision 5, which
+    relied on the opt-in pointer block alone; it adds no always-on content.
+  - `chayen-data` adds a "Use the real schema" principle: names come from
+    migrations, the data model or the catalog, never a guess, and existing
+    scripts are preferred over new one-off scripts.
+  - `docs/CONTRIBUTING.md` describes how an observed agent failure becomes a
+    case in `tests/skills/` and the smallest guidance fix.
+  - Five recipe cases (445 → 450) cover the `1.1.1` and `1.1.2` guidance.
+- **Evidence at release:** offline validators only. The new recipe cases,
+  agent behaviour, routing, and native install and update of `1.1.2` are
+  NOT_RUN.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

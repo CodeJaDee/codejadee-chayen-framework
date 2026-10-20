@@ -8,6 +8,35 @@ All notable changes to codejadee-chayen-framework are recorded here.
 
 Nothing yet.
 
+## [1.1.2] - 2026-10-20
+
+Guidance-only release (D-065). Skill names, descriptions and L0 metadata are
+unchanged.
+
+### Changed
+
+- **Project map before searching:** `chayen-implementation`,
+  `chayen-backend`, `chayen-frontend`, `chayen-data` and `chayen-testing` read
+  `.chayen/profile.md` and `.chayen/rules.md` when present, as a map: each fact
+  is confirmed in the source, and the source wins when the two disagree
+  (amends ADR-0012 decision 5).
+- **Real schema only:** `chayen-data` takes table, column and type names from
+  migrations, the data model or the database catalog, never a guess, and
+  prefers the repository's existing scripts over new one-off scripts.
+- `docs/CONTRIBUTING.md` describes how an observed agent failure becomes a
+  test case and the smallest guidance fix.
+
+### Added
+
+- Five recipe cases in `tests/skills/recipe-cases.json` (445 → 450) for
+  ambiguous and fully specified requests, the project map, acceptance
+  verdicts and real-schema scripts.
+
+### Not verified
+
+- The new cases, agent behaviour and native install and update of `1.1.2` are
+  NOT_RUN; only the offline validators ran.
+
 ## [1.1.1] - 2026-10-20
 
 Guidance-only release (D-064). Skill names, descriptions and L0 metadata are

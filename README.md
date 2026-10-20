@@ -1,8 +1,9 @@
 # Chayen
 
 Chayen is a native plugin of engineering and Thai/English writing Skills for
-coding agents. Publisher: **CodeJaDee**. Current version **v1.1.1**
-(2026-10-20, acceptance-evidence guidance; D-064). v1.1.0 (2026-10-19) added
+coding agents. Publisher: **CodeJaDee**. Current version **v1.1.2**
+(2026-10-20, project map and real-schema guidance; D-065). v1.1.1 added
+acceptance-evidence guidance (D-064) and v1.1.0 (2026-10-19) added
 `chayen-init` (D-063); first released as v1.0.0 on 2026-10-18
 under the [MIT licence](LICENSE), from the public repository
 `CodeJaDee/codejadee-chayen-framework` (owner decision D-061). The owner released
@@ -19,7 +20,7 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Current version | `1.1.1` |
+| Current version | `1.1.2` |
 | Entry Skills | 16 |
 | Package files | 263 |
 | Skill references | 242 |

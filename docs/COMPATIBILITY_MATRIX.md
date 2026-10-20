@@ -1,6 +1,6 @@
 # Compatibility matrix
 
-**Current build:** `1.1.1` (D-064): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1` changes guidance text in five Skills since `1.1.0` and keeps the Skill metadata. The results below were recorded on the `0.1.0-rc.1` candidate, before `chayen-init` was added; none of `1.0.0`, `1.1.0` or `1.1.1` has been installed on a host yet.
+**Current build:** `1.1.2` (D-065): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1` and `1.1.2` change guidance text in five Skills since `1.1.0` and keep the Skill metadata. The results below were recorded on the `0.1.0-rc.1` candidate, before `chayen-init` was added; none of `1.0.0`, `1.1.0`, `1.1.1` or `1.1.2` has been installed on a host yet.
 **Reviewed:** 2026-10-18, Phase 4. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 

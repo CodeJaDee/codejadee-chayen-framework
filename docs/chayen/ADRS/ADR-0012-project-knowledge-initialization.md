@@ -57,6 +57,10 @@ Constraints that shape the design:
    `<!-- BEGIN .chayen project knowledge v1 -->` in `AGENTS.md`, `CLAUDE.md` or
    `.github/copilot-instructions.md`, added only with separate approval. The
    plugin ships no instruction file; installing it changes nothing.
+   *Amended by D-065 (1.1.2):* the implementation, backend, frontend, data
+   and testing Skills also read `.chayen/profile.md` and `.chayen/rules.md`
+   when present, with the pointer block's rule that the source wins. This
+   applies only when one of those Skills is loaded; nothing becomes always-on.
 6. **A third registration category**, `catalog/project-skills.json`, for
    Skills that own no engineering capability. It mirrors the editorial
    registry: closed schema, allow-list (`chayen-init`), mapping/file parity,

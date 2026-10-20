@@ -2,7 +2,7 @@
 
 Thank you for helping improve Chayen.
 
-- Released: **Chayen v1.1.1, MIT, CodeJaDee** (D-064; first release v1.0.0, D-061). Contributions are
+- Released: **Chayen v1.1.2, MIT, CodeJaDee** (D-065; first release v1.0.0, D-061). Contributions are
   accepted under the [MIT licence](../LICENSE); see
   [Licence status](distribution/LICENSE_PROPOSAL.md).
 - Repository access is needed until publication is confirmed.
@@ -16,7 +16,7 @@ Support channel. No issue tracker or address is approved here. Include:
 | Field | Example |
 |---|---|
 | Provider and surface, with version | Claude Code CLI 2.1.270 / Copilot CLI 1.0.97 / VS Code 1.141.1 + Copilot Chat |
-| Chayen version | For example `1.1.1`, from `claude plugin list`, `codex plugin list`, or `copilot plugin list` |
+| Chayen version | For example `1.1.2`, from `claude plugin list`, `codex plugin list`, or `copilot plugin list` |
 | What you asked | The prompt, without secrets or proprietary code |
 | What happened | Which skill loaded, if any; the relevant part of the answer |
 | What you expected | The skill you expected, or "no skill" |
@@ -101,6 +101,21 @@ node tools/ci/check-workflow.mjs                        # pinned linter download
 - add or update positive and negative cases in `tests/skills/`;
 - regenerate the Claude eval cases with
   `node tools/evals/generate-claude-evals.mjs`.
+
+**When an agent gets a task wrong with a skill loaded:**
+
+1. Keep the redacted prompt, the skill and reference that loaded, and the
+   step where the agent went wrong, for example a guessed column name or a
+   criterion marked done without evidence.
+2. Reproduce it as a case in `tests/skills/`: a recipe case in
+   `recipe-cases.json` whose `checks` name the observable mistake, or a
+   trigger case in `trigger-cases.json` for a routing problem.
+3. Change the smallest piece of guidance that prevents the mistake, in the
+   reference that loaded before the entry `SKILL.md`. When a command or
+   approach worked in the failed session, write that down instead of new
+   general advice.
+4. Run the validators. The new case stays NOT_RUN until an authorized
+   provider run grades it.
 
 Native provider validation is a separate authorized check when the CLI is
 available; it is not a dependency of ordinary CI. Provider runs

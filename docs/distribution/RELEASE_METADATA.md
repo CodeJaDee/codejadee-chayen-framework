@@ -11,13 +11,16 @@
 > **Decision D-064 (2026-10-20):** version `1.1.1`, a guidance-only update to
 > the same 16 Skills, after `1.1.0` (D-063). Git tags remain optional.
 
+> **Decision D-065 (2026-10-20):** version `1.1.2`, a second guidance-only
+> update to the same 16 Skills.
+
 ## Current build
 
 | Field | Actual value |
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `1.1.1` in both manifests and both Copilot version fields (D-064; `1.1.0` under D-063, `1.0.0` under D-061) |
+| Version | `1.1.2` in both manifests and both Copilot version fields (D-065; `1.1.1` under D-064, `1.1.0` under D-063, `1.0.0` under D-061) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
 | Entry Skills | 16: 13 engineering, 2 writing, 1 project knowledge |
