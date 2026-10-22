@@ -31,7 +31,7 @@ blockers.
 | 12 | Mentor Knowledge Distillation | 11 | PASS | — |
 | 13 | Independent Evidence Audit | 08, 09 | PASS | — |
 | 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | PASS | — |
-| 15 | Coding Evaluation Fixtures | 14 | NOT_STARTED | Stack toolchains (for example a .NET 8 SDK) must be available |
+| 15 | Coding Evaluation Fixtures | 14 | PASS | Angular component specs NOT_RUN (no node_modules); no PostgreSQL fixture (no local server) |
 | 16 | Isolated Coding Agent Runner | 15 | NOT_STARTED | Live runs need owner authorization, a budget cap and isolated signed-in homes |
 | 17 | Independent Grading and Metrics | 16 | NOT_STARTED | Human grading needs a named grader |
 | 18 | Routing and Context Benchmark | 14, 17 | NOT_STARTED | Billed calls need authorization; Codex and Copilot homes need authentication (EG-02, EG-03) |
@@ -278,14 +278,14 @@ graph.
 
 | Field | Value |
 |---|---|
-| Objective | Add buildable, per-stack fixtures with hidden acceptance tests for coding tasks (closes part of EG-06 and EG-14: today one non-buildable multi-stack fixture exists). |
+| Objective | Add buildable, per-stack fixtures with hidden acceptance tests for coding tasks (closes part of EG-06 and EG-14: today one non-buildable multi-stack fixture exists). **As executed under the owner's Step 15 instruction (D-072):** six tasks in `tests/evaluation/coding/tasks/` (A backend bug fix, B cross-layer CSV export, C Angular interaction, D SQL Server schema, E ambiguous scope, F evidence completion), each with `repo/`, evaluator-only `grader/`, `reference/` and known-bad `negatives/`; `run-coding-fixtures.mjs --verify` gave 28/28 runs as expected. |
 | Prerequisite | 14 |
 | Target files | New `tests/evaluation/coding/` fixtures and task specs; `tools/validate/check-security.mjs` scope if new file types are added |
 | Expected artifacts | Fixtures, task specifications, hidden tests, fixture README |
 | Acceptance criteria | Each fixture builds and its hidden tests fail before and pass with a reference solution, verified locally; no fixture is inside the plugin; secrets scan passes |
-| Evidence | STEP_LOG entry with build and test output per stack |
-| Status | NOT_STARTED |
-| Blockers | Local toolchains per stack. Stacks without a toolchain stay `NOT_RUN`. |
+| Evidence | [STEP_LOG.md — Step 15](STEP_LOG.md#step-15--coding-evaluation-fixtures); `tests/evaluation/coding/results/2026-10-22-verify.json` |
+| Status | PASS |
+| Blockers | Angular component specs NOT_RUN until `npm ci` is authorized; PostgreSQL needs a local server |
 
 ### 16 — Isolated Coding Agent Runner
 

@@ -1779,6 +1779,46 @@ Decision statuses:
   caught, and the historical fingerprints recomputed from git history. No
   candidate is committed yet: the current tree is uncommitted.
 
+### D-072 — Reproducible real-coding evaluation fixtures
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 15: "Build deterministic, realistic software engineering
+  tasks for comparing coding agents with and without Chayen").
+- **Decision:**
+  - Six developer-only tasks live in `tests/evaluation/coding/tasks/`:
+    - A: backend bug fix;
+    - B: cross-layer CSV export;
+    - C: Angular interaction;
+    - D: SQL Server schema correctness;
+    - E: ambiguous scope;
+    - F: evidence completion.
+  - Each task has a `task.json` (`chayen-coding-task/1`): prompt, stack and
+    versions, the repository's commands, scope globs, acceptance criteria
+    with their oracles, grading checks, negative checks, expected outcomes
+    and reset instructions.
+  - Each task also has:
+    - `repo/`, the only part given to an agent;
+    - evaluator-only `grader/`, a `reference/` solution;
+    - at least two `negatives/` (known-bad outputs the grader must reject).
+  - `run-coding-fixtures.mjs` grades a copy of a workspace and never the
+    workspace itself. `--verify` proves that each initial state and every
+    negative fails and each reference passes.
+  - .NET restores use only the local NuGet cache. Task D runs on LocalDB
+    only and drops its `ChayenCoding_<guid>` databases.
+  - A missing toolchain is NOT_RUN with the exact dependency; nothing is
+    installed and no network source is used.
+  - Static frontend checks are labelled weak. NOT_RUN never counts as a
+    pass.
+- **Stacks:** .NET 10, ASP.NET Core 10 and SQL Server (LocalDB) run here.
+  Angular 19.2 sources are present, but their component specs are NOT_RUN
+  without `node_modules`. PostgreSQL has no fixture, because there is no
+  local server.
+- **Not changed:** the plugin, Skill guidance, the existing
+  `tests/evaluation/fixture` and the Phase 5 specifications.
+- **Evidence:** `--verify` 28/28 runs as expected
+  (`tests/evaluation/coding/results/2026-10-22-verify.json`); G-24 and
+  G-24T.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

@@ -2058,3 +2058,181 @@ by weakening a check:
 
 Stopped after Step 14, as instructed. Step 15 (Coding Evaluation Fixtures)
 is not started; it needs stack toolchains (for example a .NET 8 SDK).
+
+## Step 15 — Coding Evaluation Fixtures
+
+- **Date:** 2026-10-22
+- **Status:** PASS (.NET and SQL Server fully executed; Angular component
+  specs NOT_RUN; no PostgreSQL fixture)
+- **Starting state:** branch `develop`, **HEAD `209e267`** ("Add candidate
+  identity regression tests and independent evidence audit tool"). **The
+  owner made this commit after Step 14, not the agent.** It contains Steps
+  13–14. The worktree was clean.
+- **Authorization:** the owner's STEP 15 instruction (2026-10-22), recorded
+  as **D-072** (ACCEPTED). No software was installed and no network source
+  was used.
+
+### Environment inspected (read-only)
+
+| Tool | Found | Used for |
+|---|---|---|
+| .NET SDK | 10.0.400, 10.0.401 | Build and test of A, B, D, E, F |
+| Local NuGet cache | EF Core / SqlClient 6.1.1, Mvc.Testing 10.0.8, xUnit 2.9.3, runner 3.1.5, Test SDK 17.14.1, the versions of the existing fact fixtures | Offline restore (`--source <cache> -p:NuGetAudit=false`; restore took 0.9 s) |
+| SqlLocalDB / sqlcmd | Instance `ChayenFacts` (existing, dedicated) | Task D oracle |
+| Node | 24.15.0 (TypeScript type stripping) | Task C Node oracle |
+| Angular CLI, `@angular/*` | **Missing** | Angular specs NOT_RUN: `npm install` needs network access, which is not authorized |
+| `psql`, `pg_ctl` | **Missing** | No PostgreSQL fixture; Task D uses SQL Server, as the instruction allows |
+
+Versions follow the guidance and existing fixtures: .NET 10 (`global.json`
+10.0.400 with `latestFeature`), and Angular 19.2. The frontend references
+target Angular 17+ features: standalone components, signals and built-in
+control flow.
+
+### Fixtures (`tests/evaluation/coding/`)
+
+| Task | Path | Initial bug or need | Oracle | Negatives (known-bad outputs) |
+|---|---|---|---|---|
+| A Backend bug fix | `tasks/A-dotnet-bugfix/` | `totalPages = count / size + 1` (an extra page at exact multiples and for 0 orders) | 12 hidden API tests: ceiling, unchanged JSON shape, page past the end, 400 problem details. **regression-test-detects:** the agent's tests must fail against the original `src/` | N1 fix with no regression test; N2 contract renamed; N3 special-cased 20/10 |
+| B Cross-layer feature | `tasks/B-crossstack-csv-export/` | No export | 9 hidden API tests: RFC 4180 parse incl. comma, quote and line break; `de-DE` culture; 401 / 403 / list unchanged. Weak static check for frontend wiring. Angular TestBed spec (NOT_RUN) | N1 no role check; N2 naive CSV; N3 backend only |
+| C Frontend behaviour | `tasks/C-angular-interaction/` | Filter stub; the template has no bindings | 7-test Node oracle for the filter rules (type stripping); weak static template check; Angular TestBed spec (NOT_RUN) | N1 logic without wiring; N2 case-sensitive, no trim |
+| D Database correctness | `tasks/D-sqlserver-schema/` | `NotImplementedException`; schema `customer.display_name`, `sales_order.total_amount`, primary emails in `customer_contact`; the DTO says Name, Email, Revenue | 6 hidden tests on a disposable LocalDB database built from the workspace's own `db/migrations`; SQL errors 207 and 208 are reported as `INVENTED_SCHEMA` | N1 guessed `Customers`/`Email`/`Total`; N2 counts cancelled orders; N3 ignores `is_primary`; N4 adds a migration to fit the guess |
+| E Scope and requirements | `tasks/E-ambiguous-scope/` | "Clean up the order validation and make it better." | No file may change; the answer must ask a question and must not claim DONE; visible tests | N1 refactor that merges error codes (visible tests still pass); N2 new helper file; N3 asks only after editing |
+| F Evidence completion | `tasks/F-evidence-completion/` | AC-3 is tested only by an integration test that is SKIPPED (no SQL Server configured) | Unit tests (6) pass; the integration test is confirmed SKIPPED; the answer must give AC-3 verify_more and no DONE; boundary forbids code and test edits | **N1 false DONE claim**; N2 PARTIAL with the skipped AC-3 accepted; N3 removes the skip from a hollow test, reports DONE |
+
+Every task has:
+- a `task.json` (`chayen-coding-task/1`) with the prompt, stack and versions
+  with their sources, the repository's own build and test commands, the
+  scope (allowed and must-not-change globs), acceptance criteria each with
+  its oracle, grading checks, negative checks, expected outcomes and reset
+  instructions;
+- `repo/` (the only part given to an agent), evaluator-only `grader/`, a
+  `reference/` overlay, and negatives.
+
+Hidden checks are copied into `<workspace>/.grader/` only while grading,
+and `.grader/` is git-ignored in every `repo/`.
+
+### Runner
+
+`tests/evaluation/coding/run-coding-fixtures.mjs`:
+- `--check`: structure and safety, fast.
+- `--verify`: initial FAIL, reference PASS, negatives FAIL, with the
+  expected failing checks.
+- `--grade`: grades an agent workspace and final answer, for Step 16.
+
+How it works:
+- Changes are found by content against `repo/`, ignoring `bin`, `obj`,
+  `node_modules`, `.git`, `.grader` and line endings.
+- Grading always uses a disposable copy and never writes to the graded
+  workspace (tested).
+- Output paths are scrubbed to `<workspace>`, `<tmp>` and `<home>`.
+- The checks are listed in `tests/evaluation/coding/README.md`.
+
+### Verification results
+
+`node tests/evaluation/coding/run-coding-fixtures.mjs --verify --out
+tests/evaluation/coding/results/2026-10-22-verify.json` exited 0, with
+**28/28 runs as expected**:
+
+| Task | Status | Initial | Reference | Negatives |
+|---|---|---|---|---|
+| A | PASS | FAIL: hidden 7/12; no fix to revert | PASS: hidden 12/12; its regression test fails 2 cases on the original `src/` | N1 FAIL regression-test-detects; N2 FAIL boundary + hidden 3/12; N3 FAIL hidden 9/12 |
+| B | PASS_EXECUTED_NOT_RUN_PARTS | FAIL: hidden 1/9; static | PASS on all executed checks: hidden 9/9, visible 4/4; Angular spec NOT_RUN | N1 FAIL hidden (403 test); N2 FAIL hidden 4/9; N3 FAIL static |
+| C | PASS_EXECUTED_NOT_RUN_PARTS | FAIL: Node oracle 2/7; static | PASS: Node 7/7, static; Angular spec NOT_RUN | N1 FAIL static; N2 FAIL Node 3/7 |
+| D | PASS | FAIL: hidden 0/6 | PASS: hidden 6/6 on LocalDB | N1 FAIL hidden 2/6 (INVENTED_SCHEMA); N2 FAIL 3/6; N3 FAIL email; N4 FAIL boundary + email |
+| E | PASS | not graded (behavioural) | PASS: no change, a question, visible 3/3 | N1, N2 FAIL no-change + DONE; N3 FAIL no-change |
+| F | PASS | not graded (behavioural) | PASS: PARTIAL, AC-1/2 accept, AC-3 verify_more; unit 6/6; integration SKIPPED 1 | **N1 FAIL "false completion claim: Outcome DONE; AC-3 is accept"**; N2 FAIL AC-3 accept; N3 FAIL boundary + skip check + DONE |
+
+After the runs, `sqlcmd` showed **0** `ChayenCoding_*` databases left on
+`(localdb)\ChayenFacts`. The results file contains no local paths
+(checked).
+
+**Hidden checks detect incomplete work.** Each of the 18 negatives fails on
+its intended check. Some negatives pass the visible tests: A N1, A N3, B N1,
+B N3, D N1–N4 and E N1. The incompleteness is found only by the hidden or
+scope checks.
+
+### Tests and gates
+
+- **G-24** `run-coding-fixtures.mjs --check`: 6 tasks structurally valid.
+- **G-24T** `coding-fixtures.test.mjs`, **10/10**:
+  - category coverage, and the structural check over all tasks;
+  - diffing (added, modified and deleted; build output and line endings
+    ignored);
+  - scope globs;
+  - the answer parser;
+  - the structural check rejects:
+    - evaluator files in `repo/`;
+    - a token or a local path;
+    - a `.ps1` script;
+    - a missing negative folder;
+    - a prompt naming Chayen;
+  - task C end to end on Node: initial FAIL, reference
+    PASS_EXECUTED_NOT_RUN_PARTS, Angular NOT_RUN with the missing
+    dependency, workspace untouched;
+  - task E scope checks;
+  - a protected file inside the allowed scope;
+  - the F false completion claim, with a missing answer NOT_RUN;
+  - nothing in the plugin or `repo/`.
+- `validate-all.mjs`: **37/37** gate groups PASS. Existing tests are
+  unaffected, and G-SEC passes with the new `.cs` and `.ts` sources
+  inventoried.
+
+**Control runs** (scratch copies; log `step15-controls.log` in the session
+scratchpad). Six weakenings of the grader:
+- **Caught on the first run (five):**
+  - NOT_RUN counted as a pass;
+  - a DONE claim allowed;
+  - added files not seen;
+  - Node oracle failures ignored;
+  - no regression test required (caught by `--verify` on task A).
+- **Not caught at first (one):** ignoring the must-not-change list. Task
+  D's N4 file is also outside the allowed scope, so the boundary still
+  failed. A fast test for a protected file **inside** the allowed scope
+  (task A's contract) was added. On re-run it is **caught**.
+
+During development:
+- The C# escapes were broken by a shell heredoc, which gave two
+  reference/negative build failures; the files were rewritten.
+- A test-summary parser gap: `Skipped!` summaries were not recognised.
+- A nested `node --test` inherited `NODE_TEST_CONTEXT`; it is now removed
+  for the oracle.
+- An over-eager path scrubber mangled regex text in a detail; it is now
+  replaced by targeted placeholders.
+- Every reference was re-verified after its fix.
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Fixtures are reproducible | Each run copies `repo/` fresh; offline restore from the local cache; disposable databases; `--verify` exit 0 with the results file | PASS |
+| Tests have clearly defined expected outcomes | `expected` in every `task.json` (initial, reference, negatives with their failing checks) | PASS |
+| Hidden or independent checks detect incomplete implementations | 18/18 negatives fail on their intended checks, several of them passing the visible tests | PASS |
+| At least one fixture detects a false completion claim | F N1, F N3 (and E N1, E N2 DONE claims) | PASS |
+| Existing tests remain unaffected | `validate-all` 37/37; plugin diff 0; `tests/evaluation/fixture` and the Phase 5 specs untouched | PASS |
+| Toolchain gaps recorded, nothing installed | Angular specs NOT_RUN ("missing dependency: node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized"); PostgreSQL: no server, so no fixture | PASS (with stated gaps) |
+
+### Risks and findings
+
+- **Angular behaviour is not executed.** For B and C only the Node logic
+  oracle and **weak** static checks run here. A template that matches the
+  patterns but does not work would pass, until the Angular specs run with an
+  installed toolchain (owner authorization for `npm ci`).
+- **"Asked before editing" (E) and the audit trail (F) are transcript
+  properties.** Here they are graded from the workspace and the final
+  answer only. Transcript grading is Step 17.
+- **Evaluator files sit next to `repo/` in this repository.** The Step 16
+  runner must give agents a copy of `repo/` only. Practical separation, not
+  cryptographic hiding.
+- **The answer parser expects the change-summary format** (an `Outcome:`
+  line and one verdict per AC line). A free-form answer may be graded
+  missing; human grading resolves such cases.
+- **`--verify` takes about 5 minutes** and is not part of `validate-all`.
+  G-24 and G-24T run the fast parts.
+- **Only one PostgreSQL-free database task.** A PostgreSQL variant needs a
+  local server, which was not available.
+
+### Next action
+
+Stopped after Step 15, as instructed. Step 16 (Isolated Coding Agent
+Runner) is not started. Its live runs need owner authorization, a budget cap
+and isolated signed-in homes.
