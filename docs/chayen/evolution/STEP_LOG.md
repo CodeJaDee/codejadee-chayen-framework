@@ -1249,3 +1249,203 @@ impact recipe's map step, and GI-06 detects it (22/22).
 
 Stopped after Step 10, as instructed. Step 11 (Failure Reproduction) is
 **ready**: prerequisites 08 and 09 are PASS. Not started.
+
+## Step 11 — Failure Reproduction
+
+- **Date:** 2026-10-22
+- **Status:** PASS (developer-side workflow; model behaviour NOT_RUN)
+- **Starting state:** branch `develop`, **HEAD `b52e28e`** ("Enhance project
+  knowledge mapping and impact analysis", 2026-10-22 14:18 +0700, author
+  0xPratyaDev7x, 23 files). **The owner made this commit between Steps 10
+  and 11, not the agent.** It contains the Step 10 work and keeps version
+  `1.1.2`. The worktree was clean before Step 11, and Step 10 was confirmed
+  `PASS`.
+- **Authorization:** the owner's STEP 11 instruction (2026-10-22): "Extend
+  the existing Chayen contribution workflow so observed Agent failures can
+  become reproducible regression cases." Recorded as **D-068** (ACCEPTED).
+- **Scope change against the Step 01 plan:** the plan's Step 11 targeted
+  agent-facing reproduce-before-fix guidance (`bug-fix.md`,
+  `workflow-bug-repair.md`, `failing-and-flaky-tests.md`). The owner's
+  instruction asks for a developer-only failure workflow instead. That
+  guidance work was **not done** in this step. It remains an open item for
+  the owner; it was not silently dropped.
+
+### Inspected
+
+- `docs/CONTRIBUTING.md`: the D-065 "When an agent gets a task wrong"
+  process. Its steps are keep the redacted prompt, reproduce as a recipe or
+  trigger case, make the smallest guidance change, and validate (the case
+  stays NOT_RUN).
+- `tests/skills/recipe-cases.json` (469) and `trigger-cases.json` (186).
+- `tests/evaluation/phase5/`:
+  - `phase5-lib.mjs`: `parseTranscript` for Claude, Codex and Copilot,
+    `scrub`, `classifyRouting`;
+  - `run-phase5.mjs`: `--plan` and `--score` are offline; live runs are
+    gated by `--allow-provider-calls`, `--authorization` and `--max-calls`;
+  - the README safety rules.
+- `tests/evaluation/fixture/`.
+- `tools/evals/`.
+- `tools/validate/check-security.mjs` (V-25.2 secret patterns).
+- The "Secrets and data handling" and "Maintainer execution" sections of
+  `SECURITY_MODEL.md`.
+
+**Findings that shaped the design:**
+- The existing process already turns a failure into a recipe or trigger
+  case. It lacks a fixture, failing evidence, a detector and an
+  evidence-bound verification status. The new record adds exactly these and
+  references the existing case, so the process is extended, not duplicated.
+- Phase 5 already parses all three providers' transcripts and scrubs paths.
+  Replay reuses `parseTranscript` and `scrub` rather than adding a parser.
+- The evaluation fixture already contains a realistic schema trap: `AppDb.cs`
+  has `Customer { Id, Name }`, while the Angular form has an email field.
+  It also has a reporting service with no tests. It has no consumer of
+  `api/orders`. Changing it would disturb the Phase 5 probes, so FC-0002
+  gets its own three-file synthetic fixture.
+- The V-25.2 secret patterns were private to `check-security.mjs`. They now
+  live in `tools/validate/secret-patterns.mjs`, used by both validators.
+  V-25 output is unchanged apart from the developer-asset count.
+
+### Design
+
+| Owner requirement | Where |
+|---|---|
+| Failure-case specification | `docs/chayen/FAILURE_REPRODUCTION.md`; closed format `chayen-failure-case/1` |
+| Fields: ID; category; redacted request; Skill and Recipe; provider and model when observed; revision or fingerprint; expected; observed; reproduction; failing evidence; root-cause status; corrective action; regression test; verification status | `id`, `category`, `request`, `skill`, `observedWith`, `source`, `expected`, `observed`, `reproduction`, `evidence.transcripts`, `rootCause`, `correctiveAction`, `regressionTests`, `verification`. All are required; unknown fields are rejected |
+| The ten categories | `CATEGORIES` in `tools/evals/failure-cases.mjs`; any other value is rejected |
+| Validate and replay with existing evaluation tools | Phase 5 `parseTranscript` plus declarative detector signals; regression references must name existing `tests/skills` cases; G-20 and G-20T in `validate-all.mjs` |
+| Outcomes: Reproduced, Not reproduced, Fixed and verified, Not run, Inconclusive | `REPRODUCED`, `NOT_REPRODUCED`, `FIXED_AND_VERIFIED`, `NOT_RUN`, `INCONCLUSIVE`. The status is derived from recorded authorized live replays only; a claimed status that differs is rejected |
+| Do not assume fixed because guidance text changed | Only `live-replay` runs count. Each needs authorization, a date, a later revision or package, a redacted transcript and a matching SHA-256. FIXED also needs `correctiveAction.status: applied` |
+| No automatic collection; no telemetry | Records are written by hand. The tool imports no process or network module (a static test checks this) |
+| No secrets, tokens, personal data or production source | Rejects secret patterns, credential URLs, local paths and non-example emails. Fixtures must be under `tests/`; transcripts are capped at 64 KiB |
+| Opt-in before external models | The tool never calls a model. Observed records need `consent.optIn`, and live runs need an authorization reference (OD-10, Phase 5 runbook) |
+| Redact paths and sensitive output | `--redact`: new file only; fixture root becomes `<FIXTURE>`; paths, secrets and emails masked; tool output bodies removed. `--score` refuses unredacted input |
+| No scripts from traces | Steps are prose and detectors are string checks. The `cases/`, `transcripts/` and `fixtures/` folders accept only `.json .jsonl .md .cs .ts .html .sql` |
+| Developer-only, outside the plugin | `tests/failures/` and `tools/evals/`; the plugin diff is empty, and a test asserts that no failure artifact is in the package |
+
+### Files changed (Step 11 only, against `b52e28e`)
+
+| Path | Change |
+|---|---|
+| `tools/evals/failure-cases.mjs` (new) | Validator, offline replay, `--score`, `--redact` |
+| `tools/validate/secret-patterns.mjs` (new), `tools/validate/check-security.mjs` | Shared V-25.2 patterns (the patterns themselves are unchanged) |
+| `tests/failures/cases/FC-0001..0003-*.json` (new) | Three synthetic records |
+| `tests/failures/transcripts/FC-000{1,2,3}.{failing,control}.jsonl` (new) | Six hand-written synthetic transcripts in Claude stream-json shape, each with a synthetic marker |
+| `tests/failures/fixtures/orders-consumers/` (new) | Four files: the FC-0002 API controller, an Angular consumer, a URL-string consumer, and a README |
+| `tests/failures/failure-cases.test.mjs`, `tests/failures/README.md` (new) | 17 regressions, and an index of the folder |
+| `tools/validate/validate-all.mjs` | G-20, G-20T |
+| `docs/chayen/FAILURE_REPRODUCTION.md` (new), `docs/CONTRIBUTING.md`, `docs/chayen/DECISIONS.md` (D-068), `docs/chayen/SECURITY_MODEL.md`, `docs/chayen/KNOWN_LIMITATIONS.md` (KL-15) | Specification and records |
+
+No shipped Skill, catalog, recipe or trigger case, or Phase 5 file changed.
+
+### Synthetic cases
+
+| Case | Owner example | Fixture facts checked by the validator | Failing transcript | Control transcript | Regression reference | Model behaviour |
+|---|---|---|---|---|---|---|
+| FC-0001 `invented-schema-or-command` | Agent guesses a nonexistent database column | `AppDb.cs` has `Customer { Id, Name }` and lacks `Email`; the Angular form has `formControlName="email"` | Infers the column from the form; `SELECT c.Email ...` → REPRODUCED | Reads `AppDb.cs`, reports no email column, asks → NOT_REPRODUCED | `rc-09-007-pos-real-schema` | NOT_RUN |
+| FC-0002 `missed-affected-file` | Agent misses an affected API consumer | The route is `api/orders`; the admin service and `apps/shop/lib/order-status.ts` both call it; the shop helper reads `body.status` and shares no `Order` type | Searches by type; lists only the admin service → REPRODUCED | Searches the route string; lists both consumers → NOT_REPRODUCED | `rc-01-004-pos-api-consumers` | NOT_RUN |
+| FC-0003 `false-done-claim` | Agent marks an untested AC as DONE | `services/reporting/tests` holds only an empty `__init__.py`; no `test_invoice.py` exists | Both ACs accept, "all tests pass", Outcome: DONE → REPRODUCED | Both verify_more, NOT_RUN, not done → NOT_REPRODUCED | `rc-04-007-pos-ac-verdicts` | NOT_RUN |
+
+The transcripts are hand-written; **no provider or model was called**. Offline
+replay therefore shows that each record is valid and each detector separates
+the failure from correct behaviour. It does not show that any model produces
+or avoids the failure. That is recorded as `NOT_RUN` for all three.
+
+### Tests
+
+**`tests/failures/failure-cases.test.mjs` (G-20T), 17/17, 0 skipped.** It
+works in memory or on OS-temp copies:
+
+- shipped cases valid, and the six replays as expected;
+- every field required and unknown fields rejected;
+- all ten categories accepted, and any other rejected;
+- provider and model only when observed, and consent required;
+- the skill, recipe, regression reference, corrective target and source
+  must exist;
+- fixture facts checked, including traversal;
+- a non-discriminating detector and malformed signals rejected;
+- routing, denial and repetition signals work;
+- cut-off, turn-limit and empty runs are INCONCLUSIVE;
+- **a guidance edit leaves the status NOT_RUN, and a FIXED claim or a
+  `guidance-changed` run is rejected**;
+- live replays derive REPRODUCED, NOT_REPRODUCED and FIXED_AND_VERIFIED from
+  the transcript. A same-revision run, a proposed action, a missing
+  authorization, a hash mismatch and a synthetic transcript used as a live
+  run all fail to verify;
+- privacy patterns;
+- redaction, with the redacted transcript still scorable;
+- transcript marker, JSON lines, size cap and privacy;
+- `.sh`, `.ps1`, `.mjs`, `.py` and `.bat` artifacts rejected;
+- static scan: no process, network or dynamic-code use, a single `wx` write,
+  and no failure artifact in the plugin;
+- CLI: `--score` gives REPRODUCED, unredacted input is REFUSED, and
+  `--redact` never overwrites.
+
+**Control runs** (scratch copies of the tool with one rule weakened; log in
+the session scratchpad, `step11-controls.log`):
+
+| Weakened rule | Caught by |
+|---|---|
+| Trust the claimed verification status | The guidance-change test and the live-replay test |
+| Drop the local-path check | The privacy, transcript and CLI tests |
+| Score cut-off runs | The INCONCLUSIVE test. It was **not caught on the first attempt**: an empty answer masked it. An action-only detector case was added, after which it is caught |
+| Count non-live runs | The guidance-change test |
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/evals/failure-cases.mjs` | 0 | 3/3 records valid; 6/6 recorded transcripts replay as expected; model behaviour NOT_RUN 3 |
+| `node --test tests/failures/failure-cases.test.mjs` | 0 | 17/17 |
+| `node tools/validate/check-security.mjs` | 0 | PASS, 0 errors. Developer assets 100 → 103 (new `.mjs` and `.cs` files); package 263 files, 16 skills, 242 references unchanged |
+| `node tools/validate/validate-all.mjs` | 0 | **30/30** gate groups PASS (adds G-20 and G-20T); G-13 189/189; G-14 docs PASS |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability levels PASS |
+| `node tools/catalog/discovery-metrics.mjs`; `git diff -- plugins/` | 0 | L0 6,563 characters (~1,641 tokens) unchanged; plugin diff 0 lines, so the metadata fingerprint `411b6adbbea7e121` is unchanged; recipe and trigger case files unchanged |
+
+During development:
+- the first test run had 6 failures: the artifact allowlist also covered
+  the test file, an error-result subtype was not treated as INCONCLUSIVE,
+  two expectations were wrong, and a static ban pattern matched
+  `RegExp.exec`;
+- all six were fixed in the tool scope or the test, not by weakening a rule;
+- two shell heredocs failed on quoting and wrote nothing; the files were
+  written with the editor instead.
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Developer-only failure-case specification and validation tooling | `FAILURE_REPRODUCTION.md`, `failure-cases.mjs`, G-20 and G-20T | PASS |
+| Existing process extended, not duplicated | CONTRIBUTING steps 1–4 unchanged, plus a failure-record paragraph; records reference existing recipe cases; Phase 5 parser reused | PASS |
+| At least three synthetic, reproducible examples (column, consumer, untested AC as DONE) | FC-0001..0003 valid; facts hold in the fixtures | PASS |
+| Replay where supported; outcomes distinguished | Offline replay 6/6 as expected; all five outcomes exercised in tests | PASS (offline) |
+| Unexecuted model behaviour recorded as NOT_RUN | `verification.status: NOT_RUN` for all three, derived and enforced | PASS |
+| Not assumed fixed after a guidance change | Guidance-edit test; control run | PASS |
+| Security and privacy constraints | Static no-process, no-network test; privacy rules; script-type rejection; opt-in consent and authorization fields; plugin diff empty | PASS (static; the pattern checks are heuristic) |
+| Documentation and Step Log updated | This entry; MASTER_PLAN row | PASS |
+
+### Risks and findings
+
+- **No live replay exists.** The records demonstrate the format and the
+  detectors, not agent behaviour. The first live replay needs OD-10
+  authorization and must follow the Phase 5 isolation rules.
+- **Detectors are literal string checks.** A model can fail in a form the
+  detector does not match (a false NOT_REPRODUCED) or mention the failing
+  token while refusing it. Detectors cover the failure as recorded. A human
+  still reads the transcript before a root cause becomes `confirmed`.
+- **Privacy checks are heuristic.** Names, customer data in prose, or
+  proprietary code shapes are not detected. Redaction is best effort, and
+  the record must be read in full before it is committed.
+- **Live replay needs a manual run.** No runner sends a failure case to a
+  provider: `run-phase5.mjs` runs only its own suites. A maintainer runs the
+  provider CLI on a disposable fixture copy under an authorization, then uses
+  `--redact` and `--score`. Wiring failure cases into the Phase 5 runner is
+  left for Steps 15–17.
+- The planned agent-facing reproduce-before-fix guidance (Step 01 plan) is
+  still not done. It needs an owner decision on whether it belongs to a
+  later step.
+- There are no shipped changes in this step. The open version decision from
+  Steps 07–10 still stands.
+
+### Next action
+
+Stopped after Step 11, as instructed. Step 12 is not started.

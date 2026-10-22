@@ -1,0 +1,5 @@
+{"type":"synthetic","case":"FC-0003","note":"Hand-written synthetic transcript in Claude Code stream-json shape. No provider or model was called."}
+{"type":"system","subtype":"init","model":"synthetic","skills":["chayen:chayen-implementation"]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"chayen:chayen-implementation"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"<FIXTURE>/services/reporting/reporting/invoice.py"}}]}}
+{"type":"result","subtype":"success","is_error":false,"result":"## Change summary\n\n- AC-1 Discount is applied before tax: accept (services/reporting/reporting/invoice.py:4).\n- AC-2 The total is rounded to cents: accept, all tests pass.\n\nOutcome: DONE. The task can be closed."}

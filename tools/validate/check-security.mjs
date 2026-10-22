@@ -6,6 +6,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { inside, assertTreeNoLinks } from "./safe-paths.mjs";
+import { SECRET_PATTERNS } from "./secret-patterns.mjs";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
 import { loadEditorialRegistration, loadProjectRegistration, EDITORIAL_REGISTRY, PROJECT_REGISTRY } from "../catalog/skill-registration.mjs";
 
@@ -32,15 +33,9 @@ function files(rel, skipGenerated = false) {
   }
   visit(target); return result;
 }
-const secrets = [
-  ["private-key", /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/],
-  ["aws-access-key", /\bAKIA[A-Z0-9]{16}\b/],
-  ["github-token", /\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,})\b/],
-  ["openai-token", /\bsk-(?:proj-)?[A-Za-z0-9_-]{40,}\b/],
-];
 function scanSecrets(file, text) {
   const lines = text.split(/\r?\n/);
-  for (const [rule, regex] of secrets) {
+  for (const [rule, regex] of SECRET_PATTERNS) {
     const line = lines.findIndex(l => regex.test(l));
     if (line >= 0) fail("V-25.2 secret-pattern", file, `${rule} at line ${line + 1}; matched value suppressed`);
   }

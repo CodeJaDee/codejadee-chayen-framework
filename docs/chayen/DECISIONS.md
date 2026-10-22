@@ -1626,6 +1626,37 @@ Decision statuses:
   (`tests/skills/project-map.test.mjs`). Agent behaviour is NOT_RUN. Shipped
   guidance changed without a version bump.
 
+### D-068 — Opt-in failure reproduction records
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 11: "Extend the existing Chayen contribution workflow so
+  observed Agent failures can become reproducible regression cases").
+- **Decision:**
+  - Failure records (`chayen-failure-case/1`) in `tests/failures/`.
+    Developer-only, never shipped. The format is specified in
+    [FAILURE_REPRODUCTION.md](FAILURE_REPRODUCTION.md).
+  - The existing CONTRIBUTING process stays: the recipe or trigger case in
+    `tests/skills/` is the behavioural regression specification. The record
+    references it and adds a fixture with checkable facts, a failing and a
+    control transcript, and a detector.
+  - `tools/evals/failure-cases.mjs` validates the records, replays recorded
+    transcripts offline through the Phase 5 parser, redacts transcripts
+    (new file only) and scores a supplied transcript. It calls no provider,
+    makes no network connection, starts no process and executes nothing from
+    a record or transcript.
+  - Records are synthetic, or observed with explicit opt-in consent and
+    reviewed redaction. Secret patterns (shared with V-25.2 through
+    `tools/validate/secret-patterns.mjs`), credential URLs, local paths and
+    non-example emails are rejected. Scripts are not accepted as artifacts.
+  - Replay outcomes: REPRODUCED, NOT_REPRODUCED, FIXED_AND_VERIFIED, NOT_RUN,
+    INCONCLUSIVE. The verification status is derived from authorized live
+    replays only, and changed guidance text never changes it.
+- **Not changed:** the plugin package, Skill guidance, routing metadata, the
+  recipe and trigger cases, the Phase 5 harness and its live-run gates.
+- **Evidence:** three synthetic cases (invented column, missed API consumer,
+  untested criterion marked DONE) validate and discriminate offline. G-20 and
+  G-20T are in `validate-all.mjs`. Model behaviour is NOT_RUN.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

@@ -40,6 +40,8 @@ const steps = [
   ["G-18 guidance consistency invariants GI-01..GI-09 (static; REVIEW items do not fail)", "tools/validate/check-guidance.mjs", []],
   ["G-18T guidance consistency regressions on disposable copies", "tests/skills/guidance-consistency.test.mjs", []],
   ["G-19 project-map template, staleness and evidence mechanics on a disposable git monorepo (agent behaviour NOT_RUN)", "tests/skills/project-map.test.mjs", []],
+  ["G-20 failure-case records, privacy rules and offline replay of recorded transcripts (D-068; no provider calls; model behaviour NOT_RUN)", "tools/evals/failure-cases.mjs", []],
+  ["G-20T failure-case format, privacy, replay and verification-status regressions (offline, disposable copies)", "tests/failures/failure-cases.test.mjs", []],
   ["G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored)", "tools/evals/score-step40.mjs", ["--self-test"]],
 ];
 let failed = 0;

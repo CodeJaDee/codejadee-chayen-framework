@@ -97,6 +97,7 @@ node tools/evals/run-evaluation-suite.mjs               # evaluation traceabilit
 node --test tests/ci/negative-controls.test.mjs          # isolated failure demonstrations
 node --test tests/ci/limits.test.mjs                     # no former numeric cap; limits exceeded at once still valid
 node tools/catalog/discovery-metrics.mjs                # discovery metadata, estimated tokens, provider figures
+node tools/evals/failure-cases.mjs                      # failure records: validate, replay recorded transcripts offline
 node tools/ci/check-workflow.mjs                        # pinned linter download; no providers
 ```
 
@@ -126,6 +127,19 @@ limits (name ≤64 characters, description ≤1,024) still fail.
    general advice.
 4. Run the validators. The new case stays NOT_RUN until an authorized
    provider run grades it.
+
+To make the failure replayable, also add a failure record in
+`tests/failures/` ([format and rules](chayen/FAILURE_REPRODUCTION.md)):
+
+- a fixture with checkable facts;
+- a failing and a control transcript;
+- a detector;
+- the case from step 2 as its regression reference.
+
+Records are synthetic, or redacted with explicit opt-in. Never paste a
+conversation, a secret, personal data or production source. The record's
+verification status changes only through an authorized live replay on the
+changed revision, never because the guidance text changed.
 
 Native provider validation is a separate authorized check when the CLI is
 available; it is not a dependency of ordinary CI. Provider runs

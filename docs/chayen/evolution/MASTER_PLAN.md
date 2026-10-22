@@ -27,7 +27,7 @@ blockers.
 | 08 | Acceptance Evidence Contract | 07 | PASS | — |
 | 09 | Guidance Consistency Validator | 06, 08 | PASS | — |
 | 10 | Repository Intelligence | 05, 09 | PASS | — |
-| 11 | Failure Reproduction | 08, 09 | NOT_STARTED | — |
+| 11 | Failure Reproduction | 08, 09 | PASS | — |
 | 12 | Mentor Knowledge Distillation | 11 | NOT_STARTED | Scope to be confirmed by the owner at step start |
 | 13 | Independent Evidence Audit | 08, 09 | NOT_STARTED | — |
 | 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | NOT_STARTED | — |
@@ -226,13 +226,13 @@ graph.
 
 | Field | Value |
 |---|---|
-| Objective | Make reproduce-before-fix explicit and consistent: a failing test or recorded reproduction first, the fix second, the same check passing after. |
+| Objective | Make reproduce-before-fix explicit and consistent: a failing test or recorded reproduction first, the fix second, the same check passing after. **As executed under the owner's Step 11 instruction (D-068):** a developer-only, opt-in failure-reproduction workflow: `chayen-failure-case/1` records in `tests/failures/`, validated and replayed offline by `tools/evals/failure-cases.mjs` (G-20, G-20T), with a verification status derived only from authorized live replays. The agent-facing reproduce-before-fix guidance in the target files below was not changed and remains open for an owner decision. |
 | Prerequisite | 08, 09 |
 | Target files | `skills/chayen-implementation/references/bug-fix.md`, `workflow-bug-repair.md`; `skills/chayen-testing/references/failing-and-flaky-tests.md`, `workflow-testing-regression.md` |
 | Expected artifacts | Guidance changes linked to the Step 08 evidence contract; recipe and workflow cases |
 | Acceptance criteria | The reproduction is recorded as observed evidence under the Step 08 contract; the no-reproduction path is defined (`verify_more`, not `accept`); cases cover both paths; `validate-all.mjs` passes |
-| Evidence | STEP_LOG entry |
-| Status | NOT_STARTED |
+| Evidence | [STEP_LOG.md — Step 11](STEP_LOG.md#step-11--failure-reproduction) |
+| Status | PASS |
 | Blockers | None beyond prerequisites |
 
 ### 12 — Mentor Knowledge Distillation

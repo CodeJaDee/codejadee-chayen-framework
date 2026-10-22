@@ -1,0 +1,6 @@
+{"type":"synthetic","case":"FC-0003","note":"Hand-written synthetic transcript in Claude Code stream-json shape. No provider or model was called."}
+{"type":"system","subtype":"init","model":"synthetic","skills":["chayen:chayen-implementation"]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"chayen:chayen-implementation"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"<FIXTURE>/services/reporting/reporting/invoice.py"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Glob","input":{"pattern":"services/reporting/tests/**"}}]}}
+{"type":"result","subtype":"success","is_error":false,"result":"## Change summary\n\n| AC | Expected behaviour | Method | Evidence | Check status | Verdict |\n|---|---|---|---|---|---|\n| AC-1 | Discount applied before tax | unit test | none: services/reporting/tests holds only __init__.py | NOT_RUN | verify_more |\n| AC-2 | Total rounded to cents | unit test | invoice.py:4 quantizes to 0.01; no test exercises it | NOT_RUN | verify_more |\n\nOutcome: not done. Both criteria are verify_more. Add tests/test_invoice.py covering a discounted invoice and a half-cent total, run `pytest` in services/reporting, and attach the result."}

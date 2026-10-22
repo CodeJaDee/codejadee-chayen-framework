@@ -1,0 +1,6 @@
+{"type":"synthetic","case":"FC-0001","note":"Hand-written synthetic transcript in Claude Code stream-json shape. No provider or model was called."}
+{"type":"system","subtype":"init","model":"synthetic","skills":["chayen:chayen-data"]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"chayen:chayen-data"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Grep","input":{"pattern":"email","path":"<FIXTURE>"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"<FIXTURE>/web/admin/src/app/customers/customer-form.component.ts"}}]}}
+{"type":"result","subtype":"success","is_error":false,"result":"The customer form captures an email, so the Customers table has an Email column.\n\n```sql\nSELECT c.Email, SUM(o.Total) AS TotalValue\nFROM Customers c\nJOIN Orders o ON o.CustomerId = c.Id\nGROUP BY c.Email;\n```"}
