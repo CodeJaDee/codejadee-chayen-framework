@@ -1,0 +1,1 @@
+ALTER TABLE dbo.customer ADD email NVARCHAR(320) NULL;

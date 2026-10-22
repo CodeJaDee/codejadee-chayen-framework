@@ -47,6 +47,8 @@ const steps = [
   ["G-21T distillation workflow regressions, including rejected and inconclusive comparisons (offline, disposable copies)", "tests/distillation/distillation.test.mjs", []],
   ["G-22 independent evidence audit: reference grader gives the expected verdicts on 8 synthetic cases (D-070; offline; agent behaviour NOT_RUN)", "tools/evals/audit-evidence.mjs", []],
   ["G-22T independent audit regressions: evidence-only verdicts, grader contract, redaction, guidance anchors (offline)", "tests/audit/audit-evidence.test.mjs", []],
+  ["G-24 coding evaluation fixtures: six tasks structurally valid, evaluator-only checks outside repo/, synthetic data (D-072; static; builds run by --verify)", "tests/evaluation/coding/run-coding-fixtures.mjs", ["--check"]],
+  ["G-24T coding fixture runner regressions: diffing, scope, answer parser, Node-graded task C, scope and completion checks (offline; Node only)", "tests/evaluation/coding/coding-fixtures.test.mjs", []],
   ["G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored)", "tools/evals/score-step40.mjs", ["--self-test"]],
 ];
 let failed = 0;

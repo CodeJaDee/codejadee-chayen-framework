@@ -1,0 +1,45 @@
+{
+  "$schema": "chayen-coding-task/1",
+  "id": "C-angular-interaction",
+  "title": "Frontend behaviour: search and Clear do nothing on the Products page",
+  "category": "frontend-behaviour",
+  "prompt": "On the Products page the list renders, but typing in the search box does nothing and the Clear button does nothing. Make the search filter the list as the user types (by name or SKU, ignoring case and surrounding spaces), make Clear empty the search box and show all products again, and show \"No products match\" when nothing matches.",
+  "stack": [
+    { "name": "Angular (standalone components, signals, built-in control flow)", "version": "19.2.14", "source": "repo/package.json" },
+    { "name": "TypeScript", "version": "5.7.3", "source": "repo/package.json" },
+    { "name": "Karma / Jasmine", "version": "6.4.4 / 5.6.0", "source": "repo/package.json" }
+  ],
+  "commands": {
+    "build": "npx ng build",
+    "test": "npx ng test --watch=false"
+  },
+  "scope": {
+    "allowed": ["src/app/products/**"],
+    "mustNotChange": ["src/app/products/products.data.ts", "src/app/products/product.ts", "package.json"],
+    "note": "The page component, its template and the filter; the catalog data and dependencies stay as they are."
+  },
+  "acceptanceCriteria": [
+    { "id": "AC-1", "text": "The list filters by name or SKU as the user types, ignoring case and surrounding spaces; a blank query shows every product in order.", "oracle": "Node oracle grader/product-filter.test.ts (rules); Angular spec 'filters the rendered list as the user types' (interaction, NOT_RUN without node_modules)" },
+    { "id": "AC-2", "text": "Clear empties the search box and shows every product again.", "oracle": "Angular spec 'Clear empties the box…' (NOT_RUN without node_modules); weak static check on the template" },
+    { "id": "AC-3", "text": "\"No products match\" is shown when nothing matches.", "oracle": "Angular spec (NOT_RUN without node_modules); weak static check" }
+  ],
+  "grading": [
+    { "check": "boundary" },
+    { "check": "node-test", "name": "filter rules (Node oracle)", "grader": "grader/product-filter.test.ts", "target": ".grader/product-filter.test.ts", "minPassed": 7 },
+    { "check": "static", "name": "template interaction wiring (weak)", "files": ["src/app/products/*.html"], "patterns": ["\\((?:input|keyup|ngModelChange)\\)=|\\[\\(ngModel\\)\\]", "\\[value\\]=|\\[\\(ngModel\\)\\]", "<button[^>]*\\(click\\)=\"[^\"]+\"[^>]*>\\s*Clear\\s*</button>", "No products match"] },
+    { "check": "angular-test", "name": "Angular interaction spec", "app": ".", "angular": "19.2.14", "grader": "grader/products-page.component.spec.ts", "command": "npx ng test --watch=false" }
+  ],
+  "negativeChecks": [
+    "A query with no match shows the empty-state message, not an empty page.",
+    "Clear resets both the input value and the list, not only one of them."
+  ],
+  "expected": {
+    "initial": "FAIL",
+    "reference": "PASS",
+    "negatives": [
+      { "id": "N1-logic-without-wiring", "expect": "FAIL", "failedChecks": ["template interaction wiring (weak)"], "detects": "a correct filter that the page never calls (the interaction is still missing)" },
+      { "id": "N2-case-sensitive", "expect": "FAIL", "failedChecks": ["filter rules (Node oracle)"], "detects": "wired-up search that is case-sensitive and does not trim" }
+    ]
+  },
+  "reset": "Give the agent a fresh copy of repo/ only (never grader/, reference/ or negatives/), initialised as a git repository with one commit. Reset by discarding the copy."
+}

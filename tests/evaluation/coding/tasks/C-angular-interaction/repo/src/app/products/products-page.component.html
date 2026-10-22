@@ -1,0 +1,12 @@
+<h1>Products</h1>
+
+<div class="search">
+  <input type="search" placeholder="Search products" aria-label="Search products" />
+  <button type="button">Clear</button>
+</div>
+
+<ul class="products">
+  @for (p of visible(); track p.sku) {
+    <li><span class="sku">{{ p.sku }}</span> {{ p.name }} <span class="price">{{ p.price | currency }}</span></li>
+  }
+</ul>

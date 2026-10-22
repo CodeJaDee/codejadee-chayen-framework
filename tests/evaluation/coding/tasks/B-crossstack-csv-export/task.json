@@ -1,0 +1,50 @@
+{
+  "$schema": "chayen-coding-task/1",
+  "id": "B-crossstack-csv-export",
+  "title": "Cross-layer feature: CSV export of the order list for the Sales role",
+  "category": "cross-layer-feature",
+  "prompt": "Sales staff need to export the order list to CSV. Add an \"Export CSV\" button to the Orders page that downloads the orders matching the currently selected status filter, served by GET /api/orders/export?status=<status>. Only users with the Sales role may export. Columns: Id, Customer, Status, Total, PlacedOn.",
+  "stack": [
+    { "name": ".NET SDK", "version": "10.0", "source": "repo/global.json" },
+    { "name": "ASP.NET Core minimal API with policy authorization", "version": "10.0", "source": "repo/src/Shop.Api/Program.cs" },
+    { "name": "xUnit / Mvc.Testing", "version": "2.9.3 / 10.0.8", "source": "repo/tests/Shop.Api.Tests/Shop.Api.Tests.csproj" },
+    { "name": "Angular (standalone components, signals)", "version": "19.2.14", "source": "repo/web/package.json" }
+  ],
+  "commands": {
+    "build": "dotnet build tests/Shop.Api.Tests",
+    "test": "dotnet test tests/Shop.Api.Tests; cd web && npx ng test --watch=false"
+  },
+  "scope": {
+    "allowed": ["src/Shop.Api/**", "tests/Shop.Api.Tests/**", "web/src/app/**"],
+    "mustNotChange": ["src/Shop.Api/Auth/**", "global.json", "**/*.csproj", "web/package.json"],
+    "note": "API endpoint and CSV writer, API tests, the Orders page and its service. Authentication and dependencies stay as they are."
+  },
+  "acceptanceCriteria": [
+    { "id": "AC-1", "text": "GET /api/orders/export?status=<s> returns text/csv as an attachment named orders.csv: header Id,Customer,Status,Total,PlacedOn and one row per order matching the filter (all orders without a status).", "oracle": "hidden Sales_users_get_the_filtered_orders_as_csv, The_download_is_an_attachment_named_orders_csv" },
+    { "id": "AC-2", "text": "Values follow RFC 4180 (commas, quotes and line breaks quoted), totals use two decimals with a dot and dates are yyyy-MM-dd, whatever the server culture.", "oracle": "hidden Commas_quotes_and_line_breaks_are_escaped, Totals_and_dates_do_not_depend_on_the_server_culture" },
+    { "id": "AC-3", "text": "Only the Sales role may export: anonymous callers get 401 and other roles 403; the existing list endpoint is unchanged.", "oracle": "hidden Anonymous_callers_get_401, Users_without_the_Sales_role_get_403, The_existing_list_endpoint_is_unchanged_for_other_roles" },
+    { "id": "AC-4", "text": "The Orders page has an Export CSV button that requests the export for the selected status as a blob and downloads it.", "oracle": "evaluator Angular spec grader/web/orders-page.export.spec.ts (NOT_RUN without web/node_modules); weak static check on the service and template" }
+  ],
+  "grading": [
+    { "check": "boundary" },
+    { "check": "dotnet-test", "name": "visible API tests (no regression)", "project": "tests/Shop.Api.Tests" },
+    { "check": "dotnet-test", "name": "hidden API oracle", "grader": "grader/HiddenTests", "project": ".grader/HiddenTests", "minPassed": 9 },
+    { "check": "static", "name": "frontend export wiring (weak)", "files": ["web/src/app/**/*.ts", "web/src/app/**/*.html"], "patterns": ["/api/orders/export", "responseType:\\s*['\"]blob['\"]", "<button[^>]*\\(click\\)=\"[^\"]+\"[^>]*>\\s*Export CSV\\s*</button>"] },
+    { "check": "angular-test", "name": "Angular export spec", "app": "web", "angular": "19.2.14", "grader": "grader/web/orders-page.export.spec.ts", "command": "npx ng test --watch=false" }
+  ],
+  "negativeChecks": [
+    "Anonymous export is 401 and a non-Sales role is 403; the list endpoint keeps working for other roles.",
+    "A customer name with a comma, a quote or a line break does not break the CSV structure.",
+    "A German server culture does not change the decimal separator."
+  ],
+  "expected": {
+    "initial": "FAIL",
+    "reference": "PASS",
+    "negatives": [
+      { "id": "N1-no-role-check", "expect": "FAIL", "failedChecks": ["hidden API oracle"], "detects": "an export that any authenticated user can call" },
+      { "id": "N2-naive-csv", "expect": "FAIL", "failedChecks": ["hidden API oracle"], "detects": "CSV without quoting and with culture-dependent totals" },
+      { "id": "N3-backend-only", "expect": "FAIL", "failedChecks": ["frontend export wiring (weak)"], "detects": "a backend-only change with no frontend action" }
+    ]
+  },
+  "reset": "Give the agent a fresh copy of repo/ only (never grader/, reference/ or negatives/), initialised as a git repository with one commit. Reset by discarding the copy."
+}
