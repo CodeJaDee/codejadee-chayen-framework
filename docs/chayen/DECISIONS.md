@@ -1657,6 +1657,44 @@ Decision statuses:
   untested criterion marked DONE) validate and discriminate offline. G-20 and
   G-20T are in `validate-all.mjs`. Model behaviour is NOT_RUN.
 
+### D-069 — Governed mentor-to-fast-agent knowledge distillation
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 12: "Build a governed workflow where a capable Mentor Agent
+  analyzes verified failures and produces small, reusable guidance
+  improvements for faster coding Agents").
+- **Decision:**
+  - Distillation happens at the prompt and process level, through a
+    developer-only workflow with six stages: collect, diagnose, distill,
+    review, validate, promote
+    ([KNOWLEDGE_DISTILLATION.md](KNOWLEDGE_DISTILLATION.md)). The Mentor is a
+    maintainer's opt-in session following
+    [MENTOR_BRIEF.md](MENTOR_BRIEF.md). No Mentor ships in the plugin and no
+    service runs.
+  - Proposals (`chayen-distillation-proposal/1`) in
+    `tests/distillation/proposals/` reference one Step 11 failure case. Each
+    root cause limits the actions allowed, and every root cause allows a
+    non-Skill action. Proposals change existing files only, so a new Entry
+    Skill is impossible.
+  - `tools/evals/distill.mjs` derives the decision:
+    - routing impact is computed from the diff;
+    - the diff is applied only to a disposable copy;
+    - the fixed offline validators run there, after a check that they are
+      byte-identical to the reviewed scripts;
+    - a person other than the Mentor must review;
+    - guidance changes are promoted only when authorized live runs show the
+      baseline reproducing the failure and no candidate run reproducing it
+      (≥ 3 runs per arm, one provider and model);
+    - promotion keeps the previous version recoverable and the failure
+      evidence in place.
+- **Not changed:** the plugin package, Skill guidance, routing metadata,
+  recipe and trigger cases. Proposals are not applied.
+- **Evidence:** four proposals from the three synthetic failures (one
+  minimal Recipe change, one regression case, one limitation held for
+  evidence, one returned demonstration). G-21 and G-21T are in
+  `validate-all.mjs`. Mentor diagnosis quality and live improvement are
+  NOT_RUN.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

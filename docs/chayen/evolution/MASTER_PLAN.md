@@ -28,7 +28,7 @@ blockers.
 | 09 | Guidance Consistency Validator | 06, 08 | PASS | — |
 | 10 | Repository Intelligence | 05, 09 | PASS | — |
 | 11 | Failure Reproduction | 08, 09 | PASS | — |
-| 12 | Mentor Knowledge Distillation | 11 | NOT_STARTED | Scope to be confirmed by the owner at step start |
+| 12 | Mentor Knowledge Distillation | 11 | PASS | — |
 | 13 | Independent Evidence Audit | 08, 09 | NOT_STARTED | — |
 | 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | NOT_STARTED | — |
 | 15 | Coding Evaluation Fixtures | 14 | NOT_STARTED | Stack toolchains (for example a .NET 8 SDK) must be available |
@@ -239,14 +239,14 @@ graph.
 
 | Field | Value |
 |---|---|
-| Objective | Turn observed agent failures and reviewer feedback into tests and the smallest guidance fix, extending the failure-to-fix process in `docs/CONTRIBUTING.md` (D-065). The exact meaning of "mentor knowledge" is confirmed with the owner at step start. |
+| Objective | Turn observed agent failures and reviewer feedback into tests and the smallest guidance fix, extending the failure-to-fix process in `docs/CONTRIBUTING.md` (D-065). The exact meaning of "mentor knowledge" is confirmed with the owner at step start. **As executed under the owner's Step 12 instruction (D-069), which confirms the scope:** prompt- and process-level distillation through a developer-only six-stage workflow (collect, diagnose, distill, review, validate, promote): an opt-in Mentor brief, `chayen-distillation-proposal/1` records in `tests/distillation/`, and `tools/evals/distill.mjs` (G-21, G-21T), which derives each decision. Demonstrated on the Step 11 synthetic failures; no proposal is applied. |
 | Prerequisite | 11 |
 | Target files | `docs/CONTRIBUTING.md`; `tests/skills/README.md`; a new intake template under `docs/chayen/evolution/`; affected Skill references |
 | Expected artifacts | Intake template, worked example traced from failure to case to fix |
 | Acceptance criteria | Owner-confirmed scope recorded; at least one real recorded failure (from existing results or Step 11) traced end to end; no unverified failure is presented as observed; `validate-all.mjs` passes |
-| Evidence | STEP_LOG entry |
-| Status | NOT_STARTED |
-| Blockers | Owner scope confirmation |
+| Evidence | [STEP_LOG.md — Step 12](STEP_LOG.md#step-12--mentor-knowledge-distillation) |
+| Status | PASS |
+| Blockers | None. Owner scope confirmed by the Step 12 instruction |
 
 ### 13 — Independent Evidence Audit
 

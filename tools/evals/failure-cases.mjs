@@ -135,7 +135,7 @@ const isText = (v) => typeof v === "string" && v.trim().length > 0;
 const hex = (v, min, max) => typeof v === "string" && new RegExp(`^[0-9a-f]{${min},${max}}$`).test(v);
 const sha256 = (t) => crypto.createHash("sha256").update(t).digest("hex");
 
-function readTranscript(root, rel, synthetic, provider, err) {
+export function readTranscript(root, rel, synthetic, provider, err) {
   if (typeof rel !== "string" || !rel.startsWith(`${FAILURES_DIR}/transcripts/`) || !rel.endsWith(".jsonl")) { err(`transcript ${JSON.stringify(rel)} must be a .jsonl file under ${FAILURES_DIR}/transcripts/`); return null; }
   let text;
   try { text = fs.readFileSync(inside(root, rel), "utf8"); } catch { err(`transcript ${rel} is missing or unsafe`); return null; }

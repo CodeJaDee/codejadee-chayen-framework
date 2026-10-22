@@ -1,0 +1,71 @@
+{
+  "$schema": "chayen-distillation-proposal/1",
+  "id": "DP-0004",
+  "title": "Demonstration: a proposal that forces an Entry Skill description change for FC-0003",
+  "demonstration": true,
+  "failureCase": "FC-0003",
+  "mentor": {
+    "kind": "agent",
+    "identity": "Claude Opus 5.5 (claude-opus-5-5) in the maintainer's evolution Step 12 session, following docs/chayen/MENTOR_BRIEF.md"
+  },
+  "baseRevision": "3f8ee6b",
+  "diagnosis": {
+    "rootCause": "conflicting-instructions",
+    "confidence": "suspected",
+    "evidence": [
+      "tests/failures/transcripts/FC-0003.failing.jsonl",
+      "plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md:153"
+    ],
+    "existingGuidance": [
+      {
+        "ref": "plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md:153",
+        "covers": "fully",
+        "note": "The body already states DONE only when every required criterion is accept."
+      }
+    ],
+    "rejectedCauses": [
+      {
+        "cause": "tool-or-model-limitation",
+        "why": "Assumed that a more prominent rule in the description would be followed."
+      }
+    ],
+    "rationale": "Deliberately weak mentor output kept as a worked example: it moves a completion rule into the discovery description without evidence that the existing rule conflicts or is ignored, and declares no routing impact."
+  },
+  "action": {
+    "kind": "clarify-entry-skill",
+    "targets": [
+      {
+        "path": "plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md",
+        "baseSha256": "4dfd9ff3537ad550a976ddf70bca19e991ce0a5d6eb4f3f829958743dec4c13b"
+      }
+    ],
+    "diff": "tests/distillation/proposals/DP-0004.diff",
+    "summary": "Append 'Never reports DONE without passing tests.' to the chayen-implementation description."
+  },
+  "review": {
+    "before": "The completion rule is in the SKILL.md body (line 153).",
+    "after": "The rule is repeated in the description that every host lists for Skill selection.",
+    "risks": [
+      "None identified by the mentor (the review stage must find the routing impact)."
+    ],
+    "routingImpact": "none",
+    "testsNeeded": [
+      "FC-0003",
+      "tests/skills/recipe-cases.json#rc-04-007-pos-ac-verdicts"
+    ],
+    "humanReview": {
+      "status": "pending",
+      "reviewer": null,
+      "date": null,
+      "notes": null
+    }
+  },
+  "validation": {
+    "comparison": {
+      "baseline": [],
+      "candidate": []
+    }
+  },
+  "decision": "RETURNED_FOR_REVISION",
+  "promotion": null
+}

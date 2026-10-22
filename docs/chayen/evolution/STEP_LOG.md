@@ -1449,3 +1449,213 @@ During development:
 ### Next action
 
 Stopped after Step 11, as instructed. Step 12 is not started.
+
+## Step 12 — Mentor Knowledge Distillation
+
+- **Date:** 2026-10-22
+- **Status:** PASS (developer-side workflow; Mentor quality and live
+  improvement NOT_RUN)
+- **Starting state:** branch `develop`, **HEAD `3f8ee6b`** ("Add synthetic
+  fixtures and validation tools for failure cases FC-0001, FC-0002, and
+  FC-0003", 2026-10-22 14:42 +0700, author 0xPratyaDev7x, 26 files). **The
+  owner made this commit between Steps 11 and 12, not the agent.** It
+  contains the Step 11 work. The worktree was clean before Step 12, and
+  Step 11 was confirmed `PASS`.
+- **Authorization and scope:** the owner's STEP 12 instruction
+  (2026-10-22), recorded as **D-069** (ACCEPTED), resolves the plan's blocker
+  ("Owner scope confirmation"). Scope: "prompt/process-level knowledge
+  distillation, not model fine-tuning"; a governed six-stage maintainer
+  workflow; "Demonstrate the workflow using Step 11 synthetic failures". The
+  Step 01 plan asked for "at least one real recorded failure". That
+  criterion is superseded by the instruction to use the Step 11 synthetic
+  failures, and every artifact says they are synthetic, so no unverified
+  failure is presented as observed.
+
+### Inspected
+
+- MASTER_PLAN, EXECUTION_RULES, and the Step 11 deliverables (failure
+  records, `failure-cases.mjs`, transcripts).
+- `docs/CONTRIBUTING.md`.
+- The guidance each failure points to:
+  - `chayen-repository/references/dependency-and-impact.md:64-70` (step 6
+    names "the frontend calls that hit a changed endpoint" without saying
+    how to find them);
+  - `chayen-data/SKILL.md:45-47` ("never guess a name; when the schema
+    cannot be read, ask");
+  - `chayen-implementation/SKILL.md:153` and
+    `references/change-summary.md:70-73` (no test means verify_more; DONE
+    only when every criterion is accept).
+- `tools/validate/check-guidance.mjs` and `guidance-invariants.json`.
+- Phase 5 `metadataFingerprint`.
+
+**Findings that shaped the design:**
+- Two of the three synthetic failures contradict guidance that is
+  **already explicit and already loaded** in the failing transcript. A
+  workflow that always produces a Skill change would add redundant text.
+  So every root cause allows a non-Skill action, and a behavioural change to
+  guidance that is `fully` covered is returned unless a live replay shows
+  the guidance is ignored.
+- Offline replay replays fixed recorded transcripts, so it **cannot** show
+  that a guidance change helps. Improvement can only be shown by a live
+  baseline-versus-candidate comparison. Offline validation instead shows
+  that the change is safe and consistent.
+
+### Design
+
+| Owner requirement | Where |
+|---|---|
+| 1 Collect: one verified failure, redacted evidence, repeatable reproduction | The proposal names one Step 11 case. The case must be valid and its failing and control transcripts must replay as expected (`VERIFIED_OFFLINE`); its model behaviour is carried forward |
+| 2 Diagnose: eight root causes; not every failure becomes a Skill change | `ROOT_CAUSES`. Evidence references resolve; `existingGuidance` records coverage as fully, partly or no; rejected alternatives are required; `confirmed` needs a live REPRODUCED |
+| 3 Distill: six actions; prefer an existing Recipe over a new Entry Skill | `ALLOWED` maps each root cause to its actions; every cause allows a non-Skill action. Targets must exist, so no new file or Entry Skill. Behavioural changes over 20 lines need a justification |
+| 4 Review: evidence, root cause, before and after, diff, risks and routing collisions, tests; human review | Proposal `review`. Routing impact is computed from the diff. Trigger cases are required for a routing change. Tests must include the failure case and its regression references. The reviewer must not be the Mentor |
+| 5 Validate: offline tests and replay; live comparison when approved | Diff applied to a disposable full copy; 7 fixed validators; metadata fingerprint compared; live arms scored with the failure detector, ≥ 3 runs per arm, one provider and model |
+| 6 Promote: only demonstrated improvements; keep the evidence and the previous version | Derived decision. A promotion record needs the change in the tree, the previous version recoverable by reverse diff with a matching hash, and the failure case still valid |
+| No Mentor in the plugin; no always-on service; no untrusted commands | Mentor = opt-in session with `MENTOR_BRIEF.md`. Single `spawnSync` for fixed validators with `shell: false`, after a byte-identity check. Diffs are limited to existing `.md` and `.json` files |
+
+### Files changed (Step 12 only, against `3f8ee6b`)
+
+| Path | Change |
+|---|---|
+| `tools/evals/distill.mjs` (new) | Six-stage checker, diff parser and applier, routing impact, offline validation on a copy, decision derivation |
+| `tools/evals/failure-cases.mjs` | `readTranscript` exported for reuse (no behaviour change) |
+| `tests/distillation/proposals/DP-0001..0004-*.json` and `.diff` (new) | Four proposals |
+| `tests/distillation/templates/proposal.template.json`, `tests/distillation/README.md`, `tests/distillation/distillation.test.mjs` (new) | Template, folder index, 13 regressions |
+| `tools/validate/validate-all.mjs` | G-21, G-21T |
+| `docs/chayen/KNOWLEDGE_DISTILLATION.md`, `docs/chayen/MENTOR_BRIEF.md` (new); `docs/CONTRIBUTING.md`; `docs/chayen/DECISIONS.md` (D-069); `docs/chayen/SECURITY_MODEL.md` | Process, Mentor brief, records |
+
+No shipped Skill, catalog, recipe or trigger case changed. The plugin diff
+is 0 lines. No proposal is applied.
+
+### Workflow demonstration on the Step 11 synthetic failures
+
+The Mentor was this session's agent (Claude Opus 5.5), working from
+`MENTOR_BRIEF.md`. It is not independent of the maintainer session, and its
+diagnoses are `suspected`.
+
+| Proposal | Collect | Diagnose | Distill | Review | Validate | Decision |
+|---|---|---|---|---|---|---|
+| **DP-0001**, FC-0002 | VERIFIED_OFFLINE; model NOT_RUN | Incomplete Recipe: step 6 says what to find, not how; rejected skill-routing, missing knowledge, model limitation | **Minimal Recipe improvement:** one bullet in `dependency-and-impact.md` becomes "found by searching every app for the route path as text … an untyped `fetch` … shares no symbol with the server" (5 changed lines) | Routing impact declared none, computed none; risks: over-reporting, token cost | 7/7 validators PASS on the candidate copy; fingerprint `411b6adbbea7e121` unchanged | **PENDING_REVIEW** |
+| **DP-0002**, FC-0001 | VERIFIED_OFFLINE; NOT_RUN | Tool or model limitation (suspected): `chayen-data/SKILL.md:45-47` covers it fully | **No guidance change:** add recipe case `rc-09-007-pos-ui-field-not-schema` with a UI-field decoy | none/none | 7/7 PASS | **PENDING_REVIEW** (READY_TO_PROMOTE once approved) |
+| **DP-0003**, FC-0003 | VERIFIED_OFFLINE; NOT_RUN | Tool or model limitation (suspected): the loaded `SKILL.md:153` and `change-summary.md:70-73` forbid the claim | **No Skill change:** extend KL-22, held until a live replay reproduces FC-0003 | none/none | 7/7 PASS | **PENDING_REVIEW** (AWAITING_EVIDENCE once approved, as tested) |
+| **DP-0004**, FC-0003, demonstration | VERIFIED_OFFLINE | "Conflicting instructions" (weak, deliberately) | Appends "Never reports DONE without passing tests." to the `chayen-implementation` description | Declared none; **computed metadata** | Not run, because returned earlier | **RETURNED_FOR_REVISION**: undeclared routing impact, no trigger cases, and guidance already covers the failure fully without live evidence |
+
+While authoring, DP-0004's record first claimed `PENDING_REVIEW`. The tool
+refused it ("decision PENDING_REVIEW is not supported by the evidence
+(derived RETURNED_FOR_REVISION)"), so a Mentor cannot assert its own
+decision.
+
+### Rejected and inconclusive improvements (G-21T)
+
+There are no live runs. The comparison paths were therefore exercised with
+**test-only** copies of the Step 11 synthetic transcripts. The synthetic
+marker is removed and the copies are written only inside temporary
+repository copies; nothing committed claims a live run. DP-0001 approved by
+a reviewer other than the Mentor:
+
+| Baseline arm | Candidate arm | Derived decision |
+|---|---|---|
+| 3 × failing | 3 × control | READY_TO_PROMOTE |
+| 3 × failing | 3 × failing | **REJECTED** (no improvement) |
+| 3 × failing | 2 × control + 1 × failing | **RETURNED_FOR_REVISION** (partial) |
+| 3 × control | 3 × control | **RETURNED_FOR_REVISION** (baseline never reproduced) |
+| 3 × failing | 2 × control + 1 × cut-off | **RETURNED_FOR_REVISION** (inconclusive) |
+| 1 × failing | 1 × control | AWAITING_EVIDENCE (fewer than 3 runs) |
+| baseline on another revision, mixed models, or a synthetic transcript as a live run | — | record refused |
+
+The suite has 13 tests and all pass:
+
+- the shipped decisions, with the plugin unchanged;
+- collect;
+- diagnose;
+- distill (the cause-to-action matrix and target rules; no new file);
+- diff round trips for all four proposals;
+- computed routing impact (metadata, trigger sections, none);
+- review rules (an independent reviewer);
+- human-review decisions (approval alone gives AWAITING_EVIDENCE);
+- a stale base, a non-applying diff and an oversized diff, each returned;
+- a full offline validation of a diff that weakens a GI-03 rule: returned,
+  with the change applied only to the copy;
+- the comparison table above;
+- promotion, with the previous version recovered and promotion without
+  evidence refused;
+- a static check that only fixed validators start and there is no network
+  use.
+
+**Control runs** (scratch copies of `distill.mjs`; log in the session
+scratchpad, `step12-controls.log`): five weakenings, **all caught**. They
+were: approval alone promotes guidance; trusting the declared routing
+impact; ignoring offline validator failures; any action for any root cause;
+an unchanged candidate counted as an improvement.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/evals/distill.mjs` | 0 | 4/4 valid; PENDING_REVIEW 3, RETURNED_FOR_REVISION 1; about 11 s (3 offline copies × 7 validators) |
+| `node --test tests/distillation/distillation.test.mjs` | 0 | 13/13 |
+| `node tools/validate/validate-all.mjs` | 0 | **32/32** gate groups PASS (adds G-21 and G-21T) |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability levels PASS |
+| `git diff -- plugins/`; `git diff HEAD -- tests/skills catalog` | 0 | 0 lines; unchanged. Metadata fingerprint unchanged |
+
+During development, the first test run had 2 failures:
+
+- **A tool bug:** a record with errors still returned a decision. Fixed;
+  errors now null the decision.
+- **A real validator coverage gap** (see Risks): the test's weakening of the
+  no-test rule passed every offline validator. The test now uses the GI-03
+  mutation that G-18T proves is caught.
+
+### Tested offline, and what needs a real model run
+
+| Tested offline (executed) | Needs a real model run (NOT_RUN) |
+|---|---|
+| Collection, record validity, detector discrimination | Whether any of FC-0001..0003 happens with a real agent (live replay) |
+| Diagnosis format, the cause-to-action rules, target, size and new-file rules | **Quality of the Mentor's diagnosis.** Only the format is checked; a human review is required |
+| Diff application, reverse recovery, stale detection, computed routing impact | Whether DP-0001 reduces the failure: live baseline vs candidate, ≥ 3 runs per arm |
+| Package, guidance-invariant, security, catalog, eval-sync, documentation and failure-case gates on the candidate | Whether a change regresses other routing or capability behaviour (Steps 14–18) |
+| Every decision path, including rejected and inconclusive comparisons | Running a Mentor model as an independent session |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Reusable maintainer workflow with six stages | `KNOWLEDGE_DISTILLATION.md`, `MENTOR_BRIEF.md`, the template, `distill.mjs`, G-21 and G-21T | PASS |
+| Reuses existing components | Step 11 records and replay, recipe cases, the existing validators, Phase 5 fingerprint, CONTRIBUTING extended | PASS |
+| Not every failure forced into a Skill change | DP-0002 and DP-0003 make no Skill change; the cause-to-action matrix; the fully-covered rule | PASS |
+| Recipe preferred over a new Entry Skill | DP-0001 changes an existing Recipe; new files are impossible | PASS |
+| Human review required before approval | Pending, approved, changes-requested and rejected paths; the Mentor cannot self-review | PASS |
+| Only demonstrated improvements promoted; evidence and previous version preserved | Comparison and promotion tests; control runs | PASS (offline); no live comparison exists |
+| No Mentor in the plugin, no service, no untrusted commands | Plugin diff 0; static test; fixed validators after a byte-identity check | PASS |
+| Demonstrated on the Step 11 synthetic failures; at least one minimal Recipe proposal; failed or inconclusive returned or rejected | DP-0001..0004; the comparison table | PASS |
+| Report offline versus real-model coverage | Table above and in `KNOWLEDGE_DISTILLATION.md` | PASS |
+
+### Risks and findings
+
+- **GI-03 coverage gap (found in this step, not fixed).** A rewrite of
+  `change-summary.md` saying "A criterion with no test may be accepted when
+  the code looks right" passes `check-guidance.mjs`. GI-03 recognises
+  missing evidence only by the words missing, partial, stale or unexecuted.
+  So a distillation proposal that weakens the no-test rule in other words
+  would pass offline validation, and only human review would catch it.
+  Recommended for Step 13 (Independent Evidence Audit) or an owner-approved
+  change to GI-03.
+- **The Mentor was this session's agent**, the same model writing the
+  tooling. The demonstration shows the workflow, not independent Mentor
+  judgement.
+- **No proposal is reviewed or promoted.** DP-0001 is a candidate change to
+  shipped guidance and needs a human review, then a live comparison. If
+  DP-0002 is approved, it also needs the case count updated where documents
+  state it (KL-15, `tests/skills/README.md`), as its risks say.
+- **Live comparison has no runner.** A maintainer would run the arms
+  manually under OD-10, as in Step 11. Wiring this into Steps 15–17 is still
+  open.
+- G-21 adds about 11 s to `validate-all.mjs` (three full copies). The cost
+  grows with the number of pending proposals; promoted, returned and
+  rejected proposals do not run offline validation.
+- No shipped changes in this step. The open version decision from Steps
+  07–10 still stands.
+
+### Next action
+
+Stopped after Step 12, as instructed. Step 13 (Independent Evidence Audit)
+is not started. Its prerequisites, 08 and 09, are PASS.

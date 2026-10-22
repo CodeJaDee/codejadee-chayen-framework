@@ -102,6 +102,13 @@ Failure reproduction records are kept to these rules and checked by a validator
 - scripts are not accepted;
 - nothing from a record or transcript is executed.
 
+Distillation proposals ([KNOWLEDGE_DISTILLATION.md](KNOWLEDGE_DISTILLATION.md),
+D-069) may change only existing `.md` and `.json` files. Their diffs are
+applied in memory and on a disposable copy, never to the working tree before
+promotion. On that copy the tool starts only the repository's fixed
+validators, after confirming that they are byte-identical to the reviewed
+scripts. No command from a proposal, diff or trace runs.
+
 ## Maintainer execution and installation
 
 Inspect developer scripts from the intended revision before running them;

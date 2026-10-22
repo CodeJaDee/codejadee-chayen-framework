@@ -1,0 +1,14 @@
+--- a/plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md
++++ b/plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md
+@@ -66,7 +66,10 @@ is assumed to depend on something without evidence.
+    - string occurrences (reflection, serialization names, `nameof`, route
+      templates, configuration keys, SQL text, log queries);
+    - generated code;
+-   - the frontend calls that hit a changed endpoint;
++   - the frontend calls that hit a changed endpoint, found by searching every
++     app for the route path as text (for example `api/orders`): an untyped
++     `fetch` or HTTP call shares no symbol with the server, so a type or
++     symbol search misses it;
+    - the tests that cover it.
+ 
+    Say which dynamic mechanisms could hide usages, such as reflection,

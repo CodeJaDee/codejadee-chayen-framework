@@ -1,0 +1,10 @@
+--- a/plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md
++++ b/plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md
+@@ -1,6 +1,6 @@
+ ---
+ name: chayen-implementation
+-description: Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations.
++description: Plan and deliver code changes with a task contract, a minimal diff, real build and test runs, and a change summary. Covers cross-layer features, bug fixes, refactors, dependency and framework upgrades, dead code and deprecations, config and feature flags, concurrency, error handling, generated clients, and compatible changes. Not for work confined to API endpoints or UI components, test-only tasks, or explanations. Never reports DONE without passing tests.
+ ---
+ 
+ # Implementation

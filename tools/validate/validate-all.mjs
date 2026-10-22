@@ -42,6 +42,8 @@ const steps = [
   ["G-19 project-map template, staleness and evidence mechanics on a disposable git monorepo (agent behaviour NOT_RUN)", "tests/skills/project-map.test.mjs", []],
   ["G-20 failure-case records, privacy rules and offline replay of recorded transcripts (D-068; no provider calls; model behaviour NOT_RUN)", "tools/evals/failure-cases.mjs", []],
   ["G-20T failure-case format, privacy, replay and verification-status regressions (offline, disposable copies)", "tests/failures/failure-cases.test.mjs", []],
+  ["G-21 distillation proposals through collect, diagnose, distill, review, validate (fixed validators on a disposable copy) and promote (D-069; no provider calls; live comparison NOT_RUN)", "tools/evals/distill.mjs", []],
+  ["G-21T distillation workflow regressions, including rejected and inconclusive comparisons (offline, disposable copies)", "tests/distillation/distillation.test.mjs", []],
   ["G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored)", "tools/evals/score-step40.mjs", ["--self-test"]],
 ];
 let failed = 0;
