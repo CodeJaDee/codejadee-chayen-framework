@@ -60,8 +60,9 @@ If the request does not fit, stop following this skill and continue normally wit
 - **Discover:** test framework and version, runner command, fixtures and
   helpers, mocking approach, data builders, environment needs (database,
   containers, browsers), CI configuration, and the current baseline result.
-  When `.chayen/profile.md` and `.chayen/rules.md` are present, use them as a
-  map, confirm each fact in the source, and trust the source when the two
+  When `.chayen/profile.md`, `.chayen/rules.md`, and the unit file in
+  `.chayen/units/` for the code under test are present, use them as a map,
+  confirm each fact in the source, and trust the source when the two
   disagree.
 - **Ask when missing and it matters:** expected behaviour for edge cases,
   whether tests may use containers or external services, and time budgets

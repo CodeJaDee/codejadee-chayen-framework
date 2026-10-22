@@ -8,6 +8,13 @@ from the unit template below when the repository has more than one unit.
 Fill every field with evidence or `unknown`; delete a section only when it
 does not apply to the repository, and never leave template prompts behind.
 
+The unit file is also the unit's change-impact map: its boundary and
+dependencies, entry points, API ownership and consumers, data, tests,
+generated code, and dynamic references. In a single-unit repository, add
+those map sections to `profile.md` instead. The map sections are additive to
+schema `project-knowledge/1`: a file without them is valid, and a refresh
+adds them as part of its previewed diff.
+
 ## Template
 
 ```markdown
@@ -77,13 +84,50 @@ generated_date: <YYYY-MM-DD>
 evidence:
   - path: <evidence file>
     blob: <git hash-object output, or none>
+  - path: <evidence folder, for example the migrations folder>
+    tree: <git rev-parse HEAD:<folder> output, or none>
 ---
 <!-- Generated. Refresh it instead of editing it by hand. Team rules go in rules.md. -->
 
 # Unit: <name>
 
 ## Stack
+<Frameworks and versions (path:line), and the main dependency declarations: packages this unit uses directly, with versions.>
+
+## Boundary and dependencies
+| Depends on | Kind | Evidence |
+|---|---|---|
+| <unit or package> | <project reference, workspace dependency, package> | <path:line> |
+
+## Entry points
+| Entry point | Kind | Evidence |
+|---|---|---|
+| <path> | <host startup, route module, CLI, job, exported API> | <path:line> |
+
+## API ownership and consumers
+| API or contract | Owned in | Consumers | Evidence |
+|---|---|---|---|
+| <route group, OpenAPI file, event> | <path> | <unit or client path, or unknown> | <path:line> |
+
+## Data
+<Database provider and data-access library from package references, model and migration locations, migration command.>
+
+## Tests
+| Test project or folder | Covers | Command | Status |
+|---|---|---|---|
+| <path> | <what it tests> | `<command>` | <DISCOVERED, VERIFIED, inferred> |
+
 ## Commands
+
+## Generated code
+| Generated path | Generator and source | Regenerate with |
+|---|---|---|
+
+## Dynamic references
+| Mechanism | Where | Evidence |
+|---|---|---|
+| <reflection, assembly scanning, string routes, dynamic SQL, lazy routes> | <path> | <path:line, or none found; searched: <terms>> |
+
 ## Where things go
 ## Conventions specific to this unit
 ## Unknowns
@@ -93,8 +137,14 @@ evidence:
 
 - Labels follow the skill: `found` facts cite evidence, `inferred` facts give
   their reasoning, and `unknown` names what would resolve it.
-- Every cited file appears in the `evidence` list with its blob.
-- Keep `profile.md` at most 150 lines and a unit file at most 120 lines. When
-  `profile.md` grows past its budget, move unit detail to unit files.
+- Every cited file appears in the `evidence` list with its blob, and every
+  folder the map summarizes (migrations, generated clients, test projects)
+  with its tree id.
+- A dependency, consumer, or dynamic reference is listed only with a
+  `path:line` that shows it. A consumer that the repository does not
+  evidence is `unknown`, never "none". "None found" for dynamic references
+  names the terms searched.
+- Keep `profile.md` and each unit file at most 150 lines. When `profile.md`
+  grows past its budget, move unit detail to unit files.
 - No secret values, connection strings, hostnames with credentials, or
   personal data. Record key names and locations only.

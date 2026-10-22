@@ -66,7 +66,8 @@ If the request does not fit, stop following this skill and continue normally wit
   - the real build and test commands;
   - the closest analogous code;
   - the accepted ADRs that constrain the change;
-  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+  - `.chayen/profile.md`, `.chayen/rules.md`, and the unit file in
+    `.chayen/units/` for the code being changed, when present: use them as a
     map, confirm each fact in the source, and trust the source when the two
     disagree.
 - **Ask once if missing:**
@@ -93,6 +94,9 @@ No matching workflow => continue normal native behavior.
    base plus only the relevant types, runtime, or workspace topic.
    In mixed-stack monorepos, map each affected app/service to its own versions,
    provider, and commands; verify changed packages and affected consumers separately.
+   When a unit file maps the affected unit, use its dependencies, consumers,
+   dynamic references, and tests to target the search for affected code and
+   the tests to run, after confirming each in the source.
 2. **Baseline.** When running commands is permitted, build and run the
    relevant tests before editing. Record pre-existing failures.
 3. **Classify the change,** then read the one matching recipe:

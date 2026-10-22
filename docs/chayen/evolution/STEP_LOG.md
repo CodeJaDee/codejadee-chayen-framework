@@ -1094,3 +1094,158 @@ target real past drift, not only synthetic mutations.
 
 Stopped after Step 09, as instructed. Step 10 (Repository Intelligence) is
 **ready**: prerequisites 05 and 09 are PASS. Not started.
+
+---
+
+## Step 10 — Repository Intelligence
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, **HEAD `a0f9bfe`** ("Add discovery
+  metrics tool and guidance consistency checker", 2026-10-22 14:02 +0700,
+  author 0xPratyaDev7x). **This commit was made by the owner between Steps 09
+  and 10, not by the agent.** It contains the Step 01–09 work (80 files) and
+  keeps version `1.1.2`. Worktree clean before Step 10. Step 09 confirmed
+  `PASS`.
+- **Authorization:** the owner's STEP 10 instruction (2026-10-22): "Make
+  existing repository knowledge more useful for future coding tasks without
+  adding a mandatory Knowledge Graph database or MCP service." Recorded as
+  **D-067** (ACCEPTED) with an ADR-0012 amendment.
+
+### Inspected
+
+`chayen-init/SKILL.md`, `references/detection-and-refresh.md`,
+`references/profile-template.md` (including the unit file template),
+`references/instruction-block.md`, `chayen-repository/SKILL.md`,
+`references/dependency-and-impact.md`, ADR-0012, and the `.chayen/` reading
+bullets in the implementation, backend, frontend, data and testing skills.
+
+**Findings that shaped the design:**
+- `chayen-init` already has preview-before-write, generated versus
+  team-owned files, `git hash-object` fingerprints, and a refresh limited to
+  changed evidence.
+- Unit files existed but held only Stack, Commands, Where things go,
+  Conventions and Unknowns.
+- The impact recipe already labelled evidence and treated external
+  consumers as `unknown`, but never consulted `.chayen/`.
+- The coding skills read `profile.md` and `rules.md` but not unit files,
+  although the pointer block tells agents to read the unit file.
+
+### Design (extends ADR-0012; no new system)
+
+| Owner requirement | Where |
+|---|---|
+| Module boundaries; versions; commands; entry points; dependency declarations | Unit template sections `Stack`, `Boundary and dependencies`, `Entry points`, `Commands` |
+| API ownership and consumers where evidenced | `API ownership and consumers`: consumers only with `path:line`, otherwise `unknown` (never "none") |
+| Data model and migration locations | `Data`, plus the migrations folder fingerprinted by tree id |
+| Test projects and commands | `Tests` (project, coverage, command, status) |
+| Generated-code boundaries | `Generated code` (generator, source, regenerate command; also under "Do not edit") |
+| Dynamic or reflection dependencies | `Dynamic references`; "none found" must name the terms searched |
+| Evidence and freshness fingerprints | Header `evidence` with file blobs plus folder `tree` ids (`git rev-parse HEAD:<folder>`) |
+| Prefer unit files | Map lives in `units/<unit>.md`; only a single-unit repository puts it in `profile.md` |
+| Agent workflow steps 1–7 | Impact recipe step 1 (map first, only the owning unit file, read-only staleness check, leads for targeted search, confirm in source, a missing entry never proves absence) and its "Project map" output line; implementation Orient step; the five consuming skills read the owning unit file |
+| Source authoritative | Every reader states that the source wins; GI-06 now enforces this for any file reading `profile.md` or `units/` |
+| Refresh: git fingerprints, no full rescans, no silent overwrite, preview and approval | Refresh step 2 compares tree ids too; step 8 adds missing map sections through the preview; the "Staleness check for readers" section is read-only and offers refresh only on request; `rules.md`, conventions and instruction-file protections unchanged |
+| No mandatory runtime or dependency | Markdown guidance plus read-only git commands that the existing lifecycle already uses |
+
+Schema stays `project-knowledge/1` (the sections are additive), so existing
+`.chayen/` directories remain valid and are not stopped by the "unknown
+schema" rule. The unit-file budget rose from 120 to 150 lines, equal to
+`profile.md`, to fit the map.
+
+### Files changed (Step 10 only, against `a0f9bfe`)
+
+| Path | Change |
+|---|---|
+| `plugins/.../chayen-init/references/profile-template.md` | Map-section intro; unit template with seven map sections and folder `tree` evidence; completion rules: evidence for every dependency, consumer and dynamic reference, consumers `unknown` not "none", the 150-line budget (+53/−3) |
+| `plugins/.../chayen-init/references/detection-and-refresh.md` | "Impact map (per unit)" checklist; folder tree fingerprints; refresh compares trees and adds missing sections through the preview; "Staleness check for readers" (+67/−6) |
+| `plugins/.../chayen-init/SKILL.md` | Detect step names the map; budgets; Outputs; Verification (tree ids, cited map rows); failure row for unevidenced consumers (+15/−6). Description, When to use and When not to use unchanged |
+| `plugins/.../chayen-repository/references/dependency-and-impact.md` | New step 1 "Start from the project map, when present", steps renumbered 2–9; Inputs; "Project map" output line; Verification (+27/−8) |
+| `plugins/.../chayen-implementation/SKILL.md`, `chayen-backend`, `chayen-frontend`, `chayen-data`, `chayen-testing` | Discover bullets also read the owning unit file; the implementation Orient step uses the map's dependencies, consumers, dynamic references and tests for targeted search after confirming them |
+| `tools/validate/check-guidance.mjs`, `guidance-invariants.json`, `docs/chayen/GUIDANCE_INVARIANTS.md` | GI-06 now covers any file outside chayen-init that reads `profile.md` or `units/` |
+| `tests/skills/project-map.test.mjs` (new), `tests/skills/guidance-consistency.test.mjs` (+1 test), `tests/skills/recipe-cases.json` (+9), `tools/validate/validate-all.mjs` (G-19) | Tests below |
+| `docs/chayen/DECISIONS.md` (D-067), `ADRS/ADR-0012-*.md` (decision 2 amendment), `docs/SKILLS_CATALOG.md`, `docs/chayen/KNOWN_LIMITATIONS.md` (KL-15: 469), `tests/skills/README.md` | Records |
+
+### Tests
+
+**Executable: `tests/skills/project-map.test.mjs` (G-19), 11/11, 0
+skipped.** It builds a disposable git monorepo with:
+- a .NET solution with Api, Core, Data and Tests projects and
+  `ProjectReference` edges;
+- SQL Server through EF Core, with a migrations folder and a stored
+  procedure;
+- reflection (`Activator.CreateInstance`, `Type.GetType`);
+- an Angular admin app whose `OrdersService` calls `/api/orders`, with
+  `loadChildren` lazy routes;
+- a Python reporting service.
+
+A `.chayen/` map in the shipped unit-template shape carries real blobs and
+tree ids.
+
+| Owner case | Test | Observed |
+|---|---|---|
+| Template completeness | unit template has all ten sections and blob and tree evidence | pass |
+| Fresh map | reader check on three units | all `fresh` |
+| Stale map (dependency) | a committed `Shop.Api.csproj` change | only `api` stale, and only that file; `admin` and `reporting` fresh, so refresh stays targeted |
+| Stale map (data) | a committed new migration | `api` stale via the migrations tree id |
+| Stale map (uncommitted) | `orders.service.ts` edited, not committed | `admin` stale via `git status` |
+| Unconfirmed map | unknown or `none` `generated_commit` (shallow-clone case) | `unconfirmed` |
+| Missing map | `.chayen/` removed | `absent`; the recipe states the no-map fallback and that a missing entry never proves absence |
+| No invented dependency | every cited row's `path:line` holds the claimed item; an invented `Shop.Payments` reference is injected | 0 on the real map; the injected row detected |
+| Reflection and API consumer | `Activator.CreateInstance` cited at `Program.cs:3`; `/api/orders` consumer cited at `orders.service.ts:3`; external callers `unknown`; the Python service, which never calls the API, is not listed | pass |
+| Read-only reader check | `git status` identical before and after | pass |
+
+This proves the template contract and the git mechanics the guidance
+prescribes. It does not prove that an agent writes or reads the map
+correctly.
+
+**Transcript-graded recipe cases** (`tests/skills/recipe-cases.json`,
+460 → 469; specifications, **behaviour NOT_RUN**):
+`rc-01-004-pos-dotnet-solution-map`, `-angular-consumer`,
+`-sqlserver-references`, `-monorepo-consumers`, `-stale-map`, `-missing-map`,
+`-reflection`, `-api-consumers`, and `rc-01-004-neg-concept`.
+
+**Guidance invariant:** a new G-18T case removes "the source wins" from the
+impact recipe's map step, and GI-06 detects it (22/22).
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node --test tests/skills/project-map.test.mjs` | 0 | 11/11, 0 skipped. During development one failure was a test-helper bug: trimming dropped the leading space of `git status --porcelain`. Fixed in the helper, not in the guidance |
+| `node --test tests/skills/guidance-consistency.test.mjs` | 0 | 22/22 |
+| `node tools/validate/check-guidance.mjs` | 0 | 0 errors, 0 review items |
+| `node tools/validate/validate-package.mjs` | 0 | 0 errors, 0 warnings; V-22 469 cases |
+| `node tools/validate/validate-all.mjs` | 0 | **28/28** gate groups PASS (adds G-19); G-11 eval sync PASS; G-13 189/189; G-14 docs PASS |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability PASS; T-206 206/206 |
+| `metadataFingerprint`; trigger and exclusion sections of the 7 touched skills against HEAD; `git diff -- tests/skills/trigger-cases.json` | 0 | `411b6adbbea7e121` unchanged; all 7 sections byte-identical; trigger cases unchanged |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| No new mandatory runtime or external dependency | Only Markdown guidance and test code; readers use read-only git commands the lifecycle already used; V-09 and G-SEC PASS | PASS |
+| Existing `chayen-init` lifecycle remains valid | Modes, preview and approval, ownership, the schema identifier and the refresh algorithm unchanged; map sections are additive and arrive through the previewed refresh | PASS |
+| Targeted map reading preferred over blind scanning | Recipe step 1 (only the owning unit file and its listed consumers); stale-map test shows only the affected unit goes stale | PASS (static and mechanics); behaviour NOT_RUN |
+| No unsupported dependency invented | Template and checklist require `path:line` or `unknown`; consumers never "none"; the invented-row test is detected | PASS (mechanics); behaviour NOT_RUN |
+| Stale knowledge is detectable | Executable fresh, stale, unconfirmed and absent cases | PASS |
+| Routing and no-match behaviour preserved | Descriptions, When to use and When not to use unchanged; metadata fingerprint unchanged; trigger cases unchanged; G-11 PASS | PASS |
+
+### Risks and findings
+
+- **Shipped guidance changed again without a version bump**: 9 files in
+  Step 10, on top of `a0f9bfe`, which already contains the Step 07–09 shipped
+  changes at version `1.1.2`. An owner version decision is needed before a
+  release; installs pinned to `1.1.2` cannot tell the builds apart by
+  version.
+- **Behaviour NOT_RUN**: whether agents write accurate maps, read only the
+  owning unit, and confirm facts needs the runner and grader (Steps 15–17).
+- Unit files are larger (budget 150). They load only for their unit, so the
+  per-task cost rises only when that unit is touched.
+- The executable test's helpers (`staleness`, `inventedRows`) are test code,
+  not a shipped or user-facing tool. Users rely on the guidance and git.
+
+### Next action
+
+Stopped after Step 10, as instructed. Step 11 (Failure Reproduction) is
+**ready**: prerequisites 08 and 09 are PASS. Not started.

@@ -26,7 +26,7 @@ blockers.
 | 07 | Task Contract Consistency | 01, 04 | PASS | — |
 | 08 | Acceptance Evidence Contract | 07 | PASS | — |
 | 09 | Guidance Consistency Validator | 06, 08 | PASS | — |
-| 10 | Repository Intelligence | 05, 09 | NOT_STARTED | — |
+| 10 | Repository Intelligence | 05, 09 | PASS | — |
 | 11 | Failure Reproduction | 08, 09 | NOT_STARTED | — |
 | 12 | Mentor Knowledge Distillation | 11 | NOT_STARTED | Scope to be confirmed by the owner at step start |
 | 13 | Independent Evidence Audit | 08, 09 | NOT_STARTED | — |
@@ -213,13 +213,13 @@ graph.
 
 | Field | Value |
 |---|---|
-| Objective | Improve how Skills discover a repository's stacks, commands, layout and conventions (including the `.chayen/` project map, D-065) before acting, without adding always-on content. |
+| Objective | Improve how Skills discover a repository's stacks, commands, layout and conventions (including the `.chayen/` project map, D-065) before acting, without adding always-on content. **As executed under the owner's Step 10 instruction (D-067):** `.chayen/` unit files carry a lightweight, evidence-cited change-impact map with git fingerprints; readers start from the owning unit file, check staleness read-only, and confirm facts in the source. |
 | Prerequisite | 05, 09 |
 | Target files | `skills/chayen-repository/` (`repository-profile.md`, `stack-detection.md`, `dependency-and-impact.md`); `skills/chayen-init/references/detection-and-refresh.md`; Discover steps in the five consuming Skills |
 | Expected artifacts | Guidance changes, recipe and trigger cases, fixture variants if needed |
 | Acceptance criteria | Every changed rule has a case in `tests/skills/`; descriptions change only within the Step 05 budget, with the metadata fingerprint recorded; `validate-all.mjs` passes; behaviour claims stay `NOT_RUN` until Step 18 |
-| Evidence | STEP_LOG entry |
-| Status | NOT_STARTED |
+| Evidence | [STEP_LOG.md — Step 10](STEP_LOG.md#step-10--repository-intelligence) |
+| Status | PASS |
 | Blockers | None beyond prerequisites |
 
 ### 11 — Failure Reproduction

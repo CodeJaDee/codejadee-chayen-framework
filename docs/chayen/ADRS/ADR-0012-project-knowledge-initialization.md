@@ -53,6 +53,16 @@ Constraints that shape the design:
 
    Explicit standards and observed patterns stay in separate sections;
    proposals are reported in conversation and never written.
+   *Amended by D-067 (evolution Step 10):* each unit file (or `profile.md` in
+   a single-unit repository) also carries a lightweight change-impact map:
+   boundary and dependencies, entry points, API ownership and consumers,
+   data and migrations, tests, generated code, and dynamic references, each
+   cited or `unknown`. Folders are fingerprinted with `git rev-parse
+   HEAD:<folder>`. The schema stays `project-knowledge/1`; the sections are
+   additive and arrive through the normal previewed refresh. Readers
+   (`chayen-repository` impact analysis and the coding skills) read only the
+   owning unit's file, check freshness read-only, and confirm every fact in
+   the source. No database, service, or runtime is added.
 3. **Preview before every write.** Nothing is written until the user approves
    the exact content or diff. Writes stay inside `.chayen/` and inside approved
    pointer blocks.

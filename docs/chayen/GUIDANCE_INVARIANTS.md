@@ -130,7 +130,7 @@ generic practice. `.chayen/` files are a map, and the source wins.
 | Diagnostic | Meaning and fix |
 |---|---|
 | `Principles has no "Precedence." principle` / `the Precedence principle no longer gives …` | Restore the Precedence principle in that skill. |
-| `reads .chayen/profile.md without saying the source wins` | A consuming skill lost the "trust the source" rule (D-065). |
+| `reads .chayen/ project knowledge without saying the source wins` | A file outside chayen-init that reads `profile.md` or a unit file lost the "trust the source" rule (D-065; extended to unit files in evolution Step 10). |
 | `lets .chayen/ files override the source` | Contradicts D-065. |
 | REVIEW `Precedence names generic practice before repository instructions` | Check the order by hand. |
 
@@ -178,7 +178,7 @@ Exit checks are also scanned by GI-04 and GI-05.
 | Verdicts | Every definitional clause; "missing evidence is accept" patterns; the three definitions in the recipe | Verdict wording in non-definitional prose |
 | Completion | Every DONE-defining sentence group requires accept; code-or-build-is-DONE patterns; the three outcomes in the recipe | Other outcome vocabularies |
 | Check statuses | The status table and its SKIPPED rule; the recipe list; skipped-as-pass patterns | Status reporting in other phrasings |
-| Precedence | A Precedence principle in all 16 skills; ".chayen source wins" in consuming skills | The internal order (REVIEW only) |
+| Precedence | A Precedence principle in all 16 skills; ".chayen source wins" wherever profile or unit files are read | The internal order (REVIEW only) |
 | Advisory | Self-enforcement and absolute claims; advisory statements in five skills | Claims with another subject ("the agent will block …") |
 | Hand-off | Every `chayen-*` name resolves; no provider syntax; no self hand-off | Whether the named skill really owns the request; unrecognised outcomes (REVIEW) |
 | Workflows | Status vocabulary and verdict rule in Verification | Whether each exit check suffices (REVIEW signal only) |

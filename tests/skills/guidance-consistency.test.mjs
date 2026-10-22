@@ -169,6 +169,12 @@ test("detects a removed source-of-truth precedence rule", (t) => {
   detected(check(root), "GI-06", /chayen-data\/SKILL\.md: the Precedence principle no longer gives/);
 });
 
+test("detects a project-map reader that drops 'the source wins'", (t) => {
+  const root = fixture(t);
+  edit(root, `${S}/chayen-repository/references/dependency-and-impact.md`, /the source; when the two disagree, the source wins, and report that the\s+map is stale\./, "the map; use it as the dependency list.");
+  detected(check(root), "GI-06", /dependency-and-impact\.md: reads \.chayen\/ project knowledge without saying the source wins/);
+});
+
 test("detects project knowledge that overrides the source", (t) => {
   const root = fixture(t);
   append(root, `${S}/chayen-backend/SKILL.md`, "When .chayen/profile.md disagrees, .chayen/rules.md overrides the source code.");

@@ -1594,6 +1594,38 @@ Decision statuses:
 - **Evidence:** documentation only; `validate-all.mjs` re-run after the
   documentation changes (see evolution STEP_LOG, Step 02).
 
+### D-067 — Lightweight change-impact map in project knowledge
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 10: "Make existing repository knowledge more useful for future
+  coding tasks without adding a mandatory Knowledge Graph database or MCP
+  service").
+- **Decision:**
+  - Extend `.chayen/` (ADR-0012), not a new memory system. Unit files gain
+    map sections: boundary and dependencies, entry points, API ownership and
+    consumers, data and migrations, tests, generated code, dynamic references.
+    A single-unit repository keeps them in `profile.md`.
+  - Every entry cites `path:line` or is `unknown`. A consumer without
+    evidence is `unknown`, never "none"; "none found" for dynamic references
+    names the terms searched.
+  - Evidence adds folder tree ids (`git rev-parse HEAD:<folder>`). Schema
+    stays `project-knowledge/1`; the sections are additive and are added by
+    the next approved refresh.
+  - Readers start from the owning unit file only, run a read-only staleness
+    check (`git diff --name-only <generated_commit> HEAD -- <paths>`,
+    `git status --porcelain`, tree ids), use the map as leads for targeted
+    searches, confirm facts in the source (the source wins), and never treat
+    a missing entry as proof of absence. Refresh happens only on request,
+    through the existing preview and approval.
+  - Unit-file budget 120 → 150 lines, equal to `profile.md`. `rules.md`,
+    conventions and instruction files keep their existing protections.
+- **Not changed:** skill descriptions and routing metadata, the `chayen-init`
+  lifecycle and modes, the schema identifier, the 206-capability catalog.
+- **Evidence:** static validators, recipe cases (specifications), and
+  executable git mechanics on a disposable monorepo
+  (`tests/skills/project-map.test.mjs`). Agent behaviour is NOT_RUN. Shipped
+  guidance changed without a version bump.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

@@ -281,6 +281,113 @@
       ]
     },
     {
+      "id": "rc-01-004-pos-dotnet-solution-map",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "In our .NET solution, which projects are affected if I add a parameter to IOrderRepository.GetOrders in Shop.Core?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "When .chayen/units/ exists, only the owning unit's file (and the units it lists as consumers) is read, not every unit file",
+        "Each affected project is confirmed in the source through a ProjectReference or a usage with path:line",
+        "Assembly-scanning dependency-injection registration is named as a possible hidden usage when present"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-angular-consumer",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "What breaks in the Angular admin app if the orders API stops returning the status field?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Both TypeScript and template (*.html) usages of the field are searched, with path:line",
+        "Lazy routes and injection tokens are considered as string references that symbol search misses",
+        "The tests to run are named from the unit's test projects or the repository's commands"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-sqlserver-references",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "If we drop the dbo.usp_GetOrders stored procedure from our SQL Server database, what depends on it?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Repository usages (migrations, raw SQL, ORM calls, reports) are listed with path:line",
+        "sys.sql_expression_dependencies is used only with read-only access the user granted; otherwise it is named as the check to run",
+        "Dynamic SQL is named as a blind spot of the catalog view, and the blast radius is High for persisted data"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-monorepo-consumers",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "We are changing the JSON shape of the orders endpoint in the api service. Which other apps in this monorepo consume it?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Each consumer in another unit is evidenced by a call, a generated client, or a contract test, with path:line",
+        "Units in other stacks are searched with their own conventions, not inferred from a sibling unit's dependencies",
+        "Consumers outside the repository are reported as unknown, never as absent"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-stale-map",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "Use the project map to tell me what depends on Shop.Data. The map was generated before last week's refactor.",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Freshness is checked read-only against the unit file's generated_commit and evidence paths",
+        "Facts that changed are confirmed in the source, and where they disagree the source wins and the map is reported as stale",
+        "A refresh is offered, not performed, and no .chayen/ file is written"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-missing-map",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "What would break if I change the PaymentStatus enum? This repository has no project knowledge files.",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "The analysis proceeds with targeted symbol and string searches instead of a scan of the whole repository",
+        "Serialized names, persisted values, and API contracts that carry the enum are checked",
+        "No dependency is invented, and no dependency is declared absent without the searches that show it"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-reflection",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "Is it safe to rename the InvoiceExporter class? Nothing seems to reference it.",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Reflection, Type.GetType or Activator strings, assembly scanning, and configuration that names the class are searched",
+        "The unit file's dynamic references, when present, are used as leads and confirmed in the source",
+        "Hidden usages that cannot be ruled out are reported, so 'safe' is not claimed without that evidence"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-api-consumers",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "Who calls our GET /api/customers/{id} endpoint?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Consumers are listed only with evidence: route-path calls, generated clients, or contract tests, each with path:line",
+        "The unit file's API consumers, when present, are re-checked in the source rather than repeated",
+        "External callers are unknown unless the repository documents them"
+      ]
+    },
+    {
+      "id": "rc-01-004-neg-concept",
+      "capability": "CAP-01-004",
+      "polarity": "negative",
+      "prompt": "Explain what change impact analysis is and why teams do it.",
+      "expect": { "skill": "none", "not_loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "A conceptual answer is given without reading any repository",
+        "No project knowledge file is read or written"
+      ]
+    },
+    {
       "id": "rc-01-005-pos",
       "capability": "CAP-01-005",
       "polarity": "positive",

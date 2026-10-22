@@ -216,8 +216,10 @@ function needFile(id, rel) { const t = get(rel); if (t === null) error(id, rel, 
     const repo = b.search(/repository/i), generic = b.search(/generic practice/i);
     if (generic >= 0 && repo >= 0 && generic < repo) review(id, rel, "Precedence names generic practice before repository instructions; check the order");
   }
-  for (const f of files.filter((x) => /^[^/]+\/SKILL\.md$/.test(x.rel) && !x.rel.startsWith("chayen-init/"))) {
-    for (const u of units(f.text)) if (/\.chayen\/profile\.md/.test(u) && !/(?:trust|confirm\w*)[^.]{0,60}\bsource\b|source wins|source\b[^.]{0,40}\bwins?\b/i.test(u)) error(id, f.rel, "reads .chayen/profile.md without saying the source wins when they disagree");
+  // Every consumer (any shipped file outside chayen-init, which writes the map) that reads the profile or a
+  // unit file must say, in the same paragraph or list, that the source wins.
+  for (const f of files.filter((x) => !x.rel.startsWith("chayen-init/"))) {
+    for (const u of units(f.text)) if (/\.chayen\/(?:profile\.md|units\/)/.test(u) && !/(?:trust|confirm\w*)[^.]{0,60}\bsource\b|source wins|source\b[^.]{0,40}\bwins?\b/i.test(u)) error(id, f.rel, "reads .chayen/ project knowledge without saying the source wins when they disagree");
   }
   for (const h of contradictions(/\.chayen\/\S*[^.;]{0,80}\b(?:overrides?|outranks?|takes? precedence over|wins? over)\b[^.;]{0,30}\b(?:source|code)\b/i, files)) error(id, h.file, `lets .chayen/ files override the source: "${h.text}"`);
 }

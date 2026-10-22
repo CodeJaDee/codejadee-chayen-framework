@@ -71,7 +71,7 @@
       "source": "Every SKILL.md Principles section; D-065",
       "machine": [
         "Every SKILL.md has a Precedence principle that gives system and developer instructions and provider permissions priority.",
-        "Every shipped file that tells the agent to read .chayen/profile.md also says the source wins on disagreement.",
+        "Every shipped file outside chayen-init that tells the agent to read .chayen/profile.md or a .chayen/units/ file also says, in the same paragraph or list, that the source wins on disagreement.",
         "No shipped sentence lets .chayen/ files override the source."
       ],
       "review": ["The relative order of repository instructions and conventions inside each Precedence principle."]

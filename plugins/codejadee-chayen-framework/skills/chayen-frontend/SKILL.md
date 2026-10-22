@@ -70,7 +70,8 @@ If the request does not fit, stop following this skill and continue normally wit
   - the API client pattern and the test setup;
   - any shell: Capacitor, Ionic, Cordova, PWA service worker, Electron,
     Tauri, with its version, plugins, and build scripts;
-  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+  - `.chayen/profile.md`, `.chayen/rules.md`, and the unit file in
+    `.chayen/units/` for the code being changed, when present: use them as a
     map, confirm each fact in the source, and trust the source when the two
     disagree.
 - **Ask when missing and it matters:** field rules, empty and error

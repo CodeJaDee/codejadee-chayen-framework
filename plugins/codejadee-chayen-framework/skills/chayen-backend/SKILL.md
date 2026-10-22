@@ -78,7 +78,8 @@ If the request does not fit, stop following this skill and continue normally wit
   - validation, auth, job, messaging, and HTTP-client libraries;
   - test setup;
   - the real build and test commands;
-  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+  - `.chayen/profile.md`, `.chayen/rules.md`, and the unit file in
+    `.chayen/units/` for the code being changed, when present: use them as a
     map, confirm each fact in the source, and trust the source when the two
     disagree.
 - **Ask when missing and it matters:**

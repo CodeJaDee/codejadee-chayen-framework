@@ -64,22 +64,64 @@ to the evidence that changed. Use only read-only commands.
       `coverage/`, `.venv/`, and generated clients. List them under folders
       not to edit.
 
+## Impact map (per unit)
+
+Record only what evidence shows. Each row cites `path:line`; anything else
+is `unknown`. Keep the map to the facts a later change needs, not a full
+inventory.
+
+- [ ] **Boundary and dependencies:** declared edges only: `ProjectReference`
+      in `*.csproj`, `workspace:` and `file:` dependencies, `tsconfig` path
+      aliases, local packages in `pyproject.toml`, and the main external
+      packages with versions.
+- [ ] **Entry points:** host startup (`Program.cs`, `main.ts`,
+      `server.ts`, `manage.py`, `main.go`), route modules, background jobs,
+      CLIs, and a library's exported surface.
+- [ ] **API ownership and consumers:** the route groups, controllers,
+      OpenAPI documents, or events this unit owns. A consumer is listed only
+      with evidence: a generated client, a call to the route path in another
+      unit, a contract test, or published package metadata. Otherwise the
+      consumers are `unknown`.
+- [ ] **Data:** provider and data-access package (SQL Server and PostgreSQL
+      are never interchangeable), the model or schema location, the
+      migration folder and command, and stored procedures or views in the
+      repository.
+- [ ] **Tests:** each test project or folder, what it covers, and its
+      command with status.
+- [ ] **Generated code:** each generated folder or file, its generator and
+      source (OpenAPI, GraphQL, protobuf, EF scaffolding, migrations
+      designer), and the regenerate command. List these under "Do not edit"
+      as well.
+- [ ] **Dynamic references:** places where symbol search misses usages:
+      reflection (`Activator.CreateInstance`, `Type.GetType`), assembly
+      scanning in dependency injection, `nameof` and serialization names,
+      string route templates, Angular lazy routes (`loadChildren`,
+      `loadComponent`) and injection tokens, dynamic SQL (`FromSqlRaw`,
+      `ExecuteSqlRaw`, `sp_executesql`, string-built queries), dynamic
+      imports, and framework settings such as Django `INSTALLED_APPS`.
+      When nothing is found, write "none found" with the terms searched.
+
 ## Evidence fingerprints
 
 - [ ] Record the commit with `git rev-parse HEAD`, and note uncommitted
       changes from `git status --porcelain`.
 - [ ] For each evidence file a generated file relies on (manifests, lock
-      files, CI files, instruction files, configuration, and the example
-      files cited), record `git hash-object <path>`. Without `-w` it writes
-      nothing.
-- [ ] Without git, record `none` for the commit and every blob.
+      files, CI files, instruction files, configuration, route and client
+      files, and the example files cited), record `git hash-object <path>`.
+      Without `-w` it writes nothing.
+- [ ] For each folder the map summarizes (migrations, generated clients,
+      test projects), record its committed tree id with
+      `git rev-parse HEAD:<folder>`. Uncommitted changes there appear in
+      `git status --porcelain -- <folder>`.
+- [ ] Without git, record `none` for the commit, every blob and every tree.
 
 ## Refresh
 
 1. Read the header of each generated file. If any `schema` is missing or
    unknown, stop and ask.
-2. Recompute `git hash-object` for every evidence path. Collect the paths
-   that changed or no longer exist.
+2. Recompute `git hash-object` for every evidence path and
+   `git rev-parse HEAD:<folder>` for every evidence folder. Collect the
+   paths and folders that changed or no longer exist.
 3. Repeat the manifest search. A new manifest, workspace member, or
    deployable unit marks its unit as changed.
 4. With no changed paths and no new units, report that the files are up to
@@ -90,3 +132,22 @@ to the evidence that changed. Use only read-only commands.
    everything.
 7. Never edit `rules.md` during refresh. If new evidence contradicts a rule
    there, report the conflict and let the user decide.
+8. A unit file written before the map sections existed is refreshed by
+   adding them, shown in the preview diff like any other change.
+
+## Staleness check for readers
+
+A skill that reads a unit file before a change does not refresh it. It
+checks, read-only, whether the facts it will use may be stale:
+
+- `git diff --name-only <generated_commit> HEAD -- <evidence paths>` and
+  `git status --porcelain -- <evidence paths>`: any output means those
+  facts may be stale;
+- for an evidence folder, compare `git rev-parse HEAD:<folder>` with its
+  recorded tree id;
+- `generated_commit: none`, or a commit missing from local history (for
+  example in a shallow clone), means freshness cannot be checked: treat
+  every fact as unconfirmed.
+
+Stale or unconfirmed facts are leads, not facts: confirm them in the source.
+Offer a refresh; never refresh without an explicit request.
