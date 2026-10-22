@@ -1,0 +1,1096 @@
+# Chayen Evolution — Step Log
+
+Append one entry per step, newest last, using the fields in
+[EXECUTION_RULES.md §7](EXECUTION_RULES.md#7-after-a-step). Do not edit
+earlier entries except to add a dated correction note.
+
+---
+
+## Step 01 — Baseline
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, worktree clean
+  (empty `git status --porcelain=v1 -uall`), no stashes, version `1.1.2`
+  in every versioned manifest.
+
+### Files changed
+
+| Change | Path |
+|---|---|
+| Created directory | `docs/chayen/evolution/` (did not exist) |
+| Created | `docs/chayen/evolution/MASTER_PLAN.md` |
+| Created | `docs/chayen/evolution/STEP_LOG.md` |
+| Created | `docs/chayen/evolution/BASELINE_REPORT.md` |
+| Created | `docs/chayen/evolution/EXECUTION_RULES.md` |
+
+No other file was created, modified or deleted. A read-only measurement
+script and the raw logs live in the session scratchpad, outside the
+repository.
+
+### Inspection
+
+- Read in full: `tools/validate/validate-package.mjs`,
+  `tools/catalog/skill-registration.mjs`, `tools/catalog/check-catalog.mjs`,
+  `tools/validate/validate-all.mjs`, `tools/evals/run-evaluation-suite.mjs`,
+  `tests/evaluation/phase5/run-phase5.mjs`.
+- Read in part: `README.md`, `CHANGELOG.md`, `docs/chayen/DECISIONS.md`
+  (D-015..D-017, D-025, D-026, D-046, D-048..D-053, D-062..D-065),
+  `ADR-0004`, `docs/chayen/ADRS/README.md`, `docs/SKILLS_CATALOG.md`,
+  `SKILL_QUALITY_GATES.md`, `SKILL_REGISTRATION.md`, `EVALUATION_GAPS.md`,
+  all marketplace and plugin manifests, `tools/ci/toolchain.json`,
+  `docs/production/CI_CD_DESIGN.md`.
+- Before running anything, every script spawned by `validate-all.mjs` and
+  `run-evaluation-suite.mjs` was searched for write, delete, spawn and
+  network calls. Writes go only to OS-temp directories or behind explicit
+  flags (`--write`, `--write-doc`, `--write-report`, `--stage`), which were
+  not used. The live Phase 5 runner refuses without authorization.
+- Limit references found by searching the repository for the constants,
+  values and validator IDs (`MAX_ENTRY_SKILLS`, `L0_BUDGET`, `7,000`, `16`,
+  `300`, `2 hops`, `V-06`, `V-07`, `V-08`, `RF-02`, `SB-01`).
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/validate-all.mjs` | 0 | 20/20 gate groups PASS; 5 V-06 warnings |
+| `node tools/validate/validate-package.mjs` | 0 | 0 errors, 5 warnings; 16 Skills; L0 6,563/7,000 |
+| `node tools/catalog/check-catalog.mjs` | 0 | 206/206, 20 domains, fingerprint match |
+| `node --test` on each of the 8 test files in the aggregate | 0 each | 36, 22, 22, 40, 9, 13, 15, 19 tests; 0 failed, 0 skipped |
+| `node --test tests/ci/negative-controls.test.mjs` | 0 | 4/4 PASS (not part of the aggregate) |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | 0 | Static and traceability levels PASS; simulated proxy top-1 0.503 / top-3 0.775 (proxy, not evidence); no provider level |
+| `node tests/evaluation/phase5/run-phase5.mjs --plan` | 0 | 2,295 billed calls planned; nothing sent |
+| `metadataFingerprint` (from `phase5-lib.mjs`) | 0 | `411b6adbbea7e121` |
+| `git status --porcelain=v1 -uall` after all runs | 0 | Only the four new files under `docs/chayen/evolution/` |
+
+Node.js v24.15.0, Windows 11, Git Bash. Full results:
+[BASELINE_REPORT.md §6](BASELINE_REPORT.md#6-offline-validation-results).
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| A1 Baseline grounded in inspected source files | Every limit in [BASELINE_REPORT §4](BASELINE_REPORT.md#4-enforced-limits) cites `file:line`; values measured, not copied from docs | PASS |
+| A2 Existing worktree changes preserved | Worktree was clean before the step; afterwards only the four new files are untracked | PASS |
+| A3 Offline validation status recorded | BASELINE_REPORT §6 | PASS |
+| A4 All 20 steps have dependencies and expected outputs | MASTER_PLAN summary table, dependency graph and per-step tables | PASS |
+| A5 No product source file changed | `git status` shows no modified tracked file | PASS |
+
+### Risks and open findings
+
+- The Entry Skill ceiling is reached (16/16), and the metadata is at or near
+  its warning thresholds. Step 02 needs an owner decision before Steps 03–05
+  change any enforced value.
+- Several governance documents state superseded limits, and ADR-0004 is
+  still `PROPOSED` (BASELINE_REPORT §5.3, F-02, F-03).
+- Several limits have no negative control (F-05).
+- The Phase 5 candidate is stale, so live evaluation is blocked until
+  Step 14 (F-08).
+- The local Node.js version satisfies the ≥ 20.11 minimum but is not one of
+  the pinned CI versions; no CI exists (F-10).
+- The installed plugin version in provider homes was not inspected (outside
+  the repository).
+
+### Next action
+
+Step 02 (Limit Policy and ADR) is **ready to start**: its only prerequisite
+(01) is PASS. Step 02 can draft the policy, ADR and decision record and
+propose drift corrections. Any change to an enforced value (Steps 03–05)
+waits for the owner's recorded decision.
+
+---
+
+## Step 02 — Limit Policy and ADR
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: only the four untracked Step 01 files under
+  `docs/chayen/evolution/`. Step 01 confirmed `PASS` in this log and in the
+  plan.
+- **Authorization:** the owner's STEP 02 instruction (2026-10-22): "Formally
+  change Chayen's architecture policy so future capability and Skill growth
+  is not blocked by arbitrary repository-level numeric limits", with decision
+  items 1–10. Recorded as D-066 and accepted ADR-0013. A Step 03 instruction
+  arrived first and was interrupted by the owner before any action; nothing
+  from it was executed.
+
+### Files changed
+
+| Change | Path |
+|---|---|
+| Created | `docs/chayen/ADRS/ADR-0013-extensible-skill-governance.md` |
+| Created | `docs/chayen/evolution/MIGRATION_MATRIX.md` |
+| Modified (+45 lines, appended D-066) | `docs/chayen/DECISIONS.md` |
+| Modified (+9, index row and note) | `docs/chayen/ADRS/README.md` |
+| Modified (+9, superseded-components notice) | `docs/chayen/ADRS/ADR-0004-skill-catalog-vs-entry-skills.md` |
+| Modified (+11, D-066 notice) | `docs/chayen/SKILL_AUTHORING_STANDARD.md` |
+| Modified (+8, D-066 notice) | `docs/chayen/SKILL_QUALITY_GATES.md` |
+| Modified (+7, D-066 notice) | `docs/chayen/SKILL_REGISTRATION.md` |
+| Modified | `docs/chayen/evolution/MASTER_PLAN.md` (Step 02 row and section; plan note) |
+| Modified | `docs/chayen/evolution/STEP_LOG.md` (this entry) |
+
+`git diff --stat` on tracked files: 6 files, 89 insertions, **0 deletions**.
+No validator, test, catalog, Skill, manifest or version file changed.
+
+### Inspection
+
+Read: ADR-0004, ADR-0005, ADR-0012, ADR index, `SKILL_AUTHORING_STANDARD.md`
+§1–§5, `SKILL_QUALITY_GATES.md` §1–§3, `SKILL_REGISTRATION.md`,
+`PROVIDER_SPEC_RESEARCH.md` §5–§6 (provider facts), and D-015..D-017,
+D-046, D-048..D-053, D-062..D-065. Constants and literals were located in
+`skill-registration.mjs`, `validate-package.mjs`, `check-catalog.mjs`,
+`run-evaluation-suite.mjs`, `check-docs.mjs`, `check-response-style.mjs`,
+`check-security.mjs` and `check-hardening.mjs`. Limit-related mutation cases
+were listed from the four mutation files. `run-validator-tests.mjs` was read
+to confirm it asserts failures only.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `git status --porcelain=v1 -uall` (before) | 0 | four untracked Step 01 files only |
+| `node tools/validate/validate-all.mjs` (after the documentation changes) | 0 | 20/20 gate groups PASS; package 0 errors, 5 warnings; G-13 189/189; G-14 34 files, 0 errors. Identical to the Step 01 baseline. |
+| Link and anchor check over the 7 edited or new governance files and `docs/chayen/evolution/*` (82 relative links) | 0 | 1 problem, pre-existing (see findings) |
+| `git diff --stat`; `git status --porcelain=v1 -uall` (after) | 0 | documentation files only |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| All policy decisions explicit and traceable | ADR-0013 §1 (classes), §2 (A-1..A-6, mapped to owner items 1–5), §3–§7; D-066; matrix IDs K-, R-, T-, DOC- | PASS |
+| No provider limit described as removable | ADR-0013 §4: hard constraints P-01..P-07 stay errors; recommendations P-B1, P-B2 and listing budgets P-L1..P-L3 are retained and reported, with release rule P-L. The alternatives table rejects treating them as removable or as invented hard errors. | PASS |
+| No security boundary weakened | ADR-0013 §5; no validator changed in this step; `validate-all.mjs` unchanged at 20/20. The matrix keeps R-09..R-13, R-20, R-23, T-03, T-17, and requires cycle-safe traversal (R-18) when the depth cap is removed. | PASS |
+| ADR names exact implementation targets | ADR-0013 §8 and MIGRATION_MATRIX §1–§4, with file and line anchors | PASS |
+| Historical decisions intact | 0 deletions in tracked files; notices state that the values below them are historical | PASS |
+| Documentation states that removing a cap does not imply unlimited provider capacity | ADR-0013 §2 and Consequences; D-066; the `SKILL_AUTHORING_STANDARD.md` notice | PASS |
+| Plan criteria: every baseline limit classified; drift resolutions proposed; owner decision recorded verbatim; no validator changed | Matrix §1–§2 cover L-01..L-17 (L-15 response style explicitly out of scope, K-16); DOC-05..DOC-16; D-066 status line; diff | PASS |
+
+### Judgment calls for owner review
+
+These go beyond the literal decision items. They are recorded in ADR-0013
+and can be amended before Steps 03–05:
+
+1. `SKILL.md` gets a **WARN** above the provider recommendation of 500 lines
+   or about 5,000 tokens (P-B1). The repository's 200-line target is dropped.
+2. L0 gets a **WARN** above Codex's documented 8,000-character figure
+   (P-L2), and release rule P-L requires routing evidence on a provider
+   before a package above its figure, or one that adds Skills, is released
+   as supported there.
+3. RF-02 (every reference listed directly in the Skill's References table)
+   stays an **error**, as the expression of the provider's "one level deep"
+   recommendation. Deeper links between references become allowed.
+4. The 420-character description target (WARN) and the distinctness
+   thresholds (WARN 0.25, ERROR 0.35) are kept as quality rules.
+5. A new editorial record must declare a language code. A new registration
+   **category** needs its own decision record.
+6. The response-style policy limit (3,500 characters, 40 lines) is outside
+   this ADR and unchanged.
+
+### Risks and findings
+
+- Until Steps 03–05 land, the governance documents say the caps are
+  superseded while the validators still enforce them. Every notice states
+  this explicitly.
+- V-08 currently terminates on cyclic links only because of the depth cap.
+  Removing the cap without a visited set would loop forever (matrix R-18,
+  Step 04).
+- `run-validator-tests.mjs` cannot assert that a case passes, so Step 03
+  needs a pass expectation or a separate test (matrix T-08).
+- Pre-existing, not changed: `DECISIONS.md` D-058 (line 1368 at
+  `7427eb1`) links to `RELEASE_METADATA.md#step-41-version-proposal-d-058-proposed-not-applied`,
+  an anchor that does not exist. `SKILL_QUALITY_GATES.md:63` says Node.js 18,
+  but scripts need ≥20.11 (DOC-16).
+
+### Next action
+
+Step 03 (Skill Count and Registration) is **ready**: prerequisite 02 is
+PASS, and its targets are matrix rows K-01, K-03, K-04, R-01..R-14, R-23,
+T-01..T-08, T-17, DOC-05, DOC-06, DOC-07 (count) and DOC-11, DOC-12 (count
+sentences). Not started; it waits for the owner's instruction.
+
+---
+
+## Step 03 — Skill Count and Registration
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: the Step 01–02 documentation changes only (6 modified, 6
+  untracked). Step 02 confirmed `PASS`; D-066 / ADR-0013 accepted.
+- **Authorization:** the owner's STEP 03 instruction (2026-10-22): "Allow
+  Chayen to register more than 16 Entry Skills without failing purely because
+  of their number. Implement the change now."
+
+### Files changed
+
+| Change | Path | What |
+|---|---|---|
+| Modified | `tools/catalog/skill-registration.mjs` | Removed `MAX_ENTRY_SKILLS` and the registered-count check; removed `PROJECT_NAMES`, the project "exactly the allow-list" count, the editorial "exactly two records" count and the two-name allow-list. Added the shared name rule (`SKILL_NAME`, ≤64), pinned Humanizer language contracts (`PINNED_LANGUAGES`), a language-code rule for further editorial records, the `chayen-humanizer-*` family reserved for editorial, name uniqueness across all categories, and `registrationCounts()`. `L0_BUDGET` is kept (Step 05). |
+| Modified | `tools/validate/validate-package.mjs` | V-07: count rejection removed; PASS line reports Skills by category and "no count cap". |
+| Modified | `tools/catalog/check-catalog.mjs` | V-11.3: count rejection removed; report line "Registered Skills by category". |
+| Modified | `tools/validate/validate-all.mjs` | New gate G-13R runs `tests/catalog/registration.test.mjs`. |
+| Created | `tests/catalog/registration.test.mjs` | 21 disposable-fixture tests (see below). |
+| Modified | `tests/catalog/editorial-mutations.json` | `ed36-exceeded-count` → `ed36-seventeenth-copied-identity` (V-05); `ed36-registered-count` → `ed36-registered-cross-category-duplicate` (V-19); `ed36-unsafe-name` expects the name-rule message. |
+| Modified | `tests/catalog/project-mutations.json` | `pj62-exceeded-count` → `pj62-seventeenth-unregistered` (V-19); `pj62-name-allow-list` → `pj62-invalid-name`; `pj62-unregistered` expects the general unregistered-directory message. |
+| Modified | `tests/catalog/catalog-mutations.json` | `cat-entry-skill-without-capability`: description and fixture text no longer refer to a count ceiling; expectation unchanged. |
+| Modified | `docs/chayen/SKILL_REGISTRATION.md`, `docs/chayen/KNOWN_LIMITATIONS.md` (KL-03), `docs/SKILLS_CATALOG.md`, `docs/CONTRIBUTING.md`, `tools/catalog/README.md`, `tools/validate/README.md`, `tests/catalog/README.md` | Current-state statements of the ceiling and allow-lists replaced. The stale "both `mapping: planned` now" line is corrected. |
+| Modified | `docs/chayen/ARCHITECTURE.md` | Dated D-066 note added above the D-062 note. |
+| Modified | `docs/chayen/ADRS/ADR-0013-*.md`, `docs/chayen/DECISIONS.md` (D-066), `SKILL_AUTHORING_STANDARD.md`, `SKILL_QUALITY_GATES.md` | Implementation status: Step 03 parts IMPLEMENTED. |
+| Modified | `docs/chayen/evolution/MASTER_PLAN.md`, `MIGRATION_MATRIX.md`, `STEP_LOG.md` | Status and progress. |
+
+**Unchanged:** `catalog/` (all three registries and the engineering
+catalog; `git diff catalog/` is empty), `plugins/` (no Skill added or
+changed; version `1.1.2`), the 206 capability IDs, ownership mappings and
+recipe paths. `git diff --stat` on tracked files: 20 files, +250 / −94.
+`skill-registration.mjs` and `project-mutations.json` now have LF line
+endings in the working copy; the index stores LF, so there is no content
+change.
+
+### Fixture tests (`tests/catalog/registration.test.mjs`)
+
+Each test copies `plugins`, the three marketplace folders, `catalog`,
+`tests/skills`, `tools` and `CAPABILITY_COVERAGE.md` into a fresh
+`chayen-registration-*` directory under the OS temp directory, and removes it
+afterwards. The real validators run against the copy.
+
+| # | Test | Validators | Expectation |
+|---|---|---|---|
+| 1 | The existing 16 Skills and their engineering and editorial mappings remain valid | package, catalog, security | exit 0; 13 / 2 / 1 by category; 117 recipe files; 206 capabilities; inventory fingerprint matches |
+| 2 | A correctly registered 17th Skill (`chayen-glossary`, project) is accepted | package, catalog, security | exit 0; "17 shipped skills" |
+| 3 | Two additional Skills in different categories (project, plus editorial `chayen-proofread-ja` with language `ja`) are accepted | package, catalog, security | exit 0; "18 shipped skills (engineering 13, editorial 3, project 2" |
+| 4–21 | 18 single faults applied to the valid 18-Skill copy: duplicate name in a registry; duplicate across categories; duplicate frontmatter name; invalid registry name (uppercase); name >64 characters; invalid directory name (double hyphen); frontmatter without a closing fence; unsupported frontmatter field; registry/SKILL.md description drift; unregistered directory (package and catalog); non-engineering Skill as capability owner (package and catalog); engineering recipe in a non-engineering Skill; Humanizer name family as a project Skill; pinned Humanizer language changed; pinned Humanizer record removed; invalid language code | package or catalog | exit 1, the expected ERROR line, and **no** count-related diagnostic |
+
+Every synthetic Skill carries full anatomy, a reference, a registry record
+and three positive trigger cases. All tests also assert that no count
+diagnostic appears.
+
+**Control of the test itself:** a scratchpad copy of the test was pointed at
+the baseline validators (`git archive HEAD tools`). Result: 19 of 21 fail,
+with `17 entry skills > 16`, `18 entry skills > 16` and the old allow-list
+errors. The 2 that pass are the catalog-only checks (tests 14 and 16), which
+never had a count cap in V-11.3. The suite therefore distinguishes the old
+behaviour from the new.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/validate-package.mjs` | 0 | 0 errors, 5 warnings (unchanged V-06); V-07 "16 shipped skills (engineering 13, editorial 2, project 1; no count cap)" |
+| `node tools/catalog/check-catalog.mjs` | 0 | 206/206; fingerprint `2f13cad24ff431e3` matches; "Registered Skills by category: engineering 13, editorial 2, project 1" |
+| `node tools/validate/check-security.mjs` | 0 | V-25 PASS, 16 entry Skills, 263 package files |
+| `node --test tests/catalog/registration.test.mjs` | 0 | 21 tests, 21 pass, 0 fail, 0 skipped |
+| `node tools/validate/run-validator-tests.mjs --only <id>` for the 12 rewritten or affected cases | 0 each | 12/12 PASS, each with its intended ERROR line |
+| `node tools/validate/validate-all.mjs` | 0 | 21/21 gate groups PASS (20 at baseline plus G-13R); G-13 189/189 |
+| `node --test tests/security/boundaries.test.mjs` | 0 | 36/36 |
+| `node --test tests/ci/negative-controls.test.mjs` | 0 | 4/4 |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | 0 | Static and traceability PASS; numbers identical to the Step 01 baseline |
+| Baseline-validator control (scratchpad copy of the test) | 1 | 19/21 fail as expected (see above) |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| No failure caused solely by exceeding 16 Skills | Tests 2–3 pass with 17 and 18 Skills; tests 4–21 assert no count diagnostic; no count check remains (`grep MAX_ENTRY_SKILLS` empty) | PASS |
+| Existing identity, structural, security and catalog-integrity checks still operate | `validate-all.mjs` 21/21; G-13 189/189; G-SEC-T 36/36; tests 4–21 | PASS |
+| `PROJECT_NAMES` replaced by validated registration | `skill-registration.mjs`; tests 4, 5, 7, 8, 12, 13, 18 | PASS |
+| Identity, naming, category ownership, description consistency and duplicate detection preserved | tests 4–21; mutation cases `ed36-*`, `pj62-*` | PASS |
+| Humanizer Skills intact, language contracts kept | `PINNED_LANGUAGES`; tests 19–20; `ed36-unregistered`, `ed38-en-unregistered` | PASS |
+| 206 capability IDs, ownership mappings and recipe paths preserved | `git diff catalog/` empty; check-catalog fingerprint match; test 1 | PASS |
+| Non-engineering Skills need no engineering capability | tests 2–3 register Skills that own none; tests 15–17 reject them as owners | PASS |
+| Single canonical Skills directory | V-05 and V-13 unchanged and passing | PASS |
+| No new production Entry Skill; no version bump; Step 04 not started | `git diff plugins/` empty; version `1.1.2`; line and depth checks unchanged | PASS |
+| Obsolete count mutations updated, not suppressed | 5 cases retargeted to identity or registration faults; all pass | PASS |
+
+### Risks and findings
+
+- **L0 is now the effective limit on growth.** The 7,000-character budget
+  (D-062) is still enforced. With 437 characters free, the fixtures keep
+  their descriptions short (139 and 165 characters); a third typical Skill would
+  exceed it. Step 05 replaces the budget with measurement and provider
+  warnings.
+- Diagnostics changed for two old controls: an unregistered shipped
+  directory now reports the general CA-01 message instead of "unregistered
+  project Skill", and invalid names report the name rule instead of the
+  allow-list.
+- A new editorial record needs only a valid language code. Under ADR-0013
+  §7, adding one remains a decision, not something the validator approves.
+- Removing the allow-lists removed a defence-in-depth layer against unsafe
+  names. Names are now checked against `SKILL_NAME` before any path is built,
+  `inside()` confinement still applies, and `ed36-unsafe-name` (`../outside`)
+  still fails.
+
+### Next action
+
+Step 04 (Line and Reference Depth Limits) is **ready**: prerequisite 02 is
+PASS. Its targets are matrix rows K-05..K-07, R-16..R-19, T-10..T-12,
+DOC-07..DOC-10, DOC-13 and DOC-16. Not started; it waits for the owner's
+instruction.
+
+---
+
+## Step 04 — Line and Reference Depth Limits
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: Step 01–03 changes only. Step 03 confirmed `PASS`.
+- **Authorization:** the owner's STEP 04 instruction (2026-10-22): "Remove
+  arbitrary file-length and reference-hop restrictions without sacrificing
+  integrity, safety, or efficient loading." It also directs: "Permit
+  references to be discovered transitively instead of requiring every leaf to
+  be linked directly from SKILL.md. Ensure orphaned Reference files are still
+  detectable." That overrides the Step 02 judgment call that kept RF-02 as
+  "linked directly from SKILL.md". ADR-0013 P-B2, D-066 and matrix R-19 are
+  amended to match.
+
+### Files changed
+
+| Change | Path | What |
+|---|---|---|
+| Modified | `tools/validate/validate-package.mjs` | **V-06** moved out of the V-17 block and renamed `V-06 size-report`. The 300-line errors (`SKILL.md`, references) and the 200-line warning are removed. It now reports lines and estimated tokens (characters / 4) for every file, the largest `SKILL.md` and reference, and the worst single activation. It gives an advisory WARN above the provider recommendation of 500 lines or ~5,000 tokens (S24, S7). **V-08** is rewritten: every link in every Markdown file of a skill must resolve (with `decodeURI`) to a regular file inside that skill. A missing target, traversal, a link into another skill (with a hand-off-by-name hint), a symlink or junction (`lstat` plus `realpath`), a directory target or a missing anchor is an ERROR. A breadth-first walk from `SKILL.md` with a visited set and no depth cap finds orphans (ERROR) and transitive-only references (WARN). An iterative depth-first walk finds cycles (WARN, with the cycle path). No recursion remains. |
+| Created | `tests/skills/reference-graph.test.mjs` | 16 disposable-fixture tests (see below). |
+| Modified | `tests/skills/validator-mutations.json` | `sk-skill-too-long` (expected a V-06 300-line error) retargeted to `sk-link-into-other-skill` (V-08 cross-skill link). Not deleted. |
+| Modified | `tools/validate/validate-all.mjs` | New gate G-13G runs the new test file. |
+| Modified | `docs/chayen/SKILL_AUTHORING_STANDARD.md` | §1 model and level table; PT-06; SB-01; RF-02..RF-04; new "A valid graph is not a read graph" paragraph; §5.3 and §5.4 two-hop sentences; D-066 notice. |
+| Modified | `docs/chayen/SKILL_QUALITY_GATES.md` | G-06 and G-08 rows; detection matrix (`sk-link-into-other-skill`, G-13G); D-066 notice; "Node.js 18" corrected to 20.11 (DOC-16). |
+| Modified | `docs/chayen/ARCHITECTURE.md` | "As built (D-066)" note under §8 rules; DR-07; quality-attribute rows for Entry Skills (also stale since Step 03, now fixed), `SKILL.md` body and link depth. |
+| Modified | `docs/chayen/PLUGIN_PACKAGE_DESIGN.md` | D-066 notice (the document is a dated PROPOSED design; rows not rewritten). |
+| Modified | `docs/chayen/ACCEPTANCE_MATRIX.md` | ARC-07 and REQ-06 rows. |
+| Modified | `docs/chayen/ISSUES.md` | R-15 reframed (transitive references may go unread), still OPEN. |
+| Modified | `docs/chayen/ADRS/ADR-0013-*.md`, `docs/chayen/DECISIONS.md` (D-066) | Implementation status; P-B2 and D-066 amended with the owner's Step 04 instruction. |
+| Modified | `tools/validate/README.md`, `tests/skills/README.md` | V-06 and V-08 rows; new test file. |
+| Modified | `docs/chayen/evolution/MASTER_PLAN.md`, `MIGRATION_MATRIX.md`, `STEP_LOG.md` | Status and progress. |
+
+**Unchanged:** `plugins/` and `catalog/` (`git diff --name-only -- plugins
+catalog` is empty). No Skill was padded or edited. L0 (V-07) is untouched;
+it is Step 05. Dated records that cite the old limits (decision entries for
+Steps 20–22, `HUMANIZER_EVALUATION_REPORT.md`, `PLUGIN_TRUST_REVIEW.md`,
+`TECHNOLOGY_COVERAGE.md` step notes, `docs/production/*`) are left as
+written. `PLUGIN_FORMAT_DECISION.md` F-04 and `PROVIDER_SPEC_RESEARCH.md` §5
+state provider facts and stay.
+
+### Fixture tests (`tests/skills/reference-graph.test.mjs`)
+
+Each test copies `plugins`, the marketplace folders, `catalog` and
+`tests/skills` into a fresh `chayen-refgraph-*` OS-temp directory, changes
+`chayen-init` there, runs the real package validator, and removes the copy.
+Every test asserts that no former cap diagnostic (`lines > 300`,
+`exceeds 2 hops`, `V-06 line-budgets`) appears, and that the validator was
+not killed.
+
+| # | Test | Result expected |
+|---|---|---|
+| 1 | Unchanged package | exit 0; size report present; max depth 1; 0 transitive; 0 cycles |
+| 2 | `SKILL.md` at 348 lines (short filler lines, below the ~5,000-token figure) | exit 0; no V-06 warning |
+| 3 | `SKILL.md` at about 600 lines | exit 0; advisory V-06 WARN with actual lines and tokens |
+| 4 | Reference at about 416 lines | exit 0; reported as the largest reference |
+| 5 | Chain `SKILL.md` → reference → hop-1 … hop-25 (depth 26) | exit 0; WARN listing 25 transitive-only references; "max depth 26" |
+| 6 | Cycle hop-1 → hop-2 → hop-3 → hop-1 | exit 0; WARN with the cycle path; "1 cycle(s)" |
+| 7 | 500-file cycle | exit 0, terminates; "max depth 501 … 1 cycle(s)" |
+| 8 | Missing target | ERROR "broken link … (target does not exist)" |
+| 9 | Traversal `../../../../../../outside.md` | ERROR "leaves the skill directory" |
+| 10 | Percent-encoded traversal into another skill | ERROR "points into another skill (chayen-testing)" |
+| 11 | Cross-skill reference | ERROR "points into another skill … hand off by name instead" |
+| 12 | Broken heading anchor | ERROR "missing heading anchor" |
+| 13 | Link to a directory | ERROR "does not point to a file" |
+| 14 | Orphaned reference | ERROR "orphaned reference, RF-02" |
+| 15 | Two orphans that link only to each other | ERROR for both |
+| 16 | Directory junction inside a skill | ERROR V-09 "refusing symlink or junction" (ran on this host; not skipped) |
+
+During development, test 2 at first used long filler lines and drew a V-06
+warning at 348 lines (~6,118 tokens). That was correct behaviour, because
+the token figure is part of the recommendation. The test now uses short
+lines; test 3 covers the warning.
+
+**Control of the test itself:** a scratchpad copy pointed at the baseline
+validator (`git archive HEAD tools`) fails 15 of 16. The positive tests
+(1–7) fail on exactly the removed caps (`ERROR V-06 line-budgets: … 348
+lines > 300`, `… 416 lines > 300`, `… is not linked from SKILL.md
+(unreachable, RF-02)`). Tests 8–15 fail there only because the diagnostic
+wording changed; the old validator also rejected those faults. Test 16
+passes on both, because the symlink guard is unchanged.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/validate-package.mjs` | 0 | 0 errors, **0 warnings** (the five 200-line warnings were for the removed target). V-06: largest `SKILL.md` `chayen-frontend` 230 lines (~4,281 tokens); largest reference `chayen-data/references/sqlserver-data-access.md` 243 lines (~3,594 tokens); worst activation `chayen-data` ~7,495 tokens. V-08: 258 Markdown files, max depth 1, 0 transitive, 0 cycles |
+| `node --test tests/skills/reference-graph.test.mjs` | 0 | 16 tests, 16 pass, 0 fail, 0 skipped |
+| `node tools/validate/run-validator-tests.mjs --only <id>` for `sk-link-into-other-skill`, `sk-broken-reference-path`, `sk-broken-anchor`, `sk-unreachable-reference`, `ed36-missing-reference` | 0 each | 5/5 PASS |
+| `node tools/validate/validate-all.mjs` | 0 | 22/22 gate groups PASS (adds G-13G); G-13 189/189 |
+| `node --test tests/ci/negative-controls.test.mjs` | 0 | 4/4 |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | 0 | Static and traceability PASS; unchanged |
+| Link check over the 9 edited governance and README files | 0 | 70 links, 0 problems |
+| Baseline-validator control (scratchpad copy) | 1 | 15/16 fail as described above |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| `SKILL.md` 300-line hard failure removed | Tests 2–3; V-06 code | PASS |
+| Reference 300-line hard failure removed | Test 4 | PASS |
+| Concise authoring kept as a recommendation; large files reported with sizes and context cost | V-06 WARN text (lines, tokens, "loaded on every activation" or "loaded whole"); SB-01, RF-04 | PASS |
+| Existing files not padded | `git diff -- plugins` empty | PASS |
+| Fixed two-hop maximum removed; safe iterative traversal | Tests 5, 7; no recursion in V-08 | PASS |
+| Cycles detected and reported without recursion overflow | Tests 6–7 (500 files) | PASS |
+| Every reachable local Markdown reference and anchor validated | V-08 checks every `.md` in the skill; tests 8, 12 | PASS |
+| Missing targets, escaping paths, unsafe symlinks, cross-skill references rejected | Tests 8–11, 13, 16; `sk-link-into-other-skill` | PASS |
+| Transitive discovery permitted; orphans detected | Tests 5, 14, 15; `sk-unreachable-reference` | PASS |
+| Progressive, conditional loading preserved | Plugin content unchanged; LD-02/LD-04 kept; transitive-only references warn; standard says a valid graph is not a read graph | PASS |
+| Provider-neutral; no claim that a valid graph is read | SKILL_AUTHORING_STANDARD paragraph; ARCHITECTURE as-built note; R-15; warning text | PASS |
+| Existing Skills still validate | `validate-package.mjs` 0 errors; `validate-all.mjs` 22/22 | PASS |
+| Policy documents and Step Log updated; no unrelated runtime behaviour changed | Files above; only V-06 and V-08 changed in code | PASS |
+
+### Judgment calls for owner review
+
+1. **Cycles are warnings, not errors.** DR-07 used to say "No cycles". A
+   cycle no longer breaks validation and does not make an agent load
+   anything, but it is reported with its path. Say if cycles should block.
+2. **Reference files use the same advisory figure as `SKILL.md`** (500 lines
+   or ~5,000 tokens). No provider states a figure for references. The
+   reasoning is that a reference loads whole when read.
+3. **Transitive-only references are warnings** (provider recommendation S24),
+   so they need G-15 acknowledgement. Today there are none.
+
+### Risks and findings
+
+- A reference reachable only through another reference may never be read.
+  Validation cannot prove reading (R-15); the evaluation steps (14, 18) are
+  where that gets measured.
+- V-08 now checks links in every `.md` under a skill directory, including
+  nested folders. V-18 (reference kind) still checks only top-level
+  `references/*.md`. No nested files exist today. Pre-existing gap, noted
+  for Step 06.
+- The worst single activation is ~7,495 estimated tokens (`chayen-data` body
+  plus its largest reference). This is a characters/4 estimate; provider
+  token counts are Step 18.
+
+### Next action
+
+Step 05 (Metadata Budget Policy) is **ready**: prerequisite 02 is PASS. Its
+targets are matrix rows K-02, R-15, R-21, R-22, T-09, T-14, DOC-05 (budget),
+DOC-08 (DS-05, L0 row), DOC-10 (L0 rows), DOC-11, DOC-12 (L0 sentences) and
+DOC-14. Not started; it waits for the owner's instruction.
+
+---
+
+## Step 05 — Metadata Budget Policy
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: Step 01–04 changes only. Step 04 confirmed `PASS`.
+- **Authorization:** the owner's STEP 05 instruction (2026-10-22): "Remove
+  Chayen's fixed 7,000-character metadata Hard Fail while preserving
+  visibility into provider context limits and Skill discovery quality."
+
+### Files changed
+
+| Change | Path | What |
+|---|---|---|
+| Created | `tools/catalog/discovery-metrics.mjs` | Shared library and CLI (`[--root <dir>] [--json]`). Reports actual and projected name + description characters; estimated tokens (characters / 4, labelled as an estimate); counts by category; per-skill characters, tokens and share; "unusually expensive" descriptions above the package's own Tukey fence (Q3 + 1.5 IQR, advisory); largest contributors; closest description pairs (collision risk) against the V-07b thresholds; and violations of the 1,024-character provider limit. Provider diagnostics come from documentation: Claude Code is UNKNOWN (1% of an unknown context window; the 1,536-character entry cap is checked), Codex is within or above its documented 8,000-character fallback, and Copilot is UNKNOWN (U-06). All are `measurement: NOT_MEASURED`. Output is sorted by name and has no timestamps. |
+| Modified | `tools/catalog/skill-registration.mjs` | `L0_BUDGET = 7000` removed; nothing replaces it. |
+| Modified | `tools/validate/validate-package.mjs` | V-07 renamed `V-07 discovery-metadata`. The L0 error is gone. Kept: the 1,024-character error (now labelled "provider limit P-02"), the 420 warning, YAML safety and the "Not for" boundary. The PASS line reports totals, the token estimate and the provider statuses. WARN when actual metadata exceeds a documented provider figure (Codex 8,000; ADR-0013 P-L). V-07b uses the shared `descriptionOverlap` and thresholds, so its behaviour is unchanged. |
+| Modified | `tools/evals/run-evaluation-suite.mjs` | `cap: L0_BUDGET` replaced by `cap: null` and a note. Adds `report.metrics.discovery` from the shared library, a consistency check (S-DISCOVERY) between the two L0 computations, and INFO lines for contributors, collision risk and provider figures. |
+| Modified | `tools/validate/check-docs.mjs` | D-06: the README fact is `L0 metadata = <usage> characters`. A "used / budget" pair in current docs is now an error (restated cap), and a stated usage must equal the build's. |
+| Modified | `tools/validate/validate-all.mjs` | New gate G-13M. |
+| Created | `tests/catalog/discovery-metrics.test.mjs` | 13 disposable-fixture tests (see below). |
+| Modified | `tests/ci/documentation.test.mjs` | The two 7,000-denominator cases rewritten (`metadata usage`, `metadata budget restated`); two prose cases added. 15 → 17 tests. |
+| Modified | `tests/catalog/editorial-mutations.json` | `ed36-exceeded-planned-budget` (expected the L0 error) retargeted to the fault that remains, registry drift (V-19). Kept, not deleted. |
+| Modified | `tests/catalog/registration.test.mjs` | Three assertions updated to the new V-07 line (check ID; categories now sorted). Behaviour unchanged. |
+| Modified | `README.md`, `docs/AUTOMATIC_SKILL_DISCOVERY.md` (new section "Discovery metadata and provider limits"), `docs/SKILLS_CATALOG.md`, `docs/CONTRIBUTING.md`, `docs/RESPONSE_STYLE.md`, `docs/distribution/RELEASE_CHECKLIST.md` (rule P-L item) | User and release docs: usage without a cap, provider limits, the evidence requirement before claiming compatibility. |
+| Modified | `docs/chayen/ARCHITECTURE.md`, `KNOWN_LIMITATIONS.md` (KL-03), `SKILL_AUTHORING_STANDARD.md` (L0 row, DS-05, notice), `SKILL_QUALITY_GATES.md` (G-07, notice), `SKILL_REGISTRATION.md`, `ADRS/ADR-0004`, `ADRS/README.md`, `ADRS/ADR-0013`, `DECISIONS.md` (D-066), `tools/catalog/README.md`, `tools/validate/README.md`, `tests/catalog/README.md` | Policy and status. ARCHITECTURE's "at most 15 entry skills" line (stale since Step 03) is also corrected. |
+| Modified | `docs/chayen/evolution/MASTER_PLAN.md`, `MIGRATION_MATRIX.md`, `STEP_LOG.md` | Status and progress. |
+
+**Unchanged:** `plugins/` and `catalog/` (`git diff --name-only -- plugins
+catalog` is empty); no description was edited. Dated records that cite
+earlier budgets are left as written: README version history, decision
+entries D-034..D-062, ISSUES R-27, HUMANIZER_ARCHITECTURE_IMPACT,
+TECHNOLOGY_COVERAGE notes and `docs/production/*`.
+
+### Fixture tests (`tests/catalog/discovery-metrics.test.mjs`)
+
+Fixtures lengthen engineering descriptions in a disposable copy by
+inserting distinct, valid scope sentences before the "Not for" clause.
+
+| # | Test | Expectation |
+|---|---|---|
+| 1 | Existing metadata | exit 0; report total = independent recount of every shipped SKILL.md; tokens = round(chars / 4); per-skill sum = total; shares sum to 1; V-07 line matches |
+| 2 | Metadata at 7,007 characters | exit 0; no L0 error; no provider warning (below 8,000) |
+| 3 | Metadata at 8,369 characters | exit 0; V-07 WARN naming Codex's documented 8,000 figure and the routing-evidence requirement; Codex `EXCEEDS_DOCUMENTED_FIGURE` |
+| 4 | Provider diagnostics | every provider `NOT_MEASURED`; Claude Code and Copilot `UNKNOWN`; Codex `WITHIN_DOCUMENTED_FIGURE` |
+| 5 | Determinism | two runs give identical JSON; reversing the registry order gives identical JSON; projected = actual + planned records |
+| 6 | Expensive description | a doubled backend description is the only one flagged and the largest contributor |
+| 7–13 | Each with metadata above 7,000 | a shipped description above 1,024 (V-05 and V-07 "provider limit P-02"); a planned registry description above 1,024 (V-19); a duplicate identity across categories; YAML-unsafe frontmatter; catch-all wording (V-20); a missing "Not for" boundary (V-07); a description identical to another Skill's (V-07b overlap 1.00). Each fails with exit 1 for its own reason and no L0 diagnostic |
+
+**Control of the test itself:** a scratchpad copy pointed at the baseline
+validator fails 10 of 13. Tests 2 and 3 fail on exactly
+`ERROR V-07 metadata-budget: L0 metadata 7007 chars > 7000` and `… 8369
+chars > 7000`. Tests 7–13 fail because the old validator adds that L0 error
+to each fault. Test 1 fails on the changed V-07 line. Tests 4–6 use only the
+new report and pass either way.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/catalog/discovery-metrics.mjs` | 0 | 16 shipped, 6,563 characters, ~1,641 tokens (estimate); projected 6,563; largest contributors `chayen-implementation` 439, `chayen-frontend` 435, `chayen-ai-engineering` 433; expensive: none (fence 470.75); 0 pairs above 0.25, closest `chayen-humanizer-en`/`chayen-humanizer-th` 0.237; Claude Code UNKNOWN, Codex WITHIN (6,563 of 8,000, headroom 1,437), Copilot UNKNOWN; all NOT_MEASURED |
+| `node tools/validate/validate-package.mjs` | 0 | 0 errors, 0 warnings; V-07 discovery-metadata PASS with the figures above |
+| `node --test tests/catalog/discovery-metrics.test.mjs` | 0 | 13/13 pass, 0 skipped |
+| `node --test tests/ci/documentation.test.mjs` | 0 | 17/17 |
+| `node tools/validate/run-validator-tests.mjs --only ed36-exceeded-planned-budget` | 0 | PASS: V-19 "shipped Humanizer metadata differs from registry" |
+| `node tools/validate/check-docs.mjs` | 0 | 34 files, 0 errors (before the doc updates it reported exactly the 5 stale cap statements) |
+| `node tools/validate/validate-all.mjs` | 0 | 23/23 gate groups PASS (adds G-13M); G-13 189/189; G-13R 21/21; G-13G 16/16 |
+| `node --test tests/ci/negative-controls.test.mjs` | 0 | 4/4 |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | 0 | Static and traceability PASS; discovery INFO lines; S-DISCOVERY consistency holds |
+| Link check over 11 edited governance and README files | 0 | 69 links, 0 problems |
+| Baseline-validator control (scratchpad copy) | 1 | 10/13 fail as described above |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| `L0_BUDGET = 7000` removed as a rejection threshold, not replaced by another cap | `skill-registration.mjs`; `grep L0_BUDGET` empty; tests 2–3 | PASS |
+| Actual metadata calculated from the package; characters and estimated tokens reported, labelled as estimates | Report; test 1 (independent recount) | PASS |
+| Per-skill contributions; unusually expensive descriptions identified | Report per-skill table; test 6 | PASS |
+| Provider frontmatter and description-length constraints kept | Tests 7, 8, 10; V-05, V-07, V-19 | PASS |
+| Distinctness, trigger specificity and negative boundaries kept | Tests 11–13; V-07b unchanged in behaviour | PASS |
+| Provider diagnostics only where documented; otherwise UNKNOWN or NOT_MEASURED | Test 4; report; `evidenceLevel` | PASS |
+| Truncation, context tax and routing-collision risks reported | Report: provider status and entry cap, "context tax" line, collision pairs | PASS |
+| Diagnostics kept separate from measured provider behaviour | Every provider `measurement: NOT_MEASURED`; docs state static figures are not evidence | PASS |
+| No claim that unlimited Skills are reliably discovered | AUTOMATIC_SKILL_DISCOVERY "Adding Skills"; KL-03; ADR-0013 | PASS |
+| Existing metadata passes; above 7,000 does not fail on the cap | Test 1; tests 2–3 | PASS |
+| Duplicate identity and invalid frontmatter still fail | Tests 9–10 | PASS |
+| Calculations deterministic and repeatable | Test 5 | PASS |
+| Policy documented: repository limits advisory, provider limits apply, inventory growth needs routing and context evaluation | AUTOMATIC_SKILL_DISCOVERY section; RELEASE_CHECKLIST P-L item | PASS |
+| Every test and validator affected by the 7,000 limit updated; no historical test silently disabled | `ed36-exceeded-planned-budget` retargeted; documentation cases rewritten plus two added; registration assertions updated; nothing removed or skipped | PASS |
+
+### Judgment calls for owner review
+
+1. **Codex's 8,000 characters is the only provider figure used**, as a
+   WARN. It is the documented fallback when the context window is unknown;
+   the real budget may be larger, and it is shared with every other installed
+   Skill.
+2. **"Unusually expensive" is relative to this package** (Tukey fence),
+   advisory and report-only. It is not a gate, and it adds no new fixed
+   number.
+3. **The provider warning uses actual (shipped) metadata.** Planned
+   registrations are reported as projected, because providers do not list
+   unshipped Skills.
+
+### Risks and findings
+
+- With no cap, metadata can grow until a provider truncates descriptions.
+  The only signals are the advisory V-07 warning, the report and release
+  rule P-L (a checklist item, not an automated gate). Provider capacity is
+  NOT_MEASURED until evolution Step 18.
+- Character counts approximate what providers list. Hosts may also list
+  paths or other fields, so real listing sizes are larger by an unknown
+  amount.
+- The shell heredoc used to append log entries failed twice on text with
+  apostrophes. Edits were then made with the editor or with patch scripts
+  in the scratchpad. No partial writes occurred: each script writes a file
+  only after all its replacements match.
+
+### Next action
+
+Stopped after Step 05, as instructed. Step 06 (Limit Regression Tests) is
+**ready**: prerequisites 03, 04 and 05 are PASS. Its targets are matrix rows
+T-13 (Class B negative controls), T-16 (derive the Phase 5 Skill count),
+T-18 (`tests/ci/limits.test.mjs`) and T-19 (register
+`tests/ci/negative-controls.test.mjs`), plus the V-18 nested-reference gap
+noted in Step 04. Not started.
+
+---
+
+## Step 06 — Limit Regression Tests
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: Step 01–05 changes only. Steps 03, 04 and 05 confirmed `PASS`.
+- **Authorization:** the owner's STEP 06 instruction (2026-10-22): "Verify
+  that the removal of artificial restrictions is complete and consistent
+  across source code, validators, tests, documentation, and architecture
+  decisions."
+- **Deliverable:** [LIMIT_MIGRATION_REPORT.md](LIMIT_MIGRATION_REPORT.md).
+
+### Audit
+
+`git grep --untracked` over the whole repository (excluding generated
+`tests/evals/claude` and these evolution documents) for every listed term
+found 133 matches before fixes and 144 after. The increase is the new notices
+that name former values. Classification is in LIMIT_MIGRATION_REPORT §4.
+Raw results are in the scratchpad (`step06-audit-raw.txt`,
+`step06-audit-after.txt`). A second search found no numeric comparison on
+Skill count, lines, depth or metadata in `tools/`. It also re-checked the
+15/25 ceilings stated in documents.
+
+**Active items found and fixed:**
+
+1. `SKILL_AUTHORING_STANDARD.md` CA-01 still said "combined maximum 16" and
+   "fit maximum 15". It contradicted the code, and the new G-13L rule-row
+   test flagged it on its first run.
+2. V-18 checked only top-level `references/*.md`, while V-08 (Step 04)
+   reaches nested files. A nested reference without a kind passed. V-18 and
+   V-06 now cover every Markdown file in a skill except `SKILL.md`. The count
+   is unchanged at 242; the only `.md` outside `references/` is
+   `skills/README.md`, which is outside every skill.
+3. `phase5.test.mjs` pinned `SKILLS.length === 16`. The pin is removed; the
+   per-Skill probe coverage checks stay.
+
+**Documentation clarified:** ADR-0009 and ADR-0012 (superseded-limits
+notices); ARCHITECTURE §8 (note that the table is the original design);
+PLUGIN_PACKAGE_DESIGN (notice now covers the V-07 row); PROJECT_CHARTER (D-066
+paragraph); ISSUES R-57 (D-066 update; still OPEN for its other items);
+SKILL_QUALITY_GATES G-13 (fixture suites listed); `tools/validate/README.md`
+V-18; CONTRIBUTING developer checks and policy paragraph.
+
+### Files changed in Step 06
+
+| Change | Path |
+|---|---|
+| Created | `tests/ci/limits.test.mjs`; `docs/chayen/evolution/LIMIT_MIGRATION_REPORT.md` |
+| Modified (code) | `tools/validate/validate-package.mjs` (V-18/V-06 reference scope); `tools/validate/validate-all.mjs` (G-13L, G-14N) |
+| Modified (tests) | `tests/evaluation/phase5/phase5.test.mjs` |
+| Modified (docs) | `docs/chayen/SKILL_AUTHORING_STANDARD.md`, `SKILL_QUALITY_GATES.md`, `ARCHITECTURE.md`, `PLUGIN_PACKAGE_DESIGN.md`, `PROJECT_CHARTER.md`, `ISSUES.md`, `ADRS/ADR-0009-*.md`, `ADRS/ADR-0012-*.md`, `docs/CONTRIBUTING.md`, `tools/validate/README.md` |
+| Modified (records) | `docs/chayen/evolution/MASTER_PLAN.md`, `MIGRATION_MATRIX.md`, `STEP_LOG.md` |
+
+**Unchanged:** `plugins/` and `catalog/` (no diff). No Skill was added or
+edited. Cumulative tracked diff for Steps 01–06: 36 files, +560 / −201, plus
+the untracked new files (ADR-0013, 5 test files, `discovery-metrics.mjs`,
+7 evolution documents).
+
+### `tests/ci/limits.test.mjs` (G-13L)
+
+| # | Test | Result |
+|---|---|---|
+| 1 | No `MAX_ENTRY_SKILLS`, `L0_BUDGET`, `PROJECT_NAMES` or former cap diagnostic in `tools/**/*.mjs` | pass |
+| 2 | Rule rows (authoring standard L0/L1/L2, PT-06, SB-01, DS-05, RF-02..RF-04, CA-01; gates G-06..G-08; validator README V-06..V-08) state no removed cap unless marked "formerly" | pass after the CA-01 fix (failed before it) |
+| 3 | One package beyond every former limit at once: 18 Skills (3 project), `SKILL.md` above 300 lines, reference above 300 lines, nested reference at depth 4, discovery metadata above 7,000 characters | package, catalog and security validators exit 0 with no former-cap diagnostic |
+| 4–15 | On that package: name above 64 characters; description above 1,024; Copilot marketplace description above 1,024; provider-specific frontmatter field; hooks key in the Claude Code manifest; executable script; secret-shaped value (and not printed); link escaping the Skill; nested reference without a kind; orphaned nested reference; conflicting description; unregistered Skill | each exits 1 with its expected ERROR and no former-cap diagnostic |
+| 16 | Junction inside a Skill | exits 1 (V-09); ran, not skipped |
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/validate-all.mjs` | 0 | **25/25** gate groups PASS (05:47:21Z–05:50:05Z): adds G-13L and G-14N; package 0 errors, 0 warnings; G-13 189/189 |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability PASS; discovery INFO unchanged from Step 05 |
+| `node --test tests/ci/limits.test.mjs` | 0 | 16/16 |
+| `node --test` for registration (21), discovery-metrics (13), reference-graph (16), documentation (17), negative-controls (4), phase5 (13), security boundaries (36) | 0 each | all pass, 0 skipped |
+| Control: G-13L nested-kind case against current `tools/` with the pre-Step-06 V-18 scope restored (scratchpad copy) | 1 | fails, so the gap was real |
+| Link check over 9 edited governance files | 0 | 63 links, 0 problems |
+| `git diff --name-only -- plugins catalog` | 0 | empty |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| All valid existing Skills pass | `validate-package.mjs` 0 errors and 0 warnings; G-13L test 3 copies them unchanged | PASS |
+| Synthetic Skills beyond the old numeric limits pass | G-13L test 3; G-13R tests 2–3; G-13G tests 2–7; G-13M tests 2–3 | PASS |
+| Negative security and integrity tests still fail as expected | G-13L tests 4–16; G-13R 4–21; G-13G 8–16; G-13M 7–13; G-13 189/189; G-SEC-T 36/36 | PASS |
+| No obsolete numeric hard fail remains | Audit §4 (0 active restrictions); G-13L test 1 | PASS |
+| Documentation and implementation agree | G-13L test 2; G-14 `check-docs` PASS; audit classification | PASS |
+| Required commands run | `validate-all.mjs` and `run-evaluation-suite.mjs`, both exit 0 | PASS |
+| Existing Skills and metadata preserved; Skill count not inflated | no diff in `plugins/` or `catalog/` | PASS |
+
+### Risks and findings
+
+- Provider capacity remains NOT_MEASURED (Steps 14, 18). Release rule P-L is
+  a checklist item, not an automated gate.
+- The rule-row check covers the listed authoritative rows. Prose elsewhere
+  in maintained governance files relies on review and the dated-notice
+  convention.
+- The owner judgment calls from Steps 02, 04 and 05 remain open (report §7).
+
+### Next action
+
+Stopped after Step 06, as instructed. Step 07 (Task Contract Consistency) is
+**ready**: its prerequisites 01 and 04 are PASS. Not started.
+
+---
+
+## Step 07 — Task Contract Consistency
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: Step 01–06 changes; `plugins/` and `catalog/` had no diff before
+  this step. Step 06 confirmed `PASS`.
+- **Authorization:** the owner's STEP 07 instruction (2026-10-22):
+  "Eliminate conflicting Task Contract instructions and establish one
+  consistent decision policy across Chayen."
+
+### Inconsistency confirmed before any change
+
+| # | Where | Conflict |
+|---|---|---|
+| 1 | `chayen-implementation/SKILL.md` workflow step 4 vs `references/task-contract.md` procedure step 1 | The entry skill required a contract for three or more files, any risky area, **and** any request whose acceptance criteria could not be stated, however small. The recipe knew only "three or more files, or any risky area". |
+| 2 | `SKILL.md` References row for `task-contract.md` | The load condition omitted ambiguity, so the recipe could stay unloaded for an ambiguous small request. |
+| 3 | `SKILL.md` Preconditions vs workflow step 4 | Ambiguity got two prescriptions: "ask before editing" and "write a task contract". |
+| 4 | `references/feature-delivery.md` step 3 | A third copy of the "three or more files, or any risky action" rule. |
+| 5 | Recipe inline template vs `task-contract-template.md` | Two formats, with different status vocabularies (`proposed \| approved by` versus `PROPOSED` plus approval state) and field names (`Risky actions needing approval` versus `Risk and approval gates`). The template had no risk-class field. |
+
+`chayen-requirements` was consistent ("observable and testable" acceptance
+criteria) and is unchanged. `chayen-backend` and `chayen-frontend` asked
+what "done" looks like, but did not group questions or separate
+confirmation from approval.
+
+### The policy (authoritative in the recipe, procedure steps 1–6)
+
+| Owner rule | Recipe | Entry skill summary | Template |
+|---|---|---|---|
+| 1 Fully specified, low risk → proceed without questions or artifacts | Step 1b, last row; Verification | Workflow step 4, last bullet; Preconditions | — |
+| 2 Ambiguous → clarify before editing until acceptance criteria are observable | Step 1a, step 2 | Workflow step 4, first bullet | — |
+| 3 Risky → appropriate contract plus action-specific approval | Step 1b, first row; steps 4–5 | Workflow step 4; Safety boundaries | `Risk and approval gates`, `Risk class`, `Approval state` |
+| 4 Multi-file or cross-layer → proportional contract | Step 1b, second row; Template section | Workflow step 4 | Proportional versus full field sets |
+| 5 Observable, testable acceptance criteria | Step 1a; Rules; Verification | Workflow step 4 | AC table |
+| 6 Never invent UX behaviour, permissions, API contracts, data fields or business rules | Step 2 | Workflow step 4 | — |
+| 7 One grouped request; no clarification loops | Step 2 | Preconditions | — |
+| 8 Confirming a description is never authorization for destructive or security-sensitive operations | Step 5; Rules | Safety boundaries | Completion rules (Status CONFIRMED is not Approval state) |
+| Scope expansion discovered during work | Step 6; Rules | Failure handling | — |
+
+The full policy lives once, in the recipe. The entry skill carries a
+four-bullet summary, `feature-delivery.md` points to the recipe, and the
+template defers to it ("the task-contract recipe decides which applies").
+The "three or more files" figure survives only as a guide inside the
+proportional row.
+
+### Files changed
+
+| Path | Change |
+|---|---|
+| `plugins/.../chayen-implementation/references/task-contract.md` | Rewritten procedure: ordered decision (1a clarify, 1b risky / several files / fully specified), grouped clarification (2), contract by template fields (3), risk classes kept unchanged (4), confirm-and-gate (5), re-decide on scope growth (6). Inline duplicate template removed and replaced by the template's field sets. Rules, Outputs and Verification aligned. Example rewritten in the template format. Frontmatter and `capabilities` unchanged. |
+| `plugins/.../chayen-implementation/references/task-contract-template.md` | Status `PROPOSED \| CONFIRMED`; `Risk class` field; proportional versus full field sets; Status CONFIRMED is distinct from Approval state. |
+| `plugins/.../chayen-implementation/SKILL.md` | Workflow step 4 is now a four-bullet summary of the recipe; Preconditions point to it; Outputs, Failure handling (scope growth) and Safety boundaries aligned; the References load condition covers unclear, risky, multi-file and growing scope. 223 → 230 lines. |
+| `plugins/.../chayen-implementation/references/feature-delivery.md` | Step 3 refers to the recipe's decision instead of restating a rule. |
+| `plugins/.../chayen-backend/SKILL.md`, `plugins/.../chayen-frontend/SKILL.md` | One sentence each: questions in one message, never invent the missing facts, no questions for a fully specified low-risk change, confirmation never approves a risky action. |
+| `tests/skills/recipe-cases.json` | 450 → 452 cases. Updated: `rc-04-001-pos-vague-request` (prompt "Make the Settings page better."), `rc-04-001-neg-specified-edit` (prompt "Change the Save button from blue to green."), `rc-04-001-pos-csv-export` (proportional contract), `rc-04-003-pos-auth-change` (full contract; confirmation is not approval), `rc-04-002-pos-soft-delete-plan` (field name). Added: `rc-04-003-pos-destructive-migration` and `rc-04-001-pos-scope-expansion`. No case IDs renamed. |
+| `tests/skills/README.md`, `docs/chayen/KNOWN_LIMITATIONS.md` (KL-15) | Case count 452. |
+| `docs/chayen/evolution/MASTER_PLAN.md`, `STEP_LOG.md` | Status. |
+
+**Unchanged:** every Skill description (metadata fingerprint still
+`411b6adbbea7e121`; routing metadata untouched); `catalog/` (no diff;
+CAP-04-001..003 mappings and recipe path intact); the version (`1.1.2`).
+Shipped content did change, so the full package fingerprint differs from
+`1.1.2` as tagged. Releasing it needs an owner version decision (rules §4).
+
+### Regression cases (owner list)
+
+| Owner case | Case ID | Expected behaviour checked |
+|---|---|---|
+| "Make the Settings page better." | `rc-04-001-pos-vague-request` | Grouped questions with interpretations before any edit; nothing invented; path decided after the answers |
+| "Change the Save button from blue to green." | `rc-04-001-neg-specified-edit` | No question, no contract or other artifact, only the colour changes |
+| Cross-layer CSV export | `rc-04-001-pos-csv-export` | Proportional contract before the first edit; observable criteria; no questions the repository answers |
+| Authentication change | `rc-04-003-pos-auth-change` | Full contract, High risk, rollback note; no auth code before approval; confirmation is not approval |
+| Destructive migration | `rc-04-003-pos-destructive-migration` (new) | Drop listed under gates, High or Critical with a backup note; no drop migration written or applied before approval of that action |
+| Scope expansion during implementation | `rc-04-001-pos-scope-expansion` (new) | Pause before API or database edits; contract started or updated and re-confirmed; nothing invented; schema change listed for approval |
+
+These are specifications graded on transcripts. Executing them needs an
+agent runner (G-12, evolution Steps 15–17), so **agent behaviour is
+NOT_RUN**. What ran is the static validation of the cases and the content.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/validate-package.mjs` | 0 | 0 errors, 0 warnings; V-18 recipe anatomy PASS; V-22 452 cases PASS |
+| `node tools/validate/check-security.mjs` | 0 | V-25 PASS (authority guards intact) |
+| `node tools/validate/validate-all.mjs` | 0 | 25/25 gate groups PASS; G-03 catalog 0 errors; G-11 eval sync PASS; G-13 189/189 |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability PASS; T-206 206/206 |
+| `metadataFingerprint` on the plugin | 0 | `411b6adbbea7e121` (unchanged) |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Ambiguous small requests do not bypass clarification | Recipe step 1a ("however small"), step 2; SKILL step 4; References load condition; `rc-04-001-pos-vague-request` | PASS (static); behaviour NOT_RUN |
+| Fully specified trivial edits trigger no bureaucracy | Recipe step 1b last row and Verification; SKILL Preconditions and step 4; `rc-04-001-neg-specified-edit`, `rc-04-001-neg-readme-typo` | PASS (static); behaviour NOT_RUN |
+| Risky actions remain approval-gated | Recipe steps 4–5 and Rules; template Approval state; SKILL Safety boundaries; auth and destructive-migration cases | PASS (static); behaviour NOT_RUN |
+| Entry skill and recipe no longer contradict each other | One decision in the recipe; the summary in SKILL.md and feature-delivery.md maps to it row for row (table above); a single remaining "three or more files", inside the recipe's proportional row | PASS |
+| Existing catalog mappings intact | `catalog/` no diff; G-03 PASS; V-19 117 recipe files agree | PASS |
+| Relevant validators pass | `validate-all.mjs` 25/25; evaluation suite PASS | PASS |
+
+### Risks and findings
+
+- **Shipped guidance changed without a version bump.** Version-pinned
+  installs of `1.1.2` will not receive it until an owner-approved version
+  change (rules §4). The CHANGELOG `[Unreleased]` section was not edited.
+- **Behaviour is unverified.** Wording consistency does not show that an
+  agent follows the decision; the six cases need an agent runner and grader
+  (Steps 15–17).
+- The recipe grew from 153 to 171 lines and the entry skill from 223 to 230;
+  both are far below the advisory figure.
+
+### Next action
+
+Stopped after Step 07, as instructed. Step 08 (Acceptance Evidence
+Contract) is **ready**: prerequisite 07 is PASS. Not started.
+
+---
+
+## Step 08 — Acceptance Evidence Contract
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: Step 01–07 changes. Step 07 confirmed `PASS`.
+- **Authorization:** the owner's STEP 08 instruction (2026-10-22): "Make
+  completion reporting consistent across planning, implementation, backend,
+  frontend, database, and testing guidance."
+
+### Artifacts inspected (actual paths)
+
+All under `plugins/codejadee-chayen-framework/skills/`:
+- `chayen-implementation/references/task-contract-template.md`,
+  `change-summary.md`, `verification-report-template.md`,
+  `change-passport-template.md` (the Change Passport template);
+- `chayen-implementation/SKILL.md`, `chayen-backend/SKILL.md`,
+  `chayen-frontend/SKILL.md`, `chayen-data/SKILL.md`,
+  `chayen-testing/SKILL.md`;
+- the 12 composite workflows `*/references/workflow-*.md`;
+- the other templates sharing the DONE rule (`implementation-plan-template.md`,
+  `risk-assessment-template.md`, `architecture-decision-record-template.md`,
+  `context-capsule-template.md`).
+
+**Inconsistencies found:**
+1. Four acceptance formats: the task contract (5 columns), the change
+   summary (3 columns), the verification report (a `Status` column mixing
+   command status with criteria), and the passport ("criterion -> report
+   row").
+2. Two status vocabularies with no stated relation: command-level
+   PASS/FAIL/NOT_RUN (implementation, workflows) and per-test
+   PASSED/FAILED/SKIPPED/BLOCKED/NOT_RUN/UNKNOWN (`chayen-testing`).
+3. DONE rule: the task contract required "every criterion at accept", but
+   the verification report, passport, four other templates and the 12
+   workflows required only "completed scope and required verification".
+4. No guidance on adequate evidence per layer (build versus browser, unit
+   test versus API authorization, diff versus runtime, generated versus
+   applied migration), no freshness field, and no traceability fields for
+   scope changes and approvals in the summary.
+
+### Changes (shipped content)
+
+| Path | Change |
+|---|---|
+| `chayen-implementation/references/change-summary.md` | **Single definition of completion semantics.** Step 3: command statuses from the testing contract (PASS = PASSED, FAIL = FAILED, SKIPPED, BLOCKED, NOT_RUN, UNKNOWN; N/A needs a reason); baseline failures separate, unexplained failures not attributed to the baseline. Step 4: the **acceptance record** with the nine owner fields (AC, expected behaviour, method, environment, evidence, freshness, check status, verdict, open issue); proportional one-line form for simple changes. Step 5: verdict rules (accept only from observed, fresh, adequate evidence in the required environment, never from a declaration; verify_more for missing, partial, stale, irreproducible, inadequate, uncovered, or SKIPPED/BLOCKED/NOT_RUN/UNKNOWN; revise when contradicted); the evidence-adequacy table; check status never stands in for a verdict. Step 6: DONE, PARTIAL and BLOCKED rules (written code is never DONE by itself; a revise blocks DONE). Step 7: scope changes and approvals listed, or "none". Evidence audit step 6: a DONE claim with a non-accepted criterion is unsupported. Template, Outputs, Rules, Technology considerations and Verification aligned. Capabilities unchanged. |
+| `.../task-contract-template.md` | AC table is the acceptance record (method and environment planned before editing); completion rules point to the change-summary recipe's verdict rules. |
+| `.../verification-report-template.md` | Rows keyed by AC with freshness and check status; a separate `Acceptance verdicts` line; full status vocabulary in the result summary; check status versus verdict and the adequacy examples in the completion rules; DONE requires every required criterion at accept. |
+| `.../change-passport-template.md` | Acceptance to evidence carries freshness, check status and verdict and lists uncovered criteria; `Scope changes` field; DONE rule aligned. |
+| `implementation-plan-template.md`, `risk-assessment-template.md`, `architecture-decision-record-template.md`, `context-capsule-template.md` | DONE rule aligned: "where the task has acceptance criteria, every required criterion at accept". |
+| `chayen-implementation/SKILL.md` | Verification: full status vocabulary; check status is not a verdict (with the three adequacy examples); the acceptance-criteria row points to the acceptance record; DONE only when every required criterion is accept. |
+| `chayen-backend/SKILL.md` | Acceptance record fields; an authorization criterion needs a request-level test of allowed and denied paths (a unit test or diff alone is verify_more); DONE rule. |
+| `chayen-frontend/SKILL.md` | Acceptance record fields; a UI behaviour criterion needs a browser, device or component observation after the last relevant edit (a build pass alone is verify_more); DONE rule. |
+| `chayen-data/SKILL.md` | Acceptance record fields; a migration criterion needs apply, rollback and re-apply on a disposable database (a generated script alone is verify_more); DONE rule. |
+| `chayen-testing/SKILL.md` | Test status is not the verdict: uncovered or SKIPPED/BLOCKED/NOT_RUN/UNKNOWN is verify_more, a FAILED test of the criterion is revise, and only a fresh PASSED test supports accept. |
+| 12 × `*/references/workflow-*.md` | The identical DONE sentence gains: one verdict per criterion from fresh, adequate evidence; check status is never the verdict; DONE needs every required criterion at accept. V-24's required phrases ("PASS, FAIL, NOT_RUN or N/A", "PARTIAL or BLOCKED") are kept. |
+
+No new evidence format was created: the acceptance record lives in the
+existing change-summary recipe and task contract template, and the other
+templates reference it.
+
+### Tests
+
+`tests/skills/recipe-cases.json`: 452 → 460 cases (8 added, none changed or
+removed):
+
+| Layer | Adequate evidence (accept possible) | Inadequate or contradicting evidence |
+|---|---|---|
+| API | `rc-18-002-pos-api-evidence-adequate`: request-level tests for allowed and denied paths after the last edit | `rc-18-002-pos-api-unit-only`: unit tests only, so authorization is verify_more, the request check is NOT_RUN, and the outcome is PARTIAL |
+| UI | `rc-18-002-pos-ui-observed`: the user's browser observation after the last edit, attributed to the user | `rc-18-002-pos-ui-build-only`: build pass and a request to mark it done; verify_more, PARTIAL not DONE |
+| Database | `rc-18-002-pos-db-migration-applied`: apply, rollback and re-apply on a disposable database; production apply still needs approval | `rc-18-002-pos-db-migration-generated-only`: generated script only; verify_more, not DONE |
+| Cross-layer | `rc-18-002-pos-cross-layer-traceable`: scope changes and the migration approval are traceable; a row per layer | `rc-18-003-pos-cross-layer-overclaim`: audit of a DONE claim; failing test → revise, uncovered → verify_more, baseline failure separated, DONE unsupported |
+
+These are transcript-graded specifications. **Agent behaviour is NOT_RUN**:
+they need the runner and grader planned for Steps 15–17.
+
+`tests/skills/README.md` and `docs/chayen/KNOWN_LIMITATIONS.md` (KL-15)
+updated to 460 cases.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/validate-package.mjs` | 0 | 0 errors, 0 warnings; V-18 recipe and template anatomy PASS; V-22 460 cases PASS |
+| `node tools/catalog/check-workflows.mjs` | 0 | 0 errors (V-24 required phrases intact in all 12 workflows and the templates) |
+| `node tools/validate/check-security.mjs` | 0 | V-25 PASS |
+| `node tools/validate/validate-all.mjs` | 0 | 25/25 gate groups PASS; G-03 catalog 0 errors; G-13 189/189; G-14 docs PASS |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability PASS; T-206 206/206; S-HANDOFF 0 dangling |
+| `metadataFingerprint` | 0 | `411b6adbbea7e121` (unchanged; no description edited) |
+| `git diff --numstat -- plugins` | 0 | Content-only changes (+3 lines per workflow; one line per aligned template); working copies were already LF |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Every supported workflow uses consistent completion semantics | One definition in the change-summary recipe. The task contract, verification report, passport, plan, risk, ADR and capsule templates, five entry skills and all 12 composite workflows state the same DONE rule and verdict vocabulary. A sweep found 0 remaining copies of the older DONE wording and 0 "mapped to its evidence" lines | PASS |
+| No required missing evidence is silently treated as success | verify_more covers missing, partial, stale, irreproducible, inadequate, uncovered and SKIPPED/BLOCKED/NOT_RUN/UNKNOWN; NOT_RUN rows stay visible; "Not verified" lists uncovered criteria; DONE needs every required criterion at accept; an audit marks a DONE overclaim unsupported | PASS (static); behaviour NOT_RUN |
+| Owner completion policies (code alone ≠ DONE; declaration ≠ accept; build ≠ browser; unit test ≠ API authorization; diff ≠ runtime; missing test visible; baseline separated; all required ACs accepted before DONE; scope and approvals traceable) | change-summary steps 3–7 and the adequacy table; domain-specific lines in backend, frontend, data and testing | PASS |
+| Command status and AC verdict not confused | Separate columns in every template; explicit statement in the recipe, templates, implementation and testing skills | PASS |
+| Proportional reporting for simple tasks | One-line `Check:` form in the change-summary recipe; templates "keep low-risk reports compact" retained | PASS |
+| Representative positive and negative cases for API, UI, database, cross-layer | 8 cases (table above) | PASS (static) |
+| Relevant validators run and recorded | Commands above | PASS |
+
+### Risks and findings
+
+- **Shipped guidance changed again without a version bump** (Steps 07 and
+  08 together: 27 files under `plugins/`). Releasing needs an owner version
+  decision; the CHANGELOG is not edited.
+- **Behaviour unverified.** Whether agents follow the acceptance record, and
+  stop claiming DONE, needs the runner and an independent grader (Steps
+  15–17). Step 13 (Independent Evidence Audit) builds on the audit section
+  changed here.
+- The change-summary recipe grew from 146 to about 220 lines. It remains far
+  below the advisory figure; V-06 reports no warning.
+- The acceptance-record table has nine columns, which is wide in narrow
+  terminals. The proportional one-line form is the mitigation for simple
+  changes.
+
+### Next action
+
+Stopped after Step 08, as instructed. Step 09 (Guidance Consistency
+Validator) is **ready**: prerequisites 06 and 08 are PASS. A natural first
+target is a static check that the shared completion phrases above stay
+aligned. Not started.
+
+---
+
+## Step 09 — Guidance Consistency Validator
+
+- **Date:** 2026-10-22
+- **Status:** PASS
+- **Starting state:** branch `develop`, HEAD `7427eb1`, version `1.1.2`.
+  Worktree: Step 01–08 changes. Steps 07 and 08 confirmed `PASS`.
+- **Authorization:** the owner's STEP 09 instruction (2026-10-22): "Prevent
+  important policy contradictions from reappearing when Entry Skills,
+  Recipes, Templates, or Workflows are edited."
+
+### Design
+
+- **Developer-only, offline, deterministic, zero dependencies.** It reads
+  Markdown under `plugins/.../skills/` and writes nothing. Nothing new ships
+  in the plugin.
+- **No natural-language proof.** Each invariant is a set of:
+  - **structural anchors:** a named section, table, numbered step or
+    References row must still carry a short key phrase. Emphasis and line
+    breaks are normalized away;
+  - **narrow contradiction patterns:** only definitional or claiming
+    sentences ("accept when …", "… count as PASS", "approval of the
+    contract covers …"), skipped when a negation appears in or just before
+    the match.
+- **Levels:** `ERROR` fails the build; `REVIEW` is a heuristic signal for
+  G-15 human review and exits 0. The output is sorted and carries no
+  timestamps.
+- **Canonical definitions** live in `tools/validate/guidance-invariants.json`.
+  Each invariant has a statement, a single authoritative source, a list of
+  machine checks and a list of what still needs human review. A test ties
+  the JSON to the documentation.
+
+### Files changed
+
+| Change | Path |
+|---|---|
+| Created | `tools/validate/check-guidance.mjs` (checker, gate G-18) |
+| Created | `tools/validate/guidance-invariants.json` (canonical GI-01..GI-09) |
+| Created | `tests/skills/guidance-consistency.test.mjs` (21 regressions, gate G-18T) |
+| Created | `docs/chayen/GUIDANCE_INVARIANTS.md` (diagnostics, machine versus human split, limitations, change procedure) |
+| Modified | `tools/validate/validate-all.mjs` (G-18, G-18T registered) |
+| Modified | `docs/chayen/SKILL_QUALITY_GATES.md` (G-18 row), `tools/validate/README.md`, `tests/skills/README.md` |
+| Modified (shipped, one line) | `chayen-implementation/references/workflow-new-feature.md`: the Report exit check "Completion is DONE only if required scope and checks are complete" now adds "and every required criterion is at accept". **Found by the checker on its first run**; Step 08 had missed it, because it changed only the workflows' Verification sentences. |
+| Modified | `docs/chayen/evolution/MASTER_PLAN.md`, `STEP_LOG.md` |
+
+### Invariants (machine part versus human part)
+
+| ID | Machine-verified | Still requires human review |
+|---|---|---|
+| GI-01 task-contract-decision | The recipe Procedure says "clarify … before any edit … however small" before the decision table; the table has the full, proportional and no-contract paths; the entry-skill step delegating to the recipe names clarification before any edit and the three paths; the References load condition covers unclear requests; no file-count contract rule outside the recipe; no "proceed on a reasonable interpretation" | Whether summaries are faithful in meaning |
+| GI-02 action-specific-approval | Recipe: approval of the exact action and target, and confirmation is never approval; implementation Safety boundaries: contract approval is not approval of each risky action; no sentence saying contract approval or confirmation covers, implies, counts as or authorizes approval | Approval wording in unrecognised forms |
+| GI-03 acceptance-verdicts | Every definitional clause of accept, verify_more and revise (comma-joined lists read clause by clause); no "missing evidence is accept"; all three defined in the change-summary recipe | Verdict meaning in non-definitional prose |
+| GI-04 completion-outcome | Every unit with a DONE-defining sentence has one that requires accept; no "written code or a green build counts as DONE"; DONE, PARTIAL and BLOCKED defined in the recipe | Other outcome vocabularies |
+| GI-05 check-status-honesty | The testing status table defines all six statuses and SKIPPED says a skip is not a pass; the recipe lists the statuses and "never reported as passing"; no skipped, not-run, blocked or unknown check counted, treated, reported or marked as a pass | Status reporting in other phrasings |
+| GI-06 source-of-truth-precedence | All 16 skills keep the Precedence principle with system/developer and provider priority; consuming skills that read `.chayen/profile.md` say the source wins; no `.chayen/` override wording | The internal order (REVIEW signal) |
+| GI-07 advisory-not-enforcement | No "this skill, guidance, recipe, checklist, workflow, template or these instructions enforce, guarantee, ensure, prevent, block or stop" (negated forms allowed; domain verbs such as "endpoint enforces" not matched); no absolute safety claims; the advisory statement kept in security, data, devops, architecture and ai-engineering | Claims with another subject |
+| GI-08 skill-ownership-and-handoff | Every `chayen-*` name resolves to a shipped skill; no provider invocation syntax; no self hand-off in "When not to use" | Whether the named skill really owns the request; unrecognised Better-fit outcomes (REVIEW) |
+| GI-09 workflow-exit-and-verification | All 12 workflows keep "PASS, FAIL, NOT_RUN or N/A" and the one-verdict rule in Verification; exit checks are scanned by GI-04 and GI-05 | Whether each exit check suffices; completion claims without an evidence term (REVIEW) |
+
+### Tests (`tests/skills/guidance-consistency.test.mjs`, 21/21)
+
+| Owner requirement | Test(s) | Detected by |
+|---|---|---|
+| Ambiguous request skips clarification | entry-skill mutation ("proceed with the most reasonable interpretation"); recipe mutation ("note the assumption and continue") | GI-01 (two diagnostics); GI-01 |
+| Template marks missing evidence as accepted | definition mutation ("accept when the evidence is missing or partial"); statement appended to the passport ("Missing evidence is marked accept…") | GI-03; GI-03 |
+| Workflow treats a skipped test as PASS | Verification ("Skipped tests count as PASS"); exit check ("Skipped checks are reported as PASS…") | GI-05; GI-05 |
+| Approval requirement weakened | entry skill ("Approval of the task contract covers each risky action"); recipe ("… the contract is approval of …") | GI-02 (anchor and contradiction); GI-02 (contradiction; the Rules section still states the rule, so the anchor rightly holds) |
+| Valid wording change preserving semantics | one fixture with a paraphrased clarification bullet, reordered bullets, a reworded verdict definition joined with commas, "Skipping is never passing", a rewrapped workflow paragraph, added bold, and a negated enforcement sentence | **0 errors, 0 review items** |
+
+Also covered: the shipped package passes (0/0); determinism (identical
+output twice); REVIEW items do not fail (2 heuristic signals, exit 0); every
+canonical invariant is documented; and one mutation each for GI-04
+(template DONE without accept; the real `workflow-new-feature.md` regression;
+"written code counts as DONE"), GI-06 (precedence removed; `.chayen` overrides
+source), GI-07 (enforcement claim), GI-08 (`chayen-qa` hand-off) and GI-09
+(verdict rule removed).
+
+**False positives found and fixed during development:**
+1. The decision-table anchor required the table at the start of a line,
+   but the recipe indents it inside a list. Fixed: indentation allowed.
+2. GI-04 at paragraph level accepted a weakened DONE sentence because the
+   same paragraph mentioned "accept" elsewhere (a false negative). Fixed:
+   at least one DONE-defining sentence must itself require accept.
+3. GI-03 read the comma-joined 1.1.2 verdict sentence ("accept when …,
+   verify_more when the evidence is missing …") as accept being defined
+   with missing evidence. Fixed: a clause ends at the next verdict word. A
+   regression case uses the comma-joined form.
+
+**Control against history:** the checker run on the baseline `1.1.2`
+package (`git archive HEAD plugins`) reports 47 errors, all genuine:
+- GI-01 ×6: the duplicated "three or more files" rules, no clarification
+  path, no delegation, a load condition without ambiguity;
+- GI-02 ×2;
+- GI-04 ×22: the weaker DONE rule in templates and workflows;
+- GI-05 ×5: statuses missing from the recipe;
+- GI-09 ×12: no verdict rule in the workflows.
+
+These are the contradictions Steps 07 and 08 removed, so the invariants
+target real past drift, not only synthetic mutations.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/check-guidance.mjs` | 0 | 0 errors, 0 review items; 9 invariants over 259 Markdown files in 16 skills (after the `workflow-new-feature.md` fix; 1 error before it) |
+| `node tools/validate/check-guidance.mjs --root <baseline copy>` | 1 | 47 errors, all genuine (above) |
+| `node --test tests/skills/guidance-consistency.test.mjs` | 0 | 21/21, 0 skipped |
+| `node tools/validate/validate-all.mjs` | 0 | **27/27** gate groups PASS (adds G-18 and G-18T); G-SEC PASS with the new developer files |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability PASS |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Catches the documented conflicts | All four required mutation families detected, each in two locations; 47 genuine errors on the pre-Step-07 baseline; one real gap found in current content | PASS |
+| No excessive false positives | Shipped package 0 errors and 0 review items; the meaning-preserving rewording (7 edits) passes; three development-time false positives fixed and covered by tests | PASS |
+| Existing valid skills pass | G-18 PASS on the package | PASS |
+| Validation suite passes | `validate-all.mjs` 27/27; evaluation suite PASS | PASS |
+| Machine-verified versus human review reported | Table above; `GUIDANCE_INVARIANTS.md` §"What is machine-verified" | PASS |
+| Developer tooling only; nothing executable shipped | New files only under `tools/`, `tests/` and `docs/`; V-09 and G-SEC PASS | PASS |
+
+### Risks and limitations
+
+- **Anchors, not meaning.** A rewrite can keep an anchor and change the
+  meaning, which passes, or keep the meaning and drop an anchor, which
+  fails. The procedure in `GUIDANCE_INVARIANTS.md` is to update the anchor
+  with a test, never to add an exception.
+- **Negation guard.** An unrelated negation within 30 characters before a
+  contradiction hides it. Documented.
+- **Recognised forms only.** Unlisted phrasings of a contradiction are not
+  caught; each invariant names its human-review part.
+- Shipped content changed by one line in Step 09. Together with Steps 07–08,
+  this still needs an owner version decision before release.
+
+### Next action
+
+Stopped after Step 09, as instructed. Step 10 (Repository Intelligence) is
+**ready**: prerequisites 05 and 09 are PASS. Not started.

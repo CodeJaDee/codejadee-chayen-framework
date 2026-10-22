@@ -20,9 +20,10 @@ test("fixtures are verbatim copies of their reviewed sources", () => {
   assert.equal(r.status, 0, r.stdout + r.stderr);
 });
 
-test("routing set: >=30 positive, every Entry Skill twice, overlap, >=12 negative/no-match, 16 explicit", () => {
+test("routing set: >=30 positive, every Entry Skill twice, overlap, >=12 negative/no-match, one explicit probe per Entry Skill", () => {
   const by = (t) => routing.probes.filter((p) => p.type === t);
-  assert.equal(SKILLS.length, 16);
+  // The shipped Skill count is derived, not pinned (D-066): adding a Skill requires probes for it, below.
+  assert.ok(SKILLS.length > 0);
   assert.ok(by("positive").length >= 30);
   for (const s of SKILLS) assert.ok(by("positive").filter((p) => p.group === "core" && p.primary === s).length >= 2, s);
   assert.equal(by("positive").filter((p) => p.group === "overlap-documentation").length, 6);

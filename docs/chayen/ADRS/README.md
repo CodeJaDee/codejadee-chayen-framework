@@ -26,6 +26,7 @@ when that verification is still pending.
 | [ADR-0010](ADR-0010-persistent-multilingual-response-style-policy.md) | Persistent Multilingual Response Style Policy | A + B ACCEPTED by the Step 39 instruction (inferred, D-056; confirm); C not claimed | D-047, D-049, D-056, MHR-007–MHR-009 |
 | [ADR-0011](ADR-0011-multilingual-quality-and-safety.md) | Multilingual Quality and Safety | PROPOSED (Step 35); Step 40 rubric and fixtures proposed under D-057, nothing scored | D-047, D-050, D-057, MHR-010–MHR-012 |
 | [ADR-0012](ADR-0012-project-knowledge-initialization.md) | Project Knowledge Initialization | ACCEPTED (owner instruction, 2026-10-19) | D-062 |
+| [ADR-0013](ADR-0013-extensible-skill-governance.md) | Extensible Skill Governance | ACCEPTED (owner instruction, 2026-10-22); implementation pending (evolution Steps 03–06) | D-066 |
 
 Step 35 checked that 0009–0011 were unused before allocation. These proposals
 identify affected ADRs explicitly; they do not change any existing ADR's
@@ -41,6 +42,14 @@ CA-01/V-19 components. Its latest maximum is 15, superseding D-051's 25;
 L0 remains 6,500 (both later raised by D-062: maximum 16, L0 7,000, for
 `chayen-init`). Remaining editorial behavior decisions and ADR-0010/0011
 remain PROPOSED. See [SKILL_REGISTRATION.md](../SKILL_REGISTRATION.md).
+
+D-066 / [ADR-0013](ADR-0013-extensible-skill-governance.md) (2026-10-22)
+replaces the count, line, link-depth and L0 caps, and the registration
+allow-lists, with measurement, reporting and provider-derived warnings. It
+supersedes ADR-0004 decision 4 and the count and L0 components above.
+Provider constraints, security and schema rules, and the 206-capability
+inventory are unchanged. Evolution Steps 03–05 implemented it
+(2026-10-22); the regression suite is Step 06.
 
 Source IDs (S1–S24) refer to
 [PROVIDER_SPEC_RESEARCH.md §0](../PROVIDER_SPEC_RESEARCH.md#0-sources).

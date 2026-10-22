@@ -101,8 +101,8 @@
       }
     },
     {
-      "id": "ed36-exceeded-count",
-      "description": "A seventeenth shipped directory exceeds the ceiling of 16 (13 engineering + 2 editorial + 1 project + 1; D-062)",
+      "id": "ed36-seventeenth-copied-identity",
+      "description": "A 17th directory copied from another Skill keeps that Skill's frontmatter name, so it fails on identity (PT-03), not on the count; the count cap was removed by D-066 and valid additional Skills are accepted (tests/catalog/registration.test.mjs)",
       "edits": [
         {
           "op": "copydir",
@@ -112,13 +112,13 @@
       ],
       "expect": {
         "validator": "package",
-        "error": "V-07 metadata-budget",
-        "message": "17 entry skills > 16"
+        "error": "V-05 skills",
+        "message": "must equal directory \"chayen-seventeenth\""
       }
     },
     {
       "id": "ed36-exceeded-planned-budget",
-      "description": "Editorial metadata pushes the shipped surface above the L0 budget of 7,000 (D-062)",
+      "description": "A 795-character English description takes discovery metadata above the former 7,000 cap. D-066 removed that cap, so the fault that remains is drift from the registry (V-19); metadata above 7,000 passes in tests/catalog/discovery-metrics.test.mjs",
       "edits": [
         {
           "file": "plugins/codejadee-chayen-framework/skills/chayen-humanizer-en/SKILL.md",
@@ -130,8 +130,8 @@
       ],
       "expect": {
         "validator": "package",
-        "error": "V-07 metadata-budget",
-        "message": "L0 metadata"
+        "error": "V-19 catalog-mapping",
+        "message": "chayen-humanizer-en: shipped Humanizer metadata differs from registry"
       }
     },
     {
@@ -228,7 +228,7 @@
       "expect": {
         "validator": "package",
         "error": "V-19 catalog-mapping",
-        "message": "outside the approved two-name allow-list"
+        "message": "invalid editorial Skill name"
       }
     },
     {
@@ -318,20 +318,20 @@
       }
     },
     {
-      "id": "ed36-registered-count",
-      "description": "Planned registrations count toward the ceiling of 16, including the project registration (D-062)",
+      "id": "ed36-registered-cross-category-duplicate",
+      "description": "A planned engineering registration reuses the project Skill's name; names stay unique across registration categories. Replaces the combined count-ceiling control removed by D-066",
       "edits": [
         {
           "file": "catalog/engineering-capabilities.yaml",
           "op": "replace",
           "find": "entry_skills:\n",
-          "with": "entry_skills:\n  - name: chayen-extra-registration\n    mapping: planned\n    scope: \"Synthetic registration used only to test the combined registered count ceiling.\"\n"
+          "with": "entry_skills:\n  - name: chayen-init\n    mapping: planned\n    scope: \"Synthetic registration used only to test name uniqueness across registration categories.\"\n"
         }
       ],
       "expect": {
         "validator": "package",
         "error": "V-19 catalog-mapping",
-        "message": "registered Entry Skill count exceeds 16"
+        "message": "chayen-init: duplicate skill name across registration records"
       }
     },
     {

@@ -187,7 +187,9 @@ Prepare a request as described in
 
 - Most requests become a **recipe inside an existing skill**, not a new
   skill.
-- L0 metadata usage is 6,563 / 7,000 characters (D-062), leaving 437.
-  The Entry Skill ceiling is 16 (D-062) and all 16 now ship, so a further
-  skill needs a new decision. New Skills still need routing and metadata checks;
-  this internal budget does not establish host capacity or routing quality.
+- L0 metadata usage is 6,563 characters (about 1,641 tokens, estimated).
+  There is no Entry Skill count ceiling and no repository metadata cap
+  (D-066), but provider listing limits still apply: see
+  [automatic skill discovery](AUTOMATIC_SKILL_DISCOVERY.md#discovery-metadata-and-provider-limits).
+  A new skill needs a registration record, passes every quality gate, and
+  needs routing and context evaluation before compatibility is claimed.

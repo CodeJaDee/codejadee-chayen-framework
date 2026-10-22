@@ -126,7 +126,11 @@ Report every test or suite with exactly one status:
 - No skipped, disabled, or retried tests were added without the user's
   agreement.
 - When the task has acceptance criteria, each one names the test that
-  covers it and that test's status, or is marked uncovered.
+  covers it and that test's status, or is marked uncovered. A test status is
+  not the criterion's verdict: an uncovered criterion, or one whose test is
+  SKIPPED, BLOCKED, NOT_RUN or UNKNOWN, is verify_more; a FAILED test of the
+  criterion makes it revise; only a PASSED test that exercises the
+  criterion, run after the last relevant edit, supports accept.
 
 ## Failure handling
 

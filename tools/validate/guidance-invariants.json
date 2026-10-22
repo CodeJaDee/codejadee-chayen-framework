@@ -1,0 +1,116 @@
+{
+  "$comment": "Canonical guidance invariants (evolution Step 09). Developer-only, never shipped. tools/validate/check-guidance.mjs implements the machine checks named here; docs/chayen/GUIDANCE_INVARIANTS.md explains diagnostics. Each invariant names its single authoritative source; other files may summarize it but must not contradict it.",
+  "version": 1,
+  "invariants": [
+    {
+      "id": "GI-01",
+      "name": "task-contract-decision",
+      "statement": "An unclear request (acceptance criteria not yet observable, or a needed fact unknown) is clarified in one message before any edit, however small. Then: any risky action gets a full contract; several files or layers get a proportional contract; a fully specified low-risk change gets no contract and no questions. Only the task-contract recipe states the eligibility rule in full.",
+      "source": "chayen-implementation/references/task-contract.md",
+      "machine": [
+        "The recipe Procedure states clarification before any edit, however small, before its decision table.",
+        "The recipe decision table names the full, proportional and no-contract paths.",
+        "The entry skill's task-contract step names clarification before any edit and the three contract paths, and refers to the recipe.",
+        "The entry skill's References load condition for the recipe covers unclear requests.",
+        "No other file restates a file-count eligibility rule."
+      ],
+      "review": ["Whether a summary elsewhere is faithful in meaning, beyond the named anchors."]
+    },
+    {
+      "id": "GI-02",
+      "name": "action-specific-approval",
+      "statement": "Each risky action needs approval of that exact action and target before it is performed. Confirming a task description or a contract is never approval of a risky action.",
+      "source": "chayen-implementation/references/task-contract.md",
+      "machine": [
+        "The recipe requires approval of the exact action and target, and says confirmation is never approval.",
+        "The implementation entry skill says contract approval is not approval of each risky action.",
+        "No shipped file says contract approval or confirmation covers, implies or counts as approval."
+      ],
+      "review": ["Approval wording phrased in a way the weakening patterns do not recognise."]
+    },
+    {
+      "id": "GI-03",
+      "name": "acceptance-verdicts",
+      "statement": "accept: fresh, adequate observed evidence shows the criterion is met. verify_more: evidence is missing, partial, stale, not reproducible or inadequate. revise: evidence contradicts the criterion.",
+      "source": "chayen-implementation/references/change-summary.md",
+      "machine": [
+        "The recipe defines all three verdicts.",
+        "Every definitional clause ('accept when ...', 'accept: ...') in shipped content defines accept without missing, partial, stale or unexecuted evidence, verify_more with missing or partial evidence, and revise with contradicting evidence.",
+        "No shipped sentence marks missing, partial, stale, uncovered or unverified evidence as accept."
+      ],
+      "review": ["Verdict wording that does not use a definitional form."]
+    },
+    {
+      "id": "GI-04",
+      "name": "completion-outcome",
+      "statement": "DONE requires completed scope, required verification and every required acceptance criterion at accept. Otherwise PARTIAL or BLOCKED with the next safe action. Written code is never DONE by itself.",
+      "source": "chayen-implementation/references/change-summary.md",
+      "machine": [
+        "The recipe defines DONE, PARTIAL and BLOCKED.",
+        "Every paragraph, list item or table row that defines when DONE applies also requires accept.",
+        "No shipped sentence makes DONE follow from written code, compilation or a green build alone."
+      ],
+      "review": ["Outcome vocabulary other than DONE, PARTIAL and BLOCKED."]
+    },
+    {
+      "id": "GI-05",
+      "name": "check-status-honesty",
+      "statement": "A check that was skipped, not run, blocked or of unknown outcome is never reported as PASS. Check statuses are distinct from acceptance verdicts.",
+      "source": "chayen-testing/SKILL.md (status table); chayen-implementation/references/change-summary.md (step 3)",
+      "machine": [
+        "The testing skill's status table defines PASSED, FAILED, SKIPPED, BLOCKED, NOT_RUN and UNKNOWN, and its SKIPPED row says a skip is not a pass.",
+        "The change-summary recipe lists the same statuses and says an unexecuted check is never reported as passing.",
+        "No shipped sentence counts, treats, reports or marks a skipped, not-run, blocked or unknown check as a pass."
+      ],
+      "review": ["Status reporting in prose that avoids the recognised verbs."]
+    },
+    {
+      "id": "GI-06",
+      "name": "source-of-truth-precedence",
+      "statement": "System and developer instructions and provider permissions take priority; the user's authorized scope, repository instructions and conventions follow, before generic practice. Generated project knowledge (.chayen/) is a map: the current source wins when they disagree.",
+      "source": "Every SKILL.md Principles section; D-065",
+      "machine": [
+        "Every SKILL.md has a Precedence principle that gives system and developer instructions and provider permissions priority.",
+        "Every shipped file that tells the agent to read .chayen/profile.md also says the source wins on disagreement.",
+        "No shipped sentence lets .chayen/ files override the source."
+      ],
+      "review": ["The relative order of repository instructions and conventions inside each Precedence principle."]
+    },
+    {
+      "id": "GI-07",
+      "name": "advisory-not-enforcement",
+      "statement": "Guidance is advisory. It never claims to enforce, guarantee, block or prevent anything; real controls (permissions, CI, scanners, reviews) do. Security-sensitive skills state this explicitly.",
+      "source": "D-003; SKILL_AUTHORING_STANDARD §4.3",
+      "machine": [
+        "No shipped sentence says this skill, guidance, recipe, checklist, workflow, template or these instructions enforce, guarantee, ensure, block, prevent or stop something (negated statements are allowed).",
+        "No shipped sentence claims fully, completely, 100% or guaranteed secure, safe or compliant.",
+        "The skills that carry an advisory statement today (security, data, devops, architecture, ai-engineering) keep one."
+      ],
+      "review": ["Enforcement claims with another grammatical subject, for example 'the agent will block ...'."]
+    },
+    {
+      "id": "GI-08",
+      "name": "skill-ownership-and-handoff",
+      "statement": "Hand-offs name an existing shipped skill in plain prose, never a link or provider invocation syntax; a skill never hands off to itself; a 'When not to use' row names a skill or a recognised non-skill outcome.",
+      "source": "D-016, DR-04, ADR-0006",
+      "machine": [
+        "Every chayen-* skill name in shipped content (outside the .chayen path) is a shipped skill.",
+        "No shipped content uses provider-specific invocation syntax (/plugin:skill, $skill, 'Skill tool').",
+        "Every 'When not to use' Better fit cell names existing skills other than its own, or a recognised outcome (answer directly, not covered, decline, no guidance, an em dash). Unrecognised cells are REVIEW."
+      ],
+      "review": ["Whether the named skill really owns the excluded request."]
+    },
+    {
+      "id": "GI-09",
+      "name": "workflow-exit-and-verification",
+      "statement": "Composite workflow exit checks never accept less evidence than the workflow's Verification rules: a stage that declares completion requires accepted criteria or explicit evidence, and the Verification section keeps the status vocabulary and the verdict rule.",
+      "source": "SKILL_AUTHORING_STANDARD §5.4; change-summary recipe",
+      "machine": [
+        "Every workflow Verification section keeps 'PASS, FAIL, NOT_RUN or N/A' and the one-verdict-per-criterion rule.",
+        "Exit checks are subject to GI-04 and GI-05.",
+        "An exit check that declares completion (done, complete, verified, closed) without an evidence term is REVIEW."
+      ],
+      "review": ["Whether each exit check is sufficient for its stage."]
+    }
+  ]
+}

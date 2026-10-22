@@ -15,7 +15,8 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
 import { inside } from "../validate/safe-paths.mjs";
-import { L0_BUDGET, loadEditorialRegistration, loadProjectRegistration } from "../catalog/skill-registration.mjs";
+import { loadEditorialRegistration, loadProjectRegistration } from "../catalog/skill-registration.mjs";
+import { discoveryMetrics, readDiscoveryEntries } from "../catalog/discovery-metrics.mjs";
 
 const root = path.resolve(import.meta.dirname, "..", "..");
 const rel = (p) => inside(root, p);
@@ -125,7 +126,7 @@ const skills = skillDirs.map((d) => {
 const est = (chars) => Math.round(chars / 4);
 report.metrics.contextOverhead = {
   estimator: "tokens ~= characters / 4 (estimate, not a provider tokenizer)",
-  alwaysOnL0: { chars: skills.reduce((a, s) => a + s.l0Chars, 0), estTokens: est(skills.reduce((a, s) => a + s.l0Chars, 0)), cap: L0_BUDGET },
+  alwaysOnL0: { chars: skills.reduce((a, s) => a + s.l0Chars, 0), estTokens: est(skills.reduce((a, s) => a + s.l0Chars, 0)), cap: null, capNote: "no repository cap (D-066); see metrics.discovery for provider figures" },
   perActivation: skills.map((s) => ({ skill: s.skill, bodyLines: s.bodyLines, bodyEstTokens: est(s.bodyChars), references: s.references, worstCaseBodyPlusLargestRefEstTokens: est(s.bodyChars + s.refMaxChars) })),
 };
 
@@ -134,9 +135,13 @@ const editorialRegistration = loadEditorialRegistration(root, catalog);
 const projectRegistration = loadProjectRegistration(root, catalog);
 report.metrics.contextOverhead.projectedRegisteredL0 = {
   chars: report.metrics.contextOverhead.alwaysOnL0.chars + [...editorialRegistration.skills.values(), ...projectRegistration.skills.values()].filter(s => s.mapping === "planned").reduce((n, s) => n + s.name.length + s.description.length, 0),
-  cap: L0_BUDGET,
+  cap: null,
   note: "Includes planned editorial and project metadata only; no planned bodies shipped or provider behavior measured.",
 };
+// Discovery health (D-066): totals, per-skill contributions, expensive descriptions, collision risk and documented
+// provider figures. Static measurement only; provider capacity and routing stay NOT_MEASURED.
+report.metrics.discovery = discoveryMetrics(readDiscoveryEntries(root));
+if (report.metrics.discovery.actual.chars !== report.metrics.contextOverhead.alwaysOnL0.chars) fail("S-DISCOVERY", "discovery metrics and context overhead disagree on L0 characters");
 if (editorialRegistration.errors.length) fail("S-REGISTRATION", "editorial registration invalid");
 if (projectRegistration.errors.length) fail("S-REGISTRATION", "project registration invalid");
 const STOP = new Set("a an and are as at be by can do does for from has have how i in into is it its me my of on or our should so that the their them then this to use we what when where which why will with without you your not only all any".split(" "));
@@ -253,8 +258,12 @@ console.log(`${report.routingExamples.every((r) => r.trigger && r.probe) ? "PASS
 console.log(`${report.handoff.result}  S-HANDOFF ${mdFiles.length} files; dangling ${dangling.size}; provider syntax ${providerSyntax.length}`);
 const sim = report.levels.simulated;
 console.log(`SIM   lexical proxy: top1 ${sim.top1Recall}, top3 ${sim.top3Recall}, precision ${sim.precision}, no-match ${sim.noMatchCorrectness}, ambiguous ${sim.ambiguousAcceptable}`);
-console.log(`INFO  L0 metadata ${report.metrics.contextOverhead.alwaysOnL0.chars}/${report.metrics.contextOverhead.alwaysOnL0.cap} chars (~${report.metrics.contextOverhead.alwaysOnL0.estTokens} tokens)`);
-console.log(`INFO  Projected registered L0 ${report.metrics.contextOverhead.projectedRegisteredL0.chars}/${report.metrics.contextOverhead.projectedRegisteredL0.cap} chars (includes planned editorial metadata)`);
+const disc = report.metrics.discovery;
+console.log(`INFO  L0 metadata ${disc.actual.chars} chars (~${disc.actual.estTokens} tokens, estimate); no repository cap (D-066)`);
+console.log(`INFO  Projected registered L0 ${disc.projected.chars} chars (includes planned editorial and project metadata)`);
+console.log(`INFO  Largest contributors ${disc.largestContributors.map((s) => `${s.name} ${s.chars}`).join(", ")}; unusually expensive descriptions: ${disc.expensive.descriptions.map((d) => d.name).join(", ") || "none"}`);
+console.log(`INFO  Collision risk: ${disc.collisions.pairsAboveWarn} pair(s) above overlap ${disc.collisions.warnAbove}; closest ${disc.collisions.closest[0] ? `${disc.collisions.closest[0].a}/${disc.collisions.closest[0].b} ${disc.collisions.closest[0].overlap}` : "n/a"}`);
+for (const p of disc.providers) console.log(`INFO  Provider figure ${p.provider} (${p.source}): ${p.status}; ${p.measurement}`);
 for (const p of report.levels.provider) console.log(`PROV  ${p.provider} ${p.version}: routing ${p.routingPass}, recall ${p.relevantSkillRecall}, precision ${p.selectionPrecision}, false-positive ${p.falsePositiveInvocation}, references ${p.referenceLoad}, $${p.costUsd}`);
 const pp = report.levels.providerPooled;
 if (pp) console.log(`POOL  ${pp.runs} runs from ${pp.summaries} summaries: positive routing ${pp.positiveRoutingPassRate}, no-match ${pp.noMatchCorrectness}, references ${pp.referenceLoadRate}`);

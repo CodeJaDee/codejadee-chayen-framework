@@ -23,7 +23,7 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 | Entry Skills | 16 |
 | Package files | 263 |
 | Skill references | 242 |
-| L0 metadata | 6,563 / 7,000 characters |
+| L0 metadata | 6,563 characters |
 
 The 16 entry skills are 13 engineering Skills, 2 writing Skills and 1 project
 knowledge Skill. Behind them sit 206 engineering capabilities, 108 technology

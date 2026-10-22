@@ -199,8 +199,9 @@ The block is sent with every request in every session where it is loaded.
 | Copilot template | 3,079 characters, 34 lines (adds 22 characters of frontmatter) |
 | Estimated tokens | About 750–850 per request (a character-based estimate, not measured with a provider tokenizer) |
 
-The plugin's own Skill metadata budget (7,000 characters) does not include
-this cost; the two are measured separately. The repository gate G-16 keeps
+The plugin's own Skill discovery metadata (measured by
+`tools/catalog/discovery-metrics.mjs`, no repository cap since D-066) does
+not include this cost; the two are measured separately. The repository gate G-16 keeps
 the policy body at or below 3,500 characters.
 
 ## Limitations

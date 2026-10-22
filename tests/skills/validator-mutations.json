@@ -192,10 +192,10 @@
       "expect": { "validator": "package", "error": "V-10 wording" }
     },
     {
-      "id": "sk-skill-too-long",
-      "description": "SKILL.md over the 300-line budget (SB-01)",
-      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "append", "content": "\nAdditional line used to exceed the line budget in this negative control.\n", "repeat": 160 }],
-      "expect": { "validator": "package", "error": "V-06 line-budgets" }
+      "id": "sk-link-into-other-skill",
+      "description": "SKILL.md links a file inside another Skill (D-016, DR-04). Replaces sk-skill-too-long: the 300-line cap was removed by D-066, and long files pass in tests/skills/reference-graph.test.mjs",
+      "edits": [{ "file": "plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md", "op": "append", "content": "\nFor frontend detail see [the frontend skill](../chayen-frontend/SKILL.md).\n" }],
+      "expect": { "validator": "package", "error": "V-08 links", "message": "points into another skill (chayen-frontend)" }
     },
     {
       "id": "sk-placeholder-in-prose",

@@ -21,6 +21,7 @@ Version strategy and the approved public/MIT/CodeJaDee target are in
 - [x] 15 Skills, 206 engineering and 108 technology capabilities, 12 workflows.
 <!-- historical:end -->
 - [ ] Next release: include `chayen-init` (D-062), 16 Skills in total.
+- [ ] Discovery metadata (ADR-0013 rule P-L): run `node tools/catalog/discovery-metrics.mjs`. If the release adds Skills, or its metadata exceeds a documented provider listing figure, record routing and context runs on each affected provider before claiming support there. Static figures are not evidence of provider capacity.
 - [x] Standalone Nitro/Elysia excluded; no new runtime components.
 - [ ] Later owner decisions: rights-holder line and Security/Support.
   Security/Support is LATER; no contact is selected by this checklist.

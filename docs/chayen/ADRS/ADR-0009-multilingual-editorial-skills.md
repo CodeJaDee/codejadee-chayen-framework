@@ -6,6 +6,13 @@
 - **Number allocation:** 0009–0011 were unused in files/index and repository
   search before Step 35 creation.
 
+**Superseded limits (2026-10-22, D-066,
+[ADR-0013](ADR-0013-extensible-skill-governance.md)):** the count ceilings
+(≤15, ≤25) and L0 budgets (≤6,500) recorded below are historical; there is
+no repository count or L0 cap. The two Humanizer records and their language
+contracts (`th`, `en`) are unchanged; a further editorial record declares a
+language code and needs its own decision.
+
 **Owner follow-up (D-051, 2026-10-17):** the Entry Skill ceiling is now
 **25, ACCEPTED and implemented**, superseding this record's original proposed
 ≤15 ceiling and ADR-0004's old ≤14 limit. The product target remains 15;

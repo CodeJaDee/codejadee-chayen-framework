@@ -31,6 +31,21 @@ registry is implemented; D-051/D-052 change count and L0 rules only. See
 
 The words MUST, MUST NOT, and SHOULD are used in their usual sense.
 
+**D-066 amendment (accepted 2026-10-22; count cap and registration
+allow-lists removed in evolution Step 03; size and depth caps removed in
+Step 04; total-L0 threshold removed in Step 05):**
+[ADR-0013](ADRS/ADR-0013-extensible-skill-governance.md) removes the Entry
+Skill maximum, the fixed line maximums of SB-01 and RF-04, the 2-hop limit in
+PT-06 and RF-03, and the total-L0 failure threshold in DS-05 and §1. They are
+replaced by measurement and by provider-derived warnings (`SKILL.md` under
+500 lines or about 5,000 tokens; L0 against the documented listing budgets).
+Provider constraints PT-01..PT-05, RF-02 and every other rule here are
+unchanged. SB-01, PT-06, RF-02..RF-04 and §1 below are rewritten for Step 04
+(the owner's Step 04 instruction also allows references to be discovered
+transitively; orphans still fail). DS-05 and the L0 row are rewritten for
+Step 05. Removing a cap does not mean unlimited provider
+capacity.
+
 **D-062 amendment:** maximum 16 Entry Skills and L0 ≤7,000 characters; a
 project registration (`catalog/project-skills.json`) joins CA-01; PT-08 allows
 the `.chayen` directory name as a path. See
@@ -52,7 +67,7 @@ Skill must still pass all portable/anatomy/reference/security/trigger gates.
 plugins/codejadee-chayen-framework/skills/
 └── chayen-<intent>/                 ← one entry skill (discoverable)
     ├── SKILL.md                     ← concise router: scope, triggers, workflow, gates
-    └── references/                  ← loaded on demand, one hop from SKILL.md
+    └── references/                  ← loaded on demand; listed in SKILL.md or reached through another reference
         ├── <recipe>.md              ← kind: recipe      (capability procedure, catalog-mapped)
         ├── <technology>.md          ← kind: technology  (stack-specific detail)
         ├── <checklist>.md           ← kind: checklist   (review lenses, signal tables)
@@ -61,9 +76,9 @@ plugins/codejadee-chayen-framework/skills/
 
 | Level | What loads | When | Budget |
 |---|---|---|---|
-| L0 | `name` + `description` of every entry skill | Always, by the provider | ≤7,000 characters for all Chayen skills together (D-062; 6,500 under D-052, 5,500 under D-037) |
-| L1 | `SKILL.md` body | When the provider matches the description | ≤300 lines (hard). Target ≤200 lines. |
-| L2 | One or more `references/*.md` | When the SKILL.md routing table says so | ≤300 lines each |
+| L0 | `name` + `description` of every entry skill | Always, by the provider | No repository cap (D-066; formerly ≤7,000). Measured and reported by V-07 and `tools/catalog/discovery-metrics.mjs`; provider listing limits apply (advisory warning above the 8,000 characters documented for Codex). |
+| L1 | `SKILL.md` body | When the provider matches the description | No fixed cap (D-066). V-06 reports lines and estimated tokens and warns above the provider recommendation (under 500 lines, ~5,000 tokens; S24). |
+| L2 | One or more `references/*.md` | When the SKILL.md routing table, or a reference it routes to, says so | No fixed cap (D-066). Reported by V-06 with the same advisory figure. |
 
 **Where content lives:**
 
@@ -89,7 +104,7 @@ PROVIDER_SPEC_RESEARCH §5.
 | PT-03 | `name` is 1–64 characters of `a-z0-9-`, with no leading, trailing, or double hyphen. It is equal to the directory name, and is unique across the plugin. VS Code silently fails to load invalid names. | S24, S19 | V-05 |
 | PT-04 | `description` is 1–1024 characters and is a single-line, YAML-safe plain scalar (D-017). | S24, S17 | V-05, V-07 |
 | PT-05 | Only `.md` files inside a skill. No scripts, executables, or symlinks (ADR-0005). | ADR-0005 | V-09 |
-| PT-06 | Links are relative Markdown links that stay inside the skill's own directory (D-016) and are at most 2 hops from `SKILL.md`. | S24, D-016 | V-08 |
+| PT-06 | Links are relative Markdown links that resolve to a regular file inside the skill's own directory (D-016): no traversal, no link into another skill, no symlink or junction. There is no depth limit (D-066). | S24, D-016 | V-08, V-09 |
 | PT-07 | Text names no provider-only tool or variable (for example "the Bash tool", `${CLAUDE_PLUGIN_ROOT}`). Use neutral verbs: read, search, edit, run. | P-01 | V-10 |
 | PT-08 | Skills never mention "Chayen". The user must not need to know the plugin exists (REQ-03). The `.chayen` directory name may appear as a path (D-062). | SK-06 | V-10 |
 | PT-09 | Reference files MAY start with a small frontmatter block (§5.1). Providers do not parse reference files; the block is plain text that the validators read. | S24 (references are ordinary files) | V-18 |
@@ -107,7 +122,7 @@ decides triggering (REQ-02) and silence (REQ-04).
 | DS-02 | Name the concrete scope: stacks, tools, file types, or artifacts, from the validator vocabulary. Use at least 2 such terms. | V-20 |
 | DS-03 | End with a boundary clause starting "Not for" or "Not a", naming at least 2 exclusions. Exclusions name the neighbouring skills' work and the unsupported stacks that would otherwise attract the skill. | V-07, V-20 |
 | DS-04 | No catch-all wording: "any task", "anything", "everything", "all kinds of", "general purpose", "etc.", "and more", "and so on", "any language", "any framework". | V-20 |
-| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard. Total L0 is ≤7,000 characters (D-062; 6,500 under D-052, 5,500 under D-037). | V-07 |
+| DS-05 | Length: ≤420 characters target (warning), ≤1024 hard (provider limit). Total L0 has no repository cap (D-066; formerly ≤7,000). Every character is listed on every turn, so keep descriptions as short as distinct scope allows. A description far above the package's other descriptions is flagged as unusually expensive in the discovery report. | V-07, discovery report |
 | DS-06 | Distinct from every other entry skill: word overlap ≤0.25 target, and >0.35 is an error. | V-07b |
 | DS-07 | YAML-safe: no `": "`, no `" #"`, and no leading indicator character. | V-07 |
 | DS-08 | At most 24 enumerated items (warning). Longer lists usually mean the skill is too broad, or should name stack families instead. | V-20 |
@@ -141,7 +156,7 @@ written exactly as shown.
 
 | ID | Rule | Checked by |
 |---|---|---|
-| SB-01 | `SKILL.md` ≤300 lines (error). Target ≤200 lines (warning). | V-06 |
+| SB-01 | No fixed line cap (D-066); keep `SKILL.md` concise. V-06 reports its lines and estimated tokens (the cost of every activation) and warns above the provider recommendation of under 500 lines and about 5,000 tokens (S24, S7). The warning is advisory and needs G-15 acknowledgement. | V-06 |
 | SB-02 | The workflow names *what* happens and *which* reference holds the detail. A procedure longer than about 8 lines for a single capability belongs in a recipe. | Review |
 | SB-03 | No reference content is duplicated in `SKILL.md`. Summarize it and link it. | Review |
 | SB-04 | Outputs and verification state formats once. Recipes refine them for their capability. | Review |
@@ -185,10 +200,19 @@ capabilities: [CAP-DD-NNN, ...]   # recipe only, required
 | ID | Rule | Checked by |
 |---|---|---|
 | RF-01 | `kind` is one of the four values. No other fields. `capabilities` appears only for `recipe`. | V-18 |
-| RF-02 | Every reference file is listed in its skill's `## References` table (no unreachable files), and every listed file exists. | V-08 |
-| RF-03 | Reference files may link only to sibling reference files, within 2 hops of `SKILL.md`. They never link to another skill or outside the plugin. | V-08 |
-| RF-04 | ≤300 lines. Split by topic or stack if longer. | V-06 |
+| RF-02 | Every reference file is reachable from `SKILL.md` through a chain of links, and every linked file exists; an orphan is an error. List references in the `## References` table where possible: providers recommend one level deep (S24). A reference reachable only through another reference is allowed and reported as a warning (D-066). | V-08 |
+| RF-03 | Reference files may link only to files inside their own skill, at any depth, each with a stated load condition (LD-02). They never link to another skill or outside the plugin. A link cycle is reported as a warning. | V-08 |
+| RF-04 | No fixed line cap (D-066). Split a file by topic or stack when it covers several; V-06 warns above 500 lines or about 5,000 tokens, because a reference loads whole when read. | V-06 |
 | RF-05 | No placeholder text (TODO, TBD, FIXME, lorem ipsum), and no empty sections. | V-12 |
+
+**A valid graph is not a read graph.** V-08 proves that every reference can be
+reached and that every link is safe. It does not prove that an agent will
+follow a link. Provider documentation says supporting files load only when
+the instructions point to them (S17, S19) and recommends one level deep
+(S24); none promises that a linked file is read. Keep loading progressive: each
+link names when to follow it, and no instruction asks for the whole graph
+(LD-02, LD-04). Prefer the SKILL.md References table for anything a task is
+likely to need.
 
 ### 5.2 Kinds and their required sections
 
@@ -219,7 +243,8 @@ files.
 A topic split is allowed: a stack may have a base technology reference
 (detection, version, conventions) plus topic files, all listed in the
 References table. Topic files and the base name each other in code spans,
-not links, to stay within the 2-hop limit (V-08).
+not links, so that loading one does not invite loading the other (LD-03).
+A link is allowed (D-066) when it states its load condition.
 
 ---
 
@@ -241,7 +266,7 @@ accepted plan or successful test does not supply missing authorization.
 
 The seven `kind: template` formats are skill-local leaves with no outbound
 links. Existing artifact recipes name their formats; the SKILL.md table links
-them directly to preserve the two-hop limit. Repository formats take priority,
+them directly, so they stay one level deep (S24). Repository formats take priority,
 outputs remain in conversation by default, and only needed artifacts are used.
 Cross-skill composition is by owner name through native handoff, with no
 assumption of automatic invocation, delegation, execution or enforcement.
@@ -344,7 +369,7 @@ the same reason evals are staged rather than shipped (D-018):
 
 | ID | Rule | Checked by |
 |---|---|---|
-| CA-01 | Every shipped skill belongs to exactly one engineering/editorial/project registration with `mapping: existing` (project category D-062; combined maximum 16). Editorial identities/descriptions match their registry and never own Engineering Capabilities. Planned editorial records have no shipped directory. Combined registered/shipped counts fit maximum 15. | V-11.3, V-19; shared registration rules |
+| CA-01 | Every shipped skill belongs to exactly one engineering/editorial/project registration with `mapping: existing` (project category D-062). Names are unique across all registrations. Editorial and project identities/descriptions match their registry and never own Engineering Capabilities. Planned records have no shipped directory. There is no count limit on registered or shipped Skills (D-066). | V-11.3, V-19; shared registration rules |
 | CA-02 | Every catalog recipe marked `existing` is a `kind: recipe` reference file. | V-19 |
 | CA-03 | Catalog and recipe frontmatter agree (RC-01, RC-02). | V-19 |
 | CA-04 | After any catalog change, regenerate the coverage tables with `check-catalog.mjs --write-doc`. | V-11.11 |

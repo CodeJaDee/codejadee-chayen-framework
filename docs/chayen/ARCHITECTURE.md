@@ -25,6 +25,12 @@
 > See [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md); earlier pending-registry
 > statements below describe historical Step 35 proposals. No host integration.
 >
+> **D-066 (2026-10-22, [ADR-0013](ADRS/ADR-0013-extensible-skill-governance.md)):**
+> no Entry Skill count cap and no registration name allow-lists (evolution
+> Step 03), no line or link-depth cap (Step 04), and no total-L0 cap (Step 05).
+> Each is measured and reported instead; documented provider listing figures
+> give advisory warnings. Caps written below are historical.
+>
 > **D-062 (2026-10-19):** `chayen-init` adds a project knowledge category
 > (`catalog/project-skills.json`); maximum **16** Skills and L0 **7,000**;
 > actual L0 6,563. See
@@ -297,9 +303,9 @@ Entry skills are the **only** objects the provider's discovery sees.
 - **Shape:** task-intent skills, not one skill per capability and not one per
   technology (ADR-0004).
 - **Budget** (enforced by C-12, derivation in §8):
-  - at most **15** registered/shipped entry skills (D-053; previously 25 D-051);
+  - no cap on registered or shipped entry skills (D-066; previously 16 D-062, 15 D-053, 25 D-051);
   - each `description` targets ≤280 characters (hard limit 1024);
-  - Chayen's total listing metadata is ≤7,000 characters (D-062; 6,500 under D-052, 5,500 under D-037).
+  - Chayen's total listing metadata is measured and reported, with no repository cap (D-066); provider listing limits still apply (formerly ≤7,000 D-062, 6,500 D-052, 5,500 D-037).
 - **Naming:** `chayen-<intent>`. The prefix is short, which gives collision
   resistance against Copilot's silent drop (F-05, R-10).
 - **`SKILL.md` anatomy** (template in PLUGIN_PACKAGE_DESIGN §4):
@@ -404,7 +410,7 @@ sequenceDiagram
     participant S as SKILL.md (L1)
     participant I as Pack INDEX.md (L2)
     participant T as Topic / workflow / template (L3)
-    Note over P: L0: every turn, names + descriptions only (≤7,000 chars total, D-062)
+    Note over P: L0: every turn, names + descriptions only (measured, no repository cap, D-066)
     U->>M: "Add a paged GET endpoint for orders"
     P->>M: candidate: chayen-feature-delivery
     M->>S: load body (≤300 lines)
@@ -415,9 +421,13 @@ sequenceDiagram
     M->>U: change + evidence (per templates)
 ```
 
+> The INDEX layer, line budgets and two-hop rule in this subsection are the
+> original Step 03 design. The L0 row is current; for the rest, see "As
+> built (D-066)" after the rules below.
+
 | Level | Content | Loaded when | Budget |
 |---|---|---|---|
-| L0 | `name` + `description` of each entry skill | Always (by the provider) | ≤7,000 characters total (D-062) |
+| L0 | `name` + `description` of each entry skill | Always (by the provider) | Measured and reported, no repository cap (D-066); provider listing limits apply |
 | L1 | `SKILL.md` body | On match | ≤300 lines (spec allows 500) |
 | L2 | Pack `INDEX.md`, workflow file, template | When the skill routes to it | ≤80 lines per INDEX. ≤200 lines per workflow or template. |
 | L3 | Topic files | When INDEX or a workflow points to them | ≤300 lines each |
@@ -431,6 +441,16 @@ sequenceDiagram
   - The deviation is recorded in ADR-0004 and measured in C-13.
 - No reference cycles.
 - Links are plain relative Markdown links.
+
+> **As built (D-066, evolution Step 04):** there is no INDEX layer, no line
+> budget and no hop limit. References are skill-local (D-016). Each one is
+> reachable from `SKILL.md`, either listed in its References table or reached
+> through another reference with a stated load condition; orphans fail. V-06
+> reports sizes and estimated tokens, with an advisory warning above the
+> provider recommendation for `SKILL.md` (under 500 lines, ~5,000 tokens). V-08
+> walks the link graph without recursion and reports cycles. A reachable file
+> is not necessarily a read file: providers load references only when the
+> instructions point to them.
 
 ### C-08 Composite Development Workflows
 
@@ -620,7 +640,7 @@ flowchart LR
 | DR-04 | Skills never link to other skills. Hand-off is by name in prose, so the provider re-discovers it. | V-08 |
 | DR-05 | Templates and `core/` are leaves. They contain no outbound links except to `core/`. | V-08 |
 | DR-06 | Stack packs may "see also" at most 3 sibling pack `INDEX.md` files, never sibling topics. | V-08 |
-| DR-07 | At most two hops from `SKILL.md`. No cycles. | V-08 |
+| DR-07 | Every reference reachable from `SKILL.md`, at any depth (D-066; formerly at most two hops). Cycles are reported, not followed. | V-08 |
 | DR-08 | Provider-specific content exists only in C-02 files (P-01). | V-05, V-10 |
 | DR-09 | Developer tooling (C-12, C-13) depends on the plugin. The plugin never depends on tooling. | Review + V-08 |
 | DR-10 | The catalog points to plugin files. The plugin is unaware of catalog IDs, except optional `metadata` tags. | V-11 |
@@ -661,10 +681,10 @@ flowchart TB
 
 | Attribute | Target | Derivation | Checked by |
 |---|---|---|---|
-| L0 metadata footprint | ≤7,000 characters total (D-062; formerly 6,500 D-052, 5,500 D-037) | Owner-authorized internal budget for 16 Skills; current 6,563 leaves 437 characters. Host capacity and token overhead require per-surface measurement; this is not a verified provider limit. | V-07; evaluation context report |
-| Entry skills | ≤15 (D-053) | Latest Step 36 requirement, independent of L0. 13 shipped engineering plus two planned editorial registrations. | V-07, V-11.3, V-19 |
-| `SKILL.md` body | ≤300 lines | Below the 500-line spec ceiling (S7, S24), leaving headroom | V-06 |
-| Link depth | ≤2 hops | ADR-0004 | V-08 |
+| L0 metadata footprint | Measured, no repository cap (D-066; formerly ≤7,000 D-062, 6,500 D-052, 5,500 D-037) | Current 6,563 characters (~1,641 tokens, estimate). Documented provider figures: Claude Code 1% of the context window (UNKNOWN here), Codex 2% or 8,000 characters (advisory warning above 8,000), Copilot not documented (UNKNOWN). Host capacity needs per-surface measurement (NOT_MEASURED). | V-07; `tools/catalog/discovery-metrics.mjs`; evaluation context report |
+| Entry skills | No cap (D-066); count reported by category | Formerly ≤15 (D-053) and ≤16 (D-062). Each Skill still costs L0 metadata. | V-07, V-11.3, V-19 |
+| `SKILL.md` body | No cap (D-066); lines and estimated tokens reported | Advisory warning above the provider recommendation (under 500 lines, ~5,000 tokens; S7, S24) | V-06 |
+| Link depth | No cap (D-066); maximum depth reported | Providers recommend one level deep (S24); deeper references are allowed and reported | V-08 |
 | Trigger precision and recall | Measured, not assumed. Targets are set after the first eval baseline. | R-02 | C-13 |
 | Runtime footprint | Zero processes, zero network, zero executables | MA-07 | V-09 |
 

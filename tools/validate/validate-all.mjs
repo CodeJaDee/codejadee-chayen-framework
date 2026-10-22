@@ -27,11 +27,18 @@ const steps = [
   ["G-03c composite workflows and templates (V-24)", "tools/catalog/check-workflows.mjs", []],
   ["G-11 trigger eval cases in sync", "tools/evals/generate-claude-evals.mjs", ["--check"]],
   ["G-13 validator self-tests", "tools/validate/run-validator-tests.mjs", []],
+  ["G-13R extensible registration fixtures: additional Skills accepted, identity and ownership faults rejected (D-066; offline, disposable copies)", "tests/catalog/registration.test.mjs", []],
+  ["G-13M discovery metadata fixtures: metadata above the former 7,000 cap accepted, provider limits and description quality enforced, report deterministic (D-066; offline, disposable copies)", "tests/catalog/discovery-metrics.test.mjs", []],
+  ["G-13G size and reference-graph fixtures: long files and deep chains accepted, cycles reported, integrity faults rejected (D-066; offline, disposable copies)", "tests/skills/reference-graph.test.mjs", []],
+  ["G-13L limit-migration regressions: no former numeric cap enforced, all former limits exceeded at once still valid, provider, security and integrity faults rejected, rule documents agree (D-066; offline, disposable copies)", "tests/ci/limits.test.mjs", []],
   ["G-14 user and release documentation links and identifiers", "tools/validate/check-docs.mjs", []],
+  ["G-14N isolated CI negative controls (offline, disposable copies)", "tests/ci/negative-controls.test.mjs", []],
   ["Phase 3 current documentation build-fact regressions", "tests/ci/documentation.test.mjs", []],
   ["G-15E editorial pattern inventory and case specifications (static)", "tools/validate/check-editorial-cases.mjs", []],
   ["G-16 opt-in response style policy, template, budget and package isolation (static)", "tools/validate/check-response-style.mjs", []],
   ["G-16T response style setup rules on disposable fixtures", "tests/response-style/setup-fixtures.test.mjs", []],
+  ["G-18 guidance consistency invariants GI-01..GI-09 (static; REVIEW items do not fail)", "tools/validate/check-guidance.mjs", []],
+  ["G-18T guidance consistency regressions on disposable copies", "tests/skills/guidance-consistency.test.mjs", []],
   ["G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored)", "tools/evals/score-step40.mjs", ["--self-test"]],
 ];
 let failed = 0;

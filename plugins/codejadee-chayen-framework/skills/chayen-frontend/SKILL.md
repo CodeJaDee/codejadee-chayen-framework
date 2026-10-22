@@ -77,6 +77,10 @@ If the request does not fit, stop following this skill and continue normally wit
   behaviour, the API endpoint, target locales or viewports, the offline
   conflict policy, the push provider, the signing setup, or what "done"
   looks like when the request is too vague to state acceptance criteria.
+  Ask all such questions in one message before editing, and never invent
+  the missing UX behaviour, permission or API contract. A fully specified
+  low-risk change needs no questions, and confirming the request never
+  approves a risky action.
 
 ## Workflow
 
@@ -147,9 +151,12 @@ If the request does not fit, stop following this skill and continue normally wit
   example no Xcode on this machine.
 - Visual, interactive, and device behaviour not observed is marked "not
   verified in browser" or "not verified on device".
-- When the task has acceptance criteria, each one is mapped to its evidence
-  (a test, a screenshot, or a diff), with a verdict: accept, verify_more, or
-  revise.
+- When the task has acceptance criteria, each one records its method,
+  environment, evidence (a test, a screenshot, or a diff), freshness, check
+  status and one verdict: accept, verify_more, or revise. A UI behaviour
+  criterion needs an observation in a browser, on a device, or in a
+  component test after the last relevant edit; a build pass alone leaves it
+  verify_more. DONE needs every required criterion at accept.
 
 ## Failure handling
 

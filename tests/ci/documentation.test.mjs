@@ -23,8 +23,9 @@ for (const [name, from, to] of [
   ["Skill count", "| Entry Skills | 16 |", "| Entry Skills | 15 |"],
   ["package file count", "| Package files | 263 |", "| Package files | 257 |"],
   ["reference count", "| Skill references | 242 |", "| Skill references | 237 |"],
-  ["metadata usage", "6,563 / 7,000 characters", "6,217 / 7,000 characters"],
-  ["metadata budget", "6,563 / 7,000 characters", "6,563 / 6,500 characters"],
+  ["metadata usage", "| L0 metadata | 6,563 characters |", "| L0 metadata | 6,217 characters |"],
+  // D-066 removed the 7,000-character cap; restating any fixed budget is now the stale fact.
+  ["metadata budget restated", "| L0 metadata | 6,563 characters |", "| L0 metadata | 6,563 / 7,000 characters |"],
   ["plugin name", "| Plugin name | `chayen` |", "| Plugin name | `other` |"],
   ["marketplace", "| Marketplace name | `codejadee` |", "| Marketplace name | `other` |"],
   ["current version", "| Current version | `1.1.2` |", "| Current version | `1.1.1` |"],
@@ -36,6 +37,8 @@ for (const [name, from, to] of [
 for (const [name, addition, expected] of [
   ["broken doc link", "\n[Missing](missing.md)\n", "D-01"],
   ["current prose stale count", "\nThis build has 13 Skills.\n", "D-06"],
+  ["prose metadata usage against a fixed budget", "\nL0 metadata usage is 6,563 / 7,000 characters.\n", "D-06"],
+  ["prose metadata usage that differs from the build", "\nL0 metadata usage is 6,217 characters.\n", "D-06"],
   ["former install identity outside migration", "\nInstall codejadee-chayen-framework@codejadee.\n", "D-03"],
   ["wrong marketplace in an install command", "\nInstall chayen@other.\n", "D-03"],
   ["unbalanced historical markers", "\n<!-- historical:start -->\n13 Skills\n", "D-06"],

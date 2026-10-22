@@ -26,6 +26,19 @@ runners and paid provider calls were not part of its verification. The D-051
 follow-up runs count-boundary and validator regressions in isolated scratch
 copies; it still makes no provider calls or host configuration changes.
 
+**D-066 amendment (accepted and implemented 2026-10-22):**
+[ADR-0013](ADRS/ADR-0013-extensible-skill-governance.md) changes the size
+and budget parts of G-06, G-07 and G-08. Count, line, link-depth and total-L0
+values stop being errors and are reported instead, with warnings at the
+documented provider figures. Every other check in these gates, and G-SEC,
+G-01..G-05 and G-09..G-17, is unchanged. Step 03 removed the count cap and
+the registration allow-lists and added G-13R
+(`tests/catalog/registration.test.mjs`). Step 04 removed the line and depth
+caps (G-06, G-08) and added G-13G (`tests/skills/reference-graph.test.mjs`).
+Step 05 removed the total-L0 cap (G-07) and added the discovery report
+(`tools/catalog/discovery-metrics.mjs`) and G-13M
+(`tests/catalog/discovery-metrics.test.mjs`).
+
 **D-062 amendment:** maximum 16 and L0 7,000; a third registration category
 (`catalog/project-skills.json`, exactly `chayen-init`) is validated by V-07,
 V-11.3, V-19 and V-25.5, with negative controls in
@@ -60,7 +73,7 @@ CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycl
 
 **Requirements:**
 
-- Node.js 18 or later.
+- Node.js 20.11 or later (the scripts use `import.meta.dirname`).
 - No packages to install.
 - G-14 also needs the three provider CLIs. It does not call any model.
 
@@ -84,19 +97,20 @@ CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 bash tests/provider-compatibility/run-lifecycl
 | G-03c | Twelve composite workflows and seven templates reuse implemented recipes, conditionally select packs, retain approval/partial/no-match controls and have synchronized evaluation/coverage mappings (D-045) | V-24.1–V-24.6 | Automated (static only) | Every change |
 | G-04 | Skill frontmatter is valid YAML, uses only portable fields, and has unique, valid names | V-05, X-02 `skills-ref validate` | Automated | Every change |
 | G-05 | Package contains only allowed content; repo root is not misread by providers | V-09, V-13 | Automated | Every change |
-| G-06 | Entry skill anatomy (standard §4.1) and size budgets | V-17, V-06 | Automated | Every change |
-| G-07 | Descriptions are precise, bounded, distinct, YAML-safe, and within budget | V-07, V-07b, V-20 | Automated (heuristic) + G-15 | Every change |
-| G-08 | Links and anchors resolve, stay skill-local, ≤2 hops; every reference is reachable | V-08 | Automated | Every change |
+| G-06 | Entry skill anatomy (standard §4.1); sizes and estimated context cost reported, advisory warning above the provider recommendation, no line cap (D-066) | V-17, V-06 | Automated | Every change |
+| G-07 | Descriptions are precise, bounded (1,024-character provider limit), distinct, YAML-safe and scoped. Total discovery metadata is measured and reported with documented provider figures; no repository cap (D-066) | V-07, V-07b, V-20; discovery report | Automated (heuristic) + G-15 | Every change |
+| G-08 | Links and anchors resolve to files inside their own skill (no traversal, cross-skill link or symlink); every reference is reachable from `SKILL.md`, at any depth (D-066); orphans fail; cycles and transitive-only references are reported | V-08 | Automated | Every change |
 | G-09 | Reference files declare a kind and carry that kind's sections. Recipes are concrete, not placeholders. Wording is portable and advisory. | V-18, V-12, V-10 | Automated + G-15 | Every change |
 | G-10 | Skills, recipes, and catalog agree; every recipe capability has eval cases; trigger cases are well-formed | V-19, V-22, V-16 | Automated | Every change |
 | G-11 | Trigger eval cases are generated and current. **Trigger evals are executed** when a description or routing changes. | `generate-claude-evals.mjs --check`; staged `claude plugin eval` (≥3 runs, no-plugin arm); `tests/routing/run-smoke.mjs` | Check: automated. Runs: billed, need approval. | Check: every change. Runs: before claiming a routing effect (DS-09). |
 | G-12 | Recipe behaviour evals pass on fixture repositories | `tests/skills/recipe-cases.json`, graded on transcripts | Billed, manual. **No runner or fixtures yet.** | Before any capability becomes VERIFIED |
-| G-13 | The validators themselves detect what they claim to | `run-validator-tests.mjs`: six baseline validators + 173 negative controls (179 cases as of Step 41), including editorial and 14 response-style cases; optional diagnostic fragments prevent unrelated failures from satisfying a case | Automated | Whenever a validator or standard changes |
+| G-13 | The validators themselves detect what they claim to | `run-validator-tests.mjs`: six baseline validators + 173 negative controls (179 cases as of Step 41), including editorial and 14 response-style cases; optional diagnostic fragments prevent unrelated failures from satisfying a case. D-066 fixture suites with positive and negative cases: G-13R registration (`tests/catalog/registration.test.mjs`), G-13M discovery metadata (`tests/catalog/discovery-metrics.test.mjs`), G-13G size and reference graph (`tests/skills/reference-graph.test.mjs`), G-13L limit-migration regressions (`tests/ci/limits.test.mjs`) | Automated | Whenever a validator or standard changes |
 | G-14 | Native install, discovery, disable, and uninstall still work on each CLI | `run-lifecycle.sh` (24 checks, isolated homes) | Automated, local CLIs | Packaging changes; before release |
 | G-15 | Human review (checklist §4) | Reviewer | Manual | Every skill or recipe change; before promotion |
 | G-15E | Editorial pattern inventories and case specifications (Steps 37–38; labelled G-15 in `validate-all` until Step 41, renamed to avoid clashing with the human review gate) | `check-editorial-cases.mjs` (E-01–E-04) | Automated (static only; behavior NOT_RUN) | Every editorial skill or case change |
 | G-16 | Opt-in response style policy (Step 39, D-056): one marked canonical block, Copilot template byte-identical, body ≤3,500 characters, required precedence/language/protected-content clauses, no Skill routing or enforcement claims, no hardcoded home paths, nothing shipped or activated by the plugin package; setup rules on disposable fixtures (G-16T) | `check-response-style.mjs` (R-01–R-08), `tests/response-style/setup-fixtures.test.mjs`, 14 negative controls in `tests/response-style/response-style-mutations.json` | Automated (static and fixtures only; host loading NOT_RUN) | Every policy, template or package change |
 | G-17 | Step 40 evaluation assets (D-057): 120-case held-out dataset (40 Thai, 40 English, 20 mixed, 20 policy) and 52 discovery probes are well formed, preserved spans occur in the inputs, prompts never name the plugin, and the scorer detects the defects it claims to (synthetic controls) | `tools/evals/score-step40.mjs --self-test` (Q-01–Q-04 plus outputs, language, routing, review and dataset-mutation controls in `tests/evaluation/step40/scorer-controls.json`) | Automated (offline; scores no real output). Provider runs and human review: billed or manual, need approval | Every dataset, probe, scorer or skill-description change |
+| G-18 | Guidance consistency (evolution Step 09): nine invariants GI-01..GI-09 for the task-contract decision, action-specific approval, acceptance verdicts, DONE/PARTIAL/BLOCKED, check-status honesty, source-of-truth precedence, advisory wording, skill hand-off, and workflow exit checks | `tools/validate/check-guidance.mjs` (definitions in `tools/validate/guidance-invariants.json`; diagnostics in [GUIDANCE_INVARIANTS.md](GUIDANCE_INVARIANTS.md)); G-18T `tests/skills/guidance-consistency.test.mjs` | Automated (static anchors and narrow contradiction patterns; REVIEW items go to G-15) | Every change to skills, recipes, templates or workflows |
 
 **Promotion rules (D-022):**
 
@@ -121,11 +135,11 @@ negative control in G-13 that shows it works.
 | Missing catalog mappings | V-19, V-11.3 | `sk-skill-not-in-catalog`, `sk-recipe-unknown-capability`, `sk-recipe-capability-mapped-elsewhere`, `sk-recipe-lists-planned-capability` |
 | Duplicate skill names | V-05 (case-insensitive, plus name equals directory) | `sk-duplicate-skill-name`, `sk-name-differs-from-directory` |
 | Placeholder or TODO-only recipes | V-12 (placeholder text and content-free required sections), V-11.6 | `sk-recipe-todo-only`, `cat-placeholder-text` |
-| Broken internal links | V-08 (targets and heading anchors), plus the unreachable-reference rule | `sk-broken-anchor`, `sk-unreachable-reference` |
+| Broken internal links | V-08 (targets, heading anchors, traversal, cross-skill links, symlinks), plus the orphaned-reference rule; positive and negative graph fixtures in G-13G | `sk-broken-anchor`, `sk-unreachable-reference`, `sk-link-into-other-skill` |
 | Invalid plugin manifests | V-02, V-03, V-04 | `sk-manifest-invalid-json`, `sk-manifest-version-not-semver` |
 | Unsupported schema fields | V-02 (closed schema), V-03, V-05 (frontmatter), V-18 (reference frontmatter), V-11.6 (catalog fields) | `sk-manifest-unsupported-field`, `sk-claude-manifest-unsupported-field`, `sk-frontmatter-unsupported-field`, `sk-reference-unsupported-field` |
 | Entry skills with overly broad descriptions | V-20 (catch-all wording, concrete scope terms, ≥2 exclusions, enumeration size), V-07b (overlap) | `sk-description-catch-all`, `sk-description-no-concrete-scope`, `sk-description-single-exclusion` |
-| (also) Skill anatomy, budgets, recipe anatomy, eval cases, catalog rules | V-17, V-06, V-18, V-22, V-10, V-11.x | `sk-missing-section`, `sk-section-out-of-order`, `sk-missing-scope-line`, `sk-technology-missing-section`, `sk-recipe-missing-procedure`, `sk-recipe-case-missing-negative`, `sk-provider-tool-name`, `sk-skill-too-long`, `cat-*` (19) |
+| (also) Skill anatomy, budgets, recipe anatomy, eval cases, catalog rules | V-17, V-06, V-18, V-22, V-10, V-11.x | `sk-missing-section`, `sk-section-out-of-order`, `sk-missing-scope-line`, `sk-technology-missing-section`, `sk-recipe-missing-procedure`, `sk-recipe-case-missing-negative`, `sk-provider-tool-name`, `cat-*` (19); sizes in G-13G |
 
 **Limits of the automated checks:**
 

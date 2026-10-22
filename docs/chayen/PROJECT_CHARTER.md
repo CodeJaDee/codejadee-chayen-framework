@@ -57,6 +57,11 @@ and CA-01/V-19 amendments. Its latest maximum 15 replaces the earlier 25;
 L0 stays 6,500. The two Humanizers are planned metadata records only; current
 shipping count remains 13. See [SKILL_REGISTRATION.md](SKILL_REGISTRATION.md).
 
+D-066 (2026-10-22, [ADR-0013](ADRS/ADR-0013-extensible-skill-governance.md))
+later removes the repository caps on Skill count, file size, reference depth
+and total L0 metadata. They are measured and reported instead, and provider
+limits still apply. The counts and budgets above are historical.
+
 ### 2.1 In scope
 
 - Skill content (instructions plus on-demand reference material) covering

@@ -1536,6 +1536,64 @@ Decision statuses:
   agent behaviour, routing, and native install and update of `1.1.2` are
   NOT_RUN.
 
+### D-066 — Extensible Skill governance replaces repository numeric caps
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 02: "Formally change Chayen's architecture policy so future
+  capability and Skill growth is not blocked by arbitrary repository-level
+  numeric limits"). Full record:
+  [ADR-0013](ADRS/ADR-0013-extensible-skill-governance.md).
+- **Decision:**
+  - Remove, as failure conditions, the repository's own caps: the Entry
+    Skill maximum (16), the fixed `SKILL.md` and reference line maximums
+    (300, plus the 200-line target), the 2-hop link-depth limit, the
+    7,000-character L0 failure threshold, and the fixed registration
+    allow-lists (`PROJECT_NAMES`, exactly two editorial records).
+  - Replace them with measurement and reporting: counts by category, L0
+    characters and estimated tokens, per-Skill and per-reference size, link
+    depth, and a growth-evidence rule for changes that add Skills or raise L0.
+  - Keep every provider constraint. Hard ones stay errors: name ≤64
+    characters and equal to the directory, description ≤1,024 characters,
+    portable frontmatter and packaging. Provider recommendations and capacity
+    behaviours are reported against their documented figure: `SKILL.md`
+    under 500 lines or about 5,000 tokens; references one level deep through
+    RF-02; Claude Code listing budget 1% of context; Codex 2% or 8,000
+    characters. A release above a documented listing figure, or one that adds
+    Skills, needs routing evidence on that provider.
+  - Keep every security, identity, schema-integrity and supply-chain rule,
+    the package profile (ADR-0005), discoverability and progressive
+    disclosure, distinctness and trigger coverage, and the 206-capability
+    inventory.
+  - Registration becomes extensible: records are admitted by closed schema,
+    name and description rules, cross-registry uniqueness and file parity.
+    The two Humanizer language contracts stay. A new category needs its own
+    decision; no count is involved.
+- **Step 04 amendment (owner instruction, 2026-10-22):** references may be
+  discovered transitively instead of each being linked directly from
+  `SKILL.md`. Orphans still fail. Transitive-only references and link cycles
+  are reported as warnings, because providers recommend one level deep (S24)
+  and a reachable file is not guaranteed to be read. This replaces the "one
+  level deep through RF-02" item above.
+- **Removing a cap does not mean unlimited provider capacity.** Listing
+  budgets still drop, shorten or omit descriptions on overflow (S7, S12).
+- **Supersedes:** ADR-0004 decision 4; the count and L0 components of D-051,
+  D-052, D-053 and D-062 item 7; ADR-0012 decision 6's allow-list. The other
+  parts of those records are unchanged, and their text is not edited.
+- **Implementation:** evolution Steps 03 (count, registration), 04 (lines,
+  depth), 05 (metadata) and 06 (regression tests), per
+  [MIGRATION_MATRIX.md](evolution/MIGRATION_MATRIX.md). Step 03 IMPLEMENTED
+  (2026-10-22): no count cap, no name allow-lists, validated registration.
+  Step 04 IMPLEMENTED (2026-10-22): no size or depth cap; size report and
+  advisory warnings; iterative, cycle-safe reference graph. Step 05
+  IMPLEMENTED (2026-10-22): no L0 cap; discovery metrics
+  (`tools/catalog/discovery-metrics.mjs`) with estimated tokens, per-skill
+  contributions, expensive descriptions, collision risk and documented
+  provider figures (UNKNOWN or NOT_MEASURED where not reliable); release
+  rule P-L in the release checklist.
+- **Not changed:** validators, tests, Skills, manifests, version.
+- **Evidence:** documentation only; `validate-all.mjs` re-run after the
+  documentation changes (see evolution STEP_LOG, Step 02).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

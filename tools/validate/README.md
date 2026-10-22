@@ -35,8 +35,10 @@ The gates are in
 | `../response-style/inspect-instructions.mjs` | Read-only setup helper for users and maintainers: `status`, `plan-add`, `plan-remove`, `print`. Never writes; tested by `tests/response-style/setup-fixtures.test.mjs` on disposable fixtures. |
 | `check-security.mjs` | V-25 metadata-only profile, authority guards, link/path confinement, heuristic secret patterns, source hashes, URL and fixture dependency inventory; `--write-report` writes only the fixed STEP 30 report |
 | `check-docs.mjs` | STEP 33 documentation gate (G-14): relative links and anchors (D-01, D-02), `<plugin>@<marketplace>` identifiers (D-03), skill names (D-04), and `-dev` versions (D-05) in README.md, SECURITY.md, CHANGELOG.md, docs/*.md and docs/distribution/*.md. External links are listed, not fetched. |
+| `check-guidance.mjs` | Guidance consistency gate (G-18): invariants GI-01..GI-09 from `guidance-invariants.json`, checked by structural anchors and narrow, negation-aware contradiction patterns over the shipped Markdown. ERROR fails; REVIEW is for human review. See docs/chayen/GUIDANCE_INVARIANTS.md. |
 | `safe-paths.mjs` | Rejects absolute/traversal paths and linked descendants for scratch mutation and staging |
-| `../catalog/skill-registration.mjs` | Shared max-count/L0 constants and strict engineering/editorial registration rules. See docs/chayen/SKILL_REGISTRATION.md. |
+| `../catalog/skill-registration.mjs` | Shared registration rules (no count cap, D-066). See docs/chayen/SKILL_REGISTRATION.md. |
+| `../catalog/discovery-metrics.mjs` | Shared discovery metadata metrics and description overlap (V-07, V-07b, evaluation suite). |
 
 ## What `validate-package.mjs` checks
 
@@ -51,14 +53,14 @@ The gates are in
 | (V-01a–c) | For all three marketplace files: the source path rules, that the path resolves to the plugin directory, and that the entry name equals the manifest name. |
 | V-09 | The plugin contains only `.md` and `.json` files, with no hooks, MCP servers, agents, commands, scripts, or symlinks. |
 | V-05 | `SKILL.md` files exist only under `skills/`. Their frontmatter is strictly parsed (valid YAML subset, no duplicate keys, YAML-safe values) and uses only portable fields. Names are valid, equal the directory, and are unique. |
-| V-06 | `SKILL.md` ≤300 lines (warning above 200). Reference files ≤300 lines. |
-| V-07 / V-07b | L0 ≤7,000 (D-062) for both shipped and projected metadata; ≤16 Skills (D-062). Canonical planned/editorial descriptions share length, YAML safety, boundary and distinctness checks. Constants are shared with catalog/evaluation tooling. |
-| V-08 | Links and heading anchors resolve, stay inside the skill directory, are ≤2 hops away, and every reference file is reachable from `SKILL.md`. |
+| V-06 | Size report, no line cap (D-066): lines and estimated tokens (characters / 4) for every `SKILL.md` and reference, the largest of each, and the worst single activation (body plus largest reference). WARN above the provider recommendation of 500 lines or ~5,000 tokens. |
+| V-07 / V-07b | No L0 cap and no Skill count cap (D-066): shipped and projected discovery metadata, estimated tokens and counts by category are reported; WARN when metadata exceeds a documented provider listing figure (Codex 8,000 characters). Descriptions above 1,024 characters (provider limit) are errors. Canonical planned/editorial descriptions share length, YAML safety, boundary and distinctness checks. Constants are shared with catalog/evaluation tooling. |
+| V-08 | Every link in every Markdown file of a skill resolves to a regular file inside that skill (ERROR on a missing target, traversal, a link into another skill, a symlink, or a directory) and every heading anchor exists. Breadth-first walk from `SKILL.md` with a visited set, no depth cap (D-066): an unreachable reference is an orphan (ERROR); a reference reachable only through others is reported (WARN); cycles are found without recursion and reported (WARN). |
 | V-10 | No provider-specific tool names or variables, enforcement claims, or self-references. |
 | V-12 | No placeholder text in prose (code spans and fenced blocks are exempt, so a recipe can name the markers it searches for). No required recipe section with fewer than 12 words (TODO-only recipes). |
 | V-16 | `tests/skills/trigger-cases.json` integrity |
 | V-17 | Entry skill anatomy: title, `**Scope:**` line, the ten sections in order, ≥4 positive and ≥3 negative triggers, the no-match gate sentence, and a `Reference \| Load when` table. |
-| V-18 | Every reference file declares `kind` (recipe, technology, checklist, or template), uses only allowed frontmatter fields, and has that kind's sections. A recipe has ≥3 numbered procedure steps and a valid `capabilities` list. |
+| V-18 | Every reference file (every Markdown file in a skill other than its `SKILL.md`, at any depth, so V-18 covers what V-08 can reach; D-066) declares `kind` (recipe, technology, checklist, or template), uses only allowed frontmatter fields, and has that kind's sections. A recipe has ≥3 numbered procedure steps and a valid `capabilities` list. |
 | V-19 | Shipped Skills belong to exactly one engineering/editorial registration with existing mapping. Planned editorial entries have no directory; existing metadata matches the registry. Editorial names cannot own engineering mappings/recipes. Original recipe paths, statuses and IDs retain RC-01/RC-02/CA-02 checks. |
 | V-20 | Description breadth: no catch-all wording, ≥2 concrete scope terms, ≥2 exclusions, and a warning above 24 enumerated items. |
 | V-22 | `tests/skills/recipe-cases.json`: every capability in an existing recipe has ≥1 positive and ≥1 negative case. Prompts never mention Chayen. |

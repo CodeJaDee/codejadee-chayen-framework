@@ -137,9 +137,13 @@ No matching workflow => continue normal native behavior.
   conditions, or are labelled "expected, not measured".
 - Nothing ran against a shared or production database without a recorded
   approval, and production access was read-only.
-- When the task has acceptance criteria, each one is mapped to its evidence
-  (a migration run, a query result, or a before-and-after plan), with a
-  verdict: accept, verify_more, or revise.
+- When the task has acceptance criteria, each one records its method,
+  environment, evidence (a migration run, a query result, or a
+  before-and-after plan), freshness, check status and one verdict: accept,
+  verify_more, or revise. A migration criterion needs the migration applied,
+  rolled back and re-applied on a disposable database; a generated script
+  alone leaves it verify_more. DONE needs every required criterion at
+  accept.
 
 ## Failure handling
 

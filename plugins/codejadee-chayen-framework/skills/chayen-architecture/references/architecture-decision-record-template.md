@@ -35,7 +35,7 @@ NOT_PROVIDED remains until authorization for the exact action and target was
 actually provided through an authorized process; record its source, scope,
 authority and date without inventing identities or times. Retain valid prior
 authorization within its scope instead of requesting it again unnecessarily.
-Use DONE only for completed scope and required verification; otherwise mark
+Use DONE only for completed scope, required verification and, where the task has acceptance criteria, every required criterion at accept; otherwise mark
 PARTIAL or BLOCKED and the next safe action. Commands not run are NOT_RUN,
 not PASS or N/A. Redact secrets and personal data; handoffs revalidate stale
 facts and the scope of approvals. ADRs begin PROPOSED; an accepted decision
