@@ -1,0 +1,11 @@
+{
+  "$schema": "chayen-coding-task/1",
+  "id": "fixture-task",
+  "title": "Runner test fixture: sum skips negative numbers",
+  "category": "runner-test-fixture",
+  "prompt": "sum([2, -3]) returns 2 instead of -1. Fix sum so that it adds every number, and keep the existing checks passing.",
+  "stack": [{ "name": "Node.js", "version": "20.11+", "source": "repo/README.md" }],
+  "commands": { "build": "node --check src/sum.mjs", "test": "node --test tests/sum.check.mjs" },
+  "scope": { "allowed": ["src/**", "tests/**"], "mustNotChange": ["tests/sum.check.mjs"] },
+  "reset": "Harmless fixture for the Step 16 runner tests with the fake provider only. It is not an evaluation task."
+}

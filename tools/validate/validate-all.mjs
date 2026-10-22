@@ -49,6 +49,7 @@ const steps = [
   ["G-22T independent audit regressions: evidence-only verdicts, grader contract, redaction, guidance anchors (offline)", "tests/audit/audit-evidence.test.mjs", []],
   ["G-24 coding evaluation fixtures: six tasks structurally valid, evaluator-only checks outside repo/, synthetic data (D-072; static; builds run by --verify)", "tests/evaluation/coding/run-coding-fixtures.mjs", ["--check"]],
   ["G-24T coding fixture runner regressions: diffing, scope, answer parser, Node-graded task C, scope and completion checks (offline; Node only)", "tests/evaluation/coding/coding-fixtures.test.mjs", []],
+  ["G-25T isolated coding runner: native permissions only, boundary probe (fake engine), sandbox refusal, authorization gates, candidate mismatch, duplicate output, timeout, reset, detectors, reproducible scoring (D-073; fake provider only; no provider calls)", "tests/evaluation/coding/coding-runner.test.mjs", []],
   ["G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored)", "tools/evals/score-step40.mjs", ["--self-test"]],
 ];
 let failed = 0;

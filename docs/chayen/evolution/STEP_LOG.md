@@ -2236,3 +2236,225 @@ During development:
 Stopped after Step 15, as instructed. Step 16 (Isolated Coding Agent
 Runner) is not started. Its live runs need owner authorization, a budget cap
 and isolated signed-in homes.
+
+## Step 16 — Isolated Coding Agent Runner
+
+- **Date:** 2026-10-22
+- **Status:** PASS. This covers the runner, its isolation checks and the
+  offline fake-provider tests. **Real provider runs are NOT_RUN**, and
+  write-capable runs are **BLOCKED on this host** (no reachable Linux
+  container engine).
+- **Starting state:**
+  - Branch `develop`, **HEAD `ca3efab`**. The owner committed Step 15 in
+    `873f567` and `ca3efab`; the agent made no commit.
+  - `git status --porcelain` was empty. One empty, untracked directory
+    already existed: `tests/evaluation/coding/results/2026-10-22-step16/`.
+    Git does not track empty directories. This step did not create it,
+    write into it or remove it.
+  - Package `chayen` 1.1.2 in both plugin manifests.
+- **Prerequisite:** Step 15 is `PASS` in MASTER_PLAN.
+- **Authorization:** the owner's STEP 16 instruction (2026-10-22), recorded
+  as **D-073** (ACCEPTED). No provider was called. No software was
+  installed, and no network source was used.
+
+### Host behaviour inspected before enabling write-capable runs (read-only)
+
+| Item | Observed | Consequence |
+|---|---|---|
+| Node.js | 26.8.1 (Step 15 recorded 24.15.0) | Runner and tests target Node ≥ 20.11 |
+| Provider CLIs | Claude Code 2.1.220, Codex CLI 0.163.0, Copilot CLI 1.0.89 (`--version` only) | Live runs use the CLI inside the container image, not these host binaries |
+| Provider help (each read with an empty scratch home) | Claude: `--permission-mode` (`acceptEdits`, `auto`, `bypassPermissions`, `manual`, `dontAsk`, `plan`), `--tools`, `--allowedTools`, `--disallowedTools`, `--max-budget-usd`, `--strict-mcp-config`, `--effort`. Codex: `exec -s read-only\|workspace-write\|danger-full-access`, `-c`, `--dangerously-bypass-approvals-and-sandbox`, `--approve-for-me`. Copilot: `--allow-tool`/`--deny-tool` with `shell(…)`, `write`, `url`; `--allow-all*`, `--yolo`, `--no-ask-user`, `--disallow-temp-dir`, `--usage-output-file`. `copilot help sandbox` states that its sandbox is experimental and off by default, and that built-in file edits are not OS-sandboxed | The adapters use only the native allowlist mechanisms. No provider flag is accepted as the boundary |
+| Docker | Client 29.5.3; **daemon not reachable** (`dockerDesktopLinuxEngine` pipe absent) | No container boundary can be verified |
+| Podman, `bwrap`, `sandbox-exec`, Windows Sandbox | Absent | — |
+| WSL | Only the `docker-desktop` distribution, stopped | Not used |
+
+**Result:** `run-coding.mjs --inspect-host` exits 3 with `BLOCKED no
+verified isolation backend on this host`. A real-provider `--preflight` with
+a well-formed isolation profile exits 3 with `BLOCKED isolation boundary not
+verified: docker daemon not reachable`. No provider is started in either
+case.
+
+### Design
+
+| Requirement | Where |
+|---|---|
+| Read-only Phase 5 runner preserved | `run-phase5.mjs` and the Phase 5 specifications unchanged (`git diff` empty). The coding runner is a separate file with its own library. A test asserts that Phase 5 keeps its read-only invocations and imports nothing from the coding runner |
+| 1–5. Provider, exact model and configuration, candidate, fixture, arm | `--provider`; `--model` (aliases such as `opus`, `auto` and `default` refused) and `--effort` (per-provider list); `--candidate` (Step 14 manifest, verified against the checkout); `--task` (Step 15 tasks; `--task-dir` only for the fake provider); `--arm baseline\|chayen` checked by `checkInstalled` (no package, or exactly the candidate's package) |
+| 6–8. Fresh disposable workspace, local git without a remote, same snapshot for both arms | `prepareWorkspace`: copies `repo/` only, without `bin`, `obj`, `.grader` or evaluator folders; `git init --template=`; one commit with a fixed identity and date. The commit id must equal the run's `sourceCommit`. Remotes are read from `.git/config` as text |
+| 9. Permitted file changes | `captureDiff`: by content against `repo/`, with line counts from `git diff --no-index` on runner-made copies (the agent's `.git` and attributes are never used); scope and must-not-change lists |
+| 10. Build and test output, tool actions, duration, usage, cost | The task's own `dotnet` and `node` steps re-run on a copy inside the boundary with `--network none` (`npx` NOT_RUN); tool and command traces from the Phase 5 parsers; seconds; usage and cost from the transcript (Copilot from `--usage-output-file`) |
+| 11. Attempts and revisions | `attempt` (one retry only, and only for `ERROR_NO_RESULT`); metrics `editActions`, `editsAfterFirstVerification`, `filesEditedMoreThanOnce`, `verificationCommands`, `deniedActions`; `agentCommits` |
+| 12. Reproducibility and offline scoring | `--score` reads files only. The summary is deterministic, and a re-score must reproduce `summary.json` byte for byte. Stale fixtures, other candidates, mixed configurations and duplicate records are refused. `--compare` accepts only identical configurations |
+| Isolation | Owner-written `chayen-coding-isolation/1` profile (container backend; image pinned by digest; non-root user; no `host`, `bridge` or `default` network; no mount of the user home, a credential folder or the repository). Fixed hardening: `--pull never`, `--read-only`, `--cap-drop ALL`, `no-new-privileges`, limits and bind mounts only. The **boundary probe** runs from inside the container with the run's exact mounts. Any failure exits 3 with BLOCKED, with no fallback |
+| Native permissions | Claude `dontAsk` with tool allowlists and `--max-budget-usd`; Codex `workspace-write` with network off; Copilot allow and deny lists. `assertNativePermissions` refuses every bypass or widening flag |
+| Authorization | `--allow-provider-calls`, `--allow-coding-writes`, `--authorization`, `--max-calls`; for Claude `--max-usd-per-run` and `--max-total-usd` (later runs stop at the total). An isolated home is never the user home, a default provider home or the repository, and authentication files are never copied |
+| Outputs and redaction | `run.json`, `records.jsonl` (closed `chayen-coding-record/1` field list), `runs/<stem>/` (redacted transcript, stderr, diff, verification, answer, final workspace), `ledger.jsonl`, `summary.json`. Paths become placeholders; secret patterns, credential URLs and non-example emails are masked |
+| Security and completion classes | Security: `CRITICAL` (canary tripwire for writes outside the workspace, or a configured remote), `UNSAFE_ATTEMPT` (push, network, publish, deploy or destructive commands), `NO_UNSAFE_ACTION`. Completion: `CHANGED_VERIFIED`, `CHANGED_VERIFICATION_FAILED`, `CHANGED_VERIFICATION_NOT_RUN`, `NO_CHANGE`, `TIMEOUT`, `BUDGET_LIMIT`, `TURN_LIMIT`, `ERROR_NO_RESULT`. Also a `falseDoneClaim` flag. `hiddenGrading` is `NOT_RUN (Step 17)` |
+
+### Files changed (Step 16 only)
+
+| Path | Change |
+|---|---|
+| `tests/evaluation/coding/run-coding.mjs` (new) | CLI: `--inspect-host`, `--plan`, `--preflight`, live runs, `--retry`, `--score`, `--compare` |
+| `tests/evaluation/coding/coding-runner-lib.mjs` (new) | Adapters, permission guard, isolation profile, container arguments, boundary probe, backends, workspaces, diff, verification, metrics, classes, redaction, record format and summary |
+| `tests/evaluation/coding/fakes/fake-agent.mjs`, `fakes/fake-engine.mjs`, `fakes/fixture-task/` (new) | Test-only fake provider (11 scenarios), fake container engine (12 probe failure modes plus `ok`), and a harmless Node fixture. The fixture's check file is `sum.check.mjs`, so a bare `node --test` never picks it up |
+| `tests/evaluation/coding/coding-runner.test.mjs` (new), `tools/validate/validate-all.mjs` (G-25T) | 19 regressions |
+| `tests/evaluation/coding/README.md`, `tests/evaluation/README.md`, `docs/chayen/DECISIONS.md` (D-073), `docs/chayen/EVALUATION_GAPS.md` (EG-14 note) | Usage and records |
+
+Unchanged: the plugin, `tests/evaluation/phase5/` (runner, library,
+candidate tool, specifications, results), the Step 15 tasks and
+`run-coding-fixtures.mjs`, and every `results/` folder.
+
+### Tests
+
+**G-25T `tests/evaluation/coding/coding-runner.test.mjs`: 19/19, 0
+skipped.** Real providers are only ever refused, with a `PATH` that holds
+git's directory and no provider CLI or container engine. Every executed run
+uses the fake provider.
+
+| Owner test | Observed |
+|---|---|
+| Sandbox refusal | A real provider with `--isolation test-only-no-isolation` exits 3 with BLOCKED. An unpinned profile exits 3 with "isolation profile rejected". A valid profile with no engine exits 3 with "container engine docker not found on PATH". `--inspect-host` exits 3. No output directory is created. With the fake engine, `ok` gives VERIFIED; each of the 12 failure modes gives BLOCKED with its own reason: no daemon, Windows engine, image absent, root user, writable root, open egress, engine socket, extra mount, visible canary, credential environment, no report, wrong workspace mount |
+| Candidate mismatch | Each case exits 2 and nothing runs: an edited manifest ("edited or corrupted"); a valid candidate from another disposable commit ("does not describe this checkout … changed metadata"); a Chayen arm with an empty home ("found 0"); a baseline arm with a package installed |
+| Missing authorization | Real provider: each of `--allow-provider-calls`, `--allow-coding-writes`, `--authorization`, `--max-calls`, the call cap, an exact model and the Claude USD caps is refused in turn. Fake provider: the same four gates. `--out` inside the repository is refused |
+| Duplicate output | An existing `--out` is refused ("duplicate output"). Duplicated records are not scored, and no `summary.json` is written |
+| Timeout | The `hang` scenario with `--timeout-sec 2` is recorded as `TIMEOUT` and kept |
+| Reset | Three `leftover` runs each start without the previous run's file. The snapshot commit is deterministic, a second preparation into an existing folder is refused, the fixture fingerprint is unchanged, and no `bin`, `obj` or evaluator folder is copied |
+
+Further tests:
+- **Adapters and permissions:**
+  - the adapters emit the native mechanisms;
+  - each of the 17 forbidden flags, and each unsafe value (`bypassPermissions`,
+    `auto`, `danger-full-access`, `approval_policy` other than `never`,
+    `network_access=true`, `--allow-tool shell` or `url`), is refused;
+  - model aliases are refused.
+- **Isolation profile and container:** profile rejections, container
+  hardening, and privileged options refused.
+- **Paired runs:** both arms share one source commit. The baseline shows no
+  Skill and the Chayen arm shows `chayen-implementation` with its native
+  event. The trace, diff, verification, usage and cost are recorded. The
+  re-score is `REPRODUCED`, a tampered record is refused, and `--compare`
+  works and refuses a reversed order.
+- **Detectors:**
+  - escape: `CRITICAL write outside the workspace: ESCAPED.txt`;
+  - remote: `CRITICAL`, plus the push and `remote add` attempts;
+  - out-of-scope file;
+  - false DONE: `NO_CHANGE`, verification FAIL, `falseDoneClaim`;
+  - revisions: 2 edits, 1 after the first verification;
+  - provider error followed by one retry, with the earlier summary kept as
+    `summary.pre-retry.json`; a second retry is refused.
+- **Budget:** runs stop at `--max-total-usd`; 1 run is left NOT_RUN.
+- **Environment:** the agent's environment is an allowlist. A synthetic
+  token in the parent environment does not reach the agent or any recorded
+  file, and recorded files have no local paths.
+- **Scoring refusals:** another candidate, a stale fixture and mixed
+  configurations are refused.
+- **Plan:** `--plan` is offline, and every row is NOT_RUN.
+- **Static checks:** the runner never copies authentication files and never
+  pulls an image.
+
+**Control runs:** each weakening was applied in a disposable clone. The log
+is `step16-controls.log` in the session scratchpad. **All 13 were caught:**
+
+- the permission guard removed;
+- the probe ignoring egress;
+- test-only isolation accepted for a real provider;
+- falling back to the host when the boundary is unverified;
+- workspace reuse;
+- no outside-write tripwire;
+- an existing `--out` accepted;
+- duplicate records scored;
+- the full environment passed to the agent;
+- no budget stop;
+- no installed-package check;
+- no `--allow-coding-writes` gate;
+- no candidate drift check.
+
+During development:
+- **Long paths:** `git init` failed in the long scratchpad path ("Filename
+  too long"). `core.longpaths=true` was added to every runner git call.
+- **Over-broad credential rule:** it rejected `AppData\Local\Temp`. It was
+  narrowed to `AppData\Roaming`.
+- **Retry summary:** a retry would have conflicted with the earlier
+  `summary.json`, which is now kept as `summary.pre-retry.json`.
+- **Control harness:** the first attempt hit path length in the clone; it
+  was fixed and re-run, and the results above are from the re-run.
+
+### Commands
+
+Node.js 26.8.1, working directory = repository root.
+
+| Command | Exit | Result |
+|---|---|---|
+| `node --test tests/evaluation/coding/coding-runner.test.mjs` | 0 | 19/19, 0 skipped |
+| `node --test tests/evaluation/coding/coding-fixtures.test.mjs tests/evaluation/phase5/phase5.test.mjs tests/evaluation/phase5/candidate.test.mjs` | 0 | 35/35 (Step 14 and 15 suites unaffected) |
+| `node tests/evaluation/coding/run-coding.mjs --inspect-host` | 3 | BLOCKED: docker daemon not reachable; podman absent |
+| `CLAUDE_CONFIG_DIR=<empty scratch home> node tests/evaluation/coding/run-coding.mjs --preflight --provider claude --arm baseline --task A-dotnet-bugfix --model claude-opus-5-5 --candidate <scratch> --allow-uncommitted-candidate --isolation <scratch profile>` | 3 | BLOCKED isolation boundary not verified; no provider started |
+| `node tests/evaluation/coding/run-coding.mjs --preflight --provider fake …` | 0 | PASS, labelled "no isolation (fake provider only)" |
+| `node tests/evaluation/coding/run-coding.mjs --plan` | 0 | 108 invocations (6 tasks × 3 providers × 2 arms × 3 runs), all NOT_RUN |
+| `node tools/validate/validate-all.mjs` | 1 | **37/38 gate groups PASS; G-25T PASS. G-21T FAIL, pre-existing (see findings)** |
+| `node tools/evals/run-evaluation-suite.mjs` | 1 | Static and traceability levels PASS. `S-ALL` reports the same G-21T failure |
+| `git diff --quiet HEAD -- plugins tests/evaluation/phase5 tests/provider-compatibility/results tests/evaluation/coding/results tests/evaluation/coding/tasks` | 0 | Plugin, Phase 5, historical results and Step 15 tasks unchanged |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Existing read-only evaluation behaviour is preserved | `run-phase5.mjs` and the Phase 5 library unchanged; Phase 5 and candidate suites 13/13 and 12/12; G-25T static test of the read-only invocations | PASS |
+| Fake-provider tests pass | G-25T 19/19; 13/13 controls caught | PASS |
+| Isolation prerequisites are checked | Profile validation, fixed hardening, and the boundary probe (12 failure modes BLOCKED with the fake engine). Host inspected: BLOCKED here, with no fallback | PASS (live probe against a real engine NOT_RUN: no daemon) |
+| Unauthorized provider execution is refused | Every gate tested for real and fake providers. Nothing is created before the gates and the boundary pass | PASS |
+| Real provider runs remain NOT_RUN until explicitly authorized | No provider called; `--plan` shows NOT_RUN; live runs need the flags, caps, an isolated home and a VERIFIED boundary | PASS (NOT_RUN) |
+| Plan criteria: nothing sent without authorization, a budget cap and an isolated home; no permission-bypass flag; outputs outside the repository; offline tests pass | As above, plus the `--out` inside the repository refusal and the bypass-flag refusals | PASS |
+| Required outputs | Run metadata, candidate fingerprint, provider, model and configuration, source fixture fingerprint, observed Skill activation, tool and command trace, diff summary, verification outputs, duration, usage, cost, security and completion classes, redaction. All are present in the fake runs (Paired runs test) | PASS (fake provider only) |
+
+### Risks and findings
+
+- **G-21T fails on this checkout, and the failure predates Step 16.**
+  - Test: `tests/distillation/distillation.test.mjs:125` ("a diff that no
+    longer applies").
+  - Cause: it replaces a line ending in `"\n"`, but the global
+    `core.autocrlf=true` checks out `dependency-and-impact.md` with CRLF, so
+    the replace does nothing.
+  - Evidence: it also fails in a clean clone of HEAD `ca3efab` without the
+    Step 16 files, and passes 13/13 there once that file is converted to LF.
+  - Not changed: the fix is outside Step 16's scope and belongs to the
+    distillation tooling (D-069). Step 15 recorded 37/37, so the line
+    endings of that working-tree file have changed since.
+  - Owner action: make the test line-ending independent.
+- **No real boundary has been probed.** The probe is judged here against
+  canned reports from the fake engine. The first real `--inspect-host
+  --isolation <profile>` on a running Linux engine is its first live test.
+  Before that, prepare the image (pinned digest, Node and the provider
+  CLIs, .NET 10 SDK, a non-root user) and an egress-restricted network.
+- **Egress control comes from the owner's network.** The probe checks only
+  that one declared destination is blocked. It cannot prove that every
+  other host is blocked.
+- **The fake runs use no isolation.** The outside-write canary is a
+  tripwire, not a boundary. Fake results are labelled
+  `simulated-fake-provider` and are never evaluation evidence.
+- **Provider sandboxes inside a container are untested.** Codex's own
+  `workspace-write` sandbox may fail inside a container with no
+  capabilities. That would show as denied commands, not as an escape.
+- **Claude's `Bash(<cmd> *)` and Copilot's `shell(<cmd>)` patterns are
+  untested.** They follow the CLI help; whether they match the agent's
+  actual commands is NOT_RUN.
+- **The cost planning figure is an assumption.** `--plan` uses $2.00 per
+  Claude coding run, which is not a measurement.
+- **Grading is Step 17.** The records keep the workspace and the answer;
+  `hiddenGrading` is NOT_RUN. The Step 15 answer parser needs the
+  change-summary format, and the task prompt is sent unchanged to both arms.
+- **`--verify` toolchains.** Inside the container, .NET restore needs the
+  packages in the read-only NuGet mount. The `npx` steps of tasks B and C
+  stay NOT_RUN.
+
+### Next action
+
+Stopped after Step 16, as instructed. Step 17 (Independent Grading and
+Metrics) is not started; it needs a named human grader for human-scored
+items. Live coding runs remain a separate owner action. They need:
+- authorization and budget caps;
+- a running Linux container engine with a prepared, digest-pinned image
+  and an egress-restricted network;
+- signed-in isolated provider homes;
+- `--inspect-host --isolation <profile>` reporting VERIFIED.

@@ -1819,6 +1819,58 @@ Decision statuses:
   (`tests/evaluation/coding/results/2026-10-22-verify.json`); G-24 and
   G-24T.
 
+### D-073 — Isolated real-coding agent runner
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 16: "Extend Chayen's developer-only evaluation tooling to
+  measure actual code editing and verification, not just read-only Skill
+  routing").
+- **Decision:**
+  - A separate developer-only runner,
+    `tests/evaluation/coding/run-coding.mjs`, with its library
+    `coding-runner-lib.mjs`. `run-phase5.mjs` stays read-only and unchanged.
+  - **Isolation:** write-capable runs happen only inside a container that
+    passes a boundary probe:
+    - the image is pinned by digest and never pulled;
+    - non-root user, read-only root, no capabilities, `no-new-privileges`;
+    - only the disposable workspace, the isolated provider home and the
+      declared read-only mounts are mounted;
+    - no engine socket and no credential-like environment variables;
+    - egress to a declared destination fails.
+  - **When the boundary is not verified:** the runner exits 3 with BLOCKED.
+    There is no fallback to the developer workspace, and a provider
+    permission flag never counts as a sandbox.
+  - **Provider permissions:** native mechanisms only (Claude Code
+    `dontAsk` with tool allowlists, Codex `workspace-write` without network,
+    Copilot `--allow-tool` and `--deny-tool` lists). Bypass and widening
+    flags are refused in code.
+  - **Selections:** each run selects provider, exact model (aliases
+    refused), candidate (Step 14 manifest), task (Step 15 fixture) and arm
+    (`baseline` without Chayen, `chayen` with exactly the candidate's
+    package).
+  - **Gates before anything is sent:** `--allow-provider-calls`,
+    `--allow-coding-writes`, `--authorization`, `--max-calls`, USD caps for
+    Claude, a fresh `--out` outside the repository, and an isolated
+    signed-in home. Authentication files are never copied.
+  - **Workspaces:** each run gets a fresh git copy of `repo/` with a fixed
+    commit id and no remote, plus a canary that detects writes outside it.
+  - **Records:** a closed `chayen-coding-record/1` format with Skill
+    activation evidence, tool and command traces, diff, verification
+    re-run inside the boundary, duration, usage, cost, and security and
+    completion classes. Output is redacted.
+  - **Scoring:** deterministic, so a re-score must reproduce `summary.json`.
+    Arms compare only under identical configurations.
+  - **Tests:** a fake provider and a fake engine exist for tests only, and
+    are refused for real providers.
+- **Not changed:** the plugin, Skill guidance, the Phase 5 runner and
+  specifications, and the Step 15 tasks and grader.
+- **Status of live runs:** NOT_RUN. On this host no Linux container engine
+  is reachable, so `--inspect-host` reports BLOCKED. Live runs need the
+  owner's authorization, budget caps, a prepared image and network, and
+  signed-in isolated homes.
+- **Evidence:** G-25T (`tests/evaluation/coding/coding-runner.test.mjs`);
+  STEP_LOG Step 16.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

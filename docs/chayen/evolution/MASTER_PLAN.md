@@ -32,7 +32,7 @@ blockers.
 | 13 | Independent Evidence Audit | 08, 09 | PASS | — |
 | 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | PASS | — |
 | 15 | Coding Evaluation Fixtures | 14 | PASS | Angular component specs NOT_RUN (no node_modules); no PostgreSQL fixture (no local server) |
-| 16 | Isolated Coding Agent Runner | 15 | NOT_STARTED | Live runs need owner authorization, a budget cap and isolated signed-in homes |
+| 16 | Isolated Coding Agent Runner | 15 | PASS | Live runs NOT_RUN: BLOCKED on this host (no Linux container engine); need owner authorization, budget caps, a pinned image and signed-in isolated homes |
 | 17 | Independent Grading and Metrics | 16 | NOT_STARTED | Human grading needs a named grader |
 | 18 | Routing and Context Benchmark | 14, 17 | NOT_STARTED | Billed calls need authorization; Codex and Copilot homes need authentication (EG-02, EG-03) |
 | 19 | Provider and Security Verification | 14, 18 | NOT_STARTED | Native install lifecycle and billed calls need explicit owner opt-in |
@@ -291,14 +291,14 @@ graph.
 
 | Field | Value |
 |---|---|
-| Objective | Run coding tasks against disposable fixture copies with native permissions, isolated provider homes, and the authorization and budget guards already used by `run-phase5.mjs`. Plugin and no-plugin arms. |
+| Objective | Run coding tasks against disposable fixture copies with native permissions, isolated provider homes, and the authorization and budget guards already used by `run-phase5.mjs`. Plugin and no-plugin arms. **As executed under the owner's Step 16 instruction (D-073):** a separate `run-coding.mjs` and library. Write-capable runs happen only inside a container whose boundary probe passes (`chayen-coding-isolation/1` profile); otherwise the runner exits 3 with BLOCKED, with no fallback. Native provider permissions only, and bypass flags refused. Gates: `--allow-provider-calls`, `--allow-coding-writes`, `--authorization`, call and USD caps, candidate, isolated home and arm. Each run gets a fresh git snapshot with a fixed commit id and no remote. Closed `chayen-coding-record/1` records; deterministic offline `--score` and `--compare`. `run-phase5.mjs` unchanged. |
 | Prerequisite | 15 |
 | Target files | New `tests/evaluation/coding/run-coding.mjs` and library; offline tests with fake providers; `tools/validate/validate-all.mjs` (offline tests only) |
 | Expected artifacts | Runner, offline test suite, run-record schema |
 | Acceptance criteria | Without authorization, budget cap and isolated home the runner sends nothing (tested); no permission-bypass flag; outputs go outside the repository; offline tests pass. A live run is a separate, authorized action. |
-| Evidence | STEP_LOG entry |
-| Status | NOT_STARTED |
-| Blockers | Live use needs owner authorization, budget, and signed-in isolated homes |
+| Evidence | [STEP_LOG.md — Step 16](STEP_LOG.md#step-16--isolated-coding-agent-runner); G-25T 19/19; 13/13 control weakenings caught |
+| Status | PASS |
+| Blockers | Live runs NOT_RUN: BLOCKED on this host (no reachable Linux container engine). They need owner authorization, budget caps, a digest-pinned image, an egress-restricted network and signed-in isolated homes. Pre-existing G-21T CRLF failure recorded in the Step 16 log |
 
 ### 17 — Independent Grading and Metrics
 
