@@ -112,8 +112,8 @@ node --test tests/distillation/distillation.test.mjs   # workflow regressions (G
 | ID | Failure | Mentor diagnosis | Action | Decision |
 |---|---|---|---|---|
 | DP-0001 | FC-0002 missed consumer | Incomplete Recipe: step 6 of the impact recipe names the frontend calls to find but not how to find them | Modify the existing Recipe: search for the route path as text (5 changed lines) | PENDING_REVIEW; offline validation passed 7/7 |
-| DP-0002 | FC-0001 invented column | Tool or model limitation (suspected): `chayen-data/SKILL.md:45-47` already forbids guessing a name | Add a regression fixture: a recipe case with a UI-field decoy. No guidance change | PENDING_REVIEW |
-| DP-0003 | FC-0003 false DONE | Tool or model limitation (suspected): the loaded Skill and the recipe both forbid the claim | Record a limitation, held until a live replay reproduces it | PENDING_REVIEW (after approval: AWAITING_EVIDENCE) |
+| DP-0002 | FC-0001 invented column | Tool or model limitation (suspected): `chayen-data/SKILL.md:45-47` already forbids guessing a name | Add a regression fixture: a recipe case with a UI-field decoy. No guidance change | RETURNED_FOR_REVISION since Step 13: its target `recipe-cases.json` changed, so it needs a rebase |
+| DP-0003 | FC-0003 false DONE | Tool or model limitation (suspected): the loaded Skill and the recipe both forbid the claim | Record a limitation, held until a live replay reproduces it | RETURNED_FOR_REVISION since Step 13: its target `KNOWN_LIMITATIONS.md` changed, so it needs a rebase (after a rebase and approval: AWAITING_EVIDENCE) |
 | DP-0004 | FC-0003 (demonstration) | A deliberately weak Mentor output: forces a description change | Clarify an Entry Skill | RETURNED_FOR_REVISION: routing impact `metadata`, declared `none`; no trigger cases; the guidance already covers the failure fully |
 
 No proposal has been reviewed or promoted, and none is applied to the

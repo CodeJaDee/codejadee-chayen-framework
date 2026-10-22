@@ -120,7 +120,7 @@ Report every test or suite with exactly one status:
 | UNKNOWN | Execution was attempted but the outcome cannot be determined: truncated output, a crashed or timed-out runner, a missing report, or zero tests matched the filter |
 
 - Show the command and the runner's own counts. Never infer PASSED from
-  missing output.
+  missing output or from the existence of a test file.
 - Regression tests: state whether the failure before the fix was observed
   or only reasoned.
 - Flaky fixes: report repeated-run counts with the command.

@@ -111,6 +111,19 @@
         "An exit check that declares completion (done, complete, verified, closed) without an evidence term is REVIEW."
       ],
       "review": ["Whether each exit check is sufficient for its stage."]
+    },
+    {
+      "id": "GI-10",
+      "name": "independent-evidence-audit",
+      "statement": "The evidence audit is an independent review: the implementer's conclusions are claims, never evidence, and are re-checked by a reviewer who did not make the change. A test file is not a test run; a claimed PASS needs a recorded run; evidence older than the last relevant change is stale; interactive UI requirements need a behavioural check and access-control requirements their negative paths; a cited but unrecorded run is no evidence. Each criterion review records criterion, claim, evidence source, independent method, observed outcome, confidence limitation, verdict and next action. Quoted output is redacted, and an audit is no security guarantee.",
+      "source": "chayen-implementation/references/change-summary.md (Evidence audit)",
+      "machine": [
+        "The Evidence audit section keeps the anchors for each rule in the statement.",
+        "The criterion review table keeps all eight fields.",
+        "No shipped file infers a test run or a pass from a test file (negation is checked in the predicate only).",
+        "No shipped file lets the implementer audit, approve or accept its own evidence."
+      ],
+      "review": ["Whether a summary of the audit elsewhere is faithful, beyond the named anchors.", "Whether the required evidence is proportional to the criterion's risk."]
     }
   ]
 }

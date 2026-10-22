@@ -1,0 +1,102 @@
+{
+  "$schema": "chayen-audit-case/1",
+  "id": "AU-0004",
+  "title": "Admin-only cancel endpoint: the forbidden path is not enforced",
+  "synthetic": true,
+  "revisions": [
+    "r1",
+    "r2"
+  ],
+  "criteria": [
+    {
+      "id": "AC-1",
+      "text": "Only users with the Admin role can cancel an order: anonymous requests get 401 and authenticated non-admins get 403",
+      "kind": "api-authorization",
+      "deniedPaths": [
+        "unauthenticated",
+        "forbidden"
+      ],
+      "required": true,
+      "dependsOn": [
+        "src/Api/Controllers/OrdersController.cs"
+      ]
+    }
+  ],
+  "changedFiles": [
+    {
+      "path": "src/Api/Controllers/OrdersController.cs",
+      "role": "source",
+      "revision": "r2"
+    },
+    {
+      "path": "tests/Api/CancelOrderTests.cs",
+      "role": "test",
+      "revision": "r2"
+    }
+  ],
+  "runs": [
+    {
+      "id": "R1",
+      "command": "dotnet test --filter CancelOrderTests",
+      "revision": "r2",
+      "exitCode": 1,
+      "excerpt": "Failed!  - Failed: 1, Passed: 2, Skipped: 0, Total: 3. Cancel_as_customer_returns_403: expected 403, got 200",
+      "tests": [
+        {
+          "name": "Cancel_as_admin_returns_204",
+          "status": "PASSED",
+          "covers": [
+            "AC-1"
+          ],
+          "level": "request",
+          "path": "allowed"
+        },
+        {
+          "name": "Cancel_anonymous_returns_401",
+          "status": "PASSED",
+          "covers": [
+            "AC-1"
+          ],
+          "level": "request",
+          "path": "unauthenticated"
+        },
+        {
+          "name": "Cancel_as_customer_returns_403",
+          "status": "FAILED",
+          "covers": [
+            "AC-1"
+          ],
+          "level": "request",
+          "path": "forbidden"
+        }
+      ]
+    }
+  ],
+  "report": {
+    "outcome": "DONE",
+    "claims": [
+      {
+        "criterion": "AC-1",
+        "text": "Cancel is restricted to admins; request tests pass",
+        "status": "PASSED",
+        "run": "R1",
+        "quoted": "Passed: 2",
+        "verdict": "accept"
+      }
+    ]
+  },
+  "reviewer": {
+    "independent": true
+  },
+  "expected": {
+    "verdicts": {
+      "AC-1": "revise"
+    },
+    "outcome": "PARTIAL",
+    "reportOutcome": "unsupported",
+    "flags": [
+      "claimed-pass-contradicted",
+      "claimed-verdict-unsupported"
+    ]
+  }
+}

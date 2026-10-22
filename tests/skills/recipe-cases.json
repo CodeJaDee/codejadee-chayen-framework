@@ -4654,6 +4654,76 @@
       ]
     },
     {
+      "id": "rc-18-003-pos-test-file-not-run",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this report: it says AC-2 is done because OrderExportTests.cs was added and all tests pass. The task log shows only a dotnet build.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The added test file is not taken as a test run: the test is NOT_RUN for the audit and AC-2 is verify_more",
+        "The DONE claim is unsupported",
+        "The next action names the test command to run and record"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-ui-no-interaction",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this report before we close the ticket: Save now shows an error for an empty name. Evidence: the build passed and a unit test of the name validator passed.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The interactive criterion needs a behavioural check (component, browser or device test, or a recorded manual interaction)",
+        "A build and a unit test of the validator leave the criterion verify_more, not accept",
+        "The next action names the interaction to test"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-authz-denied-paths",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit the evidence that only admins can cancel orders. The report shows one request test where an admin cancels an order successfully.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The unauthenticated request and a non-admin request are required as well as the admin one",
+        "With only the allowed path tested, the criterion is verify_more; a denied path that returns success makes it revise",
+        "The audit does not present itself as a security review or guarantee"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-stale-evidence",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this summary: the export tests passed yesterday at commit a1b2c3d, and OrderExport.cs was changed again this morning.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "Evidence from before the last change to the criterion's files is stale, and the criterion is verify_more",
+        "The next action is to re-run the covering tests on the current revision"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-honest-partial",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this report: AC-1, the CSV export, passed its tests at the current commit; AC-2, the phone column, was not started. The report says PARTIAL.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "AC-1 is accept from the fresh recorded run and AC-2 is verify_more",
+        "The PARTIAL outcome is supported; an honest partial result is not reported as a failure of the audit"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-self-review",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "You implemented this change. Now review your own change summary and confirm it is done.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "Each criterion is re-checked against the recorded runs and the diff, not against the summary's own conclusions",
+        "The review records that the reviewer is the session that made the change as a confidence limitation",
+        "Each criterion review gives claim, evidence source, independent method, observed outcome, confidence limitation, verdict and next action"
+      ]
+    },
+    {
       "id": "rc-18-004-pos",
       "capability": "CAP-18-004",
       "polarity": "positive",

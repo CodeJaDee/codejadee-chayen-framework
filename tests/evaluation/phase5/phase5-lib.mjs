@@ -160,7 +160,7 @@ export function scoredAttempts(records) {
   return out;
 }
 
-export const configKey = (r) => [r.provider, r.cliVersion, r.model ?? `host-default(${r.modelConfig ?? "unpinned"})`, r.packageFingerprint, r.metadataFingerprint, r.specHash].join(" | ");
+export const configKey = (r) => [r.provider, r.cliVersion, r.model ?? `host-default(${r.modelConfig ?? "unpinned"})`, r.packageFingerprint, r.metadataFingerprint, r.specHash, r.candidateId ?? "no-candidate"].join(" | ");
 
 // Per-CLI routing summary. Throws when records mix providers or configurations (§4.4 pooling rule).
 export function summarizeRouting(records, spec) {

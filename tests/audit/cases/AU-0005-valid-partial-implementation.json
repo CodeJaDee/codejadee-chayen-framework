@@ -1,0 +1,97 @@
+{
+  "$schema": "chayen-audit-case/1",
+  "id": "AU-0005",
+  "title": "Honest partial result: one criterion done and tested, one not started",
+  "synthetic": true,
+  "revisions": [
+    "r1",
+    "r2"
+  ],
+  "criteria": [
+    {
+      "id": "AC-1",
+      "text": "GET /api/orders/export returns a CSV with a header row and one row per order",
+      "kind": "logic",
+      "required": true,
+      "dependsOn": [
+        "src/Orders/OrderExport.cs"
+      ],
+      "testFiles": [
+        "tests/Orders/OrderExportTests.cs"
+      ]
+    },
+    {
+      "id": "AC-2",
+      "text": "The export includes the customer's phone number column",
+      "kind": "logic",
+      "required": true,
+      "dependsOn": [
+        "src/Orders/OrderExport.cs"
+      ]
+    }
+  ],
+  "changedFiles": [
+    {
+      "path": "src/Orders/OrderExport.cs",
+      "role": "source",
+      "revision": "r2"
+    },
+    {
+      "path": "tests/Orders/OrderExportTests.cs",
+      "role": "test",
+      "revision": "r2"
+    }
+  ],
+  "runs": [
+    {
+      "id": "R1",
+      "command": "dotnet test --filter OrderExportTests",
+      "revision": "r2",
+      "exitCode": 0,
+      "excerpt": "Passed!  - Failed: 0, Passed: 3, Skipped: 0, Total: 3",
+      "tests": [
+        {
+          "name": "Export_writes_header_and_one_row_per_order",
+          "status": "PASSED",
+          "covers": [
+            "AC-1"
+          ],
+          "level": "integration"
+        }
+      ]
+    }
+  ],
+  "report": {
+    "outcome": "PARTIAL",
+    "claims": [
+      {
+        "criterion": "AC-1",
+        "text": "Export with header and rows; tests pass",
+        "status": "PASSED",
+        "run": "R1",
+        "quoted": "Failed: 0, Passed: 3",
+        "verdict": "accept"
+      },
+      {
+        "criterion": "AC-2",
+        "text": "Not started; phone column waits for the customer schema decision",
+        "status": "NOT_RUN",
+        "run": null,
+        "quoted": null,
+        "verdict": "verify_more"
+      }
+    ]
+  },
+  "reviewer": {
+    "independent": true
+  },
+  "expected": {
+    "verdicts": {
+      "AC-1": "accept",
+      "AC-2": "verify_more"
+    },
+    "outcome": "PARTIAL",
+    "reportOutcome": "supported",
+    "flags": []
+  }
+}

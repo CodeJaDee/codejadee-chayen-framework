@@ -1,0 +1,83 @@
+{
+  "$schema": "chayen-audit-case/1",
+  "id": "AU-0007",
+  "title": "Report quotes a clean run that the recorded output contradicts",
+  "synthetic": true,
+  "revisions": [
+    "r1",
+    "r2"
+  ],
+  "criteria": [
+    {
+      "id": "AC-1",
+      "text": "GET /api/orders/export returns a CSV with a header row and one row per order",
+      "kind": "logic",
+      "required": true,
+      "dependsOn": [
+        "src/Orders/OrderExport.cs"
+      ],
+      "testFiles": [
+        "tests/Orders/OrderExportTests.cs"
+      ]
+    }
+  ],
+  "changedFiles": [
+    {
+      "path": "src/Orders/OrderExport.cs",
+      "role": "source",
+      "revision": "r2"
+    },
+    {
+      "path": "tests/Orders/OrderExportTests.cs",
+      "role": "test",
+      "revision": "r2"
+    }
+  ],
+  "runs": [
+    {
+      "id": "R1",
+      "command": "dotnet test --filter OrderExportTests",
+      "revision": "r2",
+      "exitCode": 1,
+      "excerpt": "Failed!  - Failed: 2, Passed: 1, Skipped: 0, Total: 3",
+      "tests": [
+        {
+          "name": "Export_writes_header_and_one_row_per_order",
+          "status": "FAILED",
+          "covers": [
+            "AC-1"
+          ],
+          "level": "integration"
+        }
+      ]
+    }
+  ],
+  "report": {
+    "outcome": "DONE",
+    "claims": [
+      {
+        "criterion": "AC-1",
+        "text": "All export tests pass",
+        "status": "PASSED",
+        "run": "R1",
+        "quoted": "Failed: 0, Passed: 3",
+        "verdict": "accept"
+      }
+    ]
+  },
+  "reviewer": {
+    "independent": true
+  },
+  "expected": {
+    "verdicts": {
+      "AC-1": "revise"
+    },
+    "outcome": "PARTIAL",
+    "reportOutcome": "unsupported",
+    "flags": [
+      "claimed-pass-contradicted",
+      "claimed-verdict-unsupported",
+      "quoted-result-contradicted"
+    ]
+  }
+}

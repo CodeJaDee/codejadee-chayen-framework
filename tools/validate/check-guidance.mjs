@@ -91,6 +91,17 @@ function contradictions(regex, scope) {
   }
   return hits;
 }
+// For rules whose subject is negative by itself ("no test", "without a run"), only the predicate group is
+// checked for negation, so "a criterion with no test may be accepted" is found and "... is never accepted" is not.
+function predicateContradictions(regex, scope) {
+  const hits = [];
+  for (const f of scope) for (const u of units(f.text)) for (const s of sentences(u)) {
+    for (const m of s.matchAll(new RegExp(regex.source, regex.flags.includes("g") ? regex.flags : `${regex.flags}g`))) {
+      if (!NEGATION.test(m.groups.pred)) hits.push({ file: f.rel, text: m[0] });
+    }
+  }
+  return hits;
+}
 const IMPL = "chayen-implementation";
 const RECIPE = `${IMPL}/references/task-contract.md`, SUMMARY = `${IMPL}/references/change-summary.md`, IMPL_SKILL = `${IMPL}/SKILL.md`;
 function needFile(id, rel) { const t = get(rel); if (t === null) error(id, rel, "authoritative source file is missing"); return t; }
@@ -167,6 +178,7 @@ function needFile(id, rel) { const t = get(rel); if (t === null) error(id, rel, 
     /\b(?:missing|absent|partial|stale|no|unverified)\s+evidence\b[^.;]{0,40}\b(?:is|are|counts as|marked(?: as)?|treated as|becomes?)\s+(?:an?\s+)?accept(?:ed)?\b/i,
     /\b(?:uncovered|untested)\b[^.;]{0,40}\b(?:is|are|counts as|marked(?: as)?|treated as)\s+accept(?:ed)?\b/i,
   ]) for (const h of contradictions(re, files)) error(id, h.file, `marks missing evidence as accepted: "${h.text}"`);
+  for (const h of predicateContradictions(/\b(?:no|without(?:\s+an?|\s+any)?|missing(?:\s+an?)?)\s+(?:passing\s+|executed\s+|recorded\s+)?(?:tests?|checks?|test\s+runs?|runs?|evidence)\b(?<pred>[^.;]{0,60}?\b(?:may|can|could|should|will|is|are)\s+(?:still\s+)?(?:be\s+)?(?:marked\s+(?:as\s+)?)?accept(?:ed)?)\b/i, files)) error(id, h.file, `accepts a criterion with no test, run or evidence: "${h.text}"`);
 }
 
 // ---------- GI-04 completion outcome ----------
@@ -266,6 +278,33 @@ function needFile(id, rel) { const t = get(rel); if (t === null) error(id, rel, 
       if (/\b(?:done|complete[sd]?|completion|finished|verified|closed|resolved)\b/i.test(exit) && !/evidence|observed|recorded|executed|explicit|visible|distinct|not_run|accept|only (?:if|with|when)|without execution|separate|remains? open|stays? open/i.test(exit)) review(id, f.rel, `exit check declares completion without an evidence term: "${exit}"`);
     }
   }
+}
+
+// ---------- GI-10 independent evidence audit ----------
+{
+  const id = "GI-10", s = get(SUMMARY);
+  const start = s ? s.search(/^### Evidence audit\b/m) : -1;
+  if (start < 0) error(id, SUMMARY, "the change-summary recipe no longer has an Evidence audit section");
+  else {
+    const raw = s.slice(start), end = raw.search(/\n## /), audit = end < 0 ? raw : raw.slice(0, end), a = norm(audit);
+    const anchors = [
+      [/\b(?:conclusions?|declarations?|statements?)\b[^.]{0,40}\bclaims?\b[^.]{0,30}\bnever evidence\b/i, "no longer says the implementer's conclusions are claims, never evidence"],
+      [/\bindependent reviewer\b[^.]{0,160}\b(?:did not make|other than the implement|not the implement)/i, "no longer requires a reviewer who did not make the change"],
+      [/\btest file\b[^.]{0,80}\bnot\b[^.]{0,30}\b(?:ran|run|executed)\b/i, "no longer says a test file is not a test run"],
+      [/\bclaimed PASS needs a recorded run\b/i, "no longer requires a recorded run for a claimed PASS"],
+      [/\bbefore that change is stale\b|\bolder than\b[^.]{0,60}\bstale\b/i, "no longer treats evidence older than the last relevant change as stale"],
+      [/\binteractive UI requirement\b[^.]{0,80}\bbehaviou?ral check\b/i, "no longer requires a behavioural check for interactive UI requirements"],
+      [/\baccess-control requirement\b[^.]{0,80}\bnegative paths\b/i, "no longer requires the negative paths of an access-control requirement"],
+      [/\bcited but (?:was )?never recorded is no evidence\b/i, "no longer says a cited but unrecorded run is no evidence"],
+      [/\bredacted\b/i, "no longer redacts quoted output"],
+      [/\bnot a security (?:review|guarantee)\b|\bneither a security review nor a security guarantee\b/i, "no longer says an audit is not a security guarantee"],
+    ];
+    for (const [re, msg] of anchors) if (!re.test(a)) error(id, SUMMARY, `the evidence audit ${msg}`);
+    const fields = new Set(tableRows(audit).map((r) => r[0]));
+    for (const f of ["Criterion", "Claim", "Evidence source", "Independent method", "Observed outcome", "Confidence limitation", "Verdict", "Next action"]) if (!fields.has(f)) error(id, SUMMARY, `the criterion review no longer records "${f}"`);
+  }
+  for (const h of predicateContradictions(/\btest\s+files?\b(?<pred>[^.;]{0,60}?\b(?:is|are|counts\s+as|shows|proves|means|implies)\s+(?:that\s+)?(?:the\s+|its\s+)?(?:tests?\s+)?(?:has\s+|have\s+)?(?:ran|run|was\s+run|were\s+run|executed|passed|passing|PASS(?:ED)?))\b/i, files)) error(id, h.file, `infers a test run from a test file: "${h.text}"`);
+  for (const h of contradictions(/\b(?:implement\w*(?:\s+agent)?|the agent that (?:made|wrote) the change)\b[^.;]{0,40}\b(?:may|can|should)\s+(?:audit|approve|accept|verify)\s+(?:its|their)\s+own\b/i, files)) error(id, h.file, `lets the implementer audit its own evidence: "${h.text}"`);
 }
 
 // ---------- report ----------

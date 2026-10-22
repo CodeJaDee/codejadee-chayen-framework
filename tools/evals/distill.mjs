@@ -52,7 +52,7 @@ export const MAX_CHANGED_LINES = 20;
 // Fixed offline validators run on the candidate copy. Nothing from a proposal is ever added here.
 export const OFFLINE = [
   ["package, skills and references (V-01..V-26)", "tools/validate/validate-package.mjs", []],
-  ["guidance invariants (GI-01..GI-09)", "tools/validate/check-guidance.mjs", []],
+  ["guidance invariants (GI-01..GI-10)", "tools/validate/check-guidance.mjs", []],
   ["offline security profile (V-25)", "tools/validate/check-security.mjs", []],
   ["catalog integrity (V-11)", "tools/catalog/check-catalog.mjs", []],
   ["trigger eval cases in sync (G-11)", "tools/evals/generate-claude-evals.mjs", ["--check"]],

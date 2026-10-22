@@ -16,6 +16,7 @@ Baseline failures: <prior command/output references, none observed, or baseline 
 AC / claim | Method / exact command | Environment | Evidence | Freshness | Check status
 <AC-n or claim> | <existing command or file:line> | <target/version> | <no result yet; reason> | <revision> | NOT_RUN
 Acceptance verdicts: <AC-n: accept / verify_more / revise, from fresh adequate evidence; a check status is never the verdict>
+Independent review: <per AC: claim | evidence source | independent method | observed outcome | confidence limitation | verdict | next action, by a reviewer who did not make the change; or NOT_PERFORMED>
 Negative and denied paths: <checks and actual evidence or NOT_RUN>
 Affected consumers: <checked owners; untested owners explicit>
 Skipped checks: <NOT_RUN reason and reproducible next command>

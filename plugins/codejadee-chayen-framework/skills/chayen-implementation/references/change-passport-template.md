@@ -17,6 +17,7 @@ Files changed: <actual diff; mark pre-existing/generated files>
 Behavior and contract effects: <intentional before/after>
 Recipes and technology: <owners and versions actually used>
 Acceptance to evidence: <AC-n -> evidence reference, freshness, check status, verdict (accept / verify_more / revise); uncovered criteria listed>
+Independent review: <reviewer who did not make the change, and the per-criterion review of the evidence audit; or NOT_PERFORMED>
 Actual verification: <exact commands, observed outcomes and evidence references>
 Unexecuted verification: <NOT_RUN with reason; baseline failures separate>
 Scope changes: <contract revisions and re-confirmations, or none>

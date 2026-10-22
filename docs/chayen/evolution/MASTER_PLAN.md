@@ -29,8 +29,8 @@ blockers.
 | 10 | Repository Intelligence | 05, 09 | PASS | — |
 | 11 | Failure Reproduction | 08, 09 | PASS | — |
 | 12 | Mentor Knowledge Distillation | 11 | PASS | — |
-| 13 | Independent Evidence Audit | 08, 09 | NOT_STARTED | — |
-| 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | NOT_STARTED | — |
+| 13 | Independent Evidence Audit | 08, 09 | PASS | — |
+| 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | PASS | — |
 | 15 | Coding Evaluation Fixtures | 14 | NOT_STARTED | Stack toolchains (for example a .NET 8 SDK) must be available |
 | 16 | Isolated Coding Agent Runner | 15 | NOT_STARTED | Live runs need owner authorization, a budget cap and isolated signed-in homes |
 | 17 | Independent Grading and Metrics | 16 | NOT_STARTED | Human grading needs a named grader |
@@ -252,27 +252,27 @@ graph.
 
 | Field | Value |
 |---|---|
-| Objective | Strengthen the `task-evidence-audit` capability (CAP-18-003, recipe `skills/chayen-implementation/references/change-summary.md`) so the audit re-checks evidence independently of the implementer's claims. |
+| Objective | Strengthen the `task-evidence-audit` capability (CAP-18-003, recipe `skills/chayen-implementation/references/change-summary.md`) so the audit re-checks evidence independently of the implementer's claims. **As executed under the owner's Step 13 instruction (D-070):** the evidence audit in `change-summary.md` is extended with separate implementer and independent-reviewer roles and an eight-field review per criterion; GI-10 guards it; a developer-only verification contract with a reference grader (`tools/evals/audit-evidence.mjs`, `tests/audit/`, G-22, G-22T) checks future automated graders. |
 | Prerequisite | 08, 09 |
 | Target files | `skills/chayen-implementation/references/change-summary.md`; `catalog/engineering-capabilities.yaml` (CAP-18-003 verification text only, no inventory change); `tests/skills/recipe-cases.json` |
 | Expected artifacts | Audit procedure, cases for a claim without evidence and for evidence that contradicts the claim |
 | Acceptance criteria | The audit verdict depends on re-observed evidence, not the implementer's summary; 206 inventory and fingerprint unchanged; `check-catalog.mjs` passes; `validate-all.mjs` passes |
-| Evidence | STEP_LOG entry |
-| Status | NOT_STARTED |
+| Evidence | [STEP_LOG.md — Step 13](STEP_LOG.md#step-13--independent-evidence-audit) |
+| Status | PASS |
 | Blockers | None beyond prerequisites |
 
 ### 14 — Evaluation Candidate Modernization
 
 | Field | Value |
 |---|---|
-| Objective | Re-freeze the evaluation candidate on the current package. The Phase 5 candidate pins commit `38570b3` and metadata fingerprint `339b3125d1347648` (15 Skills). The current package is `411b6adbbea7e121` (16 Skills, 263 files), so live Phase 5 runs refuse at preflight. Keep historical results labelled as historical. |
+| Objective | Re-freeze the evaluation candidate on the current package. The Phase 5 candidate pins commit `38570b3` and metadata fingerprint `339b3125d1347648` (15 Skills). The current package is `411b6adbbea7e121` (16 Skills, 263 files), so live Phase 5 runs refuse at preflight. Keep historical results labelled as historical. **As executed under the owner's Step 14 instruction (D-071):** no hardcoded candidate; `candidate.mjs prepare` writes a deterministic `chayen-eval-candidate/1` manifest (commit, clean or dirty state, version, package and metadata fingerprints, inventory, specification and fixture fingerprints, providers); the runner takes `--candidate`, has an offline `--preflight`, and rejects mismatched packages and stale results. Historical 0.1.0-rc.1 files unchanged and reproducible. No committed candidate yet: the current tree is an uncommitted snapshot. |
 | Prerequisite | 06, 10, 11, 12, 13 (guidance stable before freezing) |
 | Target files | `tests/evaluation/phase5/` (new dated `results/<date>/candidate.json`, probe specs); `tests/provider-compatibility/qualify-rc.mjs` outputs; `tests/evaluation/phase5/phase5.test.mjs`; `docs/chayen/EVALUATION_GAPS.md` |
 | Expected artifacts | New candidate record, updated probe sets covering all 16 Skills, plan output |
 | Acceptance criteria | The candidate fingerprint equals the package fingerprint at a recorded commit; `--plan` runs offline with the new candidate; old results are not overwritten; offline Phase 5 tests pass |
-| Evidence | STEP_LOG entry |
-| Status | NOT_STARTED |
-| Blockers | A frozen candidate needs a committed source state, and committing needs owner instruction (rules §4) |
+| Evidence | [STEP_LOG.md — Step 14](STEP_LOG.md#step-14--evaluation-candidate-modernization) |
+| Status | PASS |
+| Blockers | None for the mechanism. A `COMMITTED_SOURCE` candidate needs the owner's commit of the current work |
 
 ### 15 — Coding Evaluation Fixtures
 

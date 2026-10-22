@@ -1695,6 +1695,90 @@ Decision statuses:
   `validate-all.mjs`. Mentor diagnosis quality and live improvement are
   NOT_RUN.
 
+### D-070 — Independent acceptance evidence audit
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 13: "Strengthen Chayen's existing Evidence Audit so completion
+  claims can be independently verified").
+- **Decision:**
+  - Extend the evidence audit (CAP-18-003) in
+    `chayen-implementation/references/change-summary.md`; add no competing
+    process. The implementing agent and an independent reviewer are separate
+    roles. The implementer's conclusions are claims, never evidence, and
+    the reviewer is a person or a session that did not make the change. A
+    same-session audit records that as a limitation.
+  - The audit rules:
+    - a test file is not a test run;
+    - a claimed PASS needs a recorded run;
+    - evidence older than the last relevant change is stale;
+    - interactive UI needs a behavioural check where feasible;
+    - access control needs its denied paths;
+    - a contradicted quoted result is unsupported and possibly fabricated;
+    - a cited but unrecorded run is no evidence;
+    - quoted output is redacted;
+    - an audit is no security guarantee.
+  - One review per criterion, with eight fields: criterion, claim, evidence
+    source, independent method, observed outcome, confidence limitation,
+    verdict (accept, verify_more, revise) and next action. The claim-level
+    verdicts (supported, unsupported, not re-runnable) stay as they were.
+  - Templates gain an optional `Independent review` line; no field is
+    removed. `chayen-testing` adds "or from the existence of a test file" to
+    its PASSED rule.
+  - GI-10 (`independent-evidence-audit`) guards the anchors. GI-03 gains a
+    predicate-only rule for "a criterion with no test may be accepted" (the
+    Step 12 finding).
+  - Developer-only contract for automated graders:
+    [INDEPENDENT_AUDIT_CONTRACT.md](INDEPENDENT_AUDIT_CONTRACT.md),
+    `tools/evals/audit-evidence.mjs`, `tests/audit/`.
+- **Not changed:** Skill descriptions and routing metadata, the
+  206-capability inventory, the verdict and status vocabularies, and the
+  existing template fields.
+- **Evidence:** 8 synthetic cases give the expected verdicts; G-22 and
+  G-22T; G-18T 29/29. Agent behaviour NOT_RUN. Shipped guidance changed
+  without a version bump.
+
+### D-071 — Explicit evaluation candidates
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 14: "Allow Chayen evaluation tools to work with explicitly
+  selected current or future builds instead of relying on an old hardcoded
+  release candidate").
+- **Decision:**
+  - The Phase 5 runner has no default candidate. Live runs and preflight
+    need `--candidate <file>`, and so does scoring of results that carry a
+    candidate ID. The historical 0.1.0-rc.1 file
+    `results/2026-10-18-phase5/candidate.json` is read unchanged as one
+    selectable candidate.
+  - `tests/evaluation/phase5/candidate.mjs prepare` writes a deterministic
+    `chayen-eval-candidate/1` manifest. It reads files and runs read-only
+    `git rev-parse`, `git status` and `git diff`; it never commits, tags,
+    releases or pushes, and never starts a provider CLI. The manifest
+    records:
+    - the source commit, the working-tree state and the uncommitted paths;
+    - the manifest versions and the marketplace descriptors;
+    - the package fingerprints, both raw bytes and LF-normalised;
+    - the Skill metadata fingerprint and the Entry Skill inventory;
+    - the specification and fixture fingerprints;
+    - the provider configurations.
+  - A dirty tree gives an `UNCOMMITTED_SNAPSHOT`, which is not a
+    release-qualified commit. It is written outside the repository, live
+    runs need `--allow-uncommitted-candidate`, and the label is in every
+    record.
+  - Preflight refuses:
+    - a candidate that does not describe the checkout;
+    - a plugin home without exactly one matching package (fingerprint,
+      version and metadata);
+    - a baseline home with any package.
+  - Scoring rejects results from another candidate, specification,
+    metadata or package. The candidate ID joins the pooling key.
+  - Provider calls stay behind `--allow-provider-calls`, `--authorization`
+    and `--max-calls`, and are unchanged.
+- **Not changed:** historical candidate and result files, the specifications
+  and fixture, the plugin package, parsers and classifiers.
+- **Evidence:** `candidate.test.mjs` (G-23) 12/12, nine control mutations
+  caught, and the historical fingerprints recomputed from git history. No
+  candidate is committed yet: the current tree is uncommitted.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

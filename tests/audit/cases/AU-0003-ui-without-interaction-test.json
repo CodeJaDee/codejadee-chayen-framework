@@ -1,0 +1,87 @@
+{
+  "$schema": "chayen-audit-case/1",
+  "id": "AU-0003",
+  "title": "UI change verified only by a build and a unit test of the validator",
+  "synthetic": true,
+  "revisions": [
+    "r1",
+    "r2"
+  ],
+  "criteria": [
+    {
+      "id": "AC-1",
+      "text": "Clicking Save with an empty name keeps the dialog open and shows 'Name is required' under the field",
+      "kind": "ui-interaction",
+      "required": true,
+      "dependsOn": [
+        "web/admin/src/app/customers/customer-form.component.ts"
+      ]
+    }
+  ],
+  "changedFiles": [
+    {
+      "path": "web/admin/src/app/customers/customer-form.component.ts",
+      "role": "source",
+      "revision": "r2"
+    },
+    {
+      "path": "web/admin/src/app/customers/name.validator.spec.ts",
+      "role": "test",
+      "revision": "r2"
+    }
+  ],
+  "runs": [
+    {
+      "id": "R1",
+      "command": "npm run build",
+      "revision": "r2",
+      "exitCode": 0,
+      "excerpt": "Application bundle generation complete.",
+      "tests": []
+    },
+    {
+      "id": "R2",
+      "command": "npx ng test --watch=false --include=**/name.validator.spec.ts",
+      "revision": "r2",
+      "exitCode": 0,
+      "excerpt": "TOTAL: 2 SUCCESS",
+      "tests": [
+        {
+          "name": "nameRequired rejects an empty string",
+          "status": "PASSED",
+          "covers": [
+            "AC-1"
+          ],
+          "level": "unit"
+        }
+      ]
+    }
+  ],
+  "report": {
+    "outcome": "DONE",
+    "claims": [
+      {
+        "criterion": "AC-1",
+        "text": "Build and tests pass; the form shows the required message",
+        "status": "PASSED",
+        "run": "R2",
+        "quoted": "TOTAL: 2 SUCCESS",
+        "verdict": "accept"
+      }
+    ]
+  },
+  "reviewer": {
+    "independent": true
+  },
+  "expected": {
+    "verdicts": {
+      "AC-1": "verify_more"
+    },
+    "outcome": "PARTIAL",
+    "reportOutcome": "unsupported",
+    "flags": [
+      "claimed-verdict-unsupported",
+      "inadequate-method"
+    ]
+  }
+}

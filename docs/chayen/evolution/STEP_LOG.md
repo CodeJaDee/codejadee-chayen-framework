@@ -1659,3 +1659,402 @@ During development, the first test run had 2 failures:
 
 Stopped after Step 12, as instructed. Step 13 (Independent Evidence Audit)
 is not started. Its prerequisites, 08 and 09, are PASS.
+
+## Step 13 — Independent Evidence Audit
+
+- **Date:** 2026-10-22
+- **Status:** PASS (guidance, invariant and reference grader; agent behaviour
+  NOT_RUN)
+- **Starting state:** branch `develop`, **HEAD `9b994df`** ("Add
+  distillation proposals and update skill descriptions", 2026-10-22 15:06
+  +0700, author 0xPratyaDev7x, 21 files). **The owner made this commit
+  between Steps 12 and 13, not the agent.** The worktree was clean.
+- **Note on that commit:** its message says it "Modified SKILL.md to include
+  a rule stating that DONE should not be reported without passing tests"
+  and "Updated KNOWN_LIMITATIONS.md". The commit changes **0 plugin lines**
+  and does not touch `KNOWN_LIMITATIONS.md`. It holds exactly the Step 12
+  files, and the message describes the proposals DP-0003 and DP-0004 as if
+  they had been applied. Nothing was promoted.
+- **Prerequisites:** Steps 07–12 confirmed `PASS` in MASTER_PLAN, and their
+  gates pass (below).
+- **Authorization:** the owner's STEP 13 instruction (2026-10-22), recorded
+  as **D-070** (ACCEPTED).
+
+### Inspected
+
+- `change-summary.md`: its existing Evidence audit (CAP-18-003) had 6 steps
+  with the claim verdicts supported, unsupported and not re-runnable,
+  already mapped onto accept, revise and verify_more.
+- `verification-report-template.md`, `change-passport-template.md` and
+  `task-contract-template.md`.
+- The `chayen-testing` status contract ("Never infer PASSED from missing
+  output").
+- The CAP-18-003 catalog record and the `rc-18-003-*` cases.
+- `check-guidance.mjs`: GI-03, GI-05 and the `contradictions()` negation
+  window.
+
+**Findings that shaped the design:**
+- The audit already existed, so it was **extended**, not replaced: the claim
+  verdicts and their mapping stay, and steps 1–6 survive renumbered.
+- `contradictions()` skips a match that contains a negation. A rule whose
+  subject is itself negative ("no evidence … accepted", "no test … may be
+  accepted") can therefore never match. That is the cause of the Step 12
+  GI-03 gap, and it makes the existing `no evidence` alternative of GI-03
+  unreachable. Added `predicateContradictions()`, which checks negation in
+  the predicate only.
+
+### Design
+
+| Owner requirement | Where |
+|---|---|
+| Implementing agent vs independent reviewer | New role preamble in the Evidence audit. The implementer's conclusions are "claims to check, never evidence". The reviewer did not make the change; otherwise the same session is a confidence limitation |
+| Reviewer starts from the original ACs and actual changed files; re-checks without trusting the conclusion | Audit step 1 (sources, not the report); step 3 (independent re-check per claim) |
+| Eight review fields | Audit step 6 table: Criterion, Claim, Evidence source, Independent method, Observed outcome, Confidence limitation, Verdict, Next action. The same fields are in `chayen-audit-review/1` |
+| Existing verdicts | accept, verify_more, revise per criterion; the claim verdicts are unchanged |
+| A test file is not a test run; passed vs never executed | Step 3 (a claimed PASS needs a recorded run); the testing contract adds "or from the existence of a test file" |
+| Reject fabricated command results | Step 5: a contradicted quoted result is unsupported and possibly fabricated; a cited but unrecorded run is no evidence |
+| UI behavioural verification when feasible | Step 3 (component, browser or device test, or recorded manual interaction) |
+| Negative and denied paths | Step 3 (the unauthenticated request and the request without the permission) |
+| Protect secrets | Step 4 (`<redacted>`). The grader masks quoted output, and review text must pass the privacy rules |
+| Proportional evidence | Step 3 ("proportional to the risk of the criterion"); the grader's adequacy depends on the criterion kind |
+| No security guarantee from an LLM reviewer | Closing paragraph of the audit; contract limitations |
+| Developer-only contract for automated graders | `INDEPENDENT_AUDIT_CONTRACT.md`, `tools/evals/audit-evidence.mjs` (with `--score` for any grader's output), `tests/audit/` |
+| No mandatory runtime | Guidance is Markdown; the grader is a developer tool outside the plugin |
+
+### Files changed (Step 13 only, against `9b994df`)
+
+| Path | Change |
+|---|---|
+| `plugins/.../chayen-implementation/references/change-summary.md` | Evidence audit extended: roles, steps 1–8, the eight-field review, audit Rules and Verification bullets, the no-security-guarantee statement. Outputs list the criterion review (+89/−16 across the shipped files; the removed lines are the renumbered old steps) |
+| `plugins/.../chayen-implementation/references/verification-report-template.md`, `change-passport-template.md` | One added `Independent review` line each; no field removed |
+| `plugins/.../chayen-testing/SKILL.md` | "Never infer PASSED from missing output **or from the existence of a test file**" |
+| `tools/validate/check-guidance.mjs`, `guidance-invariants.json`, `docs/chayen/GUIDANCE_INVARIANTS.md` | GI-10 `independent-evidence-audit`; GI-03 predicate-only no-test rule; `predicateContradictions()` |
+| `tools/evals/audit-evidence.mjs`, `tests/audit/cases/AU-0001..0008-*.json`, `tests/audit/audit-evidence.test.mjs`, `tests/audit/README.md` (new) | Reference grader, 8 synthetic cases, 14 regressions |
+| `docs/chayen/INDEPENDENT_AUDIT_CONTRACT.md` (new) | Verification contract for automated graders |
+| `tests/skills/recipe-cases.json` (+6), `tests/skills/guidance-consistency.test.mjs` (+7, count 9 → 10) | Behaviour specifications; GI-10 regressions |
+| `catalog/engineering-capabilities.yaml` | CAP-18-003 `verification` and `verification_evidence` text only |
+| `tests/distillation/proposals/DP-0002`, `DP-0003`; `tests/distillation/distillation.test.mjs`; `docs/chayen/KNOWLEDGE_DISTILLATION.md` | Derived decision recorded as RETURNED_FOR_REVISION (stale targets, below); the tests use an in-memory rebase |
+| `tools/validate/validate-all.mjs` (G-22, G-22T; G-18 label), `tools/evals/distill.mjs` (label), `tools/validate/README.md`, `docs/chayen/SKILL_QUALITY_GATES.md`, `docs/chayen/DECISIONS.md` (D-070), `docs/chayen/KNOWN_LIMITATIONS.md` (KL-15: 475), `tests/skills/README.md`, `docs/CONTRIBUTING.md` | Records |
+
+### Synthetic audit cases (reference grader, G-22)
+
+The expected verdicts were written from the guidance rules before the
+grader ran.
+
+| Case | Owner scenario | Verdict | Outcome / report | Flags |
+|---|---|---|---|---|
+| AU-0001 | 1. Genuine passing test | **accept** | DONE / supported | none |
+| AU-0002 | 2. Claimed PASS without recorded execution (test file in the diff, only a build ran) | **verify_more** | PARTIAL / unsupported | claimed-pass-without-recorded-run, claimed-verdict-unsupported |
+| AU-0003 | 3. UI change with no interaction test (build and a unit test only) | **verify_more** | PARTIAL / unsupported | inadequate-method, claimed-verdict-unsupported |
+| AU-0004 | 4. Incomplete API authorization (forbidden path returns 200) | **revise** | PARTIAL / unsupported | claimed-pass-contradicted, claimed-verdict-unsupported |
+| AU-0005 | 5. Valid partial implementation | **accept + verify_more** | PARTIAL / **supported** | none |
+| AU-0006 | 6. Stale result from an older revision | **verify_more** | PARTIAL / unsupported | stale-evidence, claimed-verdict-unsupported |
+| AU-0007 | Fabricated quoted result | **revise** | PARTIAL / unsupported | quoted-result-contradicted, claimed-pass-contradicted, claimed-verdict-unsupported |
+| AU-0008 | Cited run never recorded | **verify_more** | PARTIAL / unsupported | cited-run-not-recorded, claimed-verdict-unsupported |
+
+Result: **8/8** give the expected verdicts, outcome and report verdict.
+
+### Tests
+
+**G-22T `tests/audit/audit-evidence.test.mjs`, 14/14:**
+- the case table above;
+- all eight fields in every review;
+- **a confident report, or no report at all, never changes a verdict** (all
+  8 cases);
+- a test file is not a run, but its recorded pass is;
+- stale evidence becomes acceptable only after a re-run on the current
+  revision;
+- a component test makes the UI criterion acceptable;
+- authorization: a failing denied path gives revise, a fixed one accept, and
+  a missing unauthenticated path verify_more;
+- a same-session reviewer keeps the verdict and records the limitation;
+- a token, password and email in run output are redacted;
+- **grader contract:** a grader that copies the implementer's verdicts
+  agrees on only 2/8 cases, the reference on 8/8; missing fields, invalid
+  verdicts and leaked secrets are rejected;
+- case validation;
+- **guidance anchors:** each grader rule's sentence is present in the
+  shipped guidance;
+- a static check: no process or network use, no writes, nothing in the
+  plugin;
+- the CLI and `--score`.
+
+**G-18T `tests/skills/guidance-consistency.test.mjs`, 29/29** (22 → 29).
+The new tests detect:
+- the **Step 12 wording** "a criterion with no test may be accepted" (GI-03);
+- a test file taken as a passed run;
+- removal of the test-file rule;
+- removal of the UI rule;
+- a missing Confidence limitation field;
+- the implementer approving its own evidence.
+
+A reworded audit and negated statements do not fail.
+
+**Control runs** (scratch copies; log `step13-controls.log` in the session
+scratchpad). Six weakenings of the grader, **all caught**: trusting the
+implementer's verdict; a test file counting as a run; ignoring staleness;
+unit tests proving a UI interaction; skipping denied paths; no redaction.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/evals/audit-evidence.mjs` | 0 | 8/8 cases as expected |
+| `node --test tests/audit/audit-evidence.test.mjs` | 0 | 14/14 |
+| `node --test tests/skills/guidance-consistency.test.mjs` | 0 | 29/29 |
+| `node tools/validate/check-guidance.mjs` | 0 | 0 errors, 0 review items; **10** invariants |
+| `node tools/catalog/check-catalog.mjs` | 0 | PASS, 0 errors; 206 capabilities |
+| `node tools/evals/distill.mjs` | 0 | 4/4 valid; PENDING_REVIEW 1, RETURNED_FOR_REVISION 3 |
+| `node tools/validate/validate-all.mjs` | 0 | **34/34** gate groups PASS (adds G-22 and G-22T) |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability levels PASS |
+| `metadataFingerprint`; `chayen-testing` trigger sections against HEAD; `git diff HEAD -- tests/skills/trigger-cases.json` | 0 | `411b6adbbea7e121` unchanged; both sections byte-identical; trigger cases unchanged |
+| `git diff -U0 -- plugins/` removed lines | 0 | Only the renumbered old audit steps and one rewrapped testing line; no template field removed |
+
+During development:
+- A GI-10 section-slicing bug (`### Evidence audit` matched as the next
+  `## ` heading) gave 18 false errors. It was fixed in the checker.
+- `predicateContradictions()` first lacked `return hits` (TypeError), which
+  was fixed.
+- One `git stash` / `stash pop` round trip was used to show the HEAD
+  baseline passing with 9 invariants. The working tree was restored intact,
+  and its line endings were already CRLF. This will not be repeated; scratch
+  copies are used instead.
+
+### Effect on the Step 12 proposals
+
+Adding six recipe cases changed `recipe-cases.json`, and the KL-15 count
+changed `KNOWN_LIMITATIONS.md`. Those are the targets of DP-0002 and DP-0003.
+`distill.mjs` therefore derives **RETURNED_FOR_REVISION** for both ("changed
+since the proposal was written; rebase the diff"), and their records now
+state that. Their diffs still apply at the same lines, but a rebase needs a
+base revision, which exists only once this step is committed. DP-0001
+remains PENDING_REVIEW. The distillation tests now rebase in memory where
+they need pending proposals.
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Every case produces the appropriate verdict | 8/8 (G-22); the scenario table in G-22T | PASS |
+| Existing Skill and Template contracts remain compatible | No template field removed; claim verdicts and mapping kept; verdict and status vocabularies unchanged; GI-01..GI-09, V-24 and the 469 existing recipe cases pass; Skill descriptions and trigger sections unchanged | PASS |
+| Independent audit available as reusable guidance and developer-only evaluation logic, without a mandatory runtime | Extended recipe and templates; GI-10; the contract, grader and cases outside the plugin | PASS |
+| Plan criteria: verdict depends on re-observed evidence, not the summary; 206 inventory and fingerprint unchanged; `check-catalog` and `validate-all` pass | The report-independence test; 206; `411b6adbbea7e121`; PASS; 34/34 | PASS |
+| Agents actually perform the audit this way | `rc-18-003-*` (9 cases) are specifications | **NOT_RUN** |
+
+### Risks and findings
+
+- **Shipped guidance changed** in four files, again without a version bump.
+  This adds to the open owner version decision from Steps 07–10.
+- **Agent behaviour is NOT_RUN.** The grader checks structured evidence that
+  was already extracted. Extracting it from a real session (a transcript, a
+  test log) is not implemented; that is runner work for Steps 15–17.
+- **GI-10 uses anchors.** A rewrite that keeps the anchor sentences but
+  weakens nearby meaning passes, as for every GI (documented). The older
+  GI-03 `no evidence … accept` pattern is still unreachable through
+  `contradictions()`. It is now covered by the predicate rule, but the
+  pattern itself was left unchanged.
+- **DP-0002 and DP-0003 need a rebase** after this step is committed.
+- The `change-summary.md` recipe grew to about 260 lines, within the
+  advisory figure.
+
+### Next action
+
+Stopped after Step 13, as instructed. Step 14 (Evaluation Candidate
+Modernization) is not started; its prerequisites are 06, 10, 11, 12 and 13.
+
+## Step 14 — Evaluation Candidate Modernization
+
+- **Date:** 2026-10-22
+- **Status:** PASS (candidate mechanism and offline preflight; no candidate
+  committed, no provider run)
+- **Starting state:** branch `develop`, HEAD `9b994df`, with the **Step 13
+  work still uncommitted**. It was kept untouched: Step 14 changes no file
+  that Step 13 changed, apart from the shared registers listed below. Step 13
+  is confirmed `PASS` in MASTER_PLAN, and its gates pass (below).
+- **Authorization:** the owner's STEP 14 instruction (2026-10-22), recorded
+  as **D-071** (ACCEPTED). The plan's blocker ("a frozen candidate needs a
+  committed source state") is resolved by the instruction: uncommitted
+  snapshots are prepared and labelled, and no commit is made.
+
+### Current behaviour verified before modification
+
+The live runner was run with an isolated empty home and `PATH` set to an
+empty directory, so no provider CLI could be resolved:
+
+| Check | Observed |
+|---|---|
+| `run-phase5.mjs` line 173 | Reads `results/2026-10-18-phase5/candidate.json` (0.1.0-rc.1, commit `38570b3`, metadata `339b3125d1347648`), hardcoded |
+| `--plan --suite routing` | Works offline, 85 probes per plugin arm (the historical plan recorded 82) |
+| Live, baseline arm, empty home | Exit 2: "Skill metadata fingerprint 411b6adbbea7e121 differs from the frozen candidate 339b3125d1347648" |
+| Live, plugin arm, home holding the current package | Exit 2: found `daaeda6e…`, which is not an accepted fingerprint |
+| Output directories | None created; nothing spawned |
+
+### Design
+
+| Requirement | Where |
+|---|---|
+| 1. Explicitly selected candidate | `--candidate <file>` for live runs, `--preflight`, `--plan` (optional) and `--score` (required when results carry a candidate ID). **No default**: the message names `candidate.mjs prepare` and the historical file |
+| 2. Historical files preserved | `loadCandidate()` reads the 0.1.0-rc.1 format unchanged as kind `historical`. Writes into `results/` are refused; `wx` never overwrites |
+| 3. Deterministic preparation | `candidate.mjs prepare`: same tree, same manifest except `preparedAt`. `candidateId` hashes the line-ending-independent fields; an edited manifest no longer loads |
+| 4. Recorded fields | `source.commit`, `workingTree` and `dirtyPaths`; `plugin.version`, `claudeManifestVersion` and marketplaces; `package.acceptedFingerprints` (raw and LF) and `contentLfSha256`; `skills.metadataFingerprint` and `inventory`; `specs` (4 suites) and `fixture`; `providers` (home variable, invocation, arms, model and CLI version recorded per run) |
+| 5. Uncommitted snapshots labelled | `UNCOMMITTED_SNAPSHOT` with an explicit note. Writing one into the repository is refused. Live runs need `--allow-uncommitted-candidate`. `candidateQualification` is written into `run.json` and every record |
+| 6. No silent mismatched package | `checkInstalled()`: exactly one package, accepted fingerprint, the same version, the same metadata. `verifyAgainstCheckout()`: version, package, metadata, inventory, specifications, fixture |
+| 7. Baseline support | The baseline arm needs no `chayen` package anywhere under the home |
+| 8. No pooling across configurations | `configKey` adds `candidateId` to provider, CLI, model, package, metadata and specification |
+| 9. Stale results rejected | `checkRunCompatibility()` in `--score`: candidate ID, metadata, package and specification |
+| 10. Provider calls disabled | Unchanged gates. Preparation and preflight start only read-only `git` |
+
+### Files changed (Step 14 only)
+
+| Path | Change |
+|---|---|
+| `tests/evaluation/phase5/candidate.mjs` (new) | prepare, verify, `loadCandidate`, `checkInstalled`, `checkRunCompatibility`, `lfFingerprint`; `installedPackages`, `SPEC_FILES` and `HOME_ENV` moved here and re-exported from the runner |
+| `tests/evaluation/phase5/run-phase5.mjs` | Hardcoded candidate removed; `--candidate`, `--preflight`, `--allow-uncommitted-candidate`; candidate identity in `run.json`, records and humanizer arm outputs; score compatibility check |
+| `tests/evaluation/phase5/phase5-lib.mjs` | `configKey` includes `candidateId` |
+| `tests/evaluation/phase5/candidate.test.mjs` (new), `tools/validate/validate-all.mjs` (G-23) | 12 regressions |
+| `tests/evaluation/phase5/README.md`, `docs/CONTRIBUTING.md`, `docs/chayen/DECISIONS.md` (D-071) | Usage and records |
+
+Unchanged: `results/2026-10-18-phase5/`, `tests/provider-compatibility/results/`,
+the specifications, the fixture, the plugin and `qualify-rc.mjs`. Its
+`fingerprint()` is reused.
+
+### Candidate for the current build (offline)
+
+```text
+node tests/evaluation/phase5/candidate.mjs prepare --out <scratchpad>/s14/current.json
+Prepared candidate f5818222eb0f1fba (UNCOMMITTED_SNAPSHOT) for chayen 1.1.2 at 9b994df + 37 uncommitted path(s), package changed
+  package 263 files, LF 05618eaef7bed601; metadata 411b6adbbea7e121; 16 Entry Skills; providers claude, codex, copilot
+No provider CLI was started and no model was called.
+```
+
+- **Determinism:** a second preparation was identical except `preparedAt`.
+- **Accepted fingerprints:** working tree `daaeda6e…`, LF `05618eae…`.
+- **Verify:** `PASS candidate f5818222eb0f1fba (UNCOMMITTED_SNAPSHOT)
+  describes this checkout`.
+- **Preflight:** baseline arm (empty home) PASS; plugin arm (home holding the
+  current package `daaeda6e…`, version 1.1.2, metadata `411b6adbbea7e121`)
+  PASS. Both printed "no provider CLI was started and nothing was sent".
+- **`--plan --candidate`:** prints the candidate header; 963 routing calls
+  planned, nothing sent.
+- **Live run refusals** (exit 2, nothing sent, no output directory):
+  - without `--candidate`: "there is no default candidate";
+  - with the dirty candidate and no flag: "UNCOMMITTED_SNAPSHOT, not a
+    release-qualified commit";
+  - with the historical candidate: "does not describe this checkout …
+    reproduce it from commit 38570b3", with metadata and package
+    differences.
+- **Writing a dirty candidate into the repository:** refused.
+
+The candidate file stays in the session scratchpad and is not committed.
+A committed candidate needs a clean commit: once the owner commits Steps
+13–14, `prepare --out tests/evaluation/phase5/candidates/<date>-<commit>.json`
+gives a `COMMITTED_SOURCE` candidate.
+
+### Tests
+
+**G-23 `tests/evaluation/phase5/candidate.test.mjs`, 12/12, 0 skipped**, on
+disposable git repositories:
+
+| Owner test | Observed |
+|---|---|
+| Exact candidate accepted | A clean commit gives `COMMITTED_SOURCE`; verify `[]`; the installed copy is accepted |
+| Wrong version rejected | Installed `9.9.9` gives "wrong version: installed 9.9.9"; checkout `9.9.9` gives "wrong version: checkout 9.9.9" |
+| Wrong package fingerprint rejected | One reference edited in the installed copy gives exactly one error, "wrong package fingerprint" |
+| Changed metadata detected | A changed description gives "changed metadata" (installed and checkout) and a new `candidateId`; a changed specification and fixture are also reported |
+| Different configuration not pooled | `summarizeRouting` refuses mixed candidate, model, CLI version, package, specification and provider |
+| Historical evidence unchanged | See below |
+| Dirty snapshot labelled | `UNCOMMITTED_SNAPSHOT`, the note, the exact `dirtyPaths`, `packageMatchesCommit` true then false; the `candidates/` folder is ignored; the runner refuses it without the flag |
+| Baseline home has no Chayen | An empty home passes; one install fails ("found 1"); two installs fail the plugin arm ("found 2") |
+
+**Historical evidence** (in the same test):
+- **Folders unchanged:** the LF fingerprints of the 2026-10-18 Phase 5 and
+  RC1 folders equal the pinned values (`a4fa2aeb…`, `48479fed…`, 9 files
+  each), and `git diff HEAD` is empty for both.
+- **Reproducible from history:**
+  - the committed blobs at `38570b3` give 256 package files, the
+    candidate's recorded LF content fingerprint `d5e9a80e…`, and metadata
+    `339b3125d1347648`;
+  - the four specifications at `f06d3e0` (the commit that added the
+    historical `plan.json`) reproduce its spec hashes `ae96f187…`,
+    `e52edc4c…`, `d2c64d5d…` and `45f56e52…`.
+- **Not recomputed:** the candidate's second accepted value, `efc4c6e…`,
+  described as "git archive HEAD" bytes, could not be reproduced from raw
+  blobs; it depends on archive conversion.
+- **Never valid now:** the historical candidate never passes against the
+  current checkout.
+
+The remaining tests: determinism (identical manifests, an edited manifest
+refused, provider subset); stale results (five compatibility errors, and
+`--score` refusing another candidate's results without writing
+`summary.json`); runner preflight with a git-only `PATH`; and a static check
+(read-only git `rev-parse`, `status` and `diff` only, one `wx` write, an
+overwrite of the historical file refused).
+
+**Control runs** (scratch git copies; log `step14-controls.log` in the
+session scratchpad). Nine weakenings, **all caught**:
+- the installed version not checked;
+- the installed metadata not checked;
+- the candidate not part of the pooling key;
+- a dirty tree labelled as committed;
+- an uncommitted snapshot accepted silently;
+- results from another candidate accepted;
+- specifications not compared;
+- a baseline home holding a package;
+- a default candidate.
+
+### Commands
+
+| Command | Exit | Result |
+|---|---|---|
+| `node --test tests/evaluation/phase5/candidate.test.mjs` | 0 | 12/12, 0 skipped |
+| `node --test tests/evaluation/phase5/phase5.test.mjs` | 0 | 13/13 (the existing no-send guards still hold) |
+| `node tests/evaluation/phase5/build-fixtures.mjs --check` | 0 | Generated specifications match their sources |
+| `node tools/validate/validate-all.mjs` | 0 | **35/35** gate groups PASS (adds G-23) |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | Static and traceability levels PASS |
+| `git diff --quiet HEAD -- tests/evaluation/phase5/results tests/provider-compatibility/results` | 0 | Historical folders unchanged |
+| `git diff --stat -- plugins/` | 0 | Still only Step 13's 4 files; Step 14 changes no shipped file |
+
+During development there were three test failures. All are fixed, and none
+by weakening a check:
+
+- **Two in the historical test,** each from a wrong assumption about
+  history:
+  - the "git archive" fingerprint is not computable from raw blobs, so the
+    test asserts the candidate's own recorded LF value;
+  - the specifications do not exist at `38570b3`, so they are read from the
+    plan's commit `f06d3e0`.
+- **One in the runner preflight test:** an empty `PATH` also hid `git`. The
+    test now uses a `PATH` with only git's directory, checked to contain no
+    provider CLI.
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| A maintainer can prepare a candidate for the current build and run offline preflight checks | `candidate.mjs prepare`, verify, `--preflight` on both arms, `--plan --candidate` (above) | PASS |
+| No provider or model calls during candidate preparation | Only read-only git (static test); `PATH` without any provider CLI in the runner tests | PASS |
+| All eight owner tests | G-23 12/12; nine controls caught | PASS |
+| Historical 0.1.0-rc.1 data reproducible | Unchanged folders; fingerprints and spec hashes recomputed from `38570b3` and `f06d3e0` | PASS (the `efc4c6e…` archive bytes not recomputed) |
+| No automatic commit, tag, release or push | None made; candidates are written only to `--out` | PASS |
+| Plan criterion: "the candidate fingerprint equals the package fingerprint at a recorded commit" | The mechanism is in place; the current candidate is an `UNCOMMITTED_SNAPSHOT` of `9b994df` | **Partly**: a `COMMITTED_SOURCE` candidate needs the owner's commit |
+
+### Risks and findings
+
+- **No committed candidate exists yet.** The current build is an
+  uncommitted snapshot. After the owner commits, prepare a
+  `COMMITTED_SOURCE` candidate into `candidates/`. That file is a repository
+  change and needs owner review.
+- **The routing probe set changed** (82 → 85 plugin-arm probes) since the
+  historical plan. The current candidate records the current specifications.
+  Historical and current results are never comparable, and the pooling key
+  and compatibility check enforce that.
+- **The candidate check is file-based.** It proves which bytes are installed
+  in the home, not which ones the provider loads at run time. Run-time
+  loading is checked by the activation evidence in each record, as before.
+- **The Codex activation signal is still PROPOSED,** and live runs still
+  need OD-10 authorization (unchanged).
+
+### Next action
+
+Stopped after Step 14, as instructed. Step 15 (Coding Evaluation Fixtures)
+is not started; it needs stack toolchains (for example a .NET 8 SDK).

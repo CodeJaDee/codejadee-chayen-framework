@@ -43,8 +43,8 @@ function detected(r, id, pattern) {
 test("the shipped guidance satisfies every invariant with no review items", (t) => {
   const r = check(fixture(t));
   assert.equal(r.code, 0, r.out);
-  assert.match(r.out, /\n0 error\(s\), 0 review item\(s\); 9 invariants/);
-  for (let i = 1; i <= 9; i++) assert.match(r.out, new RegExp(`PASS {3}GI-0${i} `));
+  assert.match(r.out, /\n0 error\(s\), 0 review item\(s\); 10 invariants/);
+  for (let i = 1; i <= 10; i++) assert.match(r.out, new RegExp(`PASS {3}GI-${String(i).padStart(2, "0")} `));
 });
 
 test("the report is deterministic", (t) => {
@@ -140,7 +140,7 @@ test("heuristic signals are REVIEW items and do not fail", (t) => {
 test("every canonical invariant is documented", () => {
   const spec = JSON.parse(fs.readFileSync(inside(repo, "tools/validate/guidance-invariants.json"), "utf8"));
   const doc = fs.readFileSync(inside(repo, "docs/chayen/GUIDANCE_INVARIANTS.md"), "utf8");
-  assert.equal(spec.invariants.length, 9);
+  assert.equal(spec.invariants.length, 10);
   for (const inv of spec.invariants) assert.match(doc, new RegExp(`\\b${inv.id}\\b[^\\n]*${inv.name}`), `${inv.id} ${inv.name} is not documented`);
 });
 
@@ -197,4 +197,52 @@ test("detects a workflow whose verification drops the verdict rule", (t) => {
   const root = fixture(t);
   edit(root, `${S}/chayen-testing/references/workflow-testing-regression.md`, /Give each acceptance criterion one verdict \(accept, verify_more or revise\)\nfrom fresh, adequate evidence; a check status is never the verdict, and DONE\nneeds every required criterion at accept\.\n/, "");
   detected(check(root), "GI-09", /no longer gives each acceptance criterion one verdict/);
+});
+
+// ---------- evolution Step 13: independent evidence audit (GI-10) and the GI-03 no-test gap ----------
+const SUMMARY_MD = `${IMPL}/references/change-summary.md`;
+
+test("detects a criterion with no test being accepted (the Step 12 finding)", (t) => {
+  const root = fixture(t);
+  edit(root, SUMMARY_MD, /A criterion with no test is uncovered and\s+verify_more;/, "A criterion with no test may be accepted when the code looks right;");
+  detected(check(root), "GI-03", /accepts a criterion with no test, run or evidence/);
+});
+
+test("detects a test file taken as a test run", (t) => {
+  const root = fixture(t);
+  append(root, `${IMPL}/references/verification-report-template.md`, "A test file in the diff shows the test passed.");
+  detected(check(root), "GI-10", /infers a test run from a test file/);
+});
+
+test("detects an audit that no longer separates a test file from a test run", (t) => {
+  const root = fixture(t);
+  edit(root, SUMMARY_MD, /A test file in the diff shows that a test exists, not that it ran\./, "A test file in the diff is reviewed.");
+  detected(check(root), "GI-10", /no longer says a test file is not a test run/);
+});
+
+test("detects an audit that drops the UI behavioural check", (t) => {
+  const root = fixture(t);
+  edit(root, SUMMARY_MD, "An interactive UI requirement needs a behavioural check", "An interactive UI requirement needs a build");
+  detected(check(root), "GI-10", /behavioural check for interactive UI requirements/);
+});
+
+test("detects a criterion review without a confidence limitation", (t) => {
+  const root = fixture(t);
+  edit(root, SUMMARY_MD, /\n {3}\| Confidence limitation \|[^\n]*/, "");
+  detected(check(root), "GI-10", /no longer records "Confidence limitation"/);
+});
+
+test("detects the implementer auditing its own evidence", (t) => {
+  const root = fixture(t);
+  append(root, `${IMPL}/references/change-passport-template.md`, "The implementing agent may approve its own evidence when the build passes.");
+  detected(check(root), "GI-10", /lets the implementer audit its own evidence/);
+});
+
+test("a reworded audit and negated statements do not fail", (t) => {
+  const root = fixture(t);
+  edit(root, SUMMARY_MD, "Evidence from before that change is stale.", "Evidence older than that change is stale.");
+  edit(root, SUMMARY_MD, "- **Independent reviewer:** a person, or an agent session", "- **Independent reviewer** — a person, or an agent session");
+  append(root, `${IMPL}/references/verification-report-template.md`, "A criterion with no test is never accepted. A test file never shows that the test passed.");
+  const r = check(root);
+  assert.equal(r.code, 0, r.out);
 });

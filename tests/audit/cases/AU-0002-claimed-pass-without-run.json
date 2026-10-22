@@ -1,0 +1,73 @@
+{
+  "$schema": "chayen-audit-case/1",
+  "id": "AU-0002",
+  "title": "Test file added and PASS claimed, but no recorded run executed it",
+  "synthetic": true,
+  "revisions": [
+    "r1",
+    "r2"
+  ],
+  "criteria": [
+    {
+      "id": "AC-1",
+      "text": "GET /api/orders/export returns a CSV with a header row and one row per order",
+      "kind": "logic",
+      "required": true,
+      "dependsOn": [
+        "src/Orders/OrderExport.cs"
+      ],
+      "testFiles": [
+        "tests/Orders/OrderExportTests.cs"
+      ]
+    }
+  ],
+  "changedFiles": [
+    {
+      "path": "src/Orders/OrderExport.cs",
+      "role": "source",
+      "revision": "r2"
+    },
+    {
+      "path": "tests/Orders/OrderExportTests.cs",
+      "role": "test",
+      "revision": "r2"
+    }
+  ],
+  "runs": [
+    {
+      "id": "R1",
+      "command": "dotnet build",
+      "revision": "r2",
+      "exitCode": 0,
+      "excerpt": "Build succeeded. 0 Warning(s) 0 Error(s)",
+      "tests": []
+    }
+  ],
+  "report": {
+    "outcome": "DONE",
+    "claims": [
+      {
+        "criterion": "AC-1",
+        "text": "Added OrderExportTests; all tests pass",
+        "status": "PASSED",
+        "run": null,
+        "quoted": null,
+        "verdict": "accept"
+      }
+    ]
+  },
+  "reviewer": {
+    "independent": true
+  },
+  "expected": {
+    "verdicts": {
+      "AC-1": "verify_more"
+    },
+    "outcome": "PARTIAL",
+    "reportOutcome": "unsupported",
+    "flags": [
+      "claimed-pass-without-recorded-run",
+      "claimed-verdict-unsupported"
+    ]
+  }
+}

@@ -99,6 +99,8 @@ node --test tests/ci/limits.test.mjs                     # no former numeric cap
 node tools/catalog/discovery-metrics.mjs                # discovery metadata, estimated tokens, provider figures
 node tools/evals/failure-cases.mjs                      # failure records: validate, replay recorded transcripts offline
 node tools/evals/distill.mjs                            # distillation proposals: six stages, offline validation on a copy
+node tools/evals/audit-evidence.mjs                     # independent evidence audit: reference grader on synthetic cases
+node tests/evaluation/phase5/candidate.mjs prepare --out <file>   # evaluation candidate for this build; offline
 node tools/ci/check-workflow.mjs                        # pinned linter download; no providers
 ```
 

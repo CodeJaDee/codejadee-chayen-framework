@@ -40,11 +40,19 @@ const arms = (root, base, cand) => ({ comparison: {
 const decide = (root, p) => { const r = checkProposal(root, p, `${DIR}/${p.id}-x.json`, validateFailures(root), { offline: false }); return { ...r, decision: r.decision ?? `INVALID: ${r.errors.join("; ")}` }; };
 const F = "FC-0002.failing.jsonl", C = "FC-0002.control.jsonl";
 
-test("shipped proposals: three pending review, the demonstration returned; nothing is applied to the plugin", () => {
+// A rebase onto the current tree, in memory only: the same diff against the current target contents.
+const rebased = (p) => ({ ...p, action: { ...p.action, targets: p.action.targets.map((t) => ({ ...t, baseSha256: sha256(fs.readFileSync(path.join(repo, t.path), "utf8")) })) } });
+
+test("shipped proposals: DP-0001 pending review, the rest returned; nothing is applied to the plugin", () => {
   const { errors, proposals } = checkAll(repo, { offline: false });
   assert.deepEqual(errors, []);
-  assert.deepEqual(proposals.map((p) => [p.id, p.failureCase, p.decision]), [["DP-0001", "FC-0002", "PENDING_REVIEW"], ["DP-0002", "FC-0001", "PENDING_REVIEW"], ["DP-0003", "FC-0003", "PENDING_REVIEW"], ["DP-0004", "FC-0003", "RETURNED_FOR_REVISION"]]);
-  for (const p of proposals) for (const t of load(p.id).action.targets) assert.equal(sha256(fs.readFileSync(path.join(repo, t.path), "utf8")), t.baseSha256, `${t.path} unchanged`);
+  // DP-0002 and DP-0003 were returned in evolution Step 13, when their targets (recipe cases, KL-15) changed.
+  assert.deepEqual(proposals.map((p) => [p.id, p.failureCase, p.decision]), [["DP-0001", "FC-0002", "PENDING_REVIEW"], ["DP-0002", "FC-0001", "RETURNED_FOR_REVISION"], ["DP-0003", "FC-0003", "RETURNED_FOR_REVISION"], ["DP-0004", "FC-0003", "RETURNED_FOR_REVISION"]]);
+  for (const id of ["DP-0002", "DP-0003"]) assert.ok(proposals.find((p) => p.id === id).reasons.some((r) => r.includes("changed since the proposal was written")), `${id} is stale`);
+  for (const p of proposals) {
+    const [f] = parseDiff(fs.readFileSync(path.join(repo, load(p.id).action.diff), "utf8"));
+    assert.doesNotThrow(() => applyDiff(fs.readFileSync(path.join(repo, f.path), "utf8"), f), `${p.id} is not applied: its diff still applies`);
+  }
   assert.deepEqual(proposals.map((p) => p.stages.collect.modelBehaviour), ["NOT_RUN", "NOT_RUN", "NOT_RUN", "NOT_RUN"]);
 });
 
@@ -110,8 +118,8 @@ test("decisions follow the human review; approval alone never promotes behaviour
   assert.equal(check({ ...approved(p, "rejected"), decision: "REJECTED" }).decision, "REJECTED");
   assert.equal(check({ ...approved(p), decision: "AWAITING_EVIDENCE" }).decision, "AWAITING_EVIDENCE");
   assert.ok(has(check({ ...approved(p), decision: "READY_TO_PROMOTE" }), "not supported by the evidence (derived AWAITING_EVIDENCE)"));
-  assert.equal(check({ ...approved(load("DP-0002")), decision: "READY_TO_PROMOTE" }).decision, "READY_TO_PROMOTE", "a regression fixture needs no behaviour claim");
-  assert.equal(check({ ...approved(load("DP-0003")), decision: "AWAITING_EVIDENCE" }).decision, "AWAITING_EVIDENCE", "a limitation needs a live reproduction first");
+  assert.equal(check({ ...approved(rebased(load("DP-0002"))), decision: "READY_TO_PROMOTE" }).decision, "READY_TO_PROMOTE", "a regression fixture needs no behaviour claim");
+  assert.equal(check({ ...approved(rebased(load("DP-0003"))), decision: "AWAITING_EVIDENCE" }).decision, "AWAITING_EVIDENCE", "a limitation needs a live reproduction first");
 });
 
 test("validate: a stale base, a diff that no longer applies or an oversized change is returned", () => withCopy((root) => {

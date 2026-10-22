@@ -110,25 +110,80 @@ from a draft.
 
 ### Evidence audit (CAP-18-003)
 
-1. **Extract every claim** from the report or summary: commands run and
+The evidence audit is an independent review of a completion claim. Keep the
+two roles apart:
+
+- **Implementing agent:** understands the task, changes the code, runs the
+  checks, collects the evidence and submits the report (the change summary
+  above). Its conclusions are claims to check, never evidence.
+- **Independent reviewer:** a person, or an agent session that did not make
+  the change. It works from the original acceptance criteria, the changed
+  files and the recorded output, and re-checks them without relying on the
+  implementer's conclusion. When the session that made the change has to
+  audit it, record that as a confidence limitation.
+
+1. **Start from the sources, not the report:**
+   - the acceptance criteria from the task contract or the request;
+   - the changed files from the diff or the working tree status;
+   - the recorded command output with its revision.
+2. **Extract every claim** from the report or summary: commands run and
    their results, files changed, tests added, acceptance criteria met,
-   approvals obtained.
-2. **Choose a re-check method per claim:** read the file or diff, re-run the
-   command (when allowed), compare counts, or look for the recorded
-   approval.
-3. **Re-check and record the observed result** with the command and output.
-4. **Give a verdict per claim:**
+   approvals obtained, and the claimed outcome.
+3. **Choose an independent re-check per claim,** proportional to the risk of
+   the criterion: read the file or diff, re-run the command (when allowed),
+   compare counts, or look for the recorded approval.
+   - A test file in the diff shows that a test exists, not that it ran. A
+     claimed PASS needs a recorded run: the command, the runner's own output
+     or counts, and the revision. With no recorded run and no re-run, the
+     test is NOT_RUN for the audit.
+   - Compare the revision of the evidence with the last change to the files
+     the criterion depends on. Evidence from before that change is stale.
+   - An interactive UI requirement needs a behavioural check where the
+     environment allows one: a component, browser or device test, or a
+     recorded manual interaction. A build or a unit test does not show it.
+   - An access-control requirement needs its negative paths checked as well
+     as the allowed one: the unauthenticated request and the request from a
+     user without the permission.
+4. **Re-check and record the observed result** with the command and output.
+   Quote only what is needed, and write `<redacted>` for tokens, passwords,
+   connection strings and personal data.
+5. **Give a verdict per claim:**
    - **supported:** the re-check reproduces it;
    - **unsupported:** the re-check contradicts it (for example a "passing"
-     test that fails), with the observed output;
+     test that fails), with the observed output. A quoted result that the
+     recorded run contradicts is unsupported and possibly fabricated;
    - **not re-runnable:** the check needs an environment or access that is
      not available; say what would confirm it.
-5. **Treat recommendations as recommendations.** An approval claim is
+
+   A run that is cited but was never recorded is no evidence. Flag the claim
+   as possibly fabricated. The criterion stays verify_more until a recorded
+   run or a re-run exists.
+6. **Record one review per acceptance criterion:**
+
+   | Field | Content |
+   |---|---|
+   | Criterion | The identifier (AC-1, AC-2, ...) from the original criteria |
+   | Claim | What the report says about the criterion |
+   | Evidence source | A re-run, a recorded run with its revision, `file:line`, or only the implementer's statement |
+   | Independent method | How the reviewer checked it |
+   | Observed outcome | What the reviewer saw, with a redacted excerpt |
+   | Confidence limitation | What the check cannot show: environment, no re-run, same session, untested paths |
+   | Verdict | One of accept, verify_more or revise, from step 5 of the procedure |
+   | Next action | The smallest check or fix that would settle it, or none |
+
+7. **Treat recommendations as recommendations.** An approval claim is
    supported only by a named person's recorded decision, never by an
    agent's or tool's recommendation.
-6. **Re-derive the outcome** from the audited verdicts with step 6. A
-   report that claims DONE while a required criterion is not accept is
-   unsupported.
+8. **Re-derive the outcome** from the reviewed verdicts with step 6 of the
+   procedure.
+   - A report that claims DONE while a required criterion is not accept is
+     unsupported.
+   - A report that claims PARTIAL, with accurate verdicts and a next safe
+     action, is supported.
+
+The audit checks evidence; it does not make the change safe. An audit by a
+language model can miss defects, and it is neither a security review nor a
+security guarantee.
 
 ## Outputs
 
@@ -144,9 +199,11 @@ from a draft.
   - rollback;
   - not verified.
 - For hand-overs, a short list of next steps for the receiver.
-- For an evidence audit: a claim-by-claim table with the claim, re-check
-  method, observed result, and verdict (supported, unsupported, not
-  re-runnable).
+- For an evidence audit:
+  - a claim-by-claim table with the claim, re-check method, observed result,
+    and verdict (supported, unsupported, not re-runnable);
+  - one review per criterion with the eight fields of audit step 6;
+  - the re-derived outcome.
 
 ## Template
 
@@ -189,6 +246,9 @@ Next steps (hand-over only): <first action for the receiver>
   evidence.
 - **Missing evidence stays visible.** An uncovered or unverified criterion
   appears in the acceptance record and under "Not verified".
+- **The implementer never audits its own success.** Declaring a check passed
+  is not evidence, and the evidence audit is done by a reviewer who did not
+  make the change, or records that limitation.
 
 ## Technology considerations
 
@@ -218,3 +278,14 @@ changes.
   skipped lint run NOT_RUN.
 - A fixture report claiming a passing test that actually fails is marked
   unsupported with the observed output.
+- In an audit:
+  - A claimed PASS for a test that appears only in the diff, with no
+    recorded run, leaves its criterion verify_more and makes a DONE claim
+    unsupported.
+  - Evidence recorded before the last change to the criterion's files is
+    stale.
+  - A UI interaction criterion with only a build or unit test is
+    verify_more, and so is an access-control criterion without its denied
+    paths.
+  - Every criterion review has the eight fields of audit step 6, with
+    quoted output redacted.

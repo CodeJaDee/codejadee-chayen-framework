@@ -50,6 +50,7 @@ node --test tests/skills/guidance-consistency.test.mjs
 | GI-07 | advisory-not-enforcement | D-003; SKILL_AUTHORING_STANDARD §4.3 |
 | GI-08 | skill-ownership-and-handoff | D-016, DR-04, ADR-0006 |
 | GI-09 | workflow-exit-and-verification | SKILL_AUTHORING_STANDARD §5.4; change-summary recipe |
+| GI-10 | independent-evidence-audit | `chayen-implementation/references/change-summary.md`, Evidence audit (evolution Step 13, D-070) |
 
 The full statements, and the split between machine checks and human
 review, are in `guidance-invariants.json`. Each invariant has a single
@@ -169,6 +170,24 @@ Verification rules.
 
 Exit checks are also scanned by GI-04 and GI-05.
 
+### GI-10 independent-evidence-audit
+
+The evidence audit re-checks a completion claim independently of the
+implementer (evolution Step 13).
+
+| Diagnostic | Meaning and fix |
+|---|---|
+| `the evidence audit no longer …` | An anchor in the Evidence audit section is gone. The anchors cover: <br>• the implementer's conclusions are claims, never evidence <br>• a reviewer who did not make the change <br>• a test file is not a test run <br>• a claimed PASS needs a recorded run <br>• stale evidence <br>• a behavioural check for interactive UI <br>• negative paths for access control <br>• a cited but unrecorded run is no evidence <br>• redaction <br>• an audit is not a security guarantee |
+| `the criterion review no longer records "…"` | A row of the eight-field review table was removed. |
+| `infers a test run from a test file` | A sentence says a test file shows that a test ran or passed. Negation is checked only in the predicate, so "never shows" is not matched. |
+| `lets the implementer audit its own evidence` | A sentence lets the implementing agent audit, approve, accept or verify its own work. |
+
+GI-03 also gained a predicate-only rule for this step: "a criterion with no
+test may be accepted" is an `accepts a criterion with no test, run or
+evidence` error. The older GI-03 patterns place the negative subject ("no
+evidence") inside the negation window, so those patterns never matched that
+form.
+
 ## What is machine-verified and what still needs review
 
 | Property | Machine-verified | Human review (G-15) |
@@ -182,6 +201,7 @@ Exit checks are also scanned by GI-04 and GI-05.
 | Advisory | Self-enforcement and absolute claims; advisory statements in five skills | Claims with another subject ("the agent will block …") |
 | Hand-off | Every `chayen-*` name resolves; no provider syntax; no self hand-off | Whether the named skill really owns the request; unrecognised outcomes (REVIEW) |
 | Workflows | Status vocabulary and verdict rule in Verification | Whether each exit check suffices (REVIEW signal only) |
+| Independent audit | Ten audit anchors and the eight review fields in the recipe; test-file-as-run and self-audit patterns; no-test-accepted (GI-03) | Whether a reviewer is really independent; whether the required evidence is proportional to the risk |
 
 ## Limitations
 
