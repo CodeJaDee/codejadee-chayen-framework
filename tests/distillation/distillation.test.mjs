@@ -127,7 +127,12 @@ test("validate: a stale base, a diff that no longer applies or an oversized chan
   const original = fs.readFileSync(target, "utf8");
   fs.writeFileSync(target, original + "\nAppended by someone else.\n");
   assert.ok(has(decide(root, p), "changed since the proposal was written"));
-  fs.writeFileSync(target, original.replace("   - the frontend calls that hit a changed endpoint;\n", "   - the frontend calls to a changed endpoint;\n"));
+  // A Windows checkout (core.autocrlf) has CRLF here: mutate the LF-normalised text and prove the mutation took
+  // effect, so a no-op edit can never let this case pass or fail for the wrong reason (evolution Step 20, G-21T).
+  const lfOriginal = original.replace(/\r\n/g, "\n");
+  const mutated = lfOriginal.replace("   - the frontend calls that hit a changed endpoint;\n", "   - the frontend calls to a changed endpoint;\n");
+  assert.notEqual(mutated, lfOriginal, "the mutation must change the target file");
+  fs.writeFileSync(target, mutated);
   const rebased = { ...p, action: { ...p.action, targets: [{ path: p.action.targets[0].path, baseSha256: sha256(fs.readFileSync(target, "utf8")) }] } };
   assert.ok(has(decide(root, rebased), "diff does not apply"));
   fs.writeFileSync(target, original);

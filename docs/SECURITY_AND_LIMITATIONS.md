@@ -141,13 +141,13 @@ are deferred. See [the current matrix](COMPATIBILITY_MATRIX.md).
 | Area | Limitation |
 |---|---|
 | Verification status | All 206 engineering capabilities, 108 technology capabilities, and 12 workflows are **implemented, not verified** |
-| Provider evidence | Behaviour was measured on Claude Code CLI only, for the 13-skill build before the writing skills were added. Codex and Copilot results are from an earlier build; VS Code is untested. |
+| Provider evidence | Agent behaviour was measured on Claude Code CLI only, for the 13-skill build before the writing skills were added. On the current 16-Skill development snapshot only the native install lifecycle was tested (Claude Code 2.1.220, Codex 0.163.0; Copilot CLI 1.0.89 is below the supported 1.0.91); routing, explicit invocation and adversarial security cases are NOT_RUN. VS Code is untested. |
 | Routing | Automatic selection: 12/22 relevant runs (55%). Next.js server-route tasks did not trigger a skill (0/5); pytest 3/5; ASP.NET, Angular and SQL Server 2/3 each. |
 | Path handling | Before a fix in this build, agents sometimes looked for project files next to the plugin after loading a skill (3 of 7 runs; all blocked). After the fix: 0 of 7, a small sample. |
 | Writing skills | Structurally validated only. Routing, explicit invocation, writing quality and injection resistance in edited text are **not tested**; a 120-case evaluation set is ready but not run. |
 | Response style policy | Opt-in and outside the plugin. Documented locations only; loading, behaviour and removal on real hosts **not tested**. Some subagents and Copilot inline suggestions ignore instruction files. |
 | Third-party material | The English writing skill adapts material from the MIT-licensed humanizer skill (Siqi Chen); its licence notice ships inside the skill and must stay with it whatever licence Chayen chooses. |
-| Licence | Not yet chosen. No licence is granted until one is published. |
+| Licence | MIT since `1.0.0` (D-061); see `LICENSE` and the plugin's `LICENSE.md`. |
 
 Maintainers can find the threat model and trust review in
 [docs/chayen/SECURITY_MODEL.md](chayen/SECURITY_MODEL.md),

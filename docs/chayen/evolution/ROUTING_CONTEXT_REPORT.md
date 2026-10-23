@@ -146,7 +146,9 @@ that gap.
   - Shipped Skills range from 346 to 439 characters. The largest are
     `chayen-implementation` (439, 6.7% of the shipped total),
     `chayen-frontend` (435) and `chayen-ai-engineering` (433).
-  - Synthetic Skills range from 211 to 259 characters.
+  - Synthetic Skills range from 211 to 259 characters in SC1–SC3, 321 for
+    the paraphrased duplicate in SC4, and 277 and 425 for the two copied
+    descriptions in SC5 (corrected in the Step 20 audit).
   - The per-Skill table for every scenario is in the static report.
 - **Codex.** Its documentation says it shortens descriptions first, and may
   then omit Skills (S12). The package validator now warns (V-07) in every

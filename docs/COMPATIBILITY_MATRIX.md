@@ -20,7 +20,7 @@ findings are in the
 | Disable/enable | PASS command; disabled loading BLOCKED | UNSUPPORTED subcommands; native config alternative PASS (0/16 disabled) | BLOCKED |
 | Update version and content | PASS | UNSUPPORTED dedicated update; native remove/add PASS | BLOCKED |
 | Uninstall, reinstall, new process, former-identifier migration | PASS | PASS | BLOCKED |
-| Test-profile isolation | PASS (configs unchanged) | FAIL: personal Skills from outside the profile are visible | BLOCKED |
+| Test-profile isolation | Configs unchanged; personal-Skill visibility not observable without a model session | FAIL: personal Skills from outside the profile are visible | BLOCKED |
 | Qualification on a committed frozen candidate | BLOCKED; freeze pending | BLOCKED; freeze pending | BLOCKED |
 | Automatic routing >=85%, explicit invocation, no-match | NOT_RUN | NOT_RUN | NOT_RUN |
 | Adversarial security cases | BLOCKED | BLOCKED | BLOCKED |

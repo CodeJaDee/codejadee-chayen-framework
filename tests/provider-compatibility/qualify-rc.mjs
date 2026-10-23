@@ -176,7 +176,7 @@ export function qualify(target, executables = {}, inherited = process.env) {
           const reinstalled = action("reinstall", () => { invoke(["plugin", provider === "codex" ? "add" : "install", "chayen@codejadee"]); return activeBuild(); });
           if (reinstalled) action("restart", () => ({ ...activeBuild(), ...inventory(true), restart: "new native process; no reused model session" })); else blocked("restart");
           action("migration", () => {
-            // Replay former identifier on the current 15-Skill body; not a historical binary claim.
+            // Replay former identifier on the current Skill body; not a historical binary claim.
             invoke(["plugin", provider === "codex" ? "remove" : "uninstall", provider === "copilot" ? "chayen" : "chayen@codejadee"]); assertAbsent("chayen");
             for (const rel of [`${PACKAGE}/plugin.json`, `${PACKAGE}/.claude-plugin/plugin.json`, ...DESCRIPTORS]) {
               const file = path.join(marketplace, rel), data = json(file); if (data.plugins) data.plugins[0].name = "codejadee-chayen-framework"; else data.name = "codejadee-chayen-framework"; fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n");

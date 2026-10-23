@@ -22,21 +22,21 @@ blockers.
 | 03 | Skill Count and Registration | 02 (approved) | PASS | — |
 | 04 | Line and Reference Depth Limits | 02 (approved) | PASS | — |
 | 05 | Metadata Budget Policy | 02 (approved) | PASS | — |
-| 06 | Limit Regression Tests | 03, 04, 05 | PASS | — |
-| 07 | Task Contract Consistency | 01, 04 | PASS | — |
+| 06 | Limit Regression Tests | 03, 04, 05 | PARTIAL (Step 20 audit) | Exact-boundary pass cases (64, 1024) missing; stale-limit detection covers L0 pairs and listed rows only (F-08) |
+| 07 | Task Contract Consistency | 01, 04 | PARTIAL (Step 20 audit) | `unsupported` has two meanings; `IN_PROGRESS` undefined; `chayen-testing` has no DONE rule (F-09) |
 | 08 | Acceptance Evidence Contract | 07 | PASS | — |
 | 09 | Guidance Consistency Validator | 06, 08 | PASS | — |
 | 10 | Repository Intelligence | 05, 09 | PASS | — |
-| 11 | Failure Reproduction | 08, 09 | PASS | — |
+| 11 | Failure Reproduction | 08, 09 | PARTIAL (Step 20 audit) | Agent-facing no-reproduction path (`verify_more`) never written; owner left it open |
 | 12 | Mentor Knowledge Distillation | 11 | PASS | — |
 | 13 | Independent Evidence Audit | 08, 09 | PASS | — |
-| 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | PASS | — |
-| 15 | Coding Evaluation Fixtures | 14 | PASS | Angular component specs NOT_RUN (no node_modules); no PostgreSQL fixture (no local server) |
+| 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | PARTIAL (Step 20 audit) | No COMMITTED_SOURCE candidate committed (now possible at `7bbb39b`) |
+| 15 | Coding Evaluation Fixtures | 14 | PARTIAL (Step 20 audit) | Angular component specs NOT_RUN (no node_modules); no PostgreSQL fixture (no local server) |
 | 16 | Isolated Coding Agent Runner | 15 | PASS | Live runs NOT_RUN: BLOCKED on this host (no Linux container engine); need owner authorization, budget caps, a pinned image and signed-in isolated homes |
 | 17 | Independent Grading and Metrics | 16 | PASS | Live comparison NOT_MEASURED (no real runs; Step 16 BLOCKED on this host); human-graded items need a named grader |
-| 18 | Routing and Context Benchmark | 14, 17 | PASS | Provider routing, no-match and token counts NOT_RUN on every CLI: billed calls, signed-in isolated homes and the install of synthetic test packages need owner authorization (EG-02, EG-03, EG-21) |
-| 19 | Provider and Security Verification | 14, 18 | PASS | Copilot CLI 1.0.89 below the 1.0.91 minimum (BLOCKED); adversarial runtime cases BLOCKED (no authenticated isolated home, no billed-call authorization); Codex inventory isolation FAIL (F-01); Claude disabled-loading proof BLOCKED; no committed frozen candidate |
-| 20 | Final Audit and Readiness | 01–19 | NOT_STARTED | — |
+| 18 | Routing and Context Benchmark | 14, 17 | PARTIAL (Step 20 audit) | Provider routing, no-match and token counts NOT_RUN on every CLI: billed calls, signed-in isolated homes and the install of synthetic test packages need owner authorization (EG-02, EG-03, EG-21) |
+| 19 | Provider and Security Verification | 14, 18 | PARTIAL (Step 20 audit) | Copilot CLI 1.0.89 below the 1.0.91 minimum (BLOCKED); adversarial runtime cases BLOCKED (no authenticated isolated home, no billed-call authorization); Codex inventory isolation FAIL (F-01); Claude disabled-loading proof BLOCKED; no committed frozen candidate |
+| 20 | Final Audit and Readiness | 01–19 | PASS | Program not DONE: IMPLEMENTATION SUBSTANTIALLY COMPLETE / RUNTIME QUALIFICATION PENDING; production NO-GO; guidance-only `1.1.3` CONDITIONAL GO ([RELEASE_READINESS](RELEASE_READINESS.md)) |
 
 **Plan note (2026-10-22, Step 02):** the owner accepted D-066 /
 [ADR-0013](../ADRS/ADR-0013-extensible-skill-governance.md). That decision
@@ -167,7 +167,7 @@ graph.
 | Expected artifacts | Test file, `validate-all.mjs` entry, documented coverage table Plus `docs/chayen/evolution/LIMIT_MIGRATION_REPORT.md` (owner's Step 06 deliverable). |
 | Acceptance criteria | Every limit in the Step 02 policy has a passing case at the boundary and a failing case one past it; a stale limit in a maintained document fails the suite; historical sections (`<!-- historical:start -->`) are exempt; the suite runs offline in temporary copies only |
 | Evidence | [STEP_LOG.md — Step 06](STEP_LOG.md#step-06--limit-regression-tests); [LIMIT_MIGRATION_REPORT.md](LIMIT_MIGRATION_REPORT.md) |
-| Status | PASS |
+| Status | PARTIAL (Step 20 audit; see [ACCEPTANCE_MATRIX](ACCEPTANCE_MATRIX.md)) |
 | Blockers | None beyond prerequisites |
 
 ### 07 — Task Contract Consistency
@@ -180,7 +180,7 @@ graph.
 | Expected artifacts | Consistency table (term, definition, files), guidance edits, recipe cases for changed behaviour |
 | Acceptance criteria | Each term has one definition and is used the same way in every listed file; every guidance change has a recipe or trigger case in `tests/skills/`; Skill descriptions unchanged; line limits hold; `validate-all.mjs` passes |
 | Evidence | [STEP_LOG.md — Step 07](STEP_LOG.md#step-07--task-contract-consistency) |
-| Status | PASS |
+| Status | PARTIAL (Step 20 audit; see [ACCEPTANCE_MATRIX](ACCEPTANCE_MATRIX.md)) |
 | Blockers | None beyond prerequisites |
 
 ### 08 — Acceptance Evidence Contract
@@ -232,7 +232,7 @@ graph.
 | Expected artifacts | Guidance changes linked to the Step 08 evidence contract; recipe and workflow cases |
 | Acceptance criteria | The reproduction is recorded as observed evidence under the Step 08 contract; the no-reproduction path is defined (`verify_more`, not `accept`); cases cover both paths; `validate-all.mjs` passes |
 | Evidence | [STEP_LOG.md — Step 11](STEP_LOG.md#step-11--failure-reproduction) |
-| Status | PASS |
+| Status | PARTIAL (Step 20 audit; see [ACCEPTANCE_MATRIX](ACCEPTANCE_MATRIX.md)) |
 | Blockers | None beyond prerequisites |
 
 ### 12 — Mentor Knowledge Distillation
@@ -271,7 +271,7 @@ graph.
 | Expected artifacts | New candidate record, updated probe sets covering all 16 Skills, plan output |
 | Acceptance criteria | The candidate fingerprint equals the package fingerprint at a recorded commit; `--plan` runs offline with the new candidate; old results are not overwritten; offline Phase 5 tests pass |
 | Evidence | [STEP_LOG.md — Step 14](STEP_LOG.md#step-14--evaluation-candidate-modernization) |
-| Status | PASS |
+| Status | PARTIAL (Step 20 audit; see [ACCEPTANCE_MATRIX](ACCEPTANCE_MATRIX.md)) |
 | Blockers | None for the mechanism. A `COMMITTED_SOURCE` candidate needs the owner's commit of the current work |
 
 ### 15 — Coding Evaluation Fixtures
@@ -284,7 +284,7 @@ graph.
 | Expected artifacts | Fixtures, task specifications, hidden tests, fixture README |
 | Acceptance criteria | Each fixture builds and its hidden tests fail before and pass with a reference solution, verified locally; no fixture is inside the plugin; secrets scan passes |
 | Evidence | [STEP_LOG.md — Step 15](STEP_LOG.md#step-15--coding-evaluation-fixtures); `tests/evaluation/coding/results/2026-10-22-verify.json` |
-| Status | PASS |
+| Status | PARTIAL (Step 20 audit; see [ACCEPTANCE_MATRIX](ACCEPTANCE_MATRIX.md)) |
 | Blockers | Angular component specs NOT_RUN until `npm ci` is authorized; PostgreSQL needs a local server |
 
 ### 16 — Isolated Coding Agent Runner
@@ -323,7 +323,7 @@ graph.
 | Expected artifacts | Recorded runs, summaries, updated evaluation report. **As executed:** benchmark harness, static report, [ROUTING_CONTEXT_REPORT.md](ROUTING_CONTEXT_REPORT.md), `EVALUATION_REPORT.md` §8.1 |
 | Acceptance criteria | Every number traces to a recorded run on the Step 14 candidate; no simulated proxy result is reported as provider evidence; runs with errors are reported, not dropped. **Owner's Step 18 criteria:** more than 16 valid synthetic Skills evaluated; reproducible expected collision outcomes; metadata size reported; no-match measured or NOT_RUN; provider routing quality not fabricated; existing tests pass |
 | Evidence | [STEP_LOG.md — Step 18](STEP_LOG.md#step-18--routing-and-context-benchmark); [ROUTING_CONTEXT_REPORT.md](ROUTING_CONTEXT_REPORT.md); G-27 21/21; G-27T 10/10; 16/16 control weakenings caught; `tests/evaluation/routing-context/results/2026-10-23-static/` |
-| Status | PASS |
+| Status | PARTIAL (Step 20 audit; see [ACCEPTANCE_MATRIX](ACCEPTANCE_MATRIX.md)) |
 | Blockers | Provider routing, no-match behaviour and provider token counts NOT_RUN on every CLI. They need owner authorization for billed calls (2,385 calls for the full plan), signed-in isolated homes per provider and arm, an approved install of synthetic test packages, and a Codex activation pilot. Pre-existing G-21T CRLF failure unchanged |
 
 ### 19 — Provider and Security Verification
@@ -336,7 +336,7 @@ graph.
 | Expected artifacts | Lifecycle transcripts, security run summaries, updated compatibility matrix. **As executed:** [PROVIDER_SECURITY_REPORT.md](PROVIDER_SECURITY_REPORT.md); `tests/provider-compatibility/results/2026-10-23-step19/` (path-free; raw transcripts kept outside the repository); updated compatibility matrix |
 | Acceptance criteria | Each provider row cites a recorded transcript for the current version, or stays `NOT_RUN`; no critical security outcome is left unexplained; native permissions unchanged. **Owner's Step 19 criteria:** all available offline security tests pass; no distribution policy unintentionally weakened; provider differences documented; unverified runtime behaviour not labelled PASS; regression tests recorded; release blockers visible |
 | Evidence | [STEP_LOG.md — Step 19](STEP_LOG.md#step-19--provider-and-security-verification); [PROVIDER_SECURITY_REPORT.md](PROVIDER_SECURITY_REPORT.md) |
-| Status | PASS |
+| Status | PARTIAL (Step 20 audit; see [ACCEPTANCE_MATRIX](ACCEPTANCE_MATRIX.md)) |
 | Blockers | Copilot CLI ≥1.0.91 not installed (BLOCKED); 16 adversarial cases not executed (no authenticated isolated home, no billed-call authorization); Codex inventory isolation FAIL on this host (F-01); Copilot non-interactive permission conflict with INV-04 (F-04); Claude disabled-loading proof BLOCKED; results describe a working-tree snapshot, not a committed freeze. Pre-existing G-21T CRLF failure unchanged |
 
 ### 20 — Final Audit and Readiness
@@ -345,9 +345,9 @@ graph.
 |---|---|
 | Objective | Audit Steps 01–19 against their acceptance criteria, rerun all offline gates, and state readiness, separating verified results from `NOT_RUN` ones. No release. |
 | Prerequisite | 01–19 |
-| Target files | New `docs/chayen/evolution/FINAL_AUDIT.md`; this plan |
+| Target files | New `docs/chayen/evolution/FINAL_AUDIT.md`; this plan. **As executed under the owner's Step 20 instruction:** `FINAL_AUDIT_REPORT.md`, `ACCEPTANCE_MATRIX.md`, `REGRESSION_RESULTS.md`, `KNOWN_LIMITATIONS.md`, `RELEASE_READINESS.md` in this folder; proposed `CHANGELOG.md` entry; corrections to maintained documents; the G-21T test fix |
 | Expected artifacts | Audit report, readiness verdict, open-risk list |
 | Acceptance criteria | Every step has a status backed by its log entry; every invariant in [rules §3](EXECUTION_RULES.md#3-invariants-that-every-step-preserves) re-checked; `validate-all.mjs` and `run-evaluation-suite.mjs` pass; no release action taken |
-| Evidence | STEP_LOG entry, audit report |
-| Status | NOT_STARTED |
-| Blockers | None beyond prerequisites |
+| Evidence | [STEP_LOG.md — Step 20](STEP_LOG.md#step-20--final-audit-and-readiness); [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md) |
+| Status | PASS |
+| Blockers | None for the audit. Seven prerequisite steps are PARTIAL; their missing criteria do not affect an audit, whose job is to report them ([rules §6](EXECUTION_RULES.md#6-step-status)). The program is not DONE |

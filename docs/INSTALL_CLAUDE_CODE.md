@@ -1,7 +1,9 @@
 # Install in Claude Code
 
 Production target: **Claude Code CLI**. VS Code is unverified/deferred.
-The current 15-Skill development build is not lifecycle/routing-qualified.
+The current 16-Skill build is not release-qualified. Its native lifecycle passed
+in isolated profiles on Claude Code 2.1.220 (2026-10-23, an unreleased
+development snapshot); routing and explicit invocation are NOT_RUN.
 
 | Item | Value |
 |---|---|

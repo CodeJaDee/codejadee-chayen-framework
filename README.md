@@ -143,11 +143,13 @@ Read this before relying on Chayen.
 - Automatic routing accuracy has not been measured for any CLI on the current
   build: the Phase 5 run is BLOCKED pending authorization
   ([routing evaluation](docs/production/ROUTING_EVALUATION.md)).
-- Install, discover, update and remove were tested in isolated profiles on
-  Claude Code 2.1.302 and Codex 0.163.0 for an earlier 15-Skill candidate.
-  Claude disabled loading is BLOCKED and Copilot CLI was not available
-  ([native lifecycle report](docs/production/NATIVE_LIFECYCLE_REPORT.md)).
-  Native install and update of `1.1.0`, `1.1.1` and `1.1.2` are not tested.
+- Install, discover, update and remove passed in isolated profiles on Claude
+  Code 2.1.220 and Codex 0.163.0 for an unreleased 16-Skill development
+  snapshot (2026-10-23), and on Claude Code 2.1.302 and Codex 0.163.0 for the
+  earlier 15-Skill `0.1.0-rc.1` candidate. Claude disabled loading is BLOCKED.
+  Copilot CLI is not qualified: the installed 1.0.89 is below the supported
+  1.0.91 ([Step 19 report](docs/chayen/evolution/PROVIDER_SECURITY_REPORT.md)).
+  The released `1.1.0`, `1.1.1` and `1.1.2` packages were never installed natively.
 - VS Code surfaces are unverified and outside the support claim.
 - Skills are guidance. Real controls are the host's permission prompts, your
   CI and your branch protection

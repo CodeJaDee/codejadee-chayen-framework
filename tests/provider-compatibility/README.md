@@ -121,7 +121,7 @@ inventory lists Skills from outside the isolated profile. Codex 0.163.0 on
 Windows reads the real user's `~/.agents/skills` despite the HOME,
 USERPROFILE and `CODEX_HOME` overrides. Counts by scope are recorded; names
 never are. Do not score Codex routing or security runs where this row fails.
-Migration replays the former identifier using the current 15-Skill body; it
+Migration replays the former identifier using the current Skill body (15 Skills in Phase 4, 16 in Step 19); it
 does not reproduce the historical package. Restart means a new native process
 and inventory reload, not conversation resumption. Local marketplace evidence
 does not prove remote public installation. Historical six-/thirteen-Skill
