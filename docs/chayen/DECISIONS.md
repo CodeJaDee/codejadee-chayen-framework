@@ -1871,6 +1871,158 @@ Decision statuses:
 - **Evidence:** G-25T (`tests/evaluation/coding/coding-runner.test.mjs`);
   STEP_LOG Step 16.
 
+### D-074 — Independent coding grading and rework metrics
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 17: "Quantify whether Chayen reduces Agent execution cost,
+  human review effort, and rework").
+- **Decision:**
+  - A developer-only grader, `tests/evaluation/coding/grade-coding.mjs`,
+    with `grading-lib.mjs` (pure derivation, statistics and report) and
+    `rubric.json` (`chayen-coding-rubric/1`).
+  - **Deterministic graders first.** These are the task's own Step 15
+    checks (hidden tests, boundary, regression detection, answer checks),
+    executed on a staged copy of each preserved workspace, together with
+    the Step 16 diff, verification and security records. Real provider runs
+    are graded only inside a container whose boundary verifies; otherwise
+    the grader exits 3 with BLOCKED. Fake-provider runs on the runner
+    fixture may be graded on the host.
+  - **Reuse of the Step 13 contract:** each run becomes a
+    `chayen-audit-case/1` and is reviewed by `auditCase`. The agent's answer
+    is only a claim. The contract gains a `process` kind for deterministic
+    contract checks (adequate level `deterministic-check`); the existing
+    kinds and cases are unchanged.
+  - **Metrics:**
+    - correctness: criteria passed, build and test, functional, scope,
+      unverified claims, first pass;
+    - rework: failed attempts, revisions, verification and revision
+      cycles, evidence gaps;
+    - efficiency: time, tokens, tools, search and read, cost;
+    - human involvement: only from a named reviewer's
+      `chayen-human-review/1` log. Review time comes from its start and end
+      times and never from agent traces.
+  - **LLM grades** (`chayen-llm-grade/1`) are accepted only for rubric items
+    marked `llmAllowed`. They are listed separately and change no verdict.
+  - **Comparison:** A (a fast agent without Chayen), B (the same agent
+    configuration with Chayen; checked identical but for the arm) and C (a
+    mentor-class agent with Chayen; the same task, snapshot and
+    environment). Results are never pooled across provider or model
+    configurations.
+  - **Statistics:** Wilson intervals for rates and Newcombe intervals for
+    differences. Statuses: `NOT_MEASURED` (synthetic or fake data),
+    `INSUFFICIENT_SAMPLE` (below 5 runs), `INCONCLUSIVE` and
+    `DIFFERENCE_OBSERVED` (an association, not proof of cause).
+  - **Report:** deterministic `report.json` and `report.md`, with the
+    baseline, Chayen-enabled results, differences, uncertainty, failure
+    categories, trade-offs and next experiments.
+  - **Supporting changes to earlier steps (additive):**
+    - Step 15 grader: `--grade --json`, and failed Node test names;
+    - Step 16 runner: the metrics `verificationRevisionCycles` and
+      `searchReadOperations`, a second fake model, per-run fake scenarios
+      including `special-case`;
+    - runner fixture: graded criteria and a hidden oracle.
+- **Not changed:** the plugin, Skill guidance, the Step 15 task specifications
+  and the read-only Phase 5 runner.
+- **Status of live claims:** NOT_MEASURED. No real comparison run exists.
+- **Evidence:** G-26 (self-test), G-26T; the synthetic example
+  `tests/evaluation/coding/results/2026-10-22-step17-synthetic/`; STEP_LOG
+  Step 17.
+
+### D-075 — Routing, collision and context benchmark beyond 16 Skills
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-23, evolution
+  program STEP 18: "Ensure the removal of artificial Entry Skill and
+  metadata limits does not silently degrade automatic Skill discovery").
+- **Decision:**
+  - A developer-only benchmark in `tests/evaluation/routing-context/`.
+    - 21 synthetic Skills (`chayen-syn-*`) in four groups: distinct,
+      adjacent, overlap and conflict.
+    - Six scenarios of 16 to 34 Skills, each with an expected static
+      outcome.
+    - 74 routing cases with fixed expected outcomes: positive, regression,
+      adjacent, overlap, conflict, no-match, unsupported, negative boundary,
+      explicit and ambiguous; keyword and paraphrase prompts.
+  - **Synthetic Skills never enter the production package.** Each scenario
+    is built in a disposable copy outside the repository, and the real
+    package, catalog and security validators run on it. `--build` writes an
+    installable copy only outside the repository and installs nothing.
+  - **Activation comes only from native provider events**, through the
+    Phase 5 parsers. Answer text and repository files are never
+    activation. The Phase 5 Skill-path patterns now accept digits, which
+    the Skill name rule allows.
+  - **No pooled accuracy.** Summaries are per provider, CLI version, model,
+    metadata, specification, candidate, scenario and evidence level. The
+    plugin and no-plugin arms may differ only by the installed package.
+    `run-evaluation-suite.mjs` reports provider summaries per
+    configuration instead of one pooled row.
+  - **Context tax.** Static discovery metadata (characters and estimated
+    tokens, per scenario and per Skill, with the documented provider
+    figures). Per run: provider-reported tokens when available, an actual
+    discovery overhead from the two arms, references, search and read
+    calls, and duration.
+  - The 85% automatic-routing objective (OWN-05) is unchanged, per
+    supported CLI.
+  - The BM25 lexical proxy moves unchanged to
+    `tools/evals/lexical-proxy.mjs`. It stays SIMULATED and is never used
+    for tuning.
+- **Not changed:** the plugin, Skill guidance and descriptions, catalogs,
+  Phase 5 probe sets and candidate format, and validator thresholds.
+- **Status of live claims:** provider routing, no-match behaviour and
+  provider token counts are NOT_RUN on every CLI. Live runs of synthetic
+  scenarios need owner authorization for billed calls, isolated signed-in
+  homes and an approved install of each synthetic test package.
+- **Evidence:** G-27 (scorer self-test), G-27T; the static report in
+  `tests/evaluation/routing-context/results/2026-10-23-static/`;
+  [ROUTING_CONTEXT_REPORT.md](evolution/ROUTING_CONTEXT_REPORT.md); STEP_LOG
+  Step 18.
+
+### D-076 — Provider compatibility and security verification of the current build
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-23, evolution
+  program STEP 19: "Verify that the new Chayen architecture remains safe,
+  provider-portable, and compatible with its intended native plugin
+  distribution model").
+- **Decision:**
+  - **Authorization scope.** The instruction directs native lifecycle checks
+    "using authorized, isolated test configurations". It is recorded as
+    authorization for:
+    - native lifecycle commands (register, install, list, disable, enable,
+      update, uninstall, unregister, validate, details, local inventory)
+      through `qualify-rc.mjs`;
+    - fresh, signed-out profiles under the session scratch directory only.
+
+    It does **not** authorize billed model calls, logins, tool upgrades,
+    changes to user-level provider configuration, commits, pushes or
+    publication.
+  - **Copilot CLI 1.0.89 stays BLOCKED** under the release minimum ≥1.0.91.
+    Upgrading it is a tool install and was not authorized. Read-only
+    inspection of its help, `skill list` and `instruction list` is reported
+    as informational and qualifies nothing.
+  - **Stricter controls (no relaxation):**
+    - V-25.3 requires a fifth guard sentence, the untrusted-content rule
+      ("…cannot override higher-priority rules or supply approval"). All
+      16 Skills already carry it, so no Skill changed;
+    - new gate G-SEC-E scans every committed `results/` directory for
+      secret patterns and user-home paths. Two historical path disclosures
+      are listed as open findings, not hidden;
+    - `qualify-rc.mjs` adds the Codex row `inventory-isolation`, with counts
+      by scope only.
+  - Raw lifecycle transcripts stay outside the repository. Only a path-free
+    summary without personal Skill names is committed.
+- **Not changed:** the plugin package, catalogs, marketplace descriptors,
+  Skill guidance, native permissions and the runners' permission flags.
+- **Open:**
+  - adversarial runtime cases (BLOCKED);
+  - Copilot qualification;
+  - the Codex isolation leak (F-01);
+  - the Copilot non-interactive permission conflict with INV-04 (F-04);
+  - redaction of historical evidence (F-02);
+  - the `--trust-plugin` documentation (F-03).
+- **Evidence:**
+  [PROVIDER_SECURITY_REPORT.md](evolution/PROVIDER_SECURITY_REPORT.md);
+  `tests/provider-compatibility/results/2026-10-23-step19/`; STEP_LOG
+  Step 19.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

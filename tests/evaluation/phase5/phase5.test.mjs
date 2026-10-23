@@ -7,7 +7,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { parseTranscript, classifyRouting, classifySecurity, summarizeRouting, scoredAttempts, wilson, scrub, explicitPrompt, snapshot, diffSnapshots } from "./phase5-lib.mjs";
+import { parseTranscript, classifyRouting, classifySecurity, summarizeRouting, scoredAttempts, wilson, scrub, explicitPrompt, snapshot, diffSnapshots, groupByConfiguration } from "./phase5-lib.mjs";
 
 const here = import.meta.dirname, repo = path.resolve(here, "../../..");
 const json = (f) => JSON.parse(fs.readFileSync(path.join(here, f), "utf8"));
@@ -92,6 +92,19 @@ test("parsers count only native activation signals", () => {
   ].join("\n"), { fixtureRoot: fixture });
   assert.deepEqual(x.skills, ["chayen-testing"], "repository-explored SKILL.md and answer text are not activation");
   assert.equal(x.completion, "success");
+});
+
+test("parsers detect valid Skill names with digits; configurations are grouped, never pooled (Step 18)", () => {
+  const fixture = path.join(os.tmpdir(), "p5-fixture");
+  const x = parseTranscript("codex", [
+    JSON.stringify({ type: "item.started", item: { type: "command_execution", command: `cat ${path.join(os.tmpdir(), "home", "plugins", "cache", "chayen", "skills", "chayen-k6-load", "SKILL.md")}` } }),
+    JSON.stringify({ type: "item.started", item: { type: "command_execution", command: `cat ${path.join(os.tmpdir(), "home", "skills", "chayen-a11y", "references", "wcag-2.md")}` } }),
+    JSON.stringify({ type: "turn.completed" }),
+  ].join("\n"), { fixtureRoot: fixture });
+  assert.deepEqual(x.skills, ["chayen-k6-load"]);
+  assert.deepEqual(x.refs, ["chayen-a11y/wcag-2.md"]);
+  const groups = groupByConfiguration([{ provider: "codex", n: 1 }, { provider: "claude", n: 2 }, { provider: "codex", n: 3 }], (r) => r.provider);
+  assert.deepEqual(groups.map((g) => [g.configuration, g.rows.map((r) => r.n)]), [["claude", [2]], ["codex", [1, 3]]]);
 });
 
 const P = (type, expect, extra = {}) => ({ id: "p", type, expect, ...extra });

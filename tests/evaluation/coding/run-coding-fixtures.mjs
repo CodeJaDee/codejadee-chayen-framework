@@ -10,7 +10,7 @@
 // Usage:
 //   node tests/evaluation/coding/run-coding-fixtures.mjs --check                  structure and safety (fast)
 //   node tests/evaluation/coding/run-coding-fixtures.mjs --verify [--task <id>] [--out <file>]
-//   node tests/evaluation/coding/run-coding-fixtures.mjs --grade --task <id> --workspace <dir> [--answer <file>]
+//   node tests/evaluation/coding/run-coding-fixtures.mjs --grade --task <id> --workspace <dir> [--answer <file>] [--json]
 
 import fs from "node:fs";
 import os from "node:os";
@@ -162,7 +162,7 @@ export function grade(task, taskDir, workspace, { answer = null } = {}) {
         const t = spawnSync(process.execPath, ["--test", "--no-warnings", c.target], { cwd: ws, encoding: "utf8", timeout: 120_000, env, shell: false });
         const pass = +(/ℹ pass (\d+)/.exec(t.stdout)?.[1] ?? 0), fail = +(/ℹ fail (\d+)/.exec(t.stdout)?.[1] ?? 0);
         const names = [...t.stdout.matchAll(/^✖ (.+?) \(/gm)].map((m) => m[1]).filter((n) => n !== "failing tests:");
-        r = { status: t.status === 0 && pass >= (c.minPassed ?? 1) ? "PASS" : "FAIL", counts: { passed: pass, failed: fail }, detail: `Node ${tools().node} --test: passed ${pass}, failed ${fail}${names.length ? `; failed: ${[...new Set(names)].slice(0, 5).join(", ")}` : ""}` };
+        r = { status: t.status === 0 && pass >= (c.minPassed ?? 1) ? "PASS" : "FAIL", counts: { passed: pass, failed: fail }, failedTests: [...new Set(names)], detail: `Node ${tools().node} --test: passed ${pass}, failed ${fail}${names.length ? `; failed: ${[...new Set(names)].slice(0, 5).join(", ")}` : ""}` };
       } else if (c.check === "static") {
         const files = walk(ws).filter((f) => matches(f, c.files));
         const text = files.map((f) => read(path.join(ws, f))).join("\n");
@@ -289,8 +289,11 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(import.met
       const [entry] = loadTasks(arg("--task"));
       if (!entry || !arg("--workspace")) throw new Error("--grade needs --task <id> and --workspace <dir>");
       const g = grade(entry.task, entry.dir, path.resolve(arg("--workspace")), { answer: arg("--answer") ? fs.readFileSync(path.resolve(arg("--answer")), "utf8") : null });
-      for (const c of g.results) console.log(`${c.status.padEnd(7)} ${c.name}: ${c.detail}`);
-      console.log(`${g.overall} ${g.task}`);
+      if (argv.includes("--json")) console.log(JSON.stringify(g));
+      else {
+        for (const c of g.results) console.log(`${c.status.padEnd(7)} ${c.name}: ${c.detail}`);
+        console.log(`${g.overall} ${g.task}`);
+      }
       process.exitCode = g.overall === "FAIL" ? 1 : 0;
     } else throw new Error("usage: --check | --verify [--task id] [--out file] | --grade --task id --workspace dir [--answer file]");
   } catch (e) { console.log(`ERROR ${e.message}`); process.exitCode = 2; }

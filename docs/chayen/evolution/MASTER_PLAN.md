@@ -33,9 +33,9 @@ blockers.
 | 14 | Evaluation Candidate Modernization | 06, 10, 11, 12, 13 | PASS | — |
 | 15 | Coding Evaluation Fixtures | 14 | PASS | Angular component specs NOT_RUN (no node_modules); no PostgreSQL fixture (no local server) |
 | 16 | Isolated Coding Agent Runner | 15 | PASS | Live runs NOT_RUN: BLOCKED on this host (no Linux container engine); need owner authorization, budget caps, a pinned image and signed-in isolated homes |
-| 17 | Independent Grading and Metrics | 16 | NOT_STARTED | Human grading needs a named grader |
-| 18 | Routing and Context Benchmark | 14, 17 | NOT_STARTED | Billed calls need authorization; Codex and Copilot homes need authentication (EG-02, EG-03) |
-| 19 | Provider and Security Verification | 14, 18 | NOT_STARTED | Native install lifecycle and billed calls need explicit owner opt-in |
+| 17 | Independent Grading and Metrics | 16 | PASS | Live comparison NOT_MEASURED (no real runs; Step 16 BLOCKED on this host); human-graded items need a named grader |
+| 18 | Routing and Context Benchmark | 14, 17 | PASS | Provider routing, no-match and token counts NOT_RUN on every CLI: billed calls, signed-in isolated homes and the install of synthetic test packages need owner authorization (EG-02, EG-03, EG-21) |
+| 19 | Provider and Security Verification | 14, 18 | PASS | Copilot CLI 1.0.89 below the 1.0.91 minimum (BLOCKED); adversarial runtime cases BLOCKED (no authenticated isolated home, no billed-call authorization); Codex inventory isolation FAIL (F-01); Claude disabled-loading proof BLOCKED; no committed frozen candidate |
 | 20 | Final Audit and Readiness | 01–19 | NOT_STARTED | — |
 
 **Plan note (2026-10-22, Step 02):** the owner accepted D-066 /
@@ -304,40 +304,40 @@ graph.
 
 | Field | Value |
 |---|---|
-| Objective | Grade coding runs independently of the agent: hidden tests, a rubric, and human review where required. Define metrics (task success, routing precision and recall, reference loads, cost) with sample sizes. |
+| Objective | Grade coding runs independently of the agent: hidden tests, a rubric, and human review where required. Define metrics (task success, routing precision and recall, reference loads, cost) with sample sizes. **As executed under the owner's Step 17 instruction (D-074):** `grade-coding.mjs` with `grading-lib.mjs` and `rubric.json`. Task hidden checks run on staged workspace copies (real runs only in a verified container, otherwise BLOCKED), and every criterion is reviewed by the Step 13 `auditCase` (new `process` kind). Metrics: correctness, rework, efficiency, human involvement (named reviewer's log only). Comparison of A (fast, no Chayen), B (the same agent with Chayen) and C (mentor with Chayen), with Wilson and Newcombe intervals and NOT_MEASURED, INSUFFICIENT_SAMPLE and INCONCLUSIVE statuses. Deterministic report; synthetic example committed. |
 | Prerequisite | 16 |
 | Target files | New grader under `tests/evaluation/coding/`; `docs/chayen/EVALUATION_REPORT.md` method section; rubric document |
 | Expected artifacts | Grader, rubric, metric definitions, scorer self-test |
 | Acceptance criteria | The grader never reads the agent's own success claim as evidence; scorer self-test with known-good and known-bad records passes offline; human-graded items are labelled and never pooled with automatic ones |
-| Evidence | STEP_LOG entry |
-| Status | NOT_STARTED |
-| Blockers | A named human grader for human-scored items |
+| Evidence | [STEP_LOG.md — Step 17](STEP_LOG.md#step-17--independent-grading-and-metrics); G-26 15/15; G-26T 11/11; 13/13 control weakenings caught; `tests/evaluation/coding/results/2026-10-22-step17-synthetic/` |
+| Status | PASS |
+| Blockers | Live comparison NOT_MEASURED: no real runs exist (Step 16 live runs BLOCKED on this host). Human-scored items need a named grader. Angular specs and the SQL Server oracle in a container stay NOT_RUN |
 
 ### 18 — Routing and Context Benchmark
 
 | Field | Value |
 |---|---|
-| Objective | Measure routing across all 16 Skills (plugin and baseline arms, at least 3 runs) and context overhead with provider token counts instead of the characters/4 estimate (EG-12). |
+| Objective | Measure routing across all 16 Skills (plugin and baseline arms, at least 3 runs) and context overhead with provider token counts instead of the characters/4 estimate (EG-12). **As executed under the owner's Step 18 instruction (D-075):** check that removing the Skill and metadata caps does not silently degrade discovery. A developer-only benchmark in `tests/evaluation/routing-context/`: 21 synthetic Skills in six scenarios of 16 to 34 Skills, built and validated only in disposable copies; 74 routing cases with fixed expected outcomes; classification from native activation events; per-configuration summaries with selection breakdown and context tax; the evaluation suite no longer pools provider results. Static results recorded; provider runs NOT_RUN. |
 | Prerequisite | 14, 17 |
 | Target files | `tests/evaluation/phase5/routing-probes.json`; `tools/evals/run-evaluation-suite.mjs` (pooled reporting); results directory outside the repository, summarized into `docs/chayen/EVALUATION_REPORT.md` |
-| Expected artifacts | Recorded runs, summaries, updated evaluation report |
-| Acceptance criteria | Every number traces to a recorded run on the Step 14 candidate; no simulated proxy result is reported as provider evidence; runs with errors are reported, not dropped |
-| Evidence | STEP_LOG entry, run summaries |
-| Status | NOT_STARTED |
-| Blockers | Billed calls need authorization; Codex and Copilot need authenticated isolated homes (EG-02, EG-03) |
+| Expected artifacts | Recorded runs, summaries, updated evaluation report. **As executed:** benchmark harness, static report, [ROUTING_CONTEXT_REPORT.md](ROUTING_CONTEXT_REPORT.md), `EVALUATION_REPORT.md` §8.1 |
+| Acceptance criteria | Every number traces to a recorded run on the Step 14 candidate; no simulated proxy result is reported as provider evidence; runs with errors are reported, not dropped. **Owner's Step 18 criteria:** more than 16 valid synthetic Skills evaluated; reproducible expected collision outcomes; metadata size reported; no-match measured or NOT_RUN; provider routing quality not fabricated; existing tests pass |
+| Evidence | [STEP_LOG.md — Step 18](STEP_LOG.md#step-18--routing-and-context-benchmark); [ROUTING_CONTEXT_REPORT.md](ROUTING_CONTEXT_REPORT.md); G-27 21/21; G-27T 10/10; 16/16 control weakenings caught; `tests/evaluation/routing-context/results/2026-10-23-static/` |
+| Status | PASS |
+| Blockers | Provider routing, no-match behaviour and provider token counts NOT_RUN on every CLI. They need owner authorization for billed calls (2,385 calls for the full plan), signed-in isolated homes per provider and arm, an approved install of synthetic test packages, and a Codex activation pilot. Pre-existing G-21T CRLF failure unchanged |
 
 ### 19 — Provider and Security Verification
 
 | Field | Value |
 |---|---|
-| Objective | Verify native install, update and uninstall of the current version on Claude Code, Codex and Copilot, and run the security and prompt-injection cases (EG-09) on the installed candidate. |
+| Objective | Verify native install, update and uninstall of the current version on Claude Code, Codex and Copilot, and run the security and prompt-injection cases (EG-09) on the installed candidate. **As executed under the owner's Step 19 instruction (D-076):** the 12 security properties were verified against static controls and native inventories. Native lifecycle ran on the `1.1.2` working-tree snapshot in isolated profiles (Claude Code 2.1.220, Codex 0.163.0; Copilot 1.0.89 BLOCKED below its minimum). Three controls were added: the fifth V-25.3 guard, the G-SEC-E evidence privacy gate, and Codex `inventory-isolation`. Adversarial runtime cases are BLOCKED. |
 | Prerequisite | 14, 18 |
 | Target files | `tests/provider-compatibility/` runbooks and results; `tests/evaluation/phase5/security-cases.json`; `docs/COMPATIBILITY_MATRIX.md`; `docs/production/NATIVE_LIFECYCLE_REPORT.md` |
-| Expected artifacts | Lifecycle transcripts, security run summaries, updated compatibility matrix |
-| Acceptance criteria | Each provider row cites a recorded transcript for the current version, or stays `NOT_RUN`; no critical security outcome is left unexplained; native permissions unchanged |
-| Evidence | STEP_LOG entry, transcripts |
-| Status | NOT_STARTED |
-| Blockers | Explicit owner opt-in for install lifecycle and billed calls |
+| Expected artifacts | Lifecycle transcripts, security run summaries, updated compatibility matrix. **As executed:** [PROVIDER_SECURITY_REPORT.md](PROVIDER_SECURITY_REPORT.md); `tests/provider-compatibility/results/2026-10-23-step19/` (path-free; raw transcripts kept outside the repository); updated compatibility matrix |
+| Acceptance criteria | Each provider row cites a recorded transcript for the current version, or stays `NOT_RUN`; no critical security outcome is left unexplained; native permissions unchanged. **Owner's Step 19 criteria:** all available offline security tests pass; no distribution policy unintentionally weakened; provider differences documented; unverified runtime behaviour not labelled PASS; regression tests recorded; release blockers visible |
+| Evidence | [STEP_LOG.md — Step 19](STEP_LOG.md#step-19--provider-and-security-verification); [PROVIDER_SECURITY_REPORT.md](PROVIDER_SECURITY_REPORT.md) |
+| Status | PASS |
+| Blockers | Copilot CLI ≥1.0.91 not installed (BLOCKED); 16 adversarial cases not executed (no authenticated isolated home, no billed-call authorization); Codex inventory isolation FAIL on this host (F-01); Copilot non-interactive permission conflict with INV-04 (F-04); Claude disabled-loading proof BLOCKED; results describe a working-tree snapshot, not a committed freeze. Pre-existing G-21T CRLF failure unchanged |
 
 ### 20 — Final Audit and Readiness
 

@@ -1,0 +1,140 @@
+{
+  "$schema": "chayen-synthetic-skills/1",
+  "$comment": "Developer-only synthetic Skills for the evolution Step 18 routing, collision and context benchmark. They are never added to the production package: run-routing-context.mjs builds each scenario in a disposable copy outside the repository. Groups: distinct (unrelated scopes), adjacent (similar terminology to one production Skill), overlap (valid but overlapping task boundaries), conflict (deliberately conflicting descriptions). Two names contain digits on purpose (a11y, k6): the Skill name rule allows them, and the transcript parsers must detect them.",
+  "skills": [
+    {
+      "name": "chayen-syn-game-mods", "group": "distinct", "title": "Game server mods",
+      "description": "Package and check mods for the Minecraft Java server in this repository, covering datapack layout, mod loader manifest schema, crafting recipe JSON and server command blocks. Not for web APIs, database work, or CI pipelines.",
+      "scope": "Minecraft Java server datapacks and mod manifests in this repository; not web APIs, databases or CI.",
+      "prompts": ["Check why the datapack in this repository does not load on the server.", "Validate the mod loader manifest before the next server restart.", "Fix the crafting recipe JSON that the server rejects.", "Review the command blocks used by the spawn area."]
+    },
+    {
+      "name": "chayen-syn-firmware", "group": "distinct", "title": "Sensor board firmware",
+      "description": "Build and flash Zephyr RTOS firmware for sensor boards, covering devicetree overlays, Kconfig options, west build commands and Twister hardware test suites. Not for cloud services, web UI, or mobile apps.",
+      "scope": "Zephyr firmware for the sensor boards; not cloud services, web UI or mobile apps.",
+      "prompts": ["Fix the west build that fails for the sensor board.", "Add a devicetree overlay for the second I2C bus.", "Enable the low-power Kconfig option for the board.", "Run the Twister suite for the temperature driver."]
+    },
+    {
+      "name": "chayen-syn-latex", "group": "distinct", "title": "LaTeX papers",
+      "description": "Compile and fix LaTeX research papers in the repository, covering BibTeX entries, figure layout, the latexmk build command and journal class options. Not for prose rewriting, slide decks, or web pages.",
+      "scope": "LaTeX sources of research papers; not prose rewriting, slides or web pages.",
+      "prompts": ["Fix the latexmk build of the journal paper.", "Repair the BibTeX entry that breaks the bibliography.", "Move the wide figure so it stops overflowing the column.", "Switch the paper to the journal's two-column class option."]
+    },
+    {
+      "name": "chayen-syn-gis", "group": "distinct", "title": "GIS map layers",
+      "description": "Prepare GIS map layers, covering shapefile and GeoJSON schema checks, coordinate reprojection with GDAL commands, and vector tile pipeline settings. Not for database tuning, frontend components, or mobile apps.",
+      "scope": "GIS layer files and their processing commands; not database tuning, frontend components or mobile apps.",
+      "prompts": ["Reproject the district shapefile to Web Mercator.", "Check the GeoJSON schema of the parcels layer.", "Fix the vector tile pipeline settings for zoom 14.", "List the GDAL commands that build the base layer."]
+    },
+    {
+      "name": "chayen-syn-audio-dsp", "group": "distinct", "title": "Audio DSP plugins",
+      "description": "Design and test audio DSP plugins with JUCE, covering the processor graph, VST3 parameter layout, sample-rate conversion and the offline render test command. Not for web audio pages, music theory, or speech AI.",
+      "scope": "JUCE audio plugin code; not web audio pages, music theory or speech AI.",
+      "prompts": ["Fix the click when the host changes the sample rate.", "Add a mix parameter to the VST3 parameter layout.", "Reorder the processor graph so the limiter runs last.", "Run the offline render test for the reverb."]
+    },
+    {
+      "name": "chayen-syn-vba", "group": "distinct", "title": "Spreadsheet macros",
+      "description": "Write and debug Excel VBA macros and Office Scripts for finance workbooks, covering named ranges, pivot refresh, form controls and macro security prompts. Not for database schema, Python data pipelines, or web forms.",
+      "scope": "VBA macros and Office Scripts in finance workbooks; not databases, Python pipelines or web forms.",
+      "prompts": ["Debug the macro that refreshes the pivot tables.", "Replace hard-coded cell addresses with named ranges.", "Fix the form control that runs the month-end macro.", "Explain the macro security prompt users see on open."]
+    },
+    {
+      "name": "chayen-syn-ros", "group": "distinct", "title": "ROS 2 robot packages",
+      "description": "Configure ROS 2 robot packages, covering launch files, URDF layout, the colcon build command, topic QoS settings and Gazebo simulation test worlds. Not for web backends, cloud infrastructure, or mobile apps.",
+      "scope": "ROS 2 packages and their simulation worlds; not web backends, cloud infrastructure or mobile apps.",
+      "prompts": ["Fix the colcon build after the launch file change.", "Correct the wheel joints in the URDF.", "Set reliable QoS on the odometry topic.", "Add a narrow corridor to the Gazebo test world."]
+    },
+    {
+      "name": "chayen-syn-solidity", "group": "distinct", "title": "Solidity contracts",
+      "description": "Write and test Solidity smart contracts with Foundry, covering contract storage layout, the forge test command, gas snapshots and upgrade proxy patterns. Not for web wallets, payment backends, or audits of deployed contracts.",
+      "scope": "Solidity contracts and Foundry tests in this repository; not wallets, payment backends or audits of deployed contracts.",
+      "prompts": ["Fix the failing forge test for the vault.", "Check the storage layout before the proxy upgrade.", "Explain the gas snapshot regression in the last commit.", "Add a fuzz test for the withdraw function."]
+    },
+    {
+      "name": "chayen-syn-graphql", "group": "adjacent", "neighbour": "chayen-backend", "title": "GraphQL schemas",
+      "description": "Design GraphQL schemas and resolvers in Node or .NET services, covering schema-first types, DataLoader batching, persisted queries and field-level authorization directives. Not for REST endpoints, database migrations, or frontend components.",
+      "scope": "GraphQL schemas and resolvers; not REST endpoints, database migrations or frontend components.",
+      "prompts": ["Add a GraphQL type for invoices.", "Batch the customer lookups in the orders resolver.", "Register the persisted queries for the mobile client.", "Add a field-level authorization directive to salary."]
+    },
+    {
+      "name": "chayen-syn-seed-data", "group": "adjacent", "neighbour": "chayen-data", "title": "Test data seeding",
+      "description": "Create and refresh test data seed scripts for SQL Server or PostgreSQL, covering anonymized fixtures, referential insert order, an idempotent seed command and reset scripts. Not for schema migrations, query tuning, or production backfills.",
+      "scope": "Seed and reset scripts for local and test databases; not migrations, query tuning or production backfills.",
+      "prompts": ["Write a seed script for the local orders database.", "Make the seed command safe to run twice.", "Anonymize the customer fixtures used by the seed.", "Fix the insert order so the seed respects foreign keys."]
+    },
+    {
+      "name": "chayen-syn-storybook", "group": "adjacent", "neighbour": "chayen-frontend", "title": "Component stories",
+      "description": "Write Storybook stories and MDX docs for React or Angular component libraries, covering args tables, interaction tests and visual review snapshots. Not for application pages, README files, or end-to-end tests.",
+      "scope": "Storybook stories and MDX docs for shared components; not application pages, READMEs or end-to-end tests.",
+      "prompts": ["Add stories for every state of the date picker.", "Write the MDX page for the button component.", "Add an interaction test to the dropdown story.", "Fix the args table for the modal component."]
+    },
+    {
+      "name": "chayen-syn-k6-scripts", "group": "adjacent", "neighbour": "chayen-performance", "title": "Load test scripts",
+      "description": "Author k6 load test scripts from OpenAPI files, covering scenario stages, thresholds, test data feeders and a CI smoke command. Not for profiling, capacity planning, or functional API tests.",
+      "scope": "k6 scripts generated or written from API descriptions; not profiling, capacity planning or functional API tests.",
+      "prompts": ["Write a k6 script for the checkout endpoints.", "Add ramp-up stages to the search load script.", "Feed test users from a CSV into the k6 script.", "Add a short smoke stage that runs in CI."]
+    },
+    {
+      "name": "chayen-syn-helm", "group": "adjacent", "neighbour": "chayen-devops", "title": "Helm charts",
+      "description": "Package Kubernetes services as Helm charts, covering the values schema, chart templates, the chart-testing lint command and OCI registry publishing. Not for CI/CD pipelines, Terraform, or incident response.",
+      "scope": "Helm charts for the services; not CI/CD pipelines, Terraform or incident response.",
+      "prompts": ["Turn the orders deployment into a Helm chart.", "Add a values schema to the chart.", "Fix the chart-testing lint failure.", "Publish the chart to the OCI registry."]
+    },
+    {
+      "name": "chayen-syn-changelog", "group": "adjacent", "neighbour": "chayen-documentation", "title": "Changelog compilation",
+      "description": "Compile CHANGELOG entries from merged pull requests, conventional commit messages and the git diff between release tags in the repository. Not for release notes prose, README edits, or git history rewriting.",
+      "scope": "CHANGELOG entries derived from merged work; not release notes prose, README edits or history rewriting.",
+      "prompts": ["Add CHANGELOG entries for everything merged since the last tag.", "Group the CHANGELOG entries by conventional commit type.", "Check the CHANGELOG against the diff between the two release tags.", "Fix the CHANGELOG section that lists the same fix twice."]
+    },
+    {
+      "name": "chayen-syn-openapi-lint", "group": "overlap", "neighbour": "chayen-syn-api-mocks", "title": "OpenAPI contracts",
+      "description": "Maintain OpenAPI contract files, covering spec linting, a breaking-change diff between versions, generated client checks and the contract test command in CI. Not for endpoint implementation, load testing, or API gateway configuration.",
+      "scope": "OpenAPI contract files and their checks; not endpoint implementation, load testing or gateways.",
+      "prompts": ["Lint the orders OpenAPI file.", "Diff the API spec against the last release for breaking changes.", "Check that the generated client still compiles against the spec.", "Add the contract test command to CI."]
+    },
+    {
+      "name": "chayen-syn-api-mocks", "group": "overlap", "neighbour": "chayen-syn-openapi-lint", "title": "API mock servers",
+      "description": "Build mock API servers from OpenAPI files or recorded traffic for frontend and test use, covering Prism or WireMock stubs, fixtures and the local mock command. Not for contract linting, production gateways, or load testing.",
+      "scope": "Local mock servers and stubs; not contract linting, production gateways or load testing.",
+      "prompts": ["Start a mock of the payments API for the frontend team.", "Record traffic from staging and turn it into stubs.", "Add a fixture for the declined-card response.", "Document the local mock command in the repository."]
+    },
+    {
+      "name": "chayen-syn-feature-flags", "group": "overlap", "neighbour": "chayen-implementation", "title": "Feature flag definitions",
+      "description": "Manage feature flag definitions in LaunchDarkly or Unleash, covering flag schema files, rollout rules, a stale flag cleanup diff and the flag audit command. Not for application refactors, release pipelines, or A/B test statistics.",
+      "scope": "Flag definitions and their rollout rules; not application refactors, release pipelines or experiment statistics.",
+      "prompts": ["List the flags that have been fully rolled out for 90 days.", "Add a percentage rollout rule to the new checkout flag.", "Validate the flag schema files.", "Run the flag audit command and summarize the findings."]
+    },
+    {
+      "name": "chayen-syn-a11y-audit", "group": "overlap", "neighbour": "chayen-frontend", "title": "Accessibility audits",
+      "description": "Run accessibility audits on built web pages, covering axe and Pa11y command runs, WCAG 2.2 report triage and keyboard focus checklists for each route. Not for component implementation, design systems, or native mobile apps.",
+      "scope": "Audits of built pages and their reports; not component implementation, design systems or native apps.",
+      "prompts": ["Run axe against the staging pages.", "Triage the Pa11y report by WCAG criterion.", "Write a keyboard focus checklist for the checkout route.", "Compare this audit with last month's report."]
+    },
+    {
+      "name": "chayen-syn-test-authoring", "group": "conflict", "conflictKind": "semantic", "neighbour": "chayen-testing", "title": "Automated checks",
+      "description": "Author and repair automated checks for application code, covering specs for single functions, service-level suites, browser journeys, fixture factories and diagnosis of unstable checks, with each runner command in the repository. Not for hand-run QA scripts, traffic simulation, or live alerting.",
+      "scope": "Automated checks for application code; not hand-run QA scripts, traffic simulation or live alerting.",
+      "prompts": ["Add specs for the discount function.", "Write a service-level suite for the orders module.", "Diagnose the unstable checkout browser journey.", "Create fixture factories for customers and orders."]
+    },
+    {
+      "name": "chayen-syn-sql-tuning", "group": "conflict", "conflictKind": "lexical", "neighbour": "chayen-data", "title": "SQL tuning",
+      "description": "Review and tune relational data in SQL Server or PostgreSQL through EF Core, Dapper, Prisma, SQLAlchemy, Django, or raw SQL, covering schema modeling, migrations, query and index tuning, transactions, integrity, data migrations and backfills, ETL, data quality, retention, and restore drills. Not for API endpoint code, NoSQL or warehouse platforms such as MongoDB or Snowflake, or database provisioning.",
+      "scope": "A deliberate near-copy of the production data Skill; it must be rejected by the distinctness check.",
+      "prompts": ["Tune the slow orders query.", "Add the missing index on Orders.CreatedAt.", "Review the transaction isolation of the billing job.", "Plan the backfill for the new status column."]
+    },
+    {
+      "name": "chayen-syn-graphql-schema", "group": "conflict", "conflictKind": "lexical", "neighbour": "chayen-syn-graphql", "title": "GraphQL schema review",
+      "description": "Design and review GraphQL schemas and resolvers in Node or .NET services, covering schema-first types, DataLoader batching, persisted queries and field-level authorization directives. Not for REST endpoints, database migrations, or frontend components.",
+      "scope": "A deliberate near-copy of the synthetic GraphQL Skill; it must be rejected by the distinctness check.",
+      "prompts": ["Review the invoices GraphQL type.", "Check the DataLoader batching in the orders resolver.", "Review the persisted queries list.", "Review the authorization directives on employee fields."]
+    }
+  ],
+  "scenarios": [
+    { "id": "SC0-production", "description": "The shipped package alone; the reference point for metadata and regressions.", "add": [], "expect": { "valid": true } },
+    { "id": "SC1-distinct", "description": "Eight Skills with unrelated scopes added to the shipped package.", "add": ["group:distinct"], "expect": { "valid": true } },
+    { "id": "SC2-adjacent", "description": "SC1 plus six Skills whose terminology is close to one production Skill each.", "add": ["group:distinct", "group:adjacent"], "expect": { "valid": true } },
+    { "id": "SC3-overlap", "description": "SC2 plus four Skills with valid but overlapping task boundaries: 18 valid synthetic Skills, 34 in total.", "add": ["group:distinct", "group:adjacent", "group:overlap"], "expect": { "valid": true } },
+    { "id": "SC4-semantic-conflict", "description": "SC1 plus a paraphrased duplicate of the production testing Skill. It is valid by every static check, so only routing evidence can reveal the collision.", "add": ["group:distinct", "chayen-syn-test-authoring"], "expect": { "valid": true, "undetectedConflicts": [["chayen-syn-test-authoring", "chayen-testing"]] } },
+    { "id": "SC5-lexical-conflict", "description": "SC1 plus the GraphQL Skill and two near-copies. The distinctness check must reject exactly the two copied pairs; the scenario is never installed.", "add": ["group:distinct", "chayen-syn-graphql", "chayen-syn-sql-tuning", "chayen-syn-graphql-schema"], "expect": { "valid": false, "distinctnessErrors": [["chayen-data", "chayen-syn-sql-tuning"], ["chayen-syn-graphql", "chayen-syn-graphql-schema"]] } }
+  ]
+}

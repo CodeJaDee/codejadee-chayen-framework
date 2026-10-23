@@ -17,6 +17,9 @@ import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
 import { inside } from "../validate/safe-paths.mjs";
 import { loadEditorialRegistration, loadProjectRegistration } from "../catalog/skill-registration.mjs";
 import { discoveryMetrics, readDiscoveryEntries } from "../catalog/discovery-metrics.mjs";
+import { lexicalRanker, lexicalThreshold } from "./lexical-proxy.mjs";
+import { groupByConfiguration } from "../../tests/evaluation/phase5/phase5-lib.mjs";
+import { routingContextSummary } from "../../tests/evaluation/routing-context/routing-context-lib.mjs";
 
 const root = path.resolve(import.meta.dirname, "..", "..");
 const rel = (p) => inside(root, p);
@@ -144,16 +147,9 @@ report.metrics.discovery = discoveryMetrics(readDiscoveryEntries(root));
 if (report.metrics.discovery.actual.chars !== report.metrics.contextOverhead.alwaysOnL0.chars) fail("S-DISCOVERY", "discovery metrics and context overhead disagree on L0 characters");
 if (editorialRegistration.errors.length) fail("S-REGISTRATION", "editorial registration invalid");
 if (projectRegistration.errors.length) fail("S-REGISTRATION", "project registration invalid");
-const STOP = new Set("a an and are as at be by can do does for from has have how i in into is it its me my of on or our should so that the their them then this to use we what when where which why will with without you your not only all any".split(" "));
-const tok = (s) => s.toLowerCase().replace(/[^a-z0-9.#+]+/g, " ").split(" ").filter((w) => w.length > 1 && !STOP.has(w));
-const docs = skills.map((s) => ({ skill: s.skill, terms: tok(`${s.skill.replace("chayen-", "")} ${s.description}`) }));
-const df = {}; for (const d of docs) for (const t of new Set(d.terms)) df[t] = (df[t] ?? 0) + 1;
-const avgLen = docs.reduce((a, d) => a + d.terms.length, 0) / docs.length;
-const bm25 = (q, d) => { let s = 0; const tf = {}; for (const t of d.terms) tf[t] = (tf[t] ?? 0) + 1; for (const t of new Set(tok(q))) { if (!tf[t]) continue; const idf = Math.log(1 + (docs.length - df[t] + 0.5) / (df[t] + 0.5)); s += idf * (tf[t] * 2.2) / (tf[t] + 1.2 * (0.25 + 0.75 * d.terms.length / avgLen)); } return s; };
-const rank = (q) => docs.map((d) => ({ skill: d.skill, score: bm25(q, d) })).sort((a, b) => b.score - a.score);
+const rank = lexicalRanker(skills);
 const pos = trigger.cases.filter((c) => c.category === "positive");
-const posTop = pos.map((c) => rank(c.prompt)[0].score).sort((a, b) => a - b);
-const tau = 0.5 * posTop[Math.floor(posTop.length / 2)]; // fixed rule, not tuned for F1
+const tau = lexicalThreshold(rank, pos.map((c) => c.prompt)); // fixed rule, not tuned for F1
 let tp = 0, fp = 0, fnPos = 0, top3 = 0, noMatchOk = 0, noMatchN = 0, ambOk = 0, ambN = 0; const misses = [];
 for (const c of trigger.cases) {
   const r = rank(c.prompt), pick = r[0].score >= tau ? r[0].skill : null;
@@ -192,19 +188,23 @@ function probeMetrics(summary) {
     perProbe: rs.map((r) => ({ id: r.id, run: r.run, loaded: r.loadedSkills, refs: r.referencesRead, route: r.route, reference: r.reference, denied: r.deniedTools })),
   };
 }
+const probeConfigKey = (r) => `${r.provider} | ${r.providerVersion ?? "unrecorded version"} | ${r.model ?? "unrecorded model"} | ${r.discoveredSkills ?? "?"} skills discovered`;
 const probeSummaries = argList("--probes").map((f) => JSON.parse(fs.readFileSync(path.resolve(f), "utf8")));
 report.levels.provider = probeSummaries.map(probeMetrics);
-// Pooled per-probe rates across every supplied summary (descriptions must be identical across them).
+// Per-probe rates across supplied summaries, one group per provider configuration (provider, CLI version,
+// model and discovered Skill count). Accuracy is never pooled across configurations (evolution Step 18).
 if (probeSummaries.length) {
-  const all = probeSummaries.flatMap((s) => s.results.map((r) => ({ ...r, provider: s.provider })));
-  const ids = [...new Set(all.map((r) => r.id))];
-  const pooled = ids.map((id) => { const rs = all.filter((r) => r.id === id); const refs = rs.filter((r) => r.reference); return { id, runs: rs.length, routingPass: rs.filter((r) => r.route.pass).length, referencePass: refs.length ? refs.filter((r) => r.reference.pass).length : null, referenceRuns: refs.length, skillsSeen: [...new Set(rs.flatMap((r) => r.loadedSkills))] }; });
+  const all = probeSummaries.flatMap((s) => s.results.map((r) => ({ ...r, provider: s.provider, providerVersion: s.providerVersion })));
   const byId = Object.fromEntries(probes.map((p) => [p.id, p]));
-  const sum = (f) => pooled.filter(f).reduce((a, p) => [a[0] + p.routingPass, a[1] + p.runs], [0, 0]);
-  const [posHit, posN] = sum((p) => byId[p.id]?.expect.any_of);
-  const [noHit, noN] = sum((p) => byId[p.id]?.expect.none || byId[p.id]?.expect.none_or);
-  const refRuns = pooled.reduce((a, p) => [a[0] + (p.referencePass ?? 0), a[1] + p.referenceRuns], [0, 0]);
-  report.levels.providerPooled = { summaries: probeSummaries.length, runs: all.length, positiveRoutingPassRate: `${posHit}/${posN}`, noMatchCorrectness: `${noHit}/${noN}`, referenceLoadRate: `${refRuns[0]}/${refRuns[1]}`, perProbe: pooled };
+  report.levels.providerByConfiguration = groupByConfiguration(all, probeConfigKey).map(({ configuration, rows }) => {
+    const ids = [...new Set(rows.map((r) => r.id))];
+    const perProbe = ids.map((id) => { const rs = rows.filter((r) => r.id === id); const refs = rs.filter((r) => r.reference); return { id, runs: rs.length, routingPass: rs.filter((r) => r.route.pass).length, referencePass: refs.length ? refs.filter((r) => r.reference.pass).length : null, referenceRuns: refs.length, skillsSeen: [...new Set(rs.flatMap((r) => r.loadedSkills))] }; });
+    const sum = (f) => perProbe.filter(f).reduce((a, p) => [a[0] + p.routingPass, a[1] + p.runs], [0, 0]);
+    const [posHit, posN] = sum((p) => byId[p.id]?.expect.any_of);
+    const [noHit, noN] = sum((p) => byId[p.id]?.expect.none || byId[p.id]?.expect.none_or);
+    const refRuns = perProbe.reduce((a, p) => [a[0] + (p.referencePass ?? 0), a[1] + p.referenceRuns], [0, 0]);
+    return { configuration, runs: rows.length, positiveRoutingPassRate: `${posHit}/${posN}`, noMatchCorrectness: `${noHit}/${noN}`, referenceLoadRate: `${refRuns[0]}/${refRuns[1]}`, perProbe };
+  });
 }
 const hist = readJson("tests/routing/results/2026-10-14-claude-code-eval.json");
 const run1 = hist.rows.filter((r) => r.run.startsWith("run1"));
@@ -228,6 +228,13 @@ if (factsDir) {
   const tot = report.levels.facts.reduce((a, s) => { for (const [k, v] of Object.entries(s.counts)) a[k] = (a[k] ?? 0) + v; return a; }, {});
   console.log(`FACT  ${report.levels.facts.length} suites: ${Object.entries(tot).map(([k, v]) => `${k} ${v}`).join(", ")}`);
 }
+
+// ---------- Routing and context impact (evolution Step 18; static and SIMULATED only) ----------
+// Synthetic Skill scenarios beyond 16 Skills: metadata size and collision diagnostics, without building
+// packages (run-routing-context.mjs --static runs the real validators on disposable copies). Provider
+// routing stays NOT_RUN until recorded runs exist.
+report.routingContext = routingContextSummary(root);
+if (report.routingContext.cases.errors.length) fail("S-ROUTING-CONTEXT", report.routingContext.cases.errors.join("; "));
 
 // ---------- Category registry ----------
 const cats = [
@@ -265,8 +272,10 @@ console.log(`INFO  Largest contributors ${disc.largestContributors.map((s) => `$
 console.log(`INFO  Collision risk: ${disc.collisions.pairsAboveWarn} pair(s) above overlap ${disc.collisions.warnAbove}; closest ${disc.collisions.closest[0] ? `${disc.collisions.closest[0].a}/${disc.collisions.closest[0].b} ${disc.collisions.closest[0].overlap}` : "n/a"}`);
 for (const p of disc.providers) console.log(`INFO  Provider figure ${p.provider} (${p.source}): ${p.status}; ${p.measurement}`);
 for (const p of report.levels.provider) console.log(`PROV  ${p.provider} ${p.version}: routing ${p.routingPass}, recall ${p.relevantSkillRecall}, precision ${p.selectionPrecision}, false-positive ${p.falsePositiveInvocation}, references ${p.referenceLoad}, $${p.costUsd}`);
-const pp = report.levels.providerPooled;
-if (pp) console.log(`POOL  ${pp.runs} runs from ${pp.summaries} summaries: positive routing ${pp.positiveRoutingPassRate}, no-match ${pp.noMatchCorrectness}, references ${pp.referenceLoadRate}`);
+for (const g of report.levels.providerByConfiguration ?? []) console.log(`CONF  ${g.configuration}: ${g.runs} runs; positive routing ${g.positiveRoutingPassRate}, no-match ${g.noMatchCorrectness}, references ${g.referenceLoadRate}`);
+const rc = report.routingContext;
+console.log(`INFO  Routing and context (Step 18): ${rc.scenarios.map((s) => `${s.id} ${s.skills} skills ${s.metadata.chars} chars (~${s.metadata.estTokens} tokens, estimate)`).join("; ")}`);
+console.log(`INFO  Routing cases ${rc.cases.total} (${rc.cases.errors.length ? `${rc.cases.errors.length} spec error(s)` : "spec valid"}); provider routing per CLI: ${rc.providerRouting.map((p) => `${p.provider} ${p.status}`).join(", ")}; no-match ${rc.noMatch}`);
 if (process.argv.includes("--write")) {
   const dir = rel("tests/evaluation/results");
   fs.mkdirSync(dir, { recursive: true });

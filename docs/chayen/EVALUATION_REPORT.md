@@ -208,6 +208,39 @@ consistently. Contributing conditions:
 - denied execution;
 - the 10-turn limit.
 
+### 5.1 Method for coding-quality comparisons (evolution Step 17, D-074)
+
+The agent-read grading above is replaced, for real coding tasks, by an
+independent deterministic grader. Its method is in
+[`tests/evaluation/coding/GRADING.md`](../../tests/evaluation/coding/GRADING.md).
+
+How runs are graded:
+- Runs come from `run-coding.mjs` (Step 16): configuration A is a fast
+  agent without Chayen, B the same agent with Chayen, and C a mentor-class
+  agent with Chayen.
+- Each run is graded by executing the task's hidden checks on the preserved
+  workspace, inside a verified container for real runs.
+- Each criterion is reviewed with the Step 13 audit contract. The agent's
+  own report is never evidence.
+
+What is measured and how it is reported:
+- **Correctness:** criteria passed, build and test pass rate, functional
+  correctness, unauthorized scope changes, unverified completion claims,
+  first-pass completion.
+- **Rework:** failed attempts, revisions, verification and revision cycles,
+  evidence gaps.
+- **Efficiency:** time, tokens, tool calls, search and read operations,
+  reported cost.
+- **Human involvement:** only from a named reviewer's log.
+- **Reporting:** rates carry Wilson intervals and differences carry
+  Newcombe intervals. Fewer than 5 runs per side is `INSUFFICIENT_SAMPLE`.
+  Synthetic or fake data is `NOT_MEASURED`.
+
+**Status: NOT_MEASURED.** No real comparison run exists. Live runs are
+BLOCKED on the current host (Step 16), and every number produced so far
+comes from synthetic records or fake-provider runs that test the method
+only.
+
 ## 6. Providers not executed
 
 | Provider | Status | Reason |
@@ -249,6 +282,27 @@ seen in Step 06.
 
 These are estimates. Provider token figures need `claude plugin details`
 after an install (EG-12).
+
+### 8.1 Routing and context beyond 16 Skills (evolution Step 18, D-075)
+
+[ROUTING_CONTEXT_REPORT.md](evolution/ROUTING_CONTEXT_REPORT.md) covers
+routing with more than 16 Skills, collisions and context tax. Its harness
+is `tests/evaluation/routing-context/`.
+
+Static results on the current package (16 Skills, 6,563 characters):
+- Synthetic scenarios of up to 34 Skills pass every validator in disposable
+  copies.
+- The discovery metadata grows to 10,800 characters (about 2,700 tokens,
+  estimated). Codex's documented 8,000-character figure is exceeded from
+  24 Skills.
+- The description-overlap check rejects copied descriptions. It misses
+  adjacent Skills and a paraphrased duplicate.
+
+**Provider routing, no-match behaviour and provider token counts are
+NOT_RUN on every CLI.** Provider results are now reported per
+configuration. The pooled row of §4.2 is no longer produced: those runs
+shared one provider configuration, but their summaries record no metadata
+fingerprint.
 
 ## 9. Fixes made in STEP 32 and re-runs
 

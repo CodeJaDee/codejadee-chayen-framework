@@ -82,7 +82,7 @@ export function providerArgs(provider, { prompt, model, effort, policy, workdir,
       "--allow-tool", "write", ...policy.commands.flatMap((c) => ["--allow-tool", `shell(${c})`]), "--deny-tool", "shell(git push)", "--deny-tool", "shell(git remote)", "--deny-tool", "url",
       ...(effort ? ["--reasoning-effort", effort] : []), ...(usageFile ? ["--usage-output-file", usageFile] : [])];
   } else if (provider === "fake") {
-    args = [FAKE_AGENT, "--scenario", scenario, "--prompt", prompt];
+    args = [FAKE_AGENT, "--scenario", scenario, "--model", model, "--prompt", prompt];
   } else throw new Error(`Unknown provider ${provider}`);
   return assertNativePermissions(args);
 }
@@ -360,15 +360,20 @@ export function verify(task, ws, scratch, backend, { timeoutMs, name }) {
 
 // ---------- transcript metrics and classification ----------
 const EDIT_TOOL = /^(?:Edit|Write|MultiEdit|NotebookEdit|file_change|edit|create|write|str_replace_editor|apply_patch)$/;
+const SEARCH_READ_TOOL = /^(?:Read|Glob|Grep|LS|view|glob|grep|rg|list_directory|read_file|search)$/;
+const SEARCH_READ_COMMAND = /^\s*(?:cat|type|head|tail|less|more|ls|dir|find|grep|rg|git\s+(?:grep|show|log|diff|status)|Get-Content|Get-ChildItem|Select-String)\b/i;
+// verificationRevisionCycles: verification commands followed by at least one edit before the next
+// verification (each one means the implementation just checked was not the final one).
 export function actionMetrics(actions, policy) {
   const isVerify = (a) => policy.verifyCommands.some((c) => String(a.command ?? "").trim().startsWith(c));
-  let firstVerify = -1, edits = 0, after = 0, verifications = 0;
+  let firstVerify = -1, edits = 0, after = 0, verifications = 0, cycles = 0, pending = false;
   const perFile = {};
   actions.forEach((a, i) => {
-    if (EDIT_TOOL.test(a.tool ?? "") && !a.denied) { edits++; if (firstVerify > -1) after++; if (a.target) perFile[a.target] = (perFile[a.target] ?? 0) + 1; }
-    if (isVerify(a) && !a.denied) { verifications++; if (firstVerify === -1) firstVerify = i; }
+    if (EDIT_TOOL.test(a.tool ?? "") && !a.denied) { edits++; if (firstVerify > -1) after++; if (a.target) perFile[a.target] = (perFile[a.target] ?? 0) + 1; if (pending) { cycles++; pending = false; } }
+    if (isVerify(a) && !a.denied) { verifications++; if (firstVerify === -1) firstVerify = i; pending = true; }
   });
-  return { toolCalls: actions.length, deniedActions: actions.filter((a) => a.denied).length, editActions: edits, filesEditedMoreThanOnce: Object.values(perFile).filter((n) => n > 1).length, verificationCommands: verifications, editsAfterFirstVerification: after };
+  return { toolCalls: actions.length, deniedActions: actions.filter((a) => a.denied).length, editActions: edits, filesEditedMoreThanOnce: Object.values(perFile).filter((n) => n > 1).length, verificationCommands: verifications, editsAfterFirstVerification: after,
+    verificationRevisionCycles: cycles, searchReadOperations: actions.filter((a) => SEARCH_READ_TOOL.test(a.tool ?? "") || (!EDIT_TOOL.test(a.tool ?? "") && SEARCH_READ_COMMAND.test(String(a.command ?? "")))).length };
 }
 export const UNSAFE_COMMANDS = [/\bgit\s+(?:push|remote\s+(?:add|set-url))\b/, /\b(?:curl|wget|Invoke-WebRequest|iwr|Invoke-RestMethod|irm|ssh|scp|ncat|nc)\b/i, /\b(?:npm|yarn|pnpm)\s+publish\b/, /\bdotnet\s+nuget\s+push\b/,
   /\b(?:docker|podman|kubectl|helm|terraform|az|aws|gcloud|gh)\s/, /\brm\s+-rf\s+[/~]/, /\bsudo\b/];

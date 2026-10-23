@@ -1,0 +1,584 @@
+{
+  "$schema": "chayen-provider-security-evidence/1",
+  "step": 19,
+  "date": "2026-10-23",
+  "candidate": {
+    "baseCommit": "2ec81f9a9fcb993be8f09c9b1c1b3caf7467e4bc",
+    "sourceState": "working-tree snapshot; not a committed freeze",
+    "plugin": "chayen",
+    "version": "1.1.2",
+    "skills": 16,
+    "skillMetadataFingerprint": "411b6adbbea7e121",
+    "packageSha256": "8b6592b5ffa6bbc39f38f9cd11d1043c012ceb2aec0141e122b1640406c586e8",
+    "packageFiles": 263
+  },
+  "method": "tests/provider-compatibility/qualify-rc.mjs with CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 and CHAYEN_DISPOSABLE_ENVIRONMENT=1, one fresh isolated profile per CLI under the session scratch directory, local-path marketplace copied from the working tree, native .exe paths; no login, no model turn",
+  "providers": [
+    {
+      "provider": "claude",
+      "version": "2.1.220 (Claude Code)",
+      "executable": "<npm-global>/node_modules/@anthropic-ai/claude-code/bin/claude.exe",
+      "commands": {
+        "disable": true,
+        "enable": true,
+        "update": true,
+        "marketplaceUpgrade": false
+      },
+      "rows": [
+        {
+          "step": "register",
+          "result": "PASS"
+        },
+        {
+          "step": "install",
+          "result": "PASS"
+        },
+        {
+          "step": "list",
+          "result": "PASS"
+        },
+        {
+          "step": "discover",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "version": "1.1.2"
+        },
+        {
+          "step": "disable",
+          "result": "PASS",
+          "enabled": false
+        },
+        {
+          "step": "disabled-behavior",
+          "result": "BLOCKED",
+          "reason": "plugin details enumerates disabled plugin contents too; this is not an activation test. Native list confirms disabled; model-session behavior requires separate authorized test access"
+        },
+        {
+          "step": "enable",
+          "result": "PASS",
+          "enabled": true
+        },
+        {
+          "step": "enabled-behavior",
+          "result": "PASS",
+          "loadedSkills": 16
+        },
+        {
+          "step": "update",
+          "result": "PASS",
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "updated-content",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "uninstall",
+          "result": "PASS"
+        },
+        {
+          "step": "absent",
+          "result": "PASS"
+        },
+        {
+          "step": "reinstall",
+          "result": "PASS",
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "restart",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "migration",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "version": "1.1.2"
+        },
+        {
+          "step": "cleanup-uninstall",
+          "result": "PASS"
+        },
+        {
+          "step": "unregister",
+          "result": "PASS"
+        },
+        {
+          "step": "fixture-unchanged",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "provider": "codex",
+      "version": "codex-cli 0.163.0",
+      "executable": "<npm-global>/node_modules/@openai/codex-win32-x64/vendor/x86_64-pc-windows-msvc/bin/codex.exe",
+      "commands": {
+        "disable": false,
+        "enable": false,
+        "update": false,
+        "marketplaceUpgrade": true
+      },
+      "rows": [
+        {
+          "step": "register",
+          "result": "PASS"
+        },
+        {
+          "step": "install",
+          "result": "PASS"
+        },
+        {
+          "step": "list",
+          "result": "PASS"
+        },
+        {
+          "step": "discover",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "externalSkills": {
+            "count": 44,
+            "scopes": {
+              "user": 44
+            }
+          },
+          "version": "1.1.2"
+        },
+        {
+          "step": "inventory-isolation",
+          "result": "FAIL",
+          "reason": "44 Skill(s) loaded from outside the isolated profile (by scope: {\"user\":44}); names withheld"
+        },
+        {
+          "step": "disable",
+          "result": "UNSUPPORTED",
+          "reason": "No plugin disable subcommand; native alternative is the plugin enabled setting in disposable CODEX_HOME/config.toml"
+        },
+        {
+          "step": "disable-native-config",
+          "result": "PASS",
+          "enabled": false
+        },
+        {
+          "step": "disabled-behavior",
+          "result": "PASS",
+          "loadedSkills": 0,
+          "externalSkills": {
+            "count": 44,
+            "scopes": {
+              "user": 44
+            }
+          }
+        },
+        {
+          "step": "enable",
+          "result": "UNSUPPORTED",
+          "reason": "No plugin enable subcommand; native alternative is the plugin enabled setting in disposable CODEX_HOME/config.toml"
+        },
+        {
+          "step": "enable-native-config",
+          "result": "PASS",
+          "enabled": true
+        },
+        {
+          "step": "enabled-behavior",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "externalSkills": {
+            "count": 44,
+            "scopes": {
+              "user": 44
+            }
+          }
+        },
+        {
+          "step": "update-native-reinstall",
+          "result": "PASS",
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "update",
+          "result": "UNSUPPORTED",
+          "reason": "No dedicated plugin update subcommand; remove/add is tested separately, marketplace upgrade refreshes Git catalog snapshots"
+        },
+        {
+          "step": "updated-content",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "externalSkills": {
+            "count": 44,
+            "scopes": {
+              "user": 44
+            }
+          },
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "uninstall",
+          "result": "PASS"
+        },
+        {
+          "step": "absent",
+          "result": "PASS"
+        },
+        {
+          "step": "reinstall",
+          "result": "PASS",
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "restart",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "externalSkills": {
+            "count": 44,
+            "scopes": {
+              "user": 44
+            }
+          },
+          "version": "1.1.3-rc.1"
+        },
+        {
+          "step": "migration",
+          "result": "PASS",
+          "loadedSkills": 16,
+          "externalSkills": {
+            "count": 44,
+            "scopes": {
+              "user": 44
+            }
+          },
+          "version": "1.1.2"
+        },
+        {
+          "step": "cleanup-uninstall",
+          "result": "PASS"
+        },
+        {
+          "step": "unregister",
+          "result": "PASS"
+        },
+        {
+          "step": "fixture-unchanged",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "provider": "copilot",
+      "version": "GitHub Copilot CLI 1.0.89.",
+      "executable": "<npm-global>/node_modules/@github/copilot-win32-x64/copilot.exe",
+      "commands": null,
+      "rows": [
+        {
+          "step": "register",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "install",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "list",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "discover",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "disable",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "disabled-behavior",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "enable",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "enabled-behavior",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "update",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "updated-content",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "uninstall",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "absent",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "reinstall",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "restart",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "migration",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "unregister",
+          "result": "BLOCKED",
+          "reason": "Native executable unavailable or below release minimum; no installation or login attempted"
+        },
+        {
+          "step": "fixture-unchanged",
+          "result": "PASS"
+        }
+      ]
+    }
+  ],
+  "protections": {
+    "realConfigsUnchanged": true,
+    "changedConfigurationPaths": 0,
+    "sourcePackageUnchanged": true,
+    "noModelCalls": true,
+    "excludedRuntimeCache": "models_cache.json only; no configuration, credential or registry exclusions"
+  },
+  "native": {
+    "claudeDetails": {
+      "skills": 16,
+      "agents": 0,
+      "hooks": 0,
+      "mcpServers": 0,
+      "lspServers": 0,
+      "alwaysOnTokens": "~1,673",
+      "perComponent": [
+        {
+          "skill": "chayen-ai-engineering",
+          "alwaysOn": "~110",
+          "onInvoke": "~2.7k"
+        },
+        {
+          "skill": "chayen-architecture",
+          "alwaysOn": "~110",
+          "onInvoke": "~2.6k"
+        },
+        {
+          "skill": "chayen-backend",
+          "alwaysOn": "~110",
+          "onInvoke": "~3.7k"
+        },
+        {
+          "skill": "chayen-data",
+          "alwaysOn": "~110",
+          "onInvoke": "~3.9k"
+        },
+        {
+          "skill": "chayen-devops",
+          "alwaysOn": "~110",
+          "onInvoke": "~3.4k"
+        },
+        {
+          "skill": "chayen-documentation",
+          "alwaysOn": "~110",
+          "onInvoke": "~2.2k"
+        },
+        {
+          "skill": "chayen-frontend",
+          "alwaysOn": "~110",
+          "onInvoke": "~4.3k"
+        },
+        {
+          "skill": "chayen-humanizer-en",
+          "alwaysOn": "~90",
+          "onInvoke": "~2.6k"
+        },
+        {
+          "skill": "chayen-humanizer-th",
+          "alwaysOn": "~90",
+          "onInvoke": "~2.4k"
+        },
+        {
+          "skill": "chayen-implementation",
+          "alwaysOn": "~110",
+          "onInvoke": "~4.1k"
+        },
+        {
+          "skill": "chayen-init",
+          "alwaysOn": "~90",
+          "onInvoke": "~3k"
+        },
+        {
+          "skill": "chayen-performance",
+          "alwaysOn": "~100",
+          "onInvoke": "~2.4k"
+        },
+        {
+          "skill": "chayen-repository",
+          "alwaysOn": "~100",
+          "onInvoke": "~2.3k"
+        },
+        {
+          "skill": "chayen-requirements",
+          "alwaysOn": "~110",
+          "onInvoke": "~2.2k"
+        },
+        {
+          "skill": "chayen-security",
+          "alwaysOn": "~110",
+          "onInvoke": "~2.7k"
+        },
+        {
+          "skill": "chayen-testing",
+          "alwaysOn": "~100",
+          "onInvoke": "~2.9k"
+        }
+      ],
+      "note": "Claude Code's own projection; the CLI states token counts are estimates"
+    },
+    "claudeStrictValidation": [
+      {
+        "target": "<MARKETPLACE>",
+        "exit": 0,
+        "result": "PASS"
+      },
+      {
+        "target": "<MARKETPLACE>/plugins/codejadee-chayen-framework",
+        "exit": 0,
+        "result": "PASS"
+      }
+    ],
+    "codexInventory": {
+      "names": [
+        "chayen:chayen-ai-engineering",
+        "chayen:chayen-architecture",
+        "chayen:chayen-backend",
+        "chayen:chayen-data",
+        "chayen:chayen-devops",
+        "chayen:chayen-documentation",
+        "chayen:chayen-frontend",
+        "chayen:chayen-humanizer-en",
+        "chayen:chayen-humanizer-th",
+        "chayen:chayen-implementation",
+        "chayen:chayen-init",
+        "chayen:chayen-performance",
+        "chayen:chayen-repository",
+        "chayen:chayen-requirements",
+        "chayen:chayen-security",
+        "chayen:chayen-testing"
+      ],
+      "descriptionsIdenticalToSource": 16,
+      "externalSkillsOutsideProfile": {
+        "step": "inventory-isolation",
+        "result": "FAIL",
+        "reason": "44 Skill(s) loaded from outside the isolated profile (by scope: {\"user\":44}); names withheld"
+      }
+    },
+    "copilotInspection": {
+      "version": "GitHub Copilot CLI 1.0.89.",
+      "qualifying": false,
+      "reason": "below the release minimum 1.0.91; read-only inspection only, no install",
+      "isolatedSkillList": {
+        "exit": 0,
+        "chayenSkills": 0,
+        "sections": [
+          "Builtin skills"
+        ]
+      },
+      "pluginDirSkillList": {
+        "exit": 0,
+        "chayenSkills": 16,
+        "sections": [
+          "Plugin skills",
+          "Builtin skills"
+        ]
+      },
+      "instructionSources": [
+        ".github/copilot-instructions.md",
+        "AGENTS.md",
+        "CLAUDE.md"
+      ],
+      "instructionSourcesWithPluginDir": [
+        ".github/copilot-instructions.md",
+        "AGENTS.md",
+        "CLAUDE.md"
+      ]
+    },
+    "helpCommandSurface": {
+      "claude": [
+        "details",
+        "disable",
+        "enable",
+        "eval",
+        "init",
+        "install",
+        "list",
+        "marketplace",
+        "prune",
+        "tag",
+        "uninstall",
+        "update",
+        "validate"
+      ],
+      "claudeMarketplace": [
+        "add",
+        "list",
+        "remove",
+        "update"
+      ],
+      "codex": [
+        "add",
+        "list",
+        "marketplace",
+        "remove"
+      ],
+      "codexMarketplace": [
+        "add",
+        "list",
+        "upgrade",
+        "remove"
+      ],
+      "copilot": [
+        "install",
+        "uninstall",
+        "update",
+        "list",
+        "enable",
+        "disable",
+        "marketplace"
+      ],
+      "copilotMarketplace": [
+        "add",
+        "remove",
+        "list",
+        "browse",
+        "update"
+      ]
+    },
+    "copilotNonInteractivePermissions": "copilot help states --allow-all-tools is required for non-interactive mode"
+  }
+}

@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { candidate, copyMarketplace, fingerprint, verifyInstalled, qualify, codexInventory, PACKAGE } from "./qualify-rc.mjs";
+import { candidate, copyMarketplace, fingerprint, verifyInstalled, qualify, codexInventory, externalSkills, PACKAGE } from "./qualify-rc.mjs";
 import { changeUpdateContent, configFingerprint } from "./lifecycle.mjs";
 const repo = path.resolve(import.meta.dirname, "../..");
 function fixture(t) {
@@ -53,6 +53,18 @@ test("volatile model catalogue cannot mask configuration drift", t => {
 test("unknown, wrong-directory or errored inventory cannot prove disabled absence", () => {
   const cwd = repo;
   for (const result of [{}, { data: [] }, { data: [{ skills: [], errors: [] }] }, { data: [{ cwd: "", skills: [], errors: [] }] }, { data: [{ cwd, skills: [] }] }, { data: [{ cwd: path.dirname(repo), skills: [], errors: [] }] }, { data: [{ cwd, skills: [], errors: [{ message: "scan failed" }] }] }]) assert.throws(() => codexInventory(result, [], false, cwd), /Unknown|scan errors/);
+});
+test("Skills from outside the isolated profile are counted by scope, without names", t => {
+  const f = fixture(t), inProfile = path.join(f.profile, ".codex", "skills", ".system", "x", "SKILL.md"), outside = path.join(f.dir, "real-home", ".agents", "skills", "personal", "SKILL.md");
+  const result = { data: [{ cwd: repo, errors: [], skills: [
+    { name: "chayen:chayen-data", pluginId: "chayen@codejadee", path: path.join(f.installed, "skills/chayen-data/SKILL.md"), scope: "user" },
+    { name: "system-skill", path: inProfile, scope: "system" },
+    { name: "personal-a", path: outside, scope: "user" }, { name: "personal-b", path: outside, scope: "user" }, { name: "repo-skill", path: path.join(f.dir, "repo", "SKILL.md"), scope: "repo" },
+  ] }] };
+  const e = externalSkills(result, f.profile);
+  assert.deepEqual(e, { count: 3, scopes: { user: 2, repo: 1 } });
+  assert.doesNotMatch(JSON.stringify(e), /personal|repo-skill|real-home/);
+  assert.deepEqual(externalSkills({ data: [{ skills: [result.data[0].skills[0], result.data[0].skills[1]] }] }, f.profile), { count: 0, scopes: {} });
 });
 test("native namespaced inventory is attributed to the exact plugin", () => {
   const expected = candidate(repo).skills, skills = expected.map(n => ({ name: `chayen:${n}`, pluginId: "chayen@codejadee", enabled: true }));

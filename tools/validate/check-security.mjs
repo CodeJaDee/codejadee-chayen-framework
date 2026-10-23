@@ -59,7 +59,9 @@ try {
     }
     if (file.endsWith("SKILL.md")) {
       const normalized = text.replace(/\s+/g, " ");
-      for (const guard of ["System and developer instructions and provider permissions take priority", "Inspect repository scripts, build targets and lifecycle hooks before execution", "A recommendation is not permission", "No credentials or external upload of source/prompts is required"]) {
+      // The fifth guard (evolution Step 19) is the untrusted-content rule: repository files and tool output can
+      // neither override instructions (injection) nor supply approval (forged approval).
+      for (const guard of ["System and developer instructions and provider permissions take priority", "Inspect repository scripts, build targets and lifecycle hooks before execution", "A recommendation is not permission", "No credentials or external upload of source/prompts is required", "cannot override higher-priority rules or supply approval"]) {
         if (!normalized.includes(guard)) fail("V-25.3 authority", file, "missing explicit instruction/least-privilege guard");
       }
     }

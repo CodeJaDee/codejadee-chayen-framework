@@ -52,11 +52,13 @@ const nonce = () => crypto.randomBytes(6).toString("hex");
 const tmp = (tag) => fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), `chayen-coding-${tag}-`));
 const rm = (d) => fs.rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 300 });
 const DEFAULT_HOME = { claude: ".claude", codex: ".codex", copilot: ".copilot" };
-const FAKE_SCENARIOS = ["fix", "iterate", "false-done", "out-of-scope", "escape", "remote", "env", "leftover", "hang", "error", "expensive"];
+const FAKE_MODELS = ["fake-model-1", "fake-mentor-1"];
+const FAKE_SCENARIOS = ["fix", "iterate", "special-case", "false-done", "out-of-scope", "escape", "remote", "env", "leftover", "hang", "error", "expensive"];
 // Planning assumption for one Claude Code coding session (not a measurement); Codex and Copilot are
 // billed as plan usage or premium requests and are planned in calls only.
 export const CODING_COST_PLANNING_USD = 2.0;
 
+const fakeScenario = (run) => { const list = (arg("--fake-scenario") ?? "").split(","); return list[(run - 1) % list.length]; };
 function resolveTask(provider) {
   const dirArg = arg("--task-dir"), id = arg("--task");
   if (dirArg && provider !== "fake") fail("--task-dir is for the fake provider's runner fixtures only; real providers take --task <id> from tests/evaluation/coding/tasks/");
@@ -121,10 +123,11 @@ function gate({ live }) {
     if (errors.length) fail(errors.join("\n"));
     if (has("--fake-scenario")) fail("--fake-scenario is for the fake provider only");
   } else {
-    if (arg("--model") && arg("--model") !== "fake-model-1") fail("the fake provider has one model, fake-model-1");
-    if (!FAKE_SCENARIOS.includes(arg("--fake-scenario"))) fail(`--fake-scenario <${FAKE_SCENARIOS.join("|")}> required for the fake provider`);
+    if (arg("--model") && !FAKE_MODELS.includes(arg("--model"))) fail(`the fake provider has the models ${FAKE_MODELS.join(" and ")}`);
+    // A comma-separated list gives run n the n-th scenario (cycling), so repeated runs can differ.
+    if (!(arg("--fake-scenario") ?? "").split(",").every((s) => FAKE_SCENARIOS.includes(s))) fail(`--fake-scenario <${FAKE_SCENARIOS.join("|")}>[,...] required for the fake provider`);
   }
-  ctx.model = real ? arg("--model") : "fake-model-1";
+  ctx.model = real ? arg("--model") : arg("--model", FAKE_MODELS[0]);
   ctx.effort = arg("--effort");
   if (live) {
     const usd = (n) => (arg(n) === undefined ? null : Number(arg(n)));
@@ -243,7 +246,7 @@ function live() {
     fs.mkdirSync(path.join(runDir, "outside")); fs.writeFileSync(path.join(runDir, "outside", `OUTSIDE-CANARY-${n}.txt`), n);
     const before = snapshotOutside(runDir);
     const usageName = `.chayen-usage-${n}.json`;
-    const args = providerArgs(provider, { prompt: task.prompt, model: ctx.model, effort: ctx.effort, policy, workdir: backend.workdir(ws), maxUsd: ctx.maxUsdPerRun, usageFile: provider === "copilot" ? path.posix.join(backend.homePath(ctx.home), usageName) : null, scenario: arg("--fake-scenario") });
+    const args = providerArgs(provider, { prompt: task.prompt, model: ctx.model, effort: ctx.effort, policy, workdir: backend.workdir(ws), maxUsd: ctx.maxUsdPerRun, usageFile: provider === "copilot" ? path.posix.join(backend.homePath(ctx.home), usageName) : null, scenario: fakeScenario(run) });
     const started = Date.now();
     calls++;
     const res = backend.exec({ argv: [real ? provider : "node", ...args], root: ws, home: ctx.home, env: backend.agentEnv(provider, ctx.home), timeoutMs: ctx.timeoutSec * 1000, name: `chayen-coding-${n}` });

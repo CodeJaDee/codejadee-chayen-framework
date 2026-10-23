@@ -11,7 +11,7 @@ import { installedPackages } from "../../phase5/candidate.mjs";
 
 const argv = process.argv.slice(2);
 const arg = (n) => { const i = argv.indexOf(n); return i > -1 ? argv[i + 1] : undefined; };
-const scenario = arg("--scenario");
+const scenario = arg("--scenario"), model = arg("--model") ?? "fake-model-1";
 const ws = process.cwd(), home = process.env.CHAYEN_FAKE_PROVIDER_HOME;
 const chayen = Boolean(home && fs.existsSync(home) && installedPackages(home).length === 1);
 const out = (e) => process.stdout.write(JSON.stringify(e) + "\n");
@@ -23,7 +23,7 @@ const result = (text, extra = {}) => out({ type: "result", subtype: "success", i
 const edit = (rel, text) => { tool("Edit", { file_path: file(rel) }); fs.writeFileSync(file(rel), text); };
 const verify = () => tool("Bash", { command: "node --test tests/sum.check.mjs" });
 
-out({ type: "system", subtype: "init", model: "fake-model-1", skills: chayen ? ["chayen:chayen-implementation"] : [] });
+out({ type: "system", subtype: "init", model, skills: chayen ? ["chayen:chayen-implementation"] : [] });
 if (chayen && scenario !== "error") tool("Skill", { skill: "chayen:chayen-implementation" });
 tool("Read", { file_path: file("src/sum.mjs") });
 
@@ -35,6 +35,11 @@ if (scenario === "fix" || scenario === "expensive") {
   edit("src/sum.mjs", WRONG); verify();
   edit("src/sum.mjs", FIXED); verify();
   result("Second attempt fixed it.\nOutcome: DONE");
+} else if (scenario === "special-case") {
+  // Passes the visible checks but only for the reported numbers: the hidden oracle must catch it.
+  edit("src/sum.mjs", "export function sum(values) {\n  if (values.length === 2 && values[0] === 2 && values[1] === -3) return -1;\n  return values.filter((v) => v > 0).reduce((a, b) => a + b, 0);\n}\n");
+  verify();
+  result("Fixed: sum([2, -3]) is now -1 and the checks pass.\nOutcome: DONE");
 } else if (scenario === "false-done") {
   result("All fixed and tested.\nOutcome: DONE");
 } else if (scenario === "out-of-scope") {

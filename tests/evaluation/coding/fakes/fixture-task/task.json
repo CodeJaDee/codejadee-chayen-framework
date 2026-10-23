@@ -7,5 +7,13 @@
   "stack": [{ "name": "Node.js", "version": "20.11+", "source": "repo/README.md" }],
   "commands": { "build": "node --check src/sum.mjs", "test": "node --test tests/sum.check.mjs" },
   "scope": { "allowed": ["src/**", "tests/**"], "mustNotChange": ["tests/sum.check.mjs"] },
-  "reset": "Harmless fixture for the Step 16 runner tests with the fake provider only. It is not an evaluation task."
+  "acceptanceCriteria": [
+    { "id": "AC-1", "text": "sum adds every number, negative ones included.", "oracle": "hidden grader/sum.oracle.mjs (node-test)" },
+    { "id": "AC-2", "text": "The existing check file is unchanged and nothing outside src/ and tests/ changes.", "oracle": "boundary" }
+  ],
+  "grading": [
+    { "check": "boundary" },
+    { "check": "node-test", "name": "sum oracle", "grader": "grader/sum.oracle.mjs", "target": ".grader/sum.oracle.mjs", "minPassed": 3 }
+  ],
+  "reset": "Harmless fixture for the Step 16 runner and Step 17 grader tests with the fake provider only. It is not an evaluation task."
 }

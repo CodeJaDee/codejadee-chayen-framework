@@ -47,14 +47,19 @@ diagnostics, kept separate from measured provider behaviour.
 candidates for the model to choose between. An increase in the Skill
 inventory needs routing and context evaluation on each provider before
 production compatibility is claimed. Removing a cap does not mean every
-provider can reliably discover an unlimited number of Skills.
+provider can reliably discover an unlimited number of Skills. A
+developer-only benchmark measures this with synthetic Skills in disposable
+copies, never in the package. See the
+[routing and context report](chayen/evolution/ROUTING_CONTEXT_REPORT.md).
+Its static results are recorded; its provider routing results are NOT_RUN.
 
 ## What happens when no skill applies
 
 Intended behavior is native handling without Chayen Skill selection.
 General conversation, requests not to use Skills, and excluded frameworks
 such as standalone Nitro/Elysia should follow this path. No-match correctness
-still needs measurement on this build.
+still needs measurement on this build: the cases and a no-plugin comparison
+arm are defined, and provider runs are NOT_RUN.
 
 ## Writing skills and their neighbours
 

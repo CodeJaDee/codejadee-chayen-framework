@@ -28,7 +28,7 @@ A grader running in the same session as the implementer records
 | Field | Meaning |
 |---|---|
 | `revisions` | Revisions, oldest first; the last one is the current revision |
-| `criteria[]` | `id`, `text`, `kind` (`logic`, `ui-interaction`, `api-authorization`), `required`, `dependsOn` (source files), optional `testFiles`, and `deniedPaths` for authorization |
+| `criteria[]` | `id`, `text`, `kind` (`logic`, `ui-interaction`, `api-authorization`, or `process` for criteria about the work itself, decided only by a deterministic grader check at level `deterministic-check`; added in evolution Step 17, D-074), `required`, `dependsOn` (source files), optional `testFiles`, and `deniedPaths` for authorization |
 | `changedFiles[]` | `path`, `role` (`source`, `test`, `generated`), and the revision of the last change |
 | `runs[]` | **Recorded** executions only: `id`, `command`, `revision`, `exitCode`, `excerpt`, and `tests[]` with `name`, `status` (the testing contract's six statuses), `covers`, `level` and, for authorization tests, `path` (`allowed`, `unauthenticated`, `forbidden`) |
 | `report` | The implementer's outcome and `claims[]` (criterion, text, status, cited run, quoted result, claimed verdict). These are claims to check, never evidence |
@@ -87,6 +87,18 @@ Proportionality: the required level depends on what the criterion claims
 (`kind`), not on how confident the report sounds. A logic criterion does not
 require a browser test. An authorization criterion always requires its
 denied paths.
+
+## Use by the coding grader (evolution Step 17)
+
+`tests/evaluation/coding/grading-lib.mjs` builds one `chayen-audit-case/1`
+per coding run and passes it to `auditCase`:
+
+- the criteria come from the task and `tests/evaluation/coding/rubric.json`;
+- the runs are the grader checks that the grader itself executed on the
+  preserved workspace;
+- the report is the agent's final answer, treated only as claims.
+
+The verdicts, the outcome and the flags are therefore this contract's.
 
 ## Commands
 

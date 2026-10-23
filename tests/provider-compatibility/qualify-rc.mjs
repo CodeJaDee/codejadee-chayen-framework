@@ -56,6 +56,19 @@ export function codexInventory(result, expected, wantEnabled, cwd) {
   if (JSON.stringify(names) !== JSON.stringify(wantEnabled ? expected : [])) throw new Error(`Native skills/list unexpected enabled inventory: ${JSON.stringify(names)}`);
   return names;
 }
+// Skills in a native inventory that come from outside the isolated profile (evolution Step 19). Codex 0.163.0 on
+// Windows was observed reading the real user's ~/.agents/skills despite HOME/USERPROFILE/CODEX_HOME overrides.
+// Counts by scope only: names and paths of personal Skills never enter evidence.
+export function externalSkills(result, profile) {
+  const realProfile = fs.realpathSync(profile), scopes = {};
+  for (const s of result?.data?.[0]?.skills ?? []) {
+    if (s.pluginId === "chayen@codejadee" || typeof s.path !== "string") continue;
+    const p = path.resolve(s.path);
+    if (p === realProfile || p.startsWith(realProfile + path.sep)) continue;
+    scopes[s.scope ?? "unknown"] = (scopes[s.scope ?? "unknown"] ?? 0) + 1;
+  }
+  return { count: Object.values(scopes).reduce((a, b) => a + b, 0), scopes };
+}
 export function qualify(target, executables = {}, inherited = process.env) {
   authorize(inherited);
   const repo = fs.realpathSync(path.resolve(import.meta.dirname, "../.."));
@@ -73,6 +86,7 @@ export function qualify(target, executables = {}, inherited = process.env) {
       const env = isolatedEnvironment(profile, inherited), marketplace = path.join(root, "marketplace"); copyMarketplace(repo, marketplace);
       const fixture = path.join(root, "fixture"); fs.mkdirSync(fixture); fs.writeFileSync(path.join(fixture, "app.txt"), "Disposable lifecycle application\n");
       const fixtureBefore = fingerprint(fixture).sha256, transcript = [], rows = [];
+      let lastExternal = null;
       const executable = executables[provider] ?? provider;
       if (/\.(?:cmd|bat|ps1)$/i.test(executable)) throw new Error("Use a native executable, never a shell wrapper");
       const exec = args => {
@@ -121,12 +135,19 @@ export function qualify(target, executables = {}, inherited = process.env) {
             fs.writeFileSync(path.join(root, "transcript.json"), JSON.stringify(transcript, null, 2) + "\n");
             if (r.status !== 0) throw new Error(`Native skills/list unavailable: ${r.stderr}`);
             const result = JSON.parse(r.stdout), names = codexInventory(result, report.candidate.skills, wantEnabled, fixture);
-            return { loadedSkills: names.length, output: result };
+            lastExternal = externalSkills(result, profile);
+            return { loadedSkills: names.length, externalSkills: lastExternal, output: result };
           }
           throw new Error("Copilot inventory adapter requires installed-binary help review; follow runbook");
         };
         if (installed) {
           action("discover", () => ({ ...activeBuild(), ...inventory(true) }));
+          // An inventory polluted from outside the profile breaks isolation; routing measured there is contaminated.
+          if (provider === "codex") action("inventory-isolation", () => {
+            if (!lastExternal) throw Object.assign(new Error("No native inventory to inspect"), { blocked: true });
+            if (lastExternal.count) throw new Error(`${lastExternal.count} Skill(s) loaded from outside the isolated profile (by scope: ${JSON.stringify(lastExternal.scopes)}); names withheld`);
+            return { externalSkills: lastExternal };
+          });
           for (const [step, enabled] of [["disable", false], ["enable", true]]) {
             if (has(step)) action(step, () => { invoke(["plugin", step, provider === "copilot" ? "chayen" : "chayen@codejadee"]); if (record()?.enabled !== enabled) throw new Error("Native list toggle mismatch"); return { enabled }; });
             else {

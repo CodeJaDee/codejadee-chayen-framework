@@ -22,11 +22,14 @@ export const DIR = "tests/audit/cases";
 export const VERDICTS = ["accept", "verify_more", "revise"];
 export const REVIEW_FIELDS = ["criterion", "claim", "evidenceSource", "independentMethod", "observedOutcome", "confidenceLimitation", "verdict", "nextAction"];
 export const FLAGS = ["claimed-pass-without-recorded-run", "cited-run-not-recorded", "quoted-result-contradicted", "claimed-pass-contradicted", "stale-evidence", "inadequate-method", "denied-path-missing", "claimed-verdict-unsupported", "same-session-review"];
-// Adequate evidence per criterion kind (the adequacy table of the change-summary recipe).
+// Adequate evidence per criterion kind (the adequacy table of the change-summary recipe). `process` covers
+// criteria about the work itself (scope, no change, the final answer, regression detection) that only a
+// deterministic grader check can decide (evolution Step 17, D-074).
 export const ADEQUATE = {
   logic: ["unit", "integration", "request", "component", "browser", "device"],
   "ui-interaction": ["component", "browser", "device", "manual-recorded"],
   "api-authorization": ["request", "browser"],
+  process: ["deterministic-check"],
 };
 const STATUSES = ["PASSED", "FAILED", "SKIPPED", "BLOCKED", "NOT_RUN", "UNKNOWN"];
 const CASE_KEYS = ["$schema", "id", "title", "synthetic", "revisions", "criteria", "changedFiles", "runs", "report", "reviewer", "expected"];

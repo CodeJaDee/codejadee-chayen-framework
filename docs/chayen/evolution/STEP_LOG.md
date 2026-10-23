@@ -2458,3 +2458,609 @@ items. Live coding runs remain a separate owner action. They need:
   and an egress-restricted network;
 - signed-in isolated provider homes;
 - `--inspect-host --isolation <profile>` reporting VERIFIED.
+
+## Step 17 — Independent Grading and Metrics
+
+- **Date:** 2026-10-22
+- **Status:** PASS (grader, rubric, metrics, self-test and comparison
+  report). **Live improvement claims are NOT_MEASURED**: no real comparison
+  run exists.
+- **Starting state:** branch `develop`, **HEAD `2ec81f9`** ("Add fake
+  container engine and runner test fixture for coding tasks"). **The owner
+  made this commit after Step 16, not the agent**; it holds the Step 16
+  files. The worktree was clean, and `chayen` is 1.1.2 in both manifests.
+- **Prerequisite:** Step 16 is `PASS`.
+- **Authorization:** the owner's STEP 17 instruction (2026-10-22), recorded
+  as **D-074** (ACCEPTED). No provider was called. No software was
+  installed, and no network source was used.
+
+### Contracts read
+
+- **Step 13 (`audit-evidence.mjs`, `INDEPENDENT_AUDIT_CONTRACT.md`):**
+  `auditCase` re-derives one eight-field review per criterion from recorded
+  runs. The report is only claims. `DONE` requires every required criterion
+  to be `accept`. Its kinds (`logic`, `ui-interaction`, `api-authorization`)
+  did not cover scope, no-change, answer or regression-detection criteria.
+- **Step 14:** candidate identity, already carried by every Step 16 record.
+- **Step 15:**
+  - `run-coding-fixtures.mjs --grade` runs the hidden checks on a copy and
+    returns failed .NET test names;
+  - task acceptance criteria have only free-text oracles, and `task.json`
+    is a closed format;
+  - task F's answer uses the product's own AC numbering, which differs from
+    the evaluation criteria.
+- **Step 16:** closed `chayen-coding-record/1` records, preserved
+  workspaces, answers with hashes, runner verification inside the boundary,
+  and `pairKey`.
+
+### Design
+
+| Requirement | Where |
+|---|---|
+| Configurations A, B, C; the same model configuration for A and B | `checkComparison`: A must be `baseline` and B `chayen`, with identical `pairKey` (provider, CLI, model, effort, candidate, task, snapshot, prompt, isolation, tool policy). C must be `chayen` with the same task, snapshot, prompt, candidate, isolation and tool policy. No configuration mixes providers, models or evidence levels |
+| Same task, starting state, environment, permissions and rules | Enforced by the same checks; one rubric for every run (`rubricSha256` in the report) |
+| Correctness metrics | Criteria accepted / total (Step 13 review); build and test (runner verification inside the boundary); functional (the rubric's `functional` checks); unauthorized scope changes (diff and no-change); unverified completion claims (`Outcome: DONE` against the independent outcome, or `never-done` tasks); first-pass completion |
+| Rework metrics | Failed implementation attempts; revisions; verification/revision cycles (new Step 16 metric); evidence gaps (`verify_more` plus audit flags) |
+| Efficiency metrics | Elapsed time, output and total tokens, tool calls, search/read operations (new Step 16 metric), reported cost (only when reported) |
+| Human involvement | `chayen-human-review/1`: a named person (agent or model names rejected), rounds, interventions, approvals. Review time **only** from the reviewer's start and end; a duration field is rejected; never from agent traces. Provider denials are reported separately as approval requests from the trace |
+| Grading architecture: reuse Step 13; deterministic first | Each run becomes a `chayen-audit-case/1` built from the checks the grader executed (test exit status, failed test names, filesystem diff, contract and answer checks, security record). `auditCase` decides every verdict. The answer is only the report. The contract gains the kind `process` (level `deterministic-check`); its 8 cases are unchanged (G-22 8/8, G-22T 14/14) |
+| Execution evidence never replaced | For a real run, the hidden checks execute agent-written code only inside a verified container (`--oracle-isolation`); otherwise exit 3 with BLOCKED. NOT_RUN gives `verify_more`, never `accept` |
+| LLM grader labelled separately | `chayen-llm-grade/1`, only for rubric items marked `llmAllowed` (task E AC-2, task F AC-2), listed separately, changes no verdict. No LLM grader is run in this step |
+| Statistics | Results per configuration and task, plus pooled rows. `n` reported. Wilson 95% for rates; Newcombe hybrid score for B − A and C − B; distributions (median, min, max, sd) for time, tokens and cost (`DESCRIPTIVE_ONLY`). Statuses `NOT_MEASURED`, `INSUFFICIENT_SAMPLE` (< 5 runs), `INCONCLUSIVE`, `DIFFERENCE_OBSERVED`, with an explicit association-not-cause limitation |
+| Results format and report | `oracle.jsonl` (`chayen-coding-oracle/1`, written once), derived grades (`chayen-coding-grade/1`), comparison spec (`chayen-coding-comparison/1`), `report.json` (`chayen-coding-comparison-report/1`) and `report.md`. Sections: baseline, Chayen-enabled, differences, confidence and uncertainty, rework, failure categories (Step 11 taxonomy plus runner outcomes), token, time and cost trade-offs, human involvement, LLM-labelled grades, recommended next experiments, method and limitations. Deterministic: the same inputs give byte-identical files |
+
+### Files changed
+
+| Path | Change |
+|---|---|
+| `tests/evaluation/coding/grade-coding.mjs` (new) | CLI: `--grade` (staged hidden-check execution and isolation policy), `--report`, `--synthetic-report`, `--self-test` |
+| `tests/evaluation/coding/grading-lib.mjs` (new) | Rubric validation, evidence resolution, audit-case construction, `deriveGrade`, human and LLM log rules, statistics, comparison, Markdown report |
+| `tests/evaluation/coding/grading-synthetic.mjs` (new) | Seeded synthetic records and oracle results; the scorer self-test (15 known-good and known-bad cases) |
+| `tests/evaluation/coding/rubric.json`, `GRADING.md` (new) | Rubric for the six tasks and the runner fixture; rubric, metric and format document |
+| `tests/evaluation/coding/grading.test.mjs` (new), `tools/validate/validate-all.mjs` (G-26, G-26T) | 11 regressions and the self-test gate |
+| `tests/evaluation/coding/results/2026-10-22-step17-synthetic/` (new) | Synthetic example report (`report.json`, `report.md`), reproduced by a test |
+| `tools/evals/audit-evidence.mjs`, `docs/chayen/INDEPENDENT_AUDIT_CONTRACT.md` | `process` kind added; contract documents its use by the coding grader |
+| `tests/evaluation/coding/run-coding-fixtures.mjs` (Step 15) | Additive: `--grade --json`; `failedTests` for Node oracles |
+| `tests/evaluation/coding/coding-runner-lib.mjs`, `run-coding.mjs`, `fakes/fake-agent.mjs` (Step 16) | Additive: `verificationRevisionCycles` and `searchReadOperations` metrics; fake model `fake-mentor-1`; per-run fake scenario lists; scenario `special-case` |
+| `tests/evaluation/coding/fakes/fixture-task/task.json`, `grader/sum.oracle.mjs` | Runner fixture gains criteria, grading checks and a hidden oracle |
+| `tests/evaluation/coding/README.md`, `docs/chayen/EVALUATION_REPORT.md` (§5.1 method), `docs/chayen/EVALUATION_GAPS.md` (EG-10), `docs/chayen/DECISIONS.md` (D-074) | Records |
+
+Unchanged: the plugin, `tests/evaluation/phase5/`, the Step 15 tasks and
+their recorded verification, and every earlier `results/` file.
+
+### Tests
+
+**G-26 `grade-coding.mjs --self-test`: 15/15** synthetic known-good and
+known-bad records give their expected grades:
+
+| # | Case | Expected and observed |
+|---|---|---|
+| 1 | Known good | DONE, 4/4 accept, no category, first pass |
+| 2 | **False PASS** (DONE claimed; hidden tests fail) | AC-2 `revise`, unverified claim, `false-done-claim` + `functional-failure` |
+| 3 | **Missing AC evidence** (the answer says every AC is accept; no check ran) | every AC `verify_more`, 4+ evidence gaps, functional NOT_RUN, unverified claim |
+| 4 | **Unauthorized modification** (README changed) | AC-2 `revise`, scope violation, `scope-expansion` |
+| 5 | Authorization with a failed 401 path | AC-3 `revise`; AC-1 keeps `accept`; static-only UI `verify_more` (`inadequate-method`) |
+| 6 | Weak static and unit evidence for UI | every criterion `verify_more`, functional NOT_RUN |
+| 7 | Evidence task with DONE | AC-3 `revise`, unverified claim |
+| 8 | Ambiguous task with an edit | AC-1 `revise`, the edit counted as unauthorized |
+| 9 | Security CRITICAL | `permission-or-policy-violation` |
+| 10 | Unstructured "fixed it" | heuristic flag only, not counted, report `not-stated` |
+| 11 | No human log | review time not recorded (not the agent's 60 s) |
+| 12 | Human log naming "Claude", or with a duration field | rejected |
+| 13 | LLM grade on an execution criterion | rejected; on an `llmAllowed` item accepted |
+| 14 | Report from synthetic records | every claim `NOT_MEASURED` |
+| 15 | A and B with different models | refused |
+
+**G-26T `grading.test.mjs`: 11/11.**
+- **Rubric fit:** the rubric fits all six tasks and the fixture.
+- **Statistics:**
+  - Newcombe's interval reproduces the published example (56/70 versus
+    48/80: 0.2, 0.0524 to 0.3339);
+  - fewer than 5 runs gives `INSUFFICIENT_SAMPLE`;
+  - 80 runs per arm gives `DIFFERENCE_OBSERVED`, and identical arms are
+    `INCONCLUSIVE` at difference 0;
+  - time, tokens and cost are `DESCRIPTIVE_ONLY`; 4 human reviews give
+    `INSUFFICIENT_SAMPLE`.
+- **Fake A/B/C runs through the Step 16 runner and `--grade` on the host:**
+  - the `special-case` run passes the runner's visible check, but the
+    hidden oracle fails it, so it is an **unverified completion claim**;
+  - the scope and missing-verification runs are found;
+  - the workspaces are unchanged by grading, and re-grading is refused.
+- **Report from those runs:** every required section is present, `SIMULATED`
+  and `NOT_MEASURED`, two runs are byte-identical, an existing `--out` is
+  refused, and there are no local paths.
+- **Pairing:** C passed as B, the wrong arm, and a C with another tool policy
+  are all refused.
+- **Real-provider grading:** BLOCKED (exit 3) without `--oracle-isolation`,
+  and with a profile but no engine. No `oracle.jsonl` is written. A fake run
+  pointed at a real task is refused.
+- **Human and LLM logs:** a named reviewer's 300 s review is measured; human
+  verdicts are listed separately and change no automatic rate. An agent
+  name, a duration field and a missing end time are rejected, and so is an
+  LLM grade on an execution criterion.
+- **Tampering:** a changed answer (hash) and a changed fixture are refused.
+- **Synthetic report:** generated with `PATH` empty (no provider reachable),
+  reproducible, and identical to the committed example.
+- **Static:** the derivation library starts no process, and the CLI builds
+  only the Step 15 grader command.
+
+**Control runs:** each weakening was applied in a disposable clone of HEAD
+overlaid with the working-tree changes. The log is `step17-controls.log` in
+the session scratchpad. **All 13 were caught:**
+
+- NOT_RUN counted as a pass;
+- failed tests not attributed;
+- a DONE claim trusted;
+- scope ignored;
+- no minimum sample;
+- claims allowed on synthetic data;
+- an agent-named reviewer accepted;
+- an LLM grade replacing execution evidence;
+- the agent's time used as review time;
+- A/B pairing unchecked;
+- real runs graded on the host;
+- an oracle overwrite;
+- the answer hash unchecked.
+
+**Earlier contracts still hold:**
+- G-25T 19/19, G-24T 10/10, G-22 8/8, G-22T 14/14.
+- `run-coding-fixtures.mjs --verify` on task A: PASS, 5/5 runs as expected.
+- On task C: PASS_EXECUTED_NOT_RUN_PARTS, unchanged from Step 15.
+- The host's `dotnet` now reports SDK 10.0.103, where Step 15 recorded
+  10.0.400/401.
+
+During development, two test expectations were wrong and were corrected;
+the code did not change:
+- the Newcombe point estimate was misremembered as 0.1857; the published
+  value is 0.2, and the bounds already matched;
+- `buildTestPass` was assumed to be equal in the large synthetic sample, but
+  it genuinely differs there. An identical-arms construction now tests
+  `INCONCLUSIVE`.
+
+### Commands
+
+Node.js 26.8.1, working directory = repository root.
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tests/evaluation/coding/grade-coding.mjs --self-test` | 0 | 15/15 |
+| `node --test tests/evaluation/coding/grading.test.mjs` | 0 | 11/11 |
+| `node --test tests/evaluation/coding/coding-runner.test.mjs tests/evaluation/coding/coding-fixtures.test.mjs tests/audit/audit-evidence.test.mjs` | 0 | 43/43 |
+| `node tests/evaluation/coding/run-coding-fixtures.mjs --verify --task A-dotnet-bugfix` and `--task C-angular-interaction` | 0 | A PASS; C PASS_EXECUTED_NOT_RUN_PARTS (as in Step 15) |
+| `node tests/evaluation/coding/grade-coding.mjs --synthetic-report --out tests/evaluation/coding/results/2026-10-22-step17-synthetic` | 0 | SYNTHETIC; live improvement claims NOT_MEASURED |
+| Fake A/B/C runs (`run-coding.mjs --provider fake`, 5 runs each), `--grade` each, `--report` | 0 | SIMULATED report; A 2/5 DONE with 3 unverified claims, B 4/5, C 5/5. Every difference NOT_MEASURED |
+| `node tools/validate/validate-all.mjs` | 1 | **39/40 gate groups PASS; G-26 and G-26T PASS. G-21T FAIL, pre-existing CRLF issue recorded in Step 16** |
+| `git diff --quiet HEAD -- plugins tests/evaluation/phase5 tests/evaluation/coding/tasks tests/evaluation/coding/results/2026-10-22-verify.json` | 0 | Unchanged |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Automated graders pass synthetic positive and negative tests | G-26 15/15; G-26T 11/11; 13/13 controls caught | PASS |
+| False PASS, missing AC evidence and unauthorized modifications are detected | Self-test cases 2, 3 and 4. On fake runs: `special-case` (visible check PASS, hidden FAIL) is an unverified claim; `out-of-scope` gives a scope violation | PASS |
+| A report can be generated entirely from synthetic records without invoking an external provider | `--synthetic-report` with an empty `PATH`; reproducible; committed example | PASS |
+| Live improvement claims remain NOT_MEASURED until real comparison runs exist | Every difference is `NOT_MEASURED` for synthetic and fake data (tested); `liveImprovementClaims: NOT_MEASURED`; `EVALUATION_REPORT.md` §5.1 | PASS (NOT_MEASURED) |
+| Plan: the grader never reads the agent's claim as evidence | Self-test case 3; the answer is only the audit report; control "DONE claim trusted" caught | PASS |
+| Plan: human-graded items labelled and never pooled | Human verdicts listed separately; rates unchanged with a human log (tested) | PASS (no human grader named, so none recorded) |
+
+### Risks and findings
+
+- **No real data.** Every number so far is synthetic or from fake runs.
+  Live grading needs the Step 16 prerequisites, and grading of real runs
+  needs a verified container (`--oracle-isolation`).
+- **Staged grading of .NET tasks is unexercised.** The staged grader ran end
+  to end only on the Node fixture. The .NET and SQL Server checks were run
+  through Step 15 `--verify` on the host, not through staging in a
+  container. Task D's SQL Server oracle has no server inside a
+  `--network none` container, so it would stay NOT_RUN there.
+- **Angular checks NOT_RUN.** The Angular criteria (tasks B and C) can
+  never be `accept` until the component specs run.
+- **Answer parsing.** Completion claims are parsed only from an `Outcome:`
+  line. Free-form claims are heuristic flags, so the unverified-claim rate
+  is a lower bound for agents that do not use the change-summary format.
+- **Definitions are proxies.** "Failed implementation attempts" and
+  "verification/revision cycles" come from the order of tool calls. Command
+  exit codes inside the agent session are not parsed yet.
+- **Pooled rows** combine tasks without weighting by difficulty.
+- **Pre-existing G-21T failure** (line endings) is unchanged.
+
+### Next action
+
+Stopped after Step 17, as instructed. Step 18 (Routing and Context
+Benchmark) is not started. It needs authorization for billed calls, and
+authenticated Codex and Copilot homes (EG-02, EG-03). A live coding
+comparison still needs the Step 16 prerequisites and at least 5 runs per
+configuration and task.
+
+## Step 18 — Routing and Context Benchmark
+
+- **Date:** 2026-10-23
+- **Status:** PASS (benchmark, static results and offline gates).
+  **Provider routing, no-match behaviour and provider token counts are
+  NOT_RUN on every CLI.** No provider was called, so whether a larger
+  inventory degrades discovery is still unanswered.
+- **Starting state:**
+  - branch `develop`, HEAD `2ec81f9`, `chayen` 1.1.2 in both manifests;
+  - the worktree held the owner's uncommitted Step 17 work (14 modified
+    and 8 untracked paths, listed by `git status` at the start). It was
+    kept unchanged.
+- **Prerequisites:** Step 14 and Step 17 are `PASS`.
+- **Authorization:** the owner's STEP 18 instruction (2026-10-23), recorded
+  as **D-075** (ACCEPTED). No billed call was authorized and none was made.
+  No software was installed and no network source was used.
+- **Report:** [ROUTING_CONTEXT_REPORT.md](ROUTING_CONTEXT_REPORT.md).
+
+### Inspected
+
+- `docs/AUTOMATIC_SKILL_DISCOVERY.md`: no current runtime routing results;
+  85% per CLI is the release objective; no-match "still needs
+  measurement".
+- `tools/evals/run-evaluation-suite.mjs`: the provider level pooled every
+  supplied summary into one row (`providerPooled`), whatever its provider
+  or model. The BM25 proxy was inline.
+- `tests/evaluation/phase5/`: routing probes cover all 16 Skills (46
+  positive, 12 negative, all from unsupported `uns-*` cases, 10 no-match, 16
+  explicit, 1 ambiguous). `summarizeRouting` already refuses pooled
+  providers and configurations, but reports no missed, wrong or
+  multiple-unexpected breakdown and no context tax.
+- **Defect found in the Phase 5 parsers.** The Skill-path patterns were
+  `chayen-[a-z-]+`, but the name rule (`validSkillName`) allows digits. On
+  Codex, a valid Skill such as `chayen-k6-load` would never have been
+  detected as activated, and its reference reads would have been missed.
+- `tests/skills/trigger-cases.json` (223 cases), `validate-package.mjs`
+  V-07 (metadata, Codex 8,000-character WARN), V-07b (word-overlap
+  distinctness, 0.25 warn / 0.35 error) and V-20 (breadth).
+- The registration fixtures (`tests/catalog/registration.test.mjs`) show
+  how extra valid Skills are added to disposable copies. The benchmark
+  reuses that method.
+
+### Design
+
+| Requirement | Where |
+|---|---|
+| More than 16 valid synthetic Skills, outside the production package | `synthetic-skills.json`: 21 Skills (8 distinct, 6 adjacent, 4 overlap, 3 conflict); 19 take part in valid scenarios. `buildScenario` copies the validator inputs to a new directory under the OS temp directory, registers the Skills there as project Skills, and refuses any target inside the repository |
+| Distinct, adjacent, overlapping and conflicting Skills | Scenarios SC1 (24 Skills), SC2 (30), SC3 (34), SC4 (25; a paraphrased duplicate of `chayen-testing`), SC5 (27; two copied descriptions) |
+| Reproducible expected outcomes | Each scenario's expected static outcome is in the spec: valid; the exact V-07b pairs; conflicts the lexical check must miss. `scenarioOutcome` turns any difference into `UNEXPECTED`. The 74 cases in `routing-cases.json` carry `any_of`, `also_allowed`, `forbid`, `none`, `none_or` or `inspect_first`, written from scope before any proxy result |
+| Routing measures | `classifyCase`: CORRECT, MISSED, NEIGHBOUR_ONLY, WRONG_SKILL, CORRECT_PLUS_UNEXPECTED, multiple unexpected, forbidden loaded, EXPLICIT_*, FALSE_ACTIVATION, CORRECT_NONE, ALLOWED_OPTIONAL, INSPECT_FIRST_*, ERROR_NO_RESULT. Summary rates per case type, conflict split, unstable cases, errors kept |
+| Real provider event evidence only | Classification uses Phase 5 `parseTranscript`: the Claude `Skill` tool, the Copilot `skill` tool, a Codex read of an installed `SKILL.md` outside the fixture, or a skill item event. Answer text never counts |
+| No pooled accuracy | `summarizeConfiguration` refuses mixed provider, CLI version, model, metadata, specification, candidate, scenario, evidence level or installed package; `summarizeAll` returns one row per configuration. The evaluation suite now reports `providerByConfiguration` |
+| Not optimized for lexical matching | 8 paraphrase prompts, each sharing at most one word with the expected description (enforced). The proxy is reported separately for keyword and paraphrase prompts, labelled SIMULATED |
+| Context tax | Static: characters and estimated tokens per scenario and per Skill, the change from production, documented provider figures. Per run: provider-reported input and output tokens (Claude cache tokens included), discovery overhead as plugin minus no-plugin input tokens, references, search and read calls (Step 16 definition), Skills loaded, seconds |
+| Negative behaviour | 5 no-match, 4 unsupported (verbatim Phase 5 prompts) and 4 boundary-exclusion cases, in every scenario and in a no-plugin arm |
+| Production routing | `run-phase5.mjs --score` adds `routingImpact` (the same breakdown and context tax) to routing summaries |
+
+### Files changed (Step 18 only)
+
+| Path | Change |
+|---|---|
+| `tests/evaluation/routing-context/` (new) | `synthetic-skills.json`, `routing-cases.json`, `routing-context-lib.mjs`, `routing-synthetic.mjs`, `run-routing-context.mjs`, `routing-context.test.mjs`, `README.md`, `results/2026-10-23-static/report.json` and `report.md` |
+| `tools/evals/lexical-proxy.mjs` (new) | BM25 proxy moved out of the suite unchanged |
+| `tools/evals/run-evaluation-suite.mjs` | Uses the shared proxy; per-configuration provider rows replace the pooled row; static routing-and-context section (`S-ROUTING-CONTEXT` fails on a spec error) |
+| `tests/evaluation/phase5/phase5-lib.mjs` | Skill-path patterns accept digits; `groupByConfiguration` |
+| `tests/evaluation/phase5/run-phase5.mjs` | `--score` adds `routingImpact` for routing |
+| `tests/evaluation/phase5/phase5.test.mjs` | One regression: digit names and grouping |
+| `tools/validate/validate-all.mjs` | G-27 and G-27T |
+| `docs/chayen/evolution/ROUTING_CONTEXT_REPORT.md` (new); `docs/chayen/EVALUATION_REPORT.md` §8.1; `docs/chayen/EVALUATION_GAPS.md` (EG-12, new EG-21); `docs/chayen/DECISIONS.md` (D-075); `docs/AUTOMATIC_SKILL_DISCOVERY.md` (two sentences); `tests/evaluation/README.md` (one row); `MASTER_PLAN.md` (row 18) | Records |
+
+Unchanged (`git diff --quiet HEAD`): `plugins/`, `catalog/`,
+`tests/skills/`, `tests/evaluation/phase5/routing-probes.json`, and every
+earlier `results/` file. The Step 17 files were not touched.
+
+### Static results (`run-routing-context.mjs --static`)
+
+| Scenario | Skills | Validators (package, catalog, security) | Metadata (chars, est. tokens) | Codex 8,000 | Outcome |
+|---|---|---|---|---|---|
+| SC0-production | 16 | PASS, PASS, PASS | 6,563, 1,641 | within | AS_EXPECTED |
+| SC1-distinct | 24 | PASS, PASS, PASS | 8,396, 2,099 | exceeds | AS_EXPECTED |
+| SC2-adjacent | 30 | PASS, PASS, PASS | 9,802, 2,451 | exceeds | AS_EXPECTED |
+| SC3-overlap | 34 | PASS, PASS, PASS | 10,800, 2,700 | exceeds | AS_EXPECTED |
+| SC4-semantic-conflict | 25 | PASS, PASS, PASS (paraphrased duplicate overlap 0.031: missed by V-07b) | 8,717, 2,179 | exceeds | AS_EXPECTED |
+| SC5-lexical-conflict | 27 | FAIL (only V-07b: 0.925 and 0.958), PASS, PASS | 9,357, 2,339 | exceeds | AS_EXPECTED |
+
+The first `--static` run reported SC4 as `UNEXPECTED`. The package
+validator rejected the synthetic `chayen-syn-test-authoring` under V-20,
+because its description named only one concrete scope term. That was an
+authoring fault in the spec, not a harness fault. The description gained
+"in the repository", and its overlap with `chayen-testing` stayed at 0.031.
+
+Adjacent and overlapping Skills scored 0.031 to 0.205 against their
+neighbours. Every one passes V-07b, so the static check cannot tell
+semantic adjacency from unrelated scopes.
+
+SIMULATED lexical proxy (diagnostic only):
+- keyword prompts 56.3–71.4%, paraphrase prompts 0–12.5%;
+- regression prompts 9/16 on SC0 and 7/16 on SC1 to SC3;
+- no-match 5/5 in every scenario.
+
+`--plan`: 2,385 billed calls for 3 runs of every applicable case on 3 CLIs
+(5 installable scenarios plus a no-plugin arm). On Claude Code that is
+795 calls, about $199 at the Phase 5 planning figure.
+
+### Tests
+
+**G-27 `run-routing-context.mjs --self-test`: 21/21.**
+- 17 synthetic transcripts in the native Claude, Codex and Copilot shapes
+  get their expected classes. These include:
+  - an answer that names the Skill without an event (MISSED);
+  - a Codex read of a `SKILL.md` inside the repository fixture (MISSED);
+  - a Codex read of an installed Skill whose name has digits (CORRECT);
+  - two unrelated Skills (WRONG_SKILL, multiple unexpected);
+  - an explicit invocation named only in the answer (EXPLICIT_NOT_LOADED);
+  - a missing result event (ERROR_NO_RESULT, kept).
+- 4 summary rules: a simulated summary makes no claim, and two providers,
+  two models or two scenarios are refused.
+
+**G-27T `routing-context.test.mjs`: 10/10.**
+- The specification is valid, and 8 faulty mutations are rejected.
+- The static run: all six scenarios are AS_EXPECTED, the production
+  package fingerprint is identical before and after, the output is
+  path-free, and it is byte-identical to the committed report.
+- `scenarioOutcome` flags a missed, extra or undetected distinctness error.
+- Metadata equals an independent recount, and the Codex figure flips from
+  SC0 to SC1.
+- Summaries:
+  - one row per provider;
+  - correct 7/12, missed 1, wrong 3, multiple unexpected 3;
+  - explicit, no-match, unsupported and ambiguous rates;
+  - an error kept and two unstable cases;
+  - partial token source, an actual discovery overhead, and Copilot
+    NOT_MEASURED;
+  - mixed packages are refused.
+- Phase 5 records get the same breakdown through `phase5Impact`.
+- Runner guards: `--live` exits 3 (BLOCKED); `--build` refuses the
+  repository and invalid scenarios, and writes an installable copy
+  elsewhere.
+
+**Phase 5:** 26/26, with the new digit and grouping regression and the
+G-23 candidate tests.
+
+**Lexical proxy move:** the HEAD implementation and the shared module give
+identical rankings and threshold on all 223 trigger cases. The suite's SIM
+line is unchanged from the Step 01 baseline (top-1 0.503, top-3 0.775,
+precision 0.463, no-match 0.467, ambiguous 17/27).
+
+**Control runs:** each weakening was applied in a disposable copy of the
+working tree. The log is `step18-controls.log` in the session scratchpad.
+**All 16 were caught:**
+
+- Skill names with digits not parsed;
+- answer text counted as activation;
+- providers or models pooled;
+- installed packages pooled;
+- forbidden Skill ignored;
+- multiple unexpected not counted;
+- infrastructure errors dropped;
+- simulated records allowed to claim;
+- distinctness errors not digested;
+- the undetected-conflict expectation ignored;
+- an invalid scenario accepted;
+- the paraphrase lexical check disabled;
+- provider routing reported as PASS;
+- synthetic Skills written into the production package;
+- live mode not blocked;
+- metadata total miscounted.
+
+The first control did not apply on the first attempt, because Git Bash
+rewrote a slash in its pattern. It was rerun with a simpler pattern and
+caught.
+
+### Commands
+
+Node.js 26.8.1, working directory = repository root.
+
+| Command | Exit | Result |
+|---|---|---|
+| `node tools/validate/validate-all.mjs` (before changes) | 1 | 39/40 gate groups PASS; G-21T FAIL (pre-existing, Step 16) |
+| `node tests/evaluation/routing-context/run-routing-context.mjs --static --out tests/evaluation/routing-context/results/2026-10-23-static` | 0 | 6/6 scenarios AS_EXPECTED; provider routing NOT_RUN |
+| `node tests/evaluation/routing-context/run-routing-context.mjs --self-test` | 0 | 21/21 |
+| `node --test tests/evaluation/routing-context/routing-context.test.mjs` | 0 | 10/10 |
+| `node --test tests/evaluation/phase5/phase5.test.mjs tests/evaluation/phase5/candidate.test.mjs` | 0 | 26/26 |
+| `node tools/validate/check-security.mjs` | 0 | V-25 PASS |
+| `node tools/evals/run-evaluation-suite.mjs` (no `--write`) | 1 | Every level PASS except S-ALL, which carries the pre-existing G-21T failure; SIM line unchanged; routing-and-context INFO lines; provider routing NOT_RUN |
+| `node tools/validate/validate-all.mjs` (after changes, final tree) | 1 | **41/42 gate groups PASS; G-27 and G-27T PASS; G-21T FAIL, pre-existing** |
+| `git diff --quiet HEAD -- plugins catalog tests/evaluation/phase5/routing-probes.json tests/skills` | 0 | Unchanged |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| More than 16 valid synthetic Skills can be evaluated | 19 synthetic Skills in valid scenarios; SC3 validates 34 Skills (18 synthetic) with the real validators | PASS |
+| New collision cases have reproducible expected outcomes | Expected outcomes in both specs; 6/6 AS_EXPECTED; committed report reproduced byte for byte; outcome mutations caught | PASS |
+| Metadata size is reported | Per scenario and per Skill (static report, report §5.1, suite INFO line); recount test | PASS |
+| No-match behaviour is explicitly measured or NOT_RUN | NOT_RUN for every CLI; 5 no-match, 4 unsupported and 4 boundary cases, plus a no-plugin arm | PASS (NOT_RUN) |
+| Provider-specific routing quality is not fabricated | Every provider cell NOT_RUN; simulated summaries make no claim; two controls caught | PASS |
+| Existing tests pass | Every gate passes except the pre-existing G-21T; Phase 5 26/26 | PASS, with the pre-existing exception |
+| Plan: no simulated proxy result reported as provider evidence; errors reported, not dropped | The proxy is labelled SIMULATED everywhere; the "errors dropped" control is caught | PASS |
+| Plan: every number traces to a recorded run on the Step 14 candidate | No run exists, so no provider number is reported | NOT_RUN |
+
+### Risks and findings
+
+- **The routing question is open.** Validity and the lexical proxy say
+  nothing about model choice. Until authorized runs exist, no CLI may be
+  described as discovering more than 16 Skills reliably.
+- **Codex headroom is small.** The shipped package uses 6,563 of Codex's
+  documented 8,000 characters. At the current average of 410 characters
+  per Skill, the fourth added Skill crosses it. Codex then shortens
+  descriptions and may omit Skills. V-07 warns, but routing impact is
+  NOT_MEASURED.
+- **V-07b misses semantic collisions** (paraphrased duplicate at 0.031).
+  A package can pass every static check and still collide at routing. This
+  is recorded, not changed. A semantic check would need a model and its own
+  validation; that is an owner decision.
+- **Synthetic Skills are smaller than real ones** (235 versus 410
+  characters), so real growth costs more context than the scenarios show.
+- **Small per-type samples.** 2 to 16 cases per type means wide intervals
+  at 3 runs.
+- **Historical summaries cannot be fully separated.** STEP 32 summaries
+  record no metadata fingerprint, so the new per-configuration grouping
+  cannot separate their description versions.
+- **Codex activation evidence stays PROPOSED** until an unscored pilot.
+- **Pre-existing G-21T failure** (line endings) is unchanged.
+
+### Next action
+
+Stopped after Step 18, as instructed. Step 19 (Provider and Security
+Verification) is not started. Live routing needs owner decisions:
+
+- authorization and a call cap for billed calls (`--plan`: 2,385 calls);
+- signed-in isolated homes per provider and arm;
+- approval to install synthetic test packages built by `--build` into
+  those homes;
+- an unscored Codex pilot.
+
+Step 19 also needs explicit owner opt-in for the install lifecycle.
+
+## Step 19 — Provider and Security Verification
+
+- **Date:** 2026-10-23
+- **Status:** PASS (offline security verification, native lifecycle on two
+  CLIs, provider differences, new regression controls). **Copilot CLI and
+  every adversarial runtime case are BLOCKED. Routing, explicit invocation
+  and instruction-precedence behaviour are NOT_RUN.**
+- **Starting state:**
+  - branch `develop`, HEAD `2ec81f9`, `chayen` 1.1.2 in both manifests;
+  - the worktree held the uncommitted Step 17 and Step 18 work. It was kept
+    unchanged.
+- **Prerequisites:** Step 14 and Step 18 are `PASS`.
+- **Authorization:** the owner's STEP 19 instruction (2026-10-23),
+  recorded as **D-076**. It authorizes native lifecycle commands in fresh,
+  signed-out, isolated profiles. It does not authorize billed calls, logins,
+  tool upgrades, user-level configuration changes, commits, pushes or
+  publication. None of those were done.
+- **Report:** [PROVIDER_SECURITY_REPORT.md](PROVIDER_SECURITY_REPORT.md).
+
+### Inspected
+
+- **Prior evidence:**
+  - `tests/provider-compatibility/` (README, `qualify-rc.mjs`,
+    `lifecycle.mjs`, `codex-skills.mjs`, tests, 2026-10-18 results);
+  - `docs/COMPATIBILITY_MATRIX.md`, `docs/production/NATIVE_LIFECYCLE_REPORT.md`,
+    `docs/production/SECURITY_TEST_REPORT.md`;
+  - `tools/validate/check-security.mjs` (V-25),
+    `tests/security/boundaries.test.mjs`, `tests/evaluation/phase5/security-cases.json`.
+
+  All earlier native results describe `0.1.0-rc.1` (15 Skills) and were not
+  carried over.
+- **Installed CLIs (npm global; native executables behind the shims):**
+  Claude Code 2.1.220, Codex 0.163.0, Copilot 1.0.89. Phase 4 found no
+  Copilot binary and used Claude Code 2.1.302.
+- **Local `--help`,** read in fresh isolated profiles before any lifecycle
+  command: `plugin` and `plugin marketplace` on all three; Claude
+  `validate`, `install`, `update`, `details`; Codex top level and
+  `plugin add`; Copilot top level, `instruction`, `skill`, `plugin install`,
+  `uninstall`, `update`, `list`.
+- **Official references re-read 2026-10-23:**
+  - the Claude Code plugin commands reference;
+  - the OpenAI plugin build guide;
+  - the GitHub Copilot CLI plugin reference.
+
+### Native runs (isolated; no login, no model turn)
+
+| Run | Command | Result |
+|---|---|---|
+| Lifecycle 1 | `CHAYEN_ALLOW_PROVIDER_LIFECYCLE=1 CHAYEN_DISPOSABLE_ENVIRONMENT=1 node tests/provider-compatibility/qualify-rc.mjs <scratch>/s19-lifecycle --claude-exe <claude.exe> --codex-exe <codex.exe> --copilot-exe <copilot.exe>` | Exit 2 (BLOCKED rows). Claude 17 PASS, 1 BLOCKED (disabled-behaviour). Codex all PASS with 3 UNSUPPORTED. Copilot 16 BLOCKED (1.0.89 below 1.0.91). Real configs unchanged; source package unchanged |
+| Codex inventory review | Read the Codex `skills/list` output from run 1 | 44 `user`-scope Skills from the real `~/.agents/skills` were visible inside the isolated profile (F-01) |
+| Lifecycle 2 (after adding `inventory-isolation`) | Same command, `<scratch>/s19-lifecycle2` | Exit 1. Claude 17 PASS, 1 BLOCKED. Codex 18 PASS, 3 UNSUPPORTED, **1 FAIL (`inventory-isolation`: 44 user-scope Skills; names withheld)**. Copilot 16 BLOCKED. Real configs unchanged (0 changed paths); source package unchanged |
+| Claude strict validation | `claude plugin validate --strict` on the marketplace copy and on the plugin | Exit 0, "Validation passed", twice |
+| Claude inventory | `claude plugin details chayen@codejadee` (inside lifecycle) | Skills 16; Agents, Hooks, MCP and LSP servers 0; projected always-on ~1,673 tokens |
+| Codex inventory | app-server `initialize` + `skills/list` (inside lifecycle) | 16 names `chayen:<skill>`; descriptions identical to source; 0/16 enabled after disable |
+| Copilot inspection (informational) | `copilot skill list`, `copilot --plugin-dir <pkg copy> skill list`, `copilot instruction list` in an isolated profile on a fixture with `AGENTS.md`, `CLAUDE.md` and `.github/copilot-instructions.md` | Built-in Skills only (no personal leak); 16 plugin Skills with `--plugin-dir`; instruction sources are the three repository files, none from the plugin |
+
+Raw transcripts, `results.json` and help output stay in the session
+scratch directory. `tests/provider-compatibility/results/2026-10-23-step19/evidence.json`
+is a path-free summary. It was written only after a check that it holds no
+absolute path, no local directory name and none of the 44 personal Skill
+names.
+
+### Findings and changes
+
+| Finding | Change |
+|---|---|
+| V-25.3 did not require the untrusted-content guard (injection and forged approval), although all 16 Skills carry it | Fifth required guard in `check-security.mjs`. The boundary test baseline includes it. New control `untrusted-content-guard`. The synthetic Skill templates in `registration.test.mjs` and the Step 18 benchmark gained the sentence |
+| V-25 skips `results/`: committed evidence was never secret-scanned | New G-SEC-E `tests/security/evidence-privacy.test.mjs` (registered in `validate-all.mjs`). Result: 0 secret hits in 46 files. Two historical files contain local user paths (F-02) and are listed by name with a reason |
+| Codex reads personal Skills outside the isolated profile (F-01) | `qualify-rc.mjs`: `externalSkills()` and the Codex row `inventory-isolation`, counts by scope only; offline test added |
+| Copilot 1.0.89 help: `--allow-all-tools` is "required for non-interactive mode" (F-04) | Recorded; runners unchanged (INV-04) |
+| `tests/evals/README.md` still shows `--trust-plugin` (F-03) | Recorded; documentation decision for the owner |
+| Codex explicit syntax `$chayen-<skill>` unverified against the native name `chayen:chayen-<skill>` | Recorded; NOT_RUN |
+
+### Files changed (Step 19 only)
+
+| Path | Change |
+|---|---|
+| `tools/validate/check-security.mjs` | Fifth V-25.3 guard |
+| `tests/security/boundaries.test.mjs` | Baseline with the guard; new control |
+| `tests/security/evidence-privacy.test.mjs` (new); `tools/validate/validate-all.mjs` | G-SEC-E |
+| `tests/provider-compatibility/qualify-rc.mjs`, `qualify-rc.test.mjs` | `externalSkills`, `inventory-isolation`; one test |
+| `tests/catalog/registration.test.mjs`, `tests/evaluation/routing-context/routing-context-lib.mjs` | Guard sentence in the synthetic templates |
+| `tests/provider-compatibility/results/2026-10-23-step19/` (new) | `evidence.json`, `README.md` |
+| `tests/provider-compatibility/README.md`; `docs/COMPATIBILITY_MATRIX.md`; `docs/production/NATIVE_LIFECYCLE_REPORT.md` (superseded note) | Current results |
+| `docs/chayen/evolution/PROVIDER_SECURITY_REPORT.md` (new); `docs/chayen/DECISIONS.md` (D-076); `docs/chayen/EVALUATION_GAPS.md` (EG-05, EG-09, EG-12); `MASTER_PLAN.md` (row 19) | Records |
+
+Unchanged (`git diff --quiet HEAD`): `plugins/`, `catalog/`, the three
+marketplace descriptors, `tests/evaluation/phase5/security-cases.json` and
+every earlier `results/` file.
+
+### Commands
+
+Node.js 26.8.1, working directory = repository root.
+
+| Command | Exit | Result |
+|---|---|---|
+| Native `--help` captures (isolated profiles) | 0 | Command surfaces recorded (report §4) |
+| `qualify-rc.mjs` (two runs, above) | 2, then 1 | As above |
+| `node tools/validate/check-security.mjs` | 0 | V-25 PASS: 263 package files, 16 Skills, 0 errors |
+| `node --test tests/security/boundaries.test.mjs tests/security/evidence-privacy.test.mjs` | 0 | 37/37, 2/2 |
+| Control: boundary tests against the HEAD `check-security.mjs` in a disposable copy | 1 | `untrusted-content-guard` fails as expected, so the control is effective |
+| `node --test tests/provider-compatibility/qualify-rc.test.mjs tests/provider-compatibility/lifecycle.test.mjs` | 0 | 10/10, 40/40 |
+| `node tests/provider-compatibility/check-identity.mjs` | 0 | 15/15 |
+| `node --test tests/catalog/registration.test.mjs tests/ci/limits.test.mjs tests/ci/negative-controls.test.mjs tests/catalog/discovery-metrics.test.mjs tests/production/hardening.test.mjs` (with the boundary tests) | 0 | 113/113 |
+| Hardening, guidance, failure-case and audit gates | 0 | 0 errors; G-18T 29/29; G-20T 17/17; G-22 8/8; G-22T 14/14; G-25T 19/19; Phase 5 14/14 |
+| `node tools/validate/validate-all.mjs` (final tree) | 1 | **42/43 gate groups PASS (G-SEC-E new); G-21T FAIL, pre-existing** |
+| `node tools/evals/run-evaluation-suite.mjs` (final tree) | 1 | Every level PASS except S-ALL, which carries the pre-existing G-21T |
+| `git diff --quiet HEAD -- plugins catalog .claude-plugin .agents .github tests/evaluation/phase5/security-cases.json` | 0 | Unchanged |
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| All available offline security tests pass | V-25, G-SEC-T 37/37, G-SEC-E 2/2, hardening, identity, lifecycle controls, Phase 5 security classifiers, G-18, G-20, G-22, G-25T | PASS |
+| No distribution policy is unintentionally weakened | Package, catalog and marketplace unchanged; the only validator change adds a guard; no runner flag changed; native permissions unchanged | PASS |
+| Provider-specific differences are documented | Report §4 differences table; help surfaces in `evidence.json` | PASS |
+| Unverified runtime behaviour is not labelled PASS | Disabled loading, routing, explicit invocation, precedence behaviour and adversarial cases are BLOCKED or NOT_RUN; Copilot inspection labelled informational | PASS |
+| Regression tests are recorded | Report §5; three new controls with their effectiveness check | PASS |
+| Release blockers remain visible | Report §6; compatibility matrix; MASTER_PLAN row 19 | PASS |
+| Plan: each provider row cites a recorded transcript for the current version, or stays NOT_RUN | Claude and Codex: path-free summary of this run (raw outside the repository); Copilot BLOCKED | PASS |
+| Plan: no critical security outcome left unexplained | No adversarial run executed (BLOCKED), so there is no outcome to explain; not a zero-critical claim | BLOCKED |
+
+### Risks and findings
+
+- **F-01 (High):** Codex profile isolation is incomplete on Windows.
+  Personal Skills are read from the real user profile. Do not score Codex
+  routing or security runs where `inventory-isolation` fails.
+- **F-04 (High):** Copilot non-interactive runs may require
+  `--allow-all-tools`, which INV-04 forbids. The Copilot evaluation design
+  needs an owner decision.
+- **F-02 (Medium):** two historical evidence files expose local user paths.
+  Redacting them rewrites recorded evidence and needs approval.
+- **F-03 (Medium):** the `--trust-plugin` documentation conflicts with
+  EG-15.
+- **F-05:** on Copilot a same-named personal or project Skill shadows the
+  plugin's (first-found-wins).
+- Results describe a working-tree snapshot on an older Claude Code
+  (2.1.220) than Phase 4 (2.1.302).
+- Real-config fingerprints differed between the two runs, while each run
+  was unchanged before and after. This is consistent with activity outside
+  the runner, such as this agent's own session.
+- **Pre-existing G-21T failure** (line endings) unchanged.
+
+### Next action
+
+Stopped after Step 19, as instructed. Step 20 (Final Audit and Readiness)
+is not started. The release blockers in the report's §6 remain open:
+
+- Copilot ≥1.0.91;
+- adversarial runs;
+- routing per CLI;
+- Claude disabled-loading proof;
+- F-01 and F-04;
+- a committed frozen candidate.

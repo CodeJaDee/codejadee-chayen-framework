@@ -38,8 +38,9 @@ export const scrub = (text) => String(text ?? "")
   .replace(/[A-Za-z]:(?:\\\\|\\|\/)[^\s"'`)]*/g, "<ABS-PATH>")
   .replace(/(?:^|(?<=[\s"'`(]))\/(?:Users|home|tmp|var|private)\/[^\s"'`)]*/g, "<ABS-PATH>");
 
-const SKILL_MD = /skills[\\/]+(chayen-[a-z-]+)[\\/]+SKILL\.md/gi;
-const REF = /skills[\\/]+(chayen-[a-z-]+)[\\/]+references[\\/]+([\w./\\-]+\.md)/i;
+// Skill names may contain digits (provider name rule; validSkillName), so the patterns accept them (Step 18).
+const SKILL_MD = /skills[\\/]+(chayen-[a-z0-9-]+)[\\/]+SKILL\.md/gi;
+const REF = /skills[\\/]+(chayen-[a-z0-9-]+)[\\/]+references[\\/]+([\w./\\-]+\.md)/i;
 const stripNs = (s) => String(s ?? "").replace(/^[\w-]+:/, "").toLowerCase();
 
 // Parse one provider transcript (JSON lines) into observable facts. Skill activation evidence is
@@ -158,6 +159,14 @@ export function scoredAttempts(records) {
     out.push(rs.at(-1));
   }
   return out;
+}
+
+// Rows grouped by configuration key, sorted by key. Callers report each group on its own; accuracy is never
+// pooled across groups (evolution Step 18).
+export function groupByConfiguration(rows, key = configKey) {
+  const groups = new Map();
+  for (const r of rows) { const k = key(r); groups.set(k, [...(groups.get(k) ?? []), r]); }
+  return [...groups.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([configuration, rs]) => ({ configuration, rows: rs }));
 }
 
 export const configKey = (r) => [r.provider, r.cliVersion, r.model ?? `host-default(${r.modelConfig ?? "unpinned"})`, r.packageFingerprint, r.metadataFingerprint, r.specHash, r.candidateId ?? "no-candidate"].join(" | ");

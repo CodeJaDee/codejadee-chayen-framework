@@ -15,6 +15,7 @@ const failFast = process.argv.includes("--fail-fast");
 const steps = [
   ["G-SEC offline security profile (V-25)", "tools/validate/check-security.mjs", []],
   ["G-SEC-T offline security boundary regressions", "tests/security/boundaries.test.mjs", []],
+  ["G-SEC-E committed evidence privacy: no secret-shaped value and no new user-home path in any results/ directory (evolution Step 19; offline)", "tests/security/evidence-privacy.test.mjs", []],
   ["Phase 2 scope, upstream notice and lifecycle invariants", "tools/validate/check-hardening.mjs", []],
   ["Phase 2 hardening validator regressions", "tests/production/hardening.test.mjs", []],
   ["Phase 2 Thai numerals and calendar scorer regressions", "tests/editorial/numeric-preservation.test.mjs", []],
@@ -50,6 +51,10 @@ const steps = [
   ["G-24 coding evaluation fixtures: six tasks structurally valid, evaluator-only checks outside repo/, synthetic data (D-072; static; builds run by --verify)", "tests/evaluation/coding/run-coding-fixtures.mjs", ["--check"]],
   ["G-24T coding fixture runner regressions: diffing, scope, answer parser, Node-graded task C, scope and completion checks (offline; Node only)", "tests/evaluation/coding/coding-fixtures.test.mjs", []],
   ["G-25T isolated coding runner: native permissions only, boundary probe (fake engine), sandbox refusal, authorization gates, candidate mismatch, duplicate output, timeout, reset, detectors, reproducible scoring (D-073; fake provider only; no provider calls)", "tests/evaluation/coding/coding-runner.test.mjs", []],
+  ["G-26 independent coding grader self-test: synthetic known-good and known-bad records (false PASS, missing AC evidence, unauthorized modification, claims never evidence) give their expected grades (D-074; offline; no provider)", "tests/evaluation/coding/grade-coding.mjs", ["--self-test"]],
+  ["G-26T coding grading and comparison regressions: rubric fit, Newcombe and sample-size statuses, fake-run grading, BLOCKED real grading, human and LLM log rules, reproducible synthetic report (D-074; fake provider only)", "tests/evaluation/coding/grading.test.mjs", []],
+  ["G-27 routing scorer self-test: synthetic native-event transcripts for Claude, Codex and Copilot get their expected classes; answer text and repository files are never activation; providers, models and scenarios never pooled (D-075; no provider)", "tests/evaluation/routing-context/run-routing-context.mjs", ["--self-test"]],
+  ["G-27T routing, collision and context regressions: more than 16 valid synthetic Skills validated in disposable copies, expected collision outcomes, metadata recount, reproducible static report, production package untouched, live runs BLOCKED (D-075; offline)", "tests/evaluation/routing-context/routing-context.test.mjs", []],
   ["G-17 Step 40 evaluation dataset, discovery probes and scorer self-test (offline; no outputs scored)", "tools/evals/score-step40.mjs", ["--self-test"]],
 ];
 let failed = 0;

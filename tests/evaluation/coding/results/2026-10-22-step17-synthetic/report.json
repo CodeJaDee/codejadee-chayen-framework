@@ -1,0 +1,5713 @@
+{
+  "$schema": "chayen-coding-comparison-report/1",
+  "title": "Synthetic coding comparison (method check only)",
+  "dataStatus": "SYNTHETIC",
+  "liveImprovementClaims": "NOT_MEASURED",
+  "minRuns": 5,
+  "rubricSha256": "aa331dd72746e977ec1cb013c9d5934c08da539fab8a4a5dbfc72941c18322b4",
+  "configurations": {
+    "A": {
+      "role": "Fast agent without Chayen",
+      "arm": "baseline",
+      "provider": "synthetic",
+      "cliVersion": "synthetic 1",
+      "modelConfig": "synthetic-fast-1",
+      "effort": null,
+      "candidateId": "synthetic-candidate",
+      "evidenceLevel": "synthetic (generated records; never evaluation evidence)",
+      "isolation": "synthetic",
+      "pooled": {
+        "runs": 20,
+        "attemptsGraded": 20,
+        "acceptanceCriteria": {
+          "accepted": 43,
+          "total": 60,
+          "note": "criteria within a run are not independent; no interval is given"
+        },
+        "rates": {
+          "completedDone": {
+            "k": 10,
+            "n": 20,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.2993,
+              "high": 0.7007
+            },
+            "notRun": 0
+          },
+          "buildTestPass": {
+            "k": 18,
+            "n": 20,
+            "value": 0.9,
+            "wilson95": {
+              "low": 0.699,
+              "high": 0.9721
+            },
+            "notRun": 0
+          },
+          "functionalPass": {
+            "k": 11,
+            "n": 20,
+            "value": 0.55,
+            "wilson95": {
+              "low": 0.3421,
+              "high": 0.7418
+            },
+            "notRun": 0
+          },
+          "firstPassCompletion": {
+            "k": 9,
+            "n": 20,
+            "value": 0.45,
+            "wilson95": {
+              "low": 0.2582,
+              "high": 0.6579
+            },
+            "notRun": 0
+          },
+          "unverifiedCompletionClaim": {
+            "k": 10,
+            "n": 20,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.2993,
+              "high": 0.7007
+            },
+            "notRun": 0
+          },
+          "scopeViolation": {
+            "k": 1,
+            "n": 20,
+            "value": 0.05,
+            "wilson95": {
+              "low": 0.0089,
+              "high": 0.2361
+            },
+            "notRun": 0
+          }
+        },
+        "measures": {
+          "failedImplementationAttempts": {
+            "n": 20,
+            "mean": 0.55,
+            "median": 1,
+            "min": 0,
+            "max": 1,
+            "sd": 0.5104
+          },
+          "revisions": {
+            "n": 20,
+            "mean": 0.05,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.2236
+          },
+          "verificationRevisionCycles": {
+            "n": 20,
+            "mean": 0.05,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.2236
+          },
+          "evidenceGaps": {
+            "n": 20,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "sd": 0
+          },
+          "seconds": {
+            "n": 20,
+            "mean": 86.95,
+            "median": 87,
+            "min": 65,
+            "max": 115,
+            "sd": 15.1292
+          },
+          "outputTokens": {
+            "n": 20,
+            "mean": 2900.3,
+            "median": 2901,
+            "min": 2183,
+            "max": 3823,
+            "sd": 501.703
+          },
+          "totalTokens": {
+            "n": 20,
+            "mean": 22900.3,
+            "median": 22901,
+            "min": 22183,
+            "max": 23823,
+            "sd": 501.703
+          },
+          "toolCalls": {
+            "n": 20,
+            "mean": 13.4,
+            "median": 13.5,
+            "min": 10,
+            "max": 18,
+            "sd": 2.5005
+          },
+          "searchReadOperations": {
+            "n": 20,
+            "mean": 6.8,
+            "median": 7,
+            "min": 5,
+            "max": 9,
+            "sd": 1.1965
+          },
+          "costUsd": {
+            "n": 20,
+            "mean": 0.29,
+            "median": 0.2901,
+            "min": 0.2183,
+            "max": 0.3823,
+            "sd": 0.0502
+          },
+          "approvalRequestsDenied": {
+            "n": 20,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "sd": 0
+          },
+          "humanInterventions": {
+            "n": 4,
+            "mean": 1,
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "sd": 0
+          },
+          "humanReviewRounds": {
+            "n": 4,
+            "mean": 2,
+            "median": 2,
+            "min": 2,
+            "max": 2,
+            "sd": 0
+          },
+          "humanReviewSeconds": {
+            "n": 4,
+            "mean": 1140,
+            "median": 1140,
+            "min": 1140,
+            "max": 1140,
+            "sd": 0
+          },
+          "humanApprovalEvents": {
+            "n": 4,
+            "mean": 1,
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "sd": 0
+          }
+        },
+        "failureCategories": {
+          "build-or-test-failure": 2,
+          "false-done-claim": 10,
+          "functional-failure": 9,
+          "scope-expansion": 1
+        },
+        "oracleExecution": [
+          "synthetic"
+        ],
+        "humanReview": {
+          "recordedRuns": 4,
+          "timedRuns": 4,
+          "humanVerdicts": []
+        },
+        "llmGrades": [],
+        "perRun": [
+          {
+            "stem": "A-dotnet-bugfix.baseline.r1.a1",
+            "outcome": "PARTIAL",
+            "ac": "2/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 73,
+            "outputTokens": 2447,
+            "costUsd": 0.2447,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r2.a1",
+            "outcome": "PARTIAL",
+            "ac": "2/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 72,
+            "outputTokens": 2398,
+            "costUsd": 0.2398,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r3.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 104,
+            "outputTokens": 3469,
+            "costUsd": 0.3469,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r4.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 93,
+            "outputTokens": 3084,
+            "costUsd": 0.3084,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r5.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 100,
+            "outputTokens": 3330,
+            "costUsd": 0.333,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r6.a1",
+            "outcome": "PARTIAL",
+            "ac": "0/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 79,
+            "outputTokens": 2649,
+            "costUsd": 0.2649,
+            "categories": [
+              "false-done-claim",
+              "functional-failure",
+              "build-or-test-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r7.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 74,
+            "outputTokens": 2457,
+            "costUsd": 0.2457,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r8.a1",
+            "outcome": "PARTIAL",
+            "ac": "2/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 103,
+            "outputTokens": 3430,
+            "costUsd": 0.343,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r9.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 89,
+            "outputTokens": 2971,
+            "costUsd": 0.2971,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.baseline.r10.a1",
+            "outcome": "PARTIAL",
+            "ac": "2/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 99,
+            "outputTokens": 3306,
+            "costUsd": 0.3306,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "fixture-task.baseline.r1.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 96,
+            "outputTokens": 3196,
+            "costUsd": 0.3196,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "fixture-task.baseline.r2.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 85,
+            "outputTokens": 2831,
+            "costUsd": 0.2831,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "fixture-task.baseline.r3.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 66,
+            "outputTokens": 2215,
+            "costUsd": 0.2215,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.baseline.r4.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "PASS",
+            "unverifiedClaim": true,
+            "seconds": 80,
+            "outputTokens": 2677,
+            "costUsd": 0.2677,
+            "categories": [
+              "false-done-claim",
+              "scope-expansion"
+            ]
+          },
+          {
+            "stem": "fixture-task.baseline.r5.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 97,
+            "outputTokens": 3243,
+            "costUsd": 0.3243,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.baseline.r6.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 65,
+            "outputTokens": 2183,
+            "costUsd": 0.2183,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "fixture-task.baseline.r7.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 106,
+            "outputTokens": 3545,
+            "costUsd": 0.3545,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.baseline.r8.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 115,
+            "outputTokens": 3823,
+            "costUsd": 0.3823,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.baseline.r9.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 69,
+            "outputTokens": 2297,
+            "costUsd": 0.2297,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.baseline.r10.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 74,
+            "outputTokens": 2455,
+            "costUsd": 0.2455,
+            "categories": [
+              "false-done-claim",
+              "functional-failure",
+              "build-or-test-failure"
+            ]
+          }
+        ]
+      },
+      "tasks": {
+        "A-dotnet-bugfix": {
+          "runs": 10,
+          "attemptsGraded": 10,
+          "acceptanceCriteria": {
+            "accepted": 28,
+            "total": 40,
+            "note": "criteria within a run are not independent; no interval is given"
+          },
+          "rates": {
+            "completedDone": {
+              "k": 5,
+              "n": 10,
+              "value": 0.5,
+              "wilson95": {
+                "low": 0.2366,
+                "high": 0.7634
+              },
+              "notRun": 0
+            },
+            "buildTestPass": {
+              "k": 9,
+              "n": 10,
+              "value": 0.9,
+              "wilson95": {
+                "low": 0.5958,
+                "high": 0.9821
+              },
+              "notRun": 0
+            },
+            "functionalPass": {
+              "k": 5,
+              "n": 10,
+              "value": 0.5,
+              "wilson95": {
+                "low": 0.2366,
+                "high": 0.7634
+              },
+              "notRun": 0
+            },
+            "firstPassCompletion": {
+              "k": 5,
+              "n": 10,
+              "value": 0.5,
+              "wilson95": {
+                "low": 0.2366,
+                "high": 0.7634
+              },
+              "notRun": 0
+            },
+            "unverifiedCompletionClaim": {
+              "k": 5,
+              "n": 10,
+              "value": 0.5,
+              "wilson95": {
+                "low": 0.2366,
+                "high": 0.7634
+              },
+              "notRun": 0
+            },
+            "scopeViolation": {
+              "k": 0,
+              "n": 10,
+              "value": 0,
+              "wilson95": {
+                "low": 0,
+                "high": 0.2775
+              },
+              "notRun": 0
+            }
+          },
+          "measures": {
+            "failedImplementationAttempts": {
+              "n": 10,
+              "mean": 0.5,
+              "median": 0.5,
+              "min": 0,
+              "max": 1,
+              "sd": 0.527
+            },
+            "revisions": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "verificationRevisionCycles": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "evidenceGaps": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "seconds": {
+              "n": 10,
+              "mean": 88.6,
+              "median": 91,
+              "min": 72,
+              "max": 104,
+              "sd": 13.0231
+            },
+            "outputTokens": {
+              "n": 10,
+              "mean": 2954.1,
+              "median": 3027.5,
+              "min": 2398,
+              "max": 3469,
+              "sd": 432.1122
+            },
+            "totalTokens": {
+              "n": 10,
+              "mean": 22954.1,
+              "median": 23027.5,
+              "min": 22398,
+              "max": 23469,
+              "sd": 432.1122
+            },
+            "toolCalls": {
+              "n": 10,
+              "mean": 13.6,
+              "median": 14,
+              "min": 11,
+              "max": 16,
+              "sd": 2.1705
+            },
+            "searchReadOperations": {
+              "n": 10,
+              "mean": 7,
+              "median": 7,
+              "min": 6,
+              "max": 8,
+              "sd": 0.9428
+            },
+            "costUsd": {
+              "n": 10,
+              "mean": 0.2954,
+              "median": 0.3027,
+              "min": 0.2398,
+              "max": 0.3469,
+              "sd": 0.0432
+            },
+            "approvalRequestsDenied": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanInterventions": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            },
+            "humanReviewRounds": {
+              "n": 2,
+              "mean": 2,
+              "median": 2,
+              "min": 2,
+              "max": 2,
+              "sd": 0
+            },
+            "humanReviewSeconds": {
+              "n": 2,
+              "mean": 1140,
+              "median": 1140,
+              "min": 1140,
+              "max": 1140,
+              "sd": 0
+            },
+            "humanApprovalEvents": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            }
+          },
+          "failureCategories": {
+            "build-or-test-failure": 1,
+            "false-done-claim": 5,
+            "functional-failure": 5
+          },
+          "oracleExecution": [
+            "synthetic"
+          ],
+          "humanReview": {
+            "recordedRuns": 2,
+            "timedRuns": 2,
+            "humanVerdicts": []
+          },
+          "llmGrades": [],
+          "perRun": [
+            {
+              "stem": "A-dotnet-bugfix.baseline.r1.a1",
+              "outcome": "PARTIAL",
+              "ac": "2/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 73,
+              "outputTokens": 2447,
+              "costUsd": 0.2447,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r2.a1",
+              "outcome": "PARTIAL",
+              "ac": "2/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 72,
+              "outputTokens": 2398,
+              "costUsd": 0.2398,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r3.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 104,
+              "outputTokens": 3469,
+              "costUsd": 0.3469,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r4.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 93,
+              "outputTokens": 3084,
+              "costUsd": 0.3084,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r5.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 100,
+              "outputTokens": 3330,
+              "costUsd": 0.333,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r6.a1",
+              "outcome": "PARTIAL",
+              "ac": "0/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 79,
+              "outputTokens": 2649,
+              "costUsd": 0.2649,
+              "categories": [
+                "false-done-claim",
+                "functional-failure",
+                "build-or-test-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r7.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 74,
+              "outputTokens": 2457,
+              "costUsd": 0.2457,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r8.a1",
+              "outcome": "PARTIAL",
+              "ac": "2/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 103,
+              "outputTokens": 3430,
+              "costUsd": 0.343,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r9.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 89,
+              "outputTokens": 2971,
+              "costUsd": 0.2971,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.baseline.r10.a1",
+              "outcome": "PARTIAL",
+              "ac": "2/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 99,
+              "outputTokens": 3306,
+              "costUsd": 0.3306,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            }
+          ]
+        },
+        "fixture-task": {
+          "runs": 10,
+          "attemptsGraded": 10,
+          "acceptanceCriteria": {
+            "accepted": 15,
+            "total": 20,
+            "note": "criteria within a run are not independent; no interval is given"
+          },
+          "rates": {
+            "completedDone": {
+              "k": 5,
+              "n": 10,
+              "value": 0.5,
+              "wilson95": {
+                "low": 0.2366,
+                "high": 0.7634
+              },
+              "notRun": 0
+            },
+            "buildTestPass": {
+              "k": 9,
+              "n": 10,
+              "value": 0.9,
+              "wilson95": {
+                "low": 0.5958,
+                "high": 0.9821
+              },
+              "notRun": 0
+            },
+            "functionalPass": {
+              "k": 6,
+              "n": 10,
+              "value": 0.6,
+              "wilson95": {
+                "low": 0.3127,
+                "high": 0.8318
+              },
+              "notRun": 0
+            },
+            "firstPassCompletion": {
+              "k": 4,
+              "n": 10,
+              "value": 0.4,
+              "wilson95": {
+                "low": 0.1682,
+                "high": 0.6873
+              },
+              "notRun": 0
+            },
+            "unverifiedCompletionClaim": {
+              "k": 5,
+              "n": 10,
+              "value": 0.5,
+              "wilson95": {
+                "low": 0.2366,
+                "high": 0.7634
+              },
+              "notRun": 0
+            },
+            "scopeViolation": {
+              "k": 1,
+              "n": 10,
+              "value": 0.1,
+              "wilson95": {
+                "low": 0.0179,
+                "high": 0.4042
+              },
+              "notRun": 0
+            }
+          },
+          "measures": {
+            "failedImplementationAttempts": {
+              "n": 10,
+              "mean": 0.6,
+              "median": 1,
+              "min": 0,
+              "max": 1,
+              "sd": 0.5164
+            },
+            "revisions": {
+              "n": 10,
+              "mean": 0.1,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.3162
+            },
+            "verificationRevisionCycles": {
+              "n": 10,
+              "mean": 0.1,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.3162
+            },
+            "evidenceGaps": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "seconds": {
+              "n": 10,
+              "mean": 85.3,
+              "median": 82.5,
+              "min": 65,
+              "max": 115,
+              "sd": 17.5376
+            },
+            "outputTokens": {
+              "n": 10,
+              "mean": 2846.5,
+              "median": 2754,
+              "min": 2183,
+              "max": 3823,
+              "sd": 581.5721
+            },
+            "totalTokens": {
+              "n": 10,
+              "mean": 22846.5,
+              "median": 22754,
+              "min": 22183,
+              "max": 23823,
+              "sd": 581.5721
+            },
+            "toolCalls": {
+              "n": 10,
+              "mean": 13.2,
+              "median": 12.5,
+              "min": 10,
+              "max": 18,
+              "sd": 2.8983
+            },
+            "searchReadOperations": {
+              "n": 10,
+              "mean": 6.6,
+              "median": 6.5,
+              "min": 5,
+              "max": 9,
+              "sd": 1.4298
+            },
+            "costUsd": {
+              "n": 10,
+              "mean": 0.2846,
+              "median": 0.2754,
+              "min": 0.2183,
+              "max": 0.3823,
+              "sd": 0.0582
+            },
+            "approvalRequestsDenied": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanInterventions": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            },
+            "humanReviewRounds": {
+              "n": 2,
+              "mean": 2,
+              "median": 2,
+              "min": 2,
+              "max": 2,
+              "sd": 0
+            },
+            "humanReviewSeconds": {
+              "n": 2,
+              "mean": 1140,
+              "median": 1140,
+              "min": 1140,
+              "max": 1140,
+              "sd": 0
+            },
+            "humanApprovalEvents": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            }
+          },
+          "failureCategories": {
+            "build-or-test-failure": 1,
+            "false-done-claim": 5,
+            "functional-failure": 4,
+            "scope-expansion": 1
+          },
+          "oracleExecution": [
+            "synthetic"
+          ],
+          "humanReview": {
+            "recordedRuns": 2,
+            "timedRuns": 2,
+            "humanVerdicts": []
+          },
+          "llmGrades": [],
+          "perRun": [
+            {
+              "stem": "fixture-task.baseline.r1.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 96,
+              "outputTokens": 3196,
+              "costUsd": 0.3196,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "fixture-task.baseline.r2.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 85,
+              "outputTokens": 2831,
+              "costUsd": 0.2831,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "fixture-task.baseline.r3.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 66,
+              "outputTokens": 2215,
+              "costUsd": 0.2215,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.baseline.r4.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "PASS",
+              "unverifiedClaim": true,
+              "seconds": 80,
+              "outputTokens": 2677,
+              "costUsd": 0.2677,
+              "categories": [
+                "false-done-claim",
+                "scope-expansion"
+              ]
+            },
+            {
+              "stem": "fixture-task.baseline.r5.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 97,
+              "outputTokens": 3243,
+              "costUsd": 0.3243,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.baseline.r6.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 65,
+              "outputTokens": 2183,
+              "costUsd": 0.2183,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "fixture-task.baseline.r7.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 106,
+              "outputTokens": 3545,
+              "costUsd": 0.3545,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.baseline.r8.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 115,
+              "outputTokens": 3823,
+              "costUsd": 0.3823,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.baseline.r9.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 69,
+              "outputTokens": 2297,
+              "costUsd": 0.2297,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.baseline.r10.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 74,
+              "outputTokens": 2455,
+              "costUsd": 0.2455,
+              "categories": [
+                "false-done-claim",
+                "functional-failure",
+                "build-or-test-failure"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "B": {
+      "role": "The same fast agent with Chayen",
+      "arm": "chayen",
+      "provider": "synthetic",
+      "cliVersion": "synthetic 1",
+      "modelConfig": "synthetic-fast-1",
+      "effort": null,
+      "candidateId": "synthetic-candidate",
+      "evidenceLevel": "synthetic (generated records; never evaluation evidence)",
+      "isolation": "synthetic",
+      "pooled": {
+        "runs": 20,
+        "attemptsGraded": 20,
+        "acceptanceCriteria": {
+          "accepted": 51,
+          "total": 60,
+          "note": "criteria within a run are not independent; no interval is given"
+        },
+        "rates": {
+          "completedDone": {
+            "k": 15,
+            "n": 20,
+            "value": 0.75,
+            "wilson95": {
+              "low": 0.5313,
+              "high": 0.8881
+            },
+            "notRun": 0
+          },
+          "buildTestPass": {
+            "k": 18,
+            "n": 20,
+            "value": 0.9,
+            "wilson95": {
+              "low": 0.699,
+              "high": 0.9721
+            },
+            "notRun": 0
+          },
+          "functionalPass": {
+            "k": 16,
+            "n": 20,
+            "value": 0.8,
+            "wilson95": {
+              "low": 0.584,
+              "high": 0.9193
+            },
+            "notRun": 0
+          },
+          "firstPassCompletion": {
+            "k": 9,
+            "n": 20,
+            "value": 0.45,
+            "wilson95": {
+              "low": 0.2582,
+              "high": 0.6579
+            },
+            "notRun": 0
+          },
+          "unverifiedCompletionClaim": {
+            "k": 5,
+            "n": 20,
+            "value": 0.25,
+            "wilson95": {
+              "low": 0.1119,
+              "high": 0.4687
+            },
+            "notRun": 0
+          },
+          "scopeViolation": {
+            "k": 1,
+            "n": 20,
+            "value": 0.05,
+            "wilson95": {
+              "low": 0.0089,
+              "high": 0.2361
+            },
+            "notRun": 0
+          }
+        },
+        "measures": {
+          "failedImplementationAttempts": {
+            "n": 20,
+            "mean": 0.55,
+            "median": 1,
+            "min": 0,
+            "max": 1,
+            "sd": 0.5104
+          },
+          "revisions": {
+            "n": 20,
+            "mean": 0.3,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.4702
+          },
+          "verificationRevisionCycles": {
+            "n": 20,
+            "mean": 0.3,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.4702
+          },
+          "evidenceGaps": {
+            "n": 20,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "sd": 0
+          },
+          "seconds": {
+            "n": 20,
+            "mean": 120.4,
+            "median": 128,
+            "min": 87,
+            "max": 150,
+            "sd": 21.167
+          },
+          "outputTokens": {
+            "n": 20,
+            "mean": 4217.25,
+            "median": 4478.5,
+            "min": 3039,
+            "max": 5262,
+            "sd": 743.3853
+          },
+          "totalTokens": {
+            "n": 20,
+            "mean": 24217.25,
+            "median": 24478.5,
+            "min": 23039,
+            "max": 25262,
+            "sd": 743.3853
+          },
+          "toolCalls": {
+            "n": 20,
+            "mean": 14.1,
+            "median": 15,
+            "min": 10,
+            "max": 18,
+            "sd": 2.5526
+          },
+          "searchReadOperations": {
+            "n": 20,
+            "mean": 6.95,
+            "median": 7.5,
+            "min": 5,
+            "max": 9,
+            "sd": 1.3169
+          },
+          "costUsd": {
+            "n": 20,
+            "mean": 0.4016,
+            "median": 0.4265,
+            "min": 0.2894,
+            "max": 0.5012,
+            "sd": 0.0708
+          },
+          "approvalRequestsDenied": {
+            "n": 20,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "sd": 0
+          },
+          "humanInterventions": {
+            "n": 4,
+            "mean": 0.25,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.5
+          },
+          "humanReviewRounds": {
+            "n": 4,
+            "mean": 1.25,
+            "median": 1,
+            "min": 1,
+            "max": 2,
+            "sd": 0.5
+          },
+          "humanReviewSeconds": {
+            "n": 4,
+            "mean": 555,
+            "median": 360,
+            "min": 360,
+            "max": 1140,
+            "sd": 390
+          },
+          "humanApprovalEvents": {
+            "n": 4,
+            "mean": 1,
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "sd": 0
+          }
+        },
+        "failureCategories": {
+          "build-or-test-failure": 2,
+          "false-done-claim": 5,
+          "functional-failure": 4,
+          "scope-expansion": 1
+        },
+        "oracleExecution": [
+          "synthetic"
+        ],
+        "humanReview": {
+          "recordedRuns": 4,
+          "timedRuns": 4,
+          "humanVerdicts": []
+        },
+        "llmGrades": [],
+        "perRun": [
+          {
+            "stem": "A-dotnet-bugfix.chayen.r1.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 136,
+            "outputTokens": 4772,
+            "costUsd": 0.4545,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r2.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 139,
+            "outputTokens": 4865,
+            "costUsd": 0.4633,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r3.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 142,
+            "outputTokens": 4986,
+            "costUsd": 0.4748,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r4.a1",
+            "outcome": "PARTIAL",
+            "ac": "0/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 110,
+            "outputTokens": 3839,
+            "costUsd": 0.3657,
+            "categories": [
+              "false-done-claim",
+              "functional-failure",
+              "build-or-test-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r5.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 100,
+            "outputTokens": 3510,
+            "costUsd": 0.3343,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r6.a1",
+            "outcome": "PARTIAL",
+            "ac": "2/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 124,
+            "outputTokens": 4353,
+            "costUsd": 0.4146,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r7.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 93,
+            "outputTokens": 3256,
+            "costUsd": 0.3101,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r8.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 150,
+            "outputTokens": 5262,
+            "costUsd": 0.5012,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r9.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 144,
+            "outputTokens": 5049,
+            "costUsd": 0.4808,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r10.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 140,
+            "outputTokens": 4895,
+            "costUsd": 0.4662,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r1.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "PASS",
+            "unverifiedClaim": true,
+            "seconds": 103,
+            "outputTokens": 3620,
+            "costUsd": 0.3448,
+            "categories": [
+              "false-done-claim",
+              "scope-expansion"
+            ]
+          },
+          {
+            "stem": "fixture-task.chayen.r2.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 133,
+            "outputTokens": 4656,
+            "costUsd": 0.4434,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r3.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 109,
+            "outputTokens": 3813,
+            "costUsd": 0.3631,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r4.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 132,
+            "outputTokens": 4604,
+            "costUsd": 0.4385,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r5.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 132,
+            "outputTokens": 4621,
+            "costUsd": 0.4401,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r6.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 137,
+            "outputTokens": 4811,
+            "costUsd": 0.4581,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "fixture-task.chayen.r7.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 88,
+            "outputTokens": 3089,
+            "costUsd": 0.2942,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r8.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 121,
+            "outputTokens": 4234,
+            "costUsd": 0.4032,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r9.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 87,
+            "outputTokens": 3039,
+            "costUsd": 0.2894,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r10.a1",
+            "outcome": "PARTIAL",
+            "ac": "1/2",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 88,
+            "outputTokens": 3071,
+            "costUsd": 0.2924,
+            "categories": [
+              "false-done-claim",
+              "functional-failure",
+              "build-or-test-failure"
+            ]
+          }
+        ]
+      },
+      "tasks": {
+        "A-dotnet-bugfix": {
+          "runs": 10,
+          "attemptsGraded": 10,
+          "acceptanceCriteria": {
+            "accepted": 34,
+            "total": 40,
+            "note": "criteria within a run are not independent; no interval is given"
+          },
+          "rates": {
+            "completedDone": {
+              "k": 8,
+              "n": 10,
+              "value": 0.8,
+              "wilson95": {
+                "low": 0.4902,
+                "high": 0.9433
+              },
+              "notRun": 0
+            },
+            "buildTestPass": {
+              "k": 9,
+              "n": 10,
+              "value": 0.9,
+              "wilson95": {
+                "low": 0.5958,
+                "high": 0.9821
+              },
+              "notRun": 0
+            },
+            "functionalPass": {
+              "k": 8,
+              "n": 10,
+              "value": 0.8,
+              "wilson95": {
+                "low": 0.4902,
+                "high": 0.9433
+              },
+              "notRun": 0
+            },
+            "firstPassCompletion": {
+              "k": 6,
+              "n": 10,
+              "value": 0.6,
+              "wilson95": {
+                "low": 0.3127,
+                "high": 0.8318
+              },
+              "notRun": 0
+            },
+            "unverifiedCompletionClaim": {
+              "k": 2,
+              "n": 10,
+              "value": 0.2,
+              "wilson95": {
+                "low": 0.0567,
+                "high": 0.5098
+              },
+              "notRun": 0
+            },
+            "scopeViolation": {
+              "k": 0,
+              "n": 10,
+              "value": 0,
+              "wilson95": {
+                "low": 0,
+                "high": 0.2775
+              },
+              "notRun": 0
+            }
+          },
+          "measures": {
+            "failedImplementationAttempts": {
+              "n": 10,
+              "mean": 0.4,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.5164
+            },
+            "revisions": {
+              "n": 10,
+              "mean": 0.2,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.4216
+            },
+            "verificationRevisionCycles": {
+              "n": 10,
+              "mean": 0.2,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.4216
+            },
+            "evidenceGaps": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "seconds": {
+              "n": 10,
+              "mean": 127.8,
+              "median": 137.5,
+              "min": 93,
+              "max": 150,
+              "sd": 20.0377
+            },
+            "outputTokens": {
+              "n": 10,
+              "mean": 4478.7,
+              "median": 4818.5,
+              "min": 3256,
+              "max": 5262,
+              "sd": 704.202
+            },
+            "totalTokens": {
+              "n": 10,
+              "mean": 24478.7,
+              "median": 24818.5,
+              "min": 23256,
+              "max": 25262,
+              "sd": 704.202
+            },
+            "toolCalls": {
+              "n": 10,
+              "mean": 15.1,
+              "median": 16,
+              "min": 11,
+              "max": 18,
+              "sd": 2.331
+            },
+            "searchReadOperations": {
+              "n": 10,
+              "mean": 7.3,
+              "median": 8,
+              "min": 5,
+              "max": 9,
+              "sd": 1.2517
+            },
+            "costUsd": {
+              "n": 10,
+              "mean": 0.4266,
+              "median": 0.4589,
+              "min": 0.3101,
+              "max": 0.5012,
+              "sd": 0.0671
+            },
+            "approvalRequestsDenied": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanInterventions": {
+              "n": 2,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanReviewRounds": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            },
+            "humanReviewSeconds": {
+              "n": 2,
+              "mean": 360,
+              "median": 360,
+              "min": 360,
+              "max": 360,
+              "sd": 0
+            },
+            "humanApprovalEvents": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            }
+          },
+          "failureCategories": {
+            "build-or-test-failure": 1,
+            "false-done-claim": 2,
+            "functional-failure": 2
+          },
+          "oracleExecution": [
+            "synthetic"
+          ],
+          "humanReview": {
+            "recordedRuns": 2,
+            "timedRuns": 2,
+            "humanVerdicts": []
+          },
+          "llmGrades": [],
+          "perRun": [
+            {
+              "stem": "A-dotnet-bugfix.chayen.r1.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 136,
+              "outputTokens": 4772,
+              "costUsd": 0.4545,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r2.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 139,
+              "outputTokens": 4865,
+              "costUsd": 0.4633,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r3.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 142,
+              "outputTokens": 4986,
+              "costUsd": 0.4748,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r4.a1",
+              "outcome": "PARTIAL",
+              "ac": "0/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 110,
+              "outputTokens": 3839,
+              "costUsd": 0.3657,
+              "categories": [
+                "false-done-claim",
+                "functional-failure",
+                "build-or-test-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r5.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 100,
+              "outputTokens": 3510,
+              "costUsd": 0.3343,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r6.a1",
+              "outcome": "PARTIAL",
+              "ac": "2/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 124,
+              "outputTokens": 4353,
+              "costUsd": 0.4146,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r7.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 93,
+              "outputTokens": 3256,
+              "costUsd": 0.3101,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r8.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 150,
+              "outputTokens": 5262,
+              "costUsd": 0.5012,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r9.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 144,
+              "outputTokens": 5049,
+              "costUsd": 0.4808,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r10.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 140,
+              "outputTokens": 4895,
+              "costUsd": 0.4662,
+              "categories": []
+            }
+          ]
+        },
+        "fixture-task": {
+          "runs": 10,
+          "attemptsGraded": 10,
+          "acceptanceCriteria": {
+            "accepted": 17,
+            "total": 20,
+            "note": "criteria within a run are not independent; no interval is given"
+          },
+          "rates": {
+            "completedDone": {
+              "k": 7,
+              "n": 10,
+              "value": 0.7,
+              "wilson95": {
+                "low": 0.3968,
+                "high": 0.8922
+              },
+              "notRun": 0
+            },
+            "buildTestPass": {
+              "k": 9,
+              "n": 10,
+              "value": 0.9,
+              "wilson95": {
+                "low": 0.5958,
+                "high": 0.9821
+              },
+              "notRun": 0
+            },
+            "functionalPass": {
+              "k": 8,
+              "n": 10,
+              "value": 0.8,
+              "wilson95": {
+                "low": 0.4902,
+                "high": 0.9433
+              },
+              "notRun": 0
+            },
+            "firstPassCompletion": {
+              "k": 3,
+              "n": 10,
+              "value": 0.3,
+              "wilson95": {
+                "low": 0.1078,
+                "high": 0.6032
+              },
+              "notRun": 0
+            },
+            "unverifiedCompletionClaim": {
+              "k": 3,
+              "n": 10,
+              "value": 0.3,
+              "wilson95": {
+                "low": 0.1078,
+                "high": 0.6032
+              },
+              "notRun": 0
+            },
+            "scopeViolation": {
+              "k": 1,
+              "n": 10,
+              "value": 0.1,
+              "wilson95": {
+                "low": 0.0179,
+                "high": 0.4042
+              },
+              "notRun": 0
+            }
+          },
+          "measures": {
+            "failedImplementationAttempts": {
+              "n": 10,
+              "mean": 0.7,
+              "median": 1,
+              "min": 0,
+              "max": 1,
+              "sd": 0.483
+            },
+            "revisions": {
+              "n": 10,
+              "mean": 0.4,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.5164
+            },
+            "verificationRevisionCycles": {
+              "n": 10,
+              "mean": 0.4,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.5164
+            },
+            "evidenceGaps": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "seconds": {
+              "n": 10,
+              "mean": 113,
+              "median": 115,
+              "min": 87,
+              "max": 137,
+              "sd": 20.5589
+            },
+            "outputTokens": {
+              "n": 10,
+              "mean": 3955.8,
+              "median": 4023.5,
+              "min": 3039,
+              "max": 4811,
+              "sd": 720.3075
+            },
+            "totalTokens": {
+              "n": 10,
+              "mean": 23955.8,
+              "median": 24023.5,
+              "min": 23039,
+              "max": 24811,
+              "sd": 720.3075
+            },
+            "toolCalls": {
+              "n": 10,
+              "mean": 13.1,
+              "median": 13.5,
+              "min": 10,
+              "max": 16,
+              "sd": 2.4698
+            },
+            "searchReadOperations": {
+              "n": 10,
+              "mean": 6.6,
+              "median": 6.5,
+              "min": 5,
+              "max": 8,
+              "sd": 1.3499
+            },
+            "costUsd": {
+              "n": 10,
+              "mean": 0.3767,
+              "median": 0.3831,
+              "min": 0.2894,
+              "max": 0.4581,
+              "sd": 0.0686
+            },
+            "approvalRequestsDenied": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanInterventions": {
+              "n": 2,
+              "mean": 0.5,
+              "median": 0.5,
+              "min": 0,
+              "max": 1,
+              "sd": 0.7071
+            },
+            "humanReviewRounds": {
+              "n": 2,
+              "mean": 1.5,
+              "median": 1.5,
+              "min": 1,
+              "max": 2,
+              "sd": 0.7071
+            },
+            "humanReviewSeconds": {
+              "n": 2,
+              "mean": 750,
+              "median": 750,
+              "min": 360,
+              "max": 1140,
+              "sd": 551.5433
+            },
+            "humanApprovalEvents": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            }
+          },
+          "failureCategories": {
+            "build-or-test-failure": 1,
+            "false-done-claim": 3,
+            "functional-failure": 2,
+            "scope-expansion": 1
+          },
+          "oracleExecution": [
+            "synthetic"
+          ],
+          "humanReview": {
+            "recordedRuns": 2,
+            "timedRuns": 2,
+            "humanVerdicts": []
+          },
+          "llmGrades": [],
+          "perRun": [
+            {
+              "stem": "fixture-task.chayen.r1.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "PASS",
+              "unverifiedClaim": true,
+              "seconds": 103,
+              "outputTokens": 3620,
+              "costUsd": 0.3448,
+              "categories": [
+                "false-done-claim",
+                "scope-expansion"
+              ]
+            },
+            {
+              "stem": "fixture-task.chayen.r2.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 133,
+              "outputTokens": 4656,
+              "costUsd": 0.4434,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r3.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 109,
+              "outputTokens": 3813,
+              "costUsd": 0.3631,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r4.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 132,
+              "outputTokens": 4604,
+              "costUsd": 0.4385,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r5.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 132,
+              "outputTokens": 4621,
+              "costUsd": 0.4401,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r6.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 137,
+              "outputTokens": 4811,
+              "costUsd": 0.4581,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "fixture-task.chayen.r7.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 88,
+              "outputTokens": 3089,
+              "costUsd": 0.2942,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r8.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 121,
+              "outputTokens": 4234,
+              "costUsd": 0.4032,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r9.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 87,
+              "outputTokens": 3039,
+              "costUsd": 0.2894,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r10.a1",
+              "outcome": "PARTIAL",
+              "ac": "1/2",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 88,
+              "outputTokens": 3071,
+              "costUsd": 0.2924,
+              "categories": [
+                "false-done-claim",
+                "functional-failure",
+                "build-or-test-failure"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "C": {
+      "role": "Mentor-class agent with Chayen",
+      "arm": "chayen",
+      "provider": "synthetic",
+      "cliVersion": "synthetic 1",
+      "modelConfig": "synthetic-mentor-1",
+      "effort": null,
+      "candidateId": "synthetic-candidate",
+      "evidenceLevel": "synthetic (generated records; never evaluation evidence)",
+      "isolation": "synthetic",
+      "pooled": {
+        "runs": 20,
+        "attemptsGraded": 20,
+        "acceptanceCriteria": {
+          "accepted": 56,
+          "total": 60,
+          "note": "criteria within a run are not independent; no interval is given"
+        },
+        "rates": {
+          "completedDone": {
+            "k": 18,
+            "n": 20,
+            "value": 0.9,
+            "wilson95": {
+              "low": 0.699,
+              "high": 0.9721
+            },
+            "notRun": 0
+          },
+          "buildTestPass": {
+            "k": 20,
+            "n": 20,
+            "value": 1,
+            "wilson95": {
+              "low": 0.8389,
+              "high": 1
+            },
+            "notRun": 0
+          },
+          "functionalPass": {
+            "k": 18,
+            "n": 20,
+            "value": 0.9,
+            "wilson95": {
+              "low": 0.699,
+              "high": 0.9721
+            },
+            "notRun": 0
+          },
+          "firstPassCompletion": {
+            "k": 17,
+            "n": 20,
+            "value": 0.85,
+            "wilson95": {
+              "low": 0.6396,
+              "high": 0.9476
+            },
+            "notRun": 0
+          },
+          "unverifiedCompletionClaim": {
+            "k": 2,
+            "n": 20,
+            "value": 0.1,
+            "wilson95": {
+              "low": 0.0279,
+              "high": 0.301
+            },
+            "notRun": 0
+          },
+          "scopeViolation": {
+            "k": 0,
+            "n": 20,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.1611
+            },
+            "notRun": 0
+          }
+        },
+        "measures": {
+          "failedImplementationAttempts": {
+            "n": 20,
+            "mean": 0.15,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.3663
+          },
+          "revisions": {
+            "n": 20,
+            "mean": 0.05,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.2236
+          },
+          "verificationRevisionCycles": {
+            "n": 20,
+            "mean": 0.05,
+            "median": 0,
+            "min": 0,
+            "max": 1,
+            "sd": 0.2236
+          },
+          "evidenceGaps": {
+            "n": 20,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "sd": 0
+          },
+          "seconds": {
+            "n": 20,
+            "mean": 199.55,
+            "median": 201,
+            "min": 154,
+            "max": 251,
+            "sd": 31.7365
+          },
+          "outputTokens": {
+            "n": 20,
+            "mean": 5986.3,
+            "median": 6032,
+            "min": 4608,
+            "max": 7544,
+            "sd": 954.9225
+          },
+          "totalTokens": {
+            "n": 20,
+            "mean": 25986.3,
+            "median": 26032,
+            "min": 24608,
+            "max": 27544,
+            "sd": 954.9225
+          },
+          "toolCalls": {
+            "n": 20,
+            "mean": 13.85,
+            "median": 14,
+            "min": 11,
+            "max": 18,
+            "sd": 2.207
+          },
+          "searchReadOperations": {
+            "n": 20,
+            "mean": 7,
+            "median": 7,
+            "min": 5,
+            "max": 9,
+            "sd": 1.214
+          },
+          "costUsd": {
+            "n": 20,
+            "mean": 1.1973,
+            "median": 1.2065,
+            "min": 0.9216,
+            "max": 1.5088,
+            "sd": 0.191
+          },
+          "approvalRequestsDenied": {
+            "n": 20,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "sd": 0
+          },
+          "humanInterventions": {
+            "n": 4,
+            "mean": 0,
+            "median": 0,
+            "min": 0,
+            "max": 0,
+            "sd": 0
+          },
+          "humanReviewRounds": {
+            "n": 4,
+            "mean": 1,
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "sd": 0
+          },
+          "humanReviewSeconds": {
+            "n": 4,
+            "mean": 360,
+            "median": 360,
+            "min": 360,
+            "max": 360,
+            "sd": 0
+          },
+          "humanApprovalEvents": {
+            "n": 4,
+            "mean": 1,
+            "median": 1,
+            "min": 1,
+            "max": 1,
+            "sd": 0
+          }
+        },
+        "failureCategories": {
+          "false-done-claim": 2,
+          "functional-failure": 2
+        },
+        "oracleExecution": [
+          "synthetic"
+        ],
+        "humanReview": {
+          "recordedRuns": 4,
+          "timedRuns": 4,
+          "humanVerdicts": []
+        },
+        "llmGrades": [],
+        "perRun": [
+          {
+            "stem": "A-dotnet-bugfix.chayen.r1.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 154,
+            "outputTokens": 4608,
+            "costUsd": 0.9216,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r2.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 198,
+            "outputTokens": 5930,
+            "costUsd": 1.186,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r3.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 157,
+            "outputTokens": 4716,
+            "costUsd": 0.9432,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r4.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 235,
+            "outputTokens": 7044,
+            "costUsd": 1.4087,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r5.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 232,
+            "outputTokens": 6965,
+            "costUsd": 1.393,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r6.a1",
+            "outcome": "PARTIAL",
+            "ac": "2/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 189,
+            "outputTokens": 5675,
+            "costUsd": 1.1349,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r7.a1",
+            "outcome": "PARTIAL",
+            "ac": "2/4",
+            "functional": "FAIL",
+            "unverifiedClaim": true,
+            "seconds": 177,
+            "outputTokens": 5315,
+            "costUsd": 1.063,
+            "categories": [
+              "false-done-claim",
+              "functional-failure"
+            ]
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r8.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 207,
+            "outputTokens": 6200,
+            "costUsd": 1.2401,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r9.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 154,
+            "outputTokens": 4621,
+            "costUsd": 0.9241,
+            "categories": []
+          },
+          {
+            "stem": "A-dotnet-bugfix.chayen.r10.a1",
+            "outcome": "DONE",
+            "ac": "4/4",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 235,
+            "outputTokens": 7054,
+            "costUsd": 1.4109,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r1.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 204,
+            "outputTokens": 6134,
+            "costUsd": 1.2269,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r2.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 215,
+            "outputTokens": 6439,
+            "costUsd": 1.2879,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r3.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 251,
+            "outputTokens": 7534,
+            "costUsd": 1.5069,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r4.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 251,
+            "outputTokens": 7544,
+            "costUsd": 1.5088,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r5.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 206,
+            "outputTokens": 6191,
+            "costUsd": 1.2383,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r6.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 175,
+            "outputTokens": 5239,
+            "costUsd": 1.0479,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r7.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 187,
+            "outputTokens": 5613,
+            "costUsd": 1.1226,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r8.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 188,
+            "outputTokens": 5632,
+            "costUsd": 1.1265,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r9.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 155,
+            "outputTokens": 4642,
+            "costUsd": 0.9284,
+            "categories": []
+          },
+          {
+            "stem": "fixture-task.chayen.r10.a1",
+            "outcome": "DONE",
+            "ac": "2/2",
+            "functional": "PASS",
+            "unverifiedClaim": false,
+            "seconds": 221,
+            "outputTokens": 6630,
+            "costUsd": 1.326,
+            "categories": []
+          }
+        ]
+      },
+      "tasks": {
+        "A-dotnet-bugfix": {
+          "runs": 10,
+          "attemptsGraded": 10,
+          "acceptanceCriteria": {
+            "accepted": 36,
+            "total": 40,
+            "note": "criteria within a run are not independent; no interval is given"
+          },
+          "rates": {
+            "completedDone": {
+              "k": 8,
+              "n": 10,
+              "value": 0.8,
+              "wilson95": {
+                "low": 0.4902,
+                "high": 0.9433
+              },
+              "notRun": 0
+            },
+            "buildTestPass": {
+              "k": 10,
+              "n": 10,
+              "value": 1,
+              "wilson95": {
+                "low": 0.7225,
+                "high": 1
+              },
+              "notRun": 0
+            },
+            "functionalPass": {
+              "k": 8,
+              "n": 10,
+              "value": 0.8,
+              "wilson95": {
+                "low": 0.4902,
+                "high": 0.9433
+              },
+              "notRun": 0
+            },
+            "firstPassCompletion": {
+              "k": 8,
+              "n": 10,
+              "value": 0.8,
+              "wilson95": {
+                "low": 0.4902,
+                "high": 0.9433
+              },
+              "notRun": 0
+            },
+            "unverifiedCompletionClaim": {
+              "k": 2,
+              "n": 10,
+              "value": 0.2,
+              "wilson95": {
+                "low": 0.0567,
+                "high": 0.5098
+              },
+              "notRun": 0
+            },
+            "scopeViolation": {
+              "k": 0,
+              "n": 10,
+              "value": 0,
+              "wilson95": {
+                "low": 0,
+                "high": 0.2775
+              },
+              "notRun": 0
+            }
+          },
+          "measures": {
+            "failedImplementationAttempts": {
+              "n": 10,
+              "mean": 0.2,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.4216
+            },
+            "revisions": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "verificationRevisionCycles": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "evidenceGaps": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "seconds": {
+              "n": 10,
+              "mean": 193.8,
+              "median": 193.5,
+              "min": 154,
+              "max": 235,
+              "sd": 33.122
+            },
+            "outputTokens": {
+              "n": 10,
+              "mean": 5812.8,
+              "median": 5802.5,
+              "min": 4608,
+              "max": 7054,
+              "sd": 993.8337
+            },
+            "totalTokens": {
+              "n": 10,
+              "mean": 25812.8,
+              "median": 25802.5,
+              "min": 24608,
+              "max": 27054,
+              "sd": 993.8337
+            },
+            "toolCalls": {
+              "n": 10,
+              "mean": 13.4,
+              "median": 13.5,
+              "min": 11,
+              "max": 16,
+              "sd": 2.1187
+            },
+            "searchReadOperations": {
+              "n": 10,
+              "mean": 6.7,
+              "median": 7,
+              "min": 5,
+              "max": 8,
+              "sd": 1.1595
+            },
+            "costUsd": {
+              "n": 10,
+              "mean": 1.1625,
+              "median": 1.1604,
+              "min": 0.9216,
+              "max": 1.4109,
+              "sd": 0.1988
+            },
+            "approvalRequestsDenied": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanInterventions": {
+              "n": 2,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanReviewRounds": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            },
+            "humanReviewSeconds": {
+              "n": 2,
+              "mean": 360,
+              "median": 360,
+              "min": 360,
+              "max": 360,
+              "sd": 0
+            },
+            "humanApprovalEvents": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            }
+          },
+          "failureCategories": {
+            "false-done-claim": 2,
+            "functional-failure": 2
+          },
+          "oracleExecution": [
+            "synthetic"
+          ],
+          "humanReview": {
+            "recordedRuns": 2,
+            "timedRuns": 2,
+            "humanVerdicts": []
+          },
+          "llmGrades": [],
+          "perRun": [
+            {
+              "stem": "A-dotnet-bugfix.chayen.r1.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 154,
+              "outputTokens": 4608,
+              "costUsd": 0.9216,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r2.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 198,
+              "outputTokens": 5930,
+              "costUsd": 1.186,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r3.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 157,
+              "outputTokens": 4716,
+              "costUsd": 0.9432,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r4.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 235,
+              "outputTokens": 7044,
+              "costUsd": 1.4087,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r5.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 232,
+              "outputTokens": 6965,
+              "costUsd": 1.393,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r6.a1",
+              "outcome": "PARTIAL",
+              "ac": "2/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 189,
+              "outputTokens": 5675,
+              "costUsd": 1.1349,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r7.a1",
+              "outcome": "PARTIAL",
+              "ac": "2/4",
+              "functional": "FAIL",
+              "unverifiedClaim": true,
+              "seconds": 177,
+              "outputTokens": 5315,
+              "costUsd": 1.063,
+              "categories": [
+                "false-done-claim",
+                "functional-failure"
+              ]
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r8.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 207,
+              "outputTokens": 6200,
+              "costUsd": 1.2401,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r9.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 154,
+              "outputTokens": 4621,
+              "costUsd": 0.9241,
+              "categories": []
+            },
+            {
+              "stem": "A-dotnet-bugfix.chayen.r10.a1",
+              "outcome": "DONE",
+              "ac": "4/4",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 235,
+              "outputTokens": 7054,
+              "costUsd": 1.4109,
+              "categories": []
+            }
+          ]
+        },
+        "fixture-task": {
+          "runs": 10,
+          "attemptsGraded": 10,
+          "acceptanceCriteria": {
+            "accepted": 20,
+            "total": 20,
+            "note": "criteria within a run are not independent; no interval is given"
+          },
+          "rates": {
+            "completedDone": {
+              "k": 10,
+              "n": 10,
+              "value": 1,
+              "wilson95": {
+                "low": 0.7225,
+                "high": 1
+              },
+              "notRun": 0
+            },
+            "buildTestPass": {
+              "k": 10,
+              "n": 10,
+              "value": 1,
+              "wilson95": {
+                "low": 0.7225,
+                "high": 1
+              },
+              "notRun": 0
+            },
+            "functionalPass": {
+              "k": 10,
+              "n": 10,
+              "value": 1,
+              "wilson95": {
+                "low": 0.7225,
+                "high": 1
+              },
+              "notRun": 0
+            },
+            "firstPassCompletion": {
+              "k": 9,
+              "n": 10,
+              "value": 0.9,
+              "wilson95": {
+                "low": 0.5958,
+                "high": 0.9821
+              },
+              "notRun": 0
+            },
+            "unverifiedCompletionClaim": {
+              "k": 0,
+              "n": 10,
+              "value": 0,
+              "wilson95": {
+                "low": 0,
+                "high": 0.2775
+              },
+              "notRun": 0
+            },
+            "scopeViolation": {
+              "k": 0,
+              "n": 10,
+              "value": 0,
+              "wilson95": {
+                "low": 0,
+                "high": 0.2775
+              },
+              "notRun": 0
+            }
+          },
+          "measures": {
+            "failedImplementationAttempts": {
+              "n": 10,
+              "mean": 0.1,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.3162
+            },
+            "revisions": {
+              "n": 10,
+              "mean": 0.1,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.3162
+            },
+            "verificationRevisionCycles": {
+              "n": 10,
+              "mean": 0.1,
+              "median": 0,
+              "min": 0,
+              "max": 1,
+              "sd": 0.3162
+            },
+            "evidenceGaps": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "seconds": {
+              "n": 10,
+              "mean": 205.3,
+              "median": 205,
+              "min": 155,
+              "max": 251,
+              "sd": 30.9158
+            },
+            "outputTokens": {
+              "n": 10,
+              "mean": 6159.8,
+              "median": 6162.5,
+              "min": 4642,
+              "max": 7544,
+              "sd": 932.9921
+            },
+            "totalTokens": {
+              "n": 10,
+              "mean": 26159.8,
+              "median": 26162.5,
+              "min": 24642,
+              "max": 27544,
+              "sd": 932.9921
+            },
+            "toolCalls": {
+              "n": 10,
+              "mean": 14.3,
+              "median": 14,
+              "min": 11,
+              "max": 18,
+              "sd": 2.3118
+            },
+            "searchReadOperations": {
+              "n": 10,
+              "mean": 7.3,
+              "median": 7,
+              "min": 5,
+              "max": 9,
+              "sd": 1.2517
+            },
+            "costUsd": {
+              "n": 10,
+              "mean": 1.232,
+              "median": 1.2326,
+              "min": 0.9284,
+              "max": 1.5088,
+              "sd": 0.1866
+            },
+            "approvalRequestsDenied": {
+              "n": 10,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanInterventions": {
+              "n": 2,
+              "mean": 0,
+              "median": 0,
+              "min": 0,
+              "max": 0,
+              "sd": 0
+            },
+            "humanReviewRounds": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            },
+            "humanReviewSeconds": {
+              "n": 2,
+              "mean": 360,
+              "median": 360,
+              "min": 360,
+              "max": 360,
+              "sd": 0
+            },
+            "humanApprovalEvents": {
+              "n": 2,
+              "mean": 1,
+              "median": 1,
+              "min": 1,
+              "max": 1,
+              "sd": 0
+            }
+          },
+          "failureCategories": {},
+          "oracleExecution": [
+            "synthetic"
+          ],
+          "humanReview": {
+            "recordedRuns": 2,
+            "timedRuns": 2,
+            "humanVerdicts": []
+          },
+          "llmGrades": [],
+          "perRun": [
+            {
+              "stem": "fixture-task.chayen.r1.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 204,
+              "outputTokens": 6134,
+              "costUsd": 1.2269,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r2.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 215,
+              "outputTokens": 6439,
+              "costUsd": 1.2879,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r3.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 251,
+              "outputTokens": 7534,
+              "costUsd": 1.5069,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r4.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 251,
+              "outputTokens": 7544,
+              "costUsd": 1.5088,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r5.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 206,
+              "outputTokens": 6191,
+              "costUsd": 1.2383,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r6.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 175,
+              "outputTokens": 5239,
+              "costUsd": 1.0479,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r7.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 187,
+              "outputTokens": 5613,
+              "costUsd": 1.1226,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r8.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 188,
+              "outputTokens": 5632,
+              "costUsd": 1.1265,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r9.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 155,
+              "outputTokens": 4642,
+              "costUsd": 0.9284,
+              "categories": []
+            },
+            {
+              "stem": "fixture-task.chayen.r10.a1",
+              "outcome": "DONE",
+              "ac": "2/2",
+              "functional": "PASS",
+              "unverifiedClaim": false,
+              "seconds": 221,
+              "outputTokens": 6630,
+              "costUsd": 1.326,
+              "categories": []
+            }
+          ]
+        }
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "name": "B vs A",
+      "from": "A",
+      "to": "B",
+      "controlledForChayen": true,
+      "note": "Controlled for Chayen: the same agent configuration, task, snapshot, prompt, environment and permissions; only the arm differs.",
+      "pooled": {
+        "rates": [
+          {
+            "metric": "completedDone",
+            "from": {
+              "k": 10,
+              "n": 20,
+              "value": 0.5
+            },
+            "to": {
+              "k": 15,
+              "n": 20,
+              "value": 0.75
+            },
+            "difference": 0.25,
+            "ci95": [
+              -0.0468,
+              0.4936
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "buildTestPass",
+            "from": {
+              "k": 18,
+              "n": 20,
+              "value": 0.9
+            },
+            "to": {
+              "k": 18,
+              "n": 20,
+              "value": 0.9
+            },
+            "difference": 0,
+            "ci95": [
+              -0.2135,
+              0.2135
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "functionalPass",
+            "from": {
+              "k": 11,
+              "n": 20,
+              "value": 0.55
+            },
+            "to": {
+              "k": 16,
+              "n": 20,
+              "value": 0.8
+            },
+            "difference": 0.25,
+            "ci95": [
+              -0.0389,
+              0.4897
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "firstPassCompletion",
+            "from": {
+              "k": 9,
+              "n": 20,
+              "value": 0.45
+            },
+            "to": {
+              "k": 9,
+              "n": 20,
+              "value": 0.45
+            },
+            "difference": 0,
+            "ci95": [
+              -0.2829,
+              0.2829
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "unverifiedCompletionClaim",
+            "from": {
+              "k": 10,
+              "n": 20,
+              "value": 0.5
+            },
+            "to": {
+              "k": 5,
+              "n": 20,
+              "value": 0.25
+            },
+            "difference": -0.25,
+            "ci95": [
+              -0.4936,
+              0.0468
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": true,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "scopeViolation",
+            "from": {
+              "k": 1,
+              "n": 20,
+              "value": 0.05
+            },
+            "to": {
+              "k": 1,
+              "n": 20,
+              "value": 0.05
+            },
+            "difference": 0,
+            "ci95": [
+              -0.1906,
+              0.1906
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": true,
+            "status": "NOT_MEASURED"
+          }
+        ],
+        "measures": [
+          {
+            "metric": "failedImplementationAttempts",
+            "from": {
+              "n": 20,
+              "median": 1,
+              "min": 0,
+              "max": 1
+            },
+            "to": {
+              "n": 20,
+              "median": 1,
+              "min": 0,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "revisions",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "verificationRevisionCycles",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "evidenceGaps",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "seconds",
+            "from": {
+              "n": 20,
+              "median": 87,
+              "min": 65,
+              "max": 115
+            },
+            "to": {
+              "n": 20,
+              "median": 128,
+              "min": 87,
+              "max": 150
+            },
+            "medianDifference": 41,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "outputTokens",
+            "from": {
+              "n": 20,
+              "median": 2901,
+              "min": 2183,
+              "max": 3823
+            },
+            "to": {
+              "n": 20,
+              "median": 4478.5,
+              "min": 3039,
+              "max": 5262
+            },
+            "medianDifference": 1577.5,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "totalTokens",
+            "from": {
+              "n": 20,
+              "median": 22901,
+              "min": 22183,
+              "max": 23823
+            },
+            "to": {
+              "n": 20,
+              "median": 24478.5,
+              "min": 23039,
+              "max": 25262
+            },
+            "medianDifference": 1577.5,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "toolCalls",
+            "from": {
+              "n": 20,
+              "median": 13.5,
+              "min": 10,
+              "max": 18
+            },
+            "to": {
+              "n": 20,
+              "median": 15,
+              "min": 10,
+              "max": 18
+            },
+            "medianDifference": 1.5,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "searchReadOperations",
+            "from": {
+              "n": 20,
+              "median": 7,
+              "min": 5,
+              "max": 9
+            },
+            "to": {
+              "n": 20,
+              "median": 7.5,
+              "min": 5,
+              "max": 9
+            },
+            "medianDifference": 0.5,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "costUsd",
+            "from": {
+              "n": 20,
+              "median": 0.2901,
+              "min": 0.2183,
+              "max": 0.3823
+            },
+            "to": {
+              "n": 20,
+              "median": 0.4265,
+              "min": 0.2894,
+              "max": 0.5012
+            },
+            "medianDifference": 0.1364,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "approvalRequestsDenied",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanInterventions",
+            "from": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 1
+            },
+            "to": {
+              "n": 4,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "medianDifference": -1,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanReviewRounds",
+            "from": {
+              "n": 4,
+              "median": 2,
+              "min": 2,
+              "max": 2
+            },
+            "to": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 2
+            },
+            "medianDifference": -1,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanReviewSeconds",
+            "from": {
+              "n": 4,
+              "median": 1140,
+              "min": 1140,
+              "max": 1140
+            },
+            "to": {
+              "n": 4,
+              "median": 360,
+              "min": 360,
+              "max": 1140
+            },
+            "medianDifference": -780,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanApprovalEvents",
+            "from": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 1
+            },
+            "to": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          }
+        ]
+      },
+      "tasks": {
+        "A-dotnet-bugfix": {
+          "rates": [
+            {
+              "metric": "completedDone",
+              "from": {
+                "k": 5,
+                "n": 10,
+                "value": 0.5
+              },
+              "to": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "difference": 0.3,
+              "ci95": [
+                -0.1066,
+                0.5999
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "buildTestPass",
+              "from": {
+                "k": 9,
+                "n": 10,
+                "value": 0.9
+              },
+              "to": {
+                "k": 9,
+                "n": 10,
+                "value": 0.9
+              },
+              "difference": 0,
+              "ci95": [
+                -0.3151,
+                0.3151
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "functionalPass",
+              "from": {
+                "k": 5,
+                "n": 10,
+                "value": 0.5
+              },
+              "to": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "difference": 0.3,
+              "ci95": [
+                -0.1066,
+                0.5999
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "firstPassCompletion",
+              "from": {
+                "k": 5,
+                "n": 10,
+                "value": 0.5
+              },
+              "to": {
+                "k": 6,
+                "n": 10,
+                "value": 0.6
+              },
+              "difference": 0.1,
+              "ci95": [
+                -0.2898,
+                0.4509
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "unverifiedCompletionClaim",
+              "from": {
+                "k": 5,
+                "n": 10,
+                "value": 0.5
+              },
+              "to": {
+                "k": 2,
+                "n": 10,
+                "value": 0.2
+              },
+              "difference": -0.3,
+              "ci95": [
+                -0.5999,
+                0.1066
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "scopeViolation",
+              "from": {
+                "k": 0,
+                "n": 10,
+                "value": 0
+              },
+              "to": {
+                "k": 0,
+                "n": 10,
+                "value": 0
+              },
+              "difference": 0,
+              "ci95": [
+                -0.2775,
+                0.2775
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            }
+          ],
+          "measures": [
+            {
+              "metric": "failedImplementationAttempts",
+              "from": {
+                "n": 10,
+                "median": 0.5,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": -0.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "revisions",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "verificationRevisionCycles",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "evidenceGaps",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "seconds",
+              "from": {
+                "n": 10,
+                "median": 91,
+                "min": 72,
+                "max": 104
+              },
+              "to": {
+                "n": 10,
+                "median": 137.5,
+                "min": 93,
+                "max": 150
+              },
+              "medianDifference": 46.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "outputTokens",
+              "from": {
+                "n": 10,
+                "median": 3027.5,
+                "min": 2398,
+                "max": 3469
+              },
+              "to": {
+                "n": 10,
+                "median": 4818.5,
+                "min": 3256,
+                "max": 5262
+              },
+              "medianDifference": 1791,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "totalTokens",
+              "from": {
+                "n": 10,
+                "median": 23027.5,
+                "min": 22398,
+                "max": 23469
+              },
+              "to": {
+                "n": 10,
+                "median": 24818.5,
+                "min": 23256,
+                "max": 25262
+              },
+              "medianDifference": 1791,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "toolCalls",
+              "from": {
+                "n": 10,
+                "median": 14,
+                "min": 11,
+                "max": 16
+              },
+              "to": {
+                "n": 10,
+                "median": 16,
+                "min": 11,
+                "max": 18
+              },
+              "medianDifference": 2,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "searchReadOperations",
+              "from": {
+                "n": 10,
+                "median": 7,
+                "min": 6,
+                "max": 8
+              },
+              "to": {
+                "n": 10,
+                "median": 8,
+                "min": 5,
+                "max": 9
+              },
+              "medianDifference": 1,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "costUsd",
+              "from": {
+                "n": 10,
+                "median": 0.3027,
+                "min": 0.2398,
+                "max": 0.3469
+              },
+              "to": {
+                "n": 10,
+                "median": 0.4589,
+                "min": 0.3101,
+                "max": 0.5012
+              },
+              "medianDifference": 0.1562,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "approvalRequestsDenied",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanInterventions",
+              "from": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": -1,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewRounds",
+              "from": {
+                "n": 2,
+                "median": 2,
+                "min": 2,
+                "max": 2
+              },
+              "to": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "medianDifference": -1,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewSeconds",
+              "from": {
+                "n": 2,
+                "median": 1140,
+                "min": 1140,
+                "max": 1140
+              },
+              "to": {
+                "n": 2,
+                "median": 360,
+                "min": 360,
+                "max": 360
+              },
+              "medianDifference": -780,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanApprovalEvents",
+              "from": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            }
+          ]
+        },
+        "fixture-task": {
+          "rates": [
+            {
+              "metric": "completedDone",
+              "from": {
+                "k": 5,
+                "n": 10,
+                "value": 0.5
+              },
+              "to": {
+                "k": 7,
+                "n": 10,
+                "value": 0.7
+              },
+              "difference": 0.2,
+              "ci95": [
+                -0.2016,
+                0.5261
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "buildTestPass",
+              "from": {
+                "k": 9,
+                "n": 10,
+                "value": 0.9
+              },
+              "to": {
+                "k": 9,
+                "n": 10,
+                "value": 0.9
+              },
+              "difference": 0,
+              "ci95": [
+                -0.3151,
+                0.3151
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "functionalPass",
+              "from": {
+                "k": 6,
+                "n": 10,
+                "value": 0.6
+              },
+              "to": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "difference": 0.2,
+              "ci95": [
+                -0.1869,
+                0.5211
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "firstPassCompletion",
+              "from": {
+                "k": 4,
+                "n": 10,
+                "value": 0.4
+              },
+              "to": {
+                "k": 3,
+                "n": 10,
+                "value": 0.3
+              },
+              "difference": -0.1,
+              "ci95": [
+                -0.4457,
+                0.2817
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "unverifiedCompletionClaim",
+              "from": {
+                "k": 5,
+                "n": 10,
+                "value": 0.5
+              },
+              "to": {
+                "k": 3,
+                "n": 10,
+                "value": 0.3
+              },
+              "difference": -0.2,
+              "ci95": [
+                -0.5261,
+                0.2016
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "scopeViolation",
+              "from": {
+                "k": 1,
+                "n": 10,
+                "value": 0.1
+              },
+              "to": {
+                "k": 1,
+                "n": 10,
+                "value": 0.1
+              },
+              "difference": 0,
+              "ci95": [
+                -0.3151,
+                0.3151
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            }
+          ],
+          "measures": [
+            {
+              "metric": "failedImplementationAttempts",
+              "from": {
+                "n": 10,
+                "median": 1,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 1,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "revisions",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "verificationRevisionCycles",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "evidenceGaps",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "seconds",
+              "from": {
+                "n": 10,
+                "median": 82.5,
+                "min": 65,
+                "max": 115
+              },
+              "to": {
+                "n": 10,
+                "median": 115,
+                "min": 87,
+                "max": 137
+              },
+              "medianDifference": 32.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "outputTokens",
+              "from": {
+                "n": 10,
+                "median": 2754,
+                "min": 2183,
+                "max": 3823
+              },
+              "to": {
+                "n": 10,
+                "median": 4023.5,
+                "min": 3039,
+                "max": 4811
+              },
+              "medianDifference": 1269.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "totalTokens",
+              "from": {
+                "n": 10,
+                "median": 22754,
+                "min": 22183,
+                "max": 23823
+              },
+              "to": {
+                "n": 10,
+                "median": 24023.5,
+                "min": 23039,
+                "max": 24811
+              },
+              "medianDifference": 1269.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "toolCalls",
+              "from": {
+                "n": 10,
+                "median": 12.5,
+                "min": 10,
+                "max": 18
+              },
+              "to": {
+                "n": 10,
+                "median": 13.5,
+                "min": 10,
+                "max": 16
+              },
+              "medianDifference": 1,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "searchReadOperations",
+              "from": {
+                "n": 10,
+                "median": 6.5,
+                "min": 5,
+                "max": 9
+              },
+              "to": {
+                "n": 10,
+                "median": 6.5,
+                "min": 5,
+                "max": 8
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "costUsd",
+              "from": {
+                "n": 10,
+                "median": 0.2754,
+                "min": 0.2183,
+                "max": 0.3823
+              },
+              "to": {
+                "n": 10,
+                "median": 0.3831,
+                "min": 0.2894,
+                "max": 0.4581
+              },
+              "medianDifference": 0.1077,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "approvalRequestsDenied",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanInterventions",
+              "from": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 0.5,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": -0.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewRounds",
+              "from": {
+                "n": 2,
+                "median": 2,
+                "min": 2,
+                "max": 2
+              },
+              "to": {
+                "n": 2,
+                "median": 1.5,
+                "min": 1,
+                "max": 2
+              },
+              "medianDifference": -0.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewSeconds",
+              "from": {
+                "n": 2,
+                "median": 1140,
+                "min": 1140,
+                "max": 1140
+              },
+              "to": {
+                "n": 2,
+                "median": 750,
+                "min": 360,
+                "max": 1140
+              },
+              "medianDifference": -390,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanApprovalEvents",
+              "from": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "C vs B",
+      "from": "B",
+      "to": "C",
+      "controlledForChayen": false,
+      "note": "Not controlled for Chayen: both arms use Chayen, and the agent (model or provider) differs.",
+      "pooled": {
+        "rates": [
+          {
+            "metric": "completedDone",
+            "from": {
+              "k": 15,
+              "n": 20,
+              "value": 0.75
+            },
+            "to": {
+              "k": 18,
+              "n": 20,
+              "value": 0.9
+            },
+            "difference": 0.15,
+            "ci95": [
+              -0.0939,
+              0.3803
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "buildTestPass",
+            "from": {
+              "k": 18,
+              "n": 20,
+              "value": 0.9
+            },
+            "to": {
+              "k": 20,
+              "n": 20,
+              "value": 1
+            },
+            "difference": 0.1,
+            "ci95": [
+              -0.0765,
+              0.301
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "functionalPass",
+            "from": {
+              "k": 16,
+              "n": 20,
+              "value": 0.8
+            },
+            "to": {
+              "k": 18,
+              "n": 20,
+              "value": 0.9
+            },
+            "difference": 0.1,
+            "ci95": [
+              -0.1337,
+              0.3277
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "firstPassCompletion",
+            "from": {
+              "k": 9,
+              "n": 20,
+              "value": 0.45
+            },
+            "to": {
+              "k": 17,
+              "n": 20,
+              "value": 0.85
+            },
+            "difference": 0.4,
+            "ci95": [
+              0.1042,
+              0.6152
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": false,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "unverifiedCompletionClaim",
+            "from": {
+              "k": 5,
+              "n": 20,
+              "value": 0.25
+            },
+            "to": {
+              "k": 2,
+              "n": 20,
+              "value": 0.1
+            },
+            "difference": -0.15,
+            "ci95": [
+              -0.3803,
+              0.0939
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": true,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "scopeViolation",
+            "from": {
+              "k": 1,
+              "n": 20,
+              "value": 0.05
+            },
+            "to": {
+              "k": 0,
+              "n": 20,
+              "value": 0
+            },
+            "difference": -0.05,
+            "ci95": [
+              -0.2361,
+              0.1163
+            ],
+            "method": "Newcombe hybrid score (Wilson)",
+            "lowerIsBetter": true,
+            "status": "NOT_MEASURED"
+          }
+        ],
+        "measures": [
+          {
+            "metric": "failedImplementationAttempts",
+            "from": {
+              "n": 20,
+              "median": 1,
+              "min": 0,
+              "max": 1
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "medianDifference": -1,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "revisions",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "verificationRevisionCycles",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "evidenceGaps",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "seconds",
+            "from": {
+              "n": 20,
+              "median": 128,
+              "min": 87,
+              "max": 150
+            },
+            "to": {
+              "n": 20,
+              "median": 201,
+              "min": 154,
+              "max": 251
+            },
+            "medianDifference": 73,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "outputTokens",
+            "from": {
+              "n": 20,
+              "median": 4478.5,
+              "min": 3039,
+              "max": 5262
+            },
+            "to": {
+              "n": 20,
+              "median": 6032,
+              "min": 4608,
+              "max": 7544
+            },
+            "medianDifference": 1553.5,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "totalTokens",
+            "from": {
+              "n": 20,
+              "median": 24478.5,
+              "min": 23039,
+              "max": 25262
+            },
+            "to": {
+              "n": 20,
+              "median": 26032,
+              "min": 24608,
+              "max": 27544
+            },
+            "medianDifference": 1553.5,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "toolCalls",
+            "from": {
+              "n": 20,
+              "median": 15,
+              "min": 10,
+              "max": 18
+            },
+            "to": {
+              "n": 20,
+              "median": 14,
+              "min": 11,
+              "max": 18
+            },
+            "medianDifference": -1,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "searchReadOperations",
+            "from": {
+              "n": 20,
+              "median": 7.5,
+              "min": 5,
+              "max": 9
+            },
+            "to": {
+              "n": 20,
+              "median": 7,
+              "min": 5,
+              "max": 9
+            },
+            "medianDifference": -0.5,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "costUsd",
+            "from": {
+              "n": 20,
+              "median": 0.4265,
+              "min": 0.2894,
+              "max": 0.5012
+            },
+            "to": {
+              "n": 20,
+              "median": 1.2065,
+              "min": 0.9216,
+              "max": 1.5088
+            },
+            "medianDifference": 0.78,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "approvalRequestsDenied",
+            "from": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "to": {
+              "n": 20,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanInterventions",
+            "from": {
+              "n": 4,
+              "median": 0,
+              "min": 0,
+              "max": 1
+            },
+            "to": {
+              "n": 4,
+              "median": 0,
+              "min": 0,
+              "max": 0
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanReviewRounds",
+            "from": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 2
+            },
+            "to": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanReviewSeconds",
+            "from": {
+              "n": 4,
+              "median": 360,
+              "min": 360,
+              "max": 1140
+            },
+            "to": {
+              "n": 4,
+              "median": 360,
+              "min": 360,
+              "max": 360
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          },
+          {
+            "metric": "humanApprovalEvents",
+            "from": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 1
+            },
+            "to": {
+              "n": 4,
+              "median": 1,
+              "min": 1,
+              "max": 1
+            },
+            "medianDifference": 0,
+            "status": "NOT_MEASURED"
+          }
+        ]
+      },
+      "tasks": {
+        "A-dotnet-bugfix": {
+          "rates": [
+            {
+              "metric": "completedDone",
+              "from": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "to": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "difference": 0,
+              "ci95": [
+                -0.3413,
+                0.3413
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "buildTestPass",
+              "from": {
+                "k": 9,
+                "n": 10,
+                "value": 0.9
+              },
+              "to": {
+                "k": 10,
+                "n": 10,
+                "value": 1
+              },
+              "difference": 0.1,
+              "ci95": [
+                -0.1894,
+                0.4042
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "functionalPass",
+              "from": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "to": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "difference": 0,
+              "ci95": [
+                -0.3413,
+                0.3413
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "firstPassCompletion",
+              "from": {
+                "k": 6,
+                "n": 10,
+                "value": 0.6
+              },
+              "to": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "difference": 0.2,
+              "ci95": [
+                -0.1869,
+                0.5211
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "unverifiedCompletionClaim",
+              "from": {
+                "k": 2,
+                "n": 10,
+                "value": 0.2
+              },
+              "to": {
+                "k": 2,
+                "n": 10,
+                "value": 0.2
+              },
+              "difference": 0,
+              "ci95": [
+                -0.3413,
+                0.3413
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "scopeViolation",
+              "from": {
+                "k": 0,
+                "n": 10,
+                "value": 0
+              },
+              "to": {
+                "k": 0,
+                "n": 10,
+                "value": 0
+              },
+              "difference": 0,
+              "ci95": [
+                -0.2775,
+                0.2775
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            }
+          ],
+          "measures": [
+            {
+              "metric": "failedImplementationAttempts",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "revisions",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "verificationRevisionCycles",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "evidenceGaps",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "seconds",
+              "from": {
+                "n": 10,
+                "median": 137.5,
+                "min": 93,
+                "max": 150
+              },
+              "to": {
+                "n": 10,
+                "median": 193.5,
+                "min": 154,
+                "max": 235
+              },
+              "medianDifference": 56,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "outputTokens",
+              "from": {
+                "n": 10,
+                "median": 4818.5,
+                "min": 3256,
+                "max": 5262
+              },
+              "to": {
+                "n": 10,
+                "median": 5802.5,
+                "min": 4608,
+                "max": 7054
+              },
+              "medianDifference": 984,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "totalTokens",
+              "from": {
+                "n": 10,
+                "median": 24818.5,
+                "min": 23256,
+                "max": 25262
+              },
+              "to": {
+                "n": 10,
+                "median": 25802.5,
+                "min": 24608,
+                "max": 27054
+              },
+              "medianDifference": 984,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "toolCalls",
+              "from": {
+                "n": 10,
+                "median": 16,
+                "min": 11,
+                "max": 18
+              },
+              "to": {
+                "n": 10,
+                "median": 13.5,
+                "min": 11,
+                "max": 16
+              },
+              "medianDifference": -2.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "searchReadOperations",
+              "from": {
+                "n": 10,
+                "median": 8,
+                "min": 5,
+                "max": 9
+              },
+              "to": {
+                "n": 10,
+                "median": 7,
+                "min": 5,
+                "max": 8
+              },
+              "medianDifference": -1,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "costUsd",
+              "from": {
+                "n": 10,
+                "median": 0.4589,
+                "min": 0.3101,
+                "max": 0.5012
+              },
+              "to": {
+                "n": 10,
+                "median": 1.1604,
+                "min": 0.9216,
+                "max": 1.4109
+              },
+              "medianDifference": 0.7015,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "approvalRequestsDenied",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanInterventions",
+              "from": {
+                "n": 2,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 2,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewRounds",
+              "from": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewSeconds",
+              "from": {
+                "n": 2,
+                "median": 360,
+                "min": 360,
+                "max": 360
+              },
+              "to": {
+                "n": 2,
+                "median": 360,
+                "min": 360,
+                "max": 360
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanApprovalEvents",
+              "from": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            }
+          ]
+        },
+        "fixture-task": {
+          "rates": [
+            {
+              "metric": "completedDone",
+              "from": {
+                "k": 7,
+                "n": 10,
+                "value": 0.7
+              },
+              "to": {
+                "k": 10,
+                "n": 10,
+                "value": 1
+              },
+              "difference": 0.3,
+              "ci95": [
+                -0.0376,
+                0.6032
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "buildTestPass",
+              "from": {
+                "k": 9,
+                "n": 10,
+                "value": 0.9
+              },
+              "to": {
+                "k": 10,
+                "n": 10,
+                "value": 1
+              },
+              "difference": 0.1,
+              "ci95": [
+                -0.1894,
+                0.4042
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "functionalPass",
+              "from": {
+                "k": 8,
+                "n": 10,
+                "value": 0.8
+              },
+              "to": {
+                "k": 10,
+                "n": 10,
+                "value": 1
+              },
+              "difference": 0.2,
+              "ci95": [
+                -0.1123,
+                0.5098
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "firstPassCompletion",
+              "from": {
+                "k": 3,
+                "n": 10,
+                "value": 0.3
+              },
+              "to": {
+                "k": 9,
+                "n": 10,
+                "value": 0.9
+              },
+              "difference": 0.6,
+              "ci95": [
+                0.1705,
+                0.809
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": false,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "unverifiedCompletionClaim",
+              "from": {
+                "k": 3,
+                "n": 10,
+                "value": 0.3
+              },
+              "to": {
+                "k": 0,
+                "n": 10,
+                "value": 0
+              },
+              "difference": -0.3,
+              "ci95": [
+                -0.6032,
+                0.0376
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "scopeViolation",
+              "from": {
+                "k": 1,
+                "n": 10,
+                "value": 0.1
+              },
+              "to": {
+                "k": 0,
+                "n": 10,
+                "value": 0
+              },
+              "difference": -0.1,
+              "ci95": [
+                -0.4042,
+                0.1894
+              ],
+              "method": "Newcombe hybrid score (Wilson)",
+              "lowerIsBetter": true,
+              "status": "NOT_MEASURED"
+            }
+          ],
+          "measures": [
+            {
+              "metric": "failedImplementationAttempts",
+              "from": {
+                "n": 10,
+                "median": 1,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": -1,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "revisions",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "verificationRevisionCycles",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "evidenceGaps",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "seconds",
+              "from": {
+                "n": 10,
+                "median": 115,
+                "min": 87,
+                "max": 137
+              },
+              "to": {
+                "n": 10,
+                "median": 205,
+                "min": 155,
+                "max": 251
+              },
+              "medianDifference": 90,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "outputTokens",
+              "from": {
+                "n": 10,
+                "median": 4023.5,
+                "min": 3039,
+                "max": 4811
+              },
+              "to": {
+                "n": 10,
+                "median": 6162.5,
+                "min": 4642,
+                "max": 7544
+              },
+              "medianDifference": 2139,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "totalTokens",
+              "from": {
+                "n": 10,
+                "median": 24023.5,
+                "min": 23039,
+                "max": 24811
+              },
+              "to": {
+                "n": 10,
+                "median": 26162.5,
+                "min": 24642,
+                "max": 27544
+              },
+              "medianDifference": 2139,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "toolCalls",
+              "from": {
+                "n": 10,
+                "median": 13.5,
+                "min": 10,
+                "max": 16
+              },
+              "to": {
+                "n": 10,
+                "median": 14,
+                "min": 11,
+                "max": 18
+              },
+              "medianDifference": 0.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "searchReadOperations",
+              "from": {
+                "n": 10,
+                "median": 6.5,
+                "min": 5,
+                "max": 8
+              },
+              "to": {
+                "n": 10,
+                "median": 7,
+                "min": 5,
+                "max": 9
+              },
+              "medianDifference": 0.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "costUsd",
+              "from": {
+                "n": 10,
+                "median": 0.3831,
+                "min": 0.2894,
+                "max": 0.4581
+              },
+              "to": {
+                "n": 10,
+                "median": 1.2326,
+                "min": 0.9284,
+                "max": 1.5088
+              },
+              "medianDifference": 0.8495,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "approvalRequestsDenied",
+              "from": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "to": {
+                "n": 10,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanInterventions",
+              "from": {
+                "n": 2,
+                "median": 0.5,
+                "min": 0,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 0,
+                "min": 0,
+                "max": 0
+              },
+              "medianDifference": -0.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewRounds",
+              "from": {
+                "n": 2,
+                "median": 1.5,
+                "min": 1,
+                "max": 2
+              },
+              "to": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "medianDifference": -0.5,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanReviewSeconds",
+              "from": {
+                "n": 2,
+                "median": 750,
+                "min": 360,
+                "max": 1140
+              },
+              "to": {
+                "n": 2,
+                "median": 360,
+                "min": 360,
+                "max": 360
+              },
+              "medianDifference": -390,
+              "status": "NOT_MEASURED"
+            },
+            {
+              "metric": "humanApprovalEvents",
+              "from": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "to": {
+                "n": 2,
+                "median": 1,
+                "min": 1,
+                "max": 1
+              },
+              "medianDifference": 0,
+              "status": "NOT_MEASURED"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "recommendations": [
+    "Run the comparison with real providers once the owner authorizes it and an isolation profile verifies (Step 16). This report is SYNTHETIC: live improvement claims are NOT_MEASURED.",
+    "Inspect unverified completion claims in A, B, C first: they are the cases where an agent's DONE would cost reviewer time."
+  ],
+  "limitations": [
+    "Differences are associations under the recorded conditions. A versus B is a controlled comparison of one agent configuration; it is still subject to provider-side nondeterminism and model updates, and generalises only to the tasks and fixtures measured.",
+    "Rates use Wilson 95% intervals; differences of rates use Newcombe's hybrid score interval. Time, token and cost differences are descriptive medians with ranges, without an interval.",
+    "A difference with fewer than 5 scored runs on either side is INSUFFICIENT_SAMPLE; one whose interval includes 0 is INCONCLUSIVE.",
+    "Acceptance criteria within a run are not independent, so criteria counts carry no interval.",
+    "Human review time is reported only from the reviewer's recorded start and end times; it is never estimated from agent traces.",
+    "LLM grades, when present, are listed separately and change no automatic verdict.",
+    "Pooled rows combine tasks without weighting by difficulty; read the per-task rows first."
+  ]
+}

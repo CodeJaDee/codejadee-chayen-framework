@@ -216,3 +216,20 @@ The runner tests use `fakes/fake-agent.mjs` (a scripted agent, not a model)
 on `fakes/fixture-task/` (a harmless Node fixture). They also use
 `fakes/fake-engine.mjs`, which returns canned probe reports. Fake results are
 labelled `simulated-fake-provider` and are never evaluation evidence.
+
+## Independent grading and comparison report (Step 17, D-074)
+
+`grade-coding.mjs` grades the recorded runs independently of the agent and
+compares configuration A (a fast agent without Chayen), B (the same agent
+with Chayen) and C (a mentor-class agent with Chayen). The rubric, metric
+definitions, formats and statistics are in [GRADING.md](GRADING.md).
+
+- `--grade` executes each task's hidden checks on a copy of every preserved
+  workspace and writes `oracle.jsonl`. Real runs are graded only inside a
+  verified container; without one the grader exits 3 with BLOCKED.
+- `--report` derives the grades and the comparison offline, using the Step 13
+  audit for every criterion. The agent's claims are never evidence.
+- The output is deterministic, and synthetic or fake data is always
+  `NOT_MEASURED`.
+- Example: [`results/2026-10-22-step17-synthetic/`](results/2026-10-22-step17-synthetic/report.md),
+  synthetic records only.

@@ -1,0 +1,2766 @@
+{
+  "$schema": "chayen-routing-context-report/1",
+  "step": 18,
+  "evidenceLevels": {
+    "static": "validators and metadata measured on disposable scenario copies",
+    "simulated": "lexical proxy (BM25); never routing evidence",
+    "provider": "NOT_RUN"
+  },
+  "inputs": {
+    "syntheticSkillsSha256": "c8f7677aecbfdbe834d22b7094c65b7f2ffee84d0d9526eb9551a1f7d46e174d",
+    "routingCasesSha256": "0a155ff9e75343b549a291eed0eca0a2d29b22f3169dde7f29ea32a971c5091f",
+    "productionSkills": 16,
+    "productionMetadataFingerprint": "411b6adbbea7e121"
+  },
+  "specification": {
+    "errors": [],
+    "syntheticSkills": 21,
+    "validSyntheticSkills": 19,
+    "cases": 74,
+    "byType": {
+      "positive": 16,
+      "regression": 16,
+      "adjacent": 12,
+      "overlap": 7,
+      "conflict": 4,
+      "no-match": 5,
+      "unsupported": 4,
+      "negative": 4,
+      "explicit": 4,
+      "ambiguous": 2
+    },
+    "byLexical": {
+      "keyword": 51,
+      "paraphrase": 8,
+      "n/a": 15
+    },
+    "runsRequired": 3,
+    "objective": {
+      "automaticRoutingAccuracyPerCli": 0.85,
+      "source": "OWN-05 quality objective, per supported CLI, never pooled across provider or model configurations"
+    }
+  },
+  "scenarios": [
+    {
+      "id": "SC0-production",
+      "description": "The shipped package alone; the reference point for metadata and regressions.",
+      "expectation": {
+        "valid": true
+      },
+      "skills": 16,
+      "syntheticSkills": 0,
+      "validators": [
+        {
+          "validator": "package",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": 16
+        },
+        {
+          "validator": "catalog",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        },
+        {
+          "validator": "security",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        }
+      ],
+      "outcome": "AS_EXPECTED",
+      "differences": [],
+      "metadata": {
+        "chars": 6563,
+        "estTokens": 1641,
+        "deltaChars": 0,
+        "deltaEstTokens": 0,
+        "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
+      },
+      "providers": [
+        {
+          "provider": "Claude Code",
+          "source": "S7",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "Codex",
+          "source": "S12",
+          "status": "WITHIN_DOCUMENTED_FIGURE",
+          "documentedCharacters": 8000,
+          "headroom": 1437,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "GitHub Copilot CLI and VS Code",
+          "source": "S17, S19 (U-06)",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        }
+      ],
+      "expensiveDescriptions": [],
+      "distinctness": {
+        "warnAbove": 0.25,
+        "errorAbove": 0.35,
+        "pairsAboveWarn": 0,
+        "pairsAboveError": 0,
+        "closest": [],
+        "neighbours": []
+      },
+      "perSkill": [
+        {
+          "name": "chayen-ai-engineering",
+          "synthetic": false,
+          "chars": 433,
+          "estTokens": 108,
+          "shareOfTotal": 0.066
+        },
+        {
+          "name": "chayen-architecture",
+          "synthetic": false,
+          "chars": 427,
+          "estTokens": 107,
+          "shareOfTotal": 0.0651
+        },
+        {
+          "name": "chayen-backend",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0655
+        },
+        {
+          "name": "chayen-data",
+          "synthetic": false,
+          "chars": 425,
+          "estTokens": 106,
+          "shareOfTotal": 0.0648
+        },
+        {
+          "name": "chayen-devops",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0655
+        },
+        {
+          "name": "chayen-documentation",
+          "synthetic": false,
+          "chars": 415,
+          "estTokens": 104,
+          "shareOfTotal": 0.0632
+        },
+        {
+          "name": "chayen-frontend",
+          "synthetic": false,
+          "chars": 435,
+          "estTokens": 109,
+          "shareOfTotal": 0.0663
+        },
+        {
+          "name": "chayen-humanizer-en",
+          "synthetic": false,
+          "chars": 363,
+          "estTokens": 91,
+          "shareOfTotal": 0.0553
+        },
+        {
+          "name": "chayen-humanizer-th",
+          "synthetic": false,
+          "chars": 369,
+          "estTokens": 92,
+          "shareOfTotal": 0.0562
+        },
+        {
+          "name": "chayen-implementation",
+          "synthetic": false,
+          "chars": 439,
+          "estTokens": 110,
+          "shareOfTotal": 0.0669
+        },
+        {
+          "name": "chayen-init",
+          "synthetic": false,
+          "chars": 346,
+          "estTokens": 87,
+          "shareOfTotal": 0.0527
+        },
+        {
+          "name": "chayen-performance",
+          "synthetic": false,
+          "chars": 407,
+          "estTokens": 102,
+          "shareOfTotal": 0.062
+        },
+        {
+          "name": "chayen-repository",
+          "synthetic": false,
+          "chars": 397,
+          "estTokens": 99,
+          "shareOfTotal": 0.0605
+        },
+        {
+          "name": "chayen-requirements",
+          "synthetic": false,
+          "chars": 424,
+          "estTokens": 106,
+          "shareOfTotal": 0.0646
+        },
+        {
+          "name": "chayen-security",
+          "synthetic": false,
+          "chars": 431,
+          "estTokens": 108,
+          "shareOfTotal": 0.0657
+        },
+        {
+          "name": "chayen-testing",
+          "synthetic": false,
+          "chars": 392,
+          "estTokens": 98,
+          "shareOfTotal": 0.0597
+        }
+      ],
+      "cases": {
+        "applicable": 28,
+        "byType": {
+          "positive": 0,
+          "regression": 16,
+          "adjacent": 0,
+          "overlap": 0,
+          "conflict": 0,
+          "no-match": 5,
+          "unsupported": 4,
+          "negative": 0,
+          "explicit": 1,
+          "ambiguous": 2
+        }
+      },
+      "simulated": {
+        "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
+        "threshold": 2.514,
+        "rates": {
+          "lexical:keyword": {
+            "k": 9,
+            "n": 16,
+            "value": 0.5625,
+            "wilson95": {
+              "low": 0.3318,
+              "high": 0.769
+            }
+          },
+          "type:no-match": {
+            "k": 5,
+            "n": 5,
+            "value": 1,
+            "wilson95": {
+              "low": 0.5655,
+              "high": 1
+            }
+          },
+          "type:regression": {
+            "k": 9,
+            "n": 16,
+            "value": 0.5625,
+            "wilson95": {
+              "low": 0.3318,
+              "high": 0.769
+            }
+          },
+          "type:unsupported": {
+            "k": 1,
+            "n": 4,
+            "value": 0.25,
+            "wilson95": {
+              "low": 0.0456,
+              "high": 0.6994
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "SC1-distinct",
+      "description": "Eight Skills with unrelated scopes added to the shipped package.",
+      "expectation": {
+        "valid": true
+      },
+      "skills": 24,
+      "syntheticSkills": 8,
+      "validators": [
+        {
+          "validator": "package",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [
+            "V-07 discovery-metadata"
+          ],
+          "errors": 0,
+          "warnings": 1,
+          "distinctnessErrors": [],
+          "shippedSkills": 24
+        },
+        {
+          "validator": "catalog",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        },
+        {
+          "validator": "security",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        }
+      ],
+      "outcome": "AS_EXPECTED",
+      "differences": [],
+      "metadata": {
+        "chars": 8396,
+        "estTokens": 2099,
+        "deltaChars": 1833,
+        "deltaEstTokens": 458,
+        "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
+      },
+      "providers": [
+        {
+          "provider": "Claude Code",
+          "source": "S7",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "Codex",
+          "source": "S12",
+          "status": "EXCEEDS_DOCUMENTED_FIGURE",
+          "documentedCharacters": 8000,
+          "headroom": -396,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "GitHub Copilot CLI and VS Code",
+          "source": "S17, S19 (U-06)",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        }
+      ],
+      "expensiveDescriptions": [],
+      "distinctness": {
+        "warnAbove": 0.25,
+        "errorAbove": 0.35,
+        "pairsAboveWarn": 0,
+        "pairsAboveError": 0,
+        "closest": [
+          {
+            "pair": [
+              "chayen-syn-firmware",
+              "chayen-syn-ros"
+            ],
+            "overlap": 0.171
+          },
+          {
+            "pair": [
+              "chayen-syn-ros",
+              "chayen-syn-solidity"
+            ],
+            "overlap": 0.14
+          },
+          {
+            "pair": [
+              "chayen-syn-game-mods",
+              "chayen-syn-latex"
+            ],
+            "overlap": 0.119
+          },
+          {
+            "pair": [
+              "chayen-syn-latex",
+              "chayen-syn-ros"
+            ],
+            "overlap": 0.116
+          },
+          {
+            "pair": [
+              "chayen-syn-firmware",
+              "chayen-syn-gis"
+            ],
+            "overlap": 0.095
+          }
+        ],
+        "neighbours": []
+      },
+      "perSkill": [
+        {
+          "name": "chayen-ai-engineering",
+          "synthetic": false,
+          "chars": 433,
+          "estTokens": 108,
+          "shareOfTotal": 0.0516
+        },
+        {
+          "name": "chayen-architecture",
+          "synthetic": false,
+          "chars": 427,
+          "estTokens": 107,
+          "shareOfTotal": 0.0509
+        },
+        {
+          "name": "chayen-backend",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0512
+        },
+        {
+          "name": "chayen-data",
+          "synthetic": false,
+          "chars": 425,
+          "estTokens": 106,
+          "shareOfTotal": 0.0506
+        },
+        {
+          "name": "chayen-devops",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0512
+        },
+        {
+          "name": "chayen-documentation",
+          "synthetic": false,
+          "chars": 415,
+          "estTokens": 104,
+          "shareOfTotal": 0.0494
+        },
+        {
+          "name": "chayen-frontend",
+          "synthetic": false,
+          "chars": 435,
+          "estTokens": 109,
+          "shareOfTotal": 0.0518
+        },
+        {
+          "name": "chayen-humanizer-en",
+          "synthetic": false,
+          "chars": 363,
+          "estTokens": 91,
+          "shareOfTotal": 0.0432
+        },
+        {
+          "name": "chayen-humanizer-th",
+          "synthetic": false,
+          "chars": 369,
+          "estTokens": 92,
+          "shareOfTotal": 0.0439
+        },
+        {
+          "name": "chayen-implementation",
+          "synthetic": false,
+          "chars": 439,
+          "estTokens": 110,
+          "shareOfTotal": 0.0523
+        },
+        {
+          "name": "chayen-init",
+          "synthetic": false,
+          "chars": 346,
+          "estTokens": 87,
+          "shareOfTotal": 0.0412
+        },
+        {
+          "name": "chayen-performance",
+          "synthetic": false,
+          "chars": 407,
+          "estTokens": 102,
+          "shareOfTotal": 0.0485
+        },
+        {
+          "name": "chayen-repository",
+          "synthetic": false,
+          "chars": 397,
+          "estTokens": 99,
+          "shareOfTotal": 0.0473
+        },
+        {
+          "name": "chayen-requirements",
+          "synthetic": false,
+          "chars": 424,
+          "estTokens": 106,
+          "shareOfTotal": 0.0505
+        },
+        {
+          "name": "chayen-security",
+          "synthetic": false,
+          "chars": 431,
+          "estTokens": 108,
+          "shareOfTotal": 0.0513
+        },
+        {
+          "name": "chayen-syn-audio-dsp",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0274
+        },
+        {
+          "name": "chayen-syn-firmware",
+          "synthetic": true,
+          "chars": 223,
+          "estTokens": 56,
+          "shareOfTotal": 0.0266
+        },
+        {
+          "name": "chayen-syn-game-mods",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0291
+        },
+        {
+          "name": "chayen-syn-gis",
+          "synthetic": true,
+          "chars": 224,
+          "estTokens": 56,
+          "shareOfTotal": 0.0267
+        },
+        {
+          "name": "chayen-syn-latex",
+          "synthetic": true,
+          "chars": 217,
+          "estTokens": 54,
+          "shareOfTotal": 0.0258
+        },
+        {
+          "name": "chayen-syn-ros",
+          "synthetic": true,
+          "chars": 221,
+          "estTokens": 55,
+          "shareOfTotal": 0.0263
+        },
+        {
+          "name": "chayen-syn-solidity",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0291
+        },
+        {
+          "name": "chayen-syn-vba",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0274
+        },
+        {
+          "name": "chayen-testing",
+          "synthetic": false,
+          "chars": 392,
+          "estTokens": 98,
+          "shareOfTotal": 0.0467
+        }
+      ],
+      "cases": {
+        "applicable": 47,
+        "byType": {
+          "positive": 16,
+          "regression": 16,
+          "adjacent": 0,
+          "overlap": 0,
+          "conflict": 0,
+          "no-match": 5,
+          "unsupported": 4,
+          "negative": 2,
+          "explicit": 2,
+          "ambiguous": 2
+        }
+      },
+      "simulated": {
+        "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
+        "threshold": 3.497,
+        "rates": {
+          "lexical:keyword": {
+            "k": 15,
+            "n": 24,
+            "value": 0.625,
+            "wilson95": {
+              "low": 0.4271,
+              "high": 0.7884
+            }
+          },
+          "lexical:paraphrase": {
+            "k": 0,
+            "n": 8,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.3244
+            }
+          },
+          "type:negative": {
+            "k": 0,
+            "n": 2,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.6576
+            }
+          },
+          "type:no-match": {
+            "k": 5,
+            "n": 5,
+            "value": 1,
+            "wilson95": {
+              "low": 0.5655,
+              "high": 1
+            }
+          },
+          "type:positive": {
+            "k": 8,
+            "n": 16,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.28,
+              "high": 0.72
+            }
+          },
+          "type:regression": {
+            "k": 7,
+            "n": 16,
+            "value": 0.4375,
+            "wilson95": {
+              "low": 0.231,
+              "high": 0.6682
+            }
+          },
+          "type:unsupported": {
+            "k": 2,
+            "n": 4,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.15,
+              "high": 0.85
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "SC2-adjacent",
+      "description": "SC1 plus six Skills whose terminology is close to one production Skill each.",
+      "expectation": {
+        "valid": true
+      },
+      "skills": 30,
+      "syntheticSkills": 14,
+      "validators": [
+        {
+          "validator": "package",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [
+            "V-07 discovery-metadata"
+          ],
+          "errors": 0,
+          "warnings": 1,
+          "distinctnessErrors": [],
+          "shippedSkills": 30
+        },
+        {
+          "validator": "catalog",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        },
+        {
+          "validator": "security",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        }
+      ],
+      "outcome": "AS_EXPECTED",
+      "differences": [],
+      "metadata": {
+        "chars": 9802,
+        "estTokens": 2451,
+        "deltaChars": 3239,
+        "deltaEstTokens": 810,
+        "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
+      },
+      "providers": [
+        {
+          "provider": "Claude Code",
+          "source": "S7",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "Codex",
+          "source": "S12",
+          "status": "EXCEEDS_DOCUMENTED_FIGURE",
+          "documentedCharacters": 8000,
+          "headroom": -1802,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "GitHub Copilot CLI and VS Code",
+          "source": "S17, S19 (U-06)",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        }
+      ],
+      "expensiveDescriptions": [],
+      "distinctness": {
+        "warnAbove": 0.25,
+        "errorAbove": 0.35,
+        "pairsAboveWarn": 0,
+        "pairsAboveError": 0,
+        "closest": [
+          {
+            "pair": [
+              "chayen-syn-firmware",
+              "chayen-syn-ros"
+            ],
+            "overlap": 0.171
+          },
+          {
+            "pair": [
+              "chayen-data",
+              "chayen-syn-seed-data"
+            ],
+            "overlap": 0.164
+          },
+          {
+            "pair": [
+              "chayen-syn-ros",
+              "chayen-syn-solidity"
+            ],
+            "overlap": 0.14
+          },
+          {
+            "pair": [
+              "chayen-performance",
+              "chayen-syn-k6-scripts"
+            ],
+            "overlap": 0.13
+          },
+          {
+            "pair": [
+              "chayen-syn-game-mods",
+              "chayen-syn-latex"
+            ],
+            "overlap": 0.119
+          }
+        ],
+        "neighbours": [
+          {
+            "skill": "chayen-syn-graphql",
+            "group": "adjacent",
+            "neighbour": "chayen-backend",
+            "present": true,
+            "overlap": 0.068,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-seed-data",
+            "group": "adjacent",
+            "neighbour": "chayen-data",
+            "present": true,
+            "overlap": 0.164,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-storybook",
+            "group": "adjacent",
+            "neighbour": "chayen-frontend",
+            "present": true,
+            "overlap": 0.031,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-k6-scripts",
+            "group": "adjacent",
+            "neighbour": "chayen-performance",
+            "present": true,
+            "overlap": 0.13,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-helm",
+            "group": "adjacent",
+            "neighbour": "chayen-devops",
+            "present": true,
+            "overlap": 0.094,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-changelog",
+            "group": "adjacent",
+            "neighbour": "chayen-documentation",
+            "present": true,
+            "overlap": 0.07,
+            "lexicalVerdict": "PASS"
+          }
+        ]
+      },
+      "perSkill": [
+        {
+          "name": "chayen-ai-engineering",
+          "synthetic": false,
+          "chars": 433,
+          "estTokens": 108,
+          "shareOfTotal": 0.0442
+        },
+        {
+          "name": "chayen-architecture",
+          "synthetic": false,
+          "chars": 427,
+          "estTokens": 107,
+          "shareOfTotal": 0.0436
+        },
+        {
+          "name": "chayen-backend",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0439
+        },
+        {
+          "name": "chayen-data",
+          "synthetic": false,
+          "chars": 425,
+          "estTokens": 106,
+          "shareOfTotal": 0.0434
+        },
+        {
+          "name": "chayen-devops",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0439
+        },
+        {
+          "name": "chayen-documentation",
+          "synthetic": false,
+          "chars": 415,
+          "estTokens": 104,
+          "shareOfTotal": 0.0423
+        },
+        {
+          "name": "chayen-frontend",
+          "synthetic": false,
+          "chars": 435,
+          "estTokens": 109,
+          "shareOfTotal": 0.0444
+        },
+        {
+          "name": "chayen-humanizer-en",
+          "synthetic": false,
+          "chars": 363,
+          "estTokens": 91,
+          "shareOfTotal": 0.037
+        },
+        {
+          "name": "chayen-humanizer-th",
+          "synthetic": false,
+          "chars": 369,
+          "estTokens": 92,
+          "shareOfTotal": 0.0376
+        },
+        {
+          "name": "chayen-implementation",
+          "synthetic": false,
+          "chars": 439,
+          "estTokens": 110,
+          "shareOfTotal": 0.0448
+        },
+        {
+          "name": "chayen-init",
+          "synthetic": false,
+          "chars": 346,
+          "estTokens": 87,
+          "shareOfTotal": 0.0353
+        },
+        {
+          "name": "chayen-performance",
+          "synthetic": false,
+          "chars": 407,
+          "estTokens": 102,
+          "shareOfTotal": 0.0415
+        },
+        {
+          "name": "chayen-repository",
+          "synthetic": false,
+          "chars": 397,
+          "estTokens": 99,
+          "shareOfTotal": 0.0405
+        },
+        {
+          "name": "chayen-requirements",
+          "synthetic": false,
+          "chars": 424,
+          "estTokens": 106,
+          "shareOfTotal": 0.0433
+        },
+        {
+          "name": "chayen-security",
+          "synthetic": false,
+          "chars": 431,
+          "estTokens": 108,
+          "shareOfTotal": 0.044
+        },
+        {
+          "name": "chayen-syn-audio-dsp",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0235
+        },
+        {
+          "name": "chayen-syn-changelog",
+          "synthetic": true,
+          "chars": 227,
+          "estTokens": 57,
+          "shareOfTotal": 0.0232
+        },
+        {
+          "name": "chayen-syn-firmware",
+          "synthetic": true,
+          "chars": 223,
+          "estTokens": 56,
+          "shareOfTotal": 0.0228
+        },
+        {
+          "name": "chayen-syn-game-mods",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0249
+        },
+        {
+          "name": "chayen-syn-gis",
+          "synthetic": true,
+          "chars": 224,
+          "estTokens": 56,
+          "shareOfTotal": 0.0229
+        },
+        {
+          "name": "chayen-syn-graphql",
+          "synthetic": true,
+          "chars": 259,
+          "estTokens": 65,
+          "shareOfTotal": 0.0264
+        },
+        {
+          "name": "chayen-syn-helm",
+          "synthetic": true,
+          "chars": 221,
+          "estTokens": 55,
+          "shareOfTotal": 0.0225
+        },
+        {
+          "name": "chayen-syn-k6-scripts",
+          "synthetic": true,
+          "chars": 211,
+          "estTokens": 53,
+          "shareOfTotal": 0.0215
+        },
+        {
+          "name": "chayen-syn-latex",
+          "synthetic": true,
+          "chars": 217,
+          "estTokens": 54,
+          "shareOfTotal": 0.0221
+        },
+        {
+          "name": "chayen-syn-ros",
+          "synthetic": true,
+          "chars": 221,
+          "estTokens": 55,
+          "shareOfTotal": 0.0225
+        },
+        {
+          "name": "chayen-syn-seed-data",
+          "synthetic": true,
+          "chars": 259,
+          "estTokens": 65,
+          "shareOfTotal": 0.0264
+        },
+        {
+          "name": "chayen-syn-solidity",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0249
+        },
+        {
+          "name": "chayen-syn-storybook",
+          "synthetic": true,
+          "chars": 229,
+          "estTokens": 57,
+          "shareOfTotal": 0.0234
+        },
+        {
+          "name": "chayen-syn-vba",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0235
+        },
+        {
+          "name": "chayen-testing",
+          "synthetic": false,
+          "chars": 392,
+          "estTokens": 98,
+          "shareOfTotal": 0.04
+        }
+      ],
+      "cases": {
+        "applicable": 62,
+        "byType": {
+          "positive": 16,
+          "regression": 16,
+          "adjacent": 12,
+          "overlap": 0,
+          "conflict": 0,
+          "no-match": 5,
+          "unsupported": 4,
+          "negative": 4,
+          "explicit": 3,
+          "ambiguous": 2
+        }
+      },
+      "simulated": {
+        "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
+        "threshold": 3.334,
+        "rates": {
+          "lexical:keyword": {
+            "k": 24,
+            "n": 36,
+            "value": 0.6667,
+            "wilson95": {
+              "low": 0.5033,
+              "high": 0.7979
+            }
+          },
+          "lexical:paraphrase": {
+            "k": 0,
+            "n": 8,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.3244
+            }
+          },
+          "type:adjacent": {
+            "k": 9,
+            "n": 12,
+            "value": 0.75,
+            "wilson95": {
+              "low": 0.4677,
+              "high": 0.9111
+            }
+          },
+          "type:negative": {
+            "k": 1,
+            "n": 4,
+            "value": 0.25,
+            "wilson95": {
+              "low": 0.0456,
+              "high": 0.6994
+            }
+          },
+          "type:no-match": {
+            "k": 5,
+            "n": 5,
+            "value": 1,
+            "wilson95": {
+              "low": 0.5655,
+              "high": 1
+            }
+          },
+          "type:positive": {
+            "k": 8,
+            "n": 16,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.28,
+              "high": 0.72
+            }
+          },
+          "type:regression": {
+            "k": 7,
+            "n": 16,
+            "value": 0.4375,
+            "wilson95": {
+              "low": 0.231,
+              "high": 0.6682
+            }
+          },
+          "type:unsupported": {
+            "k": 1,
+            "n": 4,
+            "value": 0.25,
+            "wilson95": {
+              "low": 0.0456,
+              "high": 0.6994
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "SC3-overlap",
+      "description": "SC2 plus four Skills with valid but overlapping task boundaries: 18 valid synthetic Skills, 34 in total.",
+      "expectation": {
+        "valid": true
+      },
+      "skills": 34,
+      "syntheticSkills": 18,
+      "validators": [
+        {
+          "validator": "package",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [
+            "V-07 discovery-metadata"
+          ],
+          "errors": 0,
+          "warnings": 1,
+          "distinctnessErrors": [],
+          "shippedSkills": 34
+        },
+        {
+          "validator": "catalog",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        },
+        {
+          "validator": "security",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        }
+      ],
+      "outcome": "AS_EXPECTED",
+      "differences": [],
+      "metadata": {
+        "chars": 10800,
+        "estTokens": 2700,
+        "deltaChars": 4237,
+        "deltaEstTokens": 1059,
+        "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
+      },
+      "providers": [
+        {
+          "provider": "Claude Code",
+          "source": "S7",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "Codex",
+          "source": "S12",
+          "status": "EXCEEDS_DOCUMENTED_FIGURE",
+          "documentedCharacters": 8000,
+          "headroom": -2800,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "GitHub Copilot CLI and VS Code",
+          "source": "S17, S19 (U-06)",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        }
+      ],
+      "expensiveDescriptions": [],
+      "distinctness": {
+        "warnAbove": 0.25,
+        "errorAbove": 0.35,
+        "pairsAboveWarn": 0,
+        "pairsAboveError": 0,
+        "closest": [
+          {
+            "pair": [
+              "chayen-syn-api-mocks",
+              "chayen-syn-openapi-lint"
+            ],
+            "overlap": 0.205
+          },
+          {
+            "pair": [
+              "chayen-syn-api-mocks",
+              "chayen-syn-k6-scripts"
+            ],
+            "overlap": 0.194
+          },
+          {
+            "pair": [
+              "chayen-syn-firmware",
+              "chayen-syn-ros"
+            ],
+            "overlap": 0.171
+          },
+          {
+            "pair": [
+              "chayen-data",
+              "chayen-syn-seed-data"
+            ],
+            "overlap": 0.164
+          },
+          {
+            "pair": [
+              "chayen-syn-k6-scripts",
+              "chayen-syn-openapi-lint"
+            ],
+            "overlap": 0.158
+          }
+        ],
+        "neighbours": [
+          {
+            "skill": "chayen-syn-graphql",
+            "group": "adjacent",
+            "neighbour": "chayen-backend",
+            "present": true,
+            "overlap": 0.068,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-seed-data",
+            "group": "adjacent",
+            "neighbour": "chayen-data",
+            "present": true,
+            "overlap": 0.164,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-storybook",
+            "group": "adjacent",
+            "neighbour": "chayen-frontend",
+            "present": true,
+            "overlap": 0.031,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-k6-scripts",
+            "group": "adjacent",
+            "neighbour": "chayen-performance",
+            "present": true,
+            "overlap": 0.13,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-helm",
+            "group": "adjacent",
+            "neighbour": "chayen-devops",
+            "present": true,
+            "overlap": 0.094,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-changelog",
+            "group": "adjacent",
+            "neighbour": "chayen-documentation",
+            "present": true,
+            "overlap": 0.07,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-openapi-lint",
+            "group": "overlap",
+            "neighbour": "chayen-syn-api-mocks",
+            "present": true,
+            "overlap": 0.205,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-api-mocks",
+            "group": "overlap",
+            "neighbour": "chayen-syn-openapi-lint",
+            "present": true,
+            "overlap": 0.205,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-feature-flags",
+            "group": "overlap",
+            "neighbour": "chayen-implementation",
+            "present": true,
+            "overlap": 0.068,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-a11y-audit",
+            "group": "overlap",
+            "neighbour": "chayen-frontend",
+            "present": true,
+            "overlap": 0.077,
+            "lexicalVerdict": "PASS"
+          }
+        ]
+      },
+      "perSkill": [
+        {
+          "name": "chayen-ai-engineering",
+          "synthetic": false,
+          "chars": 433,
+          "estTokens": 108,
+          "shareOfTotal": 0.0401
+        },
+        {
+          "name": "chayen-architecture",
+          "synthetic": false,
+          "chars": 427,
+          "estTokens": 107,
+          "shareOfTotal": 0.0395
+        },
+        {
+          "name": "chayen-backend",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0398
+        },
+        {
+          "name": "chayen-data",
+          "synthetic": false,
+          "chars": 425,
+          "estTokens": 106,
+          "shareOfTotal": 0.0394
+        },
+        {
+          "name": "chayen-devops",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0398
+        },
+        {
+          "name": "chayen-documentation",
+          "synthetic": false,
+          "chars": 415,
+          "estTokens": 104,
+          "shareOfTotal": 0.0384
+        },
+        {
+          "name": "chayen-frontend",
+          "synthetic": false,
+          "chars": 435,
+          "estTokens": 109,
+          "shareOfTotal": 0.0403
+        },
+        {
+          "name": "chayen-humanizer-en",
+          "synthetic": false,
+          "chars": 363,
+          "estTokens": 91,
+          "shareOfTotal": 0.0336
+        },
+        {
+          "name": "chayen-humanizer-th",
+          "synthetic": false,
+          "chars": 369,
+          "estTokens": 92,
+          "shareOfTotal": 0.0342
+        },
+        {
+          "name": "chayen-implementation",
+          "synthetic": false,
+          "chars": 439,
+          "estTokens": 110,
+          "shareOfTotal": 0.0406
+        },
+        {
+          "name": "chayen-init",
+          "synthetic": false,
+          "chars": 346,
+          "estTokens": 87,
+          "shareOfTotal": 0.032
+        },
+        {
+          "name": "chayen-performance",
+          "synthetic": false,
+          "chars": 407,
+          "estTokens": 102,
+          "shareOfTotal": 0.0377
+        },
+        {
+          "name": "chayen-repository",
+          "synthetic": false,
+          "chars": 397,
+          "estTokens": 99,
+          "shareOfTotal": 0.0368
+        },
+        {
+          "name": "chayen-requirements",
+          "synthetic": false,
+          "chars": 424,
+          "estTokens": 106,
+          "shareOfTotal": 0.0393
+        },
+        {
+          "name": "chayen-security",
+          "synthetic": false,
+          "chars": 431,
+          "estTokens": 108,
+          "shareOfTotal": 0.0399
+        },
+        {
+          "name": "chayen-syn-a11y-audit",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0226
+        },
+        {
+          "name": "chayen-syn-api-mocks",
+          "synthetic": true,
+          "chars": 243,
+          "estTokens": 61,
+          "shareOfTotal": 0.0225
+        },
+        {
+          "name": "chayen-syn-audio-dsp",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0213
+        },
+        {
+          "name": "chayen-syn-changelog",
+          "synthetic": true,
+          "chars": 227,
+          "estTokens": 57,
+          "shareOfTotal": 0.021
+        },
+        {
+          "name": "chayen-syn-feature-flags",
+          "synthetic": true,
+          "chars": 254,
+          "estTokens": 64,
+          "shareOfTotal": 0.0235
+        },
+        {
+          "name": "chayen-syn-firmware",
+          "synthetic": true,
+          "chars": 223,
+          "estTokens": 56,
+          "shareOfTotal": 0.0206
+        },
+        {
+          "name": "chayen-syn-game-mods",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0226
+        },
+        {
+          "name": "chayen-syn-gis",
+          "synthetic": true,
+          "chars": 224,
+          "estTokens": 56,
+          "shareOfTotal": 0.0207
+        },
+        {
+          "name": "chayen-syn-graphql",
+          "synthetic": true,
+          "chars": 259,
+          "estTokens": 65,
+          "shareOfTotal": 0.024
+        },
+        {
+          "name": "chayen-syn-helm",
+          "synthetic": true,
+          "chars": 221,
+          "estTokens": 55,
+          "shareOfTotal": 0.0205
+        },
+        {
+          "name": "chayen-syn-k6-scripts",
+          "synthetic": true,
+          "chars": 211,
+          "estTokens": 53,
+          "shareOfTotal": 0.0195
+        },
+        {
+          "name": "chayen-syn-latex",
+          "synthetic": true,
+          "chars": 217,
+          "estTokens": 54,
+          "shareOfTotal": 0.0201
+        },
+        {
+          "name": "chayen-syn-openapi-lint",
+          "synthetic": true,
+          "chars": 257,
+          "estTokens": 64,
+          "shareOfTotal": 0.0238
+        },
+        {
+          "name": "chayen-syn-ros",
+          "synthetic": true,
+          "chars": 221,
+          "estTokens": 55,
+          "shareOfTotal": 0.0205
+        },
+        {
+          "name": "chayen-syn-seed-data",
+          "synthetic": true,
+          "chars": 259,
+          "estTokens": 65,
+          "shareOfTotal": 0.024
+        },
+        {
+          "name": "chayen-syn-solidity",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0226
+        },
+        {
+          "name": "chayen-syn-storybook",
+          "synthetic": true,
+          "chars": 229,
+          "estTokens": 57,
+          "shareOfTotal": 0.0212
+        },
+        {
+          "name": "chayen-syn-vba",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0213
+        },
+        {
+          "name": "chayen-testing",
+          "synthetic": false,
+          "chars": 392,
+          "estTokens": 98,
+          "shareOfTotal": 0.0363
+        }
+      ],
+      "cases": {
+        "applicable": 70,
+        "byType": {
+          "positive": 16,
+          "regression": 16,
+          "adjacent": 12,
+          "overlap": 7,
+          "conflict": 0,
+          "no-match": 5,
+          "unsupported": 4,
+          "negative": 4,
+          "explicit": 4,
+          "ambiguous": 2
+        }
+      },
+      "simulated": {
+        "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
+        "threshold": 3.342,
+        "rates": {
+          "lexical:keyword": {
+            "k": 28,
+            "n": 43,
+            "value": 0.6512,
+            "wilson95": {
+              "low": 0.5017,
+              "high": 0.7758
+            }
+          },
+          "lexical:paraphrase": {
+            "k": 1,
+            "n": 8,
+            "value": 0.125,
+            "wilson95": {
+              "low": 0.0224,
+              "high": 0.4709
+            }
+          },
+          "type:adjacent": {
+            "k": 9,
+            "n": 12,
+            "value": 0.75,
+            "wilson95": {
+              "low": 0.4677,
+              "high": 0.9111
+            }
+          },
+          "type:negative": {
+            "k": 1,
+            "n": 4,
+            "value": 0.25,
+            "wilson95": {
+              "low": 0.0456,
+              "high": 0.6994
+            }
+          },
+          "type:no-match": {
+            "k": 5,
+            "n": 5,
+            "value": 1,
+            "wilson95": {
+              "low": 0.5655,
+              "high": 1
+            }
+          },
+          "type:overlap": {
+            "k": 4,
+            "n": 7,
+            "value": 0.5714,
+            "wilson95": {
+              "low": 0.2505,
+              "high": 0.8418
+            }
+          },
+          "type:positive": {
+            "k": 9,
+            "n": 16,
+            "value": 0.5625,
+            "wilson95": {
+              "low": 0.3318,
+              "high": 0.769
+            }
+          },
+          "type:regression": {
+            "k": 7,
+            "n": 16,
+            "value": 0.4375,
+            "wilson95": {
+              "low": 0.231,
+              "high": 0.6682
+            }
+          },
+          "type:unsupported": {
+            "k": 0,
+            "n": 4,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.4899
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "SC4-semantic-conflict",
+      "description": "SC1 plus a paraphrased duplicate of the production testing Skill. It is valid by every static check, so only routing evidence can reveal the collision.",
+      "expectation": {
+        "valid": true,
+        "undetectedConflicts": [
+          [
+            "chayen-syn-test-authoring",
+            "chayen-testing"
+          ]
+        ]
+      },
+      "skills": 25,
+      "syntheticSkills": 9,
+      "validators": [
+        {
+          "validator": "package",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [
+            "V-07 discovery-metadata"
+          ],
+          "errors": 0,
+          "warnings": 1,
+          "distinctnessErrors": [],
+          "shippedSkills": 25
+        },
+        {
+          "validator": "catalog",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        },
+        {
+          "validator": "security",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        }
+      ],
+      "outcome": "AS_EXPECTED",
+      "differences": [],
+      "metadata": {
+        "chars": 8717,
+        "estTokens": 2179,
+        "deltaChars": 2154,
+        "deltaEstTokens": 538,
+        "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
+      },
+      "providers": [
+        {
+          "provider": "Claude Code",
+          "source": "S7",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "Codex",
+          "source": "S12",
+          "status": "EXCEEDS_DOCUMENTED_FIGURE",
+          "documentedCharacters": 8000,
+          "headroom": -717,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "GitHub Copilot CLI and VS Code",
+          "source": "S17, S19 (U-06)",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        }
+      ],
+      "expensiveDescriptions": [],
+      "distinctness": {
+        "warnAbove": 0.25,
+        "errorAbove": 0.35,
+        "pairsAboveWarn": 0,
+        "pairsAboveError": 0,
+        "closest": [
+          {
+            "pair": [
+              "chayen-syn-firmware",
+              "chayen-syn-ros"
+            ],
+            "overlap": 0.171
+          },
+          {
+            "pair": [
+              "chayen-syn-ros",
+              "chayen-syn-solidity"
+            ],
+            "overlap": 0.14
+          },
+          {
+            "pair": [
+              "chayen-syn-game-mods",
+              "chayen-syn-latex"
+            ],
+            "overlap": 0.119
+          },
+          {
+            "pair": [
+              "chayen-syn-latex",
+              "chayen-syn-ros"
+            ],
+            "overlap": 0.116
+          },
+          {
+            "pair": [
+              "chayen-syn-firmware",
+              "chayen-syn-gis"
+            ],
+            "overlap": 0.095
+          }
+        ],
+        "neighbours": [
+          {
+            "skill": "chayen-syn-test-authoring",
+            "group": "conflict",
+            "neighbour": "chayen-testing",
+            "present": true,
+            "overlap": 0.031,
+            "lexicalVerdict": "PASS"
+          }
+        ]
+      },
+      "perSkill": [
+        {
+          "name": "chayen-ai-engineering",
+          "synthetic": false,
+          "chars": 433,
+          "estTokens": 108,
+          "shareOfTotal": 0.0497
+        },
+        {
+          "name": "chayen-architecture",
+          "synthetic": false,
+          "chars": 427,
+          "estTokens": 107,
+          "shareOfTotal": 0.049
+        },
+        {
+          "name": "chayen-backend",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0493
+        },
+        {
+          "name": "chayen-data",
+          "synthetic": false,
+          "chars": 425,
+          "estTokens": 106,
+          "shareOfTotal": 0.0488
+        },
+        {
+          "name": "chayen-devops",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.0493
+        },
+        {
+          "name": "chayen-documentation",
+          "synthetic": false,
+          "chars": 415,
+          "estTokens": 104,
+          "shareOfTotal": 0.0476
+        },
+        {
+          "name": "chayen-frontend",
+          "synthetic": false,
+          "chars": 435,
+          "estTokens": 109,
+          "shareOfTotal": 0.0499
+        },
+        {
+          "name": "chayen-humanizer-en",
+          "synthetic": false,
+          "chars": 363,
+          "estTokens": 91,
+          "shareOfTotal": 0.0416
+        },
+        {
+          "name": "chayen-humanizer-th",
+          "synthetic": false,
+          "chars": 369,
+          "estTokens": 92,
+          "shareOfTotal": 0.0423
+        },
+        {
+          "name": "chayen-implementation",
+          "synthetic": false,
+          "chars": 439,
+          "estTokens": 110,
+          "shareOfTotal": 0.0504
+        },
+        {
+          "name": "chayen-init",
+          "synthetic": false,
+          "chars": 346,
+          "estTokens": 87,
+          "shareOfTotal": 0.0397
+        },
+        {
+          "name": "chayen-performance",
+          "synthetic": false,
+          "chars": 407,
+          "estTokens": 102,
+          "shareOfTotal": 0.0467
+        },
+        {
+          "name": "chayen-repository",
+          "synthetic": false,
+          "chars": 397,
+          "estTokens": 99,
+          "shareOfTotal": 0.0455
+        },
+        {
+          "name": "chayen-requirements",
+          "synthetic": false,
+          "chars": 424,
+          "estTokens": 106,
+          "shareOfTotal": 0.0486
+        },
+        {
+          "name": "chayen-security",
+          "synthetic": false,
+          "chars": 431,
+          "estTokens": 108,
+          "shareOfTotal": 0.0494
+        },
+        {
+          "name": "chayen-syn-audio-dsp",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0264
+        },
+        {
+          "name": "chayen-syn-firmware",
+          "synthetic": true,
+          "chars": 223,
+          "estTokens": 56,
+          "shareOfTotal": 0.0256
+        },
+        {
+          "name": "chayen-syn-game-mods",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.028
+        },
+        {
+          "name": "chayen-syn-gis",
+          "synthetic": true,
+          "chars": 224,
+          "estTokens": 56,
+          "shareOfTotal": 0.0257
+        },
+        {
+          "name": "chayen-syn-latex",
+          "synthetic": true,
+          "chars": 217,
+          "estTokens": 54,
+          "shareOfTotal": 0.0249
+        },
+        {
+          "name": "chayen-syn-ros",
+          "synthetic": true,
+          "chars": 221,
+          "estTokens": 55,
+          "shareOfTotal": 0.0254
+        },
+        {
+          "name": "chayen-syn-solidity",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.028
+        },
+        {
+          "name": "chayen-syn-test-authoring",
+          "synthetic": true,
+          "chars": 321,
+          "estTokens": 80,
+          "shareOfTotal": 0.0368
+        },
+        {
+          "name": "chayen-syn-vba",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0264
+        },
+        {
+          "name": "chayen-testing",
+          "synthetic": false,
+          "chars": 392,
+          "estTokens": 98,
+          "shareOfTotal": 0.045
+        }
+      ],
+      "cases": {
+        "applicable": 49,
+        "byType": {
+          "positive": 16,
+          "regression": 16,
+          "adjacent": 0,
+          "overlap": 0,
+          "conflict": 2,
+          "no-match": 5,
+          "unsupported": 4,
+          "negative": 2,
+          "explicit": 2,
+          "ambiguous": 2
+        }
+      },
+      "simulated": {
+        "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
+        "threshold": 3.278,
+        "rates": {
+          "lexical:keyword": {
+            "k": 18,
+            "n": 26,
+            "value": 0.6923,
+            "wilson95": {
+              "low": 0.5001,
+              "high": 0.835
+            }
+          },
+          "lexical:paraphrase": {
+            "k": 0,
+            "n": 8,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.3244
+            }
+          },
+          "type:conflict": {
+            "k": 2,
+            "n": 2,
+            "value": 1,
+            "wilson95": {
+              "low": 0.3424,
+              "high": 1
+            }
+          },
+          "type:negative": {
+            "k": 0,
+            "n": 2,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.6576
+            }
+          },
+          "type:no-match": {
+            "k": 5,
+            "n": 5,
+            "value": 1,
+            "wilson95": {
+              "low": 0.5655,
+              "high": 1
+            }
+          },
+          "type:positive": {
+            "k": 8,
+            "n": 16,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.28,
+              "high": 0.72
+            }
+          },
+          "type:regression": {
+            "k": 8,
+            "n": 16,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.28,
+              "high": 0.72
+            }
+          },
+          "type:unsupported": {
+            "k": 2,
+            "n": 4,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.15,
+              "high": 0.85
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "SC5-lexical-conflict",
+      "description": "SC1 plus the GraphQL Skill and two near-copies. The distinctness check must reject exactly the two copied pairs; the scenario is never installed.",
+      "expectation": {
+        "valid": false,
+        "distinctnessErrors": [
+          [
+            "chayen-data",
+            "chayen-syn-sql-tuning"
+          ],
+          [
+            "chayen-syn-graphql",
+            "chayen-syn-graphql-schema"
+          ]
+        ]
+      },
+      "skills": 27,
+      "syntheticSkills": 11,
+      "validators": [
+        {
+          "validator": "package",
+          "exit": 1,
+          "result": "FAIL",
+          "errorChecks": [
+            "V-07b description-distinctness"
+          ],
+          "warningChecks": [
+            "V-07 discovery-metadata"
+          ],
+          "errors": 2,
+          "warnings": 1,
+          "distinctnessErrors": [
+            [
+              "chayen-data",
+              "chayen-syn-sql-tuning"
+            ],
+            [
+              "chayen-syn-graphql",
+              "chayen-syn-graphql-schema"
+            ]
+          ],
+          "shippedSkills": 27
+        },
+        {
+          "validator": "catalog",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        },
+        {
+          "validator": "security",
+          "exit": 0,
+          "result": "PASS",
+          "errorChecks": [],
+          "warningChecks": [],
+          "errors": 0,
+          "warnings": 0,
+          "distinctnessErrors": [],
+          "shippedSkills": null
+        }
+      ],
+      "outcome": "AS_EXPECTED",
+      "differences": [],
+      "metadata": {
+        "chars": 9357,
+        "estTokens": 2339,
+        "deltaChars": 2794,
+        "deltaEstTokens": 698,
+        "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
+      },
+      "providers": [
+        {
+          "provider": "Claude Code",
+          "source": "S7",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "Codex",
+          "source": "S12",
+          "status": "EXCEEDS_DOCUMENTED_FIGURE",
+          "documentedCharacters": 8000,
+          "headroom": -1357,
+          "measurement": "NOT_MEASURED"
+        },
+        {
+          "provider": "GitHub Copilot CLI and VS Code",
+          "source": "S17, S19 (U-06)",
+          "status": "UNKNOWN",
+          "documentedCharacters": null,
+          "headroom": null,
+          "measurement": "NOT_MEASURED"
+        }
+      ],
+      "expensiveDescriptions": [],
+      "distinctness": {
+        "warnAbove": 0.25,
+        "errorAbove": 0.35,
+        "pairsAboveWarn": 2,
+        "pairsAboveError": 2,
+        "closest": [
+          {
+            "pair": [
+              "chayen-syn-graphql",
+              "chayen-syn-graphql-schema"
+            ],
+            "overlap": 0.958
+          },
+          {
+            "pair": [
+              "chayen-data",
+              "chayen-syn-sql-tuning"
+            ],
+            "overlap": 0.925
+          },
+          {
+            "pair": [
+              "chayen-syn-firmware",
+              "chayen-syn-ros"
+            ],
+            "overlap": 0.171
+          },
+          {
+            "pair": [
+              "chayen-syn-ros",
+              "chayen-syn-solidity"
+            ],
+            "overlap": 0.14
+          },
+          {
+            "pair": [
+              "chayen-syn-game-mods",
+              "chayen-syn-latex"
+            ],
+            "overlap": 0.119
+          }
+        ],
+        "neighbours": [
+          {
+            "skill": "chayen-syn-graphql",
+            "group": "adjacent",
+            "neighbour": "chayen-backend",
+            "present": true,
+            "overlap": 0.068,
+            "lexicalVerdict": "PASS"
+          },
+          {
+            "skill": "chayen-syn-sql-tuning",
+            "group": "conflict",
+            "neighbour": "chayen-data",
+            "present": true,
+            "overlap": 0.925,
+            "lexicalVerdict": "ERROR"
+          },
+          {
+            "skill": "chayen-syn-graphql-schema",
+            "group": "conflict",
+            "neighbour": "chayen-syn-graphql",
+            "present": true,
+            "overlap": 0.958,
+            "lexicalVerdict": "ERROR"
+          }
+        ]
+      },
+      "perSkill": [
+        {
+          "name": "chayen-ai-engineering",
+          "synthetic": false,
+          "chars": 433,
+          "estTokens": 108,
+          "shareOfTotal": 0.0463
+        },
+        {
+          "name": "chayen-architecture",
+          "synthetic": false,
+          "chars": 427,
+          "estTokens": 107,
+          "shareOfTotal": 0.0456
+        },
+        {
+          "name": "chayen-backend",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.046
+        },
+        {
+          "name": "chayen-data",
+          "synthetic": false,
+          "chars": 425,
+          "estTokens": 106,
+          "shareOfTotal": 0.0454
+        },
+        {
+          "name": "chayen-devops",
+          "synthetic": false,
+          "chars": 430,
+          "estTokens": 108,
+          "shareOfTotal": 0.046
+        },
+        {
+          "name": "chayen-documentation",
+          "synthetic": false,
+          "chars": 415,
+          "estTokens": 104,
+          "shareOfTotal": 0.0444
+        },
+        {
+          "name": "chayen-frontend",
+          "synthetic": false,
+          "chars": 435,
+          "estTokens": 109,
+          "shareOfTotal": 0.0465
+        },
+        {
+          "name": "chayen-humanizer-en",
+          "synthetic": false,
+          "chars": 363,
+          "estTokens": 91,
+          "shareOfTotal": 0.0388
+        },
+        {
+          "name": "chayen-humanizer-th",
+          "synthetic": false,
+          "chars": 369,
+          "estTokens": 92,
+          "shareOfTotal": 0.0394
+        },
+        {
+          "name": "chayen-implementation",
+          "synthetic": false,
+          "chars": 439,
+          "estTokens": 110,
+          "shareOfTotal": 0.0469
+        },
+        {
+          "name": "chayen-init",
+          "synthetic": false,
+          "chars": 346,
+          "estTokens": 87,
+          "shareOfTotal": 0.037
+        },
+        {
+          "name": "chayen-performance",
+          "synthetic": false,
+          "chars": 407,
+          "estTokens": 102,
+          "shareOfTotal": 0.0435
+        },
+        {
+          "name": "chayen-repository",
+          "synthetic": false,
+          "chars": 397,
+          "estTokens": 99,
+          "shareOfTotal": 0.0424
+        },
+        {
+          "name": "chayen-requirements",
+          "synthetic": false,
+          "chars": 424,
+          "estTokens": 106,
+          "shareOfTotal": 0.0453
+        },
+        {
+          "name": "chayen-security",
+          "synthetic": false,
+          "chars": 431,
+          "estTokens": 108,
+          "shareOfTotal": 0.0461
+        },
+        {
+          "name": "chayen-syn-audio-dsp",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0246
+        },
+        {
+          "name": "chayen-syn-firmware",
+          "synthetic": true,
+          "chars": 223,
+          "estTokens": 56,
+          "shareOfTotal": 0.0238
+        },
+        {
+          "name": "chayen-syn-game-mods",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0261
+        },
+        {
+          "name": "chayen-syn-gis",
+          "synthetic": true,
+          "chars": 224,
+          "estTokens": 56,
+          "shareOfTotal": 0.0239
+        },
+        {
+          "name": "chayen-syn-graphql",
+          "synthetic": true,
+          "chars": 259,
+          "estTokens": 65,
+          "shareOfTotal": 0.0277
+        },
+        {
+          "name": "chayen-syn-graphql-schema",
+          "synthetic": true,
+          "chars": 277,
+          "estTokens": 69,
+          "shareOfTotal": 0.0296
+        },
+        {
+          "name": "chayen-syn-latex",
+          "synthetic": true,
+          "chars": 217,
+          "estTokens": 54,
+          "shareOfTotal": 0.0232
+        },
+        {
+          "name": "chayen-syn-ros",
+          "synthetic": true,
+          "chars": 221,
+          "estTokens": 55,
+          "shareOfTotal": 0.0236
+        },
+        {
+          "name": "chayen-syn-solidity",
+          "synthetic": true,
+          "chars": 244,
+          "estTokens": 61,
+          "shareOfTotal": 0.0261
+        },
+        {
+          "name": "chayen-syn-sql-tuning",
+          "synthetic": true,
+          "chars": 425,
+          "estTokens": 106,
+          "shareOfTotal": 0.0454
+        },
+        {
+          "name": "chayen-syn-vba",
+          "synthetic": true,
+          "chars": 230,
+          "estTokens": 58,
+          "shareOfTotal": 0.0246
+        },
+        {
+          "name": "chayen-testing",
+          "synthetic": false,
+          "chars": 392,
+          "estTokens": 98,
+          "shareOfTotal": 0.0419
+        }
+      ],
+      "cases": {
+        "applicable": 51,
+        "byType": {
+          "positive": 16,
+          "regression": 16,
+          "adjacent": 2,
+          "overlap": 0,
+          "conflict": 2,
+          "no-match": 5,
+          "unsupported": 4,
+          "negative": 2,
+          "explicit": 2,
+          "ambiguous": 2
+        }
+      },
+      "simulated": {
+        "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
+        "threshold": 3.166,
+        "rates": {
+          "lexical:keyword": {
+            "k": 20,
+            "n": 28,
+            "value": 0.7143,
+            "wilson95": {
+              "low": 0.5294,
+              "high": 0.8475
+            }
+          },
+          "lexical:paraphrase": {
+            "k": 1,
+            "n": 8,
+            "value": 0.125,
+            "wilson95": {
+              "low": 0.0224,
+              "high": 0.4709
+            }
+          },
+          "type:adjacent": {
+            "k": 2,
+            "n": 2,
+            "value": 1,
+            "wilson95": {
+              "low": 0.3424,
+              "high": 1
+            }
+          },
+          "type:conflict": {
+            "k": 2,
+            "n": 2,
+            "value": 1,
+            "wilson95": {
+              "low": 0.3424,
+              "high": 1
+            }
+          },
+          "type:negative": {
+            "k": 0,
+            "n": 2,
+            "value": 0,
+            "wilson95": {
+              "low": 0,
+              "high": 0.6576
+            }
+          },
+          "type:no-match": {
+            "k": 5,
+            "n": 5,
+            "value": 1,
+            "wilson95": {
+              "low": 0.5655,
+              "high": 1
+            }
+          },
+          "type:positive": {
+            "k": 9,
+            "n": 16,
+            "value": 0.5625,
+            "wilson95": {
+              "low": 0.3318,
+              "high": 0.769
+            }
+          },
+          "type:regression": {
+            "k": 8,
+            "n": 16,
+            "value": 0.5,
+            "wilson95": {
+              "low": 0.28,
+              "high": 0.72
+            }
+          },
+          "type:unsupported": {
+            "k": 1,
+            "n": 4,
+            "value": 0.25,
+            "wilson95": {
+              "low": 0.0456,
+              "high": 0.6994
+            }
+          }
+        }
+      }
+    }
+  ],
+  "providerRouting": [
+    {
+      "provider": "claude",
+      "status": "NOT_RUN",
+      "routingAccuracy": "NOT_MEASURED",
+      "noMatch": "NOT_MEASURED",
+      "contextTokens": "NOT_MEASURED",
+      "reason": "no recorded provider run; billed calls, an isolated signed-in home per arm and the install of synthetic test packages need owner authorization"
+    },
+    {
+      "provider": "codex",
+      "status": "NOT_RUN",
+      "routingAccuracy": "NOT_MEASURED",
+      "noMatch": "NOT_MEASURED",
+      "contextTokens": "NOT_MEASURED",
+      "reason": "no recorded provider run; billed calls, an isolated signed-in home per arm and the install of synthetic test packages need owner authorization"
+    },
+    {
+      "provider": "copilot",
+      "status": "NOT_RUN",
+      "routingAccuracy": "NOT_MEASURED",
+      "noMatch": "NOT_MEASURED",
+      "contextTokens": "NOT_MEASURED",
+      "reason": "no recorded provider run; billed calls, an isolated signed-in home per arm and the install of synthetic test packages need owner authorization"
+    }
+  ],
+  "plan": {
+    "rows": [
+      {
+        "provider": "claude",
+        "scenario": "SC0-production",
+        "arm": "plugin",
+        "cases": 28,
+        "runs": 3,
+        "calls": 84
+      },
+      {
+        "provider": "claude",
+        "scenario": "SC1-distinct",
+        "arm": "plugin",
+        "cases": 47,
+        "runs": 3,
+        "calls": 141
+      },
+      {
+        "provider": "claude",
+        "scenario": "SC2-adjacent",
+        "arm": "plugin",
+        "cases": 62,
+        "runs": 3,
+        "calls": 186
+      },
+      {
+        "provider": "claude",
+        "scenario": "SC3-overlap",
+        "arm": "plugin",
+        "cases": 70,
+        "runs": 3,
+        "calls": 210
+      },
+      {
+        "provider": "claude",
+        "scenario": "SC4-semantic-conflict",
+        "arm": "plugin",
+        "cases": 49,
+        "runs": 3,
+        "calls": 147
+      },
+      {
+        "provider": "claude",
+        "scenario": "none (no Chayen installed)",
+        "arm": "baseline",
+        "cases": 9,
+        "runs": 3,
+        "calls": 27
+      },
+      {
+        "provider": "codex",
+        "scenario": "SC0-production",
+        "arm": "plugin",
+        "cases": 28,
+        "runs": 3,
+        "calls": 84
+      },
+      {
+        "provider": "codex",
+        "scenario": "SC1-distinct",
+        "arm": "plugin",
+        "cases": 47,
+        "runs": 3,
+        "calls": 141
+      },
+      {
+        "provider": "codex",
+        "scenario": "SC2-adjacent",
+        "arm": "plugin",
+        "cases": 62,
+        "runs": 3,
+        "calls": 186
+      },
+      {
+        "provider": "codex",
+        "scenario": "SC3-overlap",
+        "arm": "plugin",
+        "cases": 70,
+        "runs": 3,
+        "calls": 210
+      },
+      {
+        "provider": "codex",
+        "scenario": "SC4-semantic-conflict",
+        "arm": "plugin",
+        "cases": 49,
+        "runs": 3,
+        "calls": 147
+      },
+      {
+        "provider": "codex",
+        "scenario": "none (no Chayen installed)",
+        "arm": "baseline",
+        "cases": 9,
+        "runs": 3,
+        "calls": 27
+      },
+      {
+        "provider": "copilot",
+        "scenario": "SC0-production",
+        "arm": "plugin",
+        "cases": 28,
+        "runs": 3,
+        "calls": 84
+      },
+      {
+        "provider": "copilot",
+        "scenario": "SC1-distinct",
+        "arm": "plugin",
+        "cases": 47,
+        "runs": 3,
+        "calls": 141
+      },
+      {
+        "provider": "copilot",
+        "scenario": "SC2-adjacent",
+        "arm": "plugin",
+        "cases": 62,
+        "runs": 3,
+        "calls": 186
+      },
+      {
+        "provider": "copilot",
+        "scenario": "SC3-overlap",
+        "arm": "plugin",
+        "cases": 70,
+        "runs": 3,
+        "calls": 210
+      },
+      {
+        "provider": "copilot",
+        "scenario": "SC4-semantic-conflict",
+        "arm": "plugin",
+        "cases": 49,
+        "runs": 3,
+        "calls": 147
+      },
+      {
+        "provider": "copilot",
+        "scenario": "none (no Chayen installed)",
+        "arm": "baseline",
+        "cases": 9,
+        "runs": 3,
+        "calls": 27
+      }
+    ],
+    "totalCalls": 2385,
+    "note": "Billed calls a complete run would need; nothing was sent"
+  },
+  "result": "PASS"
+}

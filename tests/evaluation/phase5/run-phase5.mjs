@@ -32,6 +32,7 @@ import { spawnSync } from "node:child_process";
 import { inside, assertTreeNoLinks } from "../../../tools/validate/safe-paths.mjs";
 import { PROVIDERS, SUITES, explicitPrompt, parseTranscript, classifyRouting, classifySecurity, summarizeRouting, scoredAttempts, snapshot, diffSnapshots, scrub, rate } from "./phase5-lib.mjs";
 import { SPEC_FILES, HOME_ENV, LEGACY_CANDIDATE, loadCandidate, verifyAgainstCheckout, checkInstalled, checkRunCompatibility } from "./candidate.mjs";
+import { phase5Impact } from "../routing-context/routing-context-lib.mjs";
 export { SPEC_FILES, HOME_ENV, installedPackages } from "./candidate.mjs";
 
 const repo = fs.realpathSync(path.resolve(import.meta.dirname, "../../.."));
@@ -135,7 +136,8 @@ function score(dir) {
     if (incompatible.length) fail(`Stale or incompatible results for candidate ${candidate.id}; not scored:\n  ${incompatible.join("\n  ")}`);
   }
   let summary;
-  if (meta.suite === "routing") summary = summarizeRouting(records, spec);
+  // Step 18: selection breakdown (missed, wrong, multiple unexpected) and context tax, from the same records.
+  if (meta.suite === "routing") summary = { ...summarizeRouting(records, spec), routingImpact: phase5Impact(records, spec) };
   else {
     const scored = scoredAttempts(records);
     const by = (k) => scored.reduce((a, r) => ({ ...a, [r[k]]: (a[r[k]] ?? 0) + 1 }), {});
