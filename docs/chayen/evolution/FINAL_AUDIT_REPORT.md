@@ -306,7 +306,7 @@ Process notes, not code defects:
 | F-01 | High | No runtime qualification on any CLI: agent behaviour, routing ≥85%, explicit invocation, no-match, adversarial cases and the coding comparison are all NOT_RUN or BLOCKED | Steps 14–19 | Open; needs authorization |
 | F-02 | High | Copilot is not qualified (1.0.89 < 1.0.91). Its help says non-interactive mode requires `--allow-all-tools`, which INV-04 forbids | Step 19 | Open; owner decision |
 | F-03 | High | Codex 0.163.0 on Windows lists 44 personal Skills inside an isolated profile | Step 19 | Detected by `inventory-isolation`; open |
-| F-04 | Medium | 31 shipped guidance files changed since `v1.1.2` under the same version; D-067..D-070 note "changed without a version bump" | Git | Open; `1.1.3` proposed |
+| F-04 | Medium | 31 shipped guidance files changed since `v1.1.2` under the same version; D-067..D-070 note "changed without a version bump" | Git | **Resolved after the audit by D-077**: version `1.1.3` (uncommitted; not yet on `main`) |
 | F-05 | Medium | The reference audit grader derives only DONE or PARTIAL, so an honest BLOCKED report is graded `unsupported`. It also ignores `exitCode`: AU-0001 with every run at `exitCode: 1` still grades `accept` and DONE (reproduced) | `audit-evidence.mjs:136` | Open |
 | F-06 | Medium | G-18 guards anchor phrasings. 17 of 18 meaning-level weakenings pass, e.g. "a NOT_RUN test supports accept" or "Compiled code is enough to report DONE" | Reviewer mutation harness | Open |
 | F-07 | Medium | Snapshot pins of the 16-Skill inventory (`registration.test.mjs:155-156`, `qualify-rc.test.mjs:20`, `lifecycle.mjs:9`) make `validate-all` fail when a real Skill is added; LIMIT_MIGRATION_REPORT does not list them | Steps 03, 06, 19 | Open |

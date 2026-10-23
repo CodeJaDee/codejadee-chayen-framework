@@ -5,7 +5,7 @@
 | Version | Supported |
 |---|---|
 | `1.1.x` | Best effort; Security/Support remains LATER |
-| `1.0.x` | No; update to `1.1.2` |
+| `1.0.x` | No; update to `1.1.3` |
 | Release candidates and development builds before `1.0.0` | No; update to `1.0.0` |
 
 No stable release exists yet. This table will list supported releases once

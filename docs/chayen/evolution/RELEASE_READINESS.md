@@ -3,7 +3,10 @@
 - **Date:** 2026-10-23
 - **Source:** `develop` at `26bfbd0`: audited at `7bbb39b`, with the Step 20
   changes committed by the owner. `main` and the tag `v1.1.2` are at `7427eb1`.
-- **Package:** `chayen` 1.1.2 in both manifests (not bumped), 16 Skills,
+- **Post-audit update (D-077, 2026-10-23):** the owner approved `1.1.3`. Both
+  manifests and both Copilot version fields now read `1.1.3` (uncommitted).
+  Condition 1 in §4 is met; the other conditions stand.
+- **Package at audit time:** `chayen` 1.1.2 in both manifests (not bumped), 16 Skills,
   discovery-metadata fingerprint `411b6adbbea7e121`, 206-capability inventory
   `2f13cad24ff431e3`.
 
@@ -65,9 +68,9 @@ a version-based update (F-04).
 
 ## 4. Conditions for a CONDITIONAL GO on `1.1.3`
 
-1. The owner approves `1.1.3` and the proposed [CHANGELOG](../../../CHANGELOG.md)
-   entry. The version is changed in both manifests and the Copilot
-   marketplace entry by the owner, not by this program.
+1. **Met (D-077).** The owner approved `1.1.3` and the [CHANGELOG](../../../CHANGELOG.md)
+   entry. The version was changed on the owner's explicit instruction after
+   the program ended.
 2. The remaining Step 20 documents are committed: `REGRESSION_RESULTS.md`,
    the audit report's changed-file table and the Step Log entry. Both
    `validate-all.mjs` and `run-evaluation-suite.mjs` already pass on

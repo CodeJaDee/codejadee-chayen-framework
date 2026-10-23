@@ -6,16 +6,21 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
-Proposed entry for the evolution program (Steps 01–20, D-066..D-076), audited
-in [FINAL_AUDIT_REPORT](docs/chayen/evolution/FINAL_AUDIT_REPORT.md).
+Nothing yet.
 
-- **Version:** not bumped. The shipped package differs from the `v1.1.2` tag in
-  31 guidance files, while Skill names, descriptions and discovery metadata
-  (fingerprint `411b6adbbea7e121`) are unchanged. Following the `1.1.1` and
-  `1.1.2` precedent (D-064, D-065), the proposal is `1.1.3`. That is an owner
-  decision.
-- **Status:** implementation substantially complete; runtime qualification
-  pending.
+## [1.1.3] - 2026-10-23
+
+Guidance-only release (D-077) from the evolution program (Steps 01–20,
+D-066..D-076), audited in
+[FINAL_AUDIT_REPORT](docs/chayen/evolution/FINAL_AUDIT_REPORT.md).
+
+- **Scope:** 31 shipped guidance files changed since `1.1.2`, plus the
+  version in both manifests and the plugin's two README files. Skill names,
+  descriptions and discovery metadata (fingerprint `411b6adbbea7e121`) are
+  unchanged, so routing metadata is the same as `1.1.2`. A patch version
+  follows the `1.1.1` and `1.1.2` precedent (D-064, D-065).
+- **Status:** implementation substantially complete; **not
+  release-qualified**. Runtime evaluation is pending (see Not verified).
 
 ### Changed (shipped guidance)
 

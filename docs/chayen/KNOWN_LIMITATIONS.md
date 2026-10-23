@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
-| Build | `1.1.2` (2026-10-20, D-065; with `1.1.1`, D-064, guidance text changed in five Skills since `1.1.0`, Skill metadata unchanged): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.1.0` (2026-10-19, D-063) added `chayen-init`; `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
+| Build | `1.1.3` (2026-10-23, D-077; `1.1.2` 2026-10-20, D-065; with `1.1.1`, D-064, guidance text changed in five Skills since `1.1.0`, Skill metadata unchanged): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.1.0` (2026-10-19, D-063) added `chayen-init`; `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
 | Companions | [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md), [RELEASE_READINESS.md](RELEASE_READINESS.md) |
 | User-facing summary | [docs/SECURITY_AND_LIMITATIONS.md](../SECURITY_AND_LIMITATIONS.md) |
 

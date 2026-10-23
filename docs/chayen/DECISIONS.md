@@ -2023,6 +2023,32 @@ Decision statuses:
   `tests/provider-compatibility/results/2026-10-23-step19/`; STEP_LOG
   Step 19.
 
+### D-077 — Version 1.1.3 (guidance-only)
+
+- **Status:** ACCEPTED. Explicit owner instruction on 2026-10-23, after the
+  Step 20 audit of the evolution program. Asked whether to move to `1.1.3`,
+  the owner replied "เริ่มเลย" ("start now").
+- **Decision:**
+  - The version is `1.1.3` in both plugin manifests and in both Copilot
+    marketplace version fields (`metadata.version` and `plugins[0].version`).
+  - This is a patch bump, following D-064 and D-065: guidance text only. No
+    Skill is added or removed. Skill names, descriptions and discovery
+    metadata (fingerprint `411b6adbbea7e121`) are unchanged.
+  - The shipped package differs from `v1.1.2` in 35 files:
+    - 31 guidance files from evolution Steps 07–10 and 13;
+    - the two version fields;
+    - the plugin's two README files.
+  - The CHANGELOG `[1.1.3]` entry replaces the proposed `[Unreleased]` one.
+- **Not release-qualified.** Runtime evaluation is NOT_RUN on every CLI
+  (FINAL_AUDIT_REPORT F-01..F-03). Production readiness stays NO-GO. This is
+  the CONDITIONAL GO guidance release of RELEASE_READINESS §4.
+- **Not done by this decision:** commit, tag, merge to `main`, push and
+  publication. Each needs a separate owner action. Until `main` carries
+  `1.1.3`, `plugin update` from the GitHub marketplace still delivers
+  `1.1.2`.
+- **Evidence:** `validate-all.mjs` and `run-evaluation-suite.mjs` on the
+  bumped tree (STEP_LOG, post-program entry).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

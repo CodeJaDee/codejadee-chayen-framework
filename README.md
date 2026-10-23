@@ -7,7 +7,7 @@ commands, agree what "done" means, make the smallest change, and back every
 claim with evidence. Skills are advisory text; the host's own permissions and
 approvals stay in control.
 
-Current version: **v1.1.2** (2026-10-20). Publisher: **CodeJaDee**. Licence:
+Current version: **v1.1.3** (2026-10-23). Publisher: **CodeJaDee**. Licence:
 [MIT](LICENSE). Source: `CodeJaDee/codejadee-chayen-framework` (public).
 
 **Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
@@ -19,7 +19,7 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Current version | `1.1.2` |
+| Current version | `1.1.3` |
 | Entry Skills | 16 |
 | Package files | 263 |
 | Skill references | 242 |
@@ -96,7 +96,7 @@ Copilot. [Automatic Skill Discovery](docs/AUTOMATIC_SKILL_DISCOVERY.md)
 explains both paths. [Getting started](docs/GETTING_STARTED.md) walks through
 a first task.
 
-What the engineering Skills ask the agent to do, as of 1.1.2 (the last item
+What the engineering Skills ask the agent to do, as of 1.1.3 (the last item
 is specific to `chayen-data`):
 
 - When a request does not say what "done" looks like, ask before editing,
@@ -149,7 +149,8 @@ Read this before relying on Chayen.
   earlier 15-Skill `0.1.0-rc.1` candidate. Claude disabled loading is BLOCKED.
   Copilot CLI is not qualified: the installed 1.0.89 is below the supported
   1.0.91 ([Step 19 report](docs/chayen/evolution/PROVIDER_SECURITY_REPORT.md)).
-  The released `1.1.0`, `1.1.1` and `1.1.2` packages were never installed natively.
+  That snapshot has the Skill content of `1.1.3` under the version `1.1.2`.
+  The released `1.1.0`, `1.1.1`, `1.1.2` and `1.1.3` packages were never installed natively.
 - VS Code surfaces are unverified and outside the support claim.
 - Skills are guidance. Real controls are the host's permission prompts, your
   CI and your branch protection
@@ -166,6 +167,7 @@ Full entries are in the [changelog](CHANGELOG.md); decisions are recorded in
 
 | Version | Date | Decision | Summary |
 |---|---|---|---|
+| `1.1.3` | 2026-10-23 | D-077 | Evolution program guidance: task-contract decision policy, nine-field acceptance evidence record with `DONE` / `PARTIAL` / `BLOCKED`, independent evidence-audit roles, project-map change impact; repository caps on Skill count, lines, depth and metadata removed (D-066); runtime qualification still NOT_RUN |
 | `1.1.2` | 2026-10-20 | D-065 | Engineering Skills read `.chayen/` project knowledge as a map; `chayen-data` uses the real schema only; CONTRIBUTING describes turning an agent failure into a test case; 5 new recipe cases |
 | `1.1.1` | 2026-10-20 | D-064 | Ask before editing when "done" is unclear; acceptance criteria tied to evidence with `accept` / `verify_more` / `revise` verdicts |
 | `1.1.0` | 2026-10-19 | D-062, D-063 | Adds the `chayen-init` project knowledge Skill (ADR-0012); entry Skill ceiling raised to 16 and L0 budget to 7,000 characters |
@@ -176,7 +178,7 @@ Earlier builds, kept as recorded:
 
 - `1.0.0` shipped 15 entry skills (13 engineering, 2 writing), 237 skill
   references and 257 package files, with L0 metadata at 6,217 / 6,500
-  characters. Versions `1.1.1` and `1.1.2` change guidance text only and keep
+  characters. Versions `1.1.1`, `1.1.2` and `1.1.3` change guidance text only and keep
   the 16-Skill metadata of `1.1.0`.
 - `0.1.0-rc.1` (2026-10-18) was the release candidate measured in Phase 4. It
   became `1.0.0` with the same Skills content instead of the planned `0.1.0`

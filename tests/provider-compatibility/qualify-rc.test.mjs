@@ -32,7 +32,7 @@ test("correct content outside isolated profile cannot prove installation", t => 
 });
 test("synthetic update is a newer RC and changes full package bytes only in scratch", t => {
   const f = fixture(t), before = candidate(repo), version = changeUpdateContent(f.market).version;
-  assert.equal(version, "1.1.3-rc.1"); assert.notEqual(fingerprint(path.join(f.market, PACKAGE)).sha256, before.package.sha256);
+  assert.equal(version, "1.1.4-rc.1"); assert.notEqual(fingerprint(path.join(f.market, PACKAGE)).sha256, before.package.sha256);
   assert.deepEqual(candidate(repo), before);
 });
 test("qualification refuses missing opt-in before starting any executable", t => {
