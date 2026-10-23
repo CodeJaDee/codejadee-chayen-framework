@@ -1,8 +1,7 @@
 # Chayen Evolution — Known Limitations (Step 20)
 
 - **Date:** 2026-10-23
-- **Scope:** limitations of the evolution program's results at `7bbb39b`,
-  plus the Step 20 changes.
+- **Scope:** limitations of the evolution program's results at `26bfbd0`.
 - **Not covered:** the product's user-facing limitations, which are in
   [docs/SECURITY_AND_LIMITATIONS.md](../../SECURITY_AND_LIMITATIONS.md).
 

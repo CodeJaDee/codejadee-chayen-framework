@@ -1,8 +1,9 @@
 # Chayen Evolution — Acceptance Matrix (Step 20 audit)
 
 - **Date:** 2026-10-23
-- **Source audited:** `develop` at `7bbb39b`, plus the Step 20 working-tree
-  changes listed in [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md) §3.
+- **Source audited:** `develop` at `7bbb39b`. The Step 20 changes were then
+  committed by the owner as `26bfbd0`, which the official regression run
+  tested ([FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md) §2–§3).
 - **Method:** every criterion was re-checked in the source and by re-running
   offline tests. Five independent read-only reviewers each covered a group
   of steps; the Step 18–19 reviewer was told to distrust the authors. The

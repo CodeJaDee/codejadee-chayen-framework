@@ -3064,3 +3064,103 @@ is not started. The release blockers in the report's §6 remain open:
 - Claude disabled-loading proof;
 - F-01 and F-04;
 - a committed frozen candidate.
+
+## Step 20 — Final Audit and Readiness
+
+- **Date:** 2026-10-23
+- **Status:** PASS for the audit itself. **The program is not DONE:**
+  - 13 steps PASS and 7 PARTIAL (06, 07, 11, 14, 15, 18, 19);
+  - 3 items MISSING;
+  - IMPLEMENTATION SUBSTANTIALLY COMPLETE / RUNTIME QUALIFICATION PENDING.
+- **Recommendation:** production readiness **NO-GO**; a guidance-only
+  `1.1.3`, labelled unqualified, **CONDITIONAL GO**.
+- **Starting state:**
+  - `develop` at `2ec81f9` with the uncommitted Step 17–19 work (42 paths);
+  - `chayen` 1.1.2 in both manifests; Node.js 26.8.1.
+- **Commits by the owner during the step (not by the program):**
+  - `7bbb39b` (14:29), the Step 17–19 work;
+  - `26bfbd0` (14:59), the Step 20 changes made up to then.
+
+  Both were pushed to `origin/develop`.
+- **Authorization:** the owner's STEP 20 instruction. No version bump, tag,
+  release, push, settings change, provider call or installation was made.
+- **Deliverables:**
+  - [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md);
+  - [ACCEPTANCE_MATRIX.md](ACCEPTANCE_MATRIX.md);
+  - [REGRESSION_RESULTS.md](REGRESSION_RESULTS.md);
+  - [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md);
+  - [RELEASE_READINESS.md](RELEASE_READINESS.md).
+
+### Method
+
+- **Five read-only reviewer agents,** one per scope:
+  - Steps 01–06 and Audit B;
+  - Steps 07–09 and 13, Audit C;
+  - Steps 10–12, Audit D;
+  - Steps 14–17, Audit E;
+  - Steps 18–19, adversarial.
+
+  Each verified in the source and ran offline tests and mutations in OS
+  temp copies only.
+- **The auditor reproduced the material claims before using them:**
+  - the grader's exit-code and BLOCKED behaviour, on AU-0001;
+  - the G-21T root cause, by the fix plus a control;
+  - the synthetic size range;
+  - the changed-file counts;
+  - INV-01..INV-07.
+- **Git review** from the baseline `7427eb1` (= `v1.1.2` = `main`): 320
+  paths (233 added, 87 modified), including 31 shipped guidance files.
+  Skill descriptions are unchanged (metadata `411b6adbbea7e121`).
+
+### Changes made in Step 20
+
+| Path | Change |
+|---|---|
+| `tests/distillation/distillation.test.mjs` | G-21T fix: mutate LF-normalised text; assert the mutation took effect. Control: the fixed test fails when the tool's diff check is disabled |
+| `CHANGELOG.md` | Proposed `[Unreleased]` entry; `1.1.3` proposed, not applied |
+| `README.md`, `docs/SECURITY_AND_LIMITATIONS.md`, `docs/INSTALL_CLAUDE_CODE.md`, `docs/INSTALL_CODEX.md`, `docs/COMPATIBILITY_MATRIX.md`, `docs/production/NATIVE_LIFECYCLE_REPORT.md`, `docs/chayen/evolution/ROUTING_CONTEXT_REPORT.md`, `tests/provider-compatibility/README.md`, `qualify-rc.mjs` (comment) | Overstated or stale statements corrected (F-14): "qualified natively", "15-Skill build", licence "not yet chosen", out-of-date provider evidence, the Claude isolation caveat, the synthetic size range |
+| Five new deliverables in this folder; `MASTER_PLAN.md` | Audited statuses (06, 07, 11, 14, 15, 18, 19 → PARTIAL; 20 → PASS) |
+
+### Commands (official run on `26bfbd0`; no edits during the run)
+
+| Command | Exit | Result |
+|---|---|---|
+| 24 test files, each `node --test <file>` | 0 | 399/399 |
+| `node tools/validate/validate-all.mjs` | 0 | 43/43 gate groups PASS |
+| `node tools/evals/run-evaluation-suite.mjs` | 0 | All static and traceability levels PASS; SIM unchanged; provider routing NOT_RUN |
+| INV-01..INV-07 re-check (identity, `SKILL.md` locations, plugin file types, licence, catalog fingerprint, `package.json`) | 0 | All hold |
+
+An earlier full run that overlapped with document edits was discarded
+([REGRESSION_RESULTS](REGRESSION_RESULTS.md) §5).
+
+### Acceptance
+
+| Criterion | Evidence | Result |
+|---|---|---|
+| Every step has a status backed by its log entry, re-derived from source | ACCEPTANCE_MATRIX §1 | PASS |
+| Every rules §3 invariant re-checked | REGRESSION_RESULTS §4 | PASS |
+| `validate-all.mjs` and `run-evaluation-suite.mjs` pass | REGRESSION_RESULTS §1 | PASS |
+| No release action | — | PASS |
+| Not DONE without verified evidence; implementation separated from qualification | FINAL_AUDIT_REPORT §1; RELEASE_READINESS §1 | PASS |
+
+### Risks and findings
+
+The full list is FINAL_AUDIT_REPORT §5, F-01..F-21. The highest are:
+
+- **F-01:** no runtime qualification on any CLI;
+- **F-02:** Copilot not qualified, and its non-interactive permission
+  conflicts with INV-04;
+- **F-03:** Codex profile-isolation leak;
+- **F-04:** changed guidance under the unchanged `1.1.2`;
+- **F-05:** the reference audit grader ignores exit codes and cannot derive
+  BLOCKED;
+- **F-06:** the guidance validator guards phrasings, not meaning.
+
+### Next action
+
+The evolution program ends here. Nothing was released or published. The
+owner's next actions are in RELEASE_READINESS §6:
+1. the decisions (version `1.1.3`, the Step 18 and 19 criteria, Copilot
+   permissions, evidence redaction, the Step 11 rule);
+2. committing the remaining Step 20 documents and a frozen candidate;
+3. authorized runtime qualification, starting with Claude Code.

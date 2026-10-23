@@ -61,7 +61,7 @@
 |---|---|
 | Program baseline (Step 01) | `7427eb1` = tag `v1.1.2` = `main` |
 | Audited revision | `develop` at **`7bbb39b21ed10ca886ddae57f1db9c00fc887984`** (owner commit, 2026-10-23 14:29 +0700, pushed to `origin/develop`). It contains the Step 17–19 work under a message that names only Step 17 |
-| Step 20 changes | Uncommitted working-tree edits listed in §3.2. Nothing was committed, tagged or pushed by the program |
+| Step 20 changes | Committed by the owner as **`26bfbd0`** (2026-10-23 14:59 +0700, pushed to `origin/develop`), except the final `REGRESSION_RESULTS.md`, this report's changed-file table and the Step 20 Step Log entry, which remain uncommitted. The program itself committed, tagged and pushed nothing. The official regression run tested `26bfbd0` |
 | Package | `chayen` `1.1.2` in both manifests and the Copilot entry; 16 Skills (13 engineering, 2 editorial, 1 project); 263 files |
 | Discovery metadata | 6,563 characters; fingerprint `411b6adbbea7e121`, unchanged since baseline |
 | Capability inventory | 206; fingerprint `2f13cad24ff431e3`, unchanged |
@@ -71,10 +71,10 @@
 
 ### 3.1 Since the baseline (`7427eb1` → working tree)
 
-315 paths: 228 added, 87 modified, 0 deleted. They break down as:
+320 paths, including the Step 20 files: 233 added, 87 modified, 0 deleted. They break down as:
 - 31 shipped plugin files, guidance only;
 - 1 catalog file (CAP-18-003 verification text);
-- 11 user and maintainer documents;
+- 12 user and maintainer documents (README, CHANGELOG, eight in `docs/`, one each in `docs/production` and `docs/distribution`);
 - evolution and governance documents;
 - developer tooling and tests;
 - evaluation fixtures.
@@ -84,7 +84,171 @@ listed. A per-step attribution is in each [STEP_LOG](STEP_LOG.md) entry.
 
 | Path | Change (A added, M modified) | Files |
 |---|---|---|
-<!-- CHANGED-FILES-TABLE -->
+| `catalog/engineering-capabilities.yaml` | M | 1 |
+| `CHANGELOG.md` | M | 1 |
+| `docs/AUTOMATIC_SKILL_DISCOVERY.md` | M | 1 |
+| `docs/chayen/ACCEPTANCE_MATRIX.md` | M | 1 |
+| `docs/chayen/ADRS/ADR-0004-skill-catalog-vs-entry-skills.md` | M | 1 |
+| `docs/chayen/ADRS/ADR-0009-multilingual-editorial-skills.md` | M | 1 |
+| `docs/chayen/ADRS/ADR-0012-project-knowledge-initialization.md` | M | 1 |
+| `docs/chayen/ADRS/ADR-0013-extensible-skill-governance.md` | A | 1 |
+| `docs/chayen/ADRS/README.md` | M | 1 |
+| `docs/chayen/ARCHITECTURE.md` | M | 1 |
+| `docs/chayen/DECISIONS.md` | M | 1 |
+| `docs/chayen/EVALUATION_GAPS.md` | M | 1 |
+| `docs/chayen/EVALUATION_REPORT.md` | M | 1 |
+| `docs/chayen/evolution/ACCEPTANCE_MATRIX.md` | A | 1 |
+| `docs/chayen/evolution/BASELINE_REPORT.md` | A | 1 |
+| `docs/chayen/evolution/EXECUTION_RULES.md` | A | 1 |
+| `docs/chayen/evolution/FINAL_AUDIT_REPORT.md` | A | 1 |
+| `docs/chayen/evolution/KNOWN_LIMITATIONS.md` | A | 1 |
+| `docs/chayen/evolution/LIMIT_MIGRATION_REPORT.md` | A | 1 |
+| `docs/chayen/evolution/MASTER_PLAN.md` | A | 1 |
+| `docs/chayen/evolution/MIGRATION_MATRIX.md` | A | 1 |
+| `docs/chayen/evolution/PROVIDER_SECURITY_REPORT.md` | A | 1 |
+| `docs/chayen/evolution/REGRESSION_RESULTS.md` | A | 1 |
+| `docs/chayen/evolution/RELEASE_READINESS.md` | A | 1 |
+| `docs/chayen/evolution/ROUTING_CONTEXT_REPORT.md` | A | 1 |
+| `docs/chayen/evolution/STEP_LOG.md` | A | 1 |
+| `docs/chayen/FAILURE_REPRODUCTION.md` | A | 1 |
+| `docs/chayen/GUIDANCE_INVARIANTS.md` | A | 1 |
+| `docs/chayen/INDEPENDENT_AUDIT_CONTRACT.md` | A | 1 |
+| `docs/chayen/ISSUES.md` | M | 1 |
+| `docs/chayen/KNOWLEDGE_DISTILLATION.md` | A | 1 |
+| `docs/chayen/KNOWN_LIMITATIONS.md` | M | 1 |
+| `docs/chayen/MENTOR_BRIEF.md` | A | 1 |
+| `docs/chayen/PLUGIN_PACKAGE_DESIGN.md` | M | 1 |
+| `docs/chayen/PROJECT_CHARTER.md` | M | 1 |
+| `docs/chayen/SECURITY_MODEL.md` | M | 1 |
+| `docs/chayen/SKILL_AUTHORING_STANDARD.md` | M | 1 |
+| `docs/chayen/SKILL_QUALITY_GATES.md` | M | 1 |
+| `docs/chayen/SKILL_REGISTRATION.md` | M | 1 |
+| `docs/COMPATIBILITY_MATRIX.md` | M | 1 |
+| `docs/CONTRIBUTING.md` | M | 1 |
+| `docs/distribution/RELEASE_CHECKLIST.md` | M | 1 |
+| `docs/INSTALL_CLAUDE_CODE.md` | M | 1 |
+| `docs/INSTALL_CODEX.md` | M | 1 |
+| `docs/production/NATIVE_LIFECYCLE_REPORT.md` | M | 1 |
+| `docs/RESPONSE_STYLE.md` | M | 1 |
+| `docs/SECURITY_AND_LIMITATIONS.md` | M | 1 |
+| `docs/SKILLS_CATALOG.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-ai-engineering/references/context-capsule-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-architecture/references/architecture-decision-record-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-backend/references/workflow-api-integration.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-backend/SKILL.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-data/references/workflow-schema-migration.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-devops/references/workflow-incident-investigation.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-devops/references/workflow-release-readiness.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-documentation/references/workflow-pull-request.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-frontend/SKILL.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-passport-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/feature-delivery.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/implementation-plan-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/risk-assessment-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/task-contract.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/verification-report-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-bug-repair.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-dependency-upgrade.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-new-feature.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/references/workflow-refactoring.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-init/references/detection-and-refresh.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-init/references/profile-template.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-init/SKILL.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-performance/references/workflow-performance-investigation.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-security/references/workflow-security-review.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-testing/references/workflow-testing-regression.md` | M | 1 |
+| `plugins/codejadee-chayen-framework/skills/chayen-testing/SKILL.md` | M | 1 |
+| `README.md` | M | 1 |
+| `tests/audit/audit-evidence.test.mjs` | A | 1 |
+| `tests/audit/cases/** (8 synthetic audit cases)` | A | 8 |
+| `tests/audit/README.md` | A | 1 |
+| `tests/catalog/catalog-mutations.json` | M | 1 |
+| `tests/catalog/discovery-metrics.test.mjs` | A | 1 |
+| `tests/catalog/editorial-mutations.json` | M | 1 |
+| `tests/catalog/project-mutations.json` | M | 1 |
+| `tests/catalog/README.md` | M | 1 |
+| `tests/catalog/registration.test.mjs` | A | 1 |
+| `tests/ci/documentation.test.mjs` | M | 1 |
+| `tests/ci/limits.test.mjs` | A | 1 |
+| `tests/distillation/distillation.test.mjs` | A | 1 |
+| `tests/distillation/proposals/**` | A | 8 |
+| `tests/distillation/README.md` | A | 1 |
+| `tests/distillation/templates/**` | A | 1 |
+| `tests/evaluation/coding/coding-fixtures.test.mjs` | A | 1 |
+| `tests/evaluation/coding/coding-runner-lib.mjs` | A | 1 |
+| `tests/evaluation/coding/coding-runner.test.mjs` | A | 1 |
+| `tests/evaluation/coding/fakes/** (fake engine, fake agent, runner fixture)` | A | 8 |
+| `tests/evaluation/coding/grade-coding.mjs` | A | 1 |
+| `tests/evaluation/coding/grading-lib.mjs` | A | 1 |
+| `tests/evaluation/coding/grading-synthetic.mjs` | A | 1 |
+| `tests/evaluation/coding/GRADING.md` | A | 1 |
+| `tests/evaluation/coding/grading.test.mjs` | A | 1 |
+| `tests/evaluation/coding/README.md` | A | 1 |
+| `tests/evaluation/coding/results/2026-10-22-step17-synthetic` | A | 2 |
+| `tests/evaluation/coding/results/2026-10-22-verify.json` | A | 1 |
+| `tests/evaluation/coding/rubric.json` | A | 1 |
+| `tests/evaluation/coding/run-coding-fixtures.mjs` | A | 1 |
+| `tests/evaluation/coding/run-coding.mjs` | A | 1 |
+| `tests/evaluation/coding/tasks/A-dotnet-bugfix/** (fixture)` | A | 23 |
+| `tests/evaluation/coding/tasks/B-crossstack-csv-export/** (fixture)` | A | 36 |
+| `tests/evaluation/coding/tasks/C-angular-interaction/** (fixture)` | A | 18 |
+| `tests/evaluation/coding/tasks/D-sqlserver-schema/** (fixture)` | A | 19 |
+| `tests/evaluation/coding/tasks/E-ambiguous-scope/** (fixture)` | A | 15 |
+| `tests/evaluation/coding/tasks/F-evidence-completion/** (fixture)` | A | 16 |
+| `tests/evaluation/phase5/candidate.mjs` | A | 1 |
+| `tests/evaluation/phase5/candidate.test.mjs` | A | 1 |
+| `tests/evaluation/phase5/phase5-lib.mjs` | M | 1 |
+| `tests/evaluation/phase5/phase5.test.mjs` | M | 1 |
+| `tests/evaluation/phase5/README.md` | M | 1 |
+| `tests/evaluation/phase5/run-phase5.mjs` | M | 1 |
+| `tests/evaluation/README.md` | M | 1 |
+| `tests/evaluation/routing-context/README.md` | A | 1 |
+| `tests/evaluation/routing-context/results/2026-10-23-static/` | A | 2 |
+| `tests/evaluation/routing-context/routing-cases.json` | A | 1 |
+| `tests/evaluation/routing-context/routing-context-lib.mjs` | A | 1 |
+| `tests/evaluation/routing-context/routing-context.test.mjs` | A | 1 |
+| `tests/evaluation/routing-context/routing-synthetic.mjs` | A | 1 |
+| `tests/evaluation/routing-context/run-routing-context.mjs` | A | 1 |
+| `tests/evaluation/routing-context/synthetic-skills.json` | A | 1 |
+| `tests/failures/cases/**` | A | 3 |
+| `tests/failures/failure-cases.test.mjs` | A | 1 |
+| `tests/failures/fixtures/**` | A | 4 |
+| `tests/failures/README.md` | A | 1 |
+| `tests/failures/transcripts/**` | A | 6 |
+| `tests/provider-compatibility/qualify-rc.mjs` | M | 1 |
+| `tests/provider-compatibility/qualify-rc.test.mjs` | M | 1 |
+| `tests/provider-compatibility/README.md` | M | 1 |
+| `tests/provider-compatibility/results/2026-10-23-step19/` | A | 2 |
+| `tests/security/boundaries.test.mjs` | M | 1 |
+| `tests/security/evidence-privacy.test.mjs` | A | 1 |
+| `tests/skills/guidance-consistency.test.mjs` | A | 1 |
+| `tests/skills/project-map.test.mjs` | A | 1 |
+| `tests/skills/README.md` | M | 1 |
+| `tests/skills/recipe-cases.json` | M | 1 |
+| `tests/skills/reference-graph.test.mjs` | A | 1 |
+| `tests/skills/validator-mutations.json` | M | 1 |
+| `tools/catalog/check-catalog.mjs` | M | 1 |
+| `tools/catalog/discovery-metrics.mjs` | A | 1 |
+| `tools/catalog/README.md` | M | 1 |
+| `tools/catalog/skill-registration.mjs` | M | 1 |
+| `tools/evals/audit-evidence.mjs` | A | 1 |
+| `tools/evals/distill.mjs` | A | 1 |
+| `tools/evals/failure-cases.mjs` | A | 1 |
+| `tools/evals/lexical-proxy.mjs` | A | 1 |
+| `tools/evals/run-evaluation-suite.mjs` | M | 1 |
+| `tools/validate/check-docs.mjs` | M | 1 |
+| `tools/validate/check-guidance.mjs` | A | 1 |
+| `tools/validate/check-security.mjs` | M | 1 |
+| `tools/validate/guidance-invariants.json` | A | 1 |
+| `tools/validate/README.md` | M | 1 |
+| `tools/validate/secret-patterns.mjs` | A | 1 |
+| `tools/validate/validate-all.mjs` | M | 1 |
+| `tools/validate/validate-package.mjs` | M | 1 |
 
 ### 3.2 Changed by Step 20
 

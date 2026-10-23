@@ -1,8 +1,8 @@
 # Chayen Evolution — Release Readiness (Step 20)
 
 - **Date:** 2026-10-23
-- **Source:** `develop` at `7bbb39b`, plus the Step 20 working-tree changes
-  (uncommitted). `main` and the tag `v1.1.2` are at `7427eb1`.
+- **Source:** `develop` at `26bfbd0`: audited at `7bbb39b`, with the Step 20
+  changes committed by the owner. `main` and the tag `v1.1.2` are at `7427eb1`.
 - **Package:** `chayen` 1.1.2 in both manifests (not bumped), 16 Skills,
   discovery-metadata fingerprint `411b6adbbea7e121`, 206-capability inventory
   `2f13cad24ff431e3`.
@@ -68,8 +68,10 @@ a version-based update (F-04).
 1. The owner approves `1.1.3` and the proposed [CHANGELOG](../../../CHANGELOG.md)
    entry. The version is changed in both manifests and the Copilot
    marketplace entry by the owner, not by this program.
-2. The Step 20 changes are committed. `validate-all.mjs` and
-   `run-evaluation-suite.mjs` pass on that commit.
+2. The remaining Step 20 documents are committed: `REGRESSION_RESULTS.md`,
+   the audit report's changed-file table and the Step Log entry. Both
+   `validate-all.mjs` and `run-evaluation-suite.mjs` already pass on
+   `26bfbd0` ([REGRESSION_RESULTS](REGRESSION_RESULTS.md)).
 3. A COMMITTED_SOURCE candidate is prepared on that commit, and the native
    lifecycle is rerun on it. This is recommended, not strictly required for
    a guidance release.
