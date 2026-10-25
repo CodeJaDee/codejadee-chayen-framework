@@ -3,9 +3,9 @@ kind: template
 ---
 # Team rules template
 
-Create `.chayen/rules.md` from this template only when the file does not
-exist. The team owns it after that: later runs never overwrite it, and add an
-entry only when the user approves the exact diff.
+Create `.chayen/rules.md` directly from this template only when the file does
+not exist. The team owns it after that: later runs never overwrite it, and
+add an entry only when the user approves the exact diff.
 
 ## Template
 
@@ -43,8 +43,13 @@ and when.
 
 ## Completion rules
 
-- On first creation, the sections hold only the comments, plus answers the
-  user gave in this session and approved for this file.
+- On first creation, keep the comments, plus answers the user gave in this
+  session and approved for this file. Under open questions, add at most five
+  questions the code cannot answer, such as production database version,
+  deployment target, branch rules, or approvals. Name who can answer when
+  known; otherwise write `unknown`. Do not stop generation to ask them.
+- If the file already exists, put new unknowns in `init-report.md`. Never
+  append questions or answers to an existing file without an approved diff.
 - Write an answer as a rule only when the user stated it as a rule. Record
   facts the user is unsure about under open questions.
 - Never move observed patterns or proposals into this file without the user
