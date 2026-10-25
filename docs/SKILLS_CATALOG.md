@@ -173,14 +173,20 @@ Example prompt: *"Initialize project knowledge for this repository so future ses
 
 It writes `.chayen/profile.md` and `.chayen/rules.md` (read before every
 task), `.chayen/conventions.md` (read before writing code), and
-`.chayen/units/<unit>.md` for multi-unit repositories, after showing a preview
-and getting approval. Each unit file is also a lightweight change-impact map:
+`.chayen/units/<unit>.md` for multi-unit repositories directly, then reports
+what changed (D-078). Every initialize, and every refresh that changes
+knowledge, also writes `.chayen/init-report.md` with inspection coverage, gaps,
+proposals and follow-up; agents do not read it on every task. It asks nothing
+before writing, and runs build and test commands only when you ask for them. Each unit file is also a lightweight change-impact map:
 boundary and dependencies, entry points, API ownership and consumers, data and
 migrations, tests, generated code, and dynamic references, each cited from the
 repository or marked unknown, with git fingerprints so readers can tell when
-it is stale. The source always wins over the map. `rules.md` belongs to the team and is never overwritten.
+it is stale. Cited recipes show how to add each kind of code present. The source
+always wins over the map. A missing `rules.md` is created with open questions;
+an existing one belongs to the team and changes only with approval.
 An optional marked block in `AGENTS.md`, `CLAUDE.md` or
-`.github/copilot-instructions.md` tells every session to read the files first.
+`.github/copilot-instructions.md` tells every session to read the knowledge
+files first. It asks for all pointer changes once, at the end of the run.
 Explicit invocation in Claude Code: `/chayen:chayen-init`. Host loading of the
 block, routing and behaviour are NOT_RUN.
 

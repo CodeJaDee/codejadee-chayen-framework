@@ -18,7 +18,7 @@ function fixture(t) {
 test("candidate records exact source and all marketplace version declarations", () => {
   const c = candidate(repo); assert.match(c.baseCommit, /^[a-f0-9]{40}$/); assert.equal(c.plugin, "chayen");
   assert.equal(c.version, c.claudeVersion); assert.equal(c.skills.length, 16); assert.equal(c.skillMetadataFingerprint, "411b6adbbea7e121");
-  assert.equal(c.package.files.length, 263); assert.equal(c.marketplaces.length, 3);
+  assert.equal(c.package.files.length, 264); assert.equal(c.marketplaces.length, 3);
   assert.equal(c.marketplaces[2].pluginVersion, c.version); assert.equal(c.marketplaces[2].metadataVersion, c.version);
   assert.equal(c.marketplaces[0].pluginVersion, null); assert.equal(c.marketplaces[1].pluginVersion, null);
 });

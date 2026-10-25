@@ -6,7 +6,21 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
-Nothing yet.
+### Changed
+
+- **Project knowledge initialization** (D-078): initialize and refresh now
+  write generated `.chayen/` files directly, then report. Missing team rules
+  collect at most five open questions. Existing team rules, pointer blocks,
+  removal and detection exceptions retain their approval requirements.
+- Every initialize, and every refresh that changes knowledge, writes
+  `.chayen/init-report.md` with changes, inspected and skipped paths,
+  reasons, evidence gaps, proposals and follow-up. A refresh with no changes
+  writes nothing. Agents do not read this report on every task.
+- Add cited code excerpts and ordered recipes, numeric reading budgets,
+  evidenced single-unit area headings, and completion rules against filler.
+  Ask nothing before writing; run builds and tests only when the request
+  asks for them; offer pointers once at the end. Update the Claude evals for
+  direct generation.
 
 ## [1.1.3] - 2026-10-23
 

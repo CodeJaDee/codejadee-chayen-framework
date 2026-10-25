@@ -33,6 +33,30 @@ node tools/evals/generate-claude-evals.mjs --check  # CI: fail if generated case
 
 Each case checks `Skill` tool calls with `tool_used` graders.
 
+The four `pos-init-*` cases also check direct generation (D-078). The
+generator defines their small repository fixtures and behavioral graders.
+Their generated prompts decline builds and tests upfront; the only question should
+be pointer approval after writing knowledge and `init-report.md`. Refresh
+also checks updated stack/test locations and unchanged team rules. The
+monorepo case requires both unit files. File graders check actual artifacts;
+`llm` graders inspect the transcript, final pointer proposal and report.
+The transcript judge sees only the first and last 12 messages, so inspect
+the full saved trace when diagnosing an inconclusive result. Case generation
+and offline fixture checks do not establish agent behavior.
+The generator appends that permission answer to the three existing cases;
+their reviewed provider-neutral routing prompts stay unchanged.
+
+These cases need `--scaffold` and explicit write/tool grants when running a
+separately authorized provider evaluation. For example, from a staged copy:
+
+```bash
+claude plugin eval . --case 'pos-init-*' --scaffold --allow-tools Write Edit Bash --ablation none --runs 1 --trust-plugin --no-publish --max-cost-usd 8
+```
+
+Use a host with the provider's shell sandbox support; review the generated
+scaffolds and tool grants before running. See the
+[provider eval reference](https://code.claude.com/docs/en/plugin-evals).
+
 ### Cases must be staged
 
 `claude plugin eval` only loads plugins inside its **containment root**.

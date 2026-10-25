@@ -2049,6 +2049,53 @@ Decision statuses:
 - **Evidence:** `validate-all.mjs` and `run-evaluation-suite.mjs` on the
   bumped tree (STEP_LOG, post-program entry).
 
+### D-078 — Direct project knowledge generation with a persisted run report
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-25: improve
+  `chayen-init` and write initialize and refresh output without a preview
+  gate). Amends [ADR-0012](ADRS/ADR-0012-project-knowledge-initialization.md),
+  superseding decision 3 and the preview wording in D-062 and D-067.
+- **Decision:**
+  - Write generated `.chayen/` content directly on initialize and refresh.
+    Create missing `rules.md` with at most five open questions instead of
+    stopping for facts the code cannot answer. Existing team rules still
+    need approval of the exact diff.
+  - Generate `.chayen/init-report.md` on every initialize and on every
+    refresh that changes knowledge, with `schema: project-knowledge/1` and
+    at most 120 lines. A refresh with no changes writes nothing, so the
+    report adds no git churn.
+    Record mode, date, commit, detected units and stacks, written or changed
+    files, inspected and skipped paths with reasons, unknowns, evidence gaps,
+    proposed improvements and follow-up. The pointer never requires reading
+    it on every task. Proposals stay out of profile and conventions.
+  - Keep approval for removal, unknown or newer schemas, hand-written text
+    in generated files, unit selection above eight units, and no recognizable
+    manifest. Ask once at the end for all pointer-block changes.
+  - Add real excerpts (at most 20 lines, with `path:line`) and ordered,
+    cited folder, naming and wiring steps for every evidenced change kind.
+    Put recipes in conventions or the owning unit file. Keep the 150-line
+    profile and unit budgets and the 200-line conventions budget; shorten
+    excerpts and repeated prose to fit them. Ban filler and present-area
+    stubs. Group evidenced single-unit areas under Backend, Frontend, Data
+    and Testing.
+  - Scan folders to depth 6 first. Read 3–10 complete files per category,
+    within totals of 100 source, 20 test and 5 migration files per run.
+    Put remaining work in the report; do not expand the scan.
+  - Ask nothing before writing. Run inspected build and test commands only
+    when the request asks for them (owner choice, 2026-10-25); record actual
+    outcomes as `VERIFIED`, otherwise keep them `DISCOVERED`. Never deploy,
+    migrate, publish or delete.
+- **Rationale:** the owner asked for direct generation. Writes stay confined
+  to `.chayen/` and approved pointer blocks, where git can review and revert
+  them. The persisted report makes coverage and gaps reviewable after writing.
+- **Verification:** update generated Claude cases and behavioral graders for
+  initialize, refresh and monorepo pointers, plus a direct-write regression.
+  Offline validators check package and case integrity; live agent behavior
+  remains NOT_RUN until those evals run through a provider.
+- **Unchanged:** Skill names, descriptions, frontmatter keys, routing
+  metadata, engineering catalog and version `1.1.3`. No shipped hooks,
+  scripts, commands or runtime. No commit, push, tag or release.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

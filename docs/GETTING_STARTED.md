@@ -40,6 +40,13 @@ These are scope examples, not current runtime results. The >=85% per-CLI
 automatic-routing gate awaits Phase 5. Standalone Nitro/Elysia tasks are
 out of scope. Native no-match behavior must also be verified on this build.
 
+For persistent project context, ask to initialize project knowledge. The
+agent writes `.chayen/` directly without asking first (builds and tests run
+only when you ask), and saves inspection coverage, gaps and follow-up in
+`.chayen/init-report.md`. It asks about pointer-block changes at the end.
+Existing team rules still require approval before changes. See
+[project knowledge](SKILLS_CATALOG.md#chayen-init).
+
 ## 4. Explicit invocation
 
 | CLI | Intended example |
