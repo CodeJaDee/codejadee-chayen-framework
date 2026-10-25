@@ -80,6 +80,9 @@ For each required check record the exact command or evidence method, target
 environment/version, observed outcome and PASS, FAIL, NOT_RUN or N/A. Separate
 baseline failures from new failures; explain unexecuted checks. DONE requires
 the requested scope and required verification, not merely a green subset.
+Give each acceptance criterion one verdict (accept, verify_more or revise)
+from fresh, adequate evidence; a check status is never the verdict, and DONE
+needs every required criterion at accept.
 
 ## Approvals
 

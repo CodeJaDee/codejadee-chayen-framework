@@ -9,6 +9,20 @@ catalog checker (`tools/catalog/check-technology.mjs`, V-23). Nothing here is sh
 | `catalog-mutations.json` | 19 negative controls. Each one mutates a temporary copy of the repository, for example by omitting, renaming, or duplicating a capability, using a wrong status, a missing recipe, a recipe in `SKILL.md`, an asymmetric overlap, invalid YAML, or a stale coverage doc. The checker must fail with the expected check ID. |
 | `technology-mutations.json` | 14 negative controls for V-23: a renamed, omitted, or duplicated technology capability, VERIFIED without evidence, an unknown engineering capability, an unlisted reference, a missing or orphan section, missing version notes, a placeholder, a missing negative case, a wrong expected skill, an unknown fact, and a stale coverage doc. |
 
+`registration.test.mjs` (gate G-13R, D-066) covers what a negative-only
+runner cannot: it builds disposable repository copies with valid 17th and
+18th Skills that must pass the package, catalog and security validators. It
+then applies 18 single faults that must fail, none of them because of the
+count. Run it with `node --test tests/catalog/registration.test.mjs`.
+
+`discovery-metrics.test.mjs` (gate G-13M, D-066) does the same for discovery
+metadata. Metadata above the former 7,000-character cap passes; metadata
+above Codex's documented 8,000-character figure passes with an advisory
+warning. Descriptions above the 1,024-character provider limit, duplicate
+identities, invalid frontmatter, catch-all wording, a missing "Not for"
+boundary and conflicting descriptions still fail. The report must match an
+independent recount and stay identical across runs and registry order.
+
 Run them through the shared runner, which also runs the package validator
 cases in `tests/skills/validator-mutations.json`:
 

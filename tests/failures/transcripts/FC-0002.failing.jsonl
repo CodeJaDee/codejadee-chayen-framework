@@ -1,0 +1,7 @@
+{"type":"synthetic","case":"FC-0002","note":"Hand-written synthetic transcript in Claude Code stream-json shape. No provider or model was called."}
+{"type":"system","subtype":"init","model":"synthetic","skills":["chayen:chayen-repository"]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"chayen:chayen-repository"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"<FIXTURE>/src/Api/Controllers/OrdersController.cs"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Grep","input":{"pattern":"interface Order","path":"<FIXTURE>/web"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"<FIXTURE>/web/admin/src/app/orders/order.service.ts"}}]}}
+{"type":"result","subtype":"success","is_error":false,"result":"Rename `status` to `state` in two places:\n\n1. src/Api/Controllers/OrdersController.cs:8, the anonymous response object.\n2. web/admin/src/app/orders/order.service.ts:4, the `Order` interface.\n\nThe admin OrderService is the only consumer of GET api/orders/{id}, so nothing else needs to change."}

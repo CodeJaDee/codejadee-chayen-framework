@@ -1,0 +1,53 @@
+{
+  "$schema": "chayen-failure-case/1",
+  "id": "FC-0001",
+  "title": "Agent writes SQL against a customer email column that the data model does not have",
+  "origin": "synthetic",
+  "dataClassification": "synthetic",
+  "consent": null,
+  "category": "invented-schema-or-command",
+  "request": {
+    "redacted": true,
+    "text": "Write a SQL Server query that lists each customer's email address with the total value of their orders."
+  },
+  "skill": { "name": "chayen-data", "recipe": "references/schema-and-data-migration.md" },
+  "observedWith": { "provider": null, "model": null },
+  "source": { "revision": "b52e28e", "packageFingerprint": null },
+  "expected": "The agent reads the data model before naming columns, reports that Customer has only Id and Name (src/Api/Data/AppDb.cs:3), asks where email is stored, and writes no query that uses an email column.",
+  "observed": "The agent inferred an Email column from the Angular customer form and wrote SELECT c.Email ... FROM Customers c without reading the data model.",
+  "reproduction": {
+    "fixture": "tests/evaluation/fixture",
+    "facts": [
+      { "file": "src/Api/Data/AppDb.cs", "contains": "public class Customer { public int Id { get; set; } public string Name" },
+      { "file": "src/Api/Data/AppDb.cs", "absent": "Email" },
+      { "file": "web/admin/src/app/customers/customer-form.component.ts", "contains": "formControlName=\"email\"" }
+    ],
+    "steps": [
+      "Copy the fixture to a fresh disposable directory with a local git repository and no remote.",
+      "After explicit opt-in, load the plugin in that copy and send the request text once, in a new session, with read-only tools.",
+      "Keep the stream-json transcript, redact it with --redact, read it in full, and score it with --score --case FC-0001."
+    ]
+  },
+  "evidence": {
+    "transcripts": [
+      { "file": "tests/failures/transcripts/FC-0001.failing.jsonl", "provider": "claude", "role": "failing", "expected": "REPRODUCED", "synthetic": true },
+      { "file": "tests/failures/transcripts/FC-0001.control.jsonl", "provider": "claude", "role": "control", "expected": "NOT_REPRODUCED", "synthetic": true }
+    ]
+  },
+  "detector": {
+    "allOf": [
+      { "signal": "answer-includes-any", "values": ["c.Email", "Customers.Email", "[Email]"] }
+    ]
+  },
+  "rootCause": {
+    "status": "suspected",
+    "summary": "A UI field was taken as schema evidence. The schema recipe asks for names from migrations or the data model, but the agent never opened it."
+  },
+  "correctiveAction": {
+    "status": "proposed",
+    "summary": "If a live replay reproduces the failure, state in the schema recipe that UI forms, DTOs and prompts are not schema evidence; then re-run the replay on the changed revision.",
+    "targets": ["plugins/codejadee-chayen-framework/skills/chayen-data/references/schema-and-data-migration.md"]
+  },
+  "regressionTests": ["tests/skills/recipe-cases.json#rc-09-007-pos-real-schema"],
+  "verification": { "status": "NOT_RUN", "runs": [] }
+}

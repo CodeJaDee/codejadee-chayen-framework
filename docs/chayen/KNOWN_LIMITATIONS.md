@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Date | 2026-10-15 |
-| Build | `1.1.2` (2026-10-20, D-065; with `1.1.1`, D-064, guidance text changed in five Skills since `1.1.0`, Skill metadata unchanged): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.1.0` (2026-10-19, D-063) added `chayen-init`; `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
+| Build | `1.1.3` (2026-10-23, D-077; `1.1.2` 2026-10-20, D-065; with `1.1.1`, D-064, guidance text changed in five Skills since `1.1.0`, Skill metadata unchanged): 16 entry skills (13 engineering, 2 writing, 1 project knowledge), 242 references, 263 package files. Earlier: `1.1.0` (2026-10-19, D-063) added `chayen-init`; `1.0.0` (released 2026-10-18; same Skills content as the Step 41 build): 15 entry skills (13 engineering, 2 writing), 237 references, 256 package files (Step 41, 2026-10-17). Step 34 measured 13 / 221 / 238. |
 | Companions | [FINAL_AUDIT_REPORT.md](FINAL_AUDIT_REPORT.md), [RELEASE_READINESS.md](RELEASE_READINESS.md) |
 | User-facing summary | [docs/SECURITY_AND_LIMITATIONS.md](../SECURITY_AND_LIMITATIONS.md) |
 
@@ -17,7 +17,7 @@ executed evidence exists. It does not mean the feature is known to fail.
 |---|---|---|
 | KL-01 | **Guidance is advisory.** Markdown cannot enforce permissions, policy, or approvals. Enforcement comes from the provider, the OS, and CI. | SECURITY_MODEL.md; BC-23; V-10 |
 | KL-02 | **Skill selection is probabilistic.** The model decides from descriptions, and no provider guarantees invocation. | Provider docs S7, S12, S17, S19; probe results (§3) |
-| KL-03 | **Metadata remains bounded:** L0 7,000 (D-062); shipped 6,563 with all 16 skills, 437 free. The count ceiling of 16 (D-062) is reached, so any further skill needs a new decision. Before D-062: 6,221 / 6,500 with 15 skills. Registry checks do not prove native routing or host capacity. Step 34's 5,485/5,500 measurement remains historical. | V-07; D-052; D-053; SKILL_REGISTRATION.md |
+| KL-03 | **Metadata is bounded by providers, not by the repository.** There is no Entry Skill count cap and no repository L0 cap (D-066). Shipped L0 is 6,563 characters (~1,641 tokens, estimate) for 16 skills. Provider listing limits still apply: Claude Code drops descriptions above 1% of the context window (UNKNOWN for a given host); Codex shortens or omits above 2% of the context window or 8,000 characters (6,563 is within that documented figure); Copilot's budget is undocumented (UNKNOWN). None is measured on a host for this build. A further Skill needs a registration record, every quality gate, and routing and context evaluation before compatibility is claimed. Before D-066 the caps were 7,000 (D-062), 6,500 (D-052) and 5,500 (D-037). | V-07; `tools/catalog/discovery-metrics.mjs`; D-066; AUTOMATIC_SKILL_DISCOVERY.md |
 | KL-04 | **One plugin, 16 entry skills (13 engineering, 2 writing, 1 project knowledge).** Capabilities are recipes inside those skills, not separate skills, so they are not individually discoverable by name. | ADR-0004 (PROPOSED), D-023 |
 | KL-05 | **No executable components:** no hooks, MCP, scripts, or commands. Features that need runtime enforcement are out of scope. | ADR-0005; V-09; V-25 |
 | KL-06 | **No path for the Codex IDE extension.** OpenAI documents that it doesn't support plugins. | S13 (re-read 2026-10-15); Q-02 open |
@@ -34,7 +34,7 @@ executed evidence exists. It does not mean the feature is known to fail.
 | KL-12 | **Nitro and Elysia are out of scope. Python has general guidance only.** Python retains `python-web-apis.md` and `python-testing.md` with no cataloged technology pack. Historical standalone framework guidance was withdrawn in Phase 2. | STK-10/11 NOT_APPLICABLE; STK-12 IN_PROGRESS; R-45 |
 | KL-13 | **52 of 159 framework fact checks are NOT_RUN.** Angular 19, React/Next.js 13, Vue/Nuxt/Vite 16, .NET 8 SDK 2, and Node tools/browser 2 need toolchains that are not installed. | Fact runs 2026-10-15: 107 PASS / 0 FAIL / 52 NOT_RUN; R-41, R-43, R-49 |
 | KL-14 | **Fact checks ran on single versions:** SQL Server 2025 Express LocalDB, PostgreSQL 18.6 (C locale), .NET 10, Node 24.15.0. | R-46, R-47 |
-| KL-15 | **Recipe (450 cases), technology (315), and workflow (47) cases are specifications only.** No agent runner executes them. | EVALUATION_GAPS EG-06..EG-08 |
+| KL-15 | **Recipe (475 cases), technology (315), and workflow (47) cases are specifications only.** No agent runner executes them. The 3 failure reproduction records (D-068) are replayed offline from hand-written synthetic transcripts only. Their model behaviour is NOT_RUN. | EVALUATION_GAPS EG-06..EG-08; FAILURE_REPRODUCTION.md |
 
 ## 3. Behaviour limitations (measured)
 

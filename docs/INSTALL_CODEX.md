@@ -53,10 +53,12 @@ codex plugin list --marketplace codejadee
 <!-- migration:end -->
 
 Otherwise use native `/plugins` controls. Confirm absence of the old entry.
-Phase 4 verified a former-identifier migration fixture on the current 15-Skill
-body, restoring exact RC.1 bytes; historical package revisions were not replayed.
-Intended explicit syntax remains
-`$chayen-security <request>`, pending current-build verification.
+Phase 4 verified a former-identifier migration fixture on the 15-Skill
+`0.1.0-rc.1` body, restoring exact RC.1 bytes; historical package revisions were
+not replayed. On 2026-10-23 the same migration passed on an unreleased 16-Skill
+development snapshot (Codex 0.163.0). Intended explicit syntax remains
+`$chayen-security <request>`, pending current-build verification: Codex lists
+plugin Skills as `chayen:chayen-security`, so the namespaced form may be needed.
 
 ## Disable, enable, update, uninstall
 

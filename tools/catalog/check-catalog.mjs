@@ -19,7 +19,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { parseYamlSubset } from "./catalog-lib.mjs";
-import { loadEditorialRegistration, loadProjectRegistration, MAX_ENTRY_SKILLS } from "./skill-registration.mjs";
+import { loadEditorialRegistration, loadProjectRegistration, registrationCounts } from "./skill-registration.mjs";
 
 const argv = process.argv.slice(2);
 const opt = (name) => { const i = argv.indexOf(name); return i > -1 ? argv[i + 1] : undefined; };
@@ -367,7 +367,7 @@ const projectRegistration = loadProjectRegistration(root, cat);
 for (const message of projectRegistration.errors) err("V-11.3 entry-skills", message);
 if (!isArr(cat.entry_skills)) err("V-11.3 entry-skills", "entry_skills must be a list");
 else {
-  if (cat.entry_skills.length > MAX_ENTRY_SKILLS) err("V-11.3 entry-skills", `${cat.entry_skills.length} entry skills exceed the cap of ${MAX_ENTRY_SKILLS} (D-053)`);
+  // No Entry Skill count cap (D-066, ADR-0013 §2 A-1); counts are reported below.
   for (const s of cat.entry_skills) {
     if (!isObj(s) || !isStr(s.name) || !/^chayen-[a-z0-9-]+$/.test(s.name)) { err("V-11.3 entry-skills", `bad entry skill record ${JSON.stringify(s)}`); continue; }
     if (skills.has(s.name)) err("V-11.3 entry-skills", `duplicate entry skill ${s.name}`);
@@ -630,6 +630,7 @@ console.log(`Capabilities: ${caps.length} (expected ${inv.total}); unique ids ${
 console.log(`Per domain: ${[...domainById.values()].map((d) => `${d.id}=${d.caps.length}`).join(" ")}`);
 console.log(`Status: ${Object.entries(countBy(all, (c) => c.status)).map(([k, v]) => `${k}=${v}`).join(" ")}`);
 console.log(`Entry skills: ${skills.size} (${[...skills.values()].filter((s) => s.mapping === "existing").length} existing, ${[...skills.values()].filter((s) => s.mapping === "planned").length} planned); consolidation groups: ${groups.size}`);
+{ const n = registrationCounts(cat, editorialRegistration, projectRegistration); console.log(`Registered Skills by category: engineering ${n.engineering}, editorial ${n.editorial}, project ${n.project} (no count cap, D-066)`); }
 console.log(`Inventory fingerprint (sha256 of "id name" rows): expected ${fingerprint(invRows).slice(0, 16)}, catalog ${fingerprint(catRows).slice(0, 16)}`);
 for (const w of warnings) console.log(`WARN  ${w}`);
 for (const e of errors) console.log(`ERROR ${e}`);

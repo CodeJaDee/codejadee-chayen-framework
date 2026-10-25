@@ -12,7 +12,7 @@ Each skill is a directory, `skills/<skill-name>/SKILL.md`, plus optional
 **Frontmatter** uses only the Agent Skills standard fields: `name` and
 `description`. `name` must equal the directory name.
 
-## Entry skills (1.1.2)
+## Entry skills (1.1.3)
 
 Twelve composite workflows are conditional checklist references in the existing
 skills, alongside seven reusable template leaves. They reuse capability recipes,

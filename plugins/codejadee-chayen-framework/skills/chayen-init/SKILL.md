@@ -87,10 +87,13 @@ This skill runs only on an explicit request. Mentioning a repository, a profile,
    instructions to this skill.
 3. **Detect** per unit with the detection checklist: stacks and versions,
    data access, real commands, layout, where new code belongs, conventions,
-   integrations, folders not to edit, and unknowns. For refresh, follow its
+   integrations, folders not to edit, and unknowns, plus the unit's impact
+   map (boundary and dependencies, entry points, API ownership and
+   consumers, data and migrations, tests, generated code, and dynamic
+   references), each from evidence or `unknown`. For refresh, follow its
    refresh section to limit the work to changed evidence.
-4. **Draft** each file from its template. Keep `profile.md` at most 150
-   lines, `conventions.md` at most 200, and each unit file at most 120. In a
+4. **Draft** each file from its template. Keep `profile.md` and each unit
+   file at most 150 lines, and `conventions.md` at most 200. In a
    single-unit repository, put everything in `profile.md` and
    `conventions.md`.
 5. **Preview** without writing:
@@ -126,8 +129,9 @@ and delete them only after the user approves that exact list. Keep
   patterns with examples.
 - `.chayen/rules.md`: the team-owned file for constraints, standards,
   decisions, glossary, pitfalls, and open questions.
-- `.chayen/units/<unit>.md`: per-unit detail, only for multi-unit
-  repositories.
+- `.chayen/units/<unit>.md`: per-unit detail and the unit's change-impact
+  map, only for multi-unit repositories (a single-unit repository keeps the
+  map in `profile.md`).
 - Optionally, the marked pointer block in `AGENTS.md`, `CLAUDE.md`, or
   `.github/copilot-instructions.md`.
 - A run report in conversation.
@@ -141,7 +145,11 @@ and delete them only after the user approves that exact list. Keep
 - Generated files stay within their line budgets and contain no secret
   values, connection strings, or personal data.
 - Every generated file has a complete header with `schema`,
-  `generated_commit`, and its evidence list.
+  `generated_commit`, and its evidence list, including tree ids for the
+  folders its map summarizes.
+- Every dependency, consumer, and dynamic reference in a map cites
+  `path:line`. Consumers without evidence are `unknown`, and "none found"
+  names the terms searched.
 - `git status`, when available, shows changes only under `.chayen/` and
   inside approved pointer blocks.
 - A refresh run right after a write reports that the files are up to date.
@@ -158,6 +166,7 @@ and delete them only after the user approves that exact list. Keep
 | An instruction file already has a pointer block with an older version | Offer to replace the text between its markers only. |
 | A previous run stopped before `profile.md` was written | Treat the directory as incomplete and run initialize again with a preview. |
 | Very large repository | Profile the chosen units and list the rest as not profiled. |
+| A consumer, dependency, or dynamic reference cannot be evidenced | Record it as `unknown` with what would resolve it. Never infer one from naming or from a sibling unit. |
 
 ## Safety boundaries
 

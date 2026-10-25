@@ -5011,8 +5011,8 @@ capabilities:
     recipe: {path: skills/chayen-implementation/references/change-summary.md, mapping: existing}
     consolidation: CG-14
     overlaps: [CAP-02-006]
-    verification: "Behaviour eval: a fixture report claiming a passing test that actually fails is marked unsupported with the observed output."
-    verification_evidence: "Step 17: recipe change-summary.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-18-003-* (positive and negative) in tests/skills/recipe-cases.json. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
+    verification: "Behaviour eval: a fixture report claiming a passing test that actually fails is marked unsupported with the observed output; an independent review per criterion (claim, evidence source, independent method, observed outcome, confidence limitation, verdict, next action) leaves a test file without a recorded run, stale evidence, a UI interaction without a behavioural check and an authorization criterion without its denied paths at verify_more."
+    verification_evidence: "Step 17: recipe change-summary.md meets SKILL_AUTHORING_STANDARD section 6 and was reviewed against this record (agent review); static gates PASS (validate-all); eval cases rc-18-003-* (positive and negative) in tests/skills/recipe-cases.json. Evolution Step 13 (D-070): independent audit in the recipe, GI-10, reference grader over 8 synthetic cases (tests/audit, offline) and 6 more rc-18-003-* cases. Pending: behaviour evals (G-12) and trigger evals (G-11) NOT_RUN."
     existing_coverage: [skills/chayen-implementation/references/change-summary.md, skills/chayen-implementation/SKILL.md]
     status: IMPLEMENTED
     notes: "Step 17: change-summary.md gained the evidence audit procedure."

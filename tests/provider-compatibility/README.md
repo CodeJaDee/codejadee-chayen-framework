@@ -111,8 +111,17 @@ Do not confuse successful cleanup with successful lifecycle qualification.
 
 ## Evidence scope
 
-Current results: [2026-10-18 RC report](../../docs/production/NATIVE_LIFECYCLE_REPORT.md).
-Migration replays the former identifier using the current 15-Skill body; it
+Current results: [2026-10-23 Step 19 report](../../docs/chayen/evolution/PROVIDER_SECURITY_REPORT.md)
+for the `1.1.2` working-tree snapshot, with the path-free summary in
+`results/2026-10-23-step19/`. Previous: the
+[2026-10-18 RC report](../../docs/production/NATIVE_LIFECYCLE_REPORT.md).
+
+Step 19 added the Codex row `inventory-isolation`. It fails when the native
+inventory lists Skills from outside the isolated profile. Codex 0.163.0 on
+Windows reads the real user's `~/.agents/skills` despite the HOME,
+USERPROFILE and `CODEX_HOME` overrides. Counts by scope are recorded; names
+never are. Do not score Codex routing or security runs where this row fails.
+Migration replays the former identifier using the current Skill body (15 Skills in Phase 4, 16 in Step 19); it
 does not reproduce the historical package. Restart means a new native process
 and inventory reload, not conversation resumption. Local marketplace evidence
 does not prove remote public installation. Historical six-/thirteen-Skill

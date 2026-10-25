@@ -1,5 +1,5 @@
 {
-  "$comment": "D-062 negative controls for the project knowledge registration (catalog/project-skills.json) and the chayen-init Skill. Registry-writing controls are built from the real registry so each stays a single fault. Invalid copies exist only in confined temporary test repositories.",
+  "$comment": "D-062 negative controls for the project knowledge registration (catalog/project-skills.json) and the chayen-init Skill; count and allow-list controls retargeted to identity and registration faults by D-066 (Step 03). Registry-writing controls are built from the real registry so each stays a single fault. Invalid copies exist only in confined temporary test repositories.",
   "version": 1,
   "cases": [
     {
@@ -15,7 +15,7 @@
       "expect": {
         "validator": "package",
         "error": "V-19 catalog-mapping",
-        "message": "unregistered project Skill"
+        "message": "chayen-init: shipped skill is not a registered"
       }
     },
     {
@@ -52,19 +52,19 @@
       }
     },
     {
-      "id": "pj62-name-allow-list",
-      "description": "A project record name is outside the approved allow-list",
+      "id": "pj62-invalid-name",
+      "description": "A project record name violates the provider name rule (uppercase); D-066 replaced the name allow-list with name validation",
       "edits": [
         {
           "file": "catalog/project-skills.json",
           "op": "write",
-          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"chayen-setup\",\n      \"mapping\": \"existing\",\n      \"description\": \"Initialize or refresh persistent project knowledge files for a repository when explicitly asked, writing a profile of units, stacks, versions, commands and layout, observed conventions, and a team rules file, plus an opt-in pointer block in AGENTS.md or CLAUDE.md. Not for one-off repository questions, README writing, or code changes.\"\n    }\n  ]\n}\n"
+          "content": "{\n  \"version\": 1,\n  \"skills\": [\n    {\n      \"name\": \"Chayen-Setup\",\n      \"mapping\": \"existing\",\n      \"description\": \"Initialize or refresh persistent project knowledge files for a repository when explicitly asked, writing a profile of units, stacks, versions, commands and layout, observed conventions, and a team rules file, plus an opt-in pointer block in AGENTS.md or CLAUDE.md. Not for one-off repository questions, README writing, or code changes.\"\n    }\n  ]\n}\n"
         }
       ],
       "expect": {
         "validator": "package",
         "error": "V-19 catalog-mapping",
-        "message": "project name is outside the approved allow-list"
+        "message": "invalid project Skill name"
       }
     },
     {
@@ -150,19 +150,26 @@
       }
     },
     {
-      "id": "pj62-exceeded-count",
-      "description": "A seventeenth shipped directory exceeds the ceiling of 16 (13 engineering + 2 editorial + 1 project)",
+      "id": "pj62-seventeenth-unregistered",
+      "description": "A 17th project Skill directory with a matching name but no registry record is rejected as unregistered, not for the count (D-066); valid additional Skills are accepted in tests/catalog/registration.test.mjs",
       "edits": [
         {
           "op": "copydir",
           "from": "plugins/codejadee-chayen-framework/skills/chayen-init",
           "to": "plugins/codejadee-chayen-framework/skills/chayen-seventeenth"
+        },
+        {
+          "file": "plugins/codejadee-chayen-framework/skills/chayen-seventeenth/SKILL.md",
+          "op": "regex",
+          "pattern": "^name: chayen-init$",
+          "flags": "m",
+          "with": "name: chayen-seventeenth"
         }
       ],
       "expect": {
         "validator": "package",
-        "error": "V-07 metadata-budget",
-        "message": "17 entry skills > 16"
+        "error": "V-19 catalog-mapping",
+        "message": "chayen-seventeenth: shipped skill is not a registered"
       }
     }
   ]

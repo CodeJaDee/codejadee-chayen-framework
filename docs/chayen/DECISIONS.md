@@ -1536,6 +1536,519 @@ Decision statuses:
   agent behaviour, routing, and native install and update of `1.1.2` are
   NOT_RUN.
 
+### D-066 — Extensible Skill governance replaces repository numeric caps
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 02: "Formally change Chayen's architecture policy so future
+  capability and Skill growth is not blocked by arbitrary repository-level
+  numeric limits"). Full record:
+  [ADR-0013](ADRS/ADR-0013-extensible-skill-governance.md).
+- **Decision:**
+  - Remove, as failure conditions, the repository's own caps: the Entry
+    Skill maximum (16), the fixed `SKILL.md` and reference line maximums
+    (300, plus the 200-line target), the 2-hop link-depth limit, the
+    7,000-character L0 failure threshold, and the fixed registration
+    allow-lists (`PROJECT_NAMES`, exactly two editorial records).
+  - Replace them with measurement and reporting: counts by category, L0
+    characters and estimated tokens, per-Skill and per-reference size, link
+    depth, and a growth-evidence rule for changes that add Skills or raise L0.
+  - Keep every provider constraint. Hard ones stay errors: name ≤64
+    characters and equal to the directory, description ≤1,024 characters,
+    portable frontmatter and packaging. Provider recommendations and capacity
+    behaviours are reported against their documented figure: `SKILL.md`
+    under 500 lines or about 5,000 tokens; references one level deep through
+    RF-02; Claude Code listing budget 1% of context; Codex 2% or 8,000
+    characters. A release above a documented listing figure, or one that adds
+    Skills, needs routing evidence on that provider.
+  - Keep every security, identity, schema-integrity and supply-chain rule,
+    the package profile (ADR-0005), discoverability and progressive
+    disclosure, distinctness and trigger coverage, and the 206-capability
+    inventory.
+  - Registration becomes extensible: records are admitted by closed schema,
+    name and description rules, cross-registry uniqueness and file parity.
+    The two Humanizer language contracts stay. A new category needs its own
+    decision; no count is involved.
+- **Step 04 amendment (owner instruction, 2026-10-22):** references may be
+  discovered transitively instead of each being linked directly from
+  `SKILL.md`. Orphans still fail. Transitive-only references and link cycles
+  are reported as warnings, because providers recommend one level deep (S24)
+  and a reachable file is not guaranteed to be read. This replaces the "one
+  level deep through RF-02" item above.
+- **Removing a cap does not mean unlimited provider capacity.** Listing
+  budgets still drop, shorten or omit descriptions on overflow (S7, S12).
+- **Supersedes:** ADR-0004 decision 4; the count and L0 components of D-051,
+  D-052, D-053 and D-062 item 7; ADR-0012 decision 6's allow-list. The other
+  parts of those records are unchanged, and their text is not edited.
+- **Implementation:** evolution Steps 03 (count, registration), 04 (lines,
+  depth), 05 (metadata) and 06 (regression tests), per
+  [MIGRATION_MATRIX.md](evolution/MIGRATION_MATRIX.md). Step 03 IMPLEMENTED
+  (2026-10-22): no count cap, no name allow-lists, validated registration.
+  Step 04 IMPLEMENTED (2026-10-22): no size or depth cap; size report and
+  advisory warnings; iterative, cycle-safe reference graph. Step 05
+  IMPLEMENTED (2026-10-22): no L0 cap; discovery metrics
+  (`tools/catalog/discovery-metrics.mjs`) with estimated tokens, per-skill
+  contributions, expensive descriptions, collision risk and documented
+  provider figures (UNKNOWN or NOT_MEASURED where not reliable); release
+  rule P-L in the release checklist.
+- **Not changed:** validators, tests, Skills, manifests, version.
+- **Evidence:** documentation only; `validate-all.mjs` re-run after the
+  documentation changes (see evolution STEP_LOG, Step 02).
+
+### D-067 — Lightweight change-impact map in project knowledge
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 10: "Make existing repository knowledge more useful for future
+  coding tasks without adding a mandatory Knowledge Graph database or MCP
+  service").
+- **Decision:**
+  - Extend `.chayen/` (ADR-0012), not a new memory system. Unit files gain
+    map sections: boundary and dependencies, entry points, API ownership and
+    consumers, data and migrations, tests, generated code, dynamic references.
+    A single-unit repository keeps them in `profile.md`.
+  - Every entry cites `path:line` or is `unknown`. A consumer without
+    evidence is `unknown`, never "none"; "none found" for dynamic references
+    names the terms searched.
+  - Evidence adds folder tree ids (`git rev-parse HEAD:<folder>`). Schema
+    stays `project-knowledge/1`; the sections are additive and are added by
+    the next approved refresh.
+  - Readers start from the owning unit file only, run a read-only staleness
+    check (`git diff --name-only <generated_commit> HEAD -- <paths>`,
+    `git status --porcelain`, tree ids), use the map as leads for targeted
+    searches, confirm facts in the source (the source wins), and never treat
+    a missing entry as proof of absence. Refresh happens only on request,
+    through the existing preview and approval.
+  - Unit-file budget 120 → 150 lines, equal to `profile.md`. `rules.md`,
+    conventions and instruction files keep their existing protections.
+- **Not changed:** skill descriptions and routing metadata, the `chayen-init`
+  lifecycle and modes, the schema identifier, the 206-capability catalog.
+- **Evidence:** static validators, recipe cases (specifications), and
+  executable git mechanics on a disposable monorepo
+  (`tests/skills/project-map.test.mjs`). Agent behaviour is NOT_RUN. Shipped
+  guidance changed without a version bump.
+
+### D-068 — Opt-in failure reproduction records
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 11: "Extend the existing Chayen contribution workflow so
+  observed Agent failures can become reproducible regression cases").
+- **Decision:**
+  - Failure records (`chayen-failure-case/1`) in `tests/failures/`.
+    Developer-only, never shipped. The format is specified in
+    [FAILURE_REPRODUCTION.md](FAILURE_REPRODUCTION.md).
+  - The existing CONTRIBUTING process stays: the recipe or trigger case in
+    `tests/skills/` is the behavioural regression specification. The record
+    references it and adds a fixture with checkable facts, a failing and a
+    control transcript, and a detector.
+  - `tools/evals/failure-cases.mjs` validates the records, replays recorded
+    transcripts offline through the Phase 5 parser, redacts transcripts
+    (new file only) and scores a supplied transcript. It calls no provider,
+    makes no network connection, starts no process and executes nothing from
+    a record or transcript.
+  - Records are synthetic, or observed with explicit opt-in consent and
+    reviewed redaction. Secret patterns (shared with V-25.2 through
+    `tools/validate/secret-patterns.mjs`), credential URLs, local paths and
+    non-example emails are rejected. Scripts are not accepted as artifacts.
+  - Replay outcomes: REPRODUCED, NOT_REPRODUCED, FIXED_AND_VERIFIED, NOT_RUN,
+    INCONCLUSIVE. The verification status is derived from authorized live
+    replays only, and changed guidance text never changes it.
+- **Not changed:** the plugin package, Skill guidance, routing metadata, the
+  recipe and trigger cases, the Phase 5 harness and its live-run gates.
+- **Evidence:** three synthetic cases (invented column, missed API consumer,
+  untested criterion marked DONE) validate and discriminate offline. G-20 and
+  G-20T are in `validate-all.mjs`. Model behaviour is NOT_RUN.
+
+### D-069 — Governed mentor-to-fast-agent knowledge distillation
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 12: "Build a governed workflow where a capable Mentor Agent
+  analyzes verified failures and produces small, reusable guidance
+  improvements for faster coding Agents").
+- **Decision:**
+  - Distillation happens at the prompt and process level, through a
+    developer-only workflow with six stages: collect, diagnose, distill,
+    review, validate, promote
+    ([KNOWLEDGE_DISTILLATION.md](KNOWLEDGE_DISTILLATION.md)). The Mentor is a
+    maintainer's opt-in session following
+    [MENTOR_BRIEF.md](MENTOR_BRIEF.md). No Mentor ships in the plugin and no
+    service runs.
+  - Proposals (`chayen-distillation-proposal/1`) in
+    `tests/distillation/proposals/` reference one Step 11 failure case. Each
+    root cause limits the actions allowed, and every root cause allows a
+    non-Skill action. Proposals change existing files only, so a new Entry
+    Skill is impossible.
+  - `tools/evals/distill.mjs` derives the decision:
+    - routing impact is computed from the diff;
+    - the diff is applied only to a disposable copy;
+    - the fixed offline validators run there, after a check that they are
+      byte-identical to the reviewed scripts;
+    - a person other than the Mentor must review;
+    - guidance changes are promoted only when authorized live runs show the
+      baseline reproducing the failure and no candidate run reproducing it
+      (≥ 3 runs per arm, one provider and model);
+    - promotion keeps the previous version recoverable and the failure
+      evidence in place.
+- **Not changed:** the plugin package, Skill guidance, routing metadata,
+  recipe and trigger cases. Proposals are not applied.
+- **Evidence:** four proposals from the three synthetic failures (one
+  minimal Recipe change, one regression case, one limitation held for
+  evidence, one returned demonstration). G-21 and G-21T are in
+  `validate-all.mjs`. Mentor diagnosis quality and live improvement are
+  NOT_RUN.
+
+### D-070 — Independent acceptance evidence audit
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 13: "Strengthen Chayen's existing Evidence Audit so completion
+  claims can be independently verified").
+- **Decision:**
+  - Extend the evidence audit (CAP-18-003) in
+    `chayen-implementation/references/change-summary.md`; add no competing
+    process. The implementing agent and an independent reviewer are separate
+    roles. The implementer's conclusions are claims, never evidence, and
+    the reviewer is a person or a session that did not make the change. A
+    same-session audit records that as a limitation.
+  - The audit rules:
+    - a test file is not a test run;
+    - a claimed PASS needs a recorded run;
+    - evidence older than the last relevant change is stale;
+    - interactive UI needs a behavioural check where feasible;
+    - access control needs its denied paths;
+    - a contradicted quoted result is unsupported and possibly fabricated;
+    - a cited but unrecorded run is no evidence;
+    - quoted output is redacted;
+    - an audit is no security guarantee.
+  - One review per criterion, with eight fields: criterion, claim, evidence
+    source, independent method, observed outcome, confidence limitation,
+    verdict (accept, verify_more, revise) and next action. The claim-level
+    verdicts (supported, unsupported, not re-runnable) stay as they were.
+  - Templates gain an optional `Independent review` line; no field is
+    removed. `chayen-testing` adds "or from the existence of a test file" to
+    its PASSED rule.
+  - GI-10 (`independent-evidence-audit`) guards the anchors. GI-03 gains a
+    predicate-only rule for "a criterion with no test may be accepted" (the
+    Step 12 finding).
+  - Developer-only contract for automated graders:
+    [INDEPENDENT_AUDIT_CONTRACT.md](INDEPENDENT_AUDIT_CONTRACT.md),
+    `tools/evals/audit-evidence.mjs`, `tests/audit/`.
+- **Not changed:** Skill descriptions and routing metadata, the
+  206-capability inventory, the verdict and status vocabularies, and the
+  existing template fields.
+- **Evidence:** 8 synthetic cases give the expected verdicts; G-22 and
+  G-22T; G-18T 29/29. Agent behaviour NOT_RUN. Shipped guidance changed
+  without a version bump.
+
+### D-071 — Explicit evaluation candidates
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 14: "Allow Chayen evaluation tools to work with explicitly
+  selected current or future builds instead of relying on an old hardcoded
+  release candidate").
+- **Decision:**
+  - The Phase 5 runner has no default candidate. Live runs and preflight
+    need `--candidate <file>`, and so does scoring of results that carry a
+    candidate ID. The historical 0.1.0-rc.1 file
+    `results/2026-10-18-phase5/candidate.json` is read unchanged as one
+    selectable candidate.
+  - `tests/evaluation/phase5/candidate.mjs prepare` writes a deterministic
+    `chayen-eval-candidate/1` manifest. It reads files and runs read-only
+    `git rev-parse`, `git status` and `git diff`; it never commits, tags,
+    releases or pushes, and never starts a provider CLI. The manifest
+    records:
+    - the source commit, the working-tree state and the uncommitted paths;
+    - the manifest versions and the marketplace descriptors;
+    - the package fingerprints, both raw bytes and LF-normalised;
+    - the Skill metadata fingerprint and the Entry Skill inventory;
+    - the specification and fixture fingerprints;
+    - the provider configurations.
+  - A dirty tree gives an `UNCOMMITTED_SNAPSHOT`, which is not a
+    release-qualified commit. It is written outside the repository, live
+    runs need `--allow-uncommitted-candidate`, and the label is in every
+    record.
+  - Preflight refuses:
+    - a candidate that does not describe the checkout;
+    - a plugin home without exactly one matching package (fingerprint,
+      version and metadata);
+    - a baseline home with any package.
+  - Scoring rejects results from another candidate, specification,
+    metadata or package. The candidate ID joins the pooling key.
+  - Provider calls stay behind `--allow-provider-calls`, `--authorization`
+    and `--max-calls`, and are unchanged.
+- **Not changed:** historical candidate and result files, the specifications
+  and fixture, the plugin package, parsers and classifiers.
+- **Evidence:** `candidate.test.mjs` (G-23) 12/12, nine control mutations
+  caught, and the historical fingerprints recomputed from git history. No
+  candidate is committed yet: the current tree is uncommitted.
+
+### D-072 — Reproducible real-coding evaluation fixtures
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 15: "Build deterministic, realistic software engineering
+  tasks for comparing coding agents with and without Chayen").
+- **Decision:**
+  - Six developer-only tasks live in `tests/evaluation/coding/tasks/`:
+    - A: backend bug fix;
+    - B: cross-layer CSV export;
+    - C: Angular interaction;
+    - D: SQL Server schema correctness;
+    - E: ambiguous scope;
+    - F: evidence completion.
+  - Each task has a `task.json` (`chayen-coding-task/1`): prompt, stack and
+    versions, the repository's commands, scope globs, acceptance criteria
+    with their oracles, grading checks, negative checks, expected outcomes
+    and reset instructions.
+  - Each task also has:
+    - `repo/`, the only part given to an agent;
+    - evaluator-only `grader/`, a `reference/` solution;
+    - at least two `negatives/` (known-bad outputs the grader must reject).
+  - `run-coding-fixtures.mjs` grades a copy of a workspace and never the
+    workspace itself. `--verify` proves that each initial state and every
+    negative fails and each reference passes.
+  - .NET restores use only the local NuGet cache. Task D runs on LocalDB
+    only and drops its `ChayenCoding_<guid>` databases.
+  - A missing toolchain is NOT_RUN with the exact dependency; nothing is
+    installed and no network source is used.
+  - Static frontend checks are labelled weak. NOT_RUN never counts as a
+    pass.
+- **Stacks:** .NET 10, ASP.NET Core 10 and SQL Server (LocalDB) run here.
+  Angular 19.2 sources are present, but their component specs are NOT_RUN
+  without `node_modules`. PostgreSQL has no fixture, because there is no
+  local server.
+- **Not changed:** the plugin, Skill guidance, the existing
+  `tests/evaluation/fixture` and the Phase 5 specifications.
+- **Evidence:** `--verify` 28/28 runs as expected
+  (`tests/evaluation/coding/results/2026-10-22-verify.json`); G-24 and
+  G-24T.
+
+### D-073 — Isolated real-coding agent runner
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 16: "Extend Chayen's developer-only evaluation tooling to
+  measure actual code editing and verification, not just read-only Skill
+  routing").
+- **Decision:**
+  - A separate developer-only runner,
+    `tests/evaluation/coding/run-coding.mjs`, with its library
+    `coding-runner-lib.mjs`. `run-phase5.mjs` stays read-only and unchanged.
+  - **Isolation:** write-capable runs happen only inside a container that
+    passes a boundary probe:
+    - the image is pinned by digest and never pulled;
+    - non-root user, read-only root, no capabilities, `no-new-privileges`;
+    - only the disposable workspace, the isolated provider home and the
+      declared read-only mounts are mounted;
+    - no engine socket and no credential-like environment variables;
+    - egress to a declared destination fails.
+  - **When the boundary is not verified:** the runner exits 3 with BLOCKED.
+    There is no fallback to the developer workspace, and a provider
+    permission flag never counts as a sandbox.
+  - **Provider permissions:** native mechanisms only (Claude Code
+    `dontAsk` with tool allowlists, Codex `workspace-write` without network,
+    Copilot `--allow-tool` and `--deny-tool` lists). Bypass and widening
+    flags are refused in code.
+  - **Selections:** each run selects provider, exact model (aliases
+    refused), candidate (Step 14 manifest), task (Step 15 fixture) and arm
+    (`baseline` without Chayen, `chayen` with exactly the candidate's
+    package).
+  - **Gates before anything is sent:** `--allow-provider-calls`,
+    `--allow-coding-writes`, `--authorization`, `--max-calls`, USD caps for
+    Claude, a fresh `--out` outside the repository, and an isolated
+    signed-in home. Authentication files are never copied.
+  - **Workspaces:** each run gets a fresh git copy of `repo/` with a fixed
+    commit id and no remote, plus a canary that detects writes outside it.
+  - **Records:** a closed `chayen-coding-record/1` format with Skill
+    activation evidence, tool and command traces, diff, verification
+    re-run inside the boundary, duration, usage, cost, and security and
+    completion classes. Output is redacted.
+  - **Scoring:** deterministic, so a re-score must reproduce `summary.json`.
+    Arms compare only under identical configurations.
+  - **Tests:** a fake provider and a fake engine exist for tests only, and
+    are refused for real providers.
+- **Not changed:** the plugin, Skill guidance, the Phase 5 runner and
+  specifications, and the Step 15 tasks and grader.
+- **Status of live runs:** NOT_RUN. On this host no Linux container engine
+  is reachable, so `--inspect-host` reports BLOCKED. Live runs need the
+  owner's authorization, budget caps, a prepared image and network, and
+  signed-in isolated homes.
+- **Evidence:** G-25T (`tests/evaluation/coding/coding-runner.test.mjs`);
+  STEP_LOG Step 16.
+
+### D-074 — Independent coding grading and rework metrics
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-22, evolution
+  program STEP 17: "Quantify whether Chayen reduces Agent execution cost,
+  human review effort, and rework").
+- **Decision:**
+  - A developer-only grader, `tests/evaluation/coding/grade-coding.mjs`,
+    with `grading-lib.mjs` (pure derivation, statistics and report) and
+    `rubric.json` (`chayen-coding-rubric/1`).
+  - **Deterministic graders first.** These are the task's own Step 15
+    checks (hidden tests, boundary, regression detection, answer checks),
+    executed on a staged copy of each preserved workspace, together with
+    the Step 16 diff, verification and security records. Real provider runs
+    are graded only inside a container whose boundary verifies; otherwise
+    the grader exits 3 with BLOCKED. Fake-provider runs on the runner
+    fixture may be graded on the host.
+  - **Reuse of the Step 13 contract:** each run becomes a
+    `chayen-audit-case/1` and is reviewed by `auditCase`. The agent's answer
+    is only a claim. The contract gains a `process` kind for deterministic
+    contract checks (adequate level `deterministic-check`); the existing
+    kinds and cases are unchanged.
+  - **Metrics:**
+    - correctness: criteria passed, build and test, functional, scope,
+      unverified claims, first pass;
+    - rework: failed attempts, revisions, verification and revision
+      cycles, evidence gaps;
+    - efficiency: time, tokens, tools, search and read, cost;
+    - human involvement: only from a named reviewer's
+      `chayen-human-review/1` log. Review time comes from its start and end
+      times and never from agent traces.
+  - **LLM grades** (`chayen-llm-grade/1`) are accepted only for rubric items
+    marked `llmAllowed`. They are listed separately and change no verdict.
+  - **Comparison:** A (a fast agent without Chayen), B (the same agent
+    configuration with Chayen; checked identical but for the arm) and C (a
+    mentor-class agent with Chayen; the same task, snapshot and
+    environment). Results are never pooled across provider or model
+    configurations.
+  - **Statistics:** Wilson intervals for rates and Newcombe intervals for
+    differences. Statuses: `NOT_MEASURED` (synthetic or fake data),
+    `INSUFFICIENT_SAMPLE` (below 5 runs), `INCONCLUSIVE` and
+    `DIFFERENCE_OBSERVED` (an association, not proof of cause).
+  - **Report:** deterministic `report.json` and `report.md`, with the
+    baseline, Chayen-enabled results, differences, uncertainty, failure
+    categories, trade-offs and next experiments.
+  - **Supporting changes to earlier steps (additive):**
+    - Step 15 grader: `--grade --json`, and failed Node test names;
+    - Step 16 runner: the metrics `verificationRevisionCycles` and
+      `searchReadOperations`, a second fake model, per-run fake scenarios
+      including `special-case`;
+    - runner fixture: graded criteria and a hidden oracle.
+- **Not changed:** the plugin, Skill guidance, the Step 15 task specifications
+  and the read-only Phase 5 runner.
+- **Status of live claims:** NOT_MEASURED. No real comparison run exists.
+- **Evidence:** G-26 (self-test), G-26T; the synthetic example
+  `tests/evaluation/coding/results/2026-10-22-step17-synthetic/`; STEP_LOG
+  Step 17.
+
+### D-075 — Routing, collision and context benchmark beyond 16 Skills
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-23, evolution
+  program STEP 18: "Ensure the removal of artificial Entry Skill and
+  metadata limits does not silently degrade automatic Skill discovery").
+- **Decision:**
+  - A developer-only benchmark in `tests/evaluation/routing-context/`.
+    - 21 synthetic Skills (`chayen-syn-*`) in four groups: distinct,
+      adjacent, overlap and conflict.
+    - Six scenarios of 16 to 34 Skills, each with an expected static
+      outcome.
+    - 74 routing cases with fixed expected outcomes: positive, regression,
+      adjacent, overlap, conflict, no-match, unsupported, negative boundary,
+      explicit and ambiguous; keyword and paraphrase prompts.
+  - **Synthetic Skills never enter the production package.** Each scenario
+    is built in a disposable copy outside the repository, and the real
+    package, catalog and security validators run on it. `--build` writes an
+    installable copy only outside the repository and installs nothing.
+  - **Activation comes only from native provider events**, through the
+    Phase 5 parsers. Answer text and repository files are never
+    activation. The Phase 5 Skill-path patterns now accept digits, which
+    the Skill name rule allows.
+  - **No pooled accuracy.** Summaries are per provider, CLI version, model,
+    metadata, specification, candidate, scenario and evidence level. The
+    plugin and no-plugin arms may differ only by the installed package.
+    `run-evaluation-suite.mjs` reports provider summaries per
+    configuration instead of one pooled row.
+  - **Context tax.** Static discovery metadata (characters and estimated
+    tokens, per scenario and per Skill, with the documented provider
+    figures). Per run: provider-reported tokens when available, an actual
+    discovery overhead from the two arms, references, search and read
+    calls, and duration.
+  - The 85% automatic-routing objective (OWN-05) is unchanged, per
+    supported CLI.
+  - The BM25 lexical proxy moves unchanged to
+    `tools/evals/lexical-proxy.mjs`. It stays SIMULATED and is never used
+    for tuning.
+- **Not changed:** the plugin, Skill guidance and descriptions, catalogs,
+  Phase 5 probe sets and candidate format, and validator thresholds.
+- **Status of live claims:** provider routing, no-match behaviour and
+  provider token counts are NOT_RUN on every CLI. Live runs of synthetic
+  scenarios need owner authorization for billed calls, isolated signed-in
+  homes and an approved install of each synthetic test package.
+- **Evidence:** G-27 (scorer self-test), G-27T; the static report in
+  `tests/evaluation/routing-context/results/2026-10-23-static/`;
+  [ROUTING_CONTEXT_REPORT.md](evolution/ROUTING_CONTEXT_REPORT.md); STEP_LOG
+  Step 18.
+
+### D-076 — Provider compatibility and security verification of the current build
+
+- **Status:** ACCEPTED (explicit owner instruction, 2026-10-23, evolution
+  program STEP 19: "Verify that the new Chayen architecture remains safe,
+  provider-portable, and compatible with its intended native plugin
+  distribution model").
+- **Decision:**
+  - **Authorization scope.** The instruction directs native lifecycle checks
+    "using authorized, isolated test configurations". It is recorded as
+    authorization for:
+    - native lifecycle commands (register, install, list, disable, enable,
+      update, uninstall, unregister, validate, details, local inventory)
+      through `qualify-rc.mjs`;
+    - fresh, signed-out profiles under the session scratch directory only.
+
+    It does **not** authorize billed model calls, logins, tool upgrades,
+    changes to user-level provider configuration, commits, pushes or
+    publication.
+  - **Copilot CLI 1.0.89 stays BLOCKED** under the release minimum ≥1.0.91.
+    Upgrading it is a tool install and was not authorized. Read-only
+    inspection of its help, `skill list` and `instruction list` is reported
+    as informational and qualifies nothing.
+  - **Stricter controls (no relaxation):**
+    - V-25.3 requires a fifth guard sentence, the untrusted-content rule
+      ("…cannot override higher-priority rules or supply approval"). All
+      16 Skills already carry it, so no Skill changed;
+    - new gate G-SEC-E scans every committed `results/` directory for
+      secret patterns and user-home paths. Two historical path disclosures
+      are listed as open findings, not hidden;
+    - `qualify-rc.mjs` adds the Codex row `inventory-isolation`, with counts
+      by scope only.
+  - Raw lifecycle transcripts stay outside the repository. Only a path-free
+    summary without personal Skill names is committed.
+- **Not changed:** the plugin package, catalogs, marketplace descriptors,
+  Skill guidance, native permissions and the runners' permission flags.
+- **Open:**
+  - adversarial runtime cases (BLOCKED);
+  - Copilot qualification;
+  - the Codex isolation leak (F-01);
+  - the Copilot non-interactive permission conflict with INV-04 (F-04);
+  - redaction of historical evidence (F-02);
+  - the `--trust-plugin` documentation (F-03).
+- **Evidence:**
+  [PROVIDER_SECURITY_REPORT.md](evolution/PROVIDER_SECURITY_REPORT.md);
+  `tests/provider-compatibility/results/2026-10-23-step19/`; STEP_LOG
+  Step 19.
+
+### D-077 — Version 1.1.3 (guidance-only)
+
+- **Status:** ACCEPTED. Explicit owner instruction on 2026-10-23, after the
+  Step 20 audit of the evolution program. Asked whether to move to `1.1.3`,
+  the owner replied "เริ่มเลย" ("start now").
+- **Decision:**
+  - The version is `1.1.3` in both plugin manifests and in both Copilot
+    marketplace version fields (`metadata.version` and `plugins[0].version`).
+  - This is a patch bump, following D-064 and D-065: guidance text only. No
+    Skill is added or removed. Skill names, descriptions and discovery
+    metadata (fingerprint `411b6adbbea7e121`) are unchanged.
+  - The shipped package differs from `v1.1.2` in 35 files:
+    - 31 guidance files from evolution Steps 07–10 and 13;
+    - the two version fields;
+    - the plugin's two README files.
+  - The CHANGELOG `[1.1.3]` entry replaces the proposed `[Unreleased]` one.
+- **Not release-qualified.** Runtime evaluation is NOT_RUN on every CLI
+  (FINAL_AUDIT_REPORT F-01..F-03). Production readiness stays NO-GO. This is
+  the CONDITIONAL GO guidance release of RELEASE_READINESS §4.
+- **Not done by this decision:** commit, tag, merge to `main`, push and
+  publication. Each needs a separate owner action. Until `main` carries
+  `1.1.3`, `plugin update` from the GitHub marketplace still delivers
+  `1.1.2`.
+- **Evidence:** `validate-all.mjs` and `run-evaluation-suite.mjs` on the
+  bumped tree (STEP_LOG, post-program entry).
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

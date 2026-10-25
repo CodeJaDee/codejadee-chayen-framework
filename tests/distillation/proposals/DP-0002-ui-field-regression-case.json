@@ -1,0 +1,86 @@
+{
+  "$schema": "chayen-distillation-proposal/1",
+  "id": "DP-0002",
+  "title": "Keep the data guidance; add a regression case for a UI field taken as schema evidence",
+  "demonstration": false,
+  "failureCase": "FC-0001",
+  "mentor": {
+    "kind": "agent",
+    "identity": "Claude Opus 5.5 (claude-opus-5-5) in the maintainer's evolution Step 12 session, following docs/chayen/MENTOR_BRIEF.md"
+  },
+  "baseRevision": "3f8ee6b",
+  "diagnosis": {
+    "rootCause": "tool-or-model-limitation",
+    "confidence": "suspected",
+    "evidence": [
+      "tests/failures/transcripts/FC-0001.failing.jsonl",
+      "tests/evaluation/fixture/src/Api/Data/AppDb.cs:3",
+      "plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md:45-47"
+    ],
+    "existingGuidance": [
+      {
+        "ref": "plugins/codejadee-chayen-framework/skills/chayen-data/SKILL.md:45-47",
+        "covers": "fully",
+        "note": "The loaded Entry Skill already says to take names from the migrations, the data model or the catalog, never to guess, and to ask when the schema cannot be read. A UI form is none of these."
+      },
+      {
+        "ref": "tests/skills/recipe-cases.json:2195-2196",
+        "covers": "partly",
+        "note": "rc-09-007-pos-real-schema checks for guessed names in general but has no UI-field decoy, so it would not catch this specific inference."
+      }
+    ],
+    "rejectedCauses": [
+      {
+        "cause": "incomplete-recipe",
+        "why": "The rule is explicit and lives in the Entry Skill that loaded; restating it in a recipe would duplicate it."
+      },
+      {
+        "cause": "missing-project-knowledge",
+        "why": "The data model is in the repository (AppDb.cs:3) and readable; nothing was missing."
+      },
+      {
+        "cause": "skill-routing",
+        "why": "chayen-data loaded, as expected."
+      }
+    ],
+    "rationale": "The failure contradicts guidance that was loaded, so a further guidance change is not justified without a live run showing the guidance is not followed. The useful change is a sharper regression case with a UI-field decoy, so a future live evaluation measures exactly this inference."
+  },
+  "action": {
+    "kind": "add-regression-fixture",
+    "targets": [
+      {
+        "path": "tests/skills/recipe-cases.json",
+        "baseSha256": "46475d4203ec5e1dc6e6a28eb62995600f842493377ef76d41974ff24cbf50e3"
+      }
+    ],
+    "diff": "tests/distillation/proposals/DP-0002.diff",
+    "summary": "Add recipe case rc-09-007-pos-ui-field-not-schema next to rc-09-007-pos-real-schema; no guidance change."
+  },
+  "review": {
+    "before": "The only regression case for guessed names has no decoy; an agent that infers a column from a UI field could still pass it on a different prompt.",
+    "after": "A dedicated case with an admin-form decoy checks that a column is confirmed in the data model before use and that a UI field is not taken as evidence.",
+    "risks": [
+      "Routing collision: none; a recipe case is test data and changes no Skill text.",
+      "The case count rises from 469 to 470; documents that state the count must change in the same promotion."
+    ],
+    "routingImpact": "none",
+    "testsNeeded": [
+      "FC-0001",
+      "tests/skills/recipe-cases.json#rc-09-007-pos-real-schema"
+    ],
+    "humanReview": {
+      "status": "pending",
+      "reviewer": null,
+      "date": null,
+      "notes": null
+    }
+  },
+  "validation": {
+    "comparison": {
+      "baseline": [],
+      "candidate": []
+    }
+  },
+  "decision": "RETURNED_FOR_REVISION",
+  "promotion": null
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "chayen-distillation-proposal/1",
+  "id": "DP-0003",
+  "title": "No Skill change for an untested criterion marked DONE; record a limitation once a live run reproduces it",
+  "demonstration": false,
+  "failureCase": "FC-0003",
+  "mentor": {
+    "kind": "agent",
+    "identity": "Claude Opus 5.5 (claude-opus-5-5) in the maintainer's evolution Step 12 session, following docs/chayen/MENTOR_BRIEF.md"
+  },
+  "baseRevision": "3f8ee6b",
+  "diagnosis": {
+    "rootCause": "tool-or-model-limitation",
+    "confidence": "suspected",
+    "evidence": [
+      "tests/failures/transcripts/FC-0003.failing.jsonl",
+      "plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md:153",
+      "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md:70-73",
+      "tests/evaluation/fixture/services/reporting/tests/__init__.py"
+    ],
+    "existingGuidance": [
+      {
+        "ref": "plugins/codejadee-chayen-framework/skills/chayen-implementation/SKILL.md:153",
+        "covers": "fully",
+        "note": "The loaded Entry Skill states DONE only when every required criterion is accept."
+      },
+      {
+        "ref": "plugins/codejadee-chayen-framework/skills/chayen-implementation/references/change-summary.md:70-73",
+        "covers": "fully",
+        "note": "A criterion with no test is uncovered and verify_more. The failing transcript never read this reference."
+      }
+    ],
+    "rejectedCauses": [
+      {
+        "cause": "insufficient-verification",
+        "why": "The guidance already requires per-criterion evidence and forbids DONE without it."
+      },
+      {
+        "cause": "skill-routing",
+        "why": "chayen-implementation loaded; the DONE rule is in its SKILL.md body, so not reading the reference does not explain ignoring it."
+      },
+      {
+        "cause": "conflicting-instructions",
+        "why": "SKILL.md:153 and change-summary.md:70-73 agree; GI-03 and GI-04 check this."
+      }
+    ],
+    "rationale": "Both the Entry Skill and the recipe forbid the observed claim, and the agent loaded the Entry Skill. More guidance would repeat existing rules. The honest action is a known-limitation entry, recorded only after a live replay reproduces the failure; until then this stays a synthetic failure."
+  },
+  "action": {
+    "kind": "record-unresolved-limitation",
+    "targets": [
+      {
+        "path": "docs/chayen/KNOWN_LIMITATIONS.md",
+        "baseSha256": "4d52c628a2e79f8e25b61816fcda8a5e164eb11345b287ec64772080aad1e399"
+      }
+    ],
+    "diff": "tests/distillation/proposals/DP-0003.diff",
+    "summary": "Extend KL-22 with false DONE claims despite loaded guidance, citing FC-0003, once a live replay reproduces it."
+  },
+  "review": {
+    "before": "KL-22 covers verification evidence that is not requested, not a DONE claim for untested criteria.",
+    "after": "KL-22 also names false DONE claims despite loaded guidance, with FC-0003 as the reproduction. No Skill text changes.",
+    "risks": [
+      "Routing collision: none; only a maintainer document changes.",
+      "Recording a limitation from a synthetic failure would overstate it; the decision rules hold this proposal until a live replay reproduces FC-0003."
+    ],
+    "routingImpact": "none",
+    "testsNeeded": [
+      "FC-0003",
+      "tests/skills/recipe-cases.json#rc-04-007-pos-ac-verdicts"
+    ],
+    "humanReview": {
+      "status": "pending",
+      "reviewer": null,
+      "date": null,
+      "notes": null
+    }
+  },
+  "validation": {
+    "comparison": {
+      "baseline": [],
+      "candidate": []
+    }
+  },
+  "decision": "RETURNED_FOR_REVISION",
+  "promotion": null
+}

@@ -16,7 +16,6 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { L0_BUDGET } from "../catalog/skill-registration.mjs";
 import { assertTreeNoLinks } from "./safe-paths.mjs";
 
 const i = process.argv.indexOf("--root");
@@ -46,7 +45,7 @@ assertTreeNoLinks(pluginDir);
 const packageFiles = fs.readdirSync(pluginDir, { recursive: true }).filter(f => fs.statSync(path.join(pluginDir, f)).isFile()).length;
 const references = fs.readdirSync(path.join(pluginDir, "skills"), { recursive: true }).filter(f => /(?:^|[\\/])references[\\/].*\.md$/.test(f)).length;
 const l0 = [...skills].reduce((n, skill) => n + skill.length + (/^description:\s*(.+)$/m.exec(fs.readFileSync(path.join(pluginDir, "skills", skill, "SKILL.md"), "utf8"))?.[1].trim().length ?? 0), 0);
-const facts = { "Plugin name": `\`${manifest.name}\``, "Marketplace name": `\`${marketplaces[0]}\``, "Current version": `\`${manifest.version}\``, "Entry Skills": String(skills.size), "Package files": String(packageFiles), "Skill references": String(references), "L0 metadata": `${l0.toLocaleString("en-US")} / ${L0_BUDGET.toLocaleString("en-US")} characters` };
+const facts = { "Plugin name": `\`${manifest.name}\``, "Marketplace name": `\`${marketplaces[0]}\``, "Current version": `\`${manifest.version}\``, "Entry Skills": String(skills.size), "Package files": String(packageFiles), "Skill references": String(references), "L0 metadata": `${l0.toLocaleString("en-US")} characters` };
 const readme = path.join(root, "README.md");
 if (fs.existsSync(readme)) {
   const body = fs.readFileSync(readme, "utf8");
@@ -86,8 +85,10 @@ for (const file of docs) {
     for (const m of current.matchAll(/\b(\d+) (?:package )?files\b/gi)) if (Number(m[1]) > 100 && Number(m[1]) !== packageFiles) err("D-06", file, `package file count differs from ${packageFiles}`);
     for (const m of current.matchAll(/\b(\d+) (?:skill )?references\b/gi)) if (Number(m[1]) > 100 && Number(m[1]) !== references) err("D-06", file, `reference count differs from ${references}`);
     for (const line of current.split(/\r?\n/)) if (/L0|metadata.*(?:usage|footprint)/i.test(line)) {
-      const pair = /([\d,]+)\s*\/\s*([\d,]+)\s*(?:characters|chars)/.exec(line);
-      if (pair && (Number(pair[1].replaceAll(",", "")) !== l0 || Number(pair[2].replaceAll(",", "")) !== L0_BUDGET)) err("D-06", file, "metadata usage or budget differs from canonical Skills");
+      // D-066: there is no fixed L0 budget. A "used / budget" pair restates the removed cap; a stated usage must match.
+      if (/[\d,]+\s*\/\s*[\d,]+\s*(?:characters|chars)/.test(line)) err("D-06", file, "metadata stated against a fixed budget; D-066 removed the L0 cap, so state usage only");
+      const usage = /\b(?:L0 metadata|metadata usage)\b\D{0,40}?([\d,]{4,})\s*(?:characters|chars)/i.exec(line);
+      if (usage && Number(usage[1].replaceAll(",", "")) !== l0) err("D-06", file, `metadata usage differs from canonical Skills (${l0.toLocaleString("en-US")} characters)`);
     }
   }
   const prose = text.replace(/```[\s\S]*?```/g, (b) => b.replace(/\]\(/g, "] ("));

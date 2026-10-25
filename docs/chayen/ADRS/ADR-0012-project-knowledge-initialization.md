@@ -6,6 +6,14 @@
 - **Related:** D-007, D-008, D-052, D-053, D-062; ADR-0002, ADR-0003,
   ADR-0004, ADR-0005, ADR-0006, ADR-0010; KL-03, KL-05, KL-21, KL-26.
 
+**Superseded components (2026-10-22, D-066,
+[ADR-0013](ADR-0013-extensible-skill-governance.md)):** decision 6's project
+name allow-list (`chayen-init` only) and decision 7's limits (ceiling 16, L0
+7,000) are superseded. Project records are now admitted by validated
+registration, with no count or metadata cap. `chayen-init`, the `.chayen/`
+files, the pointer block and every other decision below are unchanged. The
+text below keeps its original wording.
+
 ## Context
 
 Every stack Skill detects the repository's stack, commands and conventions
@@ -45,6 +53,16 @@ Constraints that shape the design:
 
    Explicit standards and observed patterns stay in separate sections;
    proposals are reported in conversation and never written.
+   *Amended by D-067 (evolution Step 10):* each unit file (or `profile.md` in
+   a single-unit repository) also carries a lightweight change-impact map:
+   boundary and dependencies, entry points, API ownership and consumers,
+   data and migrations, tests, generated code, and dynamic references, each
+   cited or `unknown`. Folders are fingerprinted with `git rev-parse
+   HEAD:<folder>`. The schema stays `project-knowledge/1`; the sections are
+   additive and arrive through the normal previewed refresh. Readers
+   (`chayen-repository` impact analysis and the coding skills) read only the
+   owning unit's file, check freshness read-only, and confirm every fact in
+   the source. No database, service, or runtime is added.
 3. **Preview before every write.** Nothing is written until the user approves
    the exact content or diff. Writes stay inside `.chayen/` and inside approved
    pointer blocks.

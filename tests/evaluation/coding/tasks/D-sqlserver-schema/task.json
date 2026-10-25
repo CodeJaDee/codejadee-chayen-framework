@@ -1,0 +1,49 @@
+{
+  "$schema": "chayen-coding-task/1",
+  "id": "D-sqlserver-schema",
+  "title": "Database correctness: a top-customers query against the real SQL Server schema",
+  "category": "database-correctness",
+  "prompt": "Implement CustomerReport.GetTopCustomersAsync: the top N customers by revenue from orders placed on or after the given date, excluding cancelled orders, with each customer's primary email (null when there is none). Order by revenue, highest first, and by customer id on ties. Reject a non-positive N. Use the existing SqlConnection.",
+  "stack": [
+    { "name": ".NET SDK", "version": "10.0", "source": "repo/global.json" },
+    { "name": "Microsoft.Data.SqlClient", "version": "6.1.1", "source": "repo/src/Reports/Reports.csproj" },
+    { "name": "SQL Server (oracle run on LocalDB)", "version": "2019 or later; verified on the local SqlLocalDB", "source": "repo/README.md, repo/db/migrations" },
+    { "name": "xUnit", "version": "2.9.3", "source": "repo/tests/Reports.Tests/Reports.Tests.csproj" }
+  ],
+  "commands": {
+    "build": "dotnet build tests/Reports.Tests",
+    "test": "dotnet test tests/Reports.Tests"
+  },
+  "scope": {
+    "allowed": ["src/Reports/**", "tests/Reports.Tests/**"],
+    "mustNotChange": ["db/**", "src/Reports/TopCustomer.cs", "global.json", "**/*.csproj"],
+    "note": "The query belongs in CustomerReport; the schema in db/migrations is the source of truth and is not changed."
+  },
+  "acceptanceCriteria": [
+    { "id": "AC-1", "text": "Customers are ranked by the sum of non-cancelled order totals placed on or after the date (inclusive), highest first, ties by customer id; customers with no counted orders are left out.", "oracle": "hidden Ranks_by_revenue…, Customers_without_counted_orders…, Earlier_orders_count…" },
+    { "id": "AC-2", "text": "Email is the customer's primary email contact, or null when there is none.", "oracle": "hidden Email_is_the_primary_email_contact_or_null" },
+    { "id": "AC-3", "text": "Table and column names come from db/migrations; no invented name (detected as SQL errors 207/208, INVENTED_SCHEMA).", "oracle": "every hidden query test; boundary forbids changing db/**" },
+    { "id": "AC-4", "text": "A non-positive N is rejected with an ArgumentException.", "oracle": "hidden A_non_positive_top_is_rejected" }
+  ],
+  "grading": [
+    { "check": "boundary" },
+    { "check": "dotnet-test", "name": "visible tests (no regression)", "project": "tests/Reports.Tests" },
+    { "check": "dotnet-test", "name": "hidden SQL Server oracle", "grader": "grader/HiddenTests", "project": ".grader/HiddenTests", "requires": "sqlserver", "minPassed": 6 }
+  ],
+  "negativeChecks": [
+    "Cancelled orders and orders before the date never count.",
+    "A customer with only a non-primary email gets null, not that email.",
+    "N of 0 or less is rejected."
+  ],
+  "expected": {
+    "initial": "FAIL",
+    "reference": "PASS",
+    "negatives": [
+      { "id": "N1-guessed-schema", "expect": "FAIL", "failedChecks": ["hidden SQL Server oracle"], "detects": "invented table and column names (INVENTED_SCHEMA)" },
+      { "id": "N2-includes-cancelled", "expect": "FAIL", "failedChecks": ["hidden SQL Server oracle"], "detects": "cancelled orders counted as revenue" },
+      { "id": "N3-ignores-primary-flag", "expect": "FAIL", "failedChecks": ["hidden SQL Server oracle"], "detects": "a non-primary email reported as the customer's email" },
+      { "id": "N4-changes-schema-to-fit", "expect": "FAIL", "failedChecks": ["boundary", "hidden SQL Server oracle"], "detects": "a migration added to make a guessed column exist" }
+    ]
+  },
+  "reset": "Give the agent a fresh copy of repo/ only (never grader/, reference/ or negatives/), initialised as a git repository with one commit. The oracle creates ChayenCoding_<guid> on LocalDB and drops it; nothing persists."
+}

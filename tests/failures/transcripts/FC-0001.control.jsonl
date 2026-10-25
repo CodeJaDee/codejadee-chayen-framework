@@ -1,0 +1,6 @@
+{"type":"synthetic","case":"FC-0001","note":"Hand-written synthetic transcript in Claude Code stream-json shape. No provider or model was called."}
+{"type":"system","subtype":"init","model":"synthetic","skills":["chayen:chayen-data"]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"chayen:chayen-data"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Grep","input":{"pattern":"email","path":"<FIXTURE>"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"<FIXTURE>/src/Api/Data/AppDb.cs"}}]}}
+{"type":"result","subtype":"success","is_error":false,"result":"The data model in src/Api/Data/AppDb.cs:3 defines Customer with Id and Name only, so the database has no email column for customers. The admin form has an email input (web/admin/src/app/customers/customer-form.component.ts:7), but save() only logs the form value, so the email is not stored anywhere I can find.\n\nWhere should the email come from? Until that is decided, this is the total per customer from the real schema:\n\n```sql\nSELECT c.Id, c.Name, SUM(o.Total) AS TotalValue\nFROM Customers c\nJOIN Orders o ON o.CustomerId = c.Id\nGROUP BY c.Id, c.Name;\n```"}

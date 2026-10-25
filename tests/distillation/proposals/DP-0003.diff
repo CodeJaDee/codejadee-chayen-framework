@@ -1,0 +1,11 @@
+--- a/docs/chayen/KNOWN_LIMITATIONS.md
++++ b/docs/chayen/KNOWN_LIMITATIONS.md
+@@ -46,7 +46,7 @@ fixture.
+ |---|---|---|
+ | KL-20 | **Next.js route-handler tasks do not trigger a skill.** The agent still fixed the bug correctly without one. | `pr-nextjs-route`: 0 of 5 runs (Step 32 ×4, Step 34 ×1) |
+ | KL-21 | **Automatic routing is unreliable even for clear tasks.** Pooled automatic routing was 12/22 (55%). The STEP 34 re-run loaded no skill for the ASP.NET, Angular and SQL Server probes, which had passed 2/2 in Step 32. When the agent began by delegating exploration to a sub-agent, it often never loaded a skill. | Per-probe pooled results: ASP.NET 2/3, Angular 2/3, SQL Server 2/3, PostgreSQL 3/3, pytest 3/5, Next.js 0/5 (FINAL_AUDIT_REPORT §4) |
+-| KL-22 | **Verification evidence is often not requested** (test commands, EXPLAIN, plans): 3 of 10 graded items in Step 32, agent-graded only. | EVALUATION_REPORT §5; EG-18 |
++| KL-22 | **Verification evidence is often not requested** (test commands, EXPLAIN, plans): 3 of 10 graded items in Step 32, agent-graded only. A completion report can also claim DONE for criteria that were never tested, although the loaded guidance forbids it (failure case FC-0003, reproduced by a live replay). | EVALUATION_REPORT §5; EG-18; FC-0003 |
+ | KL-23 | **Turn limits cut off answers** in non-interactive runs (4 of 26 in Step 32). | EVALUATION_REPORT §4.3 |
+ | KL-24 | **Under-triggering in empty workspaces.** Competing personal, project, or built-in skills can win. | POC_REPORT §4; Step 32 empty-workspace check |
+ | KL-25 | **Copilot over-activation** on Unity and SwiftUI prompts, on the earlier 6-skill build. Not re-measured. | POC_REPORT §4.3 |

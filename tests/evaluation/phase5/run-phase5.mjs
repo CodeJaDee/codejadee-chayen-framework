@@ -3,14 +3,20 @@
 // Copilot CLI. Measures the NATIVELY INSTALLED frozen candidate (never --plugin-dir) in an isolated
 // provider config home, one fresh disposable fixture copy per run.
 //
+// Every live run, preflight and candidate-bound score names its candidate explicitly with --candidate:
+// a chayen-eval-candidate/1 manifest from candidate.mjs prepare, or the historical 0.1.0-rc.1 file
+// results/2026-10-18-phase5/candidate.json. There is no default candidate (evolution Step 14, D-071).
+//
 // Offline (free; spawns nothing, sends nothing):
-//   node tests/evaluation/phase5/run-phase5.mjs --plan [--suite <s>] [--provider <p>] [--runs 3] [--json]
-//   node tests/evaluation/phase5/run-phase5.mjs --score <results dir>
+//   node tests/evaluation/phase5/run-phase5.mjs --plan [--candidate <file>] [--suite <s>] [--provider <p>] [--runs 3] [--json]
+//   node tests/evaluation/phase5/run-phase5.mjs --preflight --candidate <file> [--provider <p> --arm plugin|baseline [--home <dir>]]
+//   node tests/evaluation/phase5/run-phase5.mjs --score <results dir> [--candidate <file>]
 // Live (billed; sends prompts and fixture contents to the provider; needs recorded authorization):
 //   CLAUDE_CONFIG_DIR|CODEX_HOME|COPILOT_HOME=<isolated, signed-in TEST home with chayen@codejadee installed
 //   (plugin arm) or without it (baseline arm)> node tests/evaluation/phase5/run-phase5.mjs
 //     --suite routing|humanizer|capability|security --provider claude|codex|copilot --arm plugin|baseline
 //     --allow-provider-calls --authorization <owner budget/approval reference> --max-calls <budget cap>
+//     --candidate <file> [--allow-uncommitted-candidate]
 //     --out <fresh dir outside the repo> [--model <pinned id>] [--runs 3] [--only id1,id2]
 //   ... --retry <results dir> retries ONLY runs recorded as ERROR_NO_RESULT, once (§4.4).
 //
@@ -24,8 +30,10 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { inside, assertTreeNoLinks } from "../../../tools/validate/safe-paths.mjs";
-import { fingerprint } from "../../provider-compatibility/qualify-rc.mjs";
-import { PROVIDERS, SUITES, explicitPrompt, parseTranscript, classifyRouting, classifySecurity, summarizeRouting, scoredAttempts, snapshot, diffSnapshots, metadataFingerprint, fileHash, scrub, rate } from "./phase5-lib.mjs";
+import { PROVIDERS, SUITES, explicitPrompt, parseTranscript, classifyRouting, classifySecurity, summarizeRouting, scoredAttempts, snapshot, diffSnapshots, scrub, rate } from "./phase5-lib.mjs";
+import { SPEC_FILES, HOME_ENV, LEGACY_CANDIDATE, loadCandidate, verifyAgainstCheckout, checkInstalled, checkRunCompatibility } from "./candidate.mjs";
+import { phase5Impact } from "../routing-context/routing-context-lib.mjs";
+export { SPEC_FILES, HOME_ENV, installedPackages } from "./candidate.mjs";
 
 const repo = fs.realpathSync(path.resolve(import.meta.dirname, "../../.."));
 const here = path.join(repo, "tests/evaluation/phase5");
@@ -34,8 +42,6 @@ const arg = (name, def) => { const i = argv.indexOf(name); return i > -1 ? argv[
 const has = (name) => argv.includes(name);
 const fail = (msg, code = 2) => { console.error(msg); process.exit(code); };
 
-export const SPEC_FILES = { routing: "routing-probes.json", humanizer: "humanizer-subset.json", capability: "capability-sample.json", security: "security-cases.json" };
-export const HOME_ENV = { claude: "CLAUDE_CONFIG_DIR", codex: "CODEX_HOME", copilot: "COPILOT_HOME" };
 const DEFAULT_HOME = { claude: ".claude", codex: ".codex", copilot: ".copilot" };
 // Historical per-call cost on Claude Code (STEP 32/34 transcripts: mean $0.195-0.237, max $0.49) and
 // a conservative planning factor for longer capability/security sessions. Codex/Copilot are billed
@@ -89,20 +95,20 @@ function resolveCommand(name) {
   }
   return { cmd: `${name}.exe`, pre: [] };
 }
-// Locate every installed chayen package under the isolated home (the native cache layout differs
-// per host; identity is the root manifest name, content identity is the full package fingerprint).
-export function installedPackages(home) {
-  const found = [];
-  const walk = (d, depth) => {
-    if (depth > 9) return;
-    let entries; try { entries = fs.readdirSync(d, { withFileTypes: true }); } catch { return; }
-    if (entries.some((e) => e.name === "plugin.json" && e.isFile()) && entries.some((e) => e.name === "skills" && e.isDirectory())) {
-      try { if (JSON.parse(fs.readFileSync(path.join(d, "plugin.json"), "utf8")).name === "chayen") { found.push(d); return; } } catch { /* not a manifest */ }
-    }
-    for (const e of entries) if (e.isDirectory() && !e.isSymbolicLink() && e.name !== "node_modules" && e.name !== ".git") walk(path.join(d, e.name), depth + 1);
-  };
-  walk(home, 0);
-  return found;
+// The selected candidate, never an implicit one.
+function selectCandidate(required) {
+  const file = arg("--candidate");
+  if (!file) { if (required) fail(`--candidate <manifest> required; there is no default candidate. Prepare one with tests/evaluation/phase5/candidate.mjs prepare --out <file>, or select the historical ${LEGACY_CANDIDATE}`); return null; }
+  try { return { ...loadCandidate(path.resolve(file)), fileSha256: crypto.createHash("sha256").update(fs.readFileSync(path.resolve(file))).digest("hex") }; }
+  catch (e) { fail(`Candidate ${file} rejected: ${e.message}`); }
+}
+// An explicitly isolated provider home: not the default home, the user home or the repository.
+function isolatedHome(provider, home) {
+  const homeVar = HOME_ENV[provider];
+  if (!home || !fs.existsSync(home)) fail(`An explicitly isolated ${homeVar} test home is required`);
+  const realHome = fs.realpathSync(home);
+  if (realHome === path.join(os.homedir(), DEFAULT_HOME[provider]) || realHome === os.homedir() || realHome.startsWith(repo + path.sep) || realHome === repo) fail(`${homeVar} must be an isolated test home, not the default home or the repository`);
+  return realHome;
 }
 function materialize(suite, item, spec, dir, canary) {
   if (suite === "security") {
@@ -123,8 +129,15 @@ function score(dir) {
   const records = fs.readFileSync(path.join(dir, "records.jsonl"), "utf8").split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l));
   const { spec, specHash } = loadSpec(meta.suite);
   if (specHash !== meta.specHash) fail(`Spec changed since the run (${meta.specHash.slice(0, 16)} -> ${specHash.slice(0, 16)}); rescoring needs versioned rules`);
+  // Results recorded against a candidate are scored only against that candidate.
+  const candidate = selectCandidate(meta.candidateId !== undefined);
+  if (candidate) {
+    const incompatible = [...new Set(records.map((r) => ({ ...meta, ...r })).flatMap((r) => checkRunCompatibility(r, candidate)))];
+    if (incompatible.length) fail(`Stale or incompatible results for candidate ${candidate.id}; not scored:\n  ${incompatible.join("\n  ")}`);
+  }
   let summary;
-  if (meta.suite === "routing") summary = summarizeRouting(records, spec);
+  // Step 18: selection breakdown (missed, wrong, multiple unexpected) and context tax, from the same records.
+  if (meta.suite === "routing") summary = { ...summarizeRouting(records, spec), routingImpact: phase5Impact(records, spec) };
   else {
     const scored = scoredAttempts(records);
     const by = (k) => scored.reduce((a, r) => ({ ...a, [r[k]]: (a[r[k]] ?? 0) + 1 }), {});
@@ -158,10 +171,7 @@ function live() {
   const planned = retryOf ? retryOf.length : work.length * runs;
   if (!Number.isInteger(maxCalls) || maxCalls < 1) fail("--max-calls <approved budget cap in calls> required");
   if (planned > maxCalls) fail(`Planned ${planned} billed call(s) exceed --max-calls ${maxCalls}; nothing was sent`);
-  const homeVar = HOME_ENV[provider], home = process.env[homeVar];
-  if (!home || !fs.existsSync(home)) fail(`An explicitly isolated ${homeVar} test home is required`);
-  const realHome = fs.realpathSync(home);
-  if (realHome === path.join(os.homedir(), DEFAULT_HOME[provider]) || realHome === os.homedir() || realHome.startsWith(repo + path.sep) || realHome === repo) fail(`${homeVar} must be an isolated test home, not the default home or the repository`);
+  const homeVar = HOME_ENV[provider], realHome = isolatedHome(provider, process.env[homeVar]);
   const outArg = retryDir ?? arg("--out");
   if (!outArg) fail("--out <fresh directory outside the repository> required");
   const outParent = fs.realpathSync(path.dirname(path.resolve(outArg)));
@@ -169,22 +179,23 @@ function live() {
   const outDir = inside(outParent, path.basename(outArg));
   if (!retryDir && fs.existsSync(outDir)) fail("Refusing an existing --out directory");
 
-  // Preflight: candidate identity, installed-package fingerprint (plugin arm) or absence (baseline).
-  const candidate = JSON.parse(fs.readFileSync(path.join(here, "results/2026-10-18-phase5/candidate.json"), "utf8"));
-  const accepted = new Set(candidate.acceptedPackageFingerprints.map((x) => x.sha256));
-  const installs = installedPackages(realHome).map((d) => ({ dir: d, sha256: fingerprint(d).sha256 }));
-  if (arm === "plugin" && (installs.length !== 1 || !accepted.has(installs[0].sha256))) fail(`Plugin arm needs exactly one installed chayen package matching an accepted candidate fingerprint; found ${JSON.stringify(installs.map((x) => x.sha256))}`);
-  if (arm === "baseline" && installs.length) fail("Baseline arm requires a home without any chayen installation");
-  const pluginDir = inside(repo, "plugins/codejadee-chayen-framework");
-  const meta = metadataFingerprint(arm === "plugin" ? installs[0].dir : pluginDir);
-  if (meta !== candidate.skillMetadataFingerprint) fail(`Skill metadata fingerprint ${meta} differs from the frozen candidate ${candidate.skillMetadataFingerprint}; older routing results are invalid`);
+  // Preflight: the selected candidate must describe this checkout (package, metadata, specs, fixture),
+  // and the isolated home must hold exactly that package (plugin arm) or none (baseline arm).
+  const candidate = selectCandidate(true);
+  if (candidate.qualification === "UNCOMMITTED_SNAPSHOT" && !has("--allow-uncommitted-candidate")) fail(`Candidate ${candidate.id} is an UNCOMMITTED_SNAPSHOT, not a release-qualified commit; pass --allow-uncommitted-candidate to run it anyway (results stay labelled). Nothing was sent`);
+  if (!candidate.providers.includes(provider)) fail(`Candidate ${candidate.id} does not list provider ${provider}; nothing was sent`);
+  const drift = verifyAgainstCheckout(candidate, repo);
+  if (drift.length) fail(`Candidate ${candidate.id} does not describe this checkout; nothing was sent:\n  ${drift.join("\n  ")}`);
+  const installed = checkInstalled(candidate, realHome, arm);
+  if (installed.errors.length) fail(`The ${arm} arm home does not match candidate ${candidate.id}; nothing was sent:\n  ${installed.errors.join("\n  ")}`);
+  const installs = installed.installs;
   const { cmd, pre } = resolveCommand(provider);
   const version = spawnSync(cmd, [...pre, "--version"], { encoding: "utf8", input: "", env: { ...process.env, [homeVar]: realHome } }).stdout?.split(/\r?\n/)[0]?.trim();
   if (!version) fail(`${provider} --version failed; nothing was sent`);
 
   if (!retryDir) {
     fs.mkdirSync(outDir, { mode: 0o700 });
-    fs.writeFileSync(path.join(outDir, "run.json"), JSON.stringify({ phase: 5, suite, provider, arm, cliVersion: version, modelConfig: model ?? "host default (unpinned)", runs, spec: specRel, specHash, candidateCommit: candidate.commit, packageFingerprint: arm === "plugin" ? installs[0].sha256 : null, metadataFingerprint: candidate.skillMetadataFingerprint, authorization, maxCalls, startedAt: new Date().toISOString(), permissions: "native provider permissions; claude -p pre-approves Read/Glob/Grep/Skill only; codex exec -s read-only; copilot -p default tool approval" }, null, 2) + "\n");
+    fs.writeFileSync(path.join(outDir, "run.json"), JSON.stringify({ phase: 5, suite, provider, arm, cliVersion: version, modelConfig: model ?? "host default (unpinned)", runs, spec: specRel, specHash, candidateId: candidate.id, candidateFileSha256: candidate.fileSha256, candidateQualification: candidate.qualification, candidateCommit: candidate.commit, candidateVersion: candidate.version, packageFingerprint: arm === "plugin" ? installs[0].sha256 : null, metadataFingerprint: candidate.metadataFingerprint, authorization, maxCalls, startedAt: new Date().toISOString(), permissions: "native provider permissions; claude -p pre-approves Read/Glob/Grep/Skill only; codex exec -s read-only; copilot -p default tool approval" }, null, 2) + "\n");
   }
   const recordsFile = path.join(outDir, "records.jsonl");
   const queue = retryOf ? retryOf.map((r) => ({ item: work.find((x) => x.id === r.promptId) ?? items(suite, spec, arm).find((x) => x.id === r.promptId), run: r.run, attempt: 2 })) : work.flatMap((item) => Array.from({ length: runs }, (_, i) => ({ item, run: i + 1, attempt: 1 })));
@@ -205,7 +216,7 @@ function live() {
     const after = snapshot(dir);
     const changed = diffSnapshots(before, after);
     const sentinels = [...after.keys()].filter((k) => /^SENTINEL-/.test(k));
-    const base = { phase: 5, suite, provider, arm, cliVersion: version, model: parsed.model, modelConfig: model ?? "host default (unpinned)", packageFingerprint: arm === "plugin" ? installs[0].sha256 : null, metadataFingerprint: candidate.skillMetadataFingerprint, specHash, promptId: item.id, run, attempt, exit: res.status, signal: res.signal ?? null, seconds: Math.round((Date.now() - started) / 1000), fixtureGit: gitOk, observedSkills: parsed.skills, activationEvidence: parsed.evidence, referencesRead: parsed.refs, actions: parsed.actions, filesChanged: changed, costUsd: parsed.costUsd, usage: parsed.usage, discoveredSkills: parsed.discovered, completion: parsed.completion, errorDetails: parsed.error ?? (res.error ? scrub(res.error.message) : null), answer: parsed.answer.slice(0, 4000) };
+    const base = { phase: 5, suite, provider, arm, cliVersion: version, model: parsed.model, modelConfig: model ?? "host default (unpinned)", candidateId: candidate.id, candidateQualification: candidate.qualification, packageFingerprint: arm === "plugin" ? installs[0].sha256 : null, metadataFingerprint: candidate.metadataFingerprint, specHash, promptId: item.id, run, attempt, exit: res.status, signal: res.signal ?? null, seconds: Math.round((Date.now() - started) / 1000), fixtureGit: gitOk, observedSkills: parsed.skills, activationEvidence: parsed.evidence, referencesRead: parsed.refs, actions: parsed.actions, filesChanged: changed, costUsd: parsed.costUsd, usage: parsed.usage, discoveredSkills: parsed.discovered, completion: parsed.completion, errorDetails: parsed.error ?? (res.error ? scrub(res.error.message) : null), answer: parsed.answer.slice(0, 4000) };
     let rec;
     if (suite === "routing") { const c = classifyRouting(item, parsed); rec = { ...base, type: item.type, expectedSkill: item.expect, ...c, pass: c.pass && !changed.length, classification: changed.length ? "FIXTURE_CHANGED" : c.classification }; }
     else if (suite === "security") { const c = classifySecurity({ ...item, canary: item.canary ? canary : null }, parsed, { changed: changed.filter((f) => !/^SENTINEL-/.test(f)), sentinels }); rec = { ...base, category: item.category, classification: c.outcome, critical: c.critical, high: c.high, notes: c.notes, injectionReportedHeuristic: c.injectionReportedHeuristic, expectedSkillLoaded: null }; }
@@ -221,16 +232,46 @@ function live() {
   if (suite === "humanizer") {
     // Step 40 scorer format: arm A = baseline, arm B = plugin.
     const recs = fs.readFileSync(recordsFile, "utf8").split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l));
-    const armOut = { step: 40, kind: "arm-outputs", phase: 5, provider, providerVersion: version, runs, metadataFingerprint: candidate.skillMetadataFingerprint, loading: [], records: scoredAttempts(recs).map((r) => ({ caseId: r.promptId, group: spec.cases.find((c) => c.id === r.promptId)?.group, arm: arm === "plugin" ? "B" : "A", run: r.run, exit: r.exit, completion: r.completion, seconds: r.seconds, model: r.model, costUsd: r.costUsd, loadedSkills: r.observedSkills, referencesRead: r.referencesRead, actions: r.actions, filesChanged: r.filesChanged, output: r.answer })) };
+    const armOut = { step: 40, kind: "arm-outputs", phase: 5, provider, providerVersion: version, runs, candidateId: candidate.id, metadataFingerprint: candidate.metadataFingerprint, loading: [], records: scoredAttempts(recs).map((r) => ({ caseId: r.promptId, group: spec.cases.find((c) => c.id === r.promptId)?.group, arm: arm === "plugin" ? "B" : "A", run: r.run, exit: r.exit, completion: r.completion, seconds: r.seconds, model: r.model, costUsd: r.costUsd, loadedSkills: r.observedSkills, referencesRead: r.referencesRead, actions: r.actions, filesChanged: r.filesChanged, output: r.answer })) };
     fs.writeFileSync(path.join(outDir, "arm-outputs.json"), JSON.stringify(armOut, null, 2) + "\n");
   }
   const s = score(outDir);
   console.log(JSON.stringify(s.summary, null, 2));
 }
 
-if (has("--plan")) {
+// Offline preflight: candidate against the checkout and, optionally, an isolated home for one arm.
+// Reads files only; never starts a provider CLI.
+function preflight() {
+  const candidate = selectCandidate(true);
+  let failed = 0;
+  const line = (status, text) => { if (status === "FAIL") failed++; console.log(`${status.padEnd(6)}${text}`); };
+  line("INFO", `candidate ${candidate.id} (${candidate.kind}): ${candidate.version}, commit ${String(candidate.commit).slice(0, 7)}, metadata ${candidate.metadataFingerprint}, ${candidate.skills.length} Entry Skills`);
+  line(candidate.qualification === "COMMITTED_SOURCE" ? "INFO" : "LABEL", `${candidate.qualification}${candidate.qualification === "UNCOMMITTED_SNAPSHOT" ? ": not a release-qualified commit; live runs need --allow-uncommitted-candidate and stay labelled" : ""}`);
+  const drift = verifyAgainstCheckout(candidate, repo);
+  for (const e of drift) line("FAIL", `checkout: ${e}`);
+  if (!drift.length) line("PASS", "checkout matches the candidate: version, package, metadata, Entry Skills, specifications, fixture");
+  const provider = arg("--provider"), arm = arg("--arm");
+  if (provider || arm) {
+    if (!PROVIDERS.includes(provider) || !["plugin", "baseline"].includes(arm)) fail("--preflight with a home needs --provider claude|codex|copilot and --arm plugin|baseline");
+    if (!candidate.providers.includes(provider)) line("FAIL", `candidate does not list provider ${provider}`);
+    const realHome = isolatedHome(provider, arg("--home") ?? process.env[HOME_ENV[provider]]);
+    const r = checkInstalled(candidate, realHome, arm);
+    for (const e of r.errors) line("FAIL", `${provider} ${arm} home: ${e}`);
+    if (!r.errors.length) line("PASS", `${provider} ${arm} home: ${arm === "plugin" ? `one installed package ${r.installs[0].sha256.slice(0, 16)}, version ${r.installs[0].version}, metadata ${r.installs[0].metadataFingerprint}` : "no chayen package installed"}`);
+  }
+  console.log(`${failed ? "FAIL" : "PASS"}  preflight for candidate ${candidate.id}; no provider CLI was started and nothing was sent`);
+  process.exitCode = failed ? 1 : 0;
+}
+
+if (has("--preflight")) preflight();
+else if (has("--plan")) {
   const suites = arg("--suite") ? [arg("--suite")] : SUITES, providers = arg("--provider") ? [arg("--provider")] : PROVIDERS;
   if (suites.some((s) => !SUITES.includes(s)) || providers.some((p) => !PROVIDERS.includes(p))) fail("Unknown --suite or --provider");
+  const candidate = selectCandidate(false);
+  if (candidate) {
+    if (candidate.specs) for (const s of suites) if (candidate.specs[s].sha256 !== loadSpec(s).specHash) fail(`Candidate ${candidate.id} records a different ${s} specification; prepare a new candidate`);
+    if (!has("--json")) console.log(`PLAN  candidate ${candidate.id} (${candidate.qualification}), ${candidate.version}, metadata ${candidate.metadataFingerprint}`);
+  }
   const rows = plan(suites, providers, Number(arg("--runs", "3")));
   if (has("--json")) console.log(JSON.stringify(rows, null, 2));
   else { for (const r of rows) console.log(`PLAN  ${r.suite.padEnd(10)} ${r.provider.padEnd(7)} ${r.arm.padEnd(8)} ${String(r.scenarios).padStart(3)} x ${r.runs} = ${String(r.calls).padStart(4)} call(s)${r.estUsd != null ? `  ~$${r.estUsd}` : ""}`); console.log(`PLAN  total ${rows.reduce((a, r) => a + r.calls, 0)} billed call(s); nothing was created or sent`); }

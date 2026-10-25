@@ -78,7 +78,8 @@ If the request does not fit, stop following this skill and continue normally wit
   - validation, auth, job, messaging, and HTTP-client libraries;
   - test setup;
   - the real build and test commands;
-  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+  - `.chayen/profile.md`, `.chayen/rules.md`, and the unit file in
+    `.chayen/units/` for the code being changed, when present: use them as a
     map, confirm each fact in the source, and trust the source when the two
     disagree.
 - **Ask when missing and it matters:**
@@ -88,6 +89,11 @@ If the request does not fit, stop following this skill and continue normally wit
   - whether a database change may be applied locally;
   - what "done" looks like, when the request is too vague to state
     acceptance criteria.
+
+  Ask all such questions in one message before editing, and never invent
+  the missing contract, permission or data field. A fully specified
+  low-risk change needs no questions, and confirming the request never
+  approves a risky action.
 
 ## Workflow
 
@@ -154,9 +160,12 @@ No matching workflow => continue normal native behavior.
   rollback path is described.
 - Nothing is claimed as verified without a command and its result. Checks
   that could not run are NOT_RUN, with a reason.
-- When the task has acceptance criteria, each one is mapped to its evidence
-  (a test, a request and its response, or a diff), with a verdict: accept,
-  verify_more, or revise.
+- When the task has acceptance criteria, each one records its method,
+  environment, evidence (a test, a request and its response, or a diff),
+  freshness, check status and one verdict: accept, verify_more, or revise.
+  An authorization criterion needs a request-level test of the allowed and
+  denied paths; a unit test or a diff alone leaves it verify_more. DONE
+  needs every required criterion at accept.
 
 ## Failure handling
 

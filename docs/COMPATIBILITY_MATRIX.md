@@ -1,10 +1,31 @@
 # Compatibility matrix
 
-**Current build:** `1.1.2` (D-065): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1` and `1.1.2` change guidance text in five Skills since `1.1.0` and keep the Skill metadata. The results below were recorded on the `0.1.0-rc.1` candidate, before `chayen-init` was added; none of `1.0.0`, `1.1.0`, `1.1.1` or `1.1.2` has been installed on a host yet.
-**Reviewed:** 2026-10-18, Phase 4. Production target: Claude Code CLI,
+**Current build:** `1.1.3` (D-077): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1`, `1.1.2` and `1.1.3` change guidance text only since `1.1.0` and keep the Skill metadata. The 2026-10-23 rows below were recorded on a working-tree snapshot with the Skill content of `1.1.3`, then still versioned `1.1.2`; `1.1.3` itself has not been installed on a host. A working-tree snapshot of `1.1.2` was installed natively in isolated test profiles on 2026-10-23 (evolution Step 19); `1.0.0`, `1.1.0` and `1.1.1` were never installed on a host.
+**Reviewed:** 2026-10-23, evolution Step 19. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 
-## Current build
+## Current build (`1.1.2` working-tree snapshot, 2026-10-23)
+
+Local-path marketplace, one isolated profile per CLI, no login and no model
+turn. Real provider configurations were unchanged. Details, commands and
+findings are in the
+[Step 19 report](chayen/evolution/PROVIDER_SECURITY_REPORT.md).
+
+| Check | Claude Code CLI | Codex CLI | Copilot CLI |
+|---|---|---|---|
+| Native version tested | 2.1.220 | 0.163.0 | 1.0.89, below the 1.0.91 minimum: BLOCKED |
+| Native manifest validation (`plugin validate --strict`) | PASS | No such command | BLOCKED |
+| Local marketplace register/install/list; identity `chayen@codejadee` 1.1.2 | PASS | PASS | BLOCKED |
+| Native discovery; complete package hash | PASS; 16 Skills | PASS; 16 Skills, descriptions unshortened | BLOCKED |
+| Disable/enable | PASS command; disabled loading BLOCKED | UNSUPPORTED subcommands; native config alternative PASS (0/16 disabled) | BLOCKED |
+| Update version and content | PASS | UNSUPPORTED dedicated update; native remove/add PASS | BLOCKED |
+| Uninstall, reinstall, new process, former-identifier migration | PASS | PASS | BLOCKED |
+| Test-profile isolation | Configs unchanged; personal-Skill visibility not observable without a model session | FAIL: personal Skills from outside the profile are visible | BLOCKED |
+| Qualification on a committed frozen candidate | BLOCKED; freeze pending | BLOCKED; freeze pending | BLOCKED |
+| Automatic routing >=85%, explicit invocation, no-match | NOT_RUN | NOT_RUN | NOT_RUN |
+| Adversarial security cases | BLOCKED | BLOCKED | BLOCKED |
+
+## Previous candidate (`0.1.0-rc.1`, Phase 4)
 
 Rows record the `0.1.0-rc.1` candidate, before `chayen-init` was added.
 

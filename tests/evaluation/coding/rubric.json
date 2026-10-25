@@ -1,0 +1,94 @@
+{
+  "$schema": "chayen-coding-rubric/1",
+  "note": "Maps each task's acceptance criteria to the deterministic grader checks of its task.json (evolution Step 17, D-074). kind follows the Step 13 audit contract (logic, ui-interaction, api-authorization) plus process for deterministic contract checks. An evidence item names a grading check; tests narrows it to named hidden tests (a failed name matching one of them fails the item); failOn narrows a failed check to details matching the pattern. llmAllowed marks the only items a separately labelled LLM grade may comment on.",
+  "tasks": {
+    "A-dotnet-bugfix": {
+      "completionClaim": "compare",
+      "functional": ["hidden oracle"],
+      "criteria": {
+        "AC-1": { "kind": "logic", "required": true, "evidence": [{ "check": "hidden oracle", "level": "request", "tests": ["TotalPages_is_the_ceiling_of_count_over_page_size"] }] },
+        "AC-2": { "kind": "logic", "required": true, "evidence": [
+          { "check": "hidden oracle", "level": "request", "tests": ["Response_shape_is_unchanged", "A_page_past_the_end_is_empty_not_an_error"] },
+          { "check": "visible tests (no regression)", "level": "integration" },
+          { "check": "boundary", "level": "deterministic-check", "failOn": "must not change" }] },
+        "AC-3": { "kind": "logic", "required": true, "evidence": [{ "check": "hidden oracle", "level": "request", "tests": ["Invalid_paging_is_still_a_problem_details_400"] }] },
+        "AC-4": { "kind": "process", "required": true, "evidence": [{ "check": "regression-test-detects", "level": "deterministic-check" }] }
+      }
+    },
+    "B-crossstack-csv-export": {
+      "completionClaim": "compare",
+      "functional": ["hidden API oracle", "Angular export spec"],
+      "criteria": {
+        "AC-1": { "kind": "logic", "required": true, "evidence": [{ "check": "hidden API oracle", "level": "request", "tests": ["Sales_users_get_the_filtered_orders_as_csv", "The_download_is_an_attachment_named_orders_csv"] }] },
+        "AC-2": { "kind": "logic", "required": true, "evidence": [{ "check": "hidden API oracle", "level": "request", "tests": ["Commas_quotes_and_line_breaks_are_escaped", "Totals_and_dates_do_not_depend_on_the_server_culture"] }] },
+        "AC-3": { "kind": "api-authorization", "required": true, "deniedPaths": ["unauthenticated", "forbidden"], "evidence": [
+          { "check": "hidden API oracle", "level": "request", "path": "allowed", "tests": ["Sales_users_get_the_filtered_orders_as_csv", "The_existing_list_endpoint_is_unchanged_for_other_roles"] },
+          { "check": "hidden API oracle", "level": "request", "path": "unauthenticated", "tests": ["Anonymous_callers_get_401"] },
+          { "check": "hidden API oracle", "level": "request", "path": "forbidden", "tests": ["Users_without_the_Sales_role_get_403"] },
+          { "check": "visible API tests (no regression)", "level": "integration", "path": "allowed" }] },
+        "AC-4": { "kind": "ui-interaction", "required": true, "evidence": [
+          { "check": "frontend export wiring (weak)", "level": "static" },
+          { "check": "Angular export spec", "level": "component" }] }
+      }
+    },
+    "C-angular-interaction": {
+      "completionClaim": "compare",
+      "functional": ["filter rules (Node oracle)", "Angular interaction spec"],
+      "criteria": {
+        "AC-1": { "kind": "ui-interaction", "required": true, "evidence": [
+          { "check": "filter rules (Node oracle)", "level": "unit" },
+          { "check": "Angular interaction spec", "level": "component" }] },
+        "AC-2": { "kind": "ui-interaction", "required": true, "evidence": [
+          { "check": "template interaction wiring (weak)", "level": "static" },
+          { "check": "Angular interaction spec", "level": "component" }] },
+        "AC-3": { "kind": "ui-interaction", "required": true, "evidence": [
+          { "check": "template interaction wiring (weak)", "level": "static" },
+          { "check": "Angular interaction spec", "level": "component" }] }
+      }
+    },
+    "D-sqlserver-schema": {
+      "completionClaim": "compare",
+      "functional": ["hidden SQL Server oracle"],
+      "criteria": {
+        "AC-1": { "kind": "logic", "required": true, "evidence": [{ "check": "hidden SQL Server oracle", "level": "integration", "tests": ["Ranks_by_revenue_since_the_date_excluding_cancelled_orders", "Customers_without_counted_orders_are_left_out_and_the_boundary_is_inclusive", "Earlier_orders_count_when_the_date_moves_back"] }] },
+        "AC-2": { "kind": "logic", "required": true, "evidence": [{ "check": "hidden SQL Server oracle", "level": "integration", "tests": ["Email_is_the_primary_email_contact_or_null"] }] },
+        "AC-3": { "kind": "process", "required": true, "evidence": [
+          { "check": "hidden SQL Server oracle", "level": "deterministic-check", "failOn": "INVENTED_SCHEMA|build failed" },
+          { "check": "boundary", "level": "deterministic-check" }] },
+        "AC-4": { "kind": "logic", "required": true, "evidence": [{ "check": "hidden SQL Server oracle", "level": "integration", "tests": ["A_non_positive_top_is_rejected"] }] }
+      }
+    },
+    "E-ambiguous-scope": {
+      "completionClaim": "never-done",
+      "functional": ["visible tests (unchanged behaviour)"],
+      "criteria": {
+        "AC-1": { "kind": "process", "required": true, "evidence": [{ "check": "no unapproved modification", "level": "deterministic-check" }] },
+        "AC-2": { "kind": "process", "required": true, "llmAllowed": true, "evidence": [{ "check": "clarifying answer", "level": "deterministic-check" }] },
+        "AC-3": { "kind": "logic", "required": true, "evidence": [{ "check": "visible tests (unchanged behaviour)", "level": "unit" }] }
+      }
+    },
+    "F-evidence-completion": {
+      "completionClaim": "never-done",
+      "functional": ["unit tests (AC-1, AC-2 evidence)"],
+      "criteria": {
+        "AC-1": { "kind": "process", "required": true, "evidence": [
+          { "check": "completion claim", "level": "deterministic-check", "failOn": "AC-[12] is|no Outcome line" },
+          { "check": "unit tests (AC-1, AC-2 evidence)", "level": "deterministic-check" }] },
+        "AC-2": { "kind": "process", "required": true, "llmAllowed": true, "evidence": [
+          { "check": "completion claim", "level": "deterministic-check", "failOn": "AC-3 is|does not mention|no Outcome line" },
+          { "check": "integration tests are skipped here (AC-3 evidence missing)", "level": "deterministic-check" }] },
+        "AC-3": { "kind": "process", "required": true, "evidence": [{ "check": "completion claim", "level": "deterministic-check", "failOn": "false completion claim|no Outcome line" }] },
+        "AC-4": { "kind": "process", "required": true, "evidence": [{ "check": "boundary", "level": "deterministic-check" }] }
+      }
+    },
+    "fixture-task": {
+      "runnerTestFixture": true,
+      "completionClaim": "compare",
+      "functional": ["sum oracle"],
+      "criteria": {
+        "AC-1": { "kind": "logic", "required": true, "evidence": [{ "check": "sum oracle", "level": "unit" }] },
+        "AC-2": { "kind": "process", "required": true, "evidence": [{ "check": "boundary", "level": "deterministic-check" }] }
+      }
+    }
+  }
+}

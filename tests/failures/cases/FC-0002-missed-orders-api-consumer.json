@@ -1,0 +1,56 @@
+{
+  "$schema": "chayen-failure-case/1",
+  "id": "FC-0002",
+  "title": "Agent renames an API response field and misses a consumer that calls the route by URL string",
+  "origin": "synthetic",
+  "dataClassification": "synthetic",
+  "consent": null,
+  "category": "missed-affected-file",
+  "request": {
+    "redacted": true,
+    "text": "Rename the status field to state in the GET api/orders/{id} response and tell me everything that has to change with it."
+  },
+  "skill": { "name": "chayen-repository", "recipe": "references/dependency-and-impact.md" },
+  "observedWith": { "provider": null, "model": null },
+  "source": { "revision": "b52e28e", "packageFingerprint": null },
+  "expected": "The agent searches for the route string as well as the type, and lists both consumers with path:line: web/admin/src/app/orders/order.service.ts and apps/shop/lib/order-status.ts. Callers outside the repository are reported as unknown.",
+  "observed": "The agent searched only for the Order interface, listed the admin service, and said it was the only consumer. apps/shop/lib/order-status.ts, which reads body.status, was missed.",
+  "reproduction": {
+    "fixture": "tests/failures/fixtures/orders-consumers",
+    "facts": [
+      { "file": "src/Api/Controllers/OrdersController.cs", "contains": "Route(\"api/orders\")" },
+      { "file": "web/admin/src/app/orders/order.service.ts", "contains": "/api/orders/" },
+      { "file": "apps/shop/lib/order-status.ts", "contains": "fetch('/api/orders/' + id)" },
+      { "file": "apps/shop/lib/order-status.ts", "contains": "body.status" },
+      { "file": "apps/shop/lib/order-status.ts", "absent": "Order" }
+    ],
+    "steps": [
+      "Copy the fixture to a fresh disposable directory with a local git repository and no remote.",
+      "After explicit opt-in, load the plugin in that copy and send the request text once, in a new session, with read-only tools.",
+      "Keep the stream-json transcript, redact it with --redact, read it in full, and score it with --score --case FC-0002."
+    ]
+  },
+  "evidence": {
+    "transcripts": [
+      { "file": "tests/failures/transcripts/FC-0002.failing.jsonl", "provider": "claude", "role": "failing", "expected": "REPRODUCED", "synthetic": true },
+      { "file": "tests/failures/transcripts/FC-0002.control.jsonl", "provider": "claude", "role": "control", "expected": "NOT_REPRODUCED", "synthetic": true }
+    ]
+  },
+  "detector": {
+    "allOf": [
+      { "signal": "answer-includes-any", "values": ["order.service.ts"] },
+      { "signal": "answer-includes-none", "values": ["order-status.ts"] }
+    ]
+  },
+  "rootCause": {
+    "status": "suspected",
+    "summary": "Consumers were found by type or symbol search only. A caller that uses the route string and an untyped body shares no symbol with the API."
+  },
+  "correctiveAction": {
+    "status": "proposed",
+    "summary": "If a live replay reproduces the failure, make the route-string search an explicit step for response-shape changes in the impact recipe; then re-run the replay on the changed revision.",
+    "targets": ["plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md"]
+  },
+  "regressionTests": ["tests/skills/recipe-cases.json#rc-01-004-pos-api-consumers"],
+  "verification": { "status": "NOT_RUN", "runs": [] }
+}

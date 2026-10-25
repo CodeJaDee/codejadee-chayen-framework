@@ -29,7 +29,10 @@ correct diff, with nothing unrelated touched.
 2. **Baseline.** Build and run the affected tests before editing, when
    permitted. Record the results and any pre-existing failures.
 3. **Contract and plan.**
-   - For three or more files, or any risky action, write the task contract.
+   - Decide clarification and the task contract with the task contract
+     recipe (an unclear request is clarified first; a risky action needs a
+     full contract and approval; several files or layers need a
+     proportional contract).
    - List the files per layer, in edit order: data model and migration,
      then domain or service, then API, then UI, then tests.
 4. **Implement layer by layer.** After each layer, build or typecheck.

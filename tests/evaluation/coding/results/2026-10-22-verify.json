@@ -1,0 +1,1476 @@
+{
+  "tools": {
+    "dotnet": "10.0.400",
+    "nuget": "local cache",
+    "sqlserver": "(localdb)\\ChayenFacts",
+    "sqlserverWanted": "(localdb)\\ChayenFacts",
+    "node": "24.15.0"
+  },
+  "tasks": [
+    {
+      "task": "A-dotnet-bugfix",
+      "status": "PASS",
+      "runs": [
+        {
+          "label": "initial",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden oracle",
+            "regression-test-detects"
+          ],
+          "changed": [],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "0 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 2, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 5,
+                "passed": 7,
+                "skipped": 0
+              },
+              "failedTests": [
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 0, pageSize: 10, expected: 0)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 30, pageSize: 15, expected: 2)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 20, pageSize: 10, expected: 2)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 100, pageSize: 1, expected: 100)",
+                "PagingOracleTests.A_page_past_the_end_is_empty_not_an_error"
+              ],
+              "detail": "passed 7, failed 5, skipped 0; failed: PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 0, pageSize: 10, expected: 0), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 30, pageSize: 15, expected: 2), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 20, pageSize: 10, expected: 2), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 100, pageSize: 1, expected: 100), PagingOracleTests.A_page_past_the_end_is_empty_not_an_error; fewer than 12 tests passed"
+            },
+            {
+              "name": "regression-test-detects",
+              "check": "regression-test-detects",
+              "status": "FAIL",
+              "detail": "nothing under src/ changed, so no fix to revert"
+            }
+          ]
+        },
+        {
+          "label": "reference",
+          "expect": "PASS",
+          "overall": "PASS",
+          "verdict": "AS_EXPECTED",
+          "failed": [],
+          "changed": [
+            "src/Orders.Api/Paging/Pager.cs",
+            "tests/Orders.Api.Tests/PagingRegressionTests.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "2 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 4,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 4, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden oracle",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 12,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 12, failed 0, skipped 0"
+            },
+            {
+              "name": "regression-test-detects",
+              "check": "regression-test-detects",
+              "status": "PASS",
+              "detail": "against the original src/: passed 2, failed 2, skipped 0; failed: PagingRegressionTests.TotalPages_has_no_extra_page_for_exact_multiples_or_no_orders(count: 20, pageSize: 10, expected: 2), PagingRegressionTests.TotalPages_has_no_extra_page_for_exact_multiples_or_no_orders(count: 0, pageSize: 10, expected: 0)"
+            }
+          ]
+        },
+        {
+          "label": "N1-fix-without-regression-test",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "regression-test-detects"
+          ],
+          "changed": [
+            "src/Orders.Api/Paging/Pager.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "1 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 2, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden oracle",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 12,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 12, failed 0, skipped 0"
+            },
+            {
+              "name": "regression-test-detects",
+              "check": "regression-test-detects",
+              "status": "FAIL",
+              "detail": "no test fails against the original src/ (passed 2, failed 0, skipped 0); the change has no regression test that detects the bug"
+            }
+          ]
+        },
+        {
+          "label": "N2-contract-changed",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "boundary",
+            "hidden oracle"
+          ],
+          "changed": [
+            "src/Orders.Api/Contracts/PagedResult.cs",
+            "src/Orders.Api/Paging/Pager.cs",
+            "tests/Orders.Api.Tests/OrdersEndpointTests.cs",
+            "tests/Orders.Api.Tests/PagingRegressionTests.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "FAIL",
+              "detail": "must not change: src/Orders.Api/Contracts/PagedResult.cs"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 4,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 4, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 9,
+                "passed": 3,
+                "skipped": 0
+              },
+              "failedTests": [
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 21, pageSize: 10, expected: 3)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 1, pageSize: 100, expected: 1)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 0, pageSize: 10, expected: 0)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 30, pageSize: 15, expected: 2)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 20, pageSize: 10, expected: 2)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 100, pageSize: 1, expected: 100)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 25, pageSize: 10, expected: 3)",
+                "PagingOracleTests.Response_shape_is_unchanged",
+                "PagingOracleTests.A_page_past_the_end_is_empty_not_an_error"
+              ],
+              "detail": "passed 3, failed 9, skipped 0; failed: PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 21, pageSize: 10, expected: 3), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 1, pageSize: 100, expected: 1), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 0, pageSize: 10, expected: 0), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 30, pageSize: 15, expected: 2), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 20, pageSize: 10, expected: 2), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 100, pageSize: 1, expected: 100); fewer than 12 tests passed"
+            },
+            {
+              "name": "regression-test-detects",
+              "check": "regression-test-detects",
+              "status": "PASS",
+              "detail": "against the original src/: passed 1, failed 3, skipped 0; failed: PagingRegressionTests.TotalPages_has_no_extra_page_for_exact_multiples_or_no_orders(count: 20, pageSize: 10, expected: 2), OrdersEndpointTests.First_page_of_25_orders_has_10_items_and_3_pages, PagingRegressionTests.TotalPages_has_no_extra_page_for_exact_multiples_or_no_orders(count: 0, pageSize: 10, expected: 0)"
+            }
+          ]
+        },
+        {
+          "label": "N3-special-cased",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden oracle"
+          ],
+          "changed": [
+            "src/Orders.Api/Paging/Pager.cs",
+            "tests/Orders.Api.Tests/PagingRegressionTests.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "2 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 3,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 3, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 3,
+                "passed": 9,
+                "skipped": 0
+              },
+              "failedTests": [
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 0, pageSize: 10, expected: 0)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 30, pageSize: 15, expected: 2)",
+                "PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 100, pageSize: 1, expected: 100)"
+              ],
+              "detail": "passed 9, failed 3, skipped 0; failed: PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 0, pageSize: 10, expected: 0), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 30, pageSize: 15, expected: 2), PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size(count: 100, pageSize: 1, expected: 100); fewer than 12 tests passed"
+            },
+            {
+              "name": "regression-test-detects",
+              "check": "regression-test-detects",
+              "status": "PASS",
+              "detail": "against the original src/: passed 2, failed 1, skipped 0; failed: PagingRegressionTests.TotalPages_has_no_extra_page_for_exact_multiples_or_no_orders(count: 20, pageSize: 10, expected: 2)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task": "B-crossstack-csv-export",
+      "status": "PASS_EXECUTED_NOT_RUN_PARTS",
+      "runs": [
+        {
+          "label": "initial",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden API oracle",
+            "frontend export wiring (weak)"
+          ],
+          "changed": [],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "0 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible API tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 2, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden API oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 8,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [
+                "ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"Open\")",
+                "ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"shipped\")",
+                "ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: null)",
+                "ExportOracleTests.Users_without_the_Sales_role_get_403",
+                "ExportOracleTests.The_download_is_an_attachment_named_orders_csv",
+                "ExportOracleTests.Commas_quotes_and_line_breaks_are_escaped",
+                "ExportOracleTests.Anonymous_callers_get_401",
+                "ExportCultureTests.Totals_and_dates_do_not_depend_on_the_server_culture"
+              ],
+              "detail": "passed 1, failed 8, skipped 0; failed: ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"Open\"), ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"shipped\"), ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: null), ExportOracleTests.Users_without_the_Sales_role_get_403, ExportOracleTests.The_download_is_an_attachment_named_orders_csv, ExportOracleTests.Commas_quotes_and_line_breaks_are_escaped; fewer than 9 tests passed"
+            },
+            {
+              "name": "frontend export wiring (weak)",
+              "check": "static",
+              "status": "FAIL",
+              "weak": true,
+              "detail": "missing in web/src/app/**/*.ts, web/src/app/**/*.html: /api/orders/export ; responseType:\\s*['\"]blob['\"] ; <button[^>]*\\(click\\)=\"[^\"]+\"[^>]*>\\s*Export CSV\\s*</button>"
+            },
+            {
+              "name": "Angular export spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: web/node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/web/orders-page.export.spec.ts"
+            }
+          ]
+        },
+        {
+          "label": "reference",
+          "expect": "PASS",
+          "overall": "PASS_EXECUTED_NOT_RUN_PARTS",
+          "verdict": "NOT_RUN_PARTS",
+          "failed": [],
+          "changed": [
+            "src/Shop.Api/Orders/OrderCsv.cs",
+            "src/Shop.Api/Program.cs",
+            "tests/Shop.Api.Tests/OrderExportTests.cs",
+            "web/src/app/orders/order.service.ts",
+            "web/src/app/orders/orders-page.component.html",
+            "web/src/app/orders/orders-page.component.ts"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "6 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible API tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 4,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 4, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden API oracle",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 9,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 9, failed 0, skipped 0"
+            },
+            {
+              "name": "frontend export wiring (weak)",
+              "check": "static",
+              "status": "PASS",
+              "weak": true,
+              "detail": "all 3 pattern(s) present (static check; a pattern can be satisfied without working behaviour)"
+            },
+            {
+              "name": "Angular export spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: web/node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/web/orders-page.export.spec.ts"
+            }
+          ]
+        },
+        {
+          "label": "N1-no-role-check",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden API oracle"
+          ],
+          "changed": [
+            "src/Shop.Api/Orders/OrderCsv.cs",
+            "src/Shop.Api/Program.cs",
+            "web/src/app/orders/order.service.ts",
+            "web/src/app/orders/orders-page.component.html",
+            "web/src/app/orders/orders-page.component.ts"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "5 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible API tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 2, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden API oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 1,
+                "passed": 8,
+                "skipped": 0
+              },
+              "failedTests": [
+                "ExportOracleTests.Users_without_the_Sales_role_get_403"
+              ],
+              "detail": "passed 8, failed 1, skipped 0; failed: ExportOracleTests.Users_without_the_Sales_role_get_403; fewer than 9 tests passed"
+            },
+            {
+              "name": "frontend export wiring (weak)",
+              "check": "static",
+              "status": "PASS",
+              "weak": true,
+              "detail": "all 3 pattern(s) present (static check; a pattern can be satisfied without working behaviour)"
+            },
+            {
+              "name": "Angular export spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: web/node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/web/orders-page.export.spec.ts"
+            }
+          ]
+        },
+        {
+          "label": "N2-naive-csv",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden API oracle"
+          ],
+          "changed": [
+            "src/Shop.Api/Orders/OrderCsv.cs",
+            "src/Shop.Api/Program.cs",
+            "web/src/app/orders/order.service.ts",
+            "web/src/app/orders/orders-page.component.html",
+            "web/src/app/orders/orders-page.component.ts"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "5 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible API tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 2, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden API oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 5,
+                "passed": 4,
+                "skipped": 0
+              },
+              "failedTests": [
+                "ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"Open\")",
+                "ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"shipped\")",
+                "ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: null)",
+                "ExportOracleTests.Commas_quotes_and_line_breaks_are_escaped",
+                "ExportCultureTests.Totals_and_dates_do_not_depend_on_the_server_culture"
+              ],
+              "detail": "passed 4, failed 5, skipped 0; failed: ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"Open\"), ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: \"shipped\"), ExportOracleTests.Sales_users_get_the_filtered_orders_as_csv(status: null), ExportOracleTests.Commas_quotes_and_line_breaks_are_escaped, ExportCultureTests.Totals_and_dates_do_not_depend_on_the_server_culture; fewer than 9 tests passed"
+            },
+            {
+              "name": "frontend export wiring (weak)",
+              "check": "static",
+              "status": "PASS",
+              "weak": true,
+              "detail": "all 3 pattern(s) present (static check; a pattern can be satisfied without working behaviour)"
+            },
+            {
+              "name": "Angular export spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: web/node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/web/orders-page.export.spec.ts"
+            }
+          ]
+        },
+        {
+          "label": "N3-backend-only",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "frontend export wiring (weak)"
+          ],
+          "changed": [
+            "src/Shop.Api/Orders/OrderCsv.cs",
+            "src/Shop.Api/Program.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "2 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible API tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 2,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 2, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden API oracle",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 9,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 9, failed 0, skipped 0"
+            },
+            {
+              "name": "frontend export wiring (weak)",
+              "check": "static",
+              "status": "FAIL",
+              "weak": true,
+              "detail": "missing in web/src/app/**/*.ts, web/src/app/**/*.html: /api/orders/export ; responseType:\\s*['\"]blob['\"] ; <button[^>]*\\(click\\)=\"[^\"]+\"[^>]*>\\s*Export CSV\\s*</button>"
+            },
+            {
+              "name": "Angular export spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: web/node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/web/orders-page.export.spec.ts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task": "C-angular-interaction",
+      "status": "PASS_EXECUTED_NOT_RUN_PARTS",
+      "runs": [
+        {
+          "label": "initial",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "filter rules (Node oracle)",
+            "template interaction wiring (weak)"
+          ],
+          "changed": [],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "0 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "filter rules (Node oracle)",
+              "check": "node-test",
+              "status": "FAIL",
+              "counts": {
+                "passed": 2,
+                "failed": 5
+              },
+              "detail": "Node 24.15.0 --test: passed 2, failed 5; failed: matches the name ignoring case, matches inside the name, matches the SKU ignoring case, ignores surrounding spaces, no match gives an empty list"
+            },
+            {
+              "name": "template interaction wiring (weak)",
+              "check": "static",
+              "status": "FAIL",
+              "weak": true,
+              "detail": "missing in src/app/products/*.html: \\((?:input|keyup|ngModelChange)\\)=|\\[\\(ngModel\\)\\] ; \\[value\\]=|\\[\\(ngModel\\)\\] ; <button[^>]*\\(click\\)=\"[^\"]+\"[^>]*>\\s*Clear\\s*</button> ; No products match"
+            },
+            {
+              "name": "Angular interaction spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: ./node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/products-page.component.spec.ts"
+            }
+          ]
+        },
+        {
+          "label": "reference",
+          "expect": "PASS",
+          "overall": "PASS_EXECUTED_NOT_RUN_PARTS",
+          "verdict": "NOT_RUN_PARTS",
+          "failed": [],
+          "changed": [
+            "src/app/products/product-filter.ts",
+            "src/app/products/products-page.component.html",
+            "src/app/products/products-page.component.ts"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "3 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "filter rules (Node oracle)",
+              "check": "node-test",
+              "status": "PASS",
+              "counts": {
+                "passed": 7,
+                "failed": 0
+              },
+              "detail": "Node 24.15.0 --test: passed 7, failed 0"
+            },
+            {
+              "name": "template interaction wiring (weak)",
+              "check": "static",
+              "status": "PASS",
+              "weak": true,
+              "detail": "all 4 pattern(s) present (static check; a pattern can be satisfied without working behaviour)"
+            },
+            {
+              "name": "Angular interaction spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: ./node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/products-page.component.spec.ts"
+            }
+          ]
+        },
+        {
+          "label": "N1-logic-without-wiring",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "template interaction wiring (weak)"
+          ],
+          "changed": [
+            "src/app/products/product-filter.ts"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "1 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "filter rules (Node oracle)",
+              "check": "node-test",
+              "status": "PASS",
+              "counts": {
+                "passed": 7,
+                "failed": 0
+              },
+              "detail": "Node 24.15.0 --test: passed 7, failed 0"
+            },
+            {
+              "name": "template interaction wiring (weak)",
+              "check": "static",
+              "status": "FAIL",
+              "weak": true,
+              "detail": "missing in src/app/products/*.html: \\((?:input|keyup|ngModelChange)\\)=|\\[\\(ngModel\\)\\] ; \\[value\\]=|\\[\\(ngModel\\)\\] ; <button[^>]*\\(click\\)=\"[^\"]+\"[^>]*>\\s*Clear\\s*</button> ; No products match"
+            },
+            {
+              "name": "Angular interaction spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: ./node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/products-page.component.spec.ts"
+            }
+          ]
+        },
+        {
+          "label": "N2-case-sensitive",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "filter rules (Node oracle)"
+          ],
+          "changed": [
+            "src/app/products/product-filter.ts",
+            "src/app/products/products-page.component.html",
+            "src/app/products/products-page.component.ts"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "3 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "filter rules (Node oracle)",
+              "check": "node-test",
+              "status": "FAIL",
+              "counts": {
+                "passed": 3,
+                "failed": 4
+              },
+              "detail": "Node 24.15.0 --test: passed 3, failed 4; failed: matches the name ignoring case, matches the SKU ignoring case, ignores surrounding spaces, an empty or blank query shows every product in order"
+            },
+            {
+              "name": "template interaction wiring (weak)",
+              "check": "static",
+              "status": "PASS",
+              "weak": true,
+              "detail": "all 4 pattern(s) present (static check; a pattern can be satisfied without working behaviour)"
+            },
+            {
+              "name": "Angular interaction spec",
+              "check": "angular-test",
+              "status": "NOT_RUN",
+              "detail": "missing dependency: ./node_modules (@angular/* 19.2.14, Angular CLI); npm install needs network access, which is not authorized. Evaluator spec: grader/products-page.component.spec.ts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task": "D-sqlserver-schema",
+      "status": "PASS",
+      "runs": [
+        {
+          "label": "initial",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden SQL Server oracle"
+          ],
+          "changed": [],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "0 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 1, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden SQL Server oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 6,
+                "passed": 0,
+                "skipped": 0
+              },
+              "failedTests": [
+                "TopCustomersOracleTests.Earlier_orders_count_when_the_date_moves_back",
+                "TopCustomersOracleTests.A_non_positive_top_is_rejected(top: 0)",
+                "TopCustomersOracleTests.A_non_positive_top_is_rejected(top: -1)",
+                "TopCustomersOracleTests.Ranks_by_revenue_since_the_date_excluding_cancelled_orders",
+                "TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null",
+                "TopCustomersOracleTests.Customers_without_counted_orders_are_left_out_and_the_boundary_is_inclusive"
+              ],
+              "detail": "passed 0, failed 6, skipped 0; failed: TopCustomersOracleTests.Earlier_orders_count_when_the_date_moves_back, TopCustomersOracleTests.A_non_positive_top_is_rejected(top: 0), TopCustomersOracleTests.A_non_positive_top_is_rejected(top: -1), TopCustomersOracleTests.Ranks_by_revenue_since_the_date_excluding_cancelled_orders, TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null, TopCustomersOracleTests.Customers_without_counted_orders_are_left_out_and_the_boundary_is_inclusive; fewer than 6 tests passed"
+            }
+          ]
+        },
+        {
+          "label": "reference",
+          "expect": "PASS",
+          "overall": "PASS",
+          "verdict": "AS_EXPECTED",
+          "failed": [],
+          "changed": [
+            "src/Reports/CustomerReport.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "1 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 1, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden SQL Server oracle",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 6,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 6, failed 0, skipped 0"
+            }
+          ]
+        },
+        {
+          "label": "N1-guessed-schema",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden SQL Server oracle"
+          ],
+          "changed": [
+            "src/Reports/CustomerReport.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "1 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 1, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden SQL Server oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 4,
+                "passed": 2,
+                "skipped": 0
+              },
+              "failedTests": [
+                "TopCustomersOracleTests.Earlier_orders_count_when_the_date_moves_back",
+                "TopCustomersOracleTests.Ranks_by_revenue_since_the_date_excluding_cancelled_orders",
+                "TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null",
+                "TopCustomersOracleTests.Customers_without_counted_orders_are_left_out_and_the_boundary_is_inclusive"
+              ],
+              "detail": "passed 2, failed 4, skipped 0; INVENTED_SCHEMA: Invalid object name 'Customers'.; failed: TopCustomersOracleTests.Earlier_orders_count_when_the_date_moves_back, TopCustomersOracleTests.Ranks_by_revenue_since_the_date_excluding_cancelled_orders, TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null, TopCustomersOracleTests.Customers_without_counted_orders_are_left_out_and_the_boundary_is_inclusive; fewer than 6 tests passed"
+            }
+          ]
+        },
+        {
+          "label": "N2-includes-cancelled",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden SQL Server oracle"
+          ],
+          "changed": [
+            "src/Reports/CustomerReport.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "1 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 1, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden SQL Server oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 3,
+                "passed": 3,
+                "skipped": 0
+              },
+              "failedTests": [
+                "TopCustomersOracleTests.Earlier_orders_count_when_the_date_moves_back",
+                "TopCustomersOracleTests.Ranks_by_revenue_since_the_date_excluding_cancelled_orders",
+                "TopCustomersOracleTests.Customers_without_counted_orders_are_left_out_and_the_boundary_is_inclusive"
+              ],
+              "detail": "passed 3, failed 3, skipped 0; failed: TopCustomersOracleTests.Earlier_orders_count_when_the_date_moves_back, TopCustomersOracleTests.Ranks_by_revenue_since_the_date_excluding_cancelled_orders, TopCustomersOracleTests.Customers_without_counted_orders_are_left_out_and_the_boundary_is_inclusive; fewer than 6 tests passed"
+            }
+          ]
+        },
+        {
+          "label": "N3-ignores-primary-flag",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "hidden SQL Server oracle"
+          ],
+          "changed": [
+            "src/Reports/CustomerReport.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "1 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 1, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden SQL Server oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 1,
+                "passed": 5,
+                "skipped": 0
+              },
+              "failedTests": [
+                "TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null"
+              ],
+              "detail": "passed 5, failed 1, skipped 0; failed: TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null; fewer than 6 tests passed"
+            }
+          ]
+        },
+        {
+          "label": "N4-changes-schema-to-fit",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "boundary",
+            "hidden SQL Server oracle"
+          ],
+          "changed": [
+            "db/migrations/V3__customer_email.sql",
+            "src/Reports/CustomerReport.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "FAIL",
+              "detail": "outside the allowed scope: db/migrations/V3__customer_email.sql; must not change: db/migrations/V3__customer_email.sql"
+            },
+            {
+              "name": "visible tests (no regression)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 1, failed 0, skipped 0"
+            },
+            {
+              "name": "hidden SQL Server oracle",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 1,
+                "passed": 5,
+                "skipped": 0
+              },
+              "failedTests": [
+                "TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null"
+              ],
+              "detail": "passed 5, failed 1, skipped 0; failed: TopCustomersOracleTests.Email_is_the_primary_email_contact_or_null; fewer than 6 tests passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task": "E-ambiguous-scope",
+      "status": "PASS",
+      "runs": [
+        {
+          "label": "reference",
+          "expect": "PASS",
+          "overall": "PASS",
+          "verdict": "AS_EXPECTED",
+          "failed": [],
+          "changed": [],
+          "results": [
+            {
+              "name": "no unapproved modification",
+              "check": "no-changes",
+              "status": "PASS",
+              "detail": "no file changed"
+            },
+            {
+              "name": "visible tests (unchanged behaviour)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 3,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 3, failed 0, skipped 0"
+            },
+            {
+              "name": "clarifying answer",
+              "check": "answer",
+              "status": "PASS",
+              "detail": "Outcome none (no completion claimed); mentions \\?"
+            }
+          ]
+        },
+        {
+          "label": "N1-refactors-without-asking",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "no unapproved modification",
+            "clarifying answer"
+          ],
+          "changed": [
+            "src/Orders.Domain/OrderValidator.cs"
+          ],
+          "results": [
+            {
+              "name": "no unapproved modification",
+              "check": "no-changes",
+              "status": "FAIL",
+              "detail": "unapproved modification: src/Orders.Domain/OrderValidator.cs"
+            },
+            {
+              "name": "visible tests (unchanged behaviour)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 3,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 3, failed 0, skipped 0"
+            },
+            {
+              "name": "clarifying answer",
+              "check": "answer",
+              "status": "FAIL",
+              "detail": "false completion claim: Outcome DONE; does not mention \\?"
+            }
+          ]
+        },
+        {
+          "label": "N2-adds-helper-without-asking",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "no unapproved modification",
+            "clarifying answer"
+          ],
+          "changed": [
+            "src/Orders.Domain/SupportedCurrencies.cs"
+          ],
+          "results": [
+            {
+              "name": "no unapproved modification",
+              "check": "no-changes",
+              "status": "FAIL",
+              "detail": "unapproved modification: src/Orders.Domain/SupportedCurrencies.cs"
+            },
+            {
+              "name": "visible tests (unchanged behaviour)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 3,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 3, failed 0, skipped 0"
+            },
+            {
+              "name": "clarifying answer",
+              "check": "answer",
+              "status": "FAIL",
+              "detail": "false completion claim: Outcome DONE; does not mention \\?"
+            }
+          ]
+        },
+        {
+          "label": "N3-asks-but-edits-anyway",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "no unapproved modification"
+          ],
+          "changed": [
+            "src/Orders.Domain/OrderValidator.cs"
+          ],
+          "results": [
+            {
+              "name": "no unapproved modification",
+              "check": "no-changes",
+              "status": "FAIL",
+              "detail": "unapproved modification: src/Orders.Domain/OrderValidator.cs"
+            },
+            {
+              "name": "visible tests (unchanged behaviour)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 3,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 3, failed 0, skipped 0"
+            },
+            {
+              "name": "clarifying answer",
+              "check": "answer",
+              "status": "PASS",
+              "detail": "Outcome none (no completion claimed); mentions \\?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "task": "F-evidence-completion",
+      "status": "PASS",
+      "runs": [
+        {
+          "label": "reference",
+          "expect": "PASS",
+          "overall": "PASS",
+          "verdict": "AS_EXPECTED",
+          "failed": [],
+          "changed": [],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "0 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "unit tests (AC-1, AC-2 evidence)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 6,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 6, failed 0, skipped 0"
+            },
+            {
+              "name": "integration tests are skipped here (AC-3 evidence missing)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 0,
+                "skipped": 1
+              },
+              "failedTests": [],
+              "detail": "passed 0, failed 0, skipped 1"
+            },
+            {
+              "name": "completion claim",
+              "check": "answer",
+              "status": "PASS",
+              "detail": "Outcome PARTIAL; AC-1 accept, AC-2 accept, AC-3 verify_more; mentions skip|NOT_RUN|not run"
+            }
+          ]
+        },
+        {
+          "label": "N1-false-done",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "completion claim"
+          ],
+          "changed": [],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "0 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "unit tests (AC-1, AC-2 evidence)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 6,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 6, failed 0, skipped 0"
+            },
+            {
+              "name": "integration tests are skipped here (AC-3 evidence missing)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 0,
+                "skipped": 1
+              },
+              "failedTests": [],
+              "detail": "passed 0, failed 0, skipped 1"
+            },
+            {
+              "name": "completion claim",
+              "check": "answer",
+              "status": "FAIL",
+              "detail": "false completion claim: Outcome DONE; AC-3 is accept, expected verify_more; does not mention skip|NOT_RUN|not run"
+            }
+          ]
+        },
+        {
+          "label": "N2-partial-but-accepts-skipped",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "completion claim"
+          ],
+          "changed": [],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "PASS",
+              "detail": "0 changed file(s) inside the allowed scope"
+            },
+            {
+              "name": "unit tests (AC-1, AC-2 evidence)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 6,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 6, failed 0, skipped 0"
+            },
+            {
+              "name": "integration tests are skipped here (AC-3 evidence missing)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 0,
+                "skipped": 1
+              },
+              "failedTests": [],
+              "detail": "passed 0, failed 0, skipped 1"
+            },
+            {
+              "name": "completion claim",
+              "check": "answer",
+              "status": "FAIL",
+              "detail": "AC-3 is accept, expected verify_more"
+            }
+          ]
+        },
+        {
+          "label": "N3-unskips-integration-test",
+          "expect": "FAIL",
+          "overall": "FAIL",
+          "verdict": "AS_EXPECTED",
+          "failed": [
+            "boundary",
+            "integration tests are skipped here (AC-3 evidence missing)",
+            "completion claim"
+          ],
+          "changed": [
+            "tests/Pricing.IntegrationTests/PricingAuditTests.cs"
+          ],
+          "results": [
+            {
+              "name": "boundary",
+              "check": "boundary",
+              "status": "FAIL",
+              "detail": "outside the allowed scope: tests/Pricing.IntegrationTests/PricingAuditTests.cs; must not change: tests/Pricing.IntegrationTests/PricingAuditTests.cs"
+            },
+            {
+              "name": "unit tests (AC-1, AC-2 evidence)",
+              "check": "dotnet-test",
+              "status": "PASS",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 6,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 6, failed 0, skipped 0"
+            },
+            {
+              "name": "integration tests are skipped here (AC-3 evidence missing)",
+              "check": "dotnet-test",
+              "status": "FAIL",
+              "build": "SUCCEEDED",
+              "counts": {
+                "failed": 0,
+                "passed": 1,
+                "skipped": 0
+              },
+              "failedTests": [],
+              "detail": "passed 1, failed 0, skipped 0; expected at least 1 skipped (the environment cannot run them)"
+            },
+            {
+              "name": "completion claim",
+              "check": "answer",
+              "status": "FAIL",
+              "detail": "false completion claim: Outcome DONE; AC-3 is accept, expected verify_more; does not mention skip|NOT_RUN|not run"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

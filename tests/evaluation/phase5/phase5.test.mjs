@@ -7,7 +7,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { parseTranscript, classifyRouting, classifySecurity, summarizeRouting, scoredAttempts, wilson, scrub, explicitPrompt, snapshot, diffSnapshots } from "./phase5-lib.mjs";
+import { parseTranscript, classifyRouting, classifySecurity, summarizeRouting, scoredAttempts, wilson, scrub, explicitPrompt, snapshot, diffSnapshots, groupByConfiguration } from "./phase5-lib.mjs";
 
 const here = import.meta.dirname, repo = path.resolve(here, "../../..");
 const json = (f) => JSON.parse(fs.readFileSync(path.join(here, f), "utf8"));
@@ -20,9 +20,10 @@ test("fixtures are verbatim copies of their reviewed sources", () => {
   assert.equal(r.status, 0, r.stdout + r.stderr);
 });
 
-test("routing set: >=30 positive, every Entry Skill twice, overlap, >=12 negative/no-match, 16 explicit", () => {
+test("routing set: >=30 positive, every Entry Skill twice, overlap, >=12 negative/no-match, one explicit probe per Entry Skill", () => {
   const by = (t) => routing.probes.filter((p) => p.type === t);
-  assert.equal(SKILLS.length, 16);
+  // The shipped Skill count is derived, not pinned (D-066): adding a Skill requires probes for it, below.
+  assert.ok(SKILLS.length > 0);
   assert.ok(by("positive").length >= 30);
   for (const s of SKILLS) assert.ok(by("positive").filter((p) => p.group === "core" && p.primary === s).length >= 2, s);
   assert.equal(by("positive").filter((p) => p.group === "overlap-documentation").length, 6);
@@ -91,6 +92,19 @@ test("parsers count only native activation signals", () => {
   ].join("\n"), { fixtureRoot: fixture });
   assert.deepEqual(x.skills, ["chayen-testing"], "repository-explored SKILL.md and answer text are not activation");
   assert.equal(x.completion, "success");
+});
+
+test("parsers detect valid Skill names with digits; configurations are grouped, never pooled (Step 18)", () => {
+  const fixture = path.join(os.tmpdir(), "p5-fixture");
+  const x = parseTranscript("codex", [
+    JSON.stringify({ type: "item.started", item: { type: "command_execution", command: `cat ${path.join(os.tmpdir(), "home", "plugins", "cache", "chayen", "skills", "chayen-k6-load", "SKILL.md")}` } }),
+    JSON.stringify({ type: "item.started", item: { type: "command_execution", command: `cat ${path.join(os.tmpdir(), "home", "skills", "chayen-a11y", "references", "wcag-2.md")}` } }),
+    JSON.stringify({ type: "turn.completed" }),
+  ].join("\n"), { fixtureRoot: fixture });
+  assert.deepEqual(x.skills, ["chayen-k6-load"]);
+  assert.deepEqual(x.refs, ["chayen-a11y/wcag-2.md"]);
+  const groups = groupByConfiguration([{ provider: "codex", n: 1 }, { provider: "claude", n: 2 }, { provider: "codex", n: 3 }], (r) => r.provider);
+  assert.deepEqual(groups.map((g) => [g.configuration, g.rows.map((r) => r.n)]), [["claude", [2]], ["codex", [1, 3]]]);
 });
 
 const P = (type, expect, extra = {}) => ({ id: "p", type, expect, ...extra });

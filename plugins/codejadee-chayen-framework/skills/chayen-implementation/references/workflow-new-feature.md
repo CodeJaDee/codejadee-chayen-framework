@@ -59,7 +59,7 @@ explicitly; a completed plan or static check does not prove runtime delivery.
 | Plan | Affected owners and contracts | Sequence changed owners and consumers with the implementation plan; resolve only outcome-changing unknowns. | No invented schema, architecture, dependency or approval. |
 | Implement | Authorized plan and versions | Follow feature-delivery; hand off API work to chayen-backend and UI work to chayen-frontend by name only when those stages are needed. | Changed slices build; existing conventions and public contracts remain intentional. |
 | Regress | Changed behavior and consumers | Use chayen-testing regression-testing for positive, negative and affected-consumer checks; include real database tests only when involved. | Each acceptance criterion has evidence or a stated verification gap. |
-| Report | Diff and observed outcomes | Use change-summary to produce a proportional Change Passport and safe next step. | Completion is DONE only if required scope and checks are complete. |
+| Report | Diff and observed outcomes | Use change-summary to produce a proportional Change Passport and safe next step. | Completion is DONE only if required scope and checks are complete and every required criterion is at accept. |
 
 ## Outputs
 
@@ -81,6 +81,9 @@ For each required check record the exact command or evidence method, target
 environment/version, observed outcome and PASS, FAIL, NOT_RUN or N/A. Separate
 baseline failures from new failures; explain unexecuted checks. DONE requires
 the requested scope and required verification, not merely a green subset.
+Give each acceptance criterion one verdict (accept, verify_more or revise)
+from fresh, adequate evidence; a check status is never the verdict, and DONE
+needs every required criterion at accept.
 
 ## Approvals
 

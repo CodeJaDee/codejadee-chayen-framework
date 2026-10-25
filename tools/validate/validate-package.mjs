@@ -16,7 +16,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { inside, assertTreeNoLinks } from "./safe-paths.mjs";
 import { parseYamlSubset } from "../catalog/catalog-lib.mjs";
-import { loadEditorialRegistration, loadProjectRegistration, MAX_ENTRY_SKILLS, L0_BUDGET } from "../catalog/skill-registration.mjs";
+import { loadEditorialRegistration, loadProjectRegistration } from "../catalog/skill-registration.mjs";
+import { discoveryMetrics, descriptionOverlap, DESCRIPTION_MAX, OVERLAP_WARN, OVERLAP_ERROR } from "../catalog/discovery-metrics.mjs";
 
 const root = path.resolve(process.argv[2] ?? path.join(import.meta.dirname, "..", ".."));
 const PLUGIN_DIR_REL = "plugins/codejadee-chayen-framework";
@@ -323,12 +324,15 @@ const h2Sections = (body) => {
 };
 const words = (t) => stripCode(t).replace(/[|#>*`_-]/g, " ").split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
 const refFiles = {};      // skill -> [{ file, rel, fields, body, errs }]
+// Every Markdown file in a skill except its SKILL.md, at any depth, so that the reference checks (V-06, V-18,
+// V-19) cover the same files the transitive reference graph (V-08) can reach (D-066).
 for (const s of skillDirs) {
-  const dir = path.join(SKILLS_DIR, s, "references");
-  refFiles[s] = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(".md")).sort().map((f) => {
-    const text = fs.readFileSync(path.join(dir, f), "utf8");
-    return { file: f, rel: `skills/${s}/references/${f}`, text, ...parseFrontmatter(text) };
-  }) : [];
+  const dir = path.join(SKILLS_DIR, s);
+  refFiles[s] = walk(dir).filter((x) => !x.dir && !x.symlink && x.p.toLowerCase().endsWith(".md") && x.p !== path.join(dir, "SKILL.md"))
+    .map((x) => path.relative(dir, x.p).split(path.sep).join("/")).sort().map((f) => {
+      const text = fs.readFileSync(path.join(dir, f), "utf8");
+      return { file: f, rel: `skills/${s}/${f}`, text, ...parseFrontmatter(text) };
+    });
 }
 
 // Planned editorial descriptions are checked now, without shipping Skill bodies.
@@ -337,33 +341,32 @@ const discoveryMeta = { ...skillMeta };
 for (const [name, record] of [...editorialRegistration.skills, ...projectRegistration.skills]) {
   if (!discoveryMeta[name] && typeof record.description === "string") discoveryMeta[name] = { desc: record.description };
 }
-{ // V-07 actual/projected metadata budget, description safety and distinctness
-  const c = "V-07 metadata-budget";
-  let total = 0;
+{ // V-07 discovery metadata (D-066, ADR-0013 §3-§4): provider description limits and description quality are
+  // enforced; the total is measured and reported, never capped. Documented provider listing figures give
+  // advisory warnings only (P-L2); no provider behaviour is measured here.
+  const c = "V-07 discovery-metadata";
   for (const [s, m] of Object.entries(discoveryMeta)) {
-    total += s.length + m.desc.length;
-    if (m.desc.length > 1024) error(c, `${s}: description ${m.desc.length} chars > 1024`);
+    if (m.desc.length > DESCRIPTION_MAX) error(c, `${s}: description ${m.desc.length} chars > ${DESCRIPTION_MAX} (provider limit P-02)`);
     else if (m.desc.length > 420) warn(c, `${s}: description ${m.desc.length} chars > 420 target (D-017)`);
     if (/: |\s#|^['"\[{>|*&!%@`]/.test(m.desc)) error(c, `${s}: description contains YAML-unsafe characters (": ", " #", or a leading indicator); quote it or rephrase`);
     if (!/\bNot (for|a)\b/.test(m.desc)) error(c, `${s}: description lacks a "Not for ..." boundary clause (DS-03)`);
   }
-  if (skillDirs.length > MAX_ENTRY_SKILLS) error(c, `${skillDirs.length} entry skills > ${MAX_ENTRY_SKILLS}`);
-  const L0_CAP = L0_BUDGET;
-  if (total > L0_CAP) error(c, `L0 metadata ${total} chars > ${L0_CAP}`);
-  const actual = Object.entries(skillMeta).reduce((n, [s, m]) => n + s.length + m.desc.length, 0);
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} shipped skills, actual L0 ${actual}/${L0_CAP}; projected registered metadata ${total}/${L0_CAP} chars`);
+  // No Entry Skill count cap and no L0 cap (D-066, ADR-0013 §2 A-1, A-5): both are reported, never rejected.
+  const category = (s) => (editorialRegistration.skills.has(s) ? "editorial" : projectRegistration.skills.has(s) ? "project" : "engineering");
+  const metrics = discoveryMetrics(Object.entries(discoveryMeta).map(([name, m]) => ({ name, description: m.desc, category: category(name), state: skillMeta[name] ? "shipped" : "planned" })));
+  for (const p of metrics.providers) if (p.status === "EXCEEDS_DOCUMENTED_FIGURE") warn(c, `discovery metadata ${metrics.actual.chars} chars exceeds the ${p.characters}-character figure documented for ${p.provider} (${p.source}): it may shorten descriptions or omit Skills; record routing evidence on that provider before claiming support (ADR-0013 P-L)`);
+  const byCategory = Object.entries(metrics.byCategory).sort().map(([k, v]) => `${k} ${v.shipped}`).join(", ");
+  const providerSummary = metrics.providers.map((p) => `${p.provider} ${p.status}`).join("; ");
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${skillDirs.length} shipped skills (${byCategory}; no count cap); discovery metadata ${metrics.actual.chars} chars (~${metrics.actual.estTokens} tokens, estimate), projected with planned registrations ${metrics.projected.chars}; no repository cap (D-066); provider figures (documented, not measured): ${providerSummary}`);
 
   const c2 = "V-07b description-distinctness";
-  const stop = new Set("a an and or the of for to in on with by from as is are be use when not such this that it its into than via code covers including".split(" "));
-  const wordSet = (t) => new Set(t.toLowerCase().replace(/[^a-z0-9#+.\s-]/g, " ").split(/\s+/).filter((w) => w.length > 2 && !stop.has(w)));
   const names = Object.keys(discoveryMeta);
   let maxPair = ["", "", 0];
   for (let i = 0; i < names.length; i++) for (let j = i + 1; j < names.length; j++) {
-    const a = wordSet(discoveryMeta[names[i]].desc), b = wordSet(discoveryMeta[names[j]].desc);
-    const inter = [...a].filter((w) => b.has(w)).length, jac = inter / (a.size + b.size - inter || 1);
+    const jac = descriptionOverlap(discoveryMeta[names[i]].desc, discoveryMeta[names[j]].desc);
     if (jac > maxPair[2]) maxPair = [names[i], names[j], jac];
-    if (jac > 0.35) error(c2, `${names[i]} vs ${names[j]}: description word overlap ${jac.toFixed(2)} > 0.35`);
-    else if (jac > 0.25) warn(c2, `${names[i]} vs ${names[j]}: description word overlap ${jac.toFixed(2)} > 0.25`);
+    if (jac > OVERLAP_ERROR) error(c2, `${names[i]} vs ${names[j]}: description word overlap ${jac.toFixed(2)} > ${OVERLAP_ERROR}`);
+    else if (jac > OVERLAP_WARN) warn(c2, `${names[i]} vs ${names[j]}: description word overlap ${jac.toFixed(2)} > ${OVERLAP_WARN}`);
   }
   if (!results.some((r) => r.check === c2 && r.level === "ERROR")) pass(c2, `max pairwise overlap ${maxPair[2].toFixed(2)} (${maxPair[0]} / ${maxPair[1]})`);
 }
@@ -397,8 +400,8 @@ for (const [name, record] of [...editorialRegistration.skills, ...projectRegistr
   if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `all ${Object.keys(discoveryMeta).length} shipped/planned descriptions name concrete scope, avoid catch-all wording, and exclude at least 2 neighbours`);
 }
 
-{ // V-17 entry skill anatomy (standard §4.1), V-06 line budgets
-  const c = "V-17 skill-sections", c6 = "V-06 line-budgets";
+{ // V-17 entry skill anatomy (standard §4.1)
+  const c = "V-17 skill-sections";
   const required = ["When to use", "When not to use", "Principles", "Preconditions and inputs", "Workflow", "Outputs", "Verification", "Failure handling", "Safety boundaries", "References"];
   for (const [s, m] of Object.entries(skillMeta)) {
     const secs = h2Sections(m.body);
@@ -422,16 +425,31 @@ for (const [name, record] of [...editorialRegistration.skills, ...projectRegistr
     if (!/stop following this skill and continue normally without mentioning it/.test(whenNot)) error(c, `${s}: missing the no-match gate sentence in "When not to use" (ADR-0003)`);
     const refs = secs.find((x) => x.title === "References")?.content ?? "";
     if (refFiles[s].length && !/^\|\s*Reference\s*\|\s*Load when\s*\|/m.test(refs)) error(c, `${s}: "## References" must be a "| Reference | Load when |" table (LD-01)`);
-    const lines = m.text.split(/\r?\n/).length;
-    if (lines > 300) error(c6, `${s}/SKILL.md has ${lines} lines > 300`);
-    else if (lines > 200) warn(c6, `${s}/SKILL.md has ${lines} lines > 200 target (SB-01)`);
-  }
-  for (const s of skillDirs) for (const r of refFiles[s]) {
-    const n = r.text.split(/\r?\n/).length;
-    if (n > 300) error(c6, `${r.rel} has ${n} lines > 300`);
   }
   if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `all ${skillDirs.length} skills follow the standard anatomy (scope line, ordered sections, >=4 positive and >=3 negative triggers, gate, reference table)`);
-  if (!results.some((r) => r.check === c6 && r.level === "ERROR")) pass(c6, "SKILL.md and reference files within 300 lines");
+}
+
+{ // V-06 size report (D-066, ADR-0013 §4 P-B1): no line cap. Sizes and estimated context cost are reported;
+  // a file above the providers' SKILL.md recommendation (under 500 lines, under about 5,000 tokens; S24, S7)
+  // gets an advisory WARN, never an error. Tokens are estimated as characters / 4, not a provider tokenizer.
+  const c6 = "V-06 size-report", ADVISORY_LINES = 500, ADVISORY_TOKENS = 5000;
+  const size = (text) => ({ lines: text.split(/\r?\n/).length, tokens: Math.round(text.length / 4) });
+  const over = (z) => z.lines > ADVISORY_LINES || z.tokens > ADVISORY_TOKENS;
+  let maxBody = ["", { lines: 0, tokens: 0 }], maxRef = ["", { lines: 0, tokens: 0 }], worst = ["", 0];
+  for (const s of skillDirs) {
+    const body = size(skillMeta[s].text);
+    if (body.lines > maxBody[1].lines) maxBody = [`${s}/SKILL.md`, body];
+    if (over(body)) warn(c6, `${s}/SKILL.md: ${body.lines} lines, ~${body.tokens} tokens, loaded on every activation of the skill; above the provider recommendation for SKILL.md (under ${ADVISORY_LINES} lines, ~${ADVISORY_TOKENS} tokens; S24). Advisory: move detail into references (SB-02)`);
+    let largest = 0;
+    for (const r of refFiles[s]) {
+      const z = size(r.text);
+      largest = Math.max(largest, z.tokens);
+      if (z.lines > maxRef[1].lines) maxRef = [r.rel, z];
+      if (over(z)) warn(c6, `${r.rel}: ${z.lines} lines, ~${z.tokens} tokens, loaded whole whenever it is read; above ${ADVISORY_LINES} lines / ~${ADVISORY_TOKENS} tokens. Advisory: split by topic or stack (RF-04)`);
+    }
+    if (body.tokens + largest > worst[1]) worst = [s, body.tokens + largest];
+  }
+  pass(c6, `no size cap (D-066); largest SKILL.md ${maxBody[0]} ${maxBody[1].lines} lines (~${maxBody[1].tokens} tokens); largest reference ${maxRef[0]} ${maxRef[1].lines} lines (~${maxRef[1].tokens} tokens); worst single activation (body + largest reference) ${worst[0]} ~${worst[1]} tokens`);
 }
 
 { // V-18 reference kinds (standard §5)
@@ -475,28 +493,67 @@ for (const [name, record] of [...editorialRegistration.skills, ...projectRegistr
   if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${n} reference files declare a valid kind and carry the sections their kind requires`);
 }
 
-{ // V-08 links: resolve, stay inside the skill's own directory (D-016), max 2 hops, anchors exist, no unreachable references
+{ // V-08 reference graph (D-016, D-066 / ADR-0013): every local link in every Markdown file of a skill must resolve
+  // to a regular file inside that skill (no traversal, no other skill, no symlink) and every anchor must exist.
+  // References are discovered transitively from SKILL.md by an iterative breadth-first walk with a visited set
+  // (no depth cap, no recursion); a file no chain reaches is an orphan (error); cycles are found by an iterative
+  // depth-first walk and reported as advisory warnings. Validation never implies that an agent reads every file.
   const c = "V-08 links";
+  let maxDepth = 0, transitive = 0, cycles = 0, mdChecked = 0;
   for (const s of skillDirs) {
-    const skillRoot = path.join(SKILLS_DIR, s);
-    const visit = (file, depth) => {
+    const skillRoot = path.join(SKILLS_DIR, s), realSkillRoot = fs.realpathSync(skillRoot);
+    const relOf = (f) => path.relative(root, f).split(path.sep).join("/");
+    const local = (f) => path.relative(skillRoot, f).split(path.sep).join("/");
+    const start = path.join(skillRoot, "SKILL.md");
+    const mdAll = walk(skillRoot).filter((x) => !x.dir && !x.symlink && x.p.toLowerCase().endsWith(".md")).map((x) => x.p);
+    mdChecked += mdAll.length;
+    const edges = new Map();
+    for (const file of mdAll) {
+      const out = [];
       for (const l of mdLinks(fs.readFileSync(file, "utf8"))) {
         const [target0, anchor] = l.split("#");
-        const target = target0 ? path.resolve(path.dirname(file), target0) : file;
-        const rel = path.relative(root, file).split(path.sep).join("/");
-        if (!target.startsWith(skillRoot + path.sep)) { error(c, `${rel}: link "${l}" leaves the skill directory (D-016)`); continue; }
-        if (!fs.existsSync(target)) { error(c, `${rel}: broken link "${l}"`); continue; }
-        if (anchor !== undefined && !headings(fs.readFileSync(target, "utf8")).map(slug).includes(anchor)) error(c, `${rel}: link "${l}" points to a missing heading anchor (LD-05)`);
-        if (!target0) continue;
-        if (depth + 1 > 2) { error(c, `${rel}: link "${l}" exceeds 2 hops from SKILL.md`); continue; }
-        if (target.endsWith(".md") && target !== file) visit(target, depth + 1);
+        let target;
+        try { target = target0 ? path.resolve(path.dirname(file), decodeURI(target0)) : file; }
+        catch { error(c, `${relOf(file)}: link "${l}" is not a valid relative path`); continue; }
+        if (!target.startsWith(skillRoot + path.sep)) {
+          const other = target.startsWith(SKILLS_DIR + path.sep) ? path.relative(SKILLS_DIR, target).split(path.sep)[0] : null;
+          error(c, other ? `${relOf(file)}: link "${l}" points into another skill (${other}); hand off by name instead (D-016, DR-04)` : `${relOf(file)}: link "${l}" leaves the skill directory (D-016)`);
+          continue;
+        }
+        let st;
+        try { st = fs.lstatSync(target); } catch { error(c, `${relOf(file)}: broken link "${l}" (target does not exist)`); continue; }
+        if (st.isSymbolicLink() || !fs.realpathSync(target).startsWith(realSkillRoot + path.sep)) { error(c, `${relOf(file)}: link "${l}" resolves through a symlink or junction`); continue; }
+        if (!st.isFile()) { error(c, `${relOf(file)}: link "${l}" does not point to a file`); continue; }
+        if (anchor !== undefined && !headings(fs.readFileSync(target, "utf8")).map(slug).includes(anchor)) error(c, `${relOf(file)}: link "${l}" points to a missing heading anchor (LD-05)`);
+        if (target0 && target !== file && target.toLowerCase().endsWith(".md")) out.push(target);
       }
-    };
-    visit(path.join(skillRoot, "SKILL.md"), 0);
-    const linked = new Set(mdLinks(skillMeta[s].text).map((l) => path.resolve(skillRoot, l.split("#")[0])));
-    for (const r of refFiles[s]) if (!linked.has(path.join(skillRoot, "references", r.file))) error(c, `${s}/references/${r.file} is not linked from SKILL.md (unreachable, RF-02)`);
+      edges.set(file, out);
+    }
+    // Reachability and shortest link depth from SKILL.md.
+    const depth = new Map([[start, 0]]), queue = [start];
+    for (let i = 0; i < queue.length; i++) for (const t of edges.get(queue[i]) ?? []) if (!depth.has(t)) { depth.set(t, depth.get(queue[i]) + 1); queue.push(t); }
+    for (const f of mdAll) if (f !== start && !depth.has(f)) error(c, `${s}/${local(f)} is not reachable from SKILL.md through any chain of links (orphaned reference, RF-02)`);
+    const deep = [...depth].filter(([, d]) => d > 1);
+    for (const [, d] of depth) maxDepth = Math.max(maxDepth, d);
+    if (deep.length) {
+      transitive += deep.length;
+      warn(c, `${s}: ${deep.length} reference(s) reachable only through other references (${deep.map(([f, d]) => `${local(f)} at depth ${d}`).join(", ")}). Allowed (D-066); providers recommend references one level deep from SKILL.md (S24), and an agent is not guaranteed to follow a deeper chain`);
+    }
+    // Cycles: iterative depth-first walk; a link back to a file on the current path closes a cycle.
+    const state = new Map([[start, 1]]), stack = [{ node: start, next: 0 }];
+    while (stack.length) {
+      const top = stack.at(-1), out = edges.get(top.node) ?? [];
+      if (top.next >= out.length) { state.set(top.node, 2); stack.pop(); continue; }
+      const t = out[top.next++];
+      if (!state.has(t)) { state.set(t, 1); stack.push({ node: t, next: 0 }); }
+      else if (state.get(t) === 1) {
+        cycles++;
+        const loop = [...stack.slice(stack.findIndex((x) => x.node === t)).map((x) => local(x.node)), local(t)];
+        warn(c, `${s}: reference cycle ${loop.join(" → ")}. Validation visits each file once; an agent following these links could revisit them, so keep cross-links conditional (LD-02, LD-04)`);
+      }
+    }
   }
-  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, "all skill links and anchors resolve inside their own skill directory within 2 hops; every reference is reachable");
+  if (!results.some((r) => r.check === c && r.level === "ERROR")) pass(c, `${mdChecked} Markdown files: every link and anchor resolves to a file inside its own skill (no traversal, cross-skill link or symlink); every reference is reachable from SKILL.md (transitive discovery, no depth cap, D-066); max depth ${maxDepth}; ${transitive} reference(s) reachable only transitively; ${cycles} cycle(s)`);
 }
 
 { // V-10 wording, V-12 placeholders over every markdown file in the plugin

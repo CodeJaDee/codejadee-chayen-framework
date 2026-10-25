@@ -36,7 +36,7 @@ Status values: `OPEN` · `RESOLVED` · `ACCEPTED_RISK` · `WONT_FIX`
 | R-12 | Sources disagree on Agent Plugins versions: the Copilot CLI reference accepts 1.0.0 and 1.1.0 (S15), while agent-plugins.org publishes only 1.0.0 (S22). | The wrong `$schema` could be rejected ("MUST reject", S20). | Pin 1.0.0. Re-check before Step 06 (U-07). | OPEN |
 | R-13 | Step 02 evidence comes from documentation fetched through a summarising tool. Exact wording may be paraphrased. | A misread detail could mislead packaging. | Every packaging claim must be confirmed by an install test (Steps 06–08) before rows become VERIFIED. | OPEN |
 | R-14 | Shared `knowledge/` is reached through links outside the skill directory (`../../knowledge/…`). No provider documents this (U-11), or that providers tolerate an unknown top-level plugin directory (U-13). | Knowledge files are unreachable, or the plugin is rejected. | Early install test with one skill and one pack (Step 06). Fallback: developer-side vendoring (PLUGIN_PACKAGE_DESIGN §6.2). | OPEN |
-| R-15 | The two-hop reference chain exceeds the Agent Skills "one level deep" recommendation (S24, ADR-0004). | Models may stop at the INDEX and miss topic files. | Reference-load checks in C-13. Flatten the primary stacks if this fails (AS-04). | OPEN |
+| R-15 | References deeper than one level exceed the Agent Skills "one level deep" recommendation (S24). Since D-066 any depth is valid; at Step 04 every shipped reference is still one level deep (V-08 max depth 1). | An agent may stop before a transitively linked file and miss its guidance; a valid graph does not mean a read graph. | V-08 warns on every transitive-only reference; authoring prefers the SKILL.md References table (RF-02); reference-load checks in C-13 (evolution Step 18). | OPEN |
 | R-16 | Task-intent entry skills may under-trigger for stack-specific prompts (AS-01). | Lower REQ-02 recall. | Step 10 baseline. ADR-0004 revisit trigger. | OPEN |
 | R-17 | Three marketplace files describe the same plugin (D-013) and can drift. | One provider shows a stale name or description, or a wrong path. | V-01a..c and the V-01 consistency check run on every change. Later: CI. | OPEN |
 | R-18 | Codex `category` and `policy.authentication` values are documented only by example (`Productivity`, `ON_INSTALL`). The plugin needs no authentication. | The wrong category is shown in the ChatGPT directory, or an unintended auth prompt appears. | Re-check against an official schema when one is published. Observe in a ChatGPT desktop app install (Step 07). | OPEN |
@@ -140,6 +140,12 @@ CA-01/V-19 foundation are now approved/implemented, with maximum 15 under the
 latest Step 36 request and L0 6,500 retained. There is no remaining architecture
 approval blocker for this step. R-57 remains OPEN only for later editorial
 behavior, host policy/quality decisions and native-provider evidence.
+
+**R-57 D-066 update (2026-10-22):** the count and L0 parts are closed by
+removal rather than by another increase. There is no repository count or L0
+cap (ADR-0013, evolution Steps 03–05); provider listing limits are reported
+by `tools/catalog/discovery-metrics.mjs`. R-57 stays OPEN for the items
+above.
 
 ### STEP 37 Thai editorial skill
 

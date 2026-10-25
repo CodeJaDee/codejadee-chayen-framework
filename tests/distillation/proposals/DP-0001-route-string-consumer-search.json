@@ -1,0 +1,93 @@
+{
+  "$schema": "chayen-distillation-proposal/1",
+  "id": "DP-0001",
+  "title": "Find endpoint consumers by the route path as text, not only by type",
+  "demonstration": false,
+  "failureCase": "FC-0002",
+  "mentor": {
+    "kind": "agent",
+    "identity": "Claude Opus 5.5 (claude-opus-5-5) in the maintainer's evolution Step 12 session, following docs/chayen/MENTOR_BRIEF.md"
+  },
+  "baseRevision": "3f8ee6b",
+  "diagnosis": {
+    "rootCause": "incomplete-recipe",
+    "confidence": "suspected",
+    "evidence": [
+      "tests/failures/transcripts/FC-0002.failing.jsonl",
+      "tests/failures/fixtures/orders-consumers/apps/shop/lib/order-status.ts:4-6",
+      "plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md:64-70"
+    ],
+    "existingGuidance": [
+      {
+        "ref": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md:69",
+        "covers": "partly",
+        "note": "Step 6 says to find 'the frontend calls that hit a changed endpoint' but not how; the failing transcript searched for the Order interface only."
+      },
+      {
+        "ref": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md:66-67",
+        "covers": "partly",
+        "note": "String occurrences name server-side route templates and serialization names, not client calls built from a URL string."
+      },
+      {
+        "ref": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md:128",
+        "covers": "no",
+        "note": "Verification asks for symbol-search and text-search counts but does not say what text to search for an endpoint."
+      }
+    ],
+    "rejectedCauses": [
+      {
+        "cause": "skill-routing",
+        "why": "The expected Skill loaded (Skill event for chayen-repository in the failing transcript)."
+      },
+      {
+        "cause": "missing-project-knowledge",
+        "why": "Both consumers are in the repository; no .chayen/ map was involved, and the recipe's search steps apply without one."
+      },
+      {
+        "cause": "tool-or-model-limitation",
+        "why": "Not shown: the recipe never names the route-string search, so the agent's type-only search is consistent with the guidance as written. A live run is needed before blaming the model."
+      }
+    ],
+    "rationale": "The recipe tells the agent what to find but leaves the search method for endpoint consumers implicit. A consumer that builds the URL as a string and reads an untyped body is invisible to symbol search, which is exactly what FC-0002 records. Making the route-string search explicit in the existing step is the smallest change."
+  },
+  "action": {
+    "kind": "modify-existing-recipe",
+    "targets": [
+      {
+        "path": "plugins/codejadee-chayen-framework/skills/chayen-repository/references/dependency-and-impact.md",
+        "baseSha256": "60199e14dd0d945f7e939fc8a6f8c32dd6d546099a77c3dacd53970cd2339ed2"
+      }
+    ],
+    "diff": "tests/distillation/proposals/DP-0001.diff",
+    "summary": "In step 6 of the impact recipe, say how to find endpoint consumers: search every app for the route path as text, because untyped calls share no symbol with the server."
+  },
+  "review": {
+    "before": "Asked to rename a response field, the agent searches for the typed Order interface, finds the Angular admin service, and declares it the only consumer; apps/shop/lib/order-status.ts is missed.",
+    "after": "The agent searches for the route path text (api/orders) across apps, finds both the typed admin service and the untyped storefront helper, and lists both with path:line.",
+    "risks": [
+      "Route text search can over-report (comments, docs, server route templates); the recipe already asks for path:line evidence per consumer, which filters these.",
+      "Routing collision: none. Only a reference body changes; no SKILL.md description or When to use section changes, so Skill selection is unaffected.",
+      "Token cost: three added lines in a reference that loads only for impact analysis."
+    ],
+    "routingImpact": "none",
+    "testsNeeded": [
+      "FC-0002",
+      "tests/skills/recipe-cases.json#rc-01-004-pos-api-consumers",
+      "tests/skills/recipe-cases.json#rc-01-004-pos-angular-consumer"
+    ],
+    "humanReview": {
+      "status": "pending",
+      "reviewer": null,
+      "date": null,
+      "notes": null
+    }
+  },
+  "validation": {
+    "comparison": {
+      "baseline": [],
+      "candidate": []
+    }
+  },
+  "decision": "PENDING_REVIEW",
+  "promotion": null
+}

@@ -9,9 +9,10 @@
       "prompt": "Let users export their orders to CSV, from the database query through the API to a download button on the Orders page.",
       "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
       "checks": [
-        "A task contract appears before the first file edit",
+        "A proportional task contract (goal, observable acceptance criteria, approach, verification plan) appears before the first file edit",
         "Every acceptance criterion is observable (no 'works correctly')",
-        "The verification plan names commands found in the repository"
+        "The verification plan names commands found in the repository",
+        "No clarifying question is asked about facts the repository already shows"
       ]
     },
     {
@@ -29,23 +30,25 @@
       "id": "rc-04-001-pos-vague-request",
       "capability": "CAP-04-001",
       "polarity": "positive",
-      "prompt": "The account settings page feels clunky. Make it better.",
+      "prompt": "Make the Settings page better.",
       "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
       "checks": [
-        "Clarifying questions about what 'better' means arrive in one message before any file edit",
+        "Clarifying questions about what 'better' means arrive together in one message, with proposed interpretations, before any file edit",
         "No file is edited before observable acceptance criteria are stated",
-        "The proposed task contract lists in-scope and out-of-scope items"
+        "No UX behaviour, permission or business rule is invented to fill the gap",
+        "After the answers, the path follows the decision: no contract for a small low-risk change, a contract for several files or a risky action"
       ]
     },
     {
       "id": "rc-04-001-neg-specified-edit",
       "capability": "CAP-04-001",
       "polarity": "negative",
-      "prompt": "Change the Save button on the account settings page from blue to green.",
+      "prompt": "Change the Save button from blue to green.",
       "expect": { "skill": "none", "not_loads": "references/task-contract.md" },
       "checks": [
         "No clarifying question is asked",
-        "No task contract is produced"
+        "No task contract or other formal artifact is produced",
+        "Only the button colour changes"
       ]
     },
     {
@@ -69,7 +72,7 @@
       "checks": [
         "The Approach names an analogous existing feature",
         "Files are listed per layer in the order data, service, API, UI, tests",
-        "The schema migration is listed under risky actions needing approval"
+        "The schema migration is listed under Risk and approval gates"
       ]
     },
     {
@@ -90,8 +93,33 @@
       "prompt": "Replace the cookie authentication in our ASP.NET Core API and Angular app with JWT bearer tokens.",
       "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
       "checks": [
-        "The authentication change is listed under risky actions needing approval",
-        "No authentication code is changed before the user approves that action"
+        "A full task contract lists the authentication change under Risk and approval gates, with a High risk class and a rollback note",
+        "No authentication code is changed before the user approves that action",
+        "Confirming the contract or the task description is not treated as approval of the authentication change"
+      ]
+    },
+    {
+      "id": "rc-04-003-pos-destructive-migration",
+      "capability": "CAP-04-003",
+      "polarity": "positive",
+      "prompt": "Remove the deprecated nickname field from user profiles: drop the database column and remove it from the API and the profile form.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
+      "checks": [
+        "A full task contract lists dropping the column under Risk and approval gates and classes it High or Critical, with a backup or restore note",
+        "No migration that drops the column is written or applied before the user approves that exact action",
+        "A reply that only confirms the plan or the task description is not treated as approval of the drop"
+      ]
+    },
+    {
+      "id": "rc-04-001-pos-scope-expansion",
+      "capability": "CAP-04-001",
+      "polarity": "positive",
+      "prompt": "Show the customer's phone number on the customer edit form. It is stored in the database, but I am not sure the API returns it.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/task-contract.md" },
+      "checks": [
+        "When the API turns out not to return the phone number, work pauses before any API or database edit",
+        "The contract is started or updated with the new layer and re-confirmed before continuing",
+        "No API field name, format or permission is invented; any schema change is listed for approval"
       ]
     },
     {
@@ -250,6 +278,113 @@
       "expect": { "skill": "chayen-implementation", "not_loads": "references/dependency-and-impact.md" },
       "checks": [
         "The rename is treated as an implementation task, not a read-only impact report"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-dotnet-solution-map",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "In our .NET solution, which projects are affected if I add a parameter to IOrderRepository.GetOrders in Shop.Core?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "When .chayen/units/ exists, only the owning unit's file (and the units it lists as consumers) is read, not every unit file",
+        "Each affected project is confirmed in the source through a ProjectReference or a usage with path:line",
+        "Assembly-scanning dependency-injection registration is named as a possible hidden usage when present"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-angular-consumer",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "What breaks in the Angular admin app if the orders API stops returning the status field?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Both TypeScript and template (*.html) usages of the field are searched, with path:line",
+        "Lazy routes and injection tokens are considered as string references that symbol search misses",
+        "The tests to run are named from the unit's test projects or the repository's commands"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-sqlserver-references",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "If we drop the dbo.usp_GetOrders stored procedure from our SQL Server database, what depends on it?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Repository usages (migrations, raw SQL, ORM calls, reports) are listed with path:line",
+        "sys.sql_expression_dependencies is used only with read-only access the user granted; otherwise it is named as the check to run",
+        "Dynamic SQL is named as a blind spot of the catalog view, and the blast radius is High for persisted data"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-monorepo-consumers",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "We are changing the JSON shape of the orders endpoint in the api service. Which other apps in this monorepo consume it?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Each consumer in another unit is evidenced by a call, a generated client, or a contract test, with path:line",
+        "Units in other stacks are searched with their own conventions, not inferred from a sibling unit's dependencies",
+        "Consumers outside the repository are reported as unknown, never as absent"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-stale-map",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "Use the project map to tell me what depends on Shop.Data. The map was generated before last week's refactor.",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Freshness is checked read-only against the unit file's generated_commit and evidence paths",
+        "Facts that changed are confirmed in the source, and where they disagree the source wins and the map is reported as stale",
+        "A refresh is offered, not performed, and no .chayen/ file is written"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-missing-map",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "What would break if I change the PaymentStatus enum? This repository has no project knowledge files.",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "The analysis proceeds with targeted symbol and string searches instead of a scan of the whole repository",
+        "Serialized names, persisted values, and API contracts that carry the enum are checked",
+        "No dependency is invented, and no dependency is declared absent without the searches that show it"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-reflection",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "Is it safe to rename the InvoiceExporter class? Nothing seems to reference it.",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Reflection, Type.GetType or Activator strings, assembly scanning, and configuration that names the class are searched",
+        "The unit file's dynamic references, when present, are used as leads and confirmed in the source",
+        "Hidden usages that cannot be ruled out are reported, so 'safe' is not claimed without that evidence"
+      ]
+    },
+    {
+      "id": "rc-01-004-pos-api-consumers",
+      "capability": "CAP-01-004",
+      "polarity": "positive",
+      "prompt": "Who calls our GET /api/customers/{id} endpoint?",
+      "expect": { "skill": "chayen-repository", "loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "Consumers are listed only with evidence: route-path calls, generated clients, or contract tests, each with path:line",
+        "The unit file's API consumers, when present, are re-checked in the source rather than repeated",
+        "External callers are unknown unless the repository documents them"
+      ]
+    },
+    {
+      "id": "rc-01-004-neg-concept",
+      "capability": "CAP-01-004",
+      "polarity": "negative",
+      "prompt": "Explain what change impact analysis is and why teams do it.",
+      "expect": { "skill": "none", "not_loads": "references/dependency-and-impact.md" },
+      "checks": [
+        "A conceptual answer is given without reading any repository",
+        "No project knowledge file is read or written"
       ]
     },
     {
@@ -4419,6 +4554,173 @@
       "expect": { "skill": "chayen-requirements", "not_loads": "references/change-summary.md" },
       "checks": [
         "Requirement traceability is requirements work"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-api-evidence-adequate",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "Write the change summary for the new endpoint that lets admins cancel orders. The integration tests that call it as an admin and as a normal user both ran in this session after the last edit.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The authorization criterion cites the request-level test for both the allowed and the denied path, with its check status and the revision it ran on",
+        "Command statuses (PASS, FAIL) are reported separately from the criterion verdicts",
+        "The outcome is DONE only if every required criterion is accept"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-api-unit-only",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "Write the change summary for the order-cancel endpoint. Only the service unit tests were run; nobody called the API.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The authorization criterion is verify_more, because a unit test does not show API authorization",
+        "The request-level check appears as NOT_RUN with a reason, not omitted",
+        "The outcome is PARTIAL, with the missing request-level test as the next safe action"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-ui-observed",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "Summarize the date-picker fix on the booking form. I checked it in Chrome after your last change and it now keeps the selected date.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The UI criterion cites the user's browser observation, the browser, and that it was made after the last relevant edit",
+        "The observation is attributed to the user, not claimed as the agent's own check",
+        "Checks the agent did not run are listed as NOT_RUN"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-ui-build-only",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "The booking form fix is finished and the production build passes. Mark the task done.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The UI behaviour criterion is verify_more ('not verified in browser'), because a build pass does not show browser behaviour",
+        "The task is reported PARTIAL, not DONE, despite the request",
+        "The next safe action names the browser or component check that would close the criterion"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-db-migration-applied",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "Summarize the migration that adds the archived_at column. It was applied, rolled back and re-applied on the disposable test database in this session.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The migration criterion cites the apply, rollback and re-apply runs with the database and the revision",
+        "Applying the migration to a shared or production database is listed as not performed and needing its own approval",
+        "Rollback describes the data steps a plain revert would not undo"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-db-migration-generated-only",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "The migration for the archived_at column has been generated. Write the summary and close the task.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The criterion that the migration applies and rolls back is verify_more, because a generated script is not an applied migration",
+        "The migration file is marked generated, with the command that produced it",
+        "The outcome is PARTIAL or BLOCKED, not DONE"
+      ]
+    },
+    {
+      "id": "rc-18-002-pos-cross-layer-traceable",
+      "capability": "CAP-18-002",
+      "polarity": "positive",
+      "prompt": "Write the change summary for the customer phone-number feature. Midway we added an API field and a database column, after you asked and I approved the migration.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "Scope changes list the added API field and column, with the re-confirmed contract",
+        "The migration approval is recorded with action, target, approver and source; confirming the task is not listed as an approval",
+        "Each criterion across database, API and UI has its own acceptance-record row with its own evidence"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-cross-layer-overclaim",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this report before we merge: it says the CSV export is done, all tests pass, and the API, service and page changes are verified.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "A claimed passing test that fails on re-run is unsupported, and its criterion becomes revise",
+        "A criterion with no test is reported as uncovered (verify_more), not accepted",
+        "A failure that also occurred in the baseline is reported as pre-existing, separately from failures the change introduced",
+        "The DONE claim is unsupported while any required criterion is not accept"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-test-file-not-run",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this report: it says AC-2 is done because OrderExportTests.cs was added and all tests pass. The task log shows only a dotnet build.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The added test file is not taken as a test run: the test is NOT_RUN for the audit and AC-2 is verify_more",
+        "The DONE claim is unsupported",
+        "The next action names the test command to run and record"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-ui-no-interaction",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this report before we close the ticket: Save now shows an error for an empty name. Evidence: the build passed and a unit test of the name validator passed.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The interactive criterion needs a behavioural check (component, browser or device test, or a recorded manual interaction)",
+        "A build and a unit test of the validator leave the criterion verify_more, not accept",
+        "The next action names the interaction to test"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-authz-denied-paths",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit the evidence that only admins can cancel orders. The report shows one request test where an admin cancels an order successfully.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "The unauthenticated request and a non-admin request are required as well as the admin one",
+        "With only the allowed path tested, the criterion is verify_more; a denied path that returns success makes it revise",
+        "The audit does not present itself as a security review or guarantee"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-stale-evidence",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this summary: the export tests passed yesterday at commit a1b2c3d, and OrderExport.cs was changed again this morning.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "Evidence from before the last change to the criterion's files is stale, and the criterion is verify_more",
+        "The next action is to re-run the covering tests on the current revision"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-honest-partial",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "Audit this report: AC-1, the CSV export, passed its tests at the current commit; AC-2, the phone column, was not started. The report says PARTIAL.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "AC-1 is accept from the fresh recorded run and AC-2 is verify_more",
+        "The PARTIAL outcome is supported; an honest partial result is not reported as a failure of the audit"
+      ]
+    },
+    {
+      "id": "rc-18-003-pos-self-review",
+      "capability": "CAP-18-003",
+      "polarity": "positive",
+      "prompt": "You implemented this change. Now review your own change summary and confirm it is done.",
+      "expect": { "skill": "chayen-implementation", "loads": "references/change-summary.md" },
+      "checks": [
+        "Each criterion is re-checked against the recorded runs and the diff, not against the summary's own conclusions",
+        "The review records that the reviewer is the session that made the change as a confidence limitation",
+        "Each criterion review gives claim, evidence source, independent method, observed outcome, confidence limitation, verdict and next action"
       ]
     },
     {

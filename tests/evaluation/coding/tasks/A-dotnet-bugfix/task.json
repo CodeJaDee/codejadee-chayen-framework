@@ -1,0 +1,48 @@
+{
+  "$schema": "chayen-coding-task/1",
+  "id": "A-dotnet-bugfix",
+  "title": "Backend bug fix: an extra empty page at exact multiples",
+  "category": "backend-bug-fix",
+  "prompt": "Customers report that the orders list shows an extra empty page. With 20 orders and pageSize=10, GET /api/orders says totalPages is 3. Fix the bug without changing the API response shape, and add a regression test.",
+  "stack": [
+    { "name": ".NET SDK", "version": "10.0", "source": "repo/global.json" },
+    { "name": "ASP.NET Core minimal API", "version": "10.0", "source": "repo/src/Orders.Api/Orders.Api.csproj" },
+    { "name": "xUnit", "version": "2.9.3", "source": "repo/tests/Orders.Api.Tests/Orders.Api.Tests.csproj" },
+    { "name": "Microsoft.AspNetCore.Mvc.Testing", "version": "10.0.8", "source": "repo/tests/Orders.Api.Tests/Orders.Api.Tests.csproj" }
+  ],
+  "commands": {
+    "build": "dotnet build tests/Orders.Api.Tests",
+    "test": "dotnet test tests/Orders.Api.Tests"
+  },
+  "scope": {
+    "allowed": ["src/Orders.Api/**", "tests/Orders.Api.Tests/**"],
+    "mustNotChange": ["src/Orders.Api/Contracts/**", "global.json", "**/*.csproj"],
+    "note": "The fix belongs in the paging calculation; the response contract and project files stay unchanged."
+  },
+  "acceptanceCriteria": [
+    { "id": "AC-1", "text": "totalPages is the ceiling of totalCount / pageSize: 20 orders at 10 per page give 2; no orders give 0.", "oracle": "hidden PagingOracleTests.TotalPages_is_the_ceiling_of_count_over_page_size" },
+    { "id": "AC-2", "text": "The response shape { items, page, pageSize, totalCount, totalPages } and the paging of items are unchanged; a page past the end is an empty 200.", "oracle": "hidden Response_shape_is_unchanged, A_page_past_the_end_is_empty_not_an_error; mustNotChange Contracts" },
+    { "id": "AC-3", "text": "Invalid paging still returns 400 problem details.", "oracle": "hidden Invalid_paging_is_still_a_problem_details_400" },
+    { "id": "AC-4", "text": "A regression test in the repository's test project fails on the original code and passes on the fix.", "oracle": "regression-test-detects: the agent's tests run against the original src/ must fail" }
+  ],
+  "grading": [
+    { "check": "boundary" },
+    { "check": "dotnet-test", "name": "visible tests (no regression)", "project": "tests/Orders.Api.Tests" },
+    { "check": "dotnet-test", "name": "hidden oracle", "grader": "grader/HiddenTests", "project": ".grader/HiddenTests", "minPassed": 12 },
+    { "check": "regression-test-detects", "project": "tests/Orders.Api.Tests", "revert": ["src/"] }
+  ],
+  "negativeChecks": [
+    "Invalid paging (pageSize 0 or 101, page 0) keeps returning 400 with application/problem+json.",
+    "A page past the end returns 200 with no items rather than an error."
+  ],
+  "expected": {
+    "initial": "FAIL",
+    "reference": "PASS",
+    "negatives": [
+      { "id": "N1-fix-without-regression-test", "expect": "FAIL", "failedChecks": ["regression-test-detects"], "detects": "a correct fix with no regression test" },
+      { "id": "N2-contract-changed", "expect": "FAIL", "failedChecks": ["boundary", "hidden oracle"], "detects": "a fix that renames totalPages in the public contract" },
+      { "id": "N3-special-cased", "expect": "FAIL", "failedChecks": ["hidden oracle"], "detects": "a fix that only special-cases the reported numbers" }
+    ]
+  },
+  "reset": "Give the agent a fresh copy of repo/ only (never grader/, reference/ or negatives/), initialised as a git repository with one commit. Reset by discarding the copy."
+}

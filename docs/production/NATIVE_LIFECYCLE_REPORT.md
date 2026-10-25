@@ -5,6 +5,13 @@ No Phase 5 evaluation, VS Code testing, model prompts, production credentials,
 commit, push, tag, publication or repository setting change was performed.
 Security/Support remains LATER and is unrelated to this lifecycle implementation.
 
+> **Superseded for the current build.** This report records `0.1.0-rc.1`.
+> The native lifecycle of the 16-Skill `1.1.2` working-tree snapshot passed on
+> 2026-10-23 (Claude Code 2.1.220 and Codex 0.163.0; Copilot 1.0.89 BLOCKED
+> below 1.0.91). That is lifecycle evidence, not release qualification: no
+> committed frozen candidate was used. See the
+> [Step 19 report](../chayen/evolution/PROVIDER_SECURITY_REPORT.md).
+
 ## Candidate identification
 
 The repository was clean on entry at

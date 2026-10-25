@@ -8,6 +8,87 @@ All notable changes to codejadee-chayen-framework are recorded here.
 
 Nothing yet.
 
+## [1.1.3] - 2026-10-23
+
+Guidance-only release (D-077) from the evolution program (Steps 01–20,
+D-066..D-076), audited in
+[FINAL_AUDIT_REPORT](docs/chayen/evolution/FINAL_AUDIT_REPORT.md).
+
+- **Scope:** 31 shipped guidance files changed since `1.1.2`, plus the
+  version in both manifests and the plugin's two README files. Skill names,
+  descriptions and discovery metadata (fingerprint `411b6adbbea7e121`) are
+  unchanged, so routing metadata is the same as `1.1.2`. A patch version
+  follows the `1.1.1` and `1.1.2` precedent (D-064, D-065).
+- **Status:** implementation substantially complete; **not
+  release-qualified**. Runtime evaluation is pending (see Not verified).
+
+### Changed (shipped guidance)
+
+- **Task contract decision policy** (`chayen-implementation`):
+  - clarify an unclear request before any edit;
+  - a full contract with approval of each exact risky action;
+  - a proportional contract for multi-file or multi-layer work;
+  - nothing for a fully specified low-risk change;
+  - re-decide when scope grows.
+- **Acceptance evidence contract:** a nine-field acceptance record per
+  criterion, `accept` / `verify_more` / `revise` verdicts with an
+  evidence-adequacy table, and `DONE` / `PARTIAL` / `BLOCKED` outcomes. It is
+  used by the templates, five entry Skills and twelve workflows.
+- **Independent evidence audit:** separate implementer and reviewer roles,
+  with an eight-field review per criterion.
+- **Project map:** `.chayen/` unit files carry an evidence-cited change-impact
+  map with git fingerprints. Readers check staleness read-only and confirm
+  facts in the source.
+
+### Removed (repository rules, D-066 / ADR-0013)
+
+- The 16-Entry-Skill cap and the name allow-lists.
+- The `SKILL.md` and reference line limits.
+- The two-hop reference depth limit.
+- The 7,000-character discovery-metadata failure.
+
+All are replaced by measurement and advisory warnings. Provider limits,
+security checks and integrity checks still fail when broken.
+
+### Added (developer tooling only; nothing here ships in the plugin)
+
+- **Validation:**
+  - discovery-metadata metrics;
+  - limit-migration regressions;
+  - a guidance consistency validator (GI-01..GI-10).
+- **Learning and evidence:**
+  - failure-case records with offline replay;
+  - mentor distillation proposals;
+  - a reference evidence-audit grader.
+- **Coding evaluation:**
+  - explicit evaluation candidates;
+  - six coding fixtures with hidden graders;
+  - an isolated coding runner (live runs need a verified container);
+  - an independent grader with rework and efficiency metrics.
+- **Routing:** a routing, collision and context benchmark with synthetic
+  Skills in disposable copies.
+- **Security:**
+  - a required untrusted-content guard (V-25.3);
+  - an evidence privacy gate (G-SEC-E);
+  - a Codex profile-isolation check.
+
+### Fixed
+
+- The Phase 5 transcript parsers now detect Skill names that contain digits.
+- The evaluation suite no longer pools provider results across
+  configurations.
+- G-21T: the distillation test no longer depends on the checkout's line
+  endings, and asserts that its mutation took effect.
+
+### Not verified
+
+- Agent behaviour, automatic routing (≥85% per CLI), explicit invocation,
+  no-match behaviour, adversarial security cases and real coding comparisons
+  are NOT_RUN on every CLI.
+- Copilot CLI is not qualified (1.0.89 installed; 1.0.91 required).
+- The native lifecycle passed only on an unreleased snapshot, on Claude Code
+  2.1.220 and Codex 0.163.0.
+
 ## [1.1.2] - 2026-10-20
 
 Guidance-only release (D-065). Skill names, descriptions and L0 metadata are

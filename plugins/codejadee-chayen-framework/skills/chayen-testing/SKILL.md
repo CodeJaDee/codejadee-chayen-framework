@@ -60,8 +60,9 @@ If the request does not fit, stop following this skill and continue normally wit
 - **Discover:** test framework and version, runner command, fixtures and
   helpers, mocking approach, data builders, environment needs (database,
   containers, browsers), CI configuration, and the current baseline result.
-  When `.chayen/profile.md` and `.chayen/rules.md` are present, use them as a
-  map, confirm each fact in the source, and trust the source when the two
+  When `.chayen/profile.md`, `.chayen/rules.md`, and the unit file in
+  `.chayen/units/` for the code under test are present, use them as a map,
+  confirm each fact in the source, and trust the source when the two
   disagree.
 - **Ask when missing and it matters:** expected behaviour for edge cases,
   whether tests may use containers or external services, and time budgets
@@ -119,14 +120,18 @@ Report every test or suite with exactly one status:
 | UNKNOWN | Execution was attempted but the outcome cannot be determined: truncated output, a crashed or timed-out runner, a missing report, or zero tests matched the filter |
 
 - Show the command and the runner's own counts. Never infer PASSED from
-  missing output.
+  missing output or from the existence of a test file.
 - Regression tests: state whether the failure before the fix was observed
   or only reasoned.
 - Flaky fixes: report repeated-run counts with the command.
 - No skipped, disabled, or retried tests were added without the user's
   agreement.
 - When the task has acceptance criteria, each one names the test that
-  covers it and that test's status, or is marked uncovered.
+  covers it and that test's status, or is marked uncovered. A test status is
+  not the criterion's verdict: an uncovered criterion, or one whose test is
+  SKIPPED, BLOCKED, NOT_RUN or UNKNOWN, is verify_more; a FAILED test of the
+  criterion makes it revise; only a PASSED test that exercises the
+  criterion, run after the last relevant edit, supports accept.
 
 ## Failure handling
 

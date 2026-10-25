@@ -4,6 +4,15 @@
 - **Date:** 2026-10-14
 - **Related:** D-006, REQ-05, REQ-06, C-03, C-04, C-05, C-07, R-03, R-11
 
+**Superseded components (2026-10-22, D-066,
+[ADR-0013](ADR-0013-extensible-skill-governance.md)):** decision 4 below (L0
+cap, Skill count cap, `SKILL.md` ≤300 lines, ≤2 hops) is superseded by
+measurement, reporting and provider-derived warnings. Decisions 1 and 2
+remain in force. Decision 3's pack `INDEX.md` model was already replaced in
+practice by skill-local references (D-016). The values written below are
+historical. Evolution Steps 03–05 implemented ADR-0013: the validators
+enforce no count, line, depth or L0 cap.
+
 **Accepted count amendment (2026-10-17, D-051):** the Product Owner explicitly
 authorized increasing the Entry Skill ceiling to **25**. This amendment is
 ACCEPTED and implemented in V-07 and V-11.3. The rest of this ADR retains its

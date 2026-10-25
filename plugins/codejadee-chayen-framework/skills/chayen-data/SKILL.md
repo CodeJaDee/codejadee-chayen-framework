@@ -71,7 +71,8 @@ If the request does not fit, stop following this skill and continue normally wit
   - the migration tool, data-access library, and naming conventions;
   - table sizes and write load where performance or locking matters;
   - existing jobs, pipelines, and data checks;
-  - `.chayen/profile.md` and `.chayen/rules.md`, when present: use them as a
+  - `.chayen/profile.md`, `.chayen/rules.md`, and the unit file in
+    `.chayen/units/` for the code being changed, when present: use them as a
     map, confirm each fact in the source, and trust the source when the two
     disagree.
 - **Ask when missing and it matters:** invariants and business rules,
@@ -137,9 +138,13 @@ No matching workflow => continue normal native behavior.
   conditions, or are labelled "expected, not measured".
 - Nothing ran against a shared or production database without a recorded
   approval, and production access was read-only.
-- When the task has acceptance criteria, each one is mapped to its evidence
-  (a migration run, a query result, or a before-and-after plan), with a
-  verdict: accept, verify_more, or revise.
+- When the task has acceptance criteria, each one records its method,
+  environment, evidence (a migration run, a query result, or a
+  before-and-after plan), freshness, check status and one verdict: accept,
+  verify_more, or revise. A migration criterion needs the migration applied,
+  rolled back and re-applied on a disposable database; a generated script
+  alone leaves it verify_more. DONE needs every required criterion at
+  accept.
 
 ## Failure handling
 

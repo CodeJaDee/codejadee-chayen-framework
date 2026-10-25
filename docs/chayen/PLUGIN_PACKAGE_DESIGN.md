@@ -8,6 +8,13 @@
 | Parent | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | Format basis | [PLUGIN_FORMAT_DECISION.md](PLUGIN_FORMAT_DECISION.md) (D-009), ADR-0006, ADR-0008 |
 
+> **D-066 (2026-10-22):** SK-04 and the ≤300 line budgets below, the
+> ≤2-hop part of V-08, and the count and L0 limits in the V-07 row are
+> superseded by
+> [ADR-0013](ADRS/ADR-0013-extensible-skill-governance.md): sizes are reported
+> with provider-derived advisory warnings, and references are discovered
+> transitively with orphans rejected and cycles reported.
+
 This document fixes the **physical layout** that later steps implement. It
 creates nothing. The JSON and Markdown shown here are illustrative
 specifications, not files.

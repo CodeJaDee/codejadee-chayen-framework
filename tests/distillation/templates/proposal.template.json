@@ -1,0 +1,38 @@
+{
+  "$schema": "chayen-distillation-proposal/1",
+  "id": "DP-NNNN",
+  "title": "<one line: what changes and why>",
+  "demonstration": false,
+  "failureCase": "FC-NNNN",
+  "mentor": { "kind": "agent", "identity": "<model id or maintainer name, and the session>" },
+  "baseRevision": "<git revision the diff applies to>",
+  "diagnosis": {
+    "rootCause": "<skill-routing | missing-project-knowledge | incomplete-recipe | conflicting-instructions | poor-task-specification | insufficient-verification | tool-or-model-limitation | external-environment-failure>",
+    "confidence": "suspected",
+    "evidence": ["<path or path:line, e.g. tests/failures/transcripts/FC-NNNN.failing.jsonl>"],
+    "existingGuidance": [
+      { "ref": "<path:line>", "covers": "<fully | partly | no>", "note": "<what it already says>" }
+    ],
+    "rejectedCauses": [
+      { "cause": "<another root cause>", "why": "<evidence against it>" }
+    ],
+    "rationale": "<why this root cause and why this is the smallest correction>"
+  },
+  "action": {
+    "kind": "<modify-existing-recipe | clarify-entry-skill | update-project-knowledge-template | document-verified-command | add-regression-fixture | record-unresolved-limitation>",
+    "targets": [{ "path": "<existing file>", "baseSha256": "<sha256 of the file with LF line endings>" }],
+    "diff": "tests/distillation/proposals/DP-NNNN.diff",
+    "summary": "<the change in one sentence>"
+  },
+  "review": {
+    "before": "<observable agent behaviour now>",
+    "after": "<observable agent behaviour expected after the change>",
+    "risks": ["<including routing collisions, token cost, over-reporting>"],
+    "routingImpact": "<none | trigger-sections | metadata>",
+    "testsNeeded": ["FC-NNNN", "tests/skills/recipe-cases.json#<the failure case's regression reference>"],
+    "humanReview": { "status": "pending", "reviewer": null, "date": null, "notes": null }
+  },
+  "validation": { "comparison": { "baseline": [], "candidate": [] } },
+  "decision": "PENDING_REVIEW",
+  "promotion": null
+}

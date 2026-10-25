@@ -1,0 +1,21 @@
+--- a/tests/skills/recipe-cases.json
++++ b/tests/skills/recipe-cases.json
+@@ -2197,6 +2197,18 @@
+         "An existing repository script or command is reused when one fits, or its absence is stated"
+       ]
+     },
++    {
++      "id": "rc-09-007-pos-ui-field-not-schema",
++      "capability": "CAP-09-007",
++      "polarity": "positive",
++      "prompt": "Copy each customer's email into the new contacts table. The admin form already has an email field, so the data should be there.",
++      "expect": { "skill": "chayen-data", "loads": "references/schema-and-data-migration.md" },
++      "checks": [
++        "The source column is confirmed in the migrations, the data model or the catalog, with the source cited, before any script uses it",
++        "A UI form field, DTO or prompt wording is not treated as evidence that a column exists",
++        "When the data model has no such column, the gap is reported and a question is asked instead of writing a script with a guessed name"
++      ]
++    },
+     {
+       "id": "rc-09-008-pos",
+       "capability": "CAP-09-008",

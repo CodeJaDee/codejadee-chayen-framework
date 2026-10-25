@@ -1,0 +1,7 @@
+{"type":"synthetic","case":"FC-0002","note":"Hand-written synthetic transcript in Claude Code stream-json shape. No provider or model was called."}
+{"type":"system","subtype":"init","model":"synthetic","skills":["chayen:chayen-repository"]}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Skill","input":{"skill":"chayen:chayen-repository"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Read","input":{"file_path":"<FIXTURE>/src/Api/Controllers/OrdersController.cs"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Grep","input":{"pattern":"api/orders","path":"<FIXTURE>"}}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Grep","input":{"pattern":"\\.status\\b","path":"<FIXTURE>"}}]}}
+{"type":"result","subtype":"success","is_error":false,"result":"Consumers of GET api/orders/{id} found by searching for the route string, not only the type:\n\n1. web/admin/src/app/orders/order.service.ts:8 calls it and types the body with `Order.status` (line 4).\n2. apps/shop/lib/order-status.ts:4 calls it by URL and reads `body.status` at line 6. It shares no type with the API, so a symbol search misses it.\n\nRename the field in src/Api/Controllers/OrdersController.cs:8 and update both consumers in the same change. Callers outside this repository are unknown; keep `status` for one release or version the endpoint if any may exist."}

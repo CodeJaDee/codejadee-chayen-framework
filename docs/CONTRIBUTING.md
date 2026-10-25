@@ -49,8 +49,10 @@ the owner's Support decision:
 Most requests are added as a **recipe or technology reference inside an
 existing skill**:
 
-- L0 metadata usage is 6,563 / 7,000 characters, and all 16 entry points ship
-  (D-062 raised the ceiling to 16 for `chayen-init`);
+- L0 metadata usage is 6,563 characters; there is no entry skill count
+  ceiling or repository metadata cap (D-066), but every entry skill adds
+  listing metadata on every turn and provider listing limits still apply
+  (`node tools/catalog/discovery-metrics.mjs` reports the effect);
 - each new entry skill competes with the others for selection.
 
 A new entry skill needs a recorded decision and owner approval.
@@ -93,8 +95,20 @@ node tools/validate/check-docs.mjs                      # documentation links an
 node tests/provider-compatibility/check-identity.mjs    # plugin identity and precedence
 node tools/evals/run-evaluation-suite.mjs               # evaluation traceability, simulated proxy
 node --test tests/ci/negative-controls.test.mjs          # isolated failure demonstrations
+node --test tests/ci/limits.test.mjs                     # no former numeric cap; limits exceeded at once still valid
+node tools/catalog/discovery-metrics.mjs                # discovery metadata, estimated tokens, provider figures
+node tools/evals/failure-cases.mjs                      # failure records: validate, replay recorded transcripts offline
+node tools/evals/distill.mjs                            # distillation proposals: six stages, offline validation on a copy
+node tools/evals/audit-evidence.mjs                     # independent evidence audit: reference grader on synthetic cases
+node tests/evaluation/phase5/candidate.mjs prepare --out <file>   # evaluation candidate for this build; offline
 node tools/ci/check-workflow.mjs                        # pinned linter download; no providers
 ```
+
+There is no repository cap on Skill count, file length, reference depth or
+total discovery metadata (D-066). Sizes and metadata are reported instead,
+with warnings at provider recommendations. A Skill that grows past an old
+limit is fine if it stays concise, distinct and safely linked. Provider
+limits (name ≤64 characters, description ≤1,024) still fail.
 
 **When you change a skill:**
 
@@ -116,6 +130,32 @@ node tools/ci/check-workflow.mjs                        # pinned linter download
    general advice.
 4. Run the validators. The new case stays NOT_RUN until an authorized
    provider run grades it.
+
+To make the failure replayable, also add a failure record in
+`tests/failures/` ([format and rules](chayen/FAILURE_REPRODUCTION.md)):
+
+- a fixture with checkable facts;
+- a failing and a control transcript;
+- a detector;
+- the case from step 2 as its regression reference.
+
+Records are synthetic, or redacted with explicit opt-in. Never paste a
+conversation, a secret, personal data or production source. The record's
+verification status changes only through an authorized live replay on the
+changed revision, never because the guidance text changed.
+
+To turn a failure record into a guidance fix, a Mentor (a capable model in
+an opt-in session, or a maintainer) writes a proposal in
+`tests/distillation/`. It contains the diagnosis, the smallest allowed
+action, a diff, and the review. The full process is in
+[knowledge distillation](chayen/KNOWLEDGE_DISTILLATION.md).
+
+`node tools/evals/distill.mjs` applies the diff only to a disposable copy and
+runs the offline validators there. It derives the decision: a guidance
+change is promoted only after human review and a live baseline-versus-
+candidate comparison shows the improvement. Not every failure becomes a
+Skill change. Prefer an existing Recipe, and never add an Entry Skill for a
+single failure.
 
 Native provider validation is a separate authorized check when the CLI is
 available; it is not a dependency of ordinary CI. Provider runs
