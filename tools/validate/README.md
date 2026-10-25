@@ -10,6 +10,10 @@ These tools are for **repository maintainers only**.
   24.22.0 on Windows. Use 24.22.0 for development; 20.11.0 is a legacy
   compatibility floor, not a recommended maintainer runtime.
 
+G-19I runs `tests/evals/project-knowledge-evals.test.mjs` offline. It checks
+the initialization fixtures and deterministic grader controls (D-078),
+without invoking a provider or establishing agent behavior.
+
 ```bash
 node tools/validate/validate-all.mjs           # every automated gate (SKILL_QUALITY_GATES.md), one line each
 node tools/validate/validate-package.mjs       # package, skills, references, catalog alignment (detail)

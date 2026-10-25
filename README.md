@@ -21,8 +21,8 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 | Marketplace name | `codejadee` |
 | Current version | `1.1.3` |
 | Entry Skills | 16 |
-| Package files | 263 |
-| Skill references | 242 |
+| Package files | 264 |
+| Skill references | 243 |
 | L0 metadata | 6,563 characters |
 
 The 16 entry skills are 13 engineering Skills, 2 writing Skills and 1 project
@@ -110,10 +110,14 @@ is specific to `chayen-data`):
 
 ### Project knowledge (optional)
 
-Ask the agent to initialize project knowledge and `chayen-init` drafts
+Ask the agent to initialize project knowledge and `chayen-init` writes
 `.chayen/profile.md`, `.chayen/conventions.md` and a team-owned
-`.chayen/rules.md` from the repository, then writes them only after you
-approve a preview. From 1.1.2, the implementation, backend, frontend, data
+`.chayen/rules.md` directly from the repository. Every initialize, and every
+refresh that changes knowledge, also writes `.chayen/init-report.md` with
+changes, inspection coverage, gaps and follow-up. It asks nothing before
+writing, runs builds and tests only when you ask, and asks once at the end
+for pointer-block changes. Existing team rules still need approval
+of the exact diff (D-078). From 1.1.2, the implementation, backend, frontend, data
 and testing Skills read the profile and rules first when they exist. They
 treat the files as a map, confirm each fact in the source, and trust the
 source when the two disagree. Design:

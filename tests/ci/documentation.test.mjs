@@ -21,8 +21,8 @@ const run = () => {
 test("current user/release docs match canonical build and resolve links", () => { const r = run(); assert.equal(r.code, 0, r.out); });
 for (const [name, from, to] of [
   ["Skill count", "| Entry Skills | 16 |", "| Entry Skills | 15 |"],
-  ["package file count", "| Package files | 263 |", "| Package files | 257 |"],
-  ["reference count", "| Skill references | 242 |", "| Skill references | 237 |"],
+  ["package file count", "| Package files | 264 |", "| Package files | 257 |"],
+  ["reference count", "| Skill references | 243 |", "| Skill references | 237 |"],
   ["metadata usage", "| L0 metadata | 6,563 characters |", "| L0 metadata | 6,217 characters |"],
   // D-066 removed the 7,000-character cap; restating any fixed budget is now the stale fact.
   ["metadata budget restated", "| L0 metadata | 6,563 characters |", "| L0 metadata | 6,563 / 7,000 characters |"],

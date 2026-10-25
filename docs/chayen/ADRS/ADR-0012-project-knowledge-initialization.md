@@ -66,6 +66,34 @@ Constraints that shape the design:
 3. **Preview before every write.** Nothing is written until the user approves
    the exact content or diff. Writes stay inside `.chayen/` and inside approved
    pointer blocks.
+   *Superseded by D-078 (2026-10-25):* on the owner's request, initialize and
+   refresh write generated `.chayen/` content directly, then report. Create
+   a missing `rules.md` directly with at most five open questions; existing
+   team rules still require approval of the exact diff. Keep approval for
+   removal, unknown or newer schemas, hand-written text in generated files,
+   more than eight units, and no recognizable manifest. Offer all pointer
+   changes in one approval question at the end. Compare `git status` with
+   the starting state to check that this run writes only inside `.chayen/`
+   and approved pointer blocks. Git provides review and reversal of generated
+   changes; no preview gate remains for ordinary generation.
+   *Amends decision 2 and D-067's refresh procedure:* generate
+   `.chayen/init-report.md` on every initialize and on every refresh that
+   changes knowledge; a refresh with no changes writes nothing. Use `schema: project-knowledge/1` and keep
+   it at most 120 lines. Record mode, date, commit, units and stacks, files
+   written or changed, inspection coverage and skipped paths with reasons,
+   unknowns, evidence gaps, proposals and follow-up. Proposals may live here,
+   never in profile or conventions. Do not add the report to the pointer's
+   task reading list. Generated profiles and unit files remain at most 150
+   lines; conventions remain at most 200. Compact real excerpts and cited
+   ordered recipes fit these budgets without raising them. In single-unit
+   profiles, group evidenced areas under Backend, Frontend, Data and Testing.
+   Scan folders to depth 6 before reading source. Read 3–10 complete files
+   per category, within run totals of 100 source, 20 test and 5 migration
+   files. Record work beyond the limits for follow-up; do not expand the
+   scan. Ban filler and present-area stubs. Ask nothing before writing:
+   run inspected build and test commands only when the request asks for
+   them and record actual outcomes as `VERIFIED`, otherwise `DISCOVERED`. Never deploy,
+   migrate, publish or delete. No runtime or shipped executable is added.
 4. **Freshness from git, without a runtime.** Each generated file records
    `generated_commit` and an evidence list of `path` + `git hash-object` blob.
    Refresh recomputes those hashes and re-detects only changed units or

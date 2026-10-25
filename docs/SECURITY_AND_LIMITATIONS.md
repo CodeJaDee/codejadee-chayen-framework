@@ -2,12 +2,12 @@
 
 ## What the plugin contains
 
-The installed package, `plugins/codejadee-chayen-framework/`, has 263 files,
+The installed package, `plugins/codejadee-chayen-framework/`, has 264 files,
 all **Markdown and JSON**:
 
 - two manifests;
 - 16 skills (13 engineering, 2 writing, 1 project knowledge);
-- 242 references;
+- 243 references;
 - two README files.
 
 The package contains **no** hooks, MCP servers, agents, commands, scripts,
@@ -26,11 +26,16 @@ does not control that.
 
 `chayen-init` (D-062) is the only skill whose purpose is to write files that
 persist in your repository: `.chayen/profile.md`, `conventions.md`,
-`rules.md`, optional `units/<unit>.md`, and an optional marked block in
+`rules.md`, `init-report.md`, optional `units/<unit>.md`, and an optional marked block in
 `AGENTS.md`, `CLAUDE.md` or `.github/copilot-instructions.md`.
 
-- It runs only when you ask, shows every file or diff first, and writes only
-  after you approve. `rules.md` is yours; refresh never overwrites it.
+- It runs only when you ask and writes generated `.chayen/` content directly
+  (D-078). Review changes, inspection coverage and gaps in `init-report.md`
+  and git. A missing `rules.md` collects open questions; an existing one is
+  yours and changes only with approval of the exact diff.
+- Pointer blocks need one approval at the end. Removal, unknown or newer
+  schemas, hand-written generated content, more than eight units and missing
+  manifests still need a user decision. Builds and tests run only when you ask.
 - The files hold facts with evidence, never secret values. Review them like
   code before you commit them, because later sessions read them.
 - They are project data. A stale or edited file cannot override your

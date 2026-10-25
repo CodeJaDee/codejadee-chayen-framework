@@ -5,7 +5,28 @@ kind: checklist
 
 Collect the facts for the project knowledge files from repository evidence,
 record fingerprints so later runs can tell what changed, and limit a refresh
-to the evidence that changed. Use only read-only commands.
+to the evidence that changed. Detection uses read-only commands. Run build
+and test commands only when the user's request asks for them.
+
+## Reading budget
+
+- [ ] Scan the folder structure before opening source files, up to depth 6
+      from the repository root. Skip generated and vendored trees. Do not
+      expand the scan beyond this depth; report deeper areas for follow-up.
+- [ ] Choose 3–10 representative files per category within each selected
+      unit: startup and wiring, endpoints or handlers, pages or components,
+      data access, background jobs, unit tests, integration tests, migrations.
+      Read each selected file fully. Read fewer only when fewer exist or a
+      run limit intervenes; record that evidence gap.
+- [ ] Across all units, read at most 100 source files, 20 test files, and
+      5 migration files per run. Count a file once, in its most specific
+      category: tests and migrations have separate limits from source.
+      Share the 20-file test budget across unit and integration tests.
+- [ ] Track inspected folders and files. Record notable paths not inspected
+      with the reason in `init-report.md`. At a limit, do not expand the
+      scan or read partial files to fit more in. Put the remaining paths,
+      incomplete recipes, and evidence gaps under follow-up. Never label
+      an area absent merely because it was outside the budget.
 
 ## Units
 
@@ -44,16 +65,28 @@ to the evidence that changed. Use only read-only commands.
       Ecosystem defaults with no source are `inferred`.
 - [ ] Inspect a script before proposing to run it, and never run one that
       deploys, migrates, publishes, or deletes.
+- [ ] When the request asks for it, run the inspected build and test
+      commands and mark them `VERIFIED`. Record the command and actual
+      outcome in the report, including failures. Otherwise leave them
+      `DISCOVERED` without asking. Do not install dependencies to make a
+      command work.
 
 ## Layout and conventions
 
-- [ ] For "where things go", find one real example for each kind of change
-      the repository has: endpoint or handler, page or component, migration,
-      background job, unit test, integration test.
-- [ ] Sample two or three representative files per area for observed
-      conventions: naming, folder style, dependency injection, error and
-      result handling, validation, logging, async usage, data access, test
-      location and naming.
+- [ ] For each kind the repository has, write an "Add a new X" recipe:
+      endpoint or handler, page or component, migration, background job,
+      unit test, integration test. Put recipes in `conventions.md`, or the
+      owning unit file in a multi-unit repository. Use the recipe format
+      in the conventions template; do not stop at an example path.
+- [ ] Copy a real excerpt of at most 20 lines and cite its `path:line`.
+      Prefer a short excerpt that shows the pattern. Give ordered steps
+      for the folder, naming, and registration or wiring (DI, routes,
+      module lists, test discovery, migration discovery). Cite every step.
+      If wiring is automatic, cite the configuration or convention that
+      shows it; if evidence is missing, say `unknown` and record follow-up.
+- [ ] Within the reading budget, inspect naming, folder style, dependency
+      injection, error and result handling, validation, logging, async
+      usage, data access, test location and naming.
 - [ ] An observed pattern needs at least two `path:line` examples. Record
       exceptions you saw.
 - [ ] Explicit standards come only from `.editorconfig`, linter and
@@ -63,6 +96,15 @@ to the evidence that changed. Use only read-only commands.
       `dist/`, `build/`, `.angular/`, `.next/`, `.nuxt/`, `.output/`,
       `coverage/`, `.venv/`, and generated clients. List them under folders
       not to edit.
+- [ ] In a single unit spanning several areas, group the profile's map
+      sections under Backend, Frontend, Data and Testing. Include only
+      evidenced area headings. For absent areas, add a short "not present"
+      line with the searched paths or configuration as evidence.
+- [ ] Fill every present area with concrete findings and citations. Never
+      leave stubs. "Handles business logic", "contains various utilities",
+      and "follows standard patterns" need concrete specifics and a citation
+      immediately after them, or remove them. Record proposed improvements
+      in `init-report.md`, never in profile or conventions.
 
 ## Impact map (per unit)
 
@@ -125,15 +167,23 @@ inventory.
 3. Repeat the manifest search. A new manifest, workspace member, or
    deployable unit marks its unit as changed.
 4. With no changed paths and no new units, report that the files are up to
-   date and write nothing.
+   date and write nothing, not even `init-report.md`. Missing map sections
+   or recipes still need the additive refresh below.
 5. Re-detect only the sections and units that depend on changed evidence.
    Keep unaffected text unchanged, so the diff stays small.
 6. Without git, or when more than half the evidence changed, re-detect
    everything.
 7. Never edit `rules.md` during refresh. If new evidence contradicts a rule
-   there, report the conflict and let the user decide.
-8. A unit file written before the map sections existed is refreshed by
-   adding them, shown in the preview diff like any other change.
+   there, report the conflict and let the user decide. If `rules.md` is
+   missing, create it directly with at most five open questions.
+8. Add missing map sections and cited recipes on refresh, even when evidence
+   hashes are unchanged. Keep the schema `project-knowledge/1`.
+9. Overwrite generated content directly after the schema and hand-written
+   text checks. Never request content approval for ordinary generated files.
+   Regenerate `init-report.md` on every refresh that writes, with changes,
+   skipped paths, gaps, improvements, and follow-up. Compare `git status` with the starting
+   state to check this run's write scope. Do not delete obsolete unit files;
+   report them for approved removal.
 
 ## Staleness check for readers
 

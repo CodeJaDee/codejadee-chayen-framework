@@ -6,7 +6,9 @@ kind: template
 Coding hosts load their own instruction files at the start of a session, but
 not the `.chayen/` files. This block, added to the instruction files the team
 already uses, tells every session to read the project knowledge first. It is
-optional and needs its own approval.
+optional and needs its own approval. Ask once at the end of the run, after
+writing `.chayen/` and its report. Combine all proposed pointer changes in
+that question. Do not add `init-report.md` to the files agents must read.
 
 ## Template
 
@@ -34,8 +36,9 @@ Before planning or changing code in this repository:
   `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`. Hosts differ in
   which of these they read, so a team that uses several hosts needs the block
   in each file those hosts read.
-- When the repository has none of these files, ask which hosts the team uses
-  before creating one.
+- When the repository has none of these files, include the choice of hosts
+  and proposed instruction files in the same end-of-run approval question.
+  Create only the files the user selects and approves.
 - Append the block at the end of the file, separated by a blank line. Never
   reorder, reformat, or rewrite other content.
 
@@ -43,7 +46,7 @@ Before planning or changing code in this repository:
 
 - A block with the same version marker is current: change nothing.
 - A block with an older version: replace the text from its `BEGIN` line to its
-  `END` line, inclusive, and show the diff first.
+  `END` line, inclusive, only after showing the diff and getting approval.
 - A block whose text was edited by hand: show the differences and ask before
   replacing it.
 - Removal deletes the lines from `BEGIN` to `END`, inclusive, and the blank
