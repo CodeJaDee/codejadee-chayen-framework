@@ -2096,6 +2096,29 @@ Decision statuses:
   metadata, engineering catalog and version `1.1.3`. No shipped hooks,
   scripts, commands or runtime. No commit, push, tag or release.
 
+### D-079 — Version 1.1.4 (guidance-only)
+
+- **Status:** ACCEPTED. Explicit owner instruction on 2026-10-25:
+  "อัพเดทเวอร์ชั่นเป็น 1.1.4" ("update the version to 1.1.4").
+- **Decision:**
+  - The version is `1.1.4` in both plugin manifests and in both Copilot
+    marketplace version fields (`metadata.version` and `plugins[0].version`).
+  - This is a patch bump, following D-064, D-065 and D-077: guidance text
+    only. No Skill is added or removed. Skill names, descriptions and
+    discovery metadata are unchanged.
+  - The shipped package differs from `1.1.3` in 11 files:
+    - 7 `chayen-init` files from D-078, one of them new
+      (`references/init-report-template.md`);
+    - the two version fields;
+    - the plugin's two README files.
+  - The CHANGELOG `[1.1.4]` entry replaces the `[Unreleased]` one.
+- **Not release-qualified.** Runtime evaluation is NOT_RUN on every CLI.
+- **Not done by this decision:** commit, tag, merge to `main`, push and
+  publication. Each needs a separate owner action. Until `main` carries
+  `1.1.4`, `plugin update` from the GitHub marketplace still delivers the
+  version on `main`.
+- **Evidence:** `validate-all.mjs` on the bumped tree.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

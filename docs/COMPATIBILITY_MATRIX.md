@@ -1,6 +1,6 @@
 # Compatibility matrix
 
-**Current build:** `1.1.3` (D-077): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1`, `1.1.2` and `1.1.3` change guidance text only since `1.1.0` and keep the Skill metadata. The 2026-10-23 rows below were recorded on a working-tree snapshot with the Skill content of `1.1.3`, then still versioned `1.1.2`; `1.1.3` itself has not been installed on a host. A working-tree snapshot of `1.1.2` was installed natively in isolated test profiles on 2026-10-23 (evolution Step 19); `1.0.0`, `1.1.0` and `1.1.1` were never installed on a host.
+**Current build:** `1.1.4` (D-079): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1`, `1.1.2`, `1.1.3` and `1.1.4` change guidance text only since `1.1.0` and keep the Skill metadata. `1.1.4` changes only `chayen-init` (D-078) and has not been installed on a host. The 2026-10-23 rows below were recorded on a working-tree snapshot with the Skill content of `1.1.3`, then still versioned `1.1.2`; `1.1.3` itself has not been installed on a host. A working-tree snapshot of `1.1.2` was installed natively in isolated test profiles on 2026-10-23 (evolution Step 19); `1.0.0`, `1.1.0` and `1.1.1` were never installed on a host.
 **Reviewed:** 2026-10-23, evolution Step 19. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 

@@ -7,11 +7,8 @@ commands, agree what "done" means, make the smallest change, and back every
 claim with evidence. Skills are advisory text; the host's own permissions and
 approvals stay in control.
 
-Current version: **v1.1.3** (2026-10-23). Publisher: **CodeJaDee**. Licence:
+Current version: **v1.1.4** (2026-10-25). Publisher: **CodeJaDee**. Licence:
 [MIT](LICENSE). Source: `CodeJaDee/codejadee-chayen-framework` (public).
-The source also carries one unreleased change, D-078 for `chayen-init`
-(see [Project knowledge](#project-knowledge-optional)); it ships with the
-next version number.
 
 **Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
 GitHub [@CodeJaDee](https://github.com/CodeJaDee)
@@ -22,7 +19,7 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Current version | `1.1.3` |
+| Current version | `1.1.4` |
 | Entry Skills | 16 |
 | Package files | 264 |
 | Skill references | 243 |
@@ -99,7 +96,7 @@ Copilot. [Automatic Skill Discovery](docs/AUTOMATIC_SKILL_DISCOVERY.md)
 explains both paths. [Getting started](docs/GETTING_STARTED.md) walks through
 a first task.
 
-What the engineering Skills ask the agent to do, as of 1.1.3 (the last item
+What the engineering Skills ask the agent to do, as of 1.1.4 (the last item
 is specific to `chayen-data`):
 
 - When a request does not say what "done" looks like, ask before editing,
@@ -116,11 +113,9 @@ is specific to `chayen-data`):
 Ask the agent to initialize project knowledge and `chayen-init` writes
 `.chayen/profile.md`, `.chayen/conventions.md`, a team-owned
 `.chayen/rules.md` and, in multi-unit repositories, `.chayen/units/<unit>.md`
-from the repository. In the released `1.1.3` it shows a preview and writes
-after your approval.
-
-Unreleased (D-078, in the source and not yet in a version): initialize and
-refresh write the generated files directly, then report. Every initialize,
+from the repository. From 1.1.4 (D-078), initialize and refresh write the
+generated files directly, then report; `1.1.3` and earlier showed a preview
+and wrote after approval. Every initialize,
 and every refresh that changes knowledge, also writes `.chayen/init-report.md`
 with changes, inspected and skipped paths, gaps and follow-up. A missing
 `rules.md` gets at most five open questions. It asks nothing before writing,
@@ -165,7 +160,8 @@ Read this before relying on Chayen.
   Copilot CLI is not qualified: the installed 1.0.89 is below the supported
   1.0.91 ([Step 19 report](docs/chayen/evolution/PROVIDER_SECURITY_REPORT.md)).
   That snapshot has the Skill content of `1.1.3` under the version `1.1.2`.
-  The released `1.1.0`, `1.1.1`, `1.1.2` and `1.1.3` packages were never installed natively.
+  The released `1.1.0`, `1.1.1`, `1.1.2`, `1.1.3` and `1.1.4` packages were
+  never installed natively.
 - VS Code surfaces are unverified and outside the support claim.
 - Skills are guidance. Real controls are the host's permission prompts, your
   CI and your branch protection
@@ -182,7 +178,7 @@ Full entries are in the [changelog](CHANGELOG.md); decisions are recorded in
 
 | Version | Date | Decision | Summary |
 |---|---|---|---|
-| Unreleased | — | D-078 | `chayen-init` writes generated `.chayen/` files directly and persists `.chayen/init-report.md`; existing team rules, pointer blocks and removal keep their approval steps |
+| `1.1.4` | 2026-10-25 | D-078, D-079 | `chayen-init` writes generated `.chayen/` files directly and persists `.chayen/init-report.md`; existing team rules, pointer blocks and removal keep their approval steps; runtime qualification still NOT_RUN |
 | `1.1.3` | 2026-10-23 | D-077 | Evolution program guidance: task-contract decision policy, nine-field acceptance evidence record with `DONE` / `PARTIAL` / `BLOCKED`, independent evidence-audit roles, project-map change impact; repository caps on Skill count, lines, depth and metadata removed (D-066); runtime qualification still NOT_RUN |
 | `1.1.2` | 2026-10-20 | D-065 | Engineering Skills read `.chayen/` project knowledge as a map; `chayen-data` uses the real schema only; CONTRIBUTING describes turning an agent failure into a test case; 5 new recipe cases |
 | `1.1.1` | 2026-10-20 | D-064 | Ask before editing when "done" is unclear; acceptance criteria tied to evidence with `accept` / `verify_more` / `revise` verdicts |
@@ -204,8 +200,8 @@ Earlier builds, kept as recorded:
   relevant runs; those results do not apply to later builds.
 <!-- historical:end -->
 
-Git tags exist for `v1.0.0`, `1.1.0`, `v1.1.1` and `v1.1.2`; `1.1.3` is not
-tagged. Tags are optional reference pins, and the project uses no GitHub
+Git tags exist for `v1.0.0`, `1.1.0`, `v1.1.1` and `v1.1.2`; `1.1.3` and
+`1.1.4` are not tagged. Tags are optional reference pins, and the project uses no GitHub
 Releases.
 
 ## Documentation
