@@ -18,13 +18,17 @@
 > the same 16 Skills (evolution program, Steps 07–13); Skill metadata unchanged.
 > Not release-qualified: runtime evaluation remains NOT_RUN.
 
+> **Decision D-079 (2026-10-25):** version `1.1.4`, a guidance-only update to
+> the same 16 Skills (`chayen-init` direct generation, D-078); Skill metadata
+> unchanged. Not release-qualified: runtime evaluation remains NOT_RUN.
+
 ## Current build
 
 | Field | Actual value |
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `1.1.3` in both manifests and both Copilot version fields (D-077; `1.1.2` under D-065, `1.1.1` under D-064, `1.1.0` under D-063, `1.0.0` under D-061) |
+| Version | `1.1.4` in both manifests and both Copilot version fields (D-079; `1.1.3` under D-077, `1.1.2` under D-065, `1.1.1` under D-064, `1.1.0` under D-063, `1.0.0` under D-061) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
 | Entry Skills | 16: 13 engineering, 2 writing, 1 project knowledge |

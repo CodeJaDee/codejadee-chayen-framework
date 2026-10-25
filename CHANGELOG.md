@@ -6,6 +6,21 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
+Nothing yet.
+
+## [1.1.4] - 2026-10-25
+
+Guidance-only release (D-079) carrying the `chayen-init` change of D-078.
+
+- **Scope:** 7 shipped files in `chayen-init` changed since `1.1.3` (one new:
+  `references/init-report-template.md`), plus the version in both manifests
+  and the plugin's two README files. Package: 264 files, 243 references.
+  Skill names, descriptions and discovery metadata are unchanged, so routing
+  metadata is the same as `1.1.3`. A patch version follows the `1.1.1`,
+  `1.1.2` and `1.1.3` precedent (D-064, D-065, D-077).
+- **Status:** **not release-qualified**. Runtime evaluation is pending (see
+  Not verified).
+
 ### Changed
 
 - **Project knowledge initialization** (D-078): initialize and refresh now
@@ -21,6 +36,11 @@ All notable changes to codejadee-chayen-framework are recorded here.
   Ask nothing before writing; run builds and tests only when the request
   asks for them; offer pointers once at the end. Update the Claude evals for
   direct generation.
+
+### Not verified
+
+- Agent behaviour with the new `chayen-init` guidance, and native install and
+  update of `1.1.4`, are NOT_RUN; only the offline validators ran.
 
 ## [1.1.3] - 2026-10-23
 

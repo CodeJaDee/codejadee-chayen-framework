@@ -28,7 +28,7 @@ for (const [name, from, to] of [
   ["metadata budget restated", "| L0 metadata | 6,563 characters |", "| L0 metadata | 6,563 / 7,000 characters |"],
   ["plugin name", "| Plugin name | `chayen` |", "| Plugin name | `other` |"],
   ["marketplace", "| Marketplace name | `codejadee` |", "| Marketplace name | `other` |"],
-  ["current version", "| Current version | `1.1.3` |", "| Current version | `1.1.2` |"],
+  ["current version", "| Current version | `1.1.4` |", "| Current version | `1.1.3` |"],
 ]) test(`reject stale ${name}`, () => {
   const file = inside(dir, "README.md"), source = fs.readFileSync(file, "utf8"); assert.ok(source.includes(from));
   try { fs.writeFileSync(file, source.replace(from, to)); const r = run(); assert.equal(r.code, 1); assert.match(r.out, /ERROR D-06/); }
