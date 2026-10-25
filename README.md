@@ -9,6 +9,9 @@ approvals stay in control.
 
 Current version: **v1.1.3** (2026-10-23). Publisher: **CodeJaDee**. Licence:
 [MIT](LICENSE). Source: `CodeJaDee/codejadee-chayen-framework` (public).
+The source also carries one unreleased change, D-078 for `chayen-init`
+(see [Project knowledge](#project-knowledge-optional)); it ships with the
+next version number.
 
 **Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
 GitHub [@CodeJaDee](https://github.com/CodeJaDee)
@@ -111,13 +114,21 @@ is specific to `chayen-data`):
 ### Project knowledge (optional)
 
 Ask the agent to initialize project knowledge and `chayen-init` writes
-`.chayen/profile.md`, `.chayen/conventions.md` and a team-owned
-`.chayen/rules.md` directly from the repository. Every initialize, and every
-refresh that changes knowledge, also writes `.chayen/init-report.md` with
-changes, inspection coverage, gaps and follow-up. It asks nothing before
-writing, runs builds and tests only when you ask, and asks once at the end
-for pointer-block changes. Existing team rules still need approval
-of the exact diff (D-078). From 1.1.2, the implementation, backend, frontend, data
+`.chayen/profile.md`, `.chayen/conventions.md`, a team-owned
+`.chayen/rules.md` and, in multi-unit repositories, `.chayen/units/<unit>.md`
+from the repository. In the released `1.1.3` it shows a preview and writes
+after your approval.
+
+Unreleased (D-078, in the source and not yet in a version): initialize and
+refresh write the generated files directly, then report. Every initialize,
+and every refresh that changes knowledge, also writes `.chayen/init-report.md`
+with changes, inspected and skipped paths, gaps and follow-up. A missing
+`rules.md` gets at most five open questions. It asks nothing before writing,
+runs builds and tests only when you ask, and offers pointer-block changes
+once at the end. Existing team rules, pointer blocks and removal still need
+approval of the exact change.
+
+From 1.1.2, the implementation, backend, frontend, data
 and testing Skills read the profile and rules first when they exist. They
 treat the files as a map, confirm each fact in the source, and trust the
 source when the two disagree. Design:
@@ -171,6 +182,7 @@ Full entries are in the [changelog](CHANGELOG.md); decisions are recorded in
 
 | Version | Date | Decision | Summary |
 |---|---|---|---|
+| Unreleased | — | D-078 | `chayen-init` writes generated `.chayen/` files directly and persists `.chayen/init-report.md`; existing team rules, pointer blocks and removal keep their approval steps |
 | `1.1.3` | 2026-10-23 | D-077 | Evolution program guidance: task-contract decision policy, nine-field acceptance evidence record with `DONE` / `PARTIAL` / `BLOCKED`, independent evidence-audit roles, project-map change impact; repository caps on Skill count, lines, depth and metadata removed (D-066); runtime qualification still NOT_RUN |
 | `1.1.2` | 2026-10-20 | D-065 | Engineering Skills read `.chayen/` project knowledge as a map; `chayen-data` uses the real schema only; CONTRIBUTING describes turning an agent failure into a test case; 5 new recipe cases |
 | `1.1.1` | 2026-10-20 | D-064 | Ask before editing when "done" is unclear; acceptance criteria tied to evidence with `accept` / `verify_more` / `revise` verdicts |
@@ -192,8 +204,9 @@ Earlier builds, kept as recorded:
   relevant runs; those results do not apply to later builds.
 <!-- historical:end -->
 
-Git tags exist for `v1.0.0` and `1.1.0`; later versions are not tagged. Tags
-are optional reference pins, and the project uses no GitHub Releases.
+Git tags exist for `v1.0.0`, `1.1.0`, `v1.1.1` and `v1.1.2`; `1.1.3` is not
+tagged. Tags are optional reference pins, and the project uses no GitHub
+Releases.
 
 ## Documentation
 
@@ -227,7 +240,8 @@ The repository and plugin folder keep the long name
 
 ## Contributing
 
-Use Node.js 24.22.0. The validators are offline and need no dependencies:
+Use Node.js 24.22.0; 20.11.0 is the tested compatibility floor. The
+validators are offline and need no dependencies:
 
 ```bash
 node tools/validate/validate-all.mjs
