@@ -20,8 +20,8 @@ become further criteria or open decisions.
 ## Procedure
 
 1. **Refine the story.**
-   1. Rewrite it in the team's format. The default is "As a `<role>`, I
-      want `<capability>`, so that `<benefit>`".
+   1. Rewrite it in the team's format. The default is
+      "As a `<role>`, I want `<capability>`, so that `<benefit>`".
    2. Name a real role, a single capability, and the value.
    3. Check it against INVEST:
       - Independent;
