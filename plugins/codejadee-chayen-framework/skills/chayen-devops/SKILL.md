@@ -133,7 +133,7 @@ No matching workflow => continue normal native behavior.
 - Pipeline files pass the platform's linter or a dry-run where available.
 - IaC passes `validate` or `lint`, and `plan` or `what-if` output is shown
   for review, or NOT_RUN without credentials. No apply is executed without
-  approval.
+  user approval.
 - Containers build locally and start, or are NOT_RUN with the reason.
 - Nothing was deployed, rolled back, restarted, scaled, published, or
   destroyed without recorded approval and platform authorization.

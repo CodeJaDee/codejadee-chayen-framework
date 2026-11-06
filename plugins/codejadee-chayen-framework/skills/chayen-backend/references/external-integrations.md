@@ -32,7 +32,7 @@ signature, reject replays, acknowledge fast, and process idempotently.
    - the provider's official SDK.
 
    Use the same one. Do not add a second HTTP library or an SDK without
-   approval.
+   user approval.
 2. **Check the contract.** List the endpoints, request and response shapes,
    error codes, pagination, rate limits, and idempotency support, from the
    provider documentation. Facts not found in the documentation are labelled
@@ -111,6 +111,6 @@ signature, reject replays, acknowledge fast, and process idempotently.
   the code, logs, or summaries.
 - Tests use fakes, cover the success, 4xx, timeout, and retry paths, and
   pass with the project's command.
-- No new HTTP library or SDK was added without approval.
+- No new HTTP library or SDK was added without user approval.
 - The fixture webhook handler rejects a tampered payload and processes a
   duplicate event only once, shown by tests.

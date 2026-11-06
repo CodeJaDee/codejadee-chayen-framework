@@ -5,7 +5,7 @@
 | Version | Supported |
 |---|---|
 | `1.1.x` | Best effort; Security/Support remains LATER |
-| `1.0.x` | No; update to `1.1.4` |
+| `1.0.x` | No; update to `1.1.5` |
 | Release candidates and development builds before `1.0.0` | No; update to `1.0.0` |
 
 No stable release exists yet. This table will list supported releases once
@@ -53,6 +53,35 @@ Outside Chayen's scope (report these to the provider instead):
   infrastructure;
 - model behaviour that ignores clear skill instructions. You can still
   report it here as a bug if a skill makes it more likely.
+
+## Scanner results
+
+Pattern-based skill scanners, such as NVIDIA SkillSpector with `--no-llm`,
+rate Chayen as high risk. Their rules match words, and Chayen's security
+guidance has to name dangerous things in order to forbid them: destructive
+git commands, credential files, cloud metadata addresses, unpinned remote
+install scripts, and approval rules.
+
+What you can check yourself:
+
+- **Scan the package, not the repository.** Install only
+  `plugins/codejadee-chayen-framework/`. The repository root also holds
+  `tests/`, whose fixtures contain prompt-injection samples on purpose so
+  the security tests can check that skills ignore them. Those files are
+  not installed.
+- **Nothing executes.** The package is Markdown and JSON only. It has no
+  scripts, hooks, MCP servers or tool grants, and SkillSpector reports
+  `has_executable_scripts: false`.
+- **Reviewed baseline.** `security/skillspector-baseline.yaml`
+  lists each reviewed static finding in the package with its rule and
+  reason. It sits outside the package, so it only applies when you pass it:
+
+  ```bash
+  skillspector scan plugins/codejadee-chayen-framework --no-llm --baseline security/skillspector-baseline.yaml
+  ```
+
+  The baseline matches findings by content hash, so any changed or new
+  finding is still reported. Review the reasons before you rely on it.
 
 See [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md)
 for the security model and what Chayen cannot guarantee.

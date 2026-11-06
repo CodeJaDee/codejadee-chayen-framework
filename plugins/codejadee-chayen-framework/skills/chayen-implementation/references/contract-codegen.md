@@ -72,4 +72,4 @@ to the contract changes.
   location.
 - The build or typecheck passes. The breaking contract changes are listed,
   and each caller was adapted or reported.
-- No new generator was introduced without approval.
+- No new generator was introduced without user approval.

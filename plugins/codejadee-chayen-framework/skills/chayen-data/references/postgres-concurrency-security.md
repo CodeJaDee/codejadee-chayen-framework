@@ -71,8 +71,8 @@ ask to add RLS (review that code instead), or the request is a codebase-wide
 security review (security skill).
 
 **Version notes:** RLS exists since 9.5; `FORCE ROW LEVEL SECURITY` applies
-policies to the table owner; superusers and `BYPASSRLS` roles always bypass
-policies. Supabase and other managed services add their own roles and
+policies to the table owner; superusers and `BYPASSRLS` roles are always
+exempt from policies. Supabase and other managed services add their own roles and
 helper functions; follow them.
 
 **Steps:**

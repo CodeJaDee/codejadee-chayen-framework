@@ -62,11 +62,11 @@ Use the project's scripts:
 ```bash
 npm run build
 npm run lint
-npm test           # or: npx vitest run / bun test
-npx tsc --noEmit   # if there is no typecheck script
+npm test           # or: npx --no-install vitest run / bun test
+npx --no-install tsc --noEmit   # if there is no typecheck script
 ```
 
-For Nuxt, use `npx nuxi typecheck` if configured.
+For Nuxt, use `npx --no-install nuxi typecheck` if configured.
 
 ## Pitfalls
 

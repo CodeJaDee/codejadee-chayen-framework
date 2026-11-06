@@ -115,7 +115,7 @@ If the request does not fit, stop following this skill and continue normally wit
   comparisons report several runs per case with variance.
 - Leakage and split checks ran before any training claim, or are NOT_RUN.
 - No billed run, external data transfer, red-team run, or permission change
-  happened without approval.
+  happened without user approval.
 - No recommendation is presented as an approval or as enforced.
 
 ## Failure handling

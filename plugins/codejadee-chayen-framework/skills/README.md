@@ -12,7 +12,7 @@ Each skill is a directory, `skills/<skill-name>/SKILL.md`, plus optional
 **Frontmatter** uses only the Agent Skills standard fields: `name` and
 `description`. `name` must equal the directory name.
 
-## Entry skills (1.1.4)
+## Entry skills (1.1.5)
 
 Twelve composite workflows are conditional checklist references in the existing
 skills, alongside seven reusable template leaves. They reuse capability recipes,
@@ -74,7 +74,7 @@ end-to-end tests in testing, and a database portability review in data.
 | `chayen-testing` | Automated tests (.NET, JavaScript/TypeScript, Python): strategy, unit, integration, end to end, API and contract, regression, property-based, mutation, fuzz, test data, coverage gaps, failure and flaky triage |
 | `chayen-security` | Advisory security: threat models, secure review (authorization, injection, SSRF, crypto, logging), SAST and dependency triage, exposed secrets, privacy, SBOMs and licences, read-only Dockerfile and IaC review, remediation |
 | `chayen-performance` | Measurement-driven performance (.NET, Node, Python, browser): baselines, profiling, load tests, bottlenecks, memory leaks, latency budgets, capacity, caching, cost; no claim without measurement |
-| `chayen-devops` | Build, delivery, and operations: build systems, CI/CD, Dockerfiles and container hardening, IaC (Terraform, Bicep, Kubernetes, Helm), environments, secrets, packaging and provenance, deploy and rollback checks, observability and SLOs, alerting and incidents, RCA and postmortems, disaster recovery, runbooks; changes files, never environments without approval |
+| `chayen-devops` | Build, delivery, and operations: build systems, CI/CD, Dockerfiles and container hardening, IaC (Terraform, Bicep, Kubernetes, Helm), environments, secrets, packaging and provenance, deploy and rollback checks, observability and SLOs, alerting and incidents, RCA and postmortems, disaster recovery, runbooks; changes files, never environments without user approval |
 | `chayen-documentation` | Engineering docs and collaboration from verified repository facts: READMEs, onboarding, API and architecture docs, knowledge transfer, PR descriptions, code review, review comments, release notes, git workflow; never invents commands or test results |
 | `chayen-ai-engineering` | ML, LLM, and agent engineering: dataset readiness and drift, experiments and model evaluation, serving, RAG and retrieval evaluation, prompt and tool evals, red-teaming your own LLM app, LLM observability, agent permission reviews, and agent skills (authoring, review, testing, migration, provider compatibility, instruction conflicts, session handoff, benchmarks); recommendations are never authorizations |
 | `chayen-humanizer-th` | Thai writing and editing: audit, rewrite, new content and website or UI copy in articles, developer blogs, landing pages, READMEs, product descriptions and localization files; preserves facts, terminology, code and markup; editorial only, owns no engineering capability |

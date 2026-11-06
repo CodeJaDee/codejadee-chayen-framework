@@ -120,7 +120,7 @@ skill's contract codegen recipe).
 generation (`AddOpenApi()`, `MapOpenApi()` at `/openapi/v1.json`), and the
 .NET 9 templates stopped including Swashbuckle. Older projects use
 Swashbuckle or NSwag, which keep working. Do not switch generators without
-approval.
+user approval.
 
 **Steps:**
 

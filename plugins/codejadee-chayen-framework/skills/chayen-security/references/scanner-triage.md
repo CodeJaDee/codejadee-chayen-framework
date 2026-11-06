@@ -37,7 +37,7 @@ suppression is a documented decision, not a way to clear the report.
 5. **Write suppressions for confirmed false positives only,** in the tool's
    format, with the justification and the reviewer, and scoped to the
    single location. Never suppress a rule globally to reduce noise without
-   approval.
+   user approval.
 
 ### Dependency vulnerability triage (CAP-11-004)
 
@@ -86,4 +86,4 @@ suppression is a documented decision, not a way to clear the report.
 - Audit commands are run and reported with results, or NOT_RUN, and the
   absence of vulnerabilities is never claimed without a run.
 - Every suppression has a justification and a single-location scope.
-- No package was upgraded without approval.
+- No package was upgraded without user approval.

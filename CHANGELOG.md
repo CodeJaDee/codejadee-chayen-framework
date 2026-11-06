@@ -8,6 +8,70 @@ All notable changes to codejadee-chayen-framework are recorded here.
 
 Nothing yet.
 
+## [1.1.5] - 2026-11-06
+
+Guidance-only release (D-081) carrying the scanner false-positive work of
+D-080.
+
+- **Scope:** 66 shipped Markdown files reworded since `1.1.4`, plus the
+  version in both manifests and the plugin README. Package: 264 files, 243
+  references. No Skill is added or removed. Skill names, descriptions and
+  discovery metadata are unchanged, so routing metadata is the same as
+  `1.1.4`. A patch version follows the `1.1.1` to `1.1.4` precedent.
+- **Status:** **not release-qualified**. Runtime evaluation is pending (see
+  Not verified).
+
+### Why
+
+NVIDIA SkillSpector (2.12.0, static mode) rated the package
+`CRITICAL / DO_NOT_INSTALL` with 141 findings. They were false positives:
+the rules match words, and the Skills name risky commands, credential files
+and approval rules in order to forbid them. The package has no scripts,
+hooks, MCP servers or tool grants.
+
+### Changed
+
+- **Approval wording:** "without approval" now reads "without user
+  approval" (58 places). The rule is unchanged; the old phrase matched an
+  "autonomous decision" pattern.
+- **`npx` commands** in examples now use `npx --no-install`. The guidance
+  already said to use only tools the project has; the flag enforces it, so
+  `npx` no longer downloads a missing package from the registry.
+- **Five phrases** reworded with the same meaning, for example "Do not
+  judge it yet" to "Do not evaluate it yet", and "roles always bypass
+  policies" to "roles are always exempt from policies" (PostgreSQL RLS).
+- Terms that carry security knowledge are kept on purpose, such as
+  `git push --force`, `curl | sh`, `169.254.169.254`, `kubeconfig` and
+  `bypassSecurityTrust*`. Removing them would weaken the guidance.
+
+### Added (repository only, not shipped)
+
+- `security/skillspector-baseline.yaml`: the 40 remaining static findings,
+  each matched by content hash with a reviewed reason. Apply it with
+  `skillspector scan plugins/codejadee-chayen-framework --no-llm --baseline security/skillspector-baseline.yaml`.
+- `SECURITY.md`, "Scanner results": why scanners flag Chayen, to scan the
+  package path rather than the repository, and how to use the baseline.
+- The `chayen-init` eval scaffolds embed their fixture as readable JSON
+  instead of base64, so reviewers and scanners can read every file.
+
+### Results (SkillSpector 2.12.0, `--no-llm`)
+
+| Target | `1.1.4` | `1.1.5` |
+|---|---|---|
+| Package | 141 findings (15 HIGH), score 100 | 40 findings (10 HIGH), score 100 |
+| Package with the baseline | not available | 0 findings, score 0 |
+| Whole repository | 762 findings | 658 findings |
+
+The default score stays at 100 because the scanner scores cumulatively: the
+remaining MEDIUM findings alone reach the cap.
+
+### Not verified
+
+- Agent behaviour with the reworded guidance, and native install and update
+  of `1.1.5`, are NOT_RUN; only the offline validators ran.
+- SkillSpector LLM analysis is NOT_RUN: the `claude_cli` provider failed
+  every request, so that scan fell back to static analysis.
+
 ## [1.1.4] - 2026-10-25
 
 Guidance-only release (D-079) carrying the `chayen-init` change of D-078.

@@ -44,7 +44,7 @@ correct diff, with nothing unrelated touched.
    - no renames, reordering, or reformatting of untouched code;
    - keep the file's existing style, even where the formatter would differ,
      unless the project formats on commit;
-   - no new dependency without approval.
+   - no new dependency without user approval.
 6. **Tests.** Add tests at the levels the analogous feature has (unit,
    integration, component, end to end). Cover each acceptance criterion.
 7. **Verify** with the project's commands. Compare with the baseline. Check
@@ -81,4 +81,4 @@ correct diff, with nothing unrelated touched.
   baseline.
 - `git diff --stat` shows only the files in the plan, with no
   whitespace-only or unrelated hunks.
-- No dependency was added, removed, or replaced without approval.
+- No dependency was added, removed, or replaced without user approval.

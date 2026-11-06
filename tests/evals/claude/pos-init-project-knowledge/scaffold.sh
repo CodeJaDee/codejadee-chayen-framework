@@ -4,7 +4,14 @@ set -eu
 node --input-type=module <<'INIT_FIXTURE'
 import fs from 'node:fs';
 import path from 'node:path';
-const files = JSON.parse(Buffer.from('eyJBR0VOVFMubWQiOiJVc2UgdGhlIHJlcG9zaXRvcnkncyBleGlzdGluZyBuYW1pbmcgYW5kIHRlc3QgcnVubmVyLlxuIiwiUkVBRE1FLm1kIjoiIyBIZWFsdGggQVBJXG5BIG1pbmltYWwgSFRUUCBoZWFsdGggc2VydmljZS5cbkJ1aWxkOiBgZG90bmV0IGJ1aWxkIEFwaS5jc3Byb2pgLlxuVGVzdDogYGRvdG5ldCB0ZXN0IHRlc3RzL0FwaS5UZXN0cy9BcGkuVGVzdHMuY3Nwcm9qYC5cbiIsIkFwaS5jc3Byb2oiOiI8UHJvamVjdCBTZGs9XCJNaWNyb3NvZnQuTkVULlNkay5XZWJcIj5cbiAgPFByb3BlcnR5R3JvdXA+PFRhcmdldEZyYW1ld29yaz5uZXQ5LjA8L1RhcmdldEZyYW1ld29yaz48L1Byb3BlcnR5R3JvdXA+XG48L1Byb2plY3Q+XG4iLCJQcm9ncmFtLmNzIjoidmFyIGJ1aWxkZXIgPSBXZWJBcHBsaWNhdGlvbi5DcmVhdGVCdWlsZGVyKGFyZ3MpO1xudmFyIGFwcCA9IGJ1aWxkZXIuQnVpbGQoKTtcbmFwcC5NYXBHZXQoXCIvaGVhbHRoXCIsICgpID0+IFJlc3VsdHMuT2soXCJyZWFkeVwiKSk7XG5hcHAuTWFwR2V0KFwiL3ZlcnNpb25cIiwgKCkgPT4gUmVzdWx0cy5PayhcIjFcIikpO1xuYXBwLlJ1bigpO1xuIiwidGVzdHMvQXBpLlRlc3RzL0FwaS5UZXN0cy5jc3Byb2oiOiI8UHJvamVjdCBTZGs9XCJNaWNyb3NvZnQuTkVULlNka1wiPlxuICA8UHJvcGVydHlHcm91cD48VGFyZ2V0RnJhbWV3b3JrPm5ldDkuMDwvVGFyZ2V0RnJhbWV3b3JrPjxJc1Rlc3RQcm9qZWN0PnRydWU8L0lzVGVzdFByb2plY3Q+PC9Qcm9wZXJ0eUdyb3VwPlxuICA8SXRlbUdyb3VwPlxuICAgIDxQYWNrYWdlUmVmZXJlbmNlIEluY2x1ZGU9XCJ4dW5pdFwiIFZlcnNpb249XCIyLjkuM1wiIC8+XG4gICAgPFBhY2thZ2VSZWZlcmVuY2UgSW5jbHVkZT1cIk1pY3Jvc29mdC5ORVQuVGVzdC5TZGtcIiBWZXJzaW9uPVwiMTcuMTQuMVwiIC8+XG4gIDwvSXRlbUdyb3VwPlxuPC9Qcm9qZWN0PlxuIiwidGVzdHMvQXBpLlRlc3RzL0hlYWx0aFRlc3RzLmNzIjoidXNpbmcgWHVuaXQ7XG5wdWJsaWMgY2xhc3MgSGVhbHRoVGVzdHNcbntcbiAgICBbRmFjdF1cbiAgICBwdWJsaWMgdm9pZCBSZWFkeV9pc19ub3RfZW1wdHkoKSA9PiBBc3NlcnQuTm90RW1wdHkoXCJyZWFkeVwiKTtcbiAgICBbRmFjdF1cbiAgICBwdWJsaWMgdm9pZCBWZXJzaW9uX2lzX25vdF9lbXB0eSgpID0+IEFzc2VydC5Ob3RFbXB0eShcIjFcIik7XG59XG4ifQ==', 'base64').toString('utf8'));
+const files = {
+  "AGENTS.md": "Use the repository's existing naming and test runner.\n",
+  "README.md": "# Health API\nA minimal HTTP health service.\nBuild: `dotnet build Api.csproj`.\nTest: `dotnet test tests/Api.Tests/Api.Tests.csproj`.\n",
+  "Api.csproj": "<Project Sdk=\"Microsoft.NET.Sdk.Web\">\n  <PropertyGroup><TargetFramework>net9.0</TargetFramework></PropertyGroup>\n</Project>\n",
+  "Program.cs": "var builder = WebApplication.CreateBuilder(args);\nvar app = builder.Build();\napp.MapGet(\"/health\", () => Results.Ok(\"ready\"));\napp.MapGet(\"/version\", () => Results.Ok(\"1\"));\napp.Run();\n",
+  "tests/Api.Tests/Api.Tests.csproj": "<Project Sdk=\"Microsoft.NET.Sdk\">\n  <PropertyGroup><TargetFramework>net9.0</TargetFramework><IsTestProject>true</IsTestProject></PropertyGroup>\n  <ItemGroup>\n    <PackageReference Include=\"xunit\" Version=\"2.9.3\" />\n    <PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"17.14.1\" />\n  </ItemGroup>\n</Project>\n",
+  "tests/Api.Tests/HealthTests.cs": "using Xunit;\npublic class HealthTests\n{\n    [Fact]\n    public void Ready_is_not_empty() => Assert.NotEmpty(\"ready\");\n    [Fact]\n    public void Version_is_not_empty() => Assert.NotEmpty(\"1\");\n}\n"
+};
 for (const [file, body] of Object.entries(files)) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, body, { flag: 'wx' });

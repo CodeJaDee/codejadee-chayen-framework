@@ -38,7 +38,7 @@ fails with a server error, not a 401.
 **Steps:**
 
 1. Identify the existing scheme and identity provider. Do not add a second
-   scheme or replace a library without approval.
+   scheme or replace a library without user approval.
 2. Read all settings from configuration (`Authority`, `Audience`, issuer,
    metadata address). Never hard-code signing keys or client secrets.
 3. Keep token validation on: issuer, audience, lifetime, and signing key

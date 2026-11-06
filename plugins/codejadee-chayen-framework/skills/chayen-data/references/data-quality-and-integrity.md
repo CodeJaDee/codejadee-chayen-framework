@@ -61,7 +61,7 @@ reports at load or audit time.
    distinct count, minimum and maximum, top values, and pattern
    conformance for each column in scope.
 3. **Implement the checks in the existing tooling.** Do not add a quality
-   framework without approval. Plain SQL checks or tests in the project's
+   framework without user approval. Plain SQL checks or tests in the project's
    runner are acceptable defaults.
 4. **Decide the failure behaviour** with the user: block the load, quarantine
    failing rows, or warn.
@@ -93,5 +93,5 @@ reports at load or audit time.
   insert violating it fails in a test.
 - The generated quality checks detect seeded nulls and duplicates in a
   fixture table, reported PASS, FAIL, or NOT_RUN with the command.
-- No data was changed without approval, and reports show keys rather than
+- No data was changed without user approval, and reports show keys rather than
   personal data.

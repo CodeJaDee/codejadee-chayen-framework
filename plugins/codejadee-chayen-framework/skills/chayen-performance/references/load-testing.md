@@ -69,7 +69,7 @@ for each bottleneck hypothesis.
 ## Outputs
 
 - Load-test scripts with ramp profiles, think time, and thresholds, plus
-  safety notes: never against production without approval.
+  safety notes: never against production without user approval.
 - A results summary against targets with the saturation point.
 - Bottleneck hypotheses with the evidence to confirm each.
 

@@ -109,10 +109,12 @@ function initBehavior(c) {
   if (!mode) return {};
   const fixtures = initFixture(mode);
   for (const p of Object.keys(fixtures)) inside(root, p);
-  const encoded = Buffer.from(JSON.stringify(fixtures)).toString("base64");
+  // Readable JSON (not base64) so reviewers and scanners can see every fixture file.
+  const literal = JSON.stringify(fixtures, null, 2);
+  if (/^INIT_FIXTURE$/m.test(literal)) throw new Error("fixture text collides with the heredoc delimiter");
   const files = {
     "case.yaml": `schema_version: "1.1"\nname: ${c.id}\ncontext:\n  scaffold_script: scaffold.sh\n`,
-    "scaffold.sh": `#!/usr/bin/env bash\nset -eu\n# Generated developer-only fixture. Run only in the eval's empty workspace.\nnode --input-type=module <<'INIT_FIXTURE'\nimport fs from 'node:fs';\nimport path from 'node:path';\nconst files = JSON.parse(Buffer.from('${encoded}', 'base64').toString('utf8'));\nfor (const [file, body] of Object.entries(files)) {\n  fs.mkdirSync(path.dirname(file), { recursive: true });\n  fs.writeFileSync(file, body, { flag: 'wx' });\n}\nINIT_FIXTURE\n`,
+    "scaffold.sh": `#!/usr/bin/env bash\nset -eu\n# Generated developer-only fixture. Run only in the eval's empty workspace.\nnode --input-type=module <<'INIT_FIXTURE'\nimport fs from 'node:fs';\nimport path from 'node:path';\nconst files = ${literal};\nfor (const [file, body] of Object.entries(files)) {\n  fs.mkdirSync(path.dirname(file), { recursive: true });\n  fs.writeFileSync(file, body, { flag: 'wx' });\n}\nINIT_FIXTURE\n`,
     "graders/direct-writes.md": `---\ntype: llm\nfocus: trace\n---\nPASS only when the transcript shows actual writes to generated project knowledge before any request to approve file content. A plan, preview, or claim of writing alone fails. The prompt does not ask for builds or tests: do not ask about command permission or run them. The only user question may be one combined pointer-block approval question at the end, after generating the knowledge and run report. Do not ask about production versions, deployment, branch rules or approvals; record unknowns in the new rules file, or the report when rules already exist. Do not change instruction files without pointer approval. FAIL if a content-approval gate stops generation or if the evidence of writing is missing.\n`,
     "graders/pointer-approval.md": `---\ntype: llm\nfocus: last_message\n---\nPASS only when the response reports completed generation, identifies the persisted init-report.md, and asks once to approve a concrete proposed pointer block in AGENTS.md. It must show the proposed block or diff for review, and must not ask for approval of generated file content. A mere offer to generate files later fails.\n`,
     "graders/instructions-preserved.md": `---\ntype: regex\ntarget: { source: file, path: AGENTS.md }\npattern: ${yamlStr(`^${regexLiteral(agentInstructions)}$`)}\n---\n`,

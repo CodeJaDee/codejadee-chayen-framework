@@ -53,7 +53,7 @@ details or personal data.
    log entry.
 7. **Report client errors** through the existing tool only. Scrub tokens,
    personal data, and form values from reports. Do not add a reporting tool
-   or vendor without approval.
+   or vendor without user approval.
 8. **Stop swallowing errors.** Every `catch` either handles the error
    visibly, rethrows it, or logs it with context.
 9. **Test** each mapping with mocked responses: 500 renders the error state
@@ -85,6 +85,6 @@ details or personal data.
   server internals, shown by a test.
 - A mocked 403 renders the permission-denied state without Retry, and a
   thrown rendering error shows the boundary fallback.
-- No new error reporting vendor was added without approval, and reports
+- No new error reporting vendor was added without user approval, and reports
   are scrubbed of tokens and personal data (code citation).
 - Build and tests pass, reported PASS, FAIL, or NOT_RUN with the command.

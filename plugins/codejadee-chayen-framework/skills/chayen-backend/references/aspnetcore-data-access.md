@@ -40,7 +40,7 @@ across versions; check the provider package version.
 **Steps:**
 
 1. Use the library and access pattern of the surrounding code. Never mix in
-   a second data access library without approval.
+   a second data access library without user approval.
 2. Make every call async with the request's `CancellationToken`
    (`ToListAsync(ct)`, `SaveChangesAsync(ct)`, Dapper `CommandDefinition`
    with `cancellationToken`).

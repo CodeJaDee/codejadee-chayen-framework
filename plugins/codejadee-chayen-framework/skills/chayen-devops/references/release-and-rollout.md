@@ -101,7 +101,7 @@ decision stays with the release owner.
 - A seeded destructive migration in the fixture release is flagged as
   blocking rollback.
 - The rollback rehearsal result is recorded, or NOT_RUN with the reason,
-  and no rollback was executed without approval.
+  and no rollback was executed without user approval.
 - A fixture release with an open critical defect is recommended no-go,
   citing the defect, and the output does not record a decision on the
   owner's behalf.

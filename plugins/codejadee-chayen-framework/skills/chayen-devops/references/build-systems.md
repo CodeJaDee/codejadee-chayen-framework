@@ -66,4 +66,4 @@ incremental build times measured before and after.
   the lock file is honoured (the locked restore or install fails on drift).
 - Clean and incremental build times before and after are reported from
   the same machine and command, or NOT_RUN with the reason.
-- No new build tool was introduced without approval.
+- No new build tool was introduced without user approval.

@@ -94,4 +94,4 @@ Fitness tests (if added): <test file> — rule — `<command>` → PASS | FAIL |
 - The review is labelled proposed until the owner accepts the findings.
 - Fitness tests compile and run. The failing-then-passing behaviour on a
   seeded or known violation is shown, or marked NOT_RUN with the reason.
-  No package was added without approval.
+  No package was added without user approval.

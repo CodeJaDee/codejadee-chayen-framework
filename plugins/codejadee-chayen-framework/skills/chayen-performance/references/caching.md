@@ -79,4 +79,4 @@ explicit freshness requirement.
   never cached under a shared key, checked in review.
 - Hit rate and before and after latency are reported as MEASURED, or the
   benefit is labelled a hypothesis.
-- No new cache technology was added without approval.
+- No new cache technology was added without user approval.

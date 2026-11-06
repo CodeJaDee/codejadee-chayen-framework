@@ -111,8 +111,8 @@ public record OrderDto(long Id, [property: JsonNumberHandling(JsonNumberHandling
 ## Commands
 
 ```bash
-npx openapi-typescript contract/openapi.v1.json -o src/api/types.ts   # only when the project already uses it
-npx tsc --noEmit                                                        # consumer type-check after regeneration
+npx --no-install openapi-typescript contract/openapi.v1.json -o src/api/types.ts   # only when the project already uses it
+npx --no-install tsc --noEmit                                                        # consumer type-check after regeneration
 ```
 
 ## Pitfalls

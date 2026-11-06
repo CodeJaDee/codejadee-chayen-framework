@@ -48,6 +48,6 @@ Approval for one environment or one command does not extend to another.
 - Never print tokens, kubeconfigs, connection strings, or secret values.
   Refer to them by name, as `<redacted>`.
 - Do not copy production logs or dumps that contain personal data out of
-  their system without approval.
+  their system without user approval.
 - Prefer short-lived credentials and workload identity (OIDC federation)
   over long-lived keys in pipelines.

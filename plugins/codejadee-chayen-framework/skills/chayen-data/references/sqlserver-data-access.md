@@ -8,7 +8,7 @@ the EF Core SQL Server provider, Dapper, or ADO.NET
 (`Microsoft.Data.SqlClient`). Read [sql-server.md](sql-server.md) first to
 detect the engine and provider. Use the recipe for the library the code
 already uses; never add a second data access library or switch libraries
-without approval. Query tuning, transactions, and migration details are
+without user approval. Query tuning, transactions, and migration details are
 in the SQL Server query tuning and concurrency references and the EF Core
 migrations reference listed in the skill's References table.
 

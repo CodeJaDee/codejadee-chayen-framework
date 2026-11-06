@@ -42,9 +42,9 @@ commands.
    (Chromium only), show the app's own button after a meaningful action,
    and show "Add to Home Screen" instructions on iOS and iPadOS. Hide the
    prompt when `display-mode: standalone` matches.
-6. **Sync and build:** `npm run build`, then `npx cap sync`. List the native
+6. **Sync and build:** `npm run build`, then `npx --no-install cap sync`. List the native
    files changed (Gradle, `AndroidManifest.xml`, `Info.plist`,
-   entitlements), and run `npx cap run android` or `ios` where the SDK is
+   entitlements), and run `npx --no-install cap run android` or `ios` where the SDK is
    available. Otherwise mark it NOT_RUN with the reason.
 
 ### Navigation and deep links (CAP-08-002)
@@ -129,7 +129,7 @@ commands.
 
 ## Verification
 
-- The web build and `npx cap sync` succeed, or each platform build is
+- The web build and `npx --no-install cap sync` succeed, or each platform build is
   NOT_RUN with the reason (for example, no Xcode on this machine).
 - The URL parser's tests cover every documented link format, and an
   unknown link falls back safely. Device link tests are run, or listed as
@@ -137,4 +137,4 @@ commands.
 - A simulated pause and resume restores in-progress form data and stops
   and restarts background work, shown by a test.
 - Every native call has a tested or cited fallback, and no plugin was
-  added without approval.
+  added without user approval.

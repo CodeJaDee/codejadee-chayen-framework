@@ -58,6 +58,6 @@ The approval request names the environment explicitly ("Apply to
 - Never print connection strings, passwords, or tokens. Refer to them by
   configuration key, with the value `<redacted>`.
 - Never copy production data to a local or shared environment without
-  approval and an agreed masking approach.
+  user approval and an agreed masking approach.
 - Restored copies of production contain production data. They need the
   same access controls, and they are removed after use.

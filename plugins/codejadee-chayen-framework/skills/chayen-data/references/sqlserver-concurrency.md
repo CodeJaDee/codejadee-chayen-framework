@@ -42,7 +42,7 @@ whether the target has it before relying on it.
    `sys.dm_exec_requests` (`blocking_session_id`, `wait_type`,
    `wait_resource`) and `sys.dm_tran_locks`, or deadlock graphs from the
    existing Extended Events or monitoring. Do not kill sessions or change
-   settings without approval.
+   settings without user approval.
 2. Read each deadlock graph: the resources, the lock modes, and the
    statement order of each participant. The common causes are opposite
    access order on the same rows, a read followed by an update of the same

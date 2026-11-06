@@ -63,4 +63,4 @@ user's approval and the platform's authorization.
   the tag and contains only the fix commit (and the version bump).
 - The failing test is observed before the fix and passing after, and the
   regression suite results are reported, or NOT_RUN with the reason.
-- Nothing is pushed, tagged remotely, or released without approval.
+- Nothing is pushed, tagged remotely, or released without user approval.

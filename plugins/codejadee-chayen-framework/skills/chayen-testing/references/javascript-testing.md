@@ -67,11 +67,11 @@ tests.
 Use the project's scripts. Use run mode, not watch:
 
 ```bash
-npx vitest run
-npx jest
+npx --no-install vitest run
+npx --no-install jest
 ng test --watch=false            # Angular; Karma may need --browsers=ChromeHeadless
-npx playwright test              # add --repeat-each=20 to probe flakiness
-npx cypress run
+npx --no-install playwright test              # add --repeat-each=20 to probe flakiness
+npx --no-install cypress run
 bun test
 ```
 

@@ -73,7 +73,7 @@ lists every affected usage before code changes start.
 2. **Clear warnings first:** fix deprecation warnings on the current version,
    because the next major usually removes those APIs.
 3. **Upgrade one major at a time** with the official tooling (`ng update`,
-   the .NET Upgrade Assistant, vendor codemods, `npx nuxi upgrade`,
+   the .NET Upgrade Assistant, vendor codemods, `npx --no-install nuxi upgrade`,
    `django-upgrade`), review its diff, then build and run the tests after
    each hop. Keep each hop as its own commit.
 4. **Record the result per hop:** commands, migrations applied, manual fixes,
@@ -112,7 +112,7 @@ lists every affected usage before code changes start.
 |---|---|
 | .NET | Central package management (`Directory.Packages.props`). `dotnet list package --outdated` and `--include-transitive` (needs registry access, so ask). Binding redirects only on .NET Framework. Major ASP.NET Core and EF Core upgrades follow the official migration guides per version. |
 | Angular | `ng update <pkg>@<v>` runs the schematics. Upgrade one major version at a time, and keep `@angular/*` packages aligned. |
-| React / Next.js / Vue / Nuxt / Vite | Peer dependency ranges block upgrades. Use the vendor codemods (`@next/codemod`, `npx nuxi upgrade`) where documented. Use only the lock file's package manager. |
+| React / Next.js / Vue / Nuxt / Vite | Peer dependency ranges block upgrades. Use the vendor codemods (`@next/codemod`, `npx --no-install nuxi upgrade`) where documented. Use only the lock file's package manager. |
 | Node.js | Regenerate the lock file with the existing package manager and check dependency compatibility. |
 | Python | Respect the project's resolver (uv, Poetry, pip-tools). Pydantic v1 to v2 and Django feature releases have official migration notes. Re-run the type checker. |
 | SQL drivers and ORMs | Driver upgrades can change defaults, for example TLS defaults in `Microsoft.Data.SqlClient` (`Encrypt=true`). Flag them for runtime checking. |
@@ -125,7 +125,7 @@ lists every affected usage before code changes start.
   and each affected usage was fixed or reported.
 - Build, tests, and the configured lint and typecheck pass with the
   project's commands, or are reported FAIL or NOT_RUN.
-- No library was replaced or removed without approval.
+- No library was replaced or removed without user approval.
 - The Angular fixture is upgraded one major at a time with `ng update`,
   building after each step, or the run is NOT_RUN with the reason.
 - Two seeded uses of removed APIs in the fixture are found with file

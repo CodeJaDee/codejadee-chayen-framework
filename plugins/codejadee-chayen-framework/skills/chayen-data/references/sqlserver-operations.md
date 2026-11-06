@@ -6,7 +6,7 @@ kind: technology
 Stack detail for restore drills and routine database maintenance on SQL
 Server, with the Azure SQL differences. Read [sql-server.md](sql-server.md)
 first and use the backup and restore recipe for the drill procedure.
-Restores never overwrite an existing database without approval; drills
+Restores never overwrite an existing database without user approval; drills
 restore to a new name on a non-production server.
 
 ## Check the repository first

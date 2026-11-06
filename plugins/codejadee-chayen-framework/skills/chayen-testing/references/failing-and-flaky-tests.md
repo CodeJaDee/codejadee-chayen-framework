@@ -68,7 +68,7 @@ and fixing that cause, never by hiding the flakiness.
    | Resource limits | Fails on smaller CI machines or with parallel workers |
 
 3. **Fix the cause:** await properly, use auto-waiting assertions, isolate
-   or reset state, control the clock and seeds, fake the dependency, or
+   or restore clean state, control the clock and seeds, fake the dependency, or
    size the resources.
 4. **Do not paper over it.** Retries, longer timeouts, or quarantine are
    temporary measures only with the user's agreement, an owner, and a
@@ -91,7 +91,7 @@ and fixing that cause, never by hiding the flakiness.
 | Stack | Consideration |
 |---|---|
 | .NET | `dotnet test --filter` in a shell loop for repeats. xUnit runs test classes in parallel, so look for shared static state. Use `TimeProvider` fakes. `--logger trx` gives a complete report. |
-| JavaScript and TypeScript | `npx vitest run --sequence.shuffle`, `npx playwright test --repeat-each=50`, Jest `--runInBand` to rule out parallelism. Playwright traces for timing issues. JUnit reporters for complete lists. |
+| JavaScript and TypeScript | `npx --no-install vitest run --sequence.shuffle`, `npx --no-install playwright test --repeat-each=50`, Jest `--runInBand` to rule out parallelism. Playwright traces for timing issues. JUnit reporters for complete lists. |
 | Python | With pytest-randomly installed, order is shuffled by default: `--randomly-seed=<n>` reproduces an order and `-p no:randomly` disables it. `pytest --count=50` with pytest-repeat, `-x --lf` to rerun last failures, and `--junitxml` for complete reports. |
 | CI | Compare with the base branch's latest run. Note agent differences (time zone, CPU count, locale) when classifying environment failures. |
 
