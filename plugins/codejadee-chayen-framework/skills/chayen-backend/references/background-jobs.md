@@ -22,7 +22,7 @@ be observable.
 1. **Detect the mechanism:** hosted or background services, a job library,
    platform timers, a task queue, or cron calling a command. Follow the
    existing job's structure, registration, and configuration. Never add a
-   scheduler library without approval.
+   scheduler library without user approval.
 2. **Choose the trigger form.**
    - Moving slow work out of a request (PDF generation, emails) becomes an
      enqueued job. The request returns 202 with a status link, or the
@@ -82,4 +82,4 @@ be observable.
 - The overlap control is in place, or the single-instance assumption is
   documented.
 - The job uses the existing mechanism. No new scheduler was added without
-  approval. The tests pass with the project's command.
+  user approval. The tests pass with the project's command.

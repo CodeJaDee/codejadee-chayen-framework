@@ -64,6 +64,6 @@ store, and decide on history cleanup with explicit approval.
 - In a fixture with a seeded key, the value is never printed: only its
   location, type, and masked form.
 - Rotation is listed before removal and history cleanup.
-- No history rewrite or force push happens without approval.
+- No history rewrite or force push happens without user approval.
 - The code loads the secret from configuration, and the build or tests
   pass, or are NOT_RUN with the reason.

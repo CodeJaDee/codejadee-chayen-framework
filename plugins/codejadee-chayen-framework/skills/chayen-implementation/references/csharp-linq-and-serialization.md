@@ -86,7 +86,7 @@ case-insensitive).
 
 1. Identify the serializer and where its options are configured. Never
    switch between System.Text.Json and Newtonsoft.Json, or change shared
-   options, without approval: casing, naming, number handling, missing and
+   options, without user approval: casing, naming, number handling, missing and
    extra members, and reference loops all behave differently.
 2. Reuse one options instance per configuration; creating options for each
    call repeats expensive metadata work.

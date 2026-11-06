@@ -59,7 +59,7 @@ Read only the section for the detected tooling.
 
 ## Evaluation tools
 
-- promptfoo (`promptfooconfig.yaml`, `npx promptfoo eval` with repeat
+- promptfoo (`promptfooconfig.yaml`, `npx --no-install promptfoo eval` with repeat
   options), DeepEval or Ragas in pytest, or a custom harness writing
   per-case results.
 - LLM-as-judge graders need their own validation against human labels on a
@@ -83,7 +83,7 @@ Read only the section for the detected tooling.
 ```bash
 python -m pytest tests/eval -q             # project eval suite, if present
 mlflow ui                                  # local tracking UI, if MLflow is used
-npx promptfoo eval -c promptfooconfig.yaml # only with approval when it calls billed models
+npx --no-install promptfoo eval -c promptfooconfig.yaml # only with approval when it calls billed models
 dotnet test --filter Category=Eval
 ```
 

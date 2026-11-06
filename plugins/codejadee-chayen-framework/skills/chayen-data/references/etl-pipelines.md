@@ -21,7 +21,7 @@ observable.
 
 1. **Inventory the current pipeline:** steps, schedule, run history, run
    times, and failure modes. Follow its tooling. Do not introduce an
-   orchestrator without approval.
+   orchestrator without user approval.
 2. **Choose the incremental strategy:**
    - a watermark on a reliable change column (`updated_at` in UTC,
      `rowversion`), with an overlap window for late-arriving rows;

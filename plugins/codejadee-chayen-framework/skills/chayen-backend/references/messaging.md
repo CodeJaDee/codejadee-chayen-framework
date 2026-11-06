@@ -25,7 +25,7 @@ poison-message handling.
    - the naming conventions;
    - whether an outbox exists.
 
-   Reuse them. Never introduce a broker or library without approval.
+   Reuse them. Never introduce a broker or library without user approval.
    Choosing one is an architecture decision.
 2. **Design the contract.**
    - Name events in the past tense (`OrderPlaced`) and commands in the
@@ -92,5 +92,5 @@ poison-message handling.
 - A duplicate delivery produces a single effect, shown by a test.
 - Retry, dead-letter, and the maximum delivery count are configured and
   documented. The delivery guarantee is stated.
-- No new broker or library was introduced without approval. Tests use a
+- No new broker or library was introduced without user approval. Tests use a
   harness or containers.

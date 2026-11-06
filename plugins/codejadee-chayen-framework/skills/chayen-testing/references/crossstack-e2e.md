@@ -72,8 +72,8 @@ test("signed-in user sees their order total", async ({ page }) => {
 ## Commands
 
 ```bash
-npx playwright test --project=chromium --trace=retain-on-failure   # Playwright projects
-npx cypress run --browser chrome                                   # Cypress projects
+npx --no-install playwright test --project=chromium --trace=retain-on-failure   # Playwright projects
+npx --no-install cypress run --browser chrome                                   # Cypress projects
 ```
 
 ## Pitfalls

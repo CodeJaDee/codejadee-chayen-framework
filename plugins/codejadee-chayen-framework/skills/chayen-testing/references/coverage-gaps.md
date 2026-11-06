@@ -56,7 +56,7 @@ input, not the goal.
 | Stack | Consideration |
 |---|---|
 | .NET | `dotnet test --collect "XPlat Code Coverage"` (coverlet collector) or `dotnet-coverage`, with ReportGenerator for a readable report if installed. |
-| JavaScript and TypeScript | `npx vitest run --coverage` (v8 or istanbul provider) or `npx jest --coverage`. Angular `ng test --code-coverage`. |
+| JavaScript and TypeScript | `npx --no-install vitest run --coverage` (v8 or istanbul provider) or `npx --no-install jest --coverage`. Angular `ng test --code-coverage`. |
 | Python | `pytest --cov=<package> --cov-branch --cov-report=term-missing` with pytest-cov, or `coverage run -m pytest` and `coverage report -m`. |
 | Version control | `git log --since="6 months ago" --name-only` for churn, and commit messages or issue links for defect history. |
 

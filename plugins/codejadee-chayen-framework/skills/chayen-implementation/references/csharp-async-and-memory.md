@@ -113,7 +113,7 @@ with the command.
 ## Verification commands
 
 ```bash
-dotnet build -p:AnalysisMode=All 2>&1 | grep -E "CA2016|CA1849|CA2000|CA1001|CA2213"   # signal only; do not commit AnalysisMode changes without approval
+dotnet build -p:AnalysisMode=All 2>&1 | grep -E "CA2016|CA1849|CA2000|CA1001|CA2213"   # signal only; do not commit AnalysisMode changes without user approval
 dotnet test --filter "FullyQualifiedName~Concurrency|FullyQualifiedName~Dispose"
 dotnet run -c Release --project <Benchmarks>                                            # BenchmarkDotNet with [MemoryDiagnoser], when the project has one
 ```

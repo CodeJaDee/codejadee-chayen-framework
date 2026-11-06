@@ -132,7 +132,7 @@ verification table.
 | Situation | What to do |
 |---|---|
 | A secret was found in code or history | Do not echo it. Advise rotation first, then removal and a secret store. History rewriting needs explicit approval and coordination. |
-| A fix would break clients (CORS, authentication, token changes) | Present a staged plan, and do not apply it without approval. |
+| A fix would break clients (CORS, authentication, token changes) | Present a staged plan, and do not apply it without user approval. |
 | The scope is too large to review fully | Review the highest-risk entry points first, and list what was not covered. |
 | Exploitability is uncertain | Mark it "suspected", say what would confirm it, and do not inflate severity. |
 | The user asks for an offensive, destructive, or unauthorized test | Decline that part, and offer a defensive alternative (a local test, a code review, a scanner run on the repository). |

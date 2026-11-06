@@ -7,7 +7,7 @@ Stack detail for maintenance and restore drills on PostgreSQL, including
 managed services. Read [postgresql.md](postgresql.md) first and use the
 backup and restore recipe for the drill procedure. Restores go to a new
 database or instance; nothing overwrites an existing database without
-approval.
+user approval.
 
 ## Check the repository first
 

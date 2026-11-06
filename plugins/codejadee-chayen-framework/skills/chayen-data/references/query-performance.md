@@ -95,4 +95,4 @@ workload, with every change justified by a query and its write cost.
 - A seeded duplicate index is flagged, and no index recommendation is made
   without a query that justifies it.
 - Index changes are prepared as a migration and not applied without
-  approval.
+  user approval.

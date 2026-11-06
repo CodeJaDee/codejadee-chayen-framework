@@ -147,7 +147,7 @@ If the request does not fit, stop following this skill and continue normally wit
 - The production build succeeds (`npm run build`, `ng build`, or the
   project's script). Typecheck and lint pass where configured.
 - Component and unit tests pass, and the new tests are listed.
-- Shell work: the sync or package command ran (`npx cap sync`,
+- Shell work: the sync or package command ran (`npx --no-install cap sync`,
   `electron-builder`, `tauri build`), or is NOT_RUN with the reason, for
   example no Xcode on this machine.
 - Visual, interactive, and device behaviour not observed is marked "not

@@ -81,4 +81,4 @@ remaining usage, provide a migration path, and remove on a set date.
   command, or NOT_RUN with the reason.
 - Deprecated members in the fixture carry the language-native marker with a
   replacement pointer.
-- No public API was removed without approval and a version decision.
+- No public API was removed without user approval and a version decision.

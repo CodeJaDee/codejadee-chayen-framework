@@ -108,7 +108,7 @@ media type, shape, and absence of internal detail, plus the consumer test.
 
 ```bash
 curl -s http://localhost:5000/openapi/v1.json -o served.json   # from a locally running build, never production by default
-npx oasdiff breaking contract/openapi.v1.json served.json       # only when the project already uses oasdiff
+npx --no-install oasdiff breaking contract/openapi.v1.json served.json       # only when the project already uses oasdiff
 ```
 
 ## Pitfalls

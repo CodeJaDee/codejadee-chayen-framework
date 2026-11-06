@@ -75,4 +75,4 @@ removal plan.
   off.
 - No secret value appears in any committed file, client bundle variable, or
   summary.
-- No new configuration or flag mechanism was introduced without approval.
+- No new configuration or flag mechanism was introduced without user approval.

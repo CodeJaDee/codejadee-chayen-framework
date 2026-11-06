@@ -64,7 +64,7 @@ If the request does not fit, stop following this skill and continue normally wit
   writes must succeed together, and no unbounded queries on user-controlled
   input.
 - **Use what the project has.** Reuse its broker, job runner, HTTP client,
-  validation, and auth libraries. Never replace or add one without approval.
+  validation, and auth libraries. Never replace or add one without user approval.
 
 ## Preconditions and inputs
 

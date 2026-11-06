@@ -68,6 +68,6 @@ shared-history operation.
 - On a fixture with a conflict, the conflict is resolved keeping both
   intended changes, and the build and affected tests run afterwards, or
   NOT_RUN with the reason.
-- No force-push, reset, or history rewrite happens without approval, and a
+- No force-push, reset, or history rewrite happens without user approval, and a
   backup ref exists before any rewrite.
 - The final state is shown with `git status` and the log.

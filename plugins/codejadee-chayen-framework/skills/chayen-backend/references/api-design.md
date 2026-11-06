@@ -108,7 +108,7 @@ checks against the operations clients actually send.
 - For versioning: the old-version tests still pass, both versions appear in
   the OpenAPI output, and the deprecation dates have an owner.
 - The design is labelled proposed until confirmed. No breaking change is
-  implemented without approval.
+  implemented without user approval.
 - A field rename in the fixture GraphQL schema is done as add, deprecate,
   migrate, and the schema check reports no breaking change for existing
   operations.

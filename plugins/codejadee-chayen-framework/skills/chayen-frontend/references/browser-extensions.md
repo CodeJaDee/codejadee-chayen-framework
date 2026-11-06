@@ -66,4 +66,4 @@ checked.
   each permission justified.
 - The extension loads in the target browsers, or the load check is NOT_RUN
   with the reason.
-- No remote code is loaded, and nothing is published without approval.
+- No remote code is loaded, and nothing is published without user approval.

@@ -81,7 +81,7 @@ labelled MEASURED or ESTIMATED, and the arithmetic is reproducible.
 | Tracing | OpenTelemetry spans or APM traces give per-hop latency. Use the target percentile, not averages, per hop. |
 | .NET, Node, Python services | Per-request CPU from counters or APM. Thread pool, event loop, or worker limits cap per-instance capacity before CPU does. |
 | Databases (SQL Server, PostgreSQL) | Connection limits, DTU or vCore tiers, IOPS, and storage growth from table sizes. Read replicas change the read and write split. |
-| Cloud cost data | Azure Cost Management, AWS Cost Explorer, or GCP billing exports, read by the user or provided as exports. The agent does not access billing accounts without approval. |
+| Cloud cost data | Azure Cost Management, AWS Cost Explorer, or GCP billing exports, read by the user or provided as exports. The agent does not access billing accounts without user approval. |
 | Autoscaling | Scaling rules are infrastructure changes owned by the platform team; the recipe proposes triggers and thresholds. |
 
 ## Verification

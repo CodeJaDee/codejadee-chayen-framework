@@ -64,7 +64,7 @@ platform.
 
 - `terraform fmt -check`, `terraform validate`, `terraform plan -out`
   (read-only remote), and state in a remote backend with locking. Never
-  edit state by hand without approval.
+  edit state by hand without user approval.
 - Pulumi: `pulumi preview` is the plan equivalent; `pulumi up` is
   mutating.
 

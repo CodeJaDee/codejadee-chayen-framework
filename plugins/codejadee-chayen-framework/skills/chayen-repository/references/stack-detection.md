@@ -64,7 +64,7 @@ Read only the sections for ecosystems you actually find.
 - **Vite.** `vite.config.(js|ts|mjs)`. Client environment variables use the
   `VITE_` prefix.
 - **Default commands:** `npm run build`, `npm run lint`, `npm test`,
-  `npx tsc --noEmit` (if TypeScript is used without a typecheck script).
+  `npx --no-install tsc --noEmit` (if TypeScript is used without a typecheck script).
 
 ## Vue, Nuxt
 
@@ -76,8 +76,8 @@ Read only the sections for ecosystems you actually find.
   - `nuxt.config.(ts|js)`, and `nuxt` in `package.json`.
   - Source may live under `app/` (newer layout) or at the project root.
   - Server routes live in `server/`.
-- **Default commands:** `npm run build`, `npx vue-tsc --noEmit` (Vue + TS),
-  `npx nuxi typecheck` (Nuxt), `npm test`.
+- **Default commands:** `npm run build`, `npx --no-install vue-tsc --noEmit` (Vue + TS),
+  `npx --no-install nuxi typecheck` (Nuxt), `npm test`.
 
 ## Unsupported server frameworks
 

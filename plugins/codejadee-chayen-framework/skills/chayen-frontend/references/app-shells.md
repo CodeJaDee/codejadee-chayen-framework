@@ -33,7 +33,7 @@ app.
 ### Capacitor and Ionic
 
 - **The web build feeds the native projects.** After a web build or a
-  plugin change, run `npx cap sync` so the `webDir` output and plugins are
+  plugin change, run `npx --no-install cap sync` so the `webDir` output and plugins are
   copied in. Edits to `android/` and `ios/` are source changes: review
   them like code.
 - **Platform checks:** `Capacitor.isNativePlatform()`,
@@ -93,25 +93,25 @@ Prefer the `package.json` scripts. Typical commands:
 
 ```bash
 # Capacitor
-npm run build && npx cap sync
-npx cap run android            # needs the Android SDK and a device or emulator
-npx cap run ios                # needs macOS and Xcode
-npx cap open android           # opens Android Studio for signing and profiling
+npm run build && npx --no-install cap sync
+npx --no-install cap run android            # needs the Android SDK and a device or emulator
+npx --no-install cap run ios                # needs macOS and Xcode
+npx --no-install cap open android           # opens Android Studio for signing and profiling
 
 # PWA: serve the production build; service workers do not run in most dev servers
-npm run build && npx http-server dist/<app> -p 8080   # or the project's preview script
+npm run build && npx --no-install http-server dist/<app> -p 8080   # or the project's preview script
 
 # Electron
-npx electron-builder --win --mac --linux --publish never   # electron-builder
-npx electron-forge make                                     # Electron Forge
+npx --no-install electron-builder --win --mac --linux --publish never   # electron-builder
+npx --no-install electron-forge make                                     # Electron Forge
 
 # Tauri
-npx tauri build                # or: cargo tauri build
+npx --no-install tauri build                # or: cargo tauri build
 ```
 
 ## Pitfalls
 
-- Running `npx cap add` or regenerating `android/` or `ios/` and losing
+- Running `npx --no-install cap add` or regenerating `android/` or `ios/` and losing
   hand-made native changes.
 - Adding a plugin from a different Capacitor major than `@capacitor/core`.
 - Testing a service worker in the dev server, where it is usually disabled,

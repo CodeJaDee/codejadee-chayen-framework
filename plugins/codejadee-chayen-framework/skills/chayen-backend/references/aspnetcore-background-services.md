@@ -41,7 +41,7 @@ app starts serving.
 
 1. Use the project's mechanism. A durable job framework or broker already
    in use is the place for work that must survive restarts; do not add one
-   without approval.
+   without user approval.
 2. Write the loop around the stopping token:
    `using var timer = new PeriodicTimer(interval);` and
    `while (await timer.WaitForNextTickAsync(stoppingToken)) { ... }`, passing

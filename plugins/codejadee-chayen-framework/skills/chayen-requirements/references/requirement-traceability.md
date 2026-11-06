@@ -44,7 +44,7 @@ invented: no evidence means no link.
 5. **Report the gaps both ways:**
    - requirements without implementation, or without tests;
    - code areas or tests that trace to no requirement (candidates for
-     missing requirements or dead code; do not judge which).
+     missing requirements or dead code; do not decide which).
 6. **Propose a lightweight linking convention** only if the user wants
    ongoing traceability. Follow the team's tooling. Never rename existing
    tests unasked.

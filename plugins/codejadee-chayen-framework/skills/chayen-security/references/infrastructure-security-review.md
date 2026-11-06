@@ -77,4 +77,4 @@ cloud account.
 - Scanner commands are run on the files and reported, or NOT_RUN with the
   reason.
 - No cluster or cloud account was contacted, and no infrastructure file was
-  changed without approval.
+  changed without user approval.

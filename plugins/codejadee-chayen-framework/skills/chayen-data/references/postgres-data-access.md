@@ -6,7 +6,7 @@ kind: technology
 Recipes for application code that reads and writes PostgreSQL. Read
 [postgresql.md](postgresql.md) first to detect the engine and provider. Use
 the recipe for the library the code already uses (several may coexist);
-never add or switch a data access library without approval, and never reuse
+never add or switch a data access library without user approval, and never reuse
 SQL Server code or settings for PostgreSQL as if they were interchangeable.
 
 ## Check the repository first

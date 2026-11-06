@@ -26,7 +26,7 @@ configurable feed, and secure runtime defaults. Read
 
 1. **Read the current configuration** and the CI release job. Follow the
    existing packager. Never switch between electron-builder and Forge, or
-   add a packager, without approval.
+   add a packager, without user approval.
 2. **Check runtime security before packaging,** because a signed build
    distributes whatever it contains:
    - Electron: `contextIsolation: true`, `nodeIntegration: false`, and
@@ -41,7 +41,7 @@ configurable feed, and secure runtime defaults. Read
      set in `tauri.conf.json`.
 
    Report any weakened default as a finding. Do not change it without
-   approval.
+   user approval.
 3. **Define the build targets** per OS in the packager's configuration:
    for example NSIS or MSI for Windows, DMG and ZIP for macOS (the ZIP is
    used by the macOS updater in electron-builder), and AppImage, deb, or rpm

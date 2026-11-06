@@ -92,7 +92,7 @@ lineage, retention, residency, and access for each dataset or table.
   reported PASS, FAIL, or NOT_RUN with the command.
 - Every retention period cited comes from the user's policy, with its
   source named.
-- No deletion ran against a shared or production database without approval
+- No deletion ran against a shared or production database without user approval
   of the dry-run evidence.
 - A seeded unclassified personal-data column in the fixture schema is
   reported as a gap.

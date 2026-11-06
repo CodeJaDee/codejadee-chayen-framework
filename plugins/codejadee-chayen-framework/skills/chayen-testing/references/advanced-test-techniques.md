@@ -85,7 +85,7 @@ test. Fuzzing applies only to the user's own code.
 | Stack | Consideration |
 |---|---|
 | .NET | FsCheck or CsCheck for properties (with xUnit or NUnit integration packages). Stryker.NET (`dotnet stryker --project <Project>`) for mutation. SharpFuzz with libFuzzer for fuzzing. |
-| JavaScript and TypeScript | fast-check (`fc.assert(fc.property(...))`, `seed` and `path` in failure output). StrykerJS (`npx stryker run`) with the Vitest or Jest runner. Jazzer.js for fuzzing. |
+| JavaScript and TypeScript | fast-check (`fc.assert(fc.property(...))`, `seed` and `path` in failure output). StrykerJS (`npx --no-install stryker run`) with the Vitest or Jest runner. Jazzer.js for fuzzing. |
 | Python | Hypothesis (`@given`, the example database, `@reproduce_failure`). mutmut (`mutmut run`, `mutmut results`) or Cosmic Ray. Atheris for fuzzing. Hypothesis can also drive byte-level inputs where no fuzzer is installed. |
 | CI | Property tests run in the normal suite. Mutation and fuzz runs belong in scheduled jobs with time limits unless the user decides otherwise. |
 

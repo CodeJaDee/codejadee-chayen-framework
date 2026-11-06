@@ -86,7 +86,7 @@ If the request does not fit, stop following this skill and continue normally wit
 1. **Read the decisions in force.** Find the ADRs and decision registers, and
    note each accepted decision that constrains the question.
 2. **Identify the current style** from evidence. Use the architecture styles
-   checklist to recognise it. Do not judge it yet.
+   checklist to recognise it. Do not evaluate it yet.
 3. **Classify the request,** then read the one matching recipe:
 
    | Request shape | Recipe |

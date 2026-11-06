@@ -61,4 +61,4 @@ staged rollout, and a fallback when the model is unavailable or unsure.
   model version in responses or headers, shown by tests.
 - Latency and memory are measured under stated load, or NOT_RUN.
 - The rollout has a promotion criterion and a rollback, and nothing was
-  deployed without approval.
+  deployed without user approval.

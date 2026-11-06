@@ -69,4 +69,4 @@ implementation.
   test command.
 - The performance claims come with a measured comparison at stated sizes,
   or are marked NOT_RUN.
-- No new library was added without approval.
+- No new library was added without user approval.
