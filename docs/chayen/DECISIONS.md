@@ -2119,6 +2119,61 @@ Decision statuses:
   version on `main`.
 - **Evidence:** `validate-all.mjs` on the bumped tree.
 
+### D-080 — Reduce skill-scanner false positives without weakening guidance
+
+- **Status:** ACCEPTED. Owner request on 2026-11-05, after NVIDIA
+  SkillSpector rated the repository `CRITICAL / DO_NOT_INSTALL`: users who
+  see that result will not install the plugin.
+- **Finding:** SkillSpector 2.12.0 in static mode (`--no-llm`) reported 141
+  findings in the package and 762 in the repository. Every package finding
+  was a keyword match on guidance that names a risk in order to forbid it.
+  The package has no executable surface (`has_executable_scripts: false`).
+  The scanner scores cumulatively, so about 20 MEDIUM findings reach the
+  100 cap.
+- **Decision:**
+  - Reword phrases only where the meaning is unchanged: "without approval"
+    to "without user approval" (58), and five phrases in
+    `chayen-architecture`, `chayen-repository`, `chayen-requirements`,
+    `chayen-data` and `chayen-testing`.
+  - Add `--no-install` to every `npx` example. This matches the existing
+    rule to use only tools the project already has.
+  - Keep terms that carry security knowledge (`git push --force`,
+    `curl | sh`, `169.254.169.254`, `kubeconfig`, `bypassSecurityTrust*`).
+  - Never hide terms with encoding, zero-width characters or split words.
+    Scanners treat hidden text as prompt injection, and it would mislead
+    reviewers.
+  - Keep a reviewed baseline at `security/skillspector-baseline.yaml`,
+    outside the package. V-25 allows only Markdown and the two manifests in
+    the package; shipping the baseline there needs a separate decision. Its
+    entries omit file paths because path text triggers the scanner.
+  - Explain scanner results in `SECURITY.md` and replace the base64 fixture
+    in the `chayen-init` eval scaffolds with readable JSON.
+- **Result:** package 40 findings (10 HIGH), score still 100; 0 findings
+  with the baseline. Repository 658 findings.
+- **Not done:** a plugin-only release branch, an upstream false-positive
+  report, and LLM-mode scanning (the `claude_cli` provider failed).
+- **Evidence:** SkillSpector JSON reports before and after;
+  `validate-all.mjs` passes.
+
+### D-081 — Version 1.1.5 (guidance-only)
+
+- **Status:** ACCEPTED. Explicit owner instruction on 2026-11-06:
+  "ปรับ เป็น 1.1.5" ("change it to 1.1.5").
+- **Decision:**
+  - The version is `1.1.5` in both plugin manifests and in both Copilot
+    marketplace version fields (`metadata.version` and `plugins[0].version`).
+  - This is a patch bump, following D-064, D-065, D-077 and D-079: guidance
+    text only. No Skill is added or removed. Skill names, descriptions and
+    discovery metadata are unchanged.
+  - The shipped package differs from `1.1.4` in 69 files: 66 Markdown files
+    reworded under D-080, the two version fields and the plugin README.
+    Package size is unchanged: 264 files, 243 references.
+  - The CHANGELOG `[1.1.5]` entry records the change.
+- **Not release-qualified.** Runtime evaluation is NOT_RUN on every CLI.
+- **Not done by this decision:** commit, tag, merge to `main`, push and
+  publication. Each needs a separate owner action.
+- **Evidence:** `validate-all.mjs` on the bumped tree.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge
