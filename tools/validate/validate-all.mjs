@@ -15,7 +15,8 @@ const failFast = process.argv.includes("--fail-fast");
 const steps = [
   ["G-SEC offline security profile (V-25)", "tools/validate/check-security.mjs", []],
   ["G-SEC-T offline security boundary regressions", "tests/security/boundaries.test.mjs", []],
-  ["G-SEC-E committed evidence privacy: no secret-shaped value and no new user-home path in any results/ directory (evolution Step 19; offline)", "tests/security/evidence-privacy.test.mjs", []],
+  ["G-SEC-E committed evidence privacy: no secret-shaped value and no new user-home path in any results/ directory or tracked scanner report (evolution Step 19; offline)", "tests/security/evidence-privacy.test.mjs", []],
+  ["G-SEC-B SkillSpector baseline: reviewed unique entries for real package files, no rule-wide suppression, package pinned to LF (offline; scanner not run)", "tests/security/skillspector-baseline.test.mjs", []],
   ["Phase 2 scope, upstream notice and lifecycle invariants", "tools/validate/check-hardening.mjs", []],
   ["Phase 2 hardening validator regressions", "tests/production/hardening.test.mjs", []],
   ["Phase 2 Thai numerals and calendar scorer regressions", "tests/editorial/numeric-preservation.test.mjs", []],

@@ -1,0 +1,13 @@
+# Per-skill SkillSpector baseline for chayen-architecture (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-architecture/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-architecture --no-llm --baseline security/skillspector-baselines/chayen-architecture.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:79322c64742e7cc20fef1032f0982c3df4231224467a5aaac7615f3c0ec9bba9"
+    rule_id: "EA4"
+    file: "references/architecture-review.md"
+    reason: "Reviewed guidance text, not behaviour: unlimited work named as a defect to find."

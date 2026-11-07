@@ -7,6 +7,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import { SECRET_PATTERNS } from "../../tools/validate/secret-patterns.mjs";
 
 const repo = path.resolve(import.meta.dirname, "../..");
@@ -37,6 +38,53 @@ export function scanEvidence(root) {
   }
   return out;
 }
+
+// Raw scanner output (for example SkillSpector JSON) records absolute paths. It belongs in the ignored
+// .scan-reports/ folder; a tracked copy outside results/ was the gap the results-only walk above missed.
+const SCANNER_REPORT = /(^|\/)(chayen-security-[^/]*|[^/]*skillspector[^/]*)\.(json|md|log|txt|sarif)$/i;
+const gitFiles = (root) => {
+  const r = spawnSync("git", ["-c", "core.quotepath=off", "ls-files", "-z"], { cwd: root, encoding: "utf8" });
+  return r.status === 0 ? r.stdout.split("\0").filter(Boolean) : null;
+};
+
+export function scanTrackedScannerReports(root) {
+  const files = gitFiles(root);
+  if (files === null) return null;
+  const out = { reports: [], secrets: [], homePaths: [] };
+  for (const rel of files) {
+    if (!SCANNER_REPORT.test(rel) || rel.split("/").includes("results")) continue;
+    const p = path.join(root, rel);
+    if (!fs.existsSync(p) || !fs.lstatSync(p).isFile()) continue;
+    out.reports.push(rel);
+    const text = fs.readFileSync(p, "utf8");
+    for (const [rule, re] of SECRET_PATTERNS) if (re.test(text)) out.secrets.push({ file: rel, rule });
+    if (HOME_PATH.test(text)) out.homePaths.push(rel);
+  }
+  return out;
+}
+
+test("tracked scanner reports outside results/ hold no secret-shaped value or user-home path", (t) => {
+  const r = scanTrackedScannerReports(repo);
+  if (r === null) return t.skip("not a git checkout");
+  assert.deepEqual(r.secrets, []);
+  assert.deepEqual(r.homePaths, [], "tracked scanner report records a user-home path; keep raw reports in .scan-reports/");
+});
+
+test("the scanner-report check flags a tracked root report with a home path, and ignores untracked ones", (t) => {
+  const root = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), "chayen-scanrep-"));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const git = (...a) => spawnSync("git", ["-c", "core.autocrlf=false", ...a], { cwd: root, encoding: "utf8" });
+  if (git("init", "-q").status !== 0) return t.skip("git unavailable");
+  const leaked = JSON.stringify({ skills: [{ source: "C:\\Users\\someone\\repo\\plugins\\x" }] });
+  fs.writeFileSync(path.join(root, "chayen-security-report.json"), leaked);
+  fs.writeFileSync(path.join(root, "untracked-skillspector.json"), leaked);
+  fs.writeFileSync(path.join(root, "notes.json"), leaked); // not a scanner report name
+  assert.equal(git("add", "chayen-security-report.json", "notes.json").status, 0);
+  const r = scanTrackedScannerReports(root);
+  assert.deepEqual(r.reports, ["chayen-security-report.json"]);
+  assert.deepEqual(r.homePaths, ["chayen-security-report.json"]);
+  assert.doesNotMatch(JSON.stringify(r), /someone/);
+});
 
 test("committed evidence holds no secret-shaped value and no new user-home path", () => {
   const r = scanEvidence(repo);

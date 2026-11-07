@@ -83,5 +83,25 @@ What you can check yourself:
   The baseline matches findings by content hash, so any changed or new
   finding is still reported. Review the reasons before you rely on it.
 
+  The hash includes line endings. `.gitattributes` checks the package out
+  with LF on every platform. A Windows clone made before that file existed
+  may still hold CRLF copies; the baseline then suppresses only some
+  findings. Refresh the package files from git (with no local edits in
+  them) before scanning, for example by deleting the package folder and
+  running `git checkout -- plugins/codejadee-chayen-framework`.
+
+- **Per-skill baselines.** A scan of one skill folder fingerprints paths
+  relative to that folder, so the package baseline does not match it.
+  `security/skillspector-baselines/<skill>.yaml` holds the same reviewed
+  entries and reasons for each skill that has any:
+
+  ```bash
+  skillspector scan plugins/codejadee-chayen-framework/skills/chayen-security --no-llm --baseline security/skillspector-baselines/chayen-security.yaml
+  ```
+
+  SkillSpector 2.12.0 rejects `--baseline` with `--recursive`, so a
+  recursive scan of `skills/` always shows the raw findings. Scan each
+  skill folder on its own instead.
+
 See [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md)
 for the security model and what Chayen cannot guarantee.

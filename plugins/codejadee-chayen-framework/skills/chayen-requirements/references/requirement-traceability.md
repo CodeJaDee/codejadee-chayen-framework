@@ -34,8 +34,8 @@ invented: no evidence means no link.
 3. **Find the semantic links second.**
    - Where no ID is present, match each requirement's behaviour to the code
      and tests that implement or check it.
-   - Label these `inferred`, with the reasoning, for example: "test
-     `Cancel_AfterCutoff_Returns409` checks AC3".
+   - Label these `inferred`, with the reasoning, for example:
+     "test `Cancel_AfterCutoff_Returns409` checks AC3".
 4. **Attach evidence.** Mark a test as covering a requirement only if it
    asserts the requirement's acceptance criterion.
    - Test results count as verification evidence only when they come from an

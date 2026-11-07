@@ -1,0 +1,45 @@
+# Per-skill SkillSpector baseline for chayen-frontend (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-frontend/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-frontend --no-llm --baseline security/skillspector-baselines/chayen-frontend.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:5aa2c4c652e7a48365864c7e16d2edef06c2c18250883fadb6dfd58e011ad9c5"
+    rule_id: "EA2"
+    file: "references/angular-reactivity.md"
+    reason: "Reviewed guidance text, not behaviour: an approval rule, or unchecked behaviour named as a defect to report."
+  - hash: "sha256:8b22e76e5fb731c03252b4a49c8b38fa83b58708580719e0f978143801beece8"
+    rule_id: "PE1"
+    file: "references/browser-extensions.md"
+    reason: "Reviewed guidance text, not behaviour: advice on narrowing browser-extension permission requests."
+  - hash: "sha256:fbc4a3f34126cd6e5cbf13a6e01a39ac36f3f2a09e420596a77b271c80d10029"
+    rule_id: "RA2"
+    file: "SKILL.md"
+    reason: "Reviewed guidance text, not behaviour: Apple platform configuration files in mobile and desktop guidance."
+  - hash: "sha256:fb15628a9a5033c049100bf0ef5660e616e9b4ba547b168bd5de1777a1fd6ce5"
+    rule_id: "RA2"
+    file: "references/device-permissions-and-push.md"
+    reason: "Reviewed guidance text, not behaviour: Apple platform configuration files in mobile and desktop guidance."
+  - hash: "sha256:5461213e575cb92759faea2ca84e027175e25cf2b2a0b3914514c2a021c29306"
+    rule_id: "RA2"
+    file: "references/device-permissions-and-push.md"
+    reason: "Reviewed guidance text, not behaviour: Apple platform configuration files in mobile and desktop guidance."
+  - hash: "sha256:24b00f9cd232740440fdc54c2d75b2c3359779fe3c3f212af168b40801315e5d"
+    rule_id: "RA2"
+    file: "references/hybrid-mobile.md"
+    reason: "Reviewed guidance text, not behaviour: Apple platform configuration files in mobile and desktop guidance."
+  - hash: "sha256:ed24c722c0c2ca4dbbc93652314f04a1c19df978f6137398957280d189ee3766"
+    rule_id: "RA2"
+    file: "references/internationalization.md"
+    reason: "Reviewed guidance text, not behaviour: Apple platform configuration files in mobile and desktop guidance."
+  - hash: "sha256:9923d9e8c7094cb742c8032f9a6bf5e2e734eb560a77c06d7076322922d03e11"
+    rule_id: "TM3"
+    file: "SKILL.md"
+    reason: "Reviewed guidance text, not behaviour: framework sanitizer escape hatches named as APIs to avoid."
+  - hash: "sha256:d05702a688247117f43d5b99d6b55053b18797f56393012574ac4c0072b6d92c"
+    rule_id: "TM3"
+    file: "references/angular.md"
+    reason: "Reviewed guidance text, not behaviour: framework sanitizer escape hatches named as APIs to avoid."

@@ -426,3 +426,9 @@ FodyWeavers.xsd
 
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
+
+# Local SkillSpector scan script and the reports it writes.
+# Raw scanner output records local paths; keep it out of the repository.
+/scan-chayen.ps1
+/.scan-reports/
+/chayen-security-*.json

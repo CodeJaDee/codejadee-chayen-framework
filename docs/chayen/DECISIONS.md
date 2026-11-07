@@ -2148,8 +2148,16 @@ Decision statuses:
     entries omit file paths because path text triggers the scanner.
   - Explain scanner results in `SECURITY.md` and replace the base64 fixture
     in the `chayen-init` eval scaffolds with readable JSON.
-- **Result:** package 40 findings (10 HIGH), score still 100; 0 findings
-  with the baseline. Repository 658 findings.
+  - Keep each quotation on one line and avoid apostrophes where the scanner's
+    shell parser reads them as an open string. Three files were only partly
+    inspected for that reason, which raised a HIGH "incomplete analysis"
+    finding in `chayen-init` and `chayen-requirements`. The pointer block
+    wording changes ("instructions from the user") but keeps its `v1`
+    marker: the meaning is unchanged, and installed blocks stay current.
+- **Result:** package 40 findings (10 HIGH), score still 100; with the
+  baseline 0 findings, `SAFE`, analysis complete. Per Skill (`--recursive`):
+  12 `SAFE`, 3 `CAUTION`, 1 `DO_NOT_INSTALL` (`chayen-security`), against
+  4, 7 and 5 for `1.1.4`. Repository 658 findings.
 - **Not done:** a plugin-only release branch, an upstream false-positive
   report, and LLM-mode scanning (the `claude_cli` provider failed).
 - **Evidence:** SkillSpector JSON reports before and after;
@@ -2165,7 +2173,7 @@ Decision statuses:
   - This is a patch bump, following D-064, D-065, D-077 and D-079: guidance
     text only. No Skill is added or removed. Skill names, descriptions and
     discovery metadata are unchanged.
-  - The shipped package differs from `1.1.4` in 69 files: 66 Markdown files
+  - The shipped package differs from `1.1.4` in 71 files: 68 Markdown files
     reworded under D-080, the two version fields and the plugin README.
     Package size is unchanged: 264 files, 243 references.
   - The CHANGELOG `[1.1.5]` entry records the change.
