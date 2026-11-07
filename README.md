@@ -13,6 +13,27 @@ Current version: **v1.1.5** (2026-11-06). Publisher: **CodeJaDee**. Licence:
 **Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
 GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 
+## Security scan
+
+| Check | Result |
+|---|---|
+| Scanner | [NVIDIA SkillSpector](https://github.com/NVIDIA/skillspector) 2.12.0, static analysis (`--no-llm`) |
+| Scanned | 2026-11-08, commit `be92794`: each of the 16 Skills, then the whole package (264 files) |
+| With the reviewed baseline | **0/100, `SAFE`, 0 unsuppressed findings** for every Skill and for the package |
+| Executable content | None (`has_executable_scripts: false`) |
+
+The scanner matches keywords. Security guidance has to name a danger to
+forbid it, for example "never run `git push --force` on a shared branch", so
+it reports 40 such phrases. Each one is reviewed and listed with its reason
+in `security/skillspector-baseline.yaml` (with one file per Skill in
+`security/skillspector-baselines/`). A scan without that baseline still reports
+them, and rates `chayen-security` `DO_NOT_INSTALL` (87/100). Any new or
+changed finding is reported even with the baseline.
+
+The maintainers ran this scan themselves. It is not a review or endorsement
+by NVIDIA, and a scan cannot prove the absence of risk. To reproduce it, or
+read the reasons, see [SECURITY.md, "Scanner results"](SECURITY.md#scanner-results).
+
 ## Current build
 
 | Fact | Value |
