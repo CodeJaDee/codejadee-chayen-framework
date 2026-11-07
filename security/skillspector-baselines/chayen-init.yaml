@@ -1,0 +1,17 @@
+# Per-skill SkillSpector baseline for chayen-init (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-init/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-init --no-llm --baseline security/skillspector-baselines/chayen-init.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:4efc520826372541ad4530069f11780f7339b8c4fb8bc98a7fd66a2dee882762"
+    rule_id: "EA2"
+    file: "references/detection-and-refresh.md"
+    reason: "Reviewed guidance text, not behaviour: an approval rule, or unchecked behaviour named as a defect to report."
+  - hash: "sha256:9d3093a7e1bafdb359d3cf07bbcdbf8cf17f5c95439cea9ebebbf2f405a54633"
+    rule_id: "MP1"
+    file: "SKILL.md"
+    reason: "Reviewed guidance text, not behaviour: a rule to record where secrets live, with values redacted."

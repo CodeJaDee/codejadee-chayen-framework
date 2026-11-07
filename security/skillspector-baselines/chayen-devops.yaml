@@ -1,0 +1,41 @@
+# Per-skill SkillSpector baseline for chayen-devops (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-devops/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-devops --no-llm --baseline security/skillspector-baselines/chayen-devops.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:ef2791948eb19ca81f30a762d602c6f16435133ae9cc8aaceafed8e184210bb7"
+    rule_id: "RP1"
+    file: "references/aspnetcore-hosting.md"
+    reason: "Reviewed guidance text, not behaviour: local, disposable container examples; no tool server is referenced."
+  - hash: "sha256:4b9adeab08704ef031eb12523b09e1a554416ba50a81b5ceb5ffd4544e94e476"
+    rule_id: "RP1"
+    file: "references/containers.md"
+    reason: "Reviewed guidance text, not behaviour: local, disposable container examples; no tool server is referenced."
+  - hash: "sha256:03f67d174d3f293381629a56bf5a610b4e379305aa6cc40817f130518b1a48f2"
+    rule_id: "PE3"
+    file: "SKILL.md"
+    reason: "Reviewed guidance text, not behaviour: credential types named so the agent never prints or copies them."
+  - hash: "sha256:8e924199a0944923041bc4afe926bdc4992e08fe0eaa3beaab165825459e8571"
+    rule_id: "PE3"
+    file: "references/operations-safety.md"
+    reason: "Reviewed guidance text, not behaviour: credential types named so the agent never prints or copies them."
+  - hash: "sha256:8a172d05dbf10b9a89f24380501118600db58462035d2d9c53b631e42e4bed4a"
+    rule_id: "PE2"
+    file: "references/policy-as-code.md"
+    reason: "Reviewed guidance text, not behaviour: an example policy that forbids elevated container users."
+  - hash: "sha256:35b34807d0c8bc460d2c38379639d473456d460bb0be467db865702f7a579213"
+    rule_id: "PE3"
+    file: "references/vite-toolchain.md"
+    reason: "Reviewed guidance text, not behaviour: credential types named so the agent never prints or copies them."
+  - hash: "sha256:5eb8a3e5f56f2f0702cc88dd84b700d810b80b39ec797bb1683845d286c857cc"
+    rule_id: "PE3"
+    file: "references/vite-toolchain.md"
+    reason: "Reviewed guidance text, not behaviour: credential types named so the agent never prints or copies them."
+  - hash: "sha256:3ab031a5c4806c34ea69e229406a4017a45f94c92bf233421eb5d5eae7d68d7a"
+    rule_id: "TM1"
+    file: "references/operations-safety.md"
+    reason: "Reviewed guidance text, not behaviour: destructive commands listed so the agent denies them or asks first."

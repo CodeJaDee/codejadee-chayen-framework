@@ -1,0 +1,37 @@
+# Per-skill SkillSpector baseline for chayen-security (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-security/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-security --no-llm --baseline security/skillspector-baselines/chayen-security.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:165e7063fdeeeba12b12caccc01ccbbb7f39b93a0f837114a37d2755750eef95"
+    rule_id: "PE3"
+    file: "references/access-reviews.md"
+    reason: "Reviewed guidance text, not behaviour: credential types named so the agent never prints or copies them."
+  - hash: "sha256:42e4e6194aa6b274cfc969a266b20ffca88085c29cd12ae91d49bdf94e144ce7"
+    rule_id: "SSRF1"
+    file: "references/secure-review.md"
+    reason: "Reviewed guidance text, not behaviour: an internal address listed as a target that request-forgery reviews must block."
+  - hash: "sha256:ffd14f9440deb6e8d7732e837376f53dc3a8cbca31e7035bfc838e3ec28f94ee"
+    rule_id: "SSRF1"
+    file: "references/secure-review.md"
+    reason: "Reviewed guidance text, not behaviour: an internal address listed as a target that request-forgery reviews must block."
+  - hash: "sha256:b2cd3f442dfc24f55d35c2ff35e3b17724d8a8ff9e3c9313d2de2fdbff2df42c"
+    rule_id: "SC2"
+    file: "references/infrastructure-security-review.md"
+    reason: "Reviewed guidance text, not behaviour: an unpinned remote install pattern listed in a review checklist as something to reject."
+  - hash: "sha256:79ff3ba02e58ef98d5857879594743ae86394d3091d9b6cecc95d71b42b69552"
+    rule_id: "TM3"
+    file: "references/secure-review.md"
+    reason: "Reviewed guidance text, not behaviour: framework sanitizer escape hatches named as APIs to avoid."
+  - hash: "sha256:d9d23b4d4ca1d40aa7ae136a06675282a3039f71d76216675ed9bcb1b277ab31"
+    rule_id: "TM3"
+    file: "references/stack-hardening.md"
+    reason: "Reviewed guidance text, not behaviour: framework sanitizer escape hatches named as APIs to avoid."
+  - hash: "sha256:baf752410ff4c49683b46ca2678490245a91a71d1b0593dfbbec68127392033f"
+    rule_id: "TM3"
+    file: "references/vulnerability-remediation.md"
+    reason: "Reviewed guidance text, not behaviour: framework sanitizer escape hatches named as APIs to avoid."

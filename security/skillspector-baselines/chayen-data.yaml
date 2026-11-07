@@ -1,0 +1,13 @@
+# Per-skill SkillSpector baseline for chayen-data (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-data/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-data --no-llm --baseline security/skillspector-baselines/chayen-data.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:341b5ff788f8bb923e060d2748c7c779512740aa3582b6befc2d8ec5f8c209cc"
+    rule_id: "RP1"
+    file: "references/postgres-data-access.md"
+    reason: "Reviewed guidance text, not behaviour: local, disposable container examples; no tool server is referenced."

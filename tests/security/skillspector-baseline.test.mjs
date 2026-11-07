@@ -34,6 +34,33 @@ test("every baseline entry is a reviewed, unique finding in a real package file"
   }
 });
 
+// Single-skill scans fingerprint paths relative to the skill folder, so each skill carries its own baseline.
+// Each must hold exactly the package baseline's reviewed entries for that skill, with the same reasons.
+test("per-skill baselines mirror the reviewed package baseline", () => {
+  const dir = path.join(repo, "security/skillspector-baselines");
+  const expected = new Map();
+  for (const e of parseBaseline(baselineText)) {
+    const m = /^skills\/([^/]+)\/(.+)$/.exec(e.file);
+    if (!m) continue;
+    const list = expected.get(m[1]) ?? expected.set(m[1], []).get(m[1]);
+    list.push(`${e.rule}|${m[2]}|${e.reason}`);
+  }
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".yaml")).sort();
+  assert.deepEqual(files.map((f) => f.slice(0, -5)), [...expected.keys()].sort(), "one baseline per skill with reviewed findings");
+  for (const f of files) {
+    const skill = f.slice(0, -5);
+    const text = fs.readFileSync(path.join(dir, f), "utf8");
+    const entries = parseBaseline(text);
+    assert.equal(entries.length, (text.match(/^ {2}- hash:/gm) ?? []).length, `${f}: every fingerprint carries rule_id, file and reason`);
+    assert.equal(new Set(entries.map((e) => e.hash)).size, entries.length, `${f}: duplicate fingerprint`);
+    for (const e of entries) {
+      assert.doesNotMatch(e.file, /\.\.|^\/|\\/, `${f} ${e.file}: path must stay inside the skill`);
+      assert.ok(fs.statSync(path.join(repo, pkg, "skills", skill, e.file)).isFile(), `${f}: ${e.file} is not a skill file`);
+    }
+    assert.deepEqual(entries.map((e) => `${e.rule}|${e.file}|${e.reason}`).sort(), expected.get(skill).sort(), `${f}: out of sync with the package baseline`);
+  }
+});
+
 test("the plugin package checks out with LF line endings on every platform", (t) => {
   const files = spawnSync("git", ["ls-files", "-z", "--", pkg], { cwd: repo, encoding: "utf8" });
   if (files.status !== 0) return t.skip("not a git checkout");

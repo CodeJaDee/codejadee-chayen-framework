@@ -28,6 +28,14 @@ shipped file content changes.
 - `tests/security/skillspector-baseline.test.mjs` (gate G-SEC-B): baseline
   entries are unique, reviewed, point at real package files, use no
   rule-wide suppression, and the package is pinned to LF.
+- `security/skillspector-baselines/<skill>.yaml` for the 10 skills with
+  reviewed findings. A single-skill scan fingerprints paths relative to the
+  skill folder, so the package baseline cannot suppress them, and
+  SkillSpector 2.12.0 rejects `--baseline` on recursive scans. Each file
+  holds that skill's entries from the package baseline with the same
+  reasons; G-SEC-B fails if they drift apart. With them, every skill scans
+  `SAFE`, 0 unsuppressed (40 suppressed in total; manual run, SkillSpector
+  2.12.0, `--no-llm`).
 - `tests/security/evidence-privacy.test.mjs` also checks tracked scanner
   reports outside `results/` for user-home paths and secret-shaped values.
 - Eval case `pos-init-repo-injection`: the fixture plants agent-directed

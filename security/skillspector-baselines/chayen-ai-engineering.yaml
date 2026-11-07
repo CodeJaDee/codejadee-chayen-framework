@@ -1,0 +1,37 @@
+# Per-skill SkillSpector baseline for chayen-ai-engineering (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-ai-engineering/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-ai-engineering --no-llm --baseline security/skillspector-baselines/chayen-ai-engineering.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:fb36bcf26ac5ff3e8faa0125f325ec681b9ed923298de1917b25d017be389fb7"
+    rule_id: "EA2"
+    file: "SKILL.md"
+    reason: "Reviewed guidance text, not behaviour: an approval rule, or unchecked behaviour named as a defect to report."
+  - hash: "sha256:fd787c112638406cf24f4dcd53b155a5089ad9c701f0aab1e0f3eb14ac6752d3"
+    rule_id: "EA1"
+    file: "references/agent-governance.md"
+    reason: "Reviewed guidance text, not behaviour: a risk tier that needs native permission before any execution."
+  - hash: "sha256:a06f1c2d71cce9d3e398407ac17680397145e4b3b32c1a1a1f7fdcc76c08d89e"
+    rule_id: "EA2"
+    file: "references/agent-governance.md"
+    reason: "Reviewed guidance text, not behaviour: an approval rule, or unchecked behaviour named as a defect to report."
+  - hash: "sha256:7d04094849e083b3cff71c52b4c1db7a58aaaadd5992007707acfdf4ae8aa9c0"
+    rule_id: "EA2"
+    file: "references/agent-governance.md"
+    reason: "Reviewed guidance text, not behaviour: an approval rule, or unchecked behaviour named as a defect to report."
+  - hash: "sha256:d0bc2a2a39591bfda1edda97ab8ed17d45d8a1551a10da763fd8fb1166a2b14d"
+    rule_id: "EA2"
+    file: "references/llm-safety.md"
+    reason: "Reviewed guidance text, not behaviour: an approval rule, or unchecked behaviour named as a defect to report."
+  - hash: "sha256:80bfc1d674d38186abacf15fe51282242f9ecc0a2d1f4219fc52536dd04211d2"
+    rule_id: "TM1"
+    file: "references/agent-governance.md"
+    reason: "Reviewed guidance text, not behaviour: destructive commands listed so the agent denies them or asks first."
+  - hash: "sha256:c5259f46eda352b067664d4abaccbecfa1114493a24f70f6395690b38a023ef0"
+    rule_id: "TM1"
+    file: "references/agent-governance.md"
+    reason: "Reviewed guidance text, not behaviour: destructive commands listed so the agent denies them or asks first."

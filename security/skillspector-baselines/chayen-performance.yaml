@@ -1,0 +1,17 @@
+# Per-skill SkillSpector baseline for chayen-performance (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-performance/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-performance --no-llm --baseline security/skillspector-baselines/chayen-performance.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:6720bf77aae52993ec90257778345d7f2eea54182efe10e98d1b2b49eeb95cc9"
+    rule_id: "EA2"
+    file: "references/aspnetcore-performance.md"
+    reason: "Reviewed guidance text, not behaviour: an approval rule, or unchecked behaviour named as a defect to report."
+  - hash: "sha256:1ea4b3470a7f2d4f867a968a5d1afb58f3a5251960899f8a0ce5bdb68ea52390"
+    rule_id: "OH3"
+    file: "references/memory-leaks.md"
+    reason: "Reviewed guidance text, not behaviour: an ever-growing cache described as a memory-leak defect."

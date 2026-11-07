@@ -1,0 +1,13 @@
+# Per-skill SkillSpector baseline for chayen-humanizer-en (static analysis, SkillSpector 2.12.0).
+# Same reviewed findings as security/skillspector-baseline.yaml; file paths are relative to skills/chayen-humanizer-en/,
+# which is how SkillSpector fingerprints a single-skill scan. Hashes cover LF content (.gitattributes).
+# Apply: skillspector scan plugins/codejadee-chayen-framework/skills/chayen-humanizer-en --no-llm --baseline security/skillspector-baselines/chayen-humanizer-en.yaml
+# Regenerate: skillspector baseline <that skill folder> --no-llm -o -, then copy each reason from the package baseline.
+version: 2
+scanner_version: "2.12.0"
+rules: []
+fingerprints:
+  - hash: "sha256:18e50b15173c22449d9d60e85fe11d1baf4ceab77cfa93caa55d939fe1ffd4fd"
+    rule_id: "EA3"
+    file: "references/upstream-notice.md"
+    reason: "Reviewed guidance text, not behaviour: standard wording from an upstream licence notice."
