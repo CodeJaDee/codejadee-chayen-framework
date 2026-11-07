@@ -1,0 +1,5 @@
+# The plugin package checks out with LF line endings on every platform.
+# SkillSpector baseline fingerprints (security/skillspector-baseline.yaml) hash
+# the matched content, so a CRLF checkout (core.autocrlf=true on Windows) would
+# stop matching them and the documented baseline scan would report findings again.
+plugins/codejadee-chayen-framework/** text=auto eol=lf

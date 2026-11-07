@@ -83,5 +83,12 @@ What you can check yourself:
   The baseline matches findings by content hash, so any changed or new
   finding is still reported. Review the reasons before you rely on it.
 
+  The hash includes line endings. `.gitattributes` checks the package out
+  with LF on every platform. A Windows clone made before that file existed
+  may still hold CRLF copies; the baseline then suppresses only some
+  findings. Refresh the package files from git (with no local edits in
+  them) before scanning, for example by deleting the package folder and
+  running `git checkout -- plugins/codejadee-chayen-framework`.
+
 See [docs/SECURITY_AND_LIMITATIONS.md](docs/SECURITY_AND_LIMITATIONS.md)
 for the security model and what Chayen cannot guarantee.
