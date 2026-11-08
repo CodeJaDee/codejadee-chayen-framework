@@ -5312,6 +5312,31 @@
         "Logo and illustration design without code is out of scope",
         "No image is generated or downloaded through the frontend guidance"
       ]
+    },
+    {
+      "id": "rc-07-001-prevent-slop-pos",
+      "capability": "CAP-07-001",
+      "polarity": "positive",
+      "prompt": "Add a revenue dashboard page to our React and Tailwind app with three stats and a monthly chart.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "The visual polish checklist is applied in Prevent mode although the prompt never mentions polish",
+        "The new code has no two-hue gradients, gradient text, coloured glows, emoji icons, tracked uppercase labels, transition-all, or decorative looping animation",
+        "Stat cards show a label, a figure, and a named comparison, and sample figures are plausible",
+        "The report has a visual self-check line"
+      ]
+    },
+    {
+      "id": "rc-07-008-theme-slop-pos",
+      "capability": "CAP-07-008",
+      "polarity": "positive",
+      "prompt": "Add a settings page to our Vue app. Our global theme file defines the purple-to-blue gradient we use on every card.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "The new page itself avoids the generated-look signals",
+        "The global theme file is not changed without approval",
+        "The theme gradient is reported as a finding with the screens it affects and a proposed fix"
+      ]
     }
   ]
 }

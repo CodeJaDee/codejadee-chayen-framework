@@ -19,14 +19,22 @@ Two ideas drive every decision below:
   is still a template. The words, the focal content, and one recurring
   detail should come from what this product does.
 
-## Scope and proportion
+## Scope and modes
 
-Use this checklist when the user asks to polish, tidy, or redesign a screen
-because it looks generated, generic, or visually inconsistent, or when a
-frontend review notices the signals below. Brand identity, logos, image
-generation, and visual design with no code are outside it.
+This checklist applies to every task that writes or changes visible UI, not
+only to requests for polish. Brand identity, logos, image generation, and
+visual design with no code are outside it.
 
-Size the change from the findings, not from taste:
+Every UI task uses the first two modes. They are part of how UI work is
+done, so they need no separate request:
+
+| Situation | Mode | What changes |
+|---|---|---|
+| Any UI task: a new page, form, component, or a UI bug fix | Prevent | The code you write shows none of the signals below. Before reporting, run the search hints over the changed files and fix what they find. |
+| Signals already present in the component, template, or component styles you are changing | Fix in scope | Fix them in the same change. Signals in other files, shared components, global tokens, or themes are reported as findings, and changing them needs approval. Unverifiable claims in copy are asked about, never rewritten silently. |
+
+When the user asks to polish, tidy, or redesign a screen, size the change
+from the findings, not from taste:
 
 | Findings | Mode | What changes |
 |---|---|---|
@@ -34,7 +42,14 @@ Size the change from the findings, not from taste:
 | A few isolated signals on a screen that already has a working system | Touch-up | Only the findings. Palette, type, layout, and imagery stay. Larger ideas go in the report as suggestions. |
 | Nothing that matters | Leave | Report that the screen is sound. Offer up to three refinements with exact values, and wait for the user's go-ahead before applying any. |
 
-A sound screen is never restyled for the sake of novelty.
+No mode overrides the project's real brand, a design system the team
+chose, or the approval rules for global styles and new dependencies. A
+sound screen is never restyled for the sake of novelty.
+
+For a new screen in Prevent mode, apply the two ideas above directly: keep
+the frame quiet, decide which content is the focal point, and use the
+product's own words. No brief is needed unless the user asks for a
+redesign.
 
 ## Gather evidence first
 
@@ -47,7 +62,8 @@ A sound screen is never restyled for the sake of novelty.
    are the material for every fix (the `layout-and-design-system.md`
    recipe covers the token and theme mechanics).
 3. **Record each finding** as `path:line`, the signal, and the intended fix.
-   Group findings by the layers below.
+   Group findings by the layers below. In Prevent and Fix in scope modes,
+   cover the changed files only.
 
 Search hints for common signals (Tailwind class names first, plain CSS after):
 
@@ -258,7 +274,7 @@ none is skipped.
 
 ## Final checks
 
-- [ ] The mode (Rework, Touch-up, or Leave) matches the findings
+- [ ] The mode (Prevent, Fix in scope, Rework, Touch-up, or Leave) matches the task and the findings
 - [ ] In Rework mode, the brief was agreed and every step follows it
 - [ ] Spacing values sit on the scale, and matching elements share one size
 - [ ] Neutral surfaces and text, a single accent, and contrast of at least 4.5 to 1 for text and 3 to 1 for controls in every theme
@@ -271,7 +287,10 @@ none is skipped.
 - [ ] Rerunning the search hints on the changed files finds no remaining signal, or each remaining one is explained
 - [ ] Template test: with another product's name swapped in, the screen would no longer fit. If it still fits, push the words, the focal content, and the recurring detail further.
 
-Report the mode, the brief, the findings before and after, a few lines per
-step about what changed, any claims awaiting the user's confirmation, and
-each check as PASS, FAIL, or NOT_RUN with its command. Screens not observed
-after the last edit are marked "not verified in browser".
+In Prevent and Fix in scope modes, report one visual self-check line: the
+signals fixed, the signals reported outside the change, or none found. For
+Rework, Touch-up, and Leave, report the mode, the brief, the findings
+before and after, a few lines per step about what changed, any claims
+awaiting the user's confirmation, and each check as PASS, FAIL, or NOT_RUN
+with its command. Screens not observed after the last edit are marked "not
+verified in browser".

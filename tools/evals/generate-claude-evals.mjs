@@ -151,6 +151,63 @@ function initBehavior(c) {
   return files;
 }
 
+// Frontend behaviour cases: an ordinary UI request that never mentions polish. The
+// with-plugin arm should write no generated-look signals (Prevent mode) and fix the
+// planted emoji in the nav it has to edit (Fix in scope). File graders score both
+// arms, so the ablation delta shows the plugin's effect.
+const uiModes = {
+  "pos-frontend-no-slop-dashboard": "dashboard",
+};
+const plantedNavEmoji = "\u{1F9FE} Invoices";
+
+function uiFixture() {
+  return {
+    "README.md": "# Tallybook\nInvoicing and cash tracking for small accounting practices.\nReact 18 + Tailwind CSS 3, built with Vite. Pages live in src/pages/.\n",
+    "package.json": '{\n  "name": "tallybook-web",\n  "private": true,\n  "type": "module",\n  "scripts": { "dev": "vite", "build": "vite build" },\n  "dependencies": { "react": "18.3.1", "react-dom": "18.3.1" },\n  "devDependencies": { "@vitejs/plugin-react": "4.3.4", "autoprefixer": "10.4.20", "postcss": "8.4.49", "tailwindcss": "3.4.17", "vite": "5.4.11" }\n}\n',
+    "tailwind.config.js": 'export default {\n  content: ["./index.html", "./src/**/*.{js,jsx}"],\n  theme: { extend: { colors: { accent: { DEFAULT: "#0f766e", soft: "#ccfbf1" } } } },\n  plugins: [],\n};\n',
+    "index.html": '<!doctype html>\n<html lang="en">\n  <head><meta charset="UTF-8" /><title>Tallybook</title></head>\n  <body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body>\n</html>\n',
+    "src/index.css": "@tailwind base;\n@tailwind components;\n@tailwind utilities;\n",
+    "src/main.jsx": 'import React from "react";\nimport { createRoot } from "react-dom/client";\nimport App from "./App.jsx";\nimport "./index.css";\n\ncreateRoot(document.getElementById("root")).render(<App />);\n',
+    "src/App.jsx": `import { useState } from "react";\nimport Invoices from "./pages/Invoices.jsx";\n\nconst pages = [{ id: "invoices", label: "${plantedNavEmoji}", element: <Invoices /> }];\n\nexport default function App() {\n  const [current, setCurrent] = useState("invoices");\n  const page = pages.find((p) => p.id === current);\n  return (\n    <div className="flex min-h-screen bg-zinc-50 text-zinc-900">\n      <nav className="w-60 border-r border-zinc-200 bg-white p-4">\n        <p className="mb-4 text-sm font-medium">Tallybook</p>\n        {pages.map((p) => (\n          <button\n            key={p.id}\n            onClick={() => setCurrent(p.id)}\n            className={\`block w-full rounded-md px-3 py-2 text-left text-sm \${p.id === current ? "bg-zinc-100 font-medium" : "text-zinc-600 hover:bg-zinc-50"}\`}\n          >\n            {p.label}\n          </button>\n        ))}\n      </nav>\n      <main className="flex-1 p-8">{page.element}</main>\n    </div>\n  );\n}\n`,
+    "src/pages/Invoices.jsx": 'const invoices = [\n  { id: "INV-1042", client: "Somsri Bakery", amount: 18400, status: "Paid" },\n  { id: "INV-1043", client: "Chai Logistics", amount: 52750, status: "Open" },\n  { id: "INV-1044", client: "Mali Dental Clinic", amount: 9600, status: "Overdue" },\n];\n\nconst baht = new Intl.NumberFormat("th-TH", { style: "currency", currency: "THB", maximumFractionDigits: 0 });\n\nexport default function Invoices() {\n  return (\n    <section>\n      <h1 className="text-xl font-medium">Invoices</h1>\n      <table className="mt-6 w-full rounded-xl border border-zinc-200 bg-white text-sm">\n        <thead className="text-left text-zinc-500">\n          <tr><th className="p-3 font-normal">Invoice</th><th className="p-3 font-normal">Client</th><th className="p-3 text-right font-normal">Amount</th><th className="p-3 font-normal">Status</th></tr>\n        </thead>\n        <tbody>\n          {invoices.map((i) => (\n            <tr key={i.id} className="border-t border-zinc-100">\n              <td className="p-3">{i.id}</td><td className="p-3">{i.client}</td>\n              <td className="p-3 text-right tabular-nums">{baht.format(i.amount)}</td><td className="p-3 text-zinc-600">{i.status}</td>\n            </tr>\n          ))}\n        </tbody>\n      </table>\n    </section>\n  );\n}\n',
+  };
+}
+
+function scaffoldFiles(c, fixtures, delimiter) {
+  for (const p of Object.keys(fixtures)) inside(root, p);
+  // Readable JSON (not base64) so reviewers and scanners can see every fixture file.
+  const literal = JSON.stringify(fixtures, null, 2);
+  if (new RegExp(`^${delimiter}$`, "m").test(literal)) throw new Error("fixture text collides with the heredoc delimiter");
+  return {
+    "case.yaml": `schema_version: "1.1"\nname: ${c.id}\ncontext:\n  scaffold_script: scaffold.sh\n`,
+    "scaffold.sh": `#!/usr/bin/env bash\nset -eu\n# Generated developer-only fixture. Run only in the eval's empty workspace.\nnode --input-type=module <<'${delimiter}'\nimport fs from 'node:fs';\nimport path from 'node:path';\nconst files = ${literal};\nfor (const [file, body] of Object.entries(files)) {\n  fs.mkdirSync(path.dirname(file), { recursive: true });\n  fs.writeFileSync(file, body, { flag: 'wx' });\n}\n${delimiter}\n`,
+  };
+}
+
+const absent = (name, file, pattern) => [`graders/${name}.md`, `---\ntype: regex\nmatch: not_contains\npattern: ${yamlStr(pattern)}\ntarget: { source: file, path: ${file} }\n---\n`];
+// Emoji: surrogate pairs (no unicode flag) plus the BMP symbol and dingbat blocks.
+const emojiPattern = "[\\uD83C-\\uD83E][\\uDC00-\\uDFFF]|[\\u2600-\\u27BF]";
+
+function uiBehavior(c) {
+  if (!uiModes[c.id]) return {};
+  const page = "src/pages/Dashboard.jsx";
+  return {
+    ...scaffoldFiles(c, uiFixture(), "UI_FIXTURE"),
+    "graders/created-dashboard.md": `---\ntype: file_exists\npath: ${page}\n---\n`,
+    "graders/app-wired.md": `---\ntype: regex\npattern: "Dashboard"\ntarget: { source: file, path: src/App.jsx }\n---\n`,
+    ...Object.fromEntries([
+      absent("no-gradient", page, "bg-gradient-to-|linear-gradient\\(|radial-gradient\\(|bg-clip-text|text-transparent"),
+      absent("no-glow-or-blob", page, "shadow-\\[0_0|drop-shadow|blur-(?:2xl|3xl)|blur-\\["),
+      absent("no-decorative-motion", page, "animate-(?:pulse|ping|bounce)|transition-all|hover:scale-"),
+      absent("no-shouting-type", page, "uppercase\\s+tracking-(?:wide|wider|widest)|tracking-(?:wide|wider|widest)\\s+uppercase|font-(?:extrabold|black)"),
+      absent("no-emoji-dashboard", page, emojiPattern),
+      absent("nav-emoji-fixed", "src/App.jsx", emojiPattern),
+    ]),
+    "graders/copy-and-data.md": `---\ntype: llm\nfocus: { source: file, path: ${page} }\n---\nPASS only when the visible interface text has no exclamation marks, no greeting title such as "Welcome back", and no hype words such as supercharge, seamless, unlock, or magic; each of the three stats shows a label, a figure, and a change that names what it compares to (for example "vs last month"); sample figures look plausible rather than placeholders such as 123,456; and surfaces stay neutral with at most one accent colour. FAIL if any of these is missing.\n`,
+    "graders/self-check-reported.md": `---\ntype: llm\nfocus: last_message\narm: with-only\n---\nPASS only when the final response includes a visual self-check that says which generated-look signals were fixed (including the emoji in the App.jsx navigation label), which were reported outside the change, or that none were found. FAIL if no such check is reported.\n`,
+  };
+}
+
 function render(c) {
   const files = {};
   const skillTag = c.expect.any_of?.length === 1 ? [c.expect.any_of[0]] : [];
@@ -160,9 +217,9 @@ function render(c) {
     `description: ${yamlStr(`[${c.category}] generated from tests/skills/trigger-cases.json — do not edit by hand`)}`,
     `tags: [${[c.category, ...skillTag].join(", ")}]`,
     "runs: 3",
-    `max_turns: ${initModes[c.id] ? 30 : 8}`,
-    `timeout_seconds: ${initModes[c.id] ? 300 : 180}`,
-    `allowed_tools: ${initModes[c.id] ? "[Read, Glob, Grep, Skill, AskUserQuestion, Write, Edit, Bash]" : "[Read, Glob, Grep, Skill]"}`,
+    `max_turns: ${initModes[c.id] || uiModes[c.id] ? 30 : 8}`,
+    `timeout_seconds: ${initModes[c.id] || uiModes[c.id] ? 300 : 180}`,
+    `allowed_tools: ${initModes[c.id] ? "[Read, Glob, Grep, Skill, AskUserQuestion, Write, Edit, Bash]" : uiModes[c.id] ? "[Read, Glob, Grep, Skill, Write, Edit]" : "[Read, Glob, Grep, Skill]"}`,
     `expected_outcome: ${yamlStr(describeExpectation(c))}`,
     "---",
     "",
@@ -181,11 +238,11 @@ function render(c) {
     forbid = [...new Set([...forbid, ...spec.skills.filter((s) => !c.expect.none_or.includes(s))])];
   }
   if (forbid.length) files["graders/forbidden-skills.md"] = grader({ inputMatch: skillRegex(forbid.sort()), min: 0, max: 0, arm: "both" });
-  return { ...files, ...initBehavior(c) };
+  return { ...files, ...initBehavior(c), ...uiBehavior(c) };
 }
 
 function describeExpectation(c) {
-  if (c.expect.any_of) return `invokes ${c.expect.any_of.join(" or ")}${c.forbid?.length ? `; never ${c.forbid.join(", ")}` : ""}${initModes[c.id] ? "; writes generated knowledge directly and persists init-report.md before asking once about pointer approval" : ""}`;
+  if (c.expect.any_of) return `invokes ${c.expect.any_of.join(" or ")}${c.forbid?.length ? `; never ${c.forbid.join(", ")}` : ""}${initModes[c.id] ? "; writes generated knowledge directly and persists init-report.md before asking once about pointer approval" : ""}${uiModes[c.id] ? "; the new page and the edited navigation show no generated-look signals, and a visual self-check is reported" : ""}`;
   if (c.expect.none) return "invokes no chayen-* skill (native behavior)";
   return `invokes no chayen-* skill or only ${c.expect.none_or.join(", ")}`;
 }
