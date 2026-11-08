@@ -16,6 +16,7 @@ Requests that fit:
 - "Create an Angular form for customer registration with validation."
 - "This React component is 900 lines. How should it be split into components?"
 - "Audit our checkout page for accessibility problems."
+- "Our React dashboard looks AI-generated, with purple gradients, emoji icons, and uneven spacing. Polish it."
 - "Add Thai and English language support to our Angular app."
 - "Our field workers lose connectivity. Make the inspection form work offline and sync later."
 - "Handle the case where the user denies camera access in our Capacitor app."
@@ -103,6 +104,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | A page or feature, client state, or a form | UI features |
    | Splitting or structuring components | component architecture |
    | Responsive layout, design-system components, tokens, theming | layout and design system |
+   | Polishing a screen that looks generated, generic, or visually inconsistent | layout and design system, plus the visual polish checklist |
    | Accessibility audit or fix | accessibility |
    | Bundle size, Web Vitals, rendering cost | frontend performance |
    | Languages, locale formats, right-to-left | internationalization |
@@ -226,6 +228,7 @@ Load one framework reference (workflow step 1), the app-shell reference only whe
 | [references/ui-features.md](references/ui-features.md) | Building or fixing a page or feature, client state, or a form |
 | [references/component-architecture.md](references/component-architecture.md) | Splitting oversized components, or structuring shared and feature components |
 | [references/layout-and-design-system.md](references/layout-and-design-system.md) | Responsive layout, design-system components, tokens, or theming |
+| [references/visual-polish.md](references/visual-polish.md) | Polishing, tidying, or redesigning a screen because it looks generated, generic, or visually inconsistent, or a review notices those signals |
 | [references/accessibility.md](references/accessibility.md) | Auditing or fixing accessibility |
 | [references/frontend-performance.md](references/frontend-performance.md) | Bundle size, Core Web Vitals, rendering or hydration cost in the browser |
 | [references/internationalization.md](references/internationalization.md) | Adding languages, locale-aware formats, or right-to-left support |

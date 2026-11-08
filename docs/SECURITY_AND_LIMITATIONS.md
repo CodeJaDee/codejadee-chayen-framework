@@ -2,12 +2,12 @@
 
 ## What the plugin contains
 
-The installed package, `plugins/codejadee-chayen-framework/`, has 264 files,
+The installed package, `plugins/codejadee-chayen-framework/`, has 265 files,
 all **Markdown and JSON**:
 
 - two manifests;
 - 16 skills (13 engineering, 2 writing, 1 project knowledge);
-- 243 references;
+- 244 references;
 - two README files.
 
 The package contains **no** hooks, MCP servers, agents, commands, scripts,
