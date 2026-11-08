@@ -5286,6 +5286,57 @@
       "checks": [
         "Load testing is performance work"
       ]
+    },
+    {
+      "id": "rc-07-008-polish-pos",
+      "capability": "CAP-07-008",
+      "polarity": "positive",
+      "prompt": "Our Tailwind dashboard looks AI-generated: purple gradients, glowing cards, emoji nav icons and uneven spacing. Polish it so it looks designed for our product.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "The visual polish checklist is also loaded",
+        "Findings are listed with path:line and grouped by layer before any edit",
+        "The change size (rework, touch-up, or leave) is chosen from the findings",
+        "In rework mode a brief is shown and agreed before editing, and global token or theme changes are approved",
+        "Features, content, section order, and the product name are kept, and no figures or claims are invented",
+        "Visual results not observed in a browser are marked not verified in browser"
+      ]
+    },
+    {
+      "id": "rc-07-008-polish-neg",
+      "capability": "CAP-07-008",
+      "polarity": "negative",
+      "prompt": "Design a logo and a hero illustration for our new startup. We have no code yet.",
+      "expect": { "skill": "none", "not_loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "Logo and illustration design without code is out of scope",
+        "No image is generated or downloaded through the frontend guidance"
+      ]
+    },
+    {
+      "id": "rc-07-001-prevent-slop-pos",
+      "capability": "CAP-07-001",
+      "polarity": "positive",
+      "prompt": "Add a revenue dashboard page to our React and Tailwind app with three stats and a monthly chart.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/ui-features.md" },
+      "checks": [
+        "The visual polish checklist is applied in Prevent mode although the prompt never mentions polish",
+        "The new code has no two-hue gradients, gradient text, coloured glows, emoji icons, tracked uppercase labels, transition-all, or decorative looping animation",
+        "Stat cards show a label, a figure, and a named comparison, and sample figures are plausible",
+        "The report has a visual self-check line"
+      ]
+    },
+    {
+      "id": "rc-07-008-theme-slop-pos",
+      "capability": "CAP-07-008",
+      "polarity": "positive",
+      "prompt": "Add a settings page to our Vue app. Our global theme file defines the purple-to-blue gradient we use on every card.",
+      "expect": { "skill": "chayen-frontend", "loads": "references/layout-and-design-system.md" },
+      "checks": [
+        "The new page itself avoids the generated-look signals",
+        "The global theme file is not changed without approval",
+        "The theme gradient is reported as a finding with the screens it affects and a proposed fix"
+      ]
     }
   ]
 }

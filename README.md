@@ -18,7 +18,7 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 | Check | Result |
 |---|---|
 | Scanner | [NVIDIA SkillSpector](https://github.com/NVIDIA/skillspector) 2.12.0, static analysis (`--no-llm`) |
-| Scanned | 2026-11-08, commit `be92794`: each of the 16 Skills, then the whole package (264 files) |
+| Scanned | 2026-11-08: each of the 16 Skills at commit `be92794`; `chayen-frontend` and the whole package (265 files) again after the visual polish checklist was added |
 | With the reviewed baseline | **0/100, `SAFE`, 0 unsuppressed findings** for every Skill and for the package |
 | Executable content | None (`has_executable_scripts: false`) |
 
@@ -42,8 +42,8 @@ read the reasons, see [SECURITY.md, "Scanner results"](SECURITY.md#scanner-resul
 | Marketplace name | `codejadee` |
 | Current version | `1.1.5` |
 | Entry Skills | 16 |
-| Package files | 264 |
-| Skill references | 243 |
+| Package files | 265 |
+| Skill references | 244 |
 | L0 metadata | 6,563 characters |
 
 The 16 entry skills are 13 engineering Skills, 2 writing Skills and 1 project

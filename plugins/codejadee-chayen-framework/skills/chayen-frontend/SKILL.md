@@ -16,6 +16,7 @@ Requests that fit:
 - "Create an Angular form for customer registration with validation."
 - "This React component is 900 lines. How should it be split into components?"
 - "Audit our checkout page for accessibility problems."
+- "Our React dashboard looks AI-generated, with purple gradients, emoji icons, and uneven spacing. Polish it."
 - "Add Thai and English language support to our Angular app."
 - "Our field workers lose connectivity. Make the inspection form work offline and sync later."
 - "Handle the case where the user denies camera access in our Capacitor app."
@@ -56,6 +57,12 @@ If the request does not fit, stop following this skill and continue normally wit
   ([references/ui-states.md](references/ui-states.md)).
 - **Accessibility is part of done:** semantic elements, labels, keyboard
   operation, focus management, and announced errors.
+- **Designed, not generated.** Every visible UI change avoids the generic
+  generated look: two-hue gradients, glows, gradient text, emoji as icons,
+  tracked uppercase labels, hype or greeting copy, decorative looping
+  motion, and one-off spacing. This holds for every UI task, not only for
+  requests to polish
+  ([references/visual-polish.md](references/visual-polish.md)).
 - **Recommendation is not verification.** Label every claim about rendered
   or device behaviour: verified by a named command or test, "not verified
   in browser", or "not verified on device". A design recommendation is
@@ -103,6 +110,7 @@ If the request does not fit, stop following this skill and continue normally wit
    | A page or feature, client state, or a form | UI features |
    | Splitting or structuring components | component architecture |
    | Responsive layout, design-system components, tokens, theming | layout and design system |
+   | Polishing a screen that looks generated, generic, or visually inconsistent | layout and design system, plus the visual polish checklist |
    | Accessibility audit or fix | accessibility |
    | Bundle size, Web Vitals, rendering cost | frontend performance |
    | Languages, locale formats, right-to-left | internationalization |
@@ -127,8 +135,12 @@ If the request does not fit, stop following this skill and continue normally wit
 6. **Stop for approval** before adding a library or native plugin, adding
    a native permission, changing global styles or themes, or touching
    signing, push credentials, or update channels.
-7. **Tests.** Add or update tests with the project's runner and utilities.
-8. **Verify** with build, typecheck, lint, tests, and the shell's sync or
+7. **Self-check the look** whenever visible UI changed: run the visual
+   polish checklist's search hints over the changed files, fix any signal
+   in your own code, fix existing signals inside the component you are
+   changing, and report the rest. Global tokens and themes stay with step 6.
+8. **Tests.** Add or update tests with the project's runner and utilities.
+9. **Verify** with build, typecheck, lint, tests, and the shell's sync or
    package command. List what still needs a browser or a device.
 
 ## Outputs
@@ -137,6 +149,8 @@ If the request does not fit, stop following this skill and continue normally wit
   `path:line`.
 - The states handled (loading, empty, error, retry, permission denied,
   offline), and an accessibility note.
+- When visible UI changed, a visual self-check line: signals fixed, signals
+  reported outside the change, or none found.
 - For shells: the platform files changed (manifests, plists, entitlements,
   configuration) and the per-platform build or sync commands.
 - A verification table, with each check PASS, FAIL, or NOT_RUN and its
@@ -226,6 +240,7 @@ Load one framework reference (workflow step 1), the app-shell reference only whe
 | [references/ui-features.md](references/ui-features.md) | Building or fixing a page or feature, client state, or a form |
 | [references/component-architecture.md](references/component-architecture.md) | Splitting oversized components, or structuring shared and feature components |
 | [references/layout-and-design-system.md](references/layout-and-design-system.md) | Responsive layout, design-system components, tokens, or theming |
+| [references/visual-polish.md](references/visual-polish.md) | Any task that writes or changes visible UI (prevention and the step 7 self-check), and requests to polish or redesign a screen that looks generated, generic, or visually inconsistent |
 | [references/accessibility.md](references/accessibility.md) | Auditing or fixing accessibility |
 | [references/frontend-performance.md](references/frontend-performance.md) | Bundle size, Core Web Vitals, rendering or hydration cost in the browser |
 | [references/internationalization.md](references/internationalization.md) | Adding languages, locale-aware formats, or right-to-left support |
