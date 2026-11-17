@@ -8,6 +8,7 @@
 > Git tag `v1.0.0`. No GitHub Release is created. The table below is current;
 > the strategy text after it is the earlier `0.1.0` plan.
 
+<!-- historical:start -->
 > **Decision D-064 (2026-10-20):** version `1.1.1`, a guidance-only update to
 > the same 16 Skills, after `1.1.0` (D-063). Git tags remain optional.
 
@@ -26,6 +27,12 @@
 > the same 16 Skills (wording that reduces skill-scanner false positives,
 > D-080); Skill metadata unchanged. Not release-qualified: runtime evaluation
 > remains NOT_RUN.
+<!-- historical:end -->
+
+> **Decision D-083 (2026-11-18):** version `1.1.6`, which adds the 17th Skill,
+> `chayen-it-document-writer` (editorial registration, D-082). Existing Skill
+> names and descriptions are unchanged. Not release-qualified: runtime
+> evaluation remains NOT_RUN.
 
 ## Current build
 
@@ -33,10 +40,10 @@
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Version | `1.1.5` in both manifests and both Copilot version fields (D-081; `1.1.4` under D-079, `1.1.3` under D-077, `1.1.2` under D-065, `1.1.1` under D-064, `1.1.0` under D-063, `1.0.0` under D-061) |
+| Version | `1.1.6` in both manifests and both Copilot version fields (D-083; `1.1.5` under D-081, `1.1.4` under D-079, `1.1.3` under D-077, `1.1.2` under D-065, `1.1.1` under D-064, `1.1.0` under D-063, `1.0.0` under D-061) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
-| Entry Skills | 16: 13 engineering, 2 writing, 1 project knowledge |
+| Entry Skills | 18: 13 engineering, 4 writing, 1 project knowledge (the 18th, `chayen-it-document-writer-th`, is unreleased, D-084) |
 | Project licence | MIT; root `LICENSE`, plugin `LICENSE.md` and both manifests' `license` |
 | Upstream licence | Existing Humanizer MIT notice/attribution retained and guarded |
 | Public source | `https://github.com/CodeJaDee/codejadee-chayen-framework`, public since 2026-10-18 |

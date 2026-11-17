@@ -173,5 +173,5 @@ test("runner sends nothing without authorization, budget cap or isolated home", 
   r = run(...base, "--allow-provider-calls", "--authorization", "TEST-ONLY", "--max-calls", "5"); assert.equal(r.status, 2); assert.match(r.stderr, /exceed --max-calls 5; nothing was sent/);
   r = spawnSync(process.execPath, [path.join(here, "run-phase5.mjs"), ...base, "--allow-provider-calls", "--authorization", "TEST-ONLY", "--max-calls", "1000"], { cwd: repo, encoding: "utf8", env: { ...process.env, CLAUDE_CONFIG_DIR: "" } });
   assert.equal(r.status, 2); assert.match(r.stderr, /isolated CLAUDE_CONFIG_DIR/);
-  r = run("--plan"); assert.equal(r.status, 0); assert.match(r.stdout, /total 2295 billed call\(s\); nothing was created or sent/);
+  r = run("--plan"); assert.equal(r.status, 0); assert.match(r.stdout, /total 2349 billed call\(s\); nothing was created or sent/);
 });

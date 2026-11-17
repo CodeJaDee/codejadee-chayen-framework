@@ -7,7 +7,7 @@ commands, agree what "done" means, make the smallest change, and back every
 claim with evidence. Skills are advisory text; the host's own permissions and
 approvals stay in control.
 
-Current version: **v1.1.5** (2026-11-06). Publisher: **CodeJaDee**. Licence:
+Current version: **v1.1.6** (2026-11-18). Publisher: **CodeJaDee**. Licence:
 [MIT](LICENSE). Source: `CodeJaDee/codejadee-chayen-framework` (public).
 
 **Author:** CodeJaDee — [codejadee.com](https://codejadee.com) ·
@@ -18,7 +18,7 @@ GitHub [@CodeJaDee](https://github.com/CodeJaDee)
 | Check | Result |
 |---|---|
 | Scanner | [NVIDIA SkillSpector](https://github.com/NVIDIA/skillspector) 2.12.0, static analysis (`--no-llm`) |
-| Scanned | 2026-11-08: each of the 16 Skills at commit `be92794`; `chayen-frontend` and the whole package (265 files) again after the visual polish checklist was added |
+| Scanned | 2026-11-08: the 16 earlier Skills at commit `be92794`, with `chayen-frontend` and the whole package again after the visual polish checklist was added; 2026-11-18: `chayen-it-document-writer` and `chayen-it-document-writer-th` (0 findings each, no baseline entry needed) and the whole package (289 files) |
 | With the reviewed baseline | **0/100, `SAFE`, 0 unsuppressed findings** for every Skill and for the package |
 | Executable content | None (`has_executable_scripts: false`) |
 
@@ -40,13 +40,13 @@ read the reasons, see [SECURITY.md, "Scanner results"](SECURITY.md#scanner-resul
 |---|---|
 | Plugin name | `chayen` |
 | Marketplace name | `codejadee` |
-| Current version | `1.1.5` |
-| Entry Skills | 16 |
-| Package files | 265 |
-| Skill references | 244 |
-| L0 metadata | 6,563 characters |
+| Current version | `1.1.6` |
+| Entry Skills | 18 |
+| Package files | 289 |
+| Skill references | 266 |
+| L0 metadata | 7,356 characters |
 
-The 16 entry skills are 13 engineering Skills, 2 writing Skills and 1 project
+The 18 entry skills are 13 engineering Skills, 4 writing Skills and 1 project
 knowledge Skill. Behind them sit 206 engineering capabilities, 108 technology
 capabilities, 12 workflows and 7 templates, loaded only when a task needs
 them. The package is static Markdown and JSON: no executable, hook, MCP
@@ -71,6 +71,8 @@ server, background service or telemetry.
 | Communicate | `chayen-documentation` | READMEs, API and architecture docs, PR descriptions, reviews |
 | Write | `chayen-humanizer-en` | English prose: audit, rewrite and new content |
 | Write | `chayen-humanizer-th` | Thai prose, including copy in localization files |
+| Write | `chayen-it-document-writer` | English Technical, Application Design and Infrastructure Design documents: write, review, update, audit, cross-check |
+| Write | `chayen-it-document-writer-th` | The same for Thai documents, plus controlled English-to-Thai translation |
 | Project | `chayen-init` | Writing and refreshing `.chayen/` project knowledge files, on request |
 
 The full catalog, with boundaries for each Skill, is in
@@ -181,7 +183,7 @@ Read this before relying on Chayen.
   Copilot CLI is not qualified: the installed 1.0.89 is below the supported
   1.0.91 ([Step 19 report](docs/chayen/evolution/PROVIDER_SECURITY_REPORT.md)).
   That snapshot has the Skill content of `1.1.3` under the version `1.1.2`.
-  The released `1.1.0`, `1.1.1`, `1.1.2`, `1.1.3`, `1.1.4` and `1.1.5`
+  The released `1.1.0`, `1.1.1`, `1.1.2`, `1.1.3`, `1.1.4`, `1.1.5` and `1.1.6`
   packages were never installed natively.
 - VS Code surfaces are unverified and outside the support claim.
 - Skills are guidance. Real controls are the host's permission prompts, your
@@ -199,6 +201,8 @@ Full entries are in the [changelog](CHANGELOG.md); decisions are recorded in
 
 | Version | Date | Decision | Summary |
 |---|---|---|---|
+| Unreleased | — | D-084 | Adds the `chayen-it-document-writer-th` Skill, the Thai counterpart of `chayen-it-document-writer`, routed by the language of the requested deliverable; 18 Skills; runtime qualification still NOT_RUN |
+| `1.1.6` | 2026-11-18 | D-082, D-083 | Adds the `chayen-it-document-writer` Skill (editorial registration, English): write, review, update, audit and consistency modes for Technical, Application Design and Infrastructure Design documents, evidence-first; the Skill total becomes seventeen; runtime qualification still NOT_RUN |
 | `1.1.5` | 2026-11-06 | D-080, D-081 | Fewer skill-scanner false positives: "without user approval" wording, `npx --no-install` in examples, five rephrased phrases; reviewed SkillSpector baseline and "Scanner results" in SECURITY.md; package findings 141 to 40, or 0 with the baseline; runtime qualification still NOT_RUN |
 | `1.1.4` | 2026-10-25 | D-078, D-079 | `chayen-init` writes generated `.chayen/` files directly and persists `.chayen/init-report.md`; existing team rules, pointer blocks and removal keep their approval steps; runtime qualification still NOT_RUN |
 | `1.1.3` | 2026-10-23 | D-077 | Evolution program guidance: task-contract decision policy, nine-field acceptance evidence record with `DONE` / `PARTIAL` / `BLOCKED`, independent evidence-audit roles, project-map change impact; repository caps on Skill count, lines, depth and metadata removed (D-066); runtime qualification still NOT_RUN |
@@ -223,7 +227,7 @@ Earlier builds, kept as recorded:
 <!-- historical:end -->
 
 Git tags exist for `v1.0.0`, `1.1.0`, `v1.1.1` and `v1.1.2`; `1.1.3`,
-`1.1.4` and `1.1.5` are not tagged. Tags are optional reference pins, and the project uses no GitHub
+`1.1.4`, `1.1.5` and `1.1.6` are not tagged. Tags are optional reference pins, and the project uses no GitHub
 Releases.
 
 ## Documentation

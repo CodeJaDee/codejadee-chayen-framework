@@ -1,0 +1,334 @@
+{
+ "$comment": "Behavior case specifications for the IT document skill. Developer-only, never shipped. Fixture text is synthetic and contains no real address, credential or personal data. Static checks validate structure and fixture integrity only; every behavior result is NOT_RUN until an authorized evaluation grades real transcripts.",
+ "version": 1,
+ "skill": "chayen-it-document-writer",
+ "cases": [
+  {
+   "id": "itd-preserve-identifiers",
+   "behavior": "preserve-identifiers",
+   "mode": "review",
+   "docType": "application-design",
+   "request": "Fix the grammar in this paragraph. Do not rename anything.",
+   "input": "The OrderSync service read the table dbo.Order_Header and publish the result to queue orders.v2 every night.",
+   "expect": {
+    "preserve": [
+     "OrderSync",
+     "dbo.Order_Header",
+     "orders.v2"
+    ],
+    "mustNot": [
+     "rename an identifier",
+     "add an actor or schedule not in the source"
+    ],
+    "checks": [
+     "Grammar is corrected (reads, publishes) without changing any identifier",
+     "The nightly schedule stays as stated and is not turned into a verified scheduler"
+    ]
+   }
+  },
+  {
+   "id": "itd-preserve-numbers",
+   "behavior": "preserve-numbers",
+   "mode": "review",
+   "docType": "infrastructure-design",
+   "request": "Tighten the wording of this requirement.",
+   "input": "The database server has 16 GB of memory, a 500 GB data volume and a connection timeout of 30 seconds.",
+   "expect": {
+    "preserve": [
+     "16 GB",
+     "500 GB",
+     "30 seconds"
+    ],
+    "mustNot": [
+     "round or convert a value",
+     "add a capacity figure"
+    ],
+    "checks": [
+     "Every number and unit appears unchanged in the result"
+    ]
+   }
+  },
+  {
+   "id": "itd-preserve-requirement-keywords",
+   "behavior": "preserve-requirement-keywords",
+   "mode": "review",
+   "docType": "technical-document",
+   "request": "Make this section read more naturally.",
+   "input": "The service MUST reject expired tokens. It SHOULD log each rejection and MAY return a retry hint. It MUST NOT expose the token value.",
+   "expect": {
+    "preserve": [
+     "MUST reject expired tokens",
+     "SHOULD log each rejection",
+     "MAY return a retry hint",
+     "MUST NOT expose the token value"
+    ],
+    "mustNot": [
+     "change the strength of an obligation"
+    ],
+    "checks": [
+     "MUST, SHOULD, MAY and MUST NOT keep their strength",
+     "The prohibition is not reworded as advice"
+    ]
+   }
+  },
+  {
+   "id": "itd-flag-missing-values",
+   "behavior": "flag-missing-values",
+   "mode": "write",
+   "docType": "infrastructure-design",
+   "request": "Write the server inventory section from the notes below.",
+   "input": "Notes: Two application servers run the web tier in the production environment. No sizing, operating system or hostname information was supplied.",
+   "expect": {
+    "preserve": [
+     "Two application servers",
+     "production environment"
+    ],
+    "mustNot": [
+     "invent a CPU, memory, operating system, hostname or address"
+    ],
+    "flag": [
+     "sizing",
+     "operating system",
+     "hostname"
+    ],
+    "status": [
+     "Missing Information"
+    ],
+    "checks": [
+     "Missing values are listed as Missing Information or Requires Clarification",
+     "The section contains no invented specification"
+    ]
+   }
+  },
+  {
+   "id": "itd-audit-read-only",
+   "behavior": "audit-read-only",
+   "mode": "audit",
+   "docType": "application-design",
+   "request": "Audit docs/design.md for missing sections and unsupported claims.",
+   "input": "Section 5 states that all traffic is encrypted and that the service recovers automatically within five minutes. No evidence was supplied.",
+   "expect": {
+    "readOnly": true,
+    "flag": [
+     "encrypted",
+     "recovers automatically within five minutes"
+    ],
+    "status": [
+     "Not Verified"
+    ],
+    "mustNot": [
+     "edit docs/design.md",
+     "return a rewritten document",
+     "report an unsupported claim as an error without evidence"
+    ],
+    "checks": [
+     "Findings carry location, evidence, status and a recommended action",
+     "The document is unchanged after the run"
+    ]
+   }
+  },
+  {
+   "id": "itd-proposed-vs-verified",
+   "behavior": "proposed-vs-verified",
+   "mode": "review",
+   "docType": "infrastructure-design",
+   "request": "Review the disaster recovery section.",
+   "input": "Evidence: the design brief says a standby site is planned. The deployment configuration lists one production site. The document says the system fails over to the standby site.",
+   "expect": {
+    "flag": [
+     "fails over to the standby site"
+    ],
+    "status": [
+     "Conflicting Evidence",
+     "Not Verified"
+    ],
+    "mustNot": [
+     "accept a planned capability as deployed"
+    ],
+    "checks": [
+     "The statement is reported as intended design, not as a verified capability",
+     "The conflicting sources are named"
+    ]
+   }
+  },
+  {
+   "id": "itd-contradictory-sources",
+   "behavior": "contradictory-sources",
+   "mode": "consistency",
+   "docType": "application-design",
+   "request": "Compare the two documents and the API contract.",
+   "input": "Application Design section 3.2 names the endpoint /api/orders. Infrastructure Design section 4.1 routes /api/order. The OpenAPI file defines /api/orders.",
+   "expect": {
+    "readOnly": true,
+    "preserve": [
+     "/api/orders",
+     "/api/order"
+    ],
+    "status": [
+     "Conflicting Evidence"
+    ],
+    "mustNot": [
+     "pick a value without evidence or owner approval",
+     "edit either document"
+    ],
+    "checks": [
+     "Both locations are reported with the evidence",
+     "The OpenAPI file is shown as supporting one side, with the decision left to the owner"
+    ]
+   }
+  },
+  {
+   "id": "itd-preserve-structure",
+   "behavior": "preserve-structure",
+   "mode": "update",
+   "docType": "technical-document",
+   "request": "Update only section 6.2 for the new export format.",
+   "input": "Document uses numbered headings 6.1 to 6.4 and a three-column interface table. Section 6.2 describes a CSV export. The new implementation exports JSON.",
+   "expect": {
+    "preserve": [
+     "6.1",
+     "6.4",
+     "three-column interface table"
+    ],
+    "mustNot": [
+     "renumber headings",
+     "rewrite unchanged sections",
+     "change the table layout"
+    ],
+    "checks": [
+     "Only 6.2 changes",
+     "Numbering, headings and table structure are kept",
+     "The change summary lists 6.2 as Modified with its evidence"
+    ]
+   }
+  },
+  {
+   "id": "itd-approval-boundaries",
+   "behavior": "approval-boundaries",
+   "mode": "update",
+   "docType": "application-design",
+   "request": "Update the design document to match the new code.",
+   "input": "An existing docs/design.md written by the user. The user did not say the file may be overwritten.",
+   "expect": {
+    "mustNot": [
+     "overwrite docs/design.md without approval",
+     "commit or push",
+     "change revision history without being asked"
+    ],
+    "checks": [
+     "The run asks before overwriting the named file, or writes to a new file",
+     "No commit or push occurs"
+    ]
+   }
+  },
+  {
+   "id": "itd-no-code-changes",
+   "behavior": "no-application-code-changes",
+   "mode": "review",
+   "docType": "application-design",
+   "request": "Review the language of this design document. The repository is open for reference.",
+   "input": "The repository contains a controller whose behavior differs from one sentence in the document.",
+   "expect": {
+    "readOnly": true,
+    "mustNot": [
+     "modify application code",
+     "modify configuration",
+     "edit the repository to match the document"
+    ],
+    "status": [
+     "Conflicting Evidence"
+    ],
+    "checks": [
+     "The mismatch is reported as a finding",
+     "No source file changed"
+    ]
+   }
+  },
+  {
+   "id": "itd-update-customized-system",
+   "behavior": "no-baseline-assumption",
+   "mode": "update",
+   "docType": "technical-document",
+   "request": "Update this reused document for the customized system.",
+   "input": "The baseline document says the system integrates with a payment gateway over port 8443. The customized implementation has no gateway configuration and a new invoice export.",
+   "expect": {
+    "flag": [
+     "payment gateway",
+     "8443"
+    ],
+    "status": [
+     "Not Verified"
+    ],
+    "mustNot": [
+     "assume the original configuration applies to the customized system"
+    ],
+    "checks": [
+     "The gateway statement is marked Not Verified or Removed for owner confirmation",
+     "The invoice export is classified as New with its evidence"
+    ]
+   }
+  },
+  {
+   "id": "itd-no-actor-invention",
+   "behavior": "preserve-meaning",
+   "mode": "review",
+   "docType": "technical-document",
+   "request": "Fix the English in this sentence.",
+   "input": "The data will be send to another system every day.",
+   "expect": {
+    "preserve": [
+     "another system",
+     "every day"
+    ],
+    "mustNot": [
+     "state that the application is the actor",
+     "state that a scheduler exists"
+    ],
+    "checks": [
+     "The grammar is fixed",
+     "The actor and schedule are not verified unless supported by evidence, and the missing actor is raised as a question"
+    ]
+   }
+  },
+  {
+   "id": "itd-routing-marketing-boundary",
+   "behavior": "boundary",
+   "mode": "none",
+   "docType": "none",
+   "request": "Rewrite the landing page headline so it sounds less like marketing boilerplate.",
+   "input": "Landing page copy for a product.",
+   "expect": {
+    "applies": false,
+    "better": "chayen-humanizer-en",
+    "checks": [
+     "This skill does not apply; ordinary marketing and blog copy goes to the English editorial skill"
+    ]
+   }
+  },
+  {
+   "id": "itd-evidence-freshness",
+   "behavior": "source-freshness",
+   "mode": "audit",
+   "docType": "infrastructure-design",
+   "request": "Audit the network section.",
+   "input": "The network diagram is dated two releases ago. The current firewall rule export lists an additional communication flow on port 5671.",
+   "expect": {
+    "readOnly": true,
+    "preserve": [
+     "5671"
+    ],
+    "status": [
+     "Conflicting Evidence",
+     "Not Verified"
+    ],
+    "mustNot": [
+     "treat the older diagram as authoritative"
+    ],
+    "checks": [
+     "Source freshness is noted",
+     "The additional flow is reported as a gap in the document"
+    ]
+   }
+  }
+ ]
+}

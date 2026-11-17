@@ -2182,6 +2182,117 @@ Decision statuses:
   publication. Each needs a separate owner action.
 - **Evidence:** `validate-all.mjs` on the bumped tree.
 
+### D-082 — `chayen-it-document-writer`: an English IT document Skill
+
+- **Status:** ACCEPTED. Owner request on 2026-11-17 to implement the Skill
+  described in the "MASTER PROMPT: Implement chayen-it-document-writer".
+- **Decision:**
+  - Add one Entry Skill, `chayen-it-document-writer`, with `SKILL.md` and ten
+    references. It writes, reviews, updates, audits and cross-checks English
+    Technical Documents, Application Design Documents and Infrastructure
+    Design Documents from supplied evidence. It reports missing or
+    conflicting values as Not Verified, Missing Information, Conflicting
+    Evidence or Requires Clarification instead of inventing them.
+  - **Classification: editorial, language `en`** in
+    `catalog/editorial-skills.json`. The Skill owns a documentation
+    deliverable, not an Engineering Capability, so the engineering catalog is
+    unchanged (206 capabilities, 13 Entry Skills) and no capability is
+    invented to satisfy a validator. The project category is for project
+    knowledge (`chayen-init`) and the editorial category already admits
+    further records that declare a language code (D-066), so no registration
+    model, validator or ADR change was needed.
+  - Existing Skills are unchanged. `chayen-humanizer-en` keeps general
+    English prose, `chayen-documentation` keeps README, API and engineering
+    docs checked against the repository, and the other engineering Skills keep
+    their analysis. The new Skill names them as hand-off owners in plain
+    prose and does not assume automatic invocation. The E-04 independence
+    rule still covers only the Thai and English Humanizer pair.
+  - Scope boundaries: English only; Markdown output only (no DOCX or PDF is
+    claimed); review, audit and consistency requests never edit a document;
+    no application, configuration or infrastructure change.
+- **Tests added (developer-only):** 17 trigger cases (positive routing for
+  each mode, boundary cases that must stay with `chayen-humanizer-en`,
+  `chayen-backend`, `chayen-security`, `chayen-architecture` and
+  `chayen-documentation`, four ambiguous and one unsupported), regenerated
+  Claude eval cases, three Phase 5 routing probes, and 14 behavior case
+  specifications with offline structural checks
+  (`tests/editorial/it-document-writer-cases.*`). Existing count assertions
+  moved from 16 to 17 Skills.
+- **Not done:** routing and behavior evaluation (NOT_RUN: no provider calls
+  were authorized), native install on any host, commit, tag, merge and push.
+- **Evidence:** `validate-all.mjs`; SkillSpector 2.12.0 `--no-llm` scan of
+  the Skill folder: 0 findings, no baseline entry added.
+
+### D-083 — Version 1.1.6 (adds `chayen-it-document-writer`)
+
+- **Status:** ACCEPTED. Explicit owner instruction on 2026-11-17: after the
+  Skill is done, change the framework version from 1.1.5 to 1.1.6 with a
+  changelog entry.
+- **Decision:**
+  - The version is `1.1.6` in both plugin manifests and in both Copilot
+    version fields (`metadata.version` and `plugins[0].version`).
+  - This is a patch bump, although a Skill is added: the owner chose
+    `1.1.6`, and no existing Skill name, description or behavior changes.
+    The `1.1.0` precedent (adding `chayen-init`) used a minor bump; this
+    release follows the owner's instruction instead.
+  - The shipped package grows from 265 to 276 files (244 to 254 references)
+    and from 16 to 17 Skills; L0 metadata grows from 6,563 to 6,956
+    characters.
+  - The CHANGELOG `[1.1.6]` entry records the change and carries the
+    repository-only items that were listed under `[Unreleased]`.
+- **Not release-qualified.** Runtime evaluation is NOT_RUN on every CLI.
+- **Not done by this decision:** commit, tag, merge to `main`, push and
+  publication. Each needs a separate owner action.
+- **Evidence:** `validate-all.mjs` on the bumped tree.
+
+### D-084 — `chayen-it-document-writer-th`: the Thai IT document Skill
+
+- **Status:** ACCEPTED. Owner request on 2026-11-18 to add the Thai version of
+  `chayen-it-document-writer` (D-082), as the second phase of the IT
+  documentation initiative.
+- **Decision:**
+  - Add one Entry Skill, `chayen-it-document-writer-th`, with `SKILL.md` and
+    twelve references. It has the same five modes and three document types as
+    the English Skill and adds controlled English-to-Thai translation. It was
+    written for Thai, not translated from the English text: it carries a
+    Thai technical writing checklist (register, requirement semantics,
+    protected identifiers, digits and calendar eras, typography), a terminology
+    reference, Thai evidence-status labels and Thai output templates.
+  - **Classification: editorial, language `th`** in
+    `catalog/editorial-skills.json`, for the reasons recorded in D-082. The
+    registry admits further records that declare a language code, and the
+    pinned Humanizer contracts are untouched. No registration model, validator
+    or ADR change was needed.
+  - **Routing follows the language of the requested deliverable and the
+    artifact type, not the language of the prompt.** A Thai prompt for an
+    English document belongs to `chayen-it-document-writer`; an English prompt
+    for a Thai document belongs to the Thai Skill; Thai blogs and marketing
+    copy stay with `chayen-humanizer-th`. The two descriptions were made
+    lexically distinct (overlap 0.21; the limit is 0.35) without changing the
+    English description.
+  - The English Skill, `chayen-humanizer-th`, `chayen-humanizer-en` and every
+    other Skill are unchanged. The English Skill's "When not to use" row for
+    documents in another language still says to answer directly; pointing it
+    at the Thai Skill is left to the owner because it edits an accepted
+    Skill's text (see the follow-up below).
+- **Tests added (developer-only):** 18 trigger cases (the five required
+  language-routing scenarios, translation, update and consistency, boundary
+  cases for Thai blogs, marketing, README, security, backend and
+  architecture, and four ambiguous cases); the former "non-English documents
+  are unsupported" case of the English Skill was replaced because the request
+  now has an owner; regenerated Claude eval cases; three Phase 5 routing
+  probes; and 19 behavior case specifications with offline structural checks
+  (`tests/editorial/it-document-writer-th-cases.*`). Existing count
+  assertions moved from 17 to 18 Skills.
+- **Follow-up for the owner:** decide whether to change the English Skill's
+  non-English row to name the Thai Skill, and whether to release this as
+  `1.1.7` (`1.1.6` is already on `origin/develop`).
+- **Not done:** routing and behavior evaluation (NOT_RUN: no provider calls
+  were authorized), native install on any host, version bump, commit, tag,
+  merge and push.
+- **Evidence:** `validate-all.mjs`; SkillSpector 2.12.0 `--no-llm` scan of the
+  Skill folder and the package.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

@@ -12,7 +12,7 @@ Each skill is a directory, `skills/<skill-name>/SKILL.md`, plus optional
 **Frontmatter** uses only the Agent Skills standard fields: `name` and
 `description`. `name` must equal the directory name.
 
-## Entry skills (1.1.5)
+## Entry skills (1.1.6)
 
 Twelve composite workflows are conditional checklist references in the existing
 skills, alongside seven reusable template leaves. They reuse capability recipes,
@@ -80,3 +80,5 @@ end-to-end tests in testing, and a database portability review in data.
 | `chayen-humanizer-th` | Thai writing and editing: audit, rewrite, new content and website or UI copy in articles, developer blogs, landing pages, READMEs, product descriptions and localization files; preserves facts, terminology, code and markup; editorial only, owns no engineering capability |
 | `chayen-init` | Project knowledge on explicit request: `.chayen/` profile, conventions, team rules and per-unit files, plus an opt-in pointer block in agent instruction files; previews every write, never overwrites the team rules file (D-062, new in 1.1.0) |
 | `chayen-humanizer-en` | English writing and editing: audit, rewrite, new content and website or UI copy in articles, blogs, documentation and README prose, developer replies, product and marketing copy, landing pages and localization files; removes stock AI phrasing and filler while keeping facts, identifiers, tone and spelling variety; editorial only, owns no engineering capability |
+| `chayen-it-document-writer` | English IT documents (Technical Document, Application Design Document, Infrastructure Design Document): write, review, update, audit and cross-document consistency from supplied evidence; reports missing or conflicting values instead of inventing them; preserves identifiers, numbers and MUST/SHOULD/MAY; editorial only, owns no engineering capability |
+| `chayen-it-document-writer-th` | Thai IT documents (Technical Document, Application Design Document, Infrastructure Design Document): write, review, update, audit, cross-document consistency and controlled English-to-Thai translation from supplied evidence; Thai technical writing rules; preserves identifiers, numbers and obligation strength (ต้อง, ควร, อาจ, ต้องไม่); routed by the language of the requested deliverable; editorial only, owns no engineering capability |

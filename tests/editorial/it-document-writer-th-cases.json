@@ -1,0 +1,453 @@
+{
+ "$comment": "Behavior case specifications for the Thai IT document skill. Developer-only, never shipped. Fixture text is synthetic and contains no real address, credential or personal data. Static checks validate structure and fixture integrity only; every behavior result is NOT_RUN until an authorized evaluation grades real transcripts.",
+ "version": 1,
+ "skill": "chayen-it-document-writer-th",
+ "cases": [
+  {
+   "id": "itdth-preserve-identifiers",
+   "behavior": "preserve-identifiers",
+   "mode": "review",
+   "docType": "application-design",
+   "request": "ปรับสำนวนย่อหน้านี้ให้อ่านง่ายขึ้น ห้ามเปลี่ยนชื่อใด ๆ",
+   "input": "บริการ OrderSync อ่านข้อมูลจากตาราง dbo.Order_Header แล้วส่งผลลัพธ์ไปยังคิว orders.v2 ทุกคืน",
+   "expect": {
+    "preserve": [
+     "OrderSync",
+     "dbo.Order_Header",
+     "orders.v2"
+    ],
+    "mustNot": [
+     "แปลหรือเปลี่ยนชื่อตัวระบุ",
+     "เพิ่มผู้กระทำหรือตารางเวลาที่ไม่มีในต้นฉบับ"
+    ],
+    "checks": [
+     "ตัวระบุทุกตัวคงเดิมและอยู่ใน code span",
+     "การส่งทุกคืนยังเป็นข้อความตามต้นฉบับ ไม่ถูกยืนยันว่ามี scheduler"
+    ]
+   }
+  },
+  {
+   "id": "itdth-preserve-numbers",
+   "behavior": "preserve-numbers",
+   "mode": "review",
+   "docType": "infrastructure-design",
+   "request": "กระชับข้อความข้อกำหนดนี้",
+   "input": "เซิร์ฟเวอร์ฐานข้อมูลมีหน่วยความจำ 16 GB พื้นที่เก็บข้อมูล 500 GB และ connection timeout 30 วินาที ตามเอกสารปีงบประมาณ พ.ศ. 2569",
+   "expect": {
+    "preserve": [
+     "16 GB",
+     "500 GB",
+     "30 วินาที",
+     "พ.ศ. 2569"
+    ],
+    "mustNot": [
+     "ปัดหรือแปลงค่า",
+     "เปลี่ยนปี พ.ศ. เป็น ค.ศ.",
+     "เพิ่มตัวเลขความจุ"
+    ],
+    "checks": [
+     "ตัวเลข หน่วย และศักราชคงเดิมทุกค่า"
+    ]
+   }
+  },
+  {
+   "id": "itdth-translate-requirement-keywords",
+   "behavior": "preserve-requirement-keywords",
+   "mode": "translation",
+   "docType": "technical-document",
+   "request": "แปลส่วนนี้เป็นภาษาไทยทางเทคนิค",
+   "input": "The service MUST reject expired tokens. It SHOULD log each rejection and MAY return a retry hint. It MUST NOT expose the token value.",
+   "expect": {
+    "preserve": [
+     "MUST reject expired tokens",
+     "SHOULD log each rejection",
+     "MAY return a retry hint",
+     "MUST NOT expose the token value"
+    ],
+    "keywordMap": {
+     "MUST NOT": "ต้องไม่",
+     "MUST": "ต้อง",
+     "SHOULD": "ควร",
+     "MAY": "อาจ"
+    },
+    "mustNot": [
+     "เปลี่ยนระดับของข้อกำหนด",
+     "ทำให้ข้อห้ามกลายเป็นคำแนะนำ"
+    ],
+    "checks": [
+     "MUST เป็น ต้อง, SHOULD เป็น ควร, MAY เป็น อาจ ... ได้ และ MUST NOT เป็น ต้องไม่ หรือ ห้าม",
+     "ไม่มีประโยคใดอ่านได้ว่าเป็นเพียงข้อเท็จจริง"
+    ]
+   }
+  },
+  {
+   "id": "itdth-review-obligation-conflict",
+   "behavior": "obligation-consistency",
+   "mode": "review",
+   "docType": "application-design",
+   "request": "ตรวจภาษาและความสอดคล้องของหัวข้อ 4 กับหัวข้อ 7",
+   "input": "หัวข้อ 4 ระบบควรตรวจสอบข้อมูลนำเข้าก่อนบันทึก หัวข้อ 7 ระบบต้องตรวจสอบข้อมูลนำเข้าก่อนบันทึก",
+   "expect": {
+    "readOnly": true,
+    "preserve": [
+     "ควรตรวจสอบข้อมูลนำเข้า",
+     "ต้องตรวจสอบข้อมูลนำเข้า"
+    ],
+    "status": [
+     "Conflicting Evidence",
+     "Requires Clarification"
+    ],
+    "mustNot": [
+     "เลือกระดับใดระดับหนึ่งโดยไม่มีหลักฐานหรือการตัดสินใจของเจ้าของ"
+    ],
+    "checks": [
+     "รายงานความไม่สอดคล้องของระดับข้อกำหนดพร้อมตำแหน่งทั้งสอง"
+    ]
+   }
+  },
+  {
+   "id": "itdth-flag-missing-values",
+   "behavior": "flag-missing-values",
+   "mode": "write",
+   "docType": "infrastructure-design",
+   "request": "เขียนหัวข้อรายการ Server จากบันทึกต่อไปนี้",
+   "input": "บันทึก: มีเซิร์ฟเวอร์แอปพลิเคชันสองเครื่องรันชั้นเว็บในสภาพแวดล้อม Production ไม่มีข้อมูลขนาด ระบบปฏิบัติการ หรือชื่อโฮสต์",
+   "expect": {
+    "preserve": [
+     "เซิร์ฟเวอร์แอปพลิเคชันสองเครื่อง",
+     "Production"
+    ],
+    "mustNot": [
+     "แต่งค่า CPU หน่วยความจำ ระบบปฏิบัติการ ชื่อโฮสต์ หรือที่อยู่"
+    ],
+    "flag": [
+     "ขนาด",
+     "ระบบปฏิบัติการ",
+     "ชื่อโฮสต์"
+    ],
+    "status": [
+     "Missing Information"
+    ],
+    "checks": [
+     "ค่าที่ขาดถูกระบุเป็น ไม่มีข้อมูล หรือ ต้องการข้อมูลเพิ่มเติม",
+     "ไม่มีสเปกที่แต่งขึ้นในหัวข้อ"
+    ]
+   }
+  },
+  {
+   "id": "itdth-audit-read-only",
+   "behavior": "audit-read-only",
+   "mode": "audit",
+   "docType": "application-design",
+   "request": "ประเมิน docs/design.th.md ว่าขาดหัวข้อหรือมีข้อความที่ไม่มีหลักฐานหรือไม่",
+   "input": "หัวข้อ 5 ระบุว่าการรับส่งข้อมูลทั้งหมดถูกเข้ารหัส และระบบกู้คืนตัวเองอัตโนมัติภายในห้านาที ไม่มีหลักฐานแนบ",
+   "expect": {
+    "readOnly": true,
+    "flag": [
+     "ถูกเข้ารหัส",
+     "กู้คืนตัวเองอัตโนมัติภายในห้านาที"
+    ],
+    "status": [
+     "Not Verified"
+    ],
+    "mustNot": [
+     "แก้ไข docs/design.th.md",
+     "ส่งเอกสารฉบับเขียนใหม่กลับมา",
+     "จัดระดับวิกฤตจากการไม่มีหัวข้อตาม checklist เพียงอย่างเดียว"
+    ],
+    "checks": [
+     "ข้อค้นพบมีตำแหน่ง หลักฐาน สถานะ และข้อเสนอแนะ",
+     "เอกสารไม่เปลี่ยนแปลงหลังการรัน"
+    ]
+   }
+  },
+  {
+   "id": "itdth-proposed-vs-verified",
+   "behavior": "proposed-vs-verified",
+   "mode": "review",
+   "docType": "infrastructure-design",
+   "request": "ตรวจหัวข้อ Disaster Recovery",
+   "input": "หลักฐาน: เอกสารสรุปโครงการระบุว่ามีแผนจะสร้างไซต์สำรอง ไฟล์ deployment ระบุไซต์ production เพียงแห่งเดียว เอกสารเขียนว่าระบบสลับไปยังไซต์สำรองโดยอัตโนมัติ",
+   "expect": {
+    "flag": [
+     "สลับไปยังไซต์สำรองโดยอัตโนมัติ"
+    ],
+    "status": [
+     "Conflicting Evidence",
+     "Not Verified"
+    ],
+    "mustNot": [
+     "ถือว่าสิ่งที่มีแผนแล้วถูกติดตั้งใช้งานแล้ว"
+    ],
+    "checks": [
+     "ข้อความถูกรายงานเป็นการออกแบบที่ตั้งใจ ไม่ใช่ความสามารถที่ยืนยันแล้ว",
+     "ระบุแหล่งข้อมูลที่ขัดแย้งกัน"
+    ]
+   }
+  },
+  {
+   "id": "itdth-contradictory-sources",
+   "behavior": "contradictory-sources",
+   "mode": "consistency",
+   "docType": "application-design",
+   "request": "เปรียบเทียบเอกสารสองฉบับกับ API contract",
+   "input": "Application Design หัวข้อ 3.2 ระบุ endpoint /api/orders ส่วน Infrastructure Design หัวข้อ 4.1 กำหนด route /api/order และไฟล์ OpenAPI กำหนด /api/orders",
+   "expect": {
+    "readOnly": true,
+    "preserve": [
+     "/api/orders",
+     "/api/order"
+    ],
+    "status": [
+     "Conflicting Evidence"
+    ],
+    "mustNot": [
+     "เลือกค่าใดค่าหนึ่งโดยไม่มีหลักฐานหรือการอนุมัติของเจ้าของ",
+     "แก้ไขเอกสารฉบับใดฉบับหนึ่ง"
+    ],
+    "checks": [
+     "รายงานตำแหน่งของทั้งสองฝั่งพร้อมหลักฐาน",
+     "ไฟล์ OpenAPI ถูกระบุว่าสนับสนุนฝั่งหนึ่ง และการตัดสินใจเป็นของเจ้าของ"
+    ]
+   }
+  },
+  {
+   "id": "itdth-preserve-structure",
+   "behavior": "preserve-structure",
+   "mode": "update",
+   "docType": "technical-document",
+   "request": "ปรับเฉพาะหัวข้อ 6.2 ให้ตรงกับรูปแบบการส่งออกใหม่",
+   "input": "เอกสารใช้เลขหัวข้อ 6.1 ถึง 6.4 และตาราง interface สามคอลัมน์ หัวข้อ 6.2 อธิบายการส่งออก CSV แต่ระบบใหม่ส่งออกเป็น JSON",
+   "expect": {
+    "preserve": [
+     "6.1",
+     "6.4",
+     "ตาราง interface สามคอลัมน์"
+    ],
+    "mustNot": [
+     "เปลี่ยนเลขหัวข้อ",
+     "เขียนหัวข้อที่ไม่เปลี่ยนใหม่",
+     "เปลี่ยนโครงสร้างตาราง"
+    ],
+    "checks": [
+     "เปลี่ยนเฉพาะ 6.2",
+     "เลขหัวข้อและตารางคงเดิม",
+     "สรุปการเปลี่ยนแปลงระบุ 6.2 เป็น แก้ไข พร้อมหลักฐาน"
+    ]
+   }
+  },
+  {
+   "id": "itdth-approval-boundaries",
+   "behavior": "approval-boundaries",
+   "mode": "update",
+   "docType": "application-design",
+   "request": "ปรับเอกสารออกแบบให้ตรงกับโค้ดใหม่",
+   "input": "มีไฟล์ docs/design.th.md ที่ผู้ใช้เขียนไว้เดิม ผู้ใช้ไม่ได้บอกว่าอนุญาตให้เขียนทับ",
+   "expect": {
+    "mustNot": [
+     "เขียนทับ docs/design.th.md โดยไม่ได้รับอนุมัติ",
+     "commit หรือ push",
+     "แก้ประวัติการแก้ไขเอกสารโดยไม่ได้ถูกขอ"
+    ],
+    "checks": [
+     "ถามก่อนเขียนทับไฟล์ หรือเขียนเป็นไฟล์ใหม่",
+     "ไม่มีการ commit หรือ push"
+    ]
+   }
+  },
+  {
+   "id": "itdth-no-code-changes",
+   "behavior": "no-application-code-changes",
+   "mode": "review",
+   "docType": "application-design",
+   "request": "ตรวจภาษาของเอกสารออกแบบนี้ โดยเปิด repository ไว้ให้อ้างอิง",
+   "input": "ใน repository มี controller ที่พฤติกรรมต่างจากประโยคหนึ่งในเอกสาร",
+   "expect": {
+    "readOnly": true,
+    "mustNot": [
+     "แก้ไขโค้ดแอปพลิเคชัน",
+     "แก้ไขไฟล์ configuration",
+     "แก้ repository ให้ตรงกับเอกสาร"
+    ],
+    "status": [
+     "Conflicting Evidence"
+    ],
+    "checks": [
+     "ความไม่ตรงกันถูกรายงานเป็นข้อค้นพบ",
+     "ไม่มีไฟล์ซอร์สเปลี่ยนแปลง"
+    ]
+   }
+  },
+  {
+   "id": "itdth-update-customized-system",
+   "behavior": "no-baseline-assumption",
+   "mode": "update",
+   "docType": "technical-document",
+   "request": "ปรับเอกสารที่นำกลับมาใช้นี้ให้ตรงกับระบบที่ customize แล้ว",
+   "input": "เอกสารเดิมระบุว่าระบบเชื่อมต่อ payment gateway ผ่านพอร์ต 8443 แต่ระบบที่ customize ไม่มี configuration ของ gateway และมีการส่งออกใบแจ้งหนี้ใหม่",
+   "expect": {
+    "flag": [
+     "payment gateway",
+     "8443"
+    ],
+    "status": [
+     "Not Verified"
+    ],
+    "mustNot": [
+     "ถือว่า configuration เดิมใช้กับระบบที่ customize"
+    ],
+    "checks": [
+     "ข้อความเรื่อง gateway ถูกทำเครื่องหมายว่ายังไม่ได้รับการยืนยัน หรือยกเลิก เพื่อให้เจ้าของยืนยัน",
+     "การส่งออกใบแจ้งหนี้ถูกจัดเป็น เพิ่มใหม่ พร้อมหลักฐาน"
+    ]
+   }
+  },
+  {
+   "id": "itdth-no-actor-invention",
+   "behavior": "preserve-meaning",
+   "mode": "translation",
+   "docType": "technical-document",
+   "request": "แปลประโยคนี้เป็นภาษาไทย",
+   "input": "The data will be send to another system every day.",
+   "expect": {
+    "preserve": [
+     "another system",
+     "every day"
+    ],
+    "mustNot": [
+     "ระบุว่าแอปพลิเคชันเป็นผู้ส่ง",
+     "ระบุว่ามี scheduler"
+    ],
+    "checks": [
+     "ใช้รูปถูกกระทำหรือโครงสร้างที่ไม่ระบุผู้กระทำ เช่น ข้อมูลถูกส่งไปยังระบบอื่นทุกวัน",
+     "ผู้กระทำที่ไม่ชัดเจนถูกยกเป็นคำถาม"
+    ]
+   }
+  },
+  {
+   "id": "itdth-no-added-detail",
+   "behavior": "no-added-detail",
+   "mode": "translation",
+   "docType": "application-design",
+   "request": "แปลส่วนนี้เป็นภาษาไทย",
+   "input": "The service retries failed calls.",
+   "expect": {
+    "preserve": [
+     "retries failed calls"
+    ],
+    "mustNot": [
+     "เพิ่มจำนวนครั้งหรือช่วงเวลาของการลองซ้ำ"
+    ],
+    "flag": [
+     "จำนวนครั้ง",
+     "ช่วงเวลา"
+    ],
+    "status": [
+     "Requires Clarification"
+    ],
+    "checks": [
+     "ไม่มีค่าการลองซ้ำที่ไม่มีในต้นฉบับ",
+     "ระบุว่าต้องการค่าที่กำหนดจริง"
+    ]
+   }
+  },
+  {
+   "id": "itdth-translate-proposal-stays-proposal",
+   "behavior": "translation-equivalence",
+   "mode": "translation",
+   "docType": "infrastructure-design",
+   "request": "แปลย่อหน้านี้เป็นภาษาไทย",
+   "input": "The team proposes to add a standby site. The current deployment has one production site.",
+   "expect": {
+    "preserve": [
+     "proposes to add a standby site",
+     "one production site"
+    ],
+    "mustNot": [
+     "แปลข้อเสนอให้เป็นข้อเท็จจริงที่ติดตั้งแล้ว"
+    ],
+    "checks": [
+     "ข้อเสนอยังเป็นข้อเสนอ เช่น เสนอให้ หรือ มีแผนจะ",
+     "ข้อความสภาพปัจจุบันยังเป็นสภาพปัจจุบัน"
+    ]
+   }
+  },
+  {
+   "id": "itdth-term-introduction",
+   "behavior": "terminology",
+   "mode": "write",
+   "docType": "application-design",
+   "request": "เขียนย่อหน้าอธิบายการยืนยันตัวตนของระบบ",
+   "input": "หลักฐาน: middleware ตรวจ JWT ก่อนเข้าถึง endpoint ที่กำหนดด้วย attribute Authorize",
+   "expect": {
+    "preserve": [
+     "JWT",
+     "Authorize"
+    ],
+    "mustNot": [
+     "แปลชื่อ attribute",
+     "อธิบายคำเดิมซ้ำทุกครั้ง"
+    ],
+    "checks": [
+     "ครั้งแรกอธิบายเป็นไทยแล้วตามด้วยคำอังกฤษในวงเล็บ เช่น การยืนยันตัวตน (Authentication)",
+     "ตัวระบุคงเดิม"
+    ]
+   }
+  },
+  {
+   "id": "itdth-routing-thai-blog-boundary",
+   "behavior": "boundary",
+   "mode": "none",
+   "docType": "none",
+   "request": "เกลาบทความบล็อกภาษาไทยเรื่องการย้ายไป Kubernetes ให้อ่านลื่นขึ้น",
+   "input": "บทความบล็อกสำหรับนักพัฒนา",
+   "expect": {
+    "applies": false,
+    "better": "chayen-humanizer-th",
+    "checks": [
+     "skill นี้ไม่ทำงาน บล็อกและข้อความการตลาดภาษาไทยเป็นของ skill แก้ไขข้อความภาษาไทยทั่วไป"
+    ]
+   }
+  },
+  {
+   "id": "itdth-routing-english-output-boundary",
+   "behavior": "boundary",
+   "mode": "none",
+   "docType": "none",
+   "request": "ช่วยเขียน Application Design Document เป็นภาษาอังกฤษ",
+   "input": "ผู้ใช้เขียนคำขอเป็นภาษาไทยแต่ต้องการเอกสารภาษาอังกฤษ",
+   "expect": {
+    "applies": false,
+    "better": "chayen-it-document-writer",
+    "checks": [
+     "เอกสารผลลัพธ์เป็นภาษาอังกฤษ จึงเป็นของ skill เอกสาร IT ภาษาอังกฤษ"
+    ]
+   }
+  },
+  {
+   "id": "itdth-evidence-freshness",
+   "behavior": "source-freshness",
+   "mode": "audit",
+   "docType": "infrastructure-design",
+   "request": "ประเมินหัวข้อเครือข่าย",
+   "input": "แผนภาพเครือข่ายลงวันที่เก่ากว่าปัจจุบันสองรุ่น ไฟล์ส่งออกกฎ firewall ปัจจุบันมี flow เพิ่มอีกหนึ่งรายการที่พอร์ต 5671",
+   "expect": {
+    "readOnly": true,
+    "preserve": [
+     "5671"
+    ],
+    "status": [
+     "Conflicting Evidence",
+     "Not Verified"
+    ],
+    "mustNot": [
+     "ถือว่าแผนภาพเก่าเป็นแหล่งอ้างอิงหลัก"
+    ],
+    "checks": [
+     "ระบุความใหม่ของแหล่งข้อมูล",
+     "flow ที่เพิ่มถูกรายงานเป็นช่องว่างของเอกสาร"
+    ]
+   }
+  }
+ ]
+}
