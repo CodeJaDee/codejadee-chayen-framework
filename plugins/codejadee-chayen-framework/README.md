@@ -20,7 +20,7 @@ installs it through its own native plugin mechanism.
 
 This is version **1.1.6** (2026-11-18). Version 1.1.6 adds the `chayen-it-document-writer` Skill (D-082, D-083). Versions 1.1.1, 1.1.2, 1.1.3, 1.1.4 and 1.1.5 update
 guidance text only (D-064, D-065, D-077, D-079, D-081) on top of 1.1.0; their Skill names and descriptions are unchanged. Version 1.1.0 added the `chayen-init` Skill
-(D-062) to the 1.0.0 release, 17 entry skills in total: MIT licence
+(D-062) to the 1.0.0 release, 18 entry skills in total, with the unreleased `chayen-it-document-writer-th` (D-084): MIT licence
 (`LICENSE.md`), publisher CodeJaDee. Production hosts target Claude Code CLI, Codex CLI and Copilot CLI.
 VS Code and Response Style Policy host behavior are unverified/deferred.
 The list is in

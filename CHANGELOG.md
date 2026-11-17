@@ -6,7 +6,57 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
-Nothing yet.
+Adds the Thai counterpart of `chayen-it-document-writer` (D-084). The version
+stays `1.1.6` until the owner decides on a release.
+
+### Added (shipped)
+
+- **`chayen-it-document-writer-th`**, registered as an editorial Skill
+  (language `th`, no Engineering Capability). It writes, reviews, updates,
+  audits and cross-checks Thai Technical Documents, Application Design
+  Documents and Infrastructure Design Documents from supplied evidence, and
+  translates supplied English technical documents into Thai under controlled
+  rules. It has 13 shipped files (`SKILL.md` and 12 references).
+  - Same evidence model and boundaries as the English Skill, with Thai status
+    labels, Thai section checklists and Thai output templates.
+  - A Thai technical writing checklist and a terminology reference: natural
+    formal Thai, English terms kept where Thai would reduce clarity, MUST,
+    SHOULD, MAY and MUST NOT mapped to ต้อง, ควร, อาจ and ต้องไม่ without
+    changing obligation strength, and protected identifiers, numbers, digits
+    and calendar eras.
+  - Routing follows the language of the requested deliverable, not the prompt:
+    a Thai prompt for an English document stays with
+    `chayen-it-document-writer`, an English prompt for a Thai document goes to
+    the Thai Skill, and Thai blogs and marketing copy stay with
+    `chayen-humanizer-th`.
+  - Package: 289 files, 266 references, 18 Skills (13 engineering, 4 writing,
+    1 project knowledge); L0 metadata 7,356 characters. No existing Skill name,
+    description or text changes.
+
+### Changed (repository only, not shipped)
+
+- Trigger cases: 18 new cases for the language-routing scenarios, translation,
+  boundaries and ambiguity; the English Skill's former "non-English documents
+  are unsupported" case now routes to the Thai Skill. Claude eval cases are
+  regenerated. Phase 5 routing probes gain two core probes and one explicit
+  probe, so the full plan is 2,349 billed calls (was 2,322).
+- Count assertions moved from 17 to 18 Skills (registration, limits,
+  hardening, qualification, routing-context and documentation tests; the
+  committed static routing report is regenerated). The lifecycle script now
+  expects 18 Skills.
+- `tests/editorial/it-document-writer-th-cases.json` (19 behavior case
+  specifications) and `it-document-writer-th-cases.test.mjs`, wired into
+  `validate-all.mjs`. They check structure, preserved spans, obligation
+  keyword mappings, mode, translation and document-type coverage and the
+  language-routing trigger cases. They score no model output.
+
+### Not verified
+
+- Routing and behavior of `chayen-it-document-writer-th` (NOT_RUN): no trigger
+  or behavior evaluation was executed against an agent, and the Skill has not
+  been installed on any host. Thai output quality has had no human review.
+- The English Skill's "When not to use" row for other-language documents
+  still says to answer directly; it was not changed.
 
 ## [1.1.6] - 2026-11-18
 

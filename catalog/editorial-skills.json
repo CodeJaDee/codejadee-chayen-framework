@@ -18,6 +18,12 @@
       "language": "en",
       "mapping": "existing",
       "description": "Write, review, update, audit, or cross-check English IT documents, namely Technical Documents, Application Design Documents, and Infrastructure Design Documents, from supplied evidence, reporting missing or conflicting technical values instead of inventing them. Not for blog or marketing copy, README or API doc fact-checking, architecture decisions, or code changes."
+    },
+    {
+      "name": "chayen-it-document-writer-th",
+      "language": "th",
+      "mapping": "existing",
+      "description": "Prepare Thai system analysis and design documentation, covering technical, application and infrastructure design documents drafted, reviewed, revised, audited or translated from English, with obligation strength and identifiers preserved and unsupported values flagged. Not for Thai blogs, marketing copy, English-language deliverables, README checks, or software changes."
     }
   ]
 }

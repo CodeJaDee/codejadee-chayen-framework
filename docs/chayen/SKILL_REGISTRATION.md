@@ -35,6 +35,13 @@
   and the registry. It owns no engineering capability. 17 Skills ship (13
   engineering, 3 editorial, 1 project); actual L0 6,956 characters.
 
+- **D-084 transition:** `chayen-it-document-writer-th` ships as a fourth editorial
+  record (language `th`, `existing`), with its description identical in SKILL.md
+  and the registry. It owns no engineering capability. 18 Skills ship (13
+  engineering, 4 editorial, 1 project); actual L0 7,356 characters. Its
+  description was written to stay below the V-07b overlap limit against
+  `chayen-it-document-writer` (0.21), whose description is unchanged.
+
 ## Registration model
 
 | Category | Canonical registration | Ownership and mapping |

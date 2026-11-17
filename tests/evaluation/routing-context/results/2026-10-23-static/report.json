@@ -9,8 +9,8 @@
   "inputs": {
     "syntheticSkillsSha256": "c8f7677aecbfdbe834d22b7094c65b7f2ffee84d0d9526eb9551a1f7d46e174d",
     "routingCasesSha256": "0a155ff9e75343b549a291eed0eca0a2d29b22f3169dde7f29ea32a971c5091f",
-    "productionSkills": 17,
-    "productionMetadataFingerprint": "14c234dd64cc1f7f"
+    "productionSkills": 18,
+    "productionMetadataFingerprint": "4e255f48fa3811c2"
   },
   "specification": {
     "errors": [],
@@ -47,7 +47,7 @@
       "expectation": {
         "valid": true
       },
-      "skills": 17,
+      "skills": 18,
       "syntheticSkills": 0,
       "validators": [
         {
@@ -59,7 +59,7 @@
           "errors": 0,
           "warnings": 0,
           "distinctnessErrors": [],
-          "shippedSkills": 17
+          "shippedSkills": 18
         },
         {
           "validator": "catalog",
@@ -87,8 +87,8 @@
       "outcome": "AS_EXPECTED",
       "differences": [],
       "metadata": {
-        "chars": 6956,
-        "estTokens": 1739,
+        "chars": 7356,
+        "estTokens": 1839,
         "deltaChars": 0,
         "deltaEstTokens": 0,
         "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
@@ -107,7 +107,7 @@
           "source": "S12",
           "status": "WITHIN_DOCUMENTED_FIGURE",
           "documentedCharacters": 8000,
-          "headroom": 1044,
+          "headroom": 644,
           "measurement": "NOT_MEASURED"
         },
         {
@@ -134,119 +134,126 @@
           "synthetic": false,
           "chars": 433,
           "estTokens": 108,
-          "shareOfTotal": 0.0622
+          "shareOfTotal": 0.0589
         },
         {
           "name": "chayen-architecture",
           "synthetic": false,
           "chars": 427,
           "estTokens": 107,
-          "shareOfTotal": 0.0614
+          "shareOfTotal": 0.058
         },
         {
           "name": "chayen-backend",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0618
+          "shareOfTotal": 0.0585
         },
         {
           "name": "chayen-data",
           "synthetic": false,
           "chars": 425,
           "estTokens": 106,
-          "shareOfTotal": 0.0611
+          "shareOfTotal": 0.0578
         },
         {
           "name": "chayen-devops",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0618
+          "shareOfTotal": 0.0585
         },
         {
           "name": "chayen-documentation",
           "synthetic": false,
           "chars": 415,
           "estTokens": 104,
-          "shareOfTotal": 0.0597
+          "shareOfTotal": 0.0564
         },
         {
           "name": "chayen-frontend",
           "synthetic": false,
           "chars": 435,
           "estTokens": 109,
-          "shareOfTotal": 0.0625
+          "shareOfTotal": 0.0591
         },
         {
           "name": "chayen-humanizer-en",
           "synthetic": false,
           "chars": 363,
           "estTokens": 91,
-          "shareOfTotal": 0.0522
+          "shareOfTotal": 0.0493
         },
         {
           "name": "chayen-humanizer-th",
           "synthetic": false,
           "chars": 369,
           "estTokens": 92,
-          "shareOfTotal": 0.053
+          "shareOfTotal": 0.0502
         },
         {
           "name": "chayen-implementation",
           "synthetic": false,
           "chars": 439,
           "estTokens": 110,
-          "shareOfTotal": 0.0631
+          "shareOfTotal": 0.0597
         },
         {
           "name": "chayen-init",
           "synthetic": false,
           "chars": 346,
           "estTokens": 87,
-          "shareOfTotal": 0.0497
+          "shareOfTotal": 0.047
         },
         {
           "name": "chayen-it-document-writer",
           "synthetic": false,
           "chars": 393,
           "estTokens": 98,
-          "shareOfTotal": 0.0565
+          "shareOfTotal": 0.0534
+        },
+        {
+          "name": "chayen-it-document-writer-th",
+          "synthetic": false,
+          "chars": 400,
+          "estTokens": 100,
+          "shareOfTotal": 0.0544
         },
         {
           "name": "chayen-performance",
           "synthetic": false,
           "chars": 407,
           "estTokens": 102,
-          "shareOfTotal": 0.0585
+          "shareOfTotal": 0.0553
         },
         {
           "name": "chayen-repository",
           "synthetic": false,
           "chars": 397,
           "estTokens": 99,
-          "shareOfTotal": 0.0571
+          "shareOfTotal": 0.054
         },
         {
           "name": "chayen-requirements",
           "synthetic": false,
           "chars": 424,
           "estTokens": 106,
-          "shareOfTotal": 0.061
+          "shareOfTotal": 0.0576
         },
         {
           "name": "chayen-security",
           "synthetic": false,
           "chars": 431,
           "estTokens": 108,
-          "shareOfTotal": 0.062
+          "shareOfTotal": 0.0586
         },
         {
           "name": "chayen-testing",
           "synthetic": false,
           "chars": 392,
           "estTokens": 98,
-          "shareOfTotal": 0.0564
+          "shareOfTotal": 0.0533
         }
       ],
       "cases": {
@@ -266,7 +273,7 @@
       },
       "simulated": {
         "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
-        "threshold": 2.568,
+        "threshold": 2.617,
         "rates": {
           "lexical:keyword": {
             "k": 8,
@@ -313,7 +320,7 @@
       "expectation": {
         "valid": true
       },
-      "skills": 25,
+      "skills": 26,
       "syntheticSkills": 8,
       "validators": [
         {
@@ -327,7 +334,7 @@
           "errors": 0,
           "warnings": 1,
           "distinctnessErrors": [],
-          "shippedSkills": 25
+          "shippedSkills": 26
         },
         {
           "validator": "catalog",
@@ -355,8 +362,8 @@
       "outcome": "AS_EXPECTED",
       "differences": [],
       "metadata": {
-        "chars": 8789,
-        "estTokens": 2197,
+        "chars": 9189,
+        "estTokens": 2297,
         "deltaChars": 1833,
         "deltaEstTokens": 458,
         "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
@@ -375,7 +382,7 @@
           "source": "S12",
           "status": "EXCEEDS_DOCUMENTED_FIGURE",
           "documentedCharacters": 8000,
-          "headroom": -789,
+          "headroom": -1189,
           "measurement": "NOT_MEASURED"
         },
         {
@@ -438,175 +445,182 @@
           "synthetic": false,
           "chars": 433,
           "estTokens": 108,
-          "shareOfTotal": 0.0493
+          "shareOfTotal": 0.0471
         },
         {
           "name": "chayen-architecture",
           "synthetic": false,
           "chars": 427,
           "estTokens": 107,
-          "shareOfTotal": 0.0486
+          "shareOfTotal": 0.0465
         },
         {
           "name": "chayen-backend",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0489
+          "shareOfTotal": 0.0468
         },
         {
           "name": "chayen-data",
           "synthetic": false,
           "chars": 425,
           "estTokens": 106,
-          "shareOfTotal": 0.0484
+          "shareOfTotal": 0.0463
         },
         {
           "name": "chayen-devops",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0489
+          "shareOfTotal": 0.0468
         },
         {
           "name": "chayen-documentation",
           "synthetic": false,
           "chars": 415,
           "estTokens": 104,
-          "shareOfTotal": 0.0472
+          "shareOfTotal": 0.0452
         },
         {
           "name": "chayen-frontend",
           "synthetic": false,
           "chars": 435,
           "estTokens": 109,
-          "shareOfTotal": 0.0495
+          "shareOfTotal": 0.0473
         },
         {
           "name": "chayen-humanizer-en",
           "synthetic": false,
           "chars": 363,
           "estTokens": 91,
-          "shareOfTotal": 0.0413
+          "shareOfTotal": 0.0395
         },
         {
           "name": "chayen-humanizer-th",
           "synthetic": false,
           "chars": 369,
           "estTokens": 92,
-          "shareOfTotal": 0.042
+          "shareOfTotal": 0.0402
         },
         {
           "name": "chayen-implementation",
           "synthetic": false,
           "chars": 439,
           "estTokens": 110,
-          "shareOfTotal": 0.0499
+          "shareOfTotal": 0.0478
         },
         {
           "name": "chayen-init",
           "synthetic": false,
           "chars": 346,
           "estTokens": 87,
-          "shareOfTotal": 0.0394
+          "shareOfTotal": 0.0377
         },
         {
           "name": "chayen-it-document-writer",
           "synthetic": false,
           "chars": 393,
           "estTokens": 98,
-          "shareOfTotal": 0.0447
+          "shareOfTotal": 0.0428
+        },
+        {
+          "name": "chayen-it-document-writer-th",
+          "synthetic": false,
+          "chars": 400,
+          "estTokens": 100,
+          "shareOfTotal": 0.0435
         },
         {
           "name": "chayen-performance",
           "synthetic": false,
           "chars": 407,
           "estTokens": 102,
-          "shareOfTotal": 0.0463
+          "shareOfTotal": 0.0443
         },
         {
           "name": "chayen-repository",
           "synthetic": false,
           "chars": 397,
           "estTokens": 99,
-          "shareOfTotal": 0.0452
+          "shareOfTotal": 0.0432
         },
         {
           "name": "chayen-requirements",
           "synthetic": false,
           "chars": 424,
           "estTokens": 106,
-          "shareOfTotal": 0.0482
+          "shareOfTotal": 0.0461
         },
         {
           "name": "chayen-security",
           "synthetic": false,
           "chars": 431,
           "estTokens": 108,
-          "shareOfTotal": 0.049
+          "shareOfTotal": 0.0469
         },
         {
           "name": "chayen-syn-audio-dsp",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0262
+          "shareOfTotal": 0.025
         },
         {
           "name": "chayen-syn-firmware",
           "synthetic": true,
           "chars": 223,
           "estTokens": 56,
-          "shareOfTotal": 0.0254
+          "shareOfTotal": 0.0243
         },
         {
           "name": "chayen-syn-game-mods",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0278
+          "shareOfTotal": 0.0266
         },
         {
           "name": "chayen-syn-gis",
           "synthetic": true,
           "chars": 224,
           "estTokens": 56,
-          "shareOfTotal": 0.0255
+          "shareOfTotal": 0.0244
         },
         {
           "name": "chayen-syn-latex",
           "synthetic": true,
           "chars": 217,
           "estTokens": 54,
-          "shareOfTotal": 0.0247
+          "shareOfTotal": 0.0236
         },
         {
           "name": "chayen-syn-ros",
           "synthetic": true,
           "chars": 221,
           "estTokens": 55,
-          "shareOfTotal": 0.0251
+          "shareOfTotal": 0.0241
         },
         {
           "name": "chayen-syn-solidity",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0278
+          "shareOfTotal": 0.0266
         },
         {
           "name": "chayen-syn-vba",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0262
+          "shareOfTotal": 0.025
         },
         {
           "name": "chayen-testing",
           "synthetic": false,
           "chars": 392,
           "estTokens": 98,
-          "shareOfTotal": 0.0446
+          "shareOfTotal": 0.0427
         }
       ],
       "cases": {
@@ -626,7 +640,7 @@
       },
       "simulated": {
         "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
-        "threshold": 3.555,
+        "threshold": 3.607,
         "rates": {
           "lexical:keyword": {
             "k": 15,
@@ -700,7 +714,7 @@
       "expectation": {
         "valid": true
       },
-      "skills": 31,
+      "skills": 32,
       "syntheticSkills": 14,
       "validators": [
         {
@@ -714,7 +728,7 @@
           "errors": 0,
           "warnings": 1,
           "distinctnessErrors": [],
-          "shippedSkills": 31
+          "shippedSkills": 32
         },
         {
           "validator": "catalog",
@@ -742,8 +756,8 @@
       "outcome": "AS_EXPECTED",
       "differences": [],
       "metadata": {
-        "chars": 10195,
-        "estTokens": 2549,
+        "chars": 10595,
+        "estTokens": 2649,
         "deltaChars": 3239,
         "deltaEstTokens": 810,
         "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
@@ -762,7 +776,7 @@
           "source": "S12",
           "status": "EXCEEDS_DOCUMENTED_FIGURE",
           "documentedCharacters": 8000,
-          "headroom": -2195,
+          "headroom": -2595,
           "measurement": "NOT_MEASURED"
         },
         {
@@ -874,217 +888,224 @@
           "synthetic": false,
           "chars": 433,
           "estTokens": 108,
-          "shareOfTotal": 0.0425
+          "shareOfTotal": 0.0409
         },
         {
           "name": "chayen-architecture",
           "synthetic": false,
           "chars": 427,
           "estTokens": 107,
-          "shareOfTotal": 0.0419
+          "shareOfTotal": 0.0403
         },
         {
           "name": "chayen-backend",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0422
+          "shareOfTotal": 0.0406
         },
         {
           "name": "chayen-data",
           "synthetic": false,
           "chars": 425,
           "estTokens": 106,
-          "shareOfTotal": 0.0417
+          "shareOfTotal": 0.0401
         },
         {
           "name": "chayen-devops",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0422
+          "shareOfTotal": 0.0406
         },
         {
           "name": "chayen-documentation",
           "synthetic": false,
           "chars": 415,
           "estTokens": 104,
-          "shareOfTotal": 0.0407
+          "shareOfTotal": 0.0392
         },
         {
           "name": "chayen-frontend",
           "synthetic": false,
           "chars": 435,
           "estTokens": 109,
-          "shareOfTotal": 0.0427
+          "shareOfTotal": 0.0411
         },
         {
           "name": "chayen-humanizer-en",
           "synthetic": false,
           "chars": 363,
           "estTokens": 91,
-          "shareOfTotal": 0.0356
+          "shareOfTotal": 0.0343
         },
         {
           "name": "chayen-humanizer-th",
           "synthetic": false,
           "chars": 369,
           "estTokens": 92,
-          "shareOfTotal": 0.0362
+          "shareOfTotal": 0.0348
         },
         {
           "name": "chayen-implementation",
           "synthetic": false,
           "chars": 439,
           "estTokens": 110,
-          "shareOfTotal": 0.0431
+          "shareOfTotal": 0.0414
         },
         {
           "name": "chayen-init",
           "synthetic": false,
           "chars": 346,
           "estTokens": 87,
-          "shareOfTotal": 0.0339
+          "shareOfTotal": 0.0327
         },
         {
           "name": "chayen-it-document-writer",
           "synthetic": false,
           "chars": 393,
           "estTokens": 98,
-          "shareOfTotal": 0.0385
+          "shareOfTotal": 0.0371
+        },
+        {
+          "name": "chayen-it-document-writer-th",
+          "synthetic": false,
+          "chars": 400,
+          "estTokens": 100,
+          "shareOfTotal": 0.0378
         },
         {
           "name": "chayen-performance",
           "synthetic": false,
           "chars": 407,
           "estTokens": 102,
-          "shareOfTotal": 0.0399
+          "shareOfTotal": 0.0384
         },
         {
           "name": "chayen-repository",
           "synthetic": false,
           "chars": 397,
           "estTokens": 99,
-          "shareOfTotal": 0.0389
+          "shareOfTotal": 0.0375
         },
         {
           "name": "chayen-requirements",
           "synthetic": false,
           "chars": 424,
           "estTokens": 106,
-          "shareOfTotal": 0.0416
+          "shareOfTotal": 0.04
         },
         {
           "name": "chayen-security",
           "synthetic": false,
           "chars": 431,
           "estTokens": 108,
-          "shareOfTotal": 0.0423
+          "shareOfTotal": 0.0407
         },
         {
           "name": "chayen-syn-audio-dsp",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0226
+          "shareOfTotal": 0.0217
         },
         {
           "name": "chayen-syn-changelog",
           "synthetic": true,
           "chars": 227,
           "estTokens": 57,
-          "shareOfTotal": 0.0223
+          "shareOfTotal": 0.0214
         },
         {
           "name": "chayen-syn-firmware",
           "synthetic": true,
           "chars": 223,
           "estTokens": 56,
-          "shareOfTotal": 0.0219
+          "shareOfTotal": 0.021
         },
         {
           "name": "chayen-syn-game-mods",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0239
+          "shareOfTotal": 0.023
         },
         {
           "name": "chayen-syn-gis",
           "synthetic": true,
           "chars": 224,
           "estTokens": 56,
-          "shareOfTotal": 0.022
+          "shareOfTotal": 0.0211
         },
         {
           "name": "chayen-syn-graphql",
           "synthetic": true,
           "chars": 259,
           "estTokens": 65,
-          "shareOfTotal": 0.0254
+          "shareOfTotal": 0.0244
         },
         {
           "name": "chayen-syn-helm",
           "synthetic": true,
           "chars": 221,
           "estTokens": 55,
-          "shareOfTotal": 0.0217
+          "shareOfTotal": 0.0209
         },
         {
           "name": "chayen-syn-k6-scripts",
           "synthetic": true,
           "chars": 211,
           "estTokens": 53,
-          "shareOfTotal": 0.0207
+          "shareOfTotal": 0.0199
         },
         {
           "name": "chayen-syn-latex",
           "synthetic": true,
           "chars": 217,
           "estTokens": 54,
-          "shareOfTotal": 0.0213
+          "shareOfTotal": 0.0205
         },
         {
           "name": "chayen-syn-ros",
           "synthetic": true,
           "chars": 221,
           "estTokens": 55,
-          "shareOfTotal": 0.0217
+          "shareOfTotal": 0.0209
         },
         {
           "name": "chayen-syn-seed-data",
           "synthetic": true,
           "chars": 259,
           "estTokens": 65,
-          "shareOfTotal": 0.0254
+          "shareOfTotal": 0.0244
         },
         {
           "name": "chayen-syn-solidity",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0239
+          "shareOfTotal": 0.023
         },
         {
           "name": "chayen-syn-storybook",
           "synthetic": true,
           "chars": 229,
           "estTokens": 57,
-          "shareOfTotal": 0.0225
+          "shareOfTotal": 0.0216
         },
         {
           "name": "chayen-syn-vba",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0226
+          "shareOfTotal": 0.0217
         },
         {
           "name": "chayen-testing",
           "synthetic": false,
           "chars": 392,
           "estTokens": 98,
-          "shareOfTotal": 0.0385
+          "shareOfTotal": 0.037
         }
       ],
       "cases": {
@@ -1104,7 +1125,7 @@
       },
       "simulated": {
         "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
-        "threshold": 3.384,
+        "threshold": 3.43,
         "rates": {
           "lexical:keyword": {
             "k": 24,
@@ -1187,7 +1208,7 @@
       "expectation": {
         "valid": true
       },
-      "skills": 35,
+      "skills": 36,
       "syntheticSkills": 18,
       "validators": [
         {
@@ -1201,7 +1222,7 @@
           "errors": 0,
           "warnings": 1,
           "distinctnessErrors": [],
-          "shippedSkills": 35
+          "shippedSkills": 36
         },
         {
           "validator": "catalog",
@@ -1229,8 +1250,8 @@
       "outcome": "AS_EXPECTED",
       "differences": [],
       "metadata": {
-        "chars": 11193,
-        "estTokens": 2798,
+        "chars": 11593,
+        "estTokens": 2898,
         "deltaChars": 4237,
         "deltaEstTokens": 1059,
         "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
@@ -1249,7 +1270,7 @@
           "source": "S12",
           "status": "EXCEEDS_DOCUMENTED_FIGURE",
           "documentedCharacters": 8000,
-          "headroom": -3193,
+          "headroom": -3593,
           "measurement": "NOT_MEASURED"
         },
         {
@@ -1393,245 +1414,252 @@
           "synthetic": false,
           "chars": 433,
           "estTokens": 108,
-          "shareOfTotal": 0.0387
+          "shareOfTotal": 0.0374
         },
         {
           "name": "chayen-architecture",
           "synthetic": false,
           "chars": 427,
           "estTokens": 107,
-          "shareOfTotal": 0.0381
+          "shareOfTotal": 0.0368
         },
         {
           "name": "chayen-backend",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0384
+          "shareOfTotal": 0.0371
         },
         {
           "name": "chayen-data",
           "synthetic": false,
           "chars": 425,
           "estTokens": 106,
-          "shareOfTotal": 0.038
+          "shareOfTotal": 0.0367
         },
         {
           "name": "chayen-devops",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0384
+          "shareOfTotal": 0.0371
         },
         {
           "name": "chayen-documentation",
           "synthetic": false,
           "chars": 415,
           "estTokens": 104,
-          "shareOfTotal": 0.0371
+          "shareOfTotal": 0.0358
         },
         {
           "name": "chayen-frontend",
           "synthetic": false,
           "chars": 435,
           "estTokens": 109,
-          "shareOfTotal": 0.0389
+          "shareOfTotal": 0.0375
         },
         {
           "name": "chayen-humanizer-en",
           "synthetic": false,
           "chars": 363,
           "estTokens": 91,
-          "shareOfTotal": 0.0324
+          "shareOfTotal": 0.0313
         },
         {
           "name": "chayen-humanizer-th",
           "synthetic": false,
           "chars": 369,
           "estTokens": 92,
-          "shareOfTotal": 0.033
+          "shareOfTotal": 0.0318
         },
         {
           "name": "chayen-implementation",
           "synthetic": false,
           "chars": 439,
           "estTokens": 110,
-          "shareOfTotal": 0.0392
+          "shareOfTotal": 0.0379
         },
         {
           "name": "chayen-init",
           "synthetic": false,
           "chars": 346,
           "estTokens": 87,
-          "shareOfTotal": 0.0309
+          "shareOfTotal": 0.0298
         },
         {
           "name": "chayen-it-document-writer",
           "synthetic": false,
           "chars": 393,
           "estTokens": 98,
-          "shareOfTotal": 0.0351
+          "shareOfTotal": 0.0339
+        },
+        {
+          "name": "chayen-it-document-writer-th",
+          "synthetic": false,
+          "chars": 400,
+          "estTokens": 100,
+          "shareOfTotal": 0.0345
         },
         {
           "name": "chayen-performance",
           "synthetic": false,
           "chars": 407,
           "estTokens": 102,
-          "shareOfTotal": 0.0364
+          "shareOfTotal": 0.0351
         },
         {
           "name": "chayen-repository",
           "synthetic": false,
           "chars": 397,
           "estTokens": 99,
-          "shareOfTotal": 0.0355
+          "shareOfTotal": 0.0342
         },
         {
           "name": "chayen-requirements",
           "synthetic": false,
           "chars": 424,
           "estTokens": 106,
-          "shareOfTotal": 0.0379
+          "shareOfTotal": 0.0366
         },
         {
           "name": "chayen-security",
           "synthetic": false,
           "chars": 431,
           "estTokens": 108,
-          "shareOfTotal": 0.0385
+          "shareOfTotal": 0.0372
         },
         {
           "name": "chayen-syn-a11y-audit",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0218
+          "shareOfTotal": 0.021
         },
         {
           "name": "chayen-syn-api-mocks",
           "synthetic": true,
           "chars": 243,
           "estTokens": 61,
-          "shareOfTotal": 0.0217
+          "shareOfTotal": 0.021
         },
         {
           "name": "chayen-syn-audio-dsp",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0205
+          "shareOfTotal": 0.0198
         },
         {
           "name": "chayen-syn-changelog",
           "synthetic": true,
           "chars": 227,
           "estTokens": 57,
-          "shareOfTotal": 0.0203
+          "shareOfTotal": 0.0196
         },
         {
           "name": "chayen-syn-feature-flags",
           "synthetic": true,
           "chars": 254,
           "estTokens": 64,
-          "shareOfTotal": 0.0227
+          "shareOfTotal": 0.0219
         },
         {
           "name": "chayen-syn-firmware",
           "synthetic": true,
           "chars": 223,
           "estTokens": 56,
-          "shareOfTotal": 0.0199
+          "shareOfTotal": 0.0192
         },
         {
           "name": "chayen-syn-game-mods",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0218
+          "shareOfTotal": 0.021
         },
         {
           "name": "chayen-syn-gis",
           "synthetic": true,
           "chars": 224,
           "estTokens": 56,
-          "shareOfTotal": 0.02
+          "shareOfTotal": 0.0193
         },
         {
           "name": "chayen-syn-graphql",
           "synthetic": true,
           "chars": 259,
           "estTokens": 65,
-          "shareOfTotal": 0.0231
+          "shareOfTotal": 0.0223
         },
         {
           "name": "chayen-syn-helm",
           "synthetic": true,
           "chars": 221,
           "estTokens": 55,
-          "shareOfTotal": 0.0197
+          "shareOfTotal": 0.0191
         },
         {
           "name": "chayen-syn-k6-scripts",
           "synthetic": true,
           "chars": 211,
           "estTokens": 53,
-          "shareOfTotal": 0.0189
+          "shareOfTotal": 0.0182
         },
         {
           "name": "chayen-syn-latex",
           "synthetic": true,
           "chars": 217,
           "estTokens": 54,
-          "shareOfTotal": 0.0194
+          "shareOfTotal": 0.0187
         },
         {
           "name": "chayen-syn-openapi-lint",
           "synthetic": true,
           "chars": 257,
           "estTokens": 64,
-          "shareOfTotal": 0.023
+          "shareOfTotal": 0.0222
         },
         {
           "name": "chayen-syn-ros",
           "synthetic": true,
           "chars": 221,
           "estTokens": 55,
-          "shareOfTotal": 0.0197
+          "shareOfTotal": 0.0191
         },
         {
           "name": "chayen-syn-seed-data",
           "synthetic": true,
           "chars": 259,
           "estTokens": 65,
-          "shareOfTotal": 0.0231
+          "shareOfTotal": 0.0223
         },
         {
           "name": "chayen-syn-solidity",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0218
+          "shareOfTotal": 0.021
         },
         {
           "name": "chayen-syn-storybook",
           "synthetic": true,
           "chars": 229,
           "estTokens": 57,
-          "shareOfTotal": 0.0205
+          "shareOfTotal": 0.0198
         },
         {
           "name": "chayen-syn-vba",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0205
+          "shareOfTotal": 0.0198
         },
         {
           "name": "chayen-testing",
           "synthetic": false,
           "chars": 392,
           "estTokens": 98,
-          "shareOfTotal": 0.035
+          "shareOfTotal": 0.0338
         }
       ],
       "cases": {
@@ -1651,7 +1679,7 @@
       },
       "simulated": {
         "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
-        "threshold": 3.294,
+        "threshold": 3.332,
         "rates": {
           "lexical:keyword": {
             "k": 29,
@@ -1749,7 +1777,7 @@
           ]
         ]
       },
-      "skills": 26,
+      "skills": 27,
       "syntheticSkills": 9,
       "validators": [
         {
@@ -1763,7 +1791,7 @@
           "errors": 0,
           "warnings": 1,
           "distinctnessErrors": [],
-          "shippedSkills": 26
+          "shippedSkills": 27
         },
         {
           "validator": "catalog",
@@ -1791,8 +1819,8 @@
       "outcome": "AS_EXPECTED",
       "differences": [],
       "metadata": {
-        "chars": 9110,
-        "estTokens": 2278,
+        "chars": 9510,
+        "estTokens": 2378,
         "deltaChars": 2154,
         "deltaEstTokens": 539,
         "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
@@ -1811,7 +1839,7 @@
           "source": "S12",
           "status": "EXCEEDS_DOCUMENTED_FIGURE",
           "documentedCharacters": 8000,
-          "headroom": -1110,
+          "headroom": -1510,
           "measurement": "NOT_MEASURED"
         },
         {
@@ -1883,182 +1911,189 @@
           "synthetic": false,
           "chars": 433,
           "estTokens": 108,
-          "shareOfTotal": 0.0475
+          "shareOfTotal": 0.0455
         },
         {
           "name": "chayen-architecture",
           "synthetic": false,
           "chars": 427,
           "estTokens": 107,
-          "shareOfTotal": 0.0469
+          "shareOfTotal": 0.0449
         },
         {
           "name": "chayen-backend",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0472
+          "shareOfTotal": 0.0452
         },
         {
           "name": "chayen-data",
           "synthetic": false,
           "chars": 425,
           "estTokens": 106,
-          "shareOfTotal": 0.0467
+          "shareOfTotal": 0.0447
         },
         {
           "name": "chayen-devops",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0472
+          "shareOfTotal": 0.0452
         },
         {
           "name": "chayen-documentation",
           "synthetic": false,
           "chars": 415,
           "estTokens": 104,
-          "shareOfTotal": 0.0456
+          "shareOfTotal": 0.0436
         },
         {
           "name": "chayen-frontend",
           "synthetic": false,
           "chars": 435,
           "estTokens": 109,
-          "shareOfTotal": 0.0477
+          "shareOfTotal": 0.0457
         },
         {
           "name": "chayen-humanizer-en",
           "synthetic": false,
           "chars": 363,
           "estTokens": 91,
-          "shareOfTotal": 0.0398
+          "shareOfTotal": 0.0382
         },
         {
           "name": "chayen-humanizer-th",
           "synthetic": false,
           "chars": 369,
           "estTokens": 92,
-          "shareOfTotal": 0.0405
+          "shareOfTotal": 0.0388
         },
         {
           "name": "chayen-implementation",
           "synthetic": false,
           "chars": 439,
           "estTokens": 110,
-          "shareOfTotal": 0.0482
+          "shareOfTotal": 0.0462
         },
         {
           "name": "chayen-init",
           "synthetic": false,
           "chars": 346,
           "estTokens": 87,
-          "shareOfTotal": 0.038
+          "shareOfTotal": 0.0364
         },
         {
           "name": "chayen-it-document-writer",
           "synthetic": false,
           "chars": 393,
           "estTokens": 98,
-          "shareOfTotal": 0.0431
+          "shareOfTotal": 0.0413
+        },
+        {
+          "name": "chayen-it-document-writer-th",
+          "synthetic": false,
+          "chars": 400,
+          "estTokens": 100,
+          "shareOfTotal": 0.0421
         },
         {
           "name": "chayen-performance",
           "synthetic": false,
           "chars": 407,
           "estTokens": 102,
-          "shareOfTotal": 0.0447
+          "shareOfTotal": 0.0428
         },
         {
           "name": "chayen-repository",
           "synthetic": false,
           "chars": 397,
           "estTokens": 99,
-          "shareOfTotal": 0.0436
+          "shareOfTotal": 0.0417
         },
         {
           "name": "chayen-requirements",
           "synthetic": false,
           "chars": 424,
           "estTokens": 106,
-          "shareOfTotal": 0.0465
+          "shareOfTotal": 0.0446
         },
         {
           "name": "chayen-security",
           "synthetic": false,
           "chars": 431,
           "estTokens": 108,
-          "shareOfTotal": 0.0473
+          "shareOfTotal": 0.0453
         },
         {
           "name": "chayen-syn-audio-dsp",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0252
+          "shareOfTotal": 0.0242
         },
         {
           "name": "chayen-syn-firmware",
           "synthetic": true,
           "chars": 223,
           "estTokens": 56,
-          "shareOfTotal": 0.0245
+          "shareOfTotal": 0.0234
         },
         {
           "name": "chayen-syn-game-mods",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0268
+          "shareOfTotal": 0.0257
         },
         {
           "name": "chayen-syn-gis",
           "synthetic": true,
           "chars": 224,
           "estTokens": 56,
-          "shareOfTotal": 0.0246
+          "shareOfTotal": 0.0236
         },
         {
           "name": "chayen-syn-latex",
           "synthetic": true,
           "chars": 217,
           "estTokens": 54,
-          "shareOfTotal": 0.0238
+          "shareOfTotal": 0.0228
         },
         {
           "name": "chayen-syn-ros",
           "synthetic": true,
           "chars": 221,
           "estTokens": 55,
-          "shareOfTotal": 0.0243
+          "shareOfTotal": 0.0232
         },
         {
           "name": "chayen-syn-solidity",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.0268
+          "shareOfTotal": 0.0257
         },
         {
           "name": "chayen-syn-test-authoring",
           "synthetic": true,
           "chars": 321,
           "estTokens": 80,
-          "shareOfTotal": 0.0352
+          "shareOfTotal": 0.0338
         },
         {
           "name": "chayen-syn-vba",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0252
+          "shareOfTotal": 0.0242
         },
         {
           "name": "chayen-testing",
           "synthetic": false,
           "chars": 392,
           "estTokens": 98,
-          "shareOfTotal": 0.043
+          "shareOfTotal": 0.0412
         }
       ],
       "cases": {
@@ -2078,7 +2113,7 @@
       },
       "simulated": {
         "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
-        "threshold": 3.274,
+        "threshold": 3.332,
         "rates": {
           "lexical:keyword": {
             "k": 17,
@@ -2171,7 +2206,7 @@
           ]
         ]
       },
-      "skills": 28,
+      "skills": 29,
       "syntheticSkills": 11,
       "validators": [
         {
@@ -2196,7 +2231,7 @@
               "chayen-syn-graphql-schema"
             ]
           ],
-          "shippedSkills": 28
+          "shippedSkills": 29
         },
         {
           "validator": "catalog",
@@ -2224,8 +2259,8 @@
       "outcome": "AS_EXPECTED",
       "differences": [],
       "metadata": {
-        "chars": 9750,
-        "estTokens": 2438,
+        "chars": 10150,
+        "estTokens": 2538,
         "deltaChars": 2794,
         "deltaEstTokens": 699,
         "tokenEstimate": "characters / 4 (estimate, not a provider tokenizer)"
@@ -2244,7 +2279,7 @@
           "source": "S12",
           "status": "EXCEEDS_DOCUMENTED_FIGURE",
           "documentedCharacters": 8000,
-          "headroom": -1750,
+          "headroom": -2150,
           "measurement": "NOT_MEASURED"
         },
         {
@@ -2332,196 +2367,203 @@
           "synthetic": false,
           "chars": 433,
           "estTokens": 108,
-          "shareOfTotal": 0.0444
+          "shareOfTotal": 0.0427
         },
         {
           "name": "chayen-architecture",
           "synthetic": false,
           "chars": 427,
           "estTokens": 107,
-          "shareOfTotal": 0.0438
+          "shareOfTotal": 0.0421
         },
         {
           "name": "chayen-backend",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0441
+          "shareOfTotal": 0.0424
         },
         {
           "name": "chayen-data",
           "synthetic": false,
           "chars": 425,
           "estTokens": 106,
-          "shareOfTotal": 0.0436
+          "shareOfTotal": 0.0419
         },
         {
           "name": "chayen-devops",
           "synthetic": false,
           "chars": 430,
           "estTokens": 108,
-          "shareOfTotal": 0.0441
+          "shareOfTotal": 0.0424
         },
         {
           "name": "chayen-documentation",
           "synthetic": false,
           "chars": 415,
           "estTokens": 104,
-          "shareOfTotal": 0.0426
+          "shareOfTotal": 0.0409
         },
         {
           "name": "chayen-frontend",
           "synthetic": false,
           "chars": 435,
           "estTokens": 109,
-          "shareOfTotal": 0.0446
+          "shareOfTotal": 0.0429
         },
         {
           "name": "chayen-humanizer-en",
           "synthetic": false,
           "chars": 363,
           "estTokens": 91,
-          "shareOfTotal": 0.0372
+          "shareOfTotal": 0.0358
         },
         {
           "name": "chayen-humanizer-th",
           "synthetic": false,
           "chars": 369,
           "estTokens": 92,
-          "shareOfTotal": 0.0378
+          "shareOfTotal": 0.0364
         },
         {
           "name": "chayen-implementation",
           "synthetic": false,
           "chars": 439,
           "estTokens": 110,
-          "shareOfTotal": 0.045
+          "shareOfTotal": 0.0433
         },
         {
           "name": "chayen-init",
           "synthetic": false,
           "chars": 346,
           "estTokens": 87,
-          "shareOfTotal": 0.0355
+          "shareOfTotal": 0.0341
         },
         {
           "name": "chayen-it-document-writer",
           "synthetic": false,
           "chars": 393,
           "estTokens": 98,
-          "shareOfTotal": 0.0403
+          "shareOfTotal": 0.0387
+        },
+        {
+          "name": "chayen-it-document-writer-th",
+          "synthetic": false,
+          "chars": 400,
+          "estTokens": 100,
+          "shareOfTotal": 0.0394
         },
         {
           "name": "chayen-performance",
           "synthetic": false,
           "chars": 407,
           "estTokens": 102,
-          "shareOfTotal": 0.0417
+          "shareOfTotal": 0.0401
         },
         {
           "name": "chayen-repository",
           "synthetic": false,
           "chars": 397,
           "estTokens": 99,
-          "shareOfTotal": 0.0407
+          "shareOfTotal": 0.0391
         },
         {
           "name": "chayen-requirements",
           "synthetic": false,
           "chars": 424,
           "estTokens": 106,
-          "shareOfTotal": 0.0435
+          "shareOfTotal": 0.0418
         },
         {
           "name": "chayen-security",
           "synthetic": false,
           "chars": 431,
           "estTokens": 108,
-          "shareOfTotal": 0.0442
+          "shareOfTotal": 0.0425
         },
         {
           "name": "chayen-syn-audio-dsp",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0236
+          "shareOfTotal": 0.0227
         },
         {
           "name": "chayen-syn-firmware",
           "synthetic": true,
           "chars": 223,
           "estTokens": 56,
-          "shareOfTotal": 0.0229
+          "shareOfTotal": 0.022
         },
         {
           "name": "chayen-syn-game-mods",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.025
+          "shareOfTotal": 0.024
         },
         {
           "name": "chayen-syn-gis",
           "synthetic": true,
           "chars": 224,
           "estTokens": 56,
-          "shareOfTotal": 0.023
+          "shareOfTotal": 0.0221
         },
         {
           "name": "chayen-syn-graphql",
           "synthetic": true,
           "chars": 259,
           "estTokens": 65,
-          "shareOfTotal": 0.0266
+          "shareOfTotal": 0.0255
         },
         {
           "name": "chayen-syn-graphql-schema",
           "synthetic": true,
           "chars": 277,
           "estTokens": 69,
-          "shareOfTotal": 0.0284
+          "shareOfTotal": 0.0273
         },
         {
           "name": "chayen-syn-latex",
           "synthetic": true,
           "chars": 217,
           "estTokens": 54,
-          "shareOfTotal": 0.0223
+          "shareOfTotal": 0.0214
         },
         {
           "name": "chayen-syn-ros",
           "synthetic": true,
           "chars": 221,
           "estTokens": 55,
-          "shareOfTotal": 0.0227
+          "shareOfTotal": 0.0218
         },
         {
           "name": "chayen-syn-solidity",
           "synthetic": true,
           "chars": 244,
           "estTokens": 61,
-          "shareOfTotal": 0.025
+          "shareOfTotal": 0.024
         },
         {
           "name": "chayen-syn-sql-tuning",
           "synthetic": true,
           "chars": 425,
           "estTokens": 106,
-          "shareOfTotal": 0.0436
+          "shareOfTotal": 0.0419
         },
         {
           "name": "chayen-syn-vba",
           "synthetic": true,
           "chars": 230,
           "estTokens": 58,
-          "shareOfTotal": 0.0236
+          "shareOfTotal": 0.0227
         },
         {
           "name": "chayen-testing",
           "synthetic": false,
           "chars": 392,
           "estTokens": 98,
-          "shareOfTotal": 0.0402
+          "shareOfTotal": 0.0386
         }
       ],
       "cases": {
@@ -2541,7 +2583,7 @@
       },
       "simulated": {
         "label": "SIMULATED lexical proxy (BM25 over name and description); not a model or a provider; never routing evidence",
-        "threshold": 3.218,
+        "threshold": 3.265,
         "rates": {
           "lexical:keyword": {
             "k": 19,

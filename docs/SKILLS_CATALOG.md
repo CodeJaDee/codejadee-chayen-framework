@@ -1,6 +1,6 @@
 # Skills catalog
 
-Chayen ships **17 entry skills**: 13 engineering skills, three editorial skills (Thai prose, English prose, and English IT documents) and one project knowledge skill. Each is one directory,
+Chayen ships **18 entry skills**: 13 engineering skills, four editorial skills (Thai prose, English prose, and English and Thai IT documents) and one project knowledge skill. Each is one directory,
 `plugins/codejadee-chayen-framework/skills/<name>/`, containing `SKILL.md`
 and on-demand `references/`.
 
@@ -29,8 +29,9 @@ to load a skill.
 | `chayen-humanizer-th` (editorial) | — | — | 7 |
 | `chayen-humanizer-en` (editorial) | — | — | 9 |
 | `chayen-it-document-writer` (editorial) | — | — | 10 |
+| `chayen-it-document-writer-th` (editorial) | — | — | 12 |
 | `chayen-init` (project knowledge) | — | — | 5 |
-| **Total** | **206** (20 domains) | **108** | **252** |
+| **Total** | **206** (20 domains) | **108** | **264** |
 
 Capability counts come from `catalog/engineering-capabilities.yaml` and
 `catalog/technology-capabilities.yaml`. Every capability is
@@ -184,6 +185,28 @@ skills; general prose polish stays with `chayen-humanizer-en`. Output is
 Markdown; no DOCX or PDF is produced. Routing and behavior are not yet
 evaluated; see [SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md).
 
+
+### chayen-it-document-writer-th
+
+*Editorial skill (Thai). Owns no engineering capabilities; registered in `catalog/editorial-skills.json`.*
+
+> Prepare Thai system analysis and design documentation, covering technical, application and infrastructure design documents drafted, reviewed, revised, audited or translated from English, with obligation strength and identifiers preserved and unsupported values flagged. Not for Thai blogs, marketing copy, English-language deliverables, README checks, or software changes.
+
+Example prompt: *"ตรวจ Application Design Document ภาษาไทยฉบับนี้ ดูทั้งภาษา คำศัพท์ และความถูกต้องเทียบกับ schema ที่ให้ ยังไม่ต้องแก้ไฟล์"*
+
+The Thai counterpart of `chayen-it-document-writer`, with the same five modes
+(write, review, update, audit, consistency), the same three document types and
+the same evidence rules, plus controlled English-to-Thai translation and Thai
+technical writing guidance: natural formal Thai, English terms kept where Thai
+would reduce clarity, and MUST, SHOULD, MAY and MUST NOT mapped to ต้อง, ควร,
+อาจ and ต้องไม่ without changing obligation strength. Routing follows the
+language of the requested deliverable, not the language of the prompt: a Thai
+prompt asking for an English document belongs to `chayen-it-document-writer`,
+and an English prompt asking for a Thai document belongs to this Skill. Thai
+blogs and marketing copy stay with `chayen-humanizer-th`. Output is Markdown;
+no DOCX or PDF is produced. Routing and behavior are not yet evaluated; see
+[SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md).
+
 ### chayen-init
 
 *Project knowledge skill. Owns no engineering capabilities; registered in `catalog/project-skills.json` (D-062). New in 1.1.0.*
@@ -218,7 +241,7 @@ Prepare a request as described in
 
 - Most requests become a **recipe inside an existing skill**, not a new
   skill.
-- L0 metadata usage is 6,956 characters (about 1,739 tokens, estimated).
+- L0 metadata usage is 7,356 characters (about 1,839 tokens, estimated).
   There is no Entry Skill count ceiling and no repository metadata cap
   (D-066), but provider listing limits still apply: see
   [automatic skill discovery](AUTOMATIC_SKILL_DISCOVERY.md#discovery-metadata-and-provider-limits).

@@ -43,7 +43,7 @@
 | Version | `1.1.6` in both manifests and both Copilot version fields (D-083; `1.1.5` under D-081, `1.1.4` under D-079, `1.1.3` under D-077, `1.1.2` under D-065, `1.1.1` under D-064, `1.1.0` under D-063, `1.0.0` under D-061) |
 | Publisher | `CodeJaDee`, confirmed by the Phase 1 owner decision |
 | Source directory | `plugins/codejadee-chayen-framework/`, shared by all three marketplaces |
-| Entry Skills | 17: 13 engineering, 3 writing, 1 project knowledge |
+| Entry Skills | 18: 13 engineering, 4 writing, 1 project knowledge (the 18th, `chayen-it-document-writer-th`, is unreleased, D-084) |
 | Project licence | MIT; root `LICENSE`, plugin `LICENSE.md` and both manifests' `license` |
 | Upstream licence | Existing Humanizer MIT notice/attribution retained and guarded |
 | Public source | `https://github.com/CodeJaDee/codejadee-chayen-framework`, public since 2026-10-18 |

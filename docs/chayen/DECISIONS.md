@@ -2245,6 +2245,54 @@ Decision statuses:
   publication. Each needs a separate owner action.
 - **Evidence:** `validate-all.mjs` on the bumped tree.
 
+### D-084 — `chayen-it-document-writer-th`: the Thai IT document Skill
+
+- **Status:** ACCEPTED. Owner request on 2026-11-18 to add the Thai version of
+  `chayen-it-document-writer` (D-082), as the second phase of the IT
+  documentation initiative.
+- **Decision:**
+  - Add one Entry Skill, `chayen-it-document-writer-th`, with `SKILL.md` and
+    twelve references. It has the same five modes and three document types as
+    the English Skill and adds controlled English-to-Thai translation. It was
+    written for Thai, not translated from the English text: it carries a
+    Thai technical writing checklist (register, requirement semantics,
+    protected identifiers, digits and calendar eras, typography), a terminology
+    reference, Thai evidence-status labels and Thai output templates.
+  - **Classification: editorial, language `th`** in
+    `catalog/editorial-skills.json`, for the reasons recorded in D-082. The
+    registry admits further records that declare a language code, and the
+    pinned Humanizer contracts are untouched. No registration model, validator
+    or ADR change was needed.
+  - **Routing follows the language of the requested deliverable and the
+    artifact type, not the language of the prompt.** A Thai prompt for an
+    English document belongs to `chayen-it-document-writer`; an English prompt
+    for a Thai document belongs to the Thai Skill; Thai blogs and marketing
+    copy stay with `chayen-humanizer-th`. The two descriptions were made
+    lexically distinct (overlap 0.21; the limit is 0.35) without changing the
+    English description.
+  - The English Skill, `chayen-humanizer-th`, `chayen-humanizer-en` and every
+    other Skill are unchanged. The English Skill's "When not to use" row for
+    documents in another language still says to answer directly; pointing it
+    at the Thai Skill is left to the owner because it edits an accepted
+    Skill's text (see the follow-up below).
+- **Tests added (developer-only):** 18 trigger cases (the five required
+  language-routing scenarios, translation, update and consistency, boundary
+  cases for Thai blogs, marketing, README, security, backend and
+  architecture, and four ambiguous cases); the former "non-English documents
+  are unsupported" case of the English Skill was replaced because the request
+  now has an owner; regenerated Claude eval cases; three Phase 5 routing
+  probes; and 19 behavior case specifications with offline structural checks
+  (`tests/editorial/it-document-writer-th-cases.*`). Existing count
+  assertions moved from 17 to 18 Skills.
+- **Follow-up for the owner:** decide whether to change the English Skill's
+  non-English row to name the Thai Skill, and whether to release this as
+  `1.1.7` (`1.1.6` is already on `origin/develop`).
+- **Not done:** routing and behavior evaluation (NOT_RUN: no provider calls
+  were authorized), native install on any host, version bump, commit, tag,
+  merge and push.
+- **Evidence:** `validate-all.mjs`; SkillSpector 2.12.0 `--no-llm` scan of the
+  Skill folder and the package.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

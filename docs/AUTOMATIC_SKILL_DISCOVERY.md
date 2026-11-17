@@ -1,8 +1,8 @@
 # Automatic skill discovery
 
 Chayen relies on native provider selection; it has no router or hook.
-The current build has 17 Skills; L0 metadata uses 6,956 characters (about
-1,739 tokens, estimated as characters / 4).
+The current build has 18 Skills; L0 metadata uses 7,356 characters (about
+1,839 tokens, estimated as characters / 4).
 
 ## How a skill is selected
 

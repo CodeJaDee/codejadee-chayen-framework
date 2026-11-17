@@ -381,6 +381,40 @@
       ]
     },
     {
+      "id": "p5-pos-itdoc-th-write-technical",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-it-document-writer-th",
+      "source": "tests/skills/trigger-cases.json#pos-itdoc-th-write-technical",
+      "prompt": "เขียน Technical Document ภาษาไทยของระบบจัดการคำสั่งซื้อ จาก source code และ OpenAPI ใน repo นี้ ส่วนไหนที่ไม่มีหลักฐานให้ระบุไว้ว่ายังไม่ได้รับการยืนยัน",
+      "expect": {
+        "any_of": [
+          "chayen-it-document-writer-th"
+        ]
+      },
+      "forbid": [
+        "chayen-it-document-writer",
+        "chayen-humanizer-th"
+      ]
+    },
+    {
+      "id": "p5-pos-itdoc-th-review-add",
+      "type": "positive",
+      "group": "core",
+      "primary": "chayen-it-document-writer-th",
+      "source": "tests/skills/trigger-cases.json#pos-itdoc-th-review-add",
+      "prompt": "ตรวจ Application Design Document ภาษาไทยฉบับนี้ ดูทั้งสำนวนภาษา คำศัพท์ และความถูกต้องเทียบกับ schema ที่แนบมา ยังไม่ต้องแก้ไฟล์",
+      "expect": {
+        "any_of": [
+          "chayen-it-document-writer-th"
+        ]
+      },
+      "forbid": [
+        "chayen-it-document-writer",
+        "chayen-humanizer-th"
+      ]
+    },
+    {
       "id": "p5-pos-performance-memory-leak",
       "type": "positive",
       "group": "core",
@@ -1130,6 +1164,19 @@
       "expect": {
         "any_of": [
           "chayen-it-document-writer"
+        ]
+      }
+    },
+    {
+      "id": "p5-exp-it-document-writer-th",
+      "type": "explicit",
+      "group": "explicit",
+      "skill": "chayen-it-document-writer-th",
+      "source": "tests/skills/trigger-cases.json#pos-itdoc-th-audit-idd",
+      "prompt": "ประเมินเอกสาร Infrastructure Design ภาษาไทยนี้ว่ามีส่วนไหนไม่ครบ มีค่า server หรือ port ที่ไม่มีที่มาหรือไม่ และจัดระดับความสำคัญของแต่ละข้อ",
+      "expect": {
+        "any_of": [
+          "chayen-it-document-writer-th"
         ]
       }
     },

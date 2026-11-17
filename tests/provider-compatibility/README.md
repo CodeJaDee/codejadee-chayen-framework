@@ -1,6 +1,6 @@
 # Native CLI lifecycle qualification (developer-only)
 
-Current Entry Skills: **17**. Plugin identity: `chayen@codejadee`.
+Current Entry Skills: **18**. Plugin identity: `chayen@codejadee`.
 The canonical package contains static Markdown/JSON only. These scripts are
 developer tooling outside that package. Phase 4 tests lifecycle; automatic
 routing >=85% per CLI belongs to Phase 5 and has not been run here.

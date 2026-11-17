@@ -1,11 +1,12 @@
 # Thai and English writing and editing
 
-Chayen includes three writing skills next to its 13 engineering skills. Two edit prose by language; the third writes and reviews IT documents:
+Chayen includes four writing skills next to its 13 engineering skills. Two edit prose by language; the other two write and review IT documents in English and in Thai:
 
 | Skill | For text whose output is | Typical work |
 |---|---|---|
 | `chayen-humanizer-th` | Thai (including Thai with English technical terms) | Articles, developer blogs, landing pages, README prose, product descriptions, UI microcopy and localization strings |
 | `chayen-humanizer-en` | English | The same, plus developer replies, review comments, announcements and marketing copy |
+| `chayen-it-document-writer-th` | Thai IT documents (and English-to-Thai translation of them) | The same work as the English IT document skill, with Thai technical writing rules; see [chayen-it-document-writer-th](SKILLS_CATALOG.md#chayen-it-document-writer-th) |
 | `chayen-it-document-writer` | English IT documents: Technical, Application Design, Infrastructure Design | Writing, reviewing, updating, auditing and cross-checking documents against supplied evidence; see [chayen-it-document-writer](SKILLS_CATALOG.md#chayen-it-document-writer) |
 
 Each skill makes text read as if a careful writer wrote it for its reader,

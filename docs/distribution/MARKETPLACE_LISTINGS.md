@@ -9,7 +9,7 @@ approved channel; do not populate contact fields with guesses.
 
 **Name:** `chayen`, display name Chayen by CodeJaDee.
 
-Chayen supplies 17 Skills: 13 engineering, 3 Thai/English writing and 1
+Chayen supplies 18 Skills: 13 engineering, 4 Thai/English writing and 1
 project knowledge entry points, with 206 engineering capabilities, 108 technology capabilities,
 12 workflows and 7 templates. Its shared package is static Markdown/JSON;
 there are no hooks, executables, MCP servers or telemetry.
