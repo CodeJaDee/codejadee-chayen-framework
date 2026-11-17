@@ -12,6 +12,12 @@
       "language": "en",
       "mapping": "existing",
       "description": "Write, audit, or tighten English prose for articles, blogs, READMEs, developer replies, product and marketing copy, landing pages, and UI microcopy, removing stock AI phrasing and filler while keeping facts, identifiers, tone, and spelling variety. Not for non-English output, fiction, checking docs against the repository, or software changes."
+    },
+    {
+      "name": "chayen-it-document-writer",
+      "language": "en",
+      "mapping": "existing",
+      "description": "Write, review, update, audit, or cross-check English IT documents, namely Technical Documents, Application Design Documents, and Infrastructure Design Documents, from supplied evidence, reporting missing or conflicting technical values instead of inventing them. Not for blog or marketing copy, README or API doc fact-checking, architecture decisions, or code changes."
     }
   ]
 }

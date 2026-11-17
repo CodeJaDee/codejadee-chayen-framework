@@ -36,7 +36,7 @@ codex plugin list --marketplace codejadee
 The add/list forms were verified on Codex CLI 0.163.0 in Phase 4; confirm availability
 with installed help on other versions. Missing installation controls mean BLOCKED; do not
 replace the native plugin with copied Skills. Verify identity, version,
-enabled state and all 16 Skills, then start a new session.
+enabled state and all 17 Skills, then start a new session.
 
 ## Renamed from codejadee-chayen-framework
 

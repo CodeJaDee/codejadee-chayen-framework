@@ -31,7 +31,7 @@ runs need the owner's recorded budget and access authorization (OD-10).
 ```bash
 node tests/evaluation/phase5/build-fixtures.mjs --check
 node --test tests/evaluation/phase5/phase5.test.mjs
-node tests/evaluation/phase5/run-phase5.mjs --plan            # 2,295 billed calls for the full matrix
+node tests/evaluation/phase5/run-phase5.mjs --plan            # 2,322 billed calls for the full matrix
 node tests/evaluation/phase5/run-phase5.mjs --score <results dir> [--candidate <file>]
 
 # Candidate for the checked-out build: reads files and runs read-only git only

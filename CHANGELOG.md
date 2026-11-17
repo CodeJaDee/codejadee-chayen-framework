@@ -6,8 +6,66 @@ All notable changes to codejadee-chayen-framework are recorded here.
 - Versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
-Repository-only security hygiene from the SkillSpector audit of `1.1.5`. No
-shipped file content changes.
+Nothing yet.
+
+## [1.1.6] - 2026-11-18
+
+Adds the `chayen-it-document-writer` Skill (D-082, D-083) and carries the
+repository-only security hygiene from the SkillSpector audit of `1.1.5`.
+
+- **Scope:** one new Entry Skill with ten references (11 shipped files), plus
+  the version in both manifests, both Copilot version fields and the plugin
+  README. Package: 276 files, 254 references, 17 Skills (13 engineering, 3
+  writing, 1 project knowledge); L0 metadata grows from 6,563 to 6,956
+  characters. No existing Skill name, description or behavior changes.
+- **Status:** **not release-qualified**. Runtime evaluation is pending (see
+  Not verified).
+
+### Added (shipped)
+
+- **`chayen-it-document-writer`**, registered as an editorial Skill
+  (language `en`, no Engineering Capability). It writes, reviews, updates,
+  audits and cross-checks English Technical Documents, Application Design
+  Documents and Infrastructure Design Documents from supplied evidence.
+  - Five modes: write, review, update, audit and consistency. Review, audit
+    and consistency never edit a document; update keeps the original
+    structure and marks anything the current implementation does not confirm
+    as Not Verified.
+  - An evidence model with five statuses (Verified, Inferred, Not Verified,
+    Conflicting Evidence, Requires Clarification), a finding record, a
+    traceability matrix, and a list of values it never invents (hostnames,
+    ports, schemas, endpoints, security controls, RPO and RTO, test results).
+  - Checklists for each document type, a technical English lens that
+    preserves identifiers, numbers, units and MUST, SHALL, SHOULD, MAY and
+    MUST NOT, and output formats for every mode.
+  - Boundaries: general prose stays with `chayen-humanizer-en`, repository
+    fact-checking of READMEs and API docs with `chayen-documentation`,
+    and architecture, infrastructure, security, requirements and repository
+    analysis with their own Skills. Output is Markdown; no DOCX or PDF is
+    claimed.
+
+### Changed (repository only, not shipped)
+
+- Trigger cases: 17 new cases (positive routing per mode, boundary cases
+  that stay with other Skills, ambiguous and unsupported); the Claude eval
+  cases are regenerated. Phase 5 routing probes gain two core probes and
+  one explicit probe for the new Skill, so the full plan is 2,322 billed
+  calls (was 2,295).
+- Count assertions moved from 16 to 17 Skills (registration, limits,
+  hardening, qualification, routing-context and documentation tests; the
+  committed static routing report is regenerated). The lifecycle script now
+  expects 17 Skills.
+- Documentation build facts, the Skills catalog and the release metadata
+  describe 17 Skills. The 16-Skill lifecycle table in the compatibility
+  matrix is marked as historical evidence.
+
+### Added (repository only, not shipped, new in this release)
+
+- `tests/editorial/it-document-writer-cases.json` (14 behavior case
+  specifications) and `tests/editorial/it-document-writer-cases.test.mjs`,
+  wired into `validate-all.mjs`. They check structure, preserved spans,
+  mode and document-type coverage and the vocabulary the Skill defines.
+  They score no model output.
 
 ### Fixed (repository only, not shipped)
 
@@ -47,6 +105,10 @@ shipped file content changes.
 
 ### Not verified
 
+- Routing and behavior of `chayen-it-document-writer` (NOT_RUN): no trigger
+  or behavior evaluation was executed against an agent, and the Skill has not
+  been installed on any host. The new trigger cases, probes and behavior
+  specifications are checked offline only.
 - SkillSpector is not run by the automated gates; the baseline result above
   is from a manual run.
 - The `pos-init-repo-injection` eval was not run against an agent

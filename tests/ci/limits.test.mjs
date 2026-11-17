@@ -103,14 +103,14 @@ test("a package beyond every former limit at once passes the package, catalog an
     assert.doesNotMatch(r.out, FORMER_CAP, v);
   }
   const pkg = VALIDATORS.package(root).out;
-  assert.match(pkg, /18 shipped skills \(editorial 2, engineering 13, project 3; no count cap\)/);
+  assert.match(pkg, /19 shipped skills \(editorial 3, engineering 13, project 3; no count cap\)/);
   const size = /largest SKILL\.md chayen-notes-alpha\/SKILL\.md (\d+) lines/.exec(pkg), ref = /largest reference skills\/chayen-notes-beta\/references\/detection-and-refresh\.md (\d+) lines/.exec(pkg);
   assert.ok(size && Number(size[1]) > 300, "SKILL.md above 300 lines");
   assert.ok(ref && Number(ref[1]) > 300, "reference above 300 lines");
   assert.match(pkg, /max depth 4;/);
   const metrics = JSON.parse(run([inside(repo, "tools/catalog/discovery-metrics.mjs"), "--root", root, "--json"]).stdout);
   assert.ok(metrics.actual.chars > 7000, `discovery metadata above 7,000 characters, got ${metrics.actual.chars}`);
-  assert.equal(metrics.actual.skills, 18);
+  assert.equal(metrics.actual.skills, 19);
 });
 
 // ---------- 4. faults on the package beyond every former limit ----------

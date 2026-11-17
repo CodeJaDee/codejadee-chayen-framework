@@ -49,7 +49,7 @@ the owner's Support decision:
 Most requests are added as a **recipe or technology reference inside an
 existing skill**:
 
-- L0 metadata usage is 6,563 characters; there is no entry skill count
+- L0 metadata usage is 6,956 characters; there is no entry skill count
   ceiling or repository metadata cap (D-066), but every entry skill adds
   listing metadata on every turn and provider listing limits still apply
   (`node tools/catalog/discovery-metrics.mjs` reports the effect);

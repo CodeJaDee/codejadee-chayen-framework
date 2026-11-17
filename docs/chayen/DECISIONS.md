@@ -2182,6 +2182,69 @@ Decision statuses:
   publication. Each needs a separate owner action.
 - **Evidence:** `validate-all.mjs` on the bumped tree.
 
+### D-082 — `chayen-it-document-writer`: an English IT document Skill
+
+- **Status:** ACCEPTED. Owner request on 2026-11-17 to implement the Skill
+  described in the "MASTER PROMPT: Implement chayen-it-document-writer".
+- **Decision:**
+  - Add one Entry Skill, `chayen-it-document-writer`, with `SKILL.md` and ten
+    references. It writes, reviews, updates, audits and cross-checks English
+    Technical Documents, Application Design Documents and Infrastructure
+    Design Documents from supplied evidence. It reports missing or
+    conflicting values as Not Verified, Missing Information, Conflicting
+    Evidence or Requires Clarification instead of inventing them.
+  - **Classification: editorial, language `en`** in
+    `catalog/editorial-skills.json`. The Skill owns a documentation
+    deliverable, not an Engineering Capability, so the engineering catalog is
+    unchanged (206 capabilities, 13 Entry Skills) and no capability is
+    invented to satisfy a validator. The project category is for project
+    knowledge (`chayen-init`) and the editorial category already admits
+    further records that declare a language code (D-066), so no registration
+    model, validator or ADR change was needed.
+  - Existing Skills are unchanged. `chayen-humanizer-en` keeps general
+    English prose, `chayen-documentation` keeps README, API and engineering
+    docs checked against the repository, and the other engineering Skills keep
+    their analysis. The new Skill names them as hand-off owners in plain
+    prose and does not assume automatic invocation. The E-04 independence
+    rule still covers only the Thai and English Humanizer pair.
+  - Scope boundaries: English only; Markdown output only (no DOCX or PDF is
+    claimed); review, audit and consistency requests never edit a document;
+    no application, configuration or infrastructure change.
+- **Tests added (developer-only):** 17 trigger cases (positive routing for
+  each mode, boundary cases that must stay with `chayen-humanizer-en`,
+  `chayen-backend`, `chayen-security`, `chayen-architecture` and
+  `chayen-documentation`, four ambiguous and one unsupported), regenerated
+  Claude eval cases, three Phase 5 routing probes, and 14 behavior case
+  specifications with offline structural checks
+  (`tests/editorial/it-document-writer-cases.*`). Existing count assertions
+  moved from 16 to 17 Skills.
+- **Not done:** routing and behavior evaluation (NOT_RUN: no provider calls
+  were authorized), native install on any host, commit, tag, merge and push.
+- **Evidence:** `validate-all.mjs`; SkillSpector 2.12.0 `--no-llm` scan of
+  the Skill folder: 0 findings, no baseline entry added.
+
+### D-083 — Version 1.1.6 (adds `chayen-it-document-writer`)
+
+- **Status:** ACCEPTED. Explicit owner instruction on 2026-11-17: after the
+  Skill is done, change the framework version from 1.1.5 to 1.1.6 with a
+  changelog entry.
+- **Decision:**
+  - The version is `1.1.6` in both plugin manifests and in both Copilot
+    version fields (`metadata.version` and `plugins[0].version`).
+  - This is a patch bump, although a Skill is added: the owner chose
+    `1.1.6`, and no existing Skill name, description or behavior changes.
+    The `1.1.0` precedent (adding `chayen-init`) used a minor bump; this
+    release follows the owner's instruction instead.
+  - The shipped package grows from 265 to 276 files (244 to 254 references)
+    and from 16 to 17 Skills; L0 metadata grows from 6,563 to 6,956
+    characters.
+  - The CHANGELOG `[1.1.6]` entry records the change and carries the
+    repository-only items that were listed under `[Unreleased]`.
+- **Not release-qualified.** Runtime evaluation is NOT_RUN on every CLI.
+- **Not done by this decision:** commit, tag, merge to `main`, push and
+  publication. Each needs a separate owner action.
+- **Evidence:** `validate-all.mjs` on the bumped tree.
+
 ## Architecture assumptions (checked in Step 02)
 
 These began as working assumptions based on the agent's prior knowledge

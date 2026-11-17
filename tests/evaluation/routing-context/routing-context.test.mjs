@@ -59,9 +59,9 @@ test("static benchmark: every scenario meets its expected outcome; the productio
   const rep = JSON.parse(fs.readFileSync(path.join(out, "report.json"), "utf8"));
   const sc = Object.fromEntries(rep.scenarios.map((s) => [s.id, s]));
   for (const s of rep.scenarios) assert.equal(s.outcome, "AS_EXPECTED", `${s.id}: ${s.differences.join("; ")}`);
-  assert.deepEqual(Object.fromEntries(rep.scenarios.map((s) => [s.id, s.skills])), { "SC0-production": 16, "SC1-distinct": 24, "SC2-adjacent": 30, "SC3-overlap": 34, "SC4-semantic-conflict": 25, "SC5-lexical-conflict": 27 });
+  assert.deepEqual(Object.fromEntries(rep.scenarios.map((s) => [s.id, s.skills])), { "SC0-production": 17, "SC1-distinct": 25, "SC2-adjacent": 31, "SC3-overlap": 35, "SC4-semantic-conflict": 26, "SC5-lexical-conflict": 28 });
   for (const id of ["SC1-distinct", "SC2-adjacent", "SC3-overlap", "SC4-semantic-conflict"]) for (const v of sc[id].validators) assert.equal(v.result, "PASS", `${id} ${v.validator}`);
-  assert.equal(sc["SC3-overlap"].validators[0].shippedSkills, 34);
+  assert.equal(sc["SC3-overlap"].validators[0].shippedSkills, 35);
   assert.deepEqual(sc["SC5-lexical-conflict"].validators[0].errorChecks, ["V-07b description-distinctness"]);
   assert.deepEqual(sc["SC5-lexical-conflict"].validators[0].distinctnessErrors, [["chayen-data", "chayen-syn-sql-tuning"], ["chayen-syn-graphql", "chayen-syn-graphql-schema"]]);
   assert.equal(sc["SC4-semantic-conflict"].distinctness.neighbours.find((n) => n.skill === "chayen-syn-test-authoring").lexicalVerdict, "PASS", "the paraphrased duplicate is invisible to the lexical check");

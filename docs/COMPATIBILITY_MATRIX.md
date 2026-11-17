@@ -1,6 +1,6 @@
 # Compatibility matrix
 
-**Current build:** `1.1.5` (D-081): 16 Skills (13 engineering, 2 writing, 1 project knowledge). `1.1.1` to `1.1.5` change guidance text only since `1.1.0` and keep the Skill metadata. `1.1.5` rewords guidance to reduce skill-scanner false positives (D-080); `1.1.4` changed only `chayen-init` (D-078). Neither has been installed on a host. The 2026-10-23 rows below were recorded on a working-tree snapshot with the Skill content of `1.1.3`, then still versioned `1.1.2`; `1.1.3` itself has not been installed on a host. A working-tree snapshot of `1.1.2` was installed natively in isolated test profiles on 2026-10-23 (evolution Step 19); `1.0.0`, `1.1.0` and `1.1.1` were never installed on a host.
+**Current build:** `1.1.6` (D-083): 17 Skills (13 engineering, 3 writing, 1 project knowledge). `1.1.6` adds `chayen-it-document-writer` (D-082) and has not been installed on a host. `1.1.1` to `1.1.5` change guidance text only since `1.1.0` and keep the Skill metadata. `1.1.5` rewords guidance to reduce skill-scanner false positives (D-080); `1.1.4` changed only `chayen-init` (D-078). Neither has been installed on a host. The 2026-10-23 rows below were recorded on a working-tree snapshot with the Skill content of `1.1.3`, then still versioned `1.1.2`; `1.1.3` itself has not been installed on a host. A working-tree snapshot of `1.1.2` was installed natively in isolated test profiles on 2026-10-23 (evolution Step 19); `1.0.0`, `1.1.0` and `1.1.1` were never installed on a host.
 **Reviewed:** 2026-10-23, evolution Step 19. Production target: Claude Code CLI,
 Codex CLI and GitHub Copilot CLI >=1.0.91, subject to release qualification.
 
@@ -10,6 +10,10 @@ Local-path marketplace, one isolated profile per CLI, no login and no model
 turn. Real provider configurations were unchanged. Details, commands and
 findings are in the
 [Step 19 report](chayen/evolution/PROVIDER_SECURITY_REPORT.md).
+
+Rows record the 16-Skill snapshot; they do not cover `1.1.6`.
+
+<!-- historical:start -->
 
 | Check | Claude Code CLI | Codex CLI | Copilot CLI |
 |---|---|---|---|
@@ -24,6 +28,8 @@ findings are in the
 | Qualification on a committed frozen candidate | BLOCKED; freeze pending | BLOCKED; freeze pending | BLOCKED |
 | Automatic routing >=85%, explicit invocation, no-match | NOT_RUN | NOT_RUN | NOT_RUN |
 | Adversarial security cases | BLOCKED | BLOCKED | BLOCKED |
+
+<!-- historical:end -->
 
 ## Previous candidate (`0.1.0-rc.1`, Phase 4)
 

@@ -147,24 +147,24 @@ function assertPasses(root, ...validators) {
   }
 }
 
-test("the existing 16 Skills and their engineering and editorial mappings remain valid", (t) => {
+test("the existing 17 Skills and their engineering and editorial mappings remain valid", (t) => {
   const root = fixture(t);
   assertPasses(root, "security");
   const pkgRun = run("package", root), catRun = run("catalog", root);
   assert.equal(pkgRun.code, 0, pkgRun.out);
-  assert.match(pkgRun.out, /PASS {2}V-07 discovery-metadata: 16 shipped skills \(editorial 2, engineering 13, project 1; no count cap\)/);
-  assert.match(pkgRun.out, /PASS {2}V-19 catalog-mapping: 16 shipped skills registered; 2 editorial registrations; 1 project registration\(s\); 117 recipe file\(s\) agree with the isolated Engineering Catalog \(206 capabilities\)/);
+  assert.match(pkgRun.out, /PASS {2}V-07 discovery-metadata: 17 shipped skills \(editorial 3, engineering 13, project 1; no count cap\)/);
+  assert.match(pkgRun.out, /PASS {2}V-19 catalog-mapping: 17 shipped skills registered; 3 editorial registrations; 1 project registration\(s\); 117 recipe file\(s\) agree with the isolated Engineering Catalog \(206 capabilities\)/);
   assert.equal(catRun.code, 0, catRun.out);
   assert.match(catRun.out, /Capabilities: 206 \(expected 206\)/);
   assert.match(catRun.out, /fingerprint .*expected ([0-9a-f]{16}), catalog \1/);
-  assert.match(catRun.out, /Registered Skills by category: engineering 13, editorial 2, project 1/);
+  assert.match(catRun.out, /Registered Skills by category: engineering 13, editorial 3, project 1/);
 });
 
-test("a correctly registered 17th Skill is accepted", (t) => {
+test("a correctly registered 18th Skill is accepted", (t) => {
   const root = fixture(t);
   addSkill(root, GLOSSARY);
   assertPasses(root, "package", "catalog", "security");
-  assert.match(run("package", root).out, /17 shipped skills \(editorial 2, engineering 13, project 2; no count cap\)/);
+  assert.match(run("package", root).out, /18 shipped skills \(editorial 3, engineering 13, project 2; no count cap\)/);
 });
 
 test("multiple additional Skills in different categories are accepted", (t) => {
@@ -172,8 +172,8 @@ test("multiple additional Skills in different categories are accepted", (t) => {
   addSkill(root, GLOSSARY);
   addSkill(root, PROOFREAD);
   assertPasses(root, "package", "catalog", "security");
-  assert.match(run("package", root).out, /18 shipped skills \(editorial 3, engineering 13, project 2; no count cap\)/);
-  assert.match(run("catalog", root).out, /Registered Skills by category: engineering 13, editorial 3, project 2/);
+  assert.match(run("package", root).out, /19 shipped skills \(editorial 4, engineering 13, project 2; no count cap\)/);
+  assert.match(run("catalog", root).out, /Registered Skills by category: engineering 13, editorial 4, project 2/);
 });
 
 // Each fault is applied to an otherwise valid 18-Skill repository, so a failure cannot come from the count.

@@ -1,6 +1,6 @@
 # Skills catalog
 
-Chayen ships **16 entry skills**: 13 engineering skills, two editorial skills (Thai and English) and one project knowledge skill. Each is one directory,
+Chayen ships **17 entry skills**: 13 engineering skills, three editorial skills (Thai prose, English prose, and English IT documents) and one project knowledge skill. Each is one directory,
 `plugins/codejadee-chayen-framework/skills/<name>/`, containing `SKILL.md`
 and on-demand `references/`.
 
@@ -28,8 +28,9 @@ to load a skill.
 | `chayen-ai-engineering` | 19 | — | 13 |
 | `chayen-humanizer-th` (editorial) | — | — | 7 |
 | `chayen-humanizer-en` (editorial) | — | — | 9 |
+| `chayen-it-document-writer` (editorial) | — | — | 10 |
 | `chayen-init` (project knowledge) | — | — | 5 |
-| **Total** | **206** (20 domains) | **108** | **242** |
+| **Total** | **206** (20 domains) | **108** | **252** |
 
 Capability counts come from `catalog/engineering-capabilities.yaml` and
 `catalog/technology-capabilities.yaml`. Every capability is
@@ -163,6 +164,26 @@ patterns are adapted from the MIT-licensed
 [humanizer](https://github.com/blader/humanizer) skill by Siqi Chen; the
 attribution and licence notice ship with the skill.
 
+
+### chayen-it-document-writer
+
+*Editorial skill (English). Owns no engineering capabilities; registered in `catalog/editorial-skills.json`.*
+
+> Write, review, update, audit, or cross-check English IT documents, namely Technical Documents, Application Design Documents, and Infrastructure Design Documents, from supplied evidence, reporting missing or conflicting technical values instead of inventing them. Not for blog or marketing copy, README or API doc fact-checking, architecture decisions, or code changes.
+
+Example prompt: *"Compare the Application Design Document and the Infrastructure Design Document and list every place the component names, ports or environments disagree."*
+
+Modes: write, review, update, audit and consistency, for Technical Documents,
+Application Design Documents and Infrastructure Design Documents. Every
+technical statement needs a source or an evidence status (Verified, Inferred,
+Not Verified, Conflicting Evidence, Requires Clarification); missing values
+are reported, not invented. Review, audit and consistency requests do not edit
+documents. Architecture decisions, repository fact-checking of READMEs and API
+docs, infrastructure engineering and security analysis stay with their own
+skills; general prose polish stays with `chayen-humanizer-en`. Output is
+Markdown; no DOCX or PDF is produced. Routing and behavior are not yet
+evaluated; see [SECURITY_AND_LIMITATIONS.md](SECURITY_AND_LIMITATIONS.md).
+
 ### chayen-init
 
 *Project knowledge skill. Owns no engineering capabilities; registered in `catalog/project-skills.json` (D-062). New in 1.1.0.*
@@ -197,7 +218,7 @@ Prepare a request as described in
 
 - Most requests become a **recipe inside an existing skill**, not a new
   skill.
-- L0 metadata usage is 6,563 characters (about 1,641 tokens, estimated).
+- L0 metadata usage is 6,956 characters (about 1,739 tokens, estimated).
   There is no Entry Skill count ceiling and no repository metadata cap
   (D-066), but provider listing limits still apply: see
   [automatic skill discovery](AUTOMATIC_SKILL_DISCOVERY.md#discovery-metadata-and-provider-limits).

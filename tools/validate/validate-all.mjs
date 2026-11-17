@@ -20,6 +20,7 @@ const steps = [
   ["Phase 2 scope, upstream notice and lifecycle invariants", "tools/validate/check-hardening.mjs", []],
   ["Phase 2 hardening validator regressions", "tests/production/hardening.test.mjs", []],
   ["Phase 2 Thai numerals and calendar scorer regressions", "tests/editorial/numeric-preservation.test.mjs", []],
+  ["IT document skill behavior case specifications: modes, document types, protected spans and vocabulary (static; behavior NOT_RUN)", "tests/editorial/it-document-writer-cases.test.mjs", []],
   ["Phase 2 isolated lifecycle regressions (offline fakes)", "tests/provider-compatibility/lifecycle.test.mjs", []],
   ["RC fingerprint and isolation negative controls (offline)", "tests/provider-compatibility/qualify-rc.test.mjs", []],
   ["Phase 5 evaluation fixtures, classifiers and no-send guards (offline; no provider calls)", "tests/evaluation/phase5/phase5.test.mjs", []],
